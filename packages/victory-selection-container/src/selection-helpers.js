@@ -37,7 +37,7 @@ const SelectionHelpers = {
     return Helpers.reduceChildren(
       React.Children.toArray(props.children),
       iteratee,
-      props
+      props,
     );
   },
 
@@ -48,7 +48,7 @@ const SelectionHelpers = {
         ? memo.concat({
             childName: dataset.childName,
             eventKey: selectedData.eventKey,
-            data: selectedData.data
+            data: selectedData.data,
           })
         : memo;
       return memo;
@@ -121,7 +121,7 @@ const SelectionHelpers = {
               childName: d.childName,
               eventKey: d.eventKey,
               target: "data",
-              mutation: () => null
+              mutation: () => null,
             };
           })
         : [];
@@ -149,7 +149,7 @@ const SelectionHelpers = {
         target: "parent",
         mutation: () => {
           return { x2, y2, parentSVG };
-        }
+        },
       };
     }
   },
@@ -165,8 +165,8 @@ const SelectionHelpers = {
           target: "parent",
           mutation: () => {
             return { select: false, x1: null, x2: null, y1: null, y2: null };
-          }
-        }
+          },
+        },
       ];
     }
     const datasets = this.getDatasets(targetProps);
@@ -179,21 +179,21 @@ const SelectionHelpers = {
       x1: null,
       x2: null,
       y1: null,
-      y2: null
+      y2: null,
     };
     const callbackMutation =
       selectedData && isFunction(targetProps.onSelection)
         ? targetProps.onSelection(
             selectedData,
             bounds,
-            defaults({}, mutatedProps, targetProps)
+            defaults({}, mutatedProps, targetProps),
           )
         : {};
     const parentMutation = [
       {
         target: "parent",
-        mutation: () => mutatedProps
-      }
+        mutation: () => mutatedProps,
+      },
     ];
 
     const dataMutation =
@@ -205,13 +205,13 @@ const SelectionHelpers = {
               target: "data",
               mutation: () => {
                 return assign({ active: true }, callbackMutation);
-              }
+              },
             };
           })
         : [];
 
     return parentMutation.concat(dataMutation);
-  }
+  },
 };
 
 export default {
@@ -221,6 +221,6 @@ export default {
   onMouseMove: throttle(
     SelectionHelpers.onMouseMove.bind(SelectionHelpers),
     16, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false }
-  )
+    { leading: true, trailing: false },
+  ),
 };

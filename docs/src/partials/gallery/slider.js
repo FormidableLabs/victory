@@ -37,8 +37,8 @@ const UnfilledBar = styled.div`
 
 const ColoredBar = styled.div.attrs(({ percentage }) => ({
   style: {
-    transform: `scaleX(${percentage})`
-  }
+    transform: `scaleX(${percentage})`,
+  },
 }))`
   position: absolute;
   height: ${BAR_HEIGHT}px;
@@ -53,8 +53,8 @@ const ColoredBar = styled.div.attrs(({ percentage }) => ({
 
 const CircleTransitionContainer = styled.div.attrs(({ value }) => ({
   style: {
-    transform: `translateX(${value}%)`
-  }
+    transform: `translateX(${value}%)`,
+  },
 }))`
   width: 100%;
   height: ${BAR_HEIGHT}px;
@@ -185,7 +185,7 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
         });
       }
     },
-    [dragging, maxValue, onChange, percentage]
+    [dragging, maxValue, onChange, percentage],
   );
 
   const handleDragDone = useCallback(() => {
@@ -279,7 +279,7 @@ Slider.propTypes = {
   maxValue: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   tooltipValues: PropTypes.arrayOf(PropTypes.string).isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 export default Slider;

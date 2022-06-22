@@ -17,16 +17,16 @@ class App extends React.Component {
       return [
         {
           x: "rabbits",
-          y: random(1, 5)
+          y: random(1, 5),
         },
         {
           x: "cats",
-          y: random(1, 10)
+          y: random(1, 10),
         },
         {
           x: "dogs",
-          y: random(1, 15)
-        }
+          y: random(1, 15),
+        },
       ];
     });
   }
@@ -46,11 +46,11 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -59,7 +59,7 @@ class App extends React.Component {
           <VictoryChart style={chartStyle} domainPadding={20}>
             <VictoryStack
               style={{
-                data: { strokeDasharray: "10, 5" }
+                data: { strokeDasharray: "10, 5" },
               }}
               colorScale="qualitative"
             >
@@ -68,10 +68,10 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
-                  { x: 3, y: 2 }
+                  { x: 3, y: 2 },
                 ]}
                 style={{
-                  data: { width: 40, opacity: 0.6 }
+                  data: { width: 40, opacity: 0.6 },
                 }}
               >
                 <VictoryBar />
@@ -81,10 +81,10 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 4 },
                   { x: 2, y: 5 },
-                  { x: 3, y: 1 }
+                  { x: 3, y: 1 },
                 ]}
                 style={{
-                  data: { width: 20, opacity: 0.8 }
+                  data: { width: 20, opacity: 0.8 },
                 }}
               >
                 <VictoryBar />
@@ -94,10 +94,10 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 2 },
-                  { x: 3, y: 5 }
+                  { x: 3, y: 5 },
                 ]}
                 style={{
-                  data: { width: 10, opacity: 1 }
+                  data: { width: 10, opacity: 1 },
                 }}
               >
                 <VictoryBar />
@@ -106,7 +106,7 @@ class App extends React.Component {
                   symbol={"plus"}
                   size={10}
                   style={{
-                    data: { fill: "tomato" }
+                    data: { fill: "tomato" },
                   }}
                 />
               </VictoryGroup>
@@ -120,14 +120,14 @@ class App extends React.Component {
                 { x: 1, y: 3, errorX: 0.2, errorY: 0.5 },
                 { x: 2, y: 4, errorX: 0.3, errorY: 0.3 },
                 { x: 3, y: 2, errorX: 0.2, errorY: 0.2 },
-                { x: 4, y: 5, errorX: 0.3, errorY: 0.5 }
+                { x: 4, y: 5, errorX: 0.3, errorY: 0.5 },
               ]}
             >
               <VictoryLine />
               <VictoryBar />
               <VictoryErrorBar
                 style={{
-                  data: { stroke: "tomato" }
+                  data: { stroke: "tomato" },
                 }}
               />
             </VictoryGroup>
@@ -143,7 +143,7 @@ class App extends React.Component {
                 { x: 4, y: 3, label: "o shit\nwhaddup?" },
                 { x: 5, y: 1 },
                 { x: 6, y: -3, label: "hello!" },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             >
               <VictoryLine />

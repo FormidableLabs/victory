@@ -5,7 +5,7 @@ import { VictoryAxis } from "victory-axis/src/index";
 import {
   VictoryLabel,
   VictoryContainer,
-  VictoryTheme
+  VictoryTheme,
 } from "victory-core/src/index";
 import { merge, random, range } from "lodash";
 import XYTheme from "../theme/victory-axis-differential-styling-theme";
@@ -15,7 +15,7 @@ export default class App extends React.Component {
     super();
     this.state = {
       tickValues: [5, 10, 25, 31, 42],
-      domain: [-5, 5]
+      domain: [-5, 5],
     };
   }
 
@@ -24,7 +24,7 @@ export default class App extends React.Component {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         tickValues: this.getTickValues(),
-        domain: this.getDomain()
+        domain: this.getDomain(),
       });
     }, 2000);
   }
@@ -46,29 +46,30 @@ export default class App extends React.Component {
 
   render() {
     const style = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     const styleOverrides = {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
       axis: {
-        stroke: "black"
+        stroke: "black",
       },
       axisLabel: {
         padding: 60,
         fontWeight: "bold",
-        fontSize: 16
+        fontSize: 16,
       },
       grid: {
         strokeWidth: 2,
-        stroke: ({ tick }) => (tick === "Mariners\nSEA" ? "red" : "grey")
+        stroke: ({ tick }) => (tick === "Mariners\nSEA" ? "red" : "grey"),
       },
       ticks: {
-        stroke: ({ tick }) => (tick === "Mariners\nSEA" ? "red" : "grey")
+        stroke: ({ tick }) => (tick === "Mariners\nSEA" ? "red" : "grey"),
       },
       tickLabels: {
-        fontWeight: ({ tick }) => (tick === "Mariners\nSEA" ? "bold" : "normal")
-      }
+        fontWeight: ({ tick }) =>
+          tick === "Mariners\nSEA" ? "bold" : "normal",
+      },
     };
 
     const containerStyle = {
@@ -76,7 +77,7 @@ export default class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     return (
@@ -85,7 +86,7 @@ export default class App extends React.Component {
           <VictoryAxis
             style={{
               parent: styleOverrides.parent,
-              grid: { stroke: "#CFD8DC" }
+              grid: { stroke: "#CFD8DC" },
             }}
             padding={60}
             label={"animation\nwow!"}
@@ -108,7 +109,7 @@ export default class App extends React.Component {
               parent: style.parent,
               axis: { strokeWidth: 3 },
               tickLabels: { angle: 45 },
-              grid: { stroke: "#F4511E", strokeWidth: 2 }
+              grid: { stroke: "#F4511E", strokeWidth: 2 },
             }}
             containerComponent={
               <VictoryContainer title="Time Scale Axis Example" />
@@ -122,20 +123,20 @@ export default class App extends React.Component {
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "orange" })
+                            style: merge({}, props.style, { stroke: "orange" }),
                           };
-                        }
+                        },
                       },
                       {
                         target: "tickLabels",
                         mutation: () => {
                           return { text: "hey" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
             label={"Decades"}
             tickLabelComponent={<VictoryLabel y={25} />}
@@ -144,7 +145,7 @@ export default class App extends React.Component {
               new Date(1970, 1, 1),
               new Date(1980, 1, 1),
               new Date(1990, 1, 1),
-              new Date(2000, 1, 1)
+              new Date(2000, 1, 1),
             ]}
             tickFormat={(x) => x.getFullYear()}
           />
@@ -190,7 +191,7 @@ export default class App extends React.Component {
           <VictoryAxis
             style={{
               parent: style.parent,
-              axisLabel: { padding: 45 }
+              axisLabel: { padding: 45 },
             }}
             label="cool log axis"
             padding={{ top: 30, bottom: 30, left: 80, right: 30 }}
@@ -201,7 +202,7 @@ export default class App extends React.Component {
           <VictoryAxis
             style={{
               parent: style.parent,
-              axisLabel: { padding: 45 }
+              axisLabel: { padding: 45 },
             }}
             label="cool log axis"
             padding={{ top: 40, bottom: 40, right: 80 }}
@@ -220,7 +221,7 @@ export default class App extends React.Component {
               "Giants\nSF",
               "Yankees\nNY",
               "Nationals\nDC",
-              "Mariners\nSEA"
+              "Mariners\nSEA",
             ]}
           />
           <VictoryAxis
@@ -233,7 +234,7 @@ export default class App extends React.Component {
               "Giants\nSF",
               "Yankees\nNY",
               "Nationals\nDC",
-              "Mariners\nSEA"
+              "Mariners\nSEA",
             ]}
           />
           <VictoryAxis
@@ -246,7 +247,7 @@ export default class App extends React.Component {
               "Giants\nSF",
               "Yankees\nNY",
               "Nationals\nDC",
-              "Mariners\nSEA"
+              "Mariners\nSEA",
             ]}
           />
 
@@ -260,7 +261,7 @@ export default class App extends React.Component {
               "Giants\nSF",
               "Yankees\nNY",
               "Nationals\nDC",
-              "Mariners\nSEA"
+              "Mariners\nSEA",
             ]}
           />
         </div>

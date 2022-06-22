@@ -59,35 +59,35 @@ const MAP = {
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
   "/zoom-container": {
     component: ZoomContainerDemo,
-    name: "ZoomContainerDemo"
+    name: "ZoomContainerDemo",
   },
   "/voronoi-container": {
     component: VoronoiContainerDemo,
-    name: "VoronoiContainerDemo"
+    name: "VoronoiContainerDemo",
   },
   "/cursor-container": {
     component: CursorContainerDemo,
-    name: "CursorContainerDemo"
+    name: "CursorContainerDemo",
   },
   "/brush-container": {
     component: BrushContainerDemo,
-    name: "BrushContainerDemo"
+    name: "BrushContainerDemo",
   },
   "/animation": { component: AnimationDemo, name: "AnimationDemo" },
   "/selection-container": { component: SelectionDemo, name: "SelectionDemo" },
   "/create-container": {
     component: CreateContainerDemo,
-    name: "CreateContainerDemo"
+    name: "CreateContainerDemo",
   },
   "/polar": { component: PolarDemo, name: "PolarDemo" },
   "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
   "/external-events": {
     component: ExternalEventsDemo,
-    name: "ExternalEventsDemo"
+    name: "ExternalEventsDemo",
   },
   "/victory-brush-line": {
     component: VictoryBrushLineDemo,
-    name: "BrushLineDemo"
+    name: "BrushLineDemo",
   },
   "/performance": { component: PerformanceDemo, name: "PerformanceDemo" },
   "/debug": { component: DebugDemo, name: "DebugDemo" },
@@ -98,7 +98,7 @@ const MAP = {
   "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
   "/draggable": { component: DraggableDemo, name: "DraggableDemo" },
   "/ouia": { component: OuiaDemo, name: "OuiaDemo" },
-  "/canvas": { component: CanvasDemo, name: "CanvasDemo" }
+  "/canvas": { component: CanvasDemo, name: "CanvasDemo" },
 };
 
 class Home extends React.Component {
@@ -111,14 +111,14 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      route: window.location.hash.substr(1)
+      route: window.location.hash.substr(1),
     };
   }
 
   componentDidMount() {
     window.addEventListener("hashchange", () => {
       this.setState({
-        route: window.location.hash.substr(1)
+        route: window.location.hash.substr(1),
       });
     });
   }

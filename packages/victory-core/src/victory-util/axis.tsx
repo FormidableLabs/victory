@@ -11,7 +11,7 @@ import {
   orderBy,
   values,
   includes,
-  without
+  without,
 } from "lodash";
 import * as Collection from "./collection";
 import * as Domain from "./domain";
@@ -43,7 +43,7 @@ export function findAxisComponents(childComponents, predicate?) {
         return memo.concat(child);
       } else if (child.props && child.props.children) {
         return memo.concat(
-          findAxes(React.Children.toArray(child.props.children))
+          findAxes(React.Children.toArray(child.props.children)),
         );
       }
       return memo;
@@ -87,7 +87,7 @@ export function getAxisComponentsWithParent(childComponents, type) {
         return memo.concat(child);
       } else if (child.props && child.props.children) {
         const childAxis = findComponents(
-          React.Children.toArray(child.props.children)
+          React.Children.toArray(child.props.children),
         );
         return childAxis.length > 0 ? memo.concat(child) : memo;
       }
@@ -111,7 +111,7 @@ export function getOrigin(domain) {
       : getSingleOrigin(domain.x),
     y: Collection.containsDates(domain.y)
       ? new Date(Math.min(...domain.y))
-      : getSingleOrigin(domain.y)
+      : getSingleOrigin(domain.y),
   };
 }
 
@@ -215,13 +215,13 @@ function getTickArray(props) {
           ) {
             newTickArray.push({
               value: t,
-              index
+              index,
             });
           }
         } else {
           newTickArray.push({
             value: t,
-            index
+            index,
           });
         }
       });
@@ -251,7 +251,7 @@ export function getTickFormat(props, scale) {
     const tickArray = getTickArray(props);
     const tickArrayIndices = tickArray?.map((v) => v.index);
     const filteredTickFormat = tickFormat.filter((t, index) =>
-      tickArrayIndices?.includes(index)
+      tickArrayIndices?.includes(index),
     );
     return (x, index) => filteredTickFormat[index];
   } else if (tickFormat && isFunction(tickFormat)) {
@@ -381,6 +381,6 @@ export function modifyProps(props, fallbackProps) {
   return Helpers.modifyProps(
     assign({}, props, { theme }),
     fallbackProps,
-    "axis"
+    "axis",
   );
 }

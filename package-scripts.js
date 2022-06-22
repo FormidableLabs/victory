@@ -9,33 +9,33 @@ module.exports = {
       dev: {
         ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
         default:
-          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app"
+          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app",
       },
       hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
-      test: "webpack serve --config ./config/webpack/webpack.config.test.js"
+      test: "webpack serve --config ./config/webpack/webpack.config.test.js",
     },
     jest: {
       native: "jest --config=jest-native-config.js",
       default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js",
       watch:
         "cross-env BABEL_ENV=commonjs jest --watch --config=jest-config.js",
-      cov: "cross-env BABEL_ENV=commonjs jest --coverage --config=jest-config.js"
+      cov: "cross-env BABEL_ENV=commonjs jest --coverage --config=jest-config.js",
     },
     "test-node": {
-      default: "jest ./test/node"
+      default: "jest ./test/node",
     },
     test: {
       cov: npsUtils.series.nps("build-package-libs", "jest.default"),
       watch: npsUtils.concurrent.nps("watch", "jest.watch"),
-      default: npsUtils.series.nps("build-package-libs", "jest.cov")
+      default: npsUtils.series.nps("build-package-libs", "jest.cov"),
     },
     storybook: {
       server: "start-storybook -p 6006",
-      default: npsUtils.concurrent.nps("watch", "storybook.server")
+      default: npsUtils.concurrent.nps("watch", "storybook.server"),
     },
     start: {
       ts: npsUtils.concurrent.nps("watch", "server.dev.ts"),
-      default: npsUtils.concurrent.nps("watch", "server.dev", "server.test")
+      default: npsUtils.concurrent.nps("watch", "server.dev", "server.test"),
     },
     lint: {
       // Note: Using a base `nps` command with extra args.
@@ -58,26 +58,38 @@ module.exports = {
         "lint.demo",
         // TODO: Needs `docs` install to work -- "lint.docs",
         "lint.vendor",
-        "lint.src"
-      )
+        "lint.src",
+      ),
     },
     format: {
       fix: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
-      default: "yarn nps format.fix"
+      default: "yarn nps format.fix",
     },
     typecheck: {
       default: npsUtils.series.nps("typecheck.packages", "typecheck.test"),
-      base: "tsc --noEmit",
-      core: "lerna exec --scope victory-core -- nps typecheck.base",
+      src: "tsc --noEmit",
       demo: "tsc -p ./demo/tsconfig.json --noEmit",
       test: "tsc -p ./test/tsconfig.json --noEmit",
-      packages: "lerna exec --ignore victory-vendor -- nps typecheck.base"
+      core: "lerna exec --scope victory-core -- nps typecheck.src",
+      packages: "lerna exec --ignore victory-vendor -- nps typecheck.src",
     },
     types: {
-      base: "tsc --emitDeclarationOnly --rootDir src",
-      lib: "nps types.base -- -- --outDir lib",
-      es: "nps types.base -- -- --outDir es"
+      lib: npsUtils.concurrent.nps("types.create-lib", "types.copy-lib"),
+      es: npsUtils.concurrent.nps("types.create-es", "types.copy-es"),
+      create:
+        "tsc -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
+      "create-lib":
+        'nps types.create -- -- --outDir lib || echo "Ignoring TypeScript Errors"',
+      "create-es":
+        'nps types.create -- -- --outDir es || echo "Ignoring TypeScript Errors"',
+      "create-lib-watch": "nps types.create -- -- --outDir lib --watch",
+      "create-es-watch": "nps types.create -- -- --outDir es --watch",
+      copy: "cpx 'src/**/*.d.ts'",
+      "copy-lib": "nps types.copy -- -- lib",
+      "copy-es": "nps types.copy -- -- es",
+      "copy-lib-watch": "nps types.copy -- -- lib --watch",
+      "copy-es-watch": "nps types.copy -- -- es --watch",
     },
     check: {
       ci: npsUtils.series.nps(
@@ -88,38 +100,45 @@ module.exports = {
         "typecheck",
         "test-node",
         "jest",
-        "jest.native"
+        "jest.native",
       ),
       cov: npsUtils.series.nps("lint", "test.cov"),
       dev: npsUtils.series.nps("lint", "test.dev"),
-      default: npsUtils.series.nps("lint", "test")
+      default: npsUtils.series.nps("lint", "test"),
     },
     watch: {
-      es: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --watch",
-      lib: "lerna exec --parallel --ignore victory-native --ignore victory-vendor -- cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --watch",
-      core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
       // `victory-vendor` is built 1x up front and not watched.
-      default: npsUtils.series.nps(
-        "clean.all",
-        "build-package-libs-vendor",
-        "watch.core"
-      )
+      default: npsUtils.series.nps("build-package-libs-vendor", "watch.all"),
+      all: 'lerna exec --parallel --ignore victory-native --ignore victory-vendor "nps watch.core"',
+      core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
+      lib: npsUtils.concurrent.nps(
+        "babel-lib-watch",
+        "types.create-lib-watch",
+        "types.copy-lib-watch",
+      ),
+      es: npsUtils.concurrent.nps(
+        "babel-es-watch",
+        "types.create-es-watch",
+        "types.copy-es-watch",
+      ),
     },
     clean: {
       lib: "rimraf lib",
       es: "rimraf es",
       dist: "rimraf dist",
       default: npsUtils.concurrent.nps("clean.es", "clean.lib", "clean.dist"),
-      all: "lerna exec --parallel --ignore victory-vendor -- nps clean"
+      all: "lerna exec --parallel --ignore victory-vendor -- nps clean",
     },
     // Version testing helpers
     "lerna-dry-run":
       "lerna version --no-git-tag-version --no-push --loglevel silly",
     // TODO: organize build scripts once build perf is sorted out
     "babel-es":
-      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --source-maps",
+      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.js --extensions .tsx,.ts,.jsx,.js --source-maps",
     "babel-lib":
-      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --copy-files --extensions .tsx,.ts,.jsx,.js --source-maps",
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.js --extensions .tsx,.ts,.jsx,.js --source-maps",
+    "babel-es-watch": "nps babel-es -- -- --watch",
+    "babel-lib-watch": "nps babel-lib -- -- --watch",
     "build-es": npsUtils.series.nps("clean.es", "babel-es", "types.es"),
     "build-lib": npsUtils.series.nps("clean.lib", "babel-lib", "types.lib"),
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
@@ -128,7 +147,7 @@ module.exports = {
       "lerna exec --scope victory-vendor -- yarn build",
     "build-package-libs": npsUtils.series.nps(
       "build-package-libs-vendor",
-      "build-package-libs-core"
+      "build-package-libs-core",
     ),
     "build-dist-dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
@@ -138,6 +157,6 @@ module.exports = {
     "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
     "build-package-dists": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-dists`,
     bootstrap: "lerna bootstrap",
-    "link-parent-bin": "link-parent-bin"
-  }
+    "link-parent-bin": "link-parent-bin",
+  },
 };

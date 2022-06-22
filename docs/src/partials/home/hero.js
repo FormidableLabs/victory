@@ -223,7 +223,7 @@ const Hero = ({
   cornerText,
   description,
   linksArray,
-  link
+  link,
 }) => (
   <>
     <HeroContainer bg={background}>
@@ -285,7 +285,7 @@ const Hero = ({
 
 const linkPropType = PropTypes.shape({
   text: PropTypes.string,
-  location: PropTypes.string
+  location: PropTypes.string,
 });
 
 Hero.propTypes = {
@@ -295,7 +295,7 @@ Hero.propTypes = {
   cornerText: PropTypes.string,
   description: PropTypes.string,
   link: linkPropType,
-  linksArray: PropTypes.arrayOf(linkPropType)
+  linksArray: PropTypes.arrayOf(linkPropType),
 };
 
 export default Hero;

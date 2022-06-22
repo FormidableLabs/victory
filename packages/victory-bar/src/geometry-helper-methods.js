@@ -32,7 +32,7 @@ const point = function (x, y) {
     },
     equals(p1) {
       return this.x === p1.x && this.y === p1.y;
-    }
+    },
   };
 };
 
@@ -90,23 +90,23 @@ const circle = function (center, radius) {
       const { x: x2, y: y2 } = P2;
       const P3s = [
         point(x2 - (h * (y1 - y0)) / d, y2 + (h * (x1 - x0)) / d),
-        point(x2 + (h * (y1 - y0)) / d, y2 - (h * (x1 - x0)) / d)
+        point(x2 + (h * (y1 - y0)) / d, y2 - (h * (x1 - x0)) / d),
       ];
       P3s.sort((Point1, Point2) => Point1.x - Point2.x);
       return P3s;
     },
     solveX(y) {
       const sqrt = Math.sqrt(
-        Math.pow(this.radius, 2) - Math.pow(y - this.center.y, 2)
+        Math.pow(this.radius, 2) - Math.pow(y - this.center.y, 2),
       );
       return [this.center.x - sqrt, this.center.x + sqrt];
     },
     solveY(x) {
       const sqrt = Math.sqrt(
-        Math.pow(this.radius, 2) - Math.pow(x - this.center.x, 2)
+        Math.pow(this.radius, 2) - Math.pow(x - this.center.x, 2),
       );
       return [this.center.y - sqrt, this.center.y + sqrt];
-    }
+    },
   };
 };
 

@@ -18,7 +18,7 @@ const GoogleAnalytics = ({ children, ...rest }) => {
 };
 
 GoogleAnalytics.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
 };
 
 export default GoogleAnalytics;

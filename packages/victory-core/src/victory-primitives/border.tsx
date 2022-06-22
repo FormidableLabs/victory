@@ -4,7 +4,7 @@ import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import {
   CommonProps,
-  VictoryCommonPrimitiveProps
+  VictoryCommonPrimitiveProps,
 } from "../victory-util/common-props";
 import { Rect } from "./rect";
 
@@ -30,7 +30,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ fill: "none" }, props.style),
-    props
+    props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
@@ -54,7 +54,7 @@ export const Border = (props: BorderProps) => {
     y: props.y,
     width: props.width,
     height: props.height,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
   });
 };
 
@@ -64,11 +64,11 @@ Border.propTypes = {
   rectComponent: PropTypes.element,
   width: PropTypes.number,
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 Border.defaultProps = {
   rectComponent: <Rect />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };

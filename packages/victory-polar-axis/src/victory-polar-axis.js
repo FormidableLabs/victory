@@ -10,14 +10,14 @@ import {
   LineSegment,
   addEvents,
   Arc,
-  Axis
+  Axis,
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 const options = {
@@ -27,8 +27,8 @@ const options = {
     { name: "grid" },
     { name: "parent", index: "parent" },
     { name: "ticks" },
-    { name: "tickLabels" }
-  ]
+    { name: "tickLabels" },
+  ],
 };
 
 class VictoryPolarAxis extends React.Component {
@@ -40,7 +40,7 @@ class VictoryPolarAxis extends React.Component {
     "tickValues",
     "padding",
     "width",
-    "height"
+    "height",
   ];
 
   static displayName = "VictoryAxis";
@@ -49,11 +49,11 @@ class VictoryPolarAxis extends React.Component {
 
   static defaultTransitions = {
     onExit: {
-      duration: 500
+      duration: 500,
     },
     onEnter: {
-      duration: 500
-    }
+      duration: 500,
+    },
   };
 
   static propTypes = {
@@ -64,14 +64,14 @@ class VictoryPolarAxis extends React.Component {
     axisValue: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
-      PropTypes.object
+      PropTypes.object,
     ]),
     categories: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.shape({
         x: PropTypes.arrayOf(PropTypes.string),
-        y: PropTypes.arrayOf(PropTypes.string)
-      })
+        y: PropTypes.arrayOf(PropTypes.string),
+      }),
     ]),
     circularAxisComponent: PropTypes.element,
     circularGridComponent: PropTypes.element,
@@ -86,18 +86,18 @@ class VictoryPolarAxis extends React.Component {
           "axisLabel",
           "grid",
           "ticks",
-          "tickLabels"
+          "tickLabels",
         ]),
         eventKey: PropTypes.oneOfType([
           PropTypes.array,
           CustomPropTypes.allOfType([
             CustomPropTypes.integer,
-            CustomPropTypes.nonNegative
+            CustomPropTypes.nonNegative,
           ]),
-          PropTypes.string
+          PropTypes.string,
         ]),
-        eventHandlers: PropTypes.object
-      })
+        eventHandlers: PropTypes.object,
+      }),
     ),
     gridComponent: PropTypes.element,
     innerRadius: CustomPropTypes.nonNegative,
@@ -110,19 +110,19 @@ class VictoryPolarAxis extends React.Component {
       axisLabel: PropTypes.object,
       grid: PropTypes.object,
       ticks: PropTypes.object,
-      tickLabels: PropTypes.object
+      tickLabels: PropTypes.object,
     }),
     tickComponent: PropTypes.element,
     tickCount: CustomPropTypes.allOfType([
       CustomPropTypes.integer,
-      CustomPropTypes.greaterThanZero
+      CustomPropTypes.greaterThanZero,
     ]),
     tickFormat: PropTypes.oneOfType([
       PropTypes.func,
-      CustomPropTypes.homogeneousArray
+      CustomPropTypes.homogeneousArray,
     ]),
     tickLabelComponent: PropTypes.element,
-    tickValues: CustomPropTypes.homogeneousArray
+    tickValues: CustomPropTypes.homogeneousArray,
   };
 
   static defaultProps = {
@@ -139,7 +139,7 @@ class VictoryPolarAxis extends React.Component {
     standalone: true,
     theme: VictoryTheme.grayscale,
     tickComponent: <LineSegment />,
-    tickLabelComponent: <VictoryLabel />
+    tickLabelComponent: <VictoryLabel />,
   };
 
   static getDomain = Axis.getDomain;
@@ -155,7 +155,7 @@ class VictoryPolarAxis extends React.Component {
     "tickComponent",
     "tickLabelComponent",
     "gridComponent",
-    "circularGridComponent"
+    "circularGridComponent",
   ];
 
   renderAxisLine(props) {
@@ -175,7 +175,7 @@ class VictoryPolarAxis extends React.Component {
     const axisLabelProps = this.getComponentProps(
       axisLabelComponent,
       "axisLabel",
-      0
+      0,
     );
     return React.cloneElement(axisLabelComponent, axisLabelProps);
   }
@@ -197,7 +197,7 @@ class VictoryPolarAxis extends React.Component {
       .map((key, index) => {
         const tickProps = assign(
           { key: `${name}-tick-${key}` },
-          this.getComponentProps(tickComponent, "ticks", index)
+          this.getComponentProps(tickComponent, "ticks", index),
         );
         const TickComponent = React.cloneElement(tickComponent, tickProps);
         return shouldRender(TickComponent.props) ? TickComponent : undefined;
@@ -208,7 +208,7 @@ class VictoryPolarAxis extends React.Component {
       .map((key, index) => {
         const gridProps = assign(
           { key: `${name}-grid-${key}` },
-          this.getComponentProps(gridComponent, "grid", index)
+          this.getComponentProps(gridComponent, "grid", index),
         );
         const GridComponent = React.cloneElement(gridComponent, gridProps);
         return shouldRender(GridComponent.props) ? GridComponent : undefined;
@@ -218,7 +218,7 @@ class VictoryPolarAxis extends React.Component {
     const tickLabelComponents = this.dataKeys.map((key, index) => {
       const tickLabelProps = assign(
         { key: `${name}-tick-${key}` },
-        this.getComponentProps(tickLabelComponent, "tickLabels", index)
+        this.getComponentProps(tickLabelComponent, "tickLabels", index),
       );
       return React.cloneElement(tickLabelComponent, tickLabelProps);
     });
@@ -229,7 +229,7 @@ class VictoryPolarAxis extends React.Component {
       axisLabel,
       ...tickComponents,
       ...gridComponents,
-      ...tickLabelComponents
+      ...tickLabelComponents,
     ];
     return this.renderGroup(props, children);
   }

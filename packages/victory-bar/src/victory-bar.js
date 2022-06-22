@@ -11,20 +11,20 @@ import {
   addEvents,
   Data,
   Domain,
-  UserProps
+  UserProps,
 } from "victory-core";
 
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 const defaultData = [
   { x: 1, y: 1 },
   { x: 2, y: 2 },
   { x: 3, y: 3 },
-  { x: 4, y: 4 }
+  { x: 4, y: 4 },
 ];
 
 class VictoryBar extends React.Component {
@@ -34,7 +34,7 @@ class VictoryBar extends React.Component {
     "height",
     "padding",
     "style",
-    "width"
+    "width",
   ];
 
   static displayName = "VictoryBar";
@@ -45,17 +45,17 @@ class VictoryBar extends React.Component {
     onLoad: {
       duration: 2000,
       before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
-      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
+      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 }),
     },
     onExit: {
       duration: 500,
-      before: () => ({ _y: 0, yOffset: 0 })
+      before: () => ({ _y: 0, yOffset: 0 }),
     },
     onEnter: {
       duration: 500,
       before: () => ({ _y: 0, _y1: 0, _y0: 0 }),
-      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 })
-    }
+      after: (datum) => ({ _y: datum._y, _y1: datum._y1, _y0: datum._y0 }),
+    },
   };
 
   static propTypes = {
@@ -73,11 +73,11 @@ class VictoryBar extends React.Component {
         topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
         bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
         bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
-      })
+        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+      }),
     ]),
     getPath: PropTypes.func,
-    horizontal: PropTypes.bool
+    horizontal: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -89,7 +89,7 @@ class VictoryBar extends React.Component {
     samples: 50,
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getDomain = Domain.getDomainWithZero;
@@ -99,7 +99,7 @@ class VictoryBar extends React.Component {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions

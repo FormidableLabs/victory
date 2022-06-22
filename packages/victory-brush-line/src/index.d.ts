@@ -24,7 +24,7 @@ export interface VictoryBrushLineProps {
   name?: string;
   onBrushDomainChange?: (
     domain: DomainTuple,
-    props?: VictoryBrushLineProps
+    props?: VictoryBrushLineProps,
   ) => void;
   style?: VictoryStyleObject;
   type?: string;

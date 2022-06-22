@@ -1,6 +1,5 @@
 /*
 !/dist
-*.map
 !/es
 !/lib
 !/lib-vendor
@@ -11,3 +10,5 @@
 !CHANGELOG.md
 !README.md
 !package.json
+*.map
+**/*.test.*

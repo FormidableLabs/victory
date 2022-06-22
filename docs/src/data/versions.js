@@ -177,6 +177,6 @@ export default {
     { version: "0.1.3", date: "2015-12-30" },
     { version: "0.1.2", date: "2015-12-30" },
     { version: "0.1.1", date: "2015-12-29" },
-    { version: "0.1.0", date: "2015-12-18", label: "v0.1" }
-  ]
+    { version: "0.1.0", date: "2015-12-18", label: "v0.1" },
+  ],
 };

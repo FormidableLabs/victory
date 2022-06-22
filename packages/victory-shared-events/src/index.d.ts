@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   EventCallbackInterface,
   EventPropTypeInterface,
-  StringOrNumberOrCallback
+  StringOrNumberOrCallback,
 } from "victory-core";
 
 export type VictorySharedEventsProps = {

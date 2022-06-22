@@ -40,7 +40,7 @@ export default class VictoryAreaDemo extends React.Component<
       arrayData: this.getArrayData(),
       groupedData: this.getGroupedData(),
       multiTransitionData: this.getMultiTransitionData(),
-      areaTransitionData: this.getAreaTransitionData()
+      areaTransitionData: this.getAreaTransitionData(),
     };
   }
 
@@ -51,7 +51,7 @@ export default class VictoryAreaDemo extends React.Component<
         groupedData: this.getGroupedData(),
         multiTransitionData: this.getMultiTransitionData(),
         areaTransitionData: this.getAreaTransitionData(),
-        style: this.getStyles()
+        style: this.getStyles(),
       });
     }, 5000);
   }
@@ -77,7 +77,7 @@ export default class VictoryAreaDemo extends React.Component<
     return range(100).map((i) => {
       return {
         x: i,
-        y: Math.random()
+        y: Math.random(),
       };
     });
   }
@@ -87,24 +87,24 @@ export default class VictoryAreaDemo extends React.Component<
       return [
         {
           x: "rabbits",
-          y: random(1, 5)
+          y: random(1, 5),
         },
         {
           x: "cats",
-          y: random(1, 10)
+          y: random(1, 10),
         },
         {
           x: "dogs",
-          y: random(2, 10)
+          y: random(2, 10),
         },
         {
           x: "birds",
-          y: random(2, 10)
+          y: random(2, 10),
         },
         {
           x: "frogs",
-          y: random(2, 15)
-        }
+          y: random(2, 15),
+        },
       ];
     });
   }
@@ -116,13 +116,13 @@ export default class VictoryAreaDemo extends React.Component<
   getStyles() {
     const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
     return {
-      fill: colors[random(0, 5)]
+      fill: colors[random(0, 5)],
     };
   }
 
   render() {
     const style = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     const containerStyle: React.CSSProperties = {
@@ -130,7 +130,7 @@ export default class VictoryAreaDemo extends React.Component<
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     return (
@@ -144,7 +144,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 3 },
               { x: 3, y: 50 },
               { x: 4, y: 400 },
-              { x: 5, y: 70 }
+              { x: 5, y: 70 },
             ]}
           />
         </VictoryChart>
@@ -157,7 +157,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 3 },
               { x: 3, y: 50 },
               { x: 4, y: 400 },
-              { x: 5, y: 70 }
+              { x: 5, y: 70 },
             ]}
           />
         </VictoryChart>
@@ -180,7 +180,7 @@ export default class VictoryAreaDemo extends React.Component<
         <VictoryStack
           style={style}
           animate={{
-            duration: 1000
+            duration: 1000,
           }}
           colorScale={"warm"}
           containerComponent={
@@ -209,7 +209,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 3 },
               { x: 3, y: 5 },
               { x: 4, y: 4 },
-              { x: 5, y: 7 }
+              { x: 5, y: 7 },
             ]}
           />
           <VictoryArea
@@ -218,7 +218,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 4 },
               { x: 3, y: 5 },
               { x: 4, y: 7 },
-              { x: 5, y: 5 }
+              { x: 5, y: 5 },
             ]}
           />
           <VictoryArea
@@ -227,7 +227,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 2 },
               { x: 3, y: 6 },
               { x: 4, y: 2 },
-              { x: 5, y: 6 }
+              { x: 5, y: 6 },
             ]}
           />
           <VictoryArea
@@ -236,7 +236,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 3 },
               { x: 3, y: 3 },
               { x: 4, y: 4 },
-              { x: 5, y: 7 }
+              { x: 5, y: 7 },
             ]}
           />
         </VictoryStack>
@@ -244,7 +244,7 @@ export default class VictoryAreaDemo extends React.Component<
         <VictoryGroup
           style={{
             parent: style.parent,
-            data: { strokeWidth: 2, fillOpacity: 0.4 }
+            data: { strokeWidth: 2, fillOpacity: 0.4 },
           }}
         >
           <VictoryArea
@@ -254,7 +254,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 3 },
               { x: 3, y: 5 },
               { x: 4, y: 4 },
-              { x: 5, y: 7 }
+              { x: 5, y: 7 },
             ]}
           />
           <VictoryArea
@@ -264,7 +264,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 2 },
               { x: 3, y: 6 },
               { x: 4, y: 2 },
-              { x: 5, y: 6 }
+              { x: 5, y: 6 },
             ]}
           />
         </VictoryGroup>
@@ -289,7 +289,7 @@ export default class VictoryAreaDemo extends React.Component<
         <VictoryArea
           style={{
             parent: style.parent,
-            data: { fill: "gold" }
+            data: { fill: "gold" },
           }}
           events={[
             {
@@ -301,21 +301,21 @@ export default class VictoryAreaDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" })
+                          style: merge({}, props.style, { fill: "orange" }),
                         };
-                      }
+                      },
                     },
                     {
                       target: "labels",
                       eventKey: 0,
                       mutation: () => {
                         return { text: "hey" };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
           labels={() => null}
           data={this.state.arrayData}
@@ -333,7 +333,7 @@ export default class VictoryAreaDemo extends React.Component<
             { x: new Date(2001, 1, 1), y: 132 },
             { x: new Date(2005, 1, 1), y: 305 },
             { x: new Date(2011, 1, 1), y: 270 },
-            { x: new Date(2015, 1, 1), y: 470 }
+            { x: new Date(2015, 1, 1), y: 470 },
           ]}
         />
 
@@ -349,7 +349,7 @@ export default class VictoryAreaDemo extends React.Component<
             { x: 7, y: 6 },
             { x: 8, y: 7 },
             { x: 9, y: 8 },
-            { x: 10, y: 12 }
+            { x: 10, y: 12 },
           ]}
         />
 
@@ -405,7 +405,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 3 },
               { x: 3, y: 5 },
               { x: 4, y: 4 },
-              { x: 5, y: 7 }
+              { x: 5, y: 7 },
             ]}
           />
           <VictoryArea
@@ -414,7 +414,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 4 },
               { x: 3, y: 5 },
               { x: 4, y: 7 },
-              { x: 5, y: 5 }
+              { x: 5, y: 5 },
             ]}
           />
           <VictoryArea
@@ -423,7 +423,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 2 },
               { x: 3, y: 6 },
               { x: 4, y: 2 },
-              { x: 5, y: 6 }
+              { x: 5, y: 6 },
             ]}
           />
           <VictoryArea
@@ -432,7 +432,7 @@ export default class VictoryAreaDemo extends React.Component<
               { x: 2, y: 3 },
               { x: 3, y: 3 },
               { x: 4, y: 4 },
-              { x: 5, y: 7 }
+              { x: 5, y: 7 },
             ]}
           />
         </VictoryStack>

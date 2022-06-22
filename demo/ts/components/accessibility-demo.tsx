@@ -19,7 +19,7 @@ import {
   Border,
   Point,
   VictoryLabel,
-  VictoryAccessibleGroup
+  VictoryAccessibleGroup,
 } from "victory-core";
 import {
   accessibilityBarData,
@@ -31,7 +31,7 @@ import {
   accessibilityScatterData,
   accessibilityVoronoiData,
   accessibilityErrorBarData,
-  accessibilityCandlestickData
+  accessibilityCandlestickData,
 } from "../../demo-data";
 
 const pageHeadingStyle: React.CSSProperties = {
@@ -39,20 +39,20 @@ const pageHeadingStyle: React.CSSProperties = {
   flexDirection: "row",
   width: "100%",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const chartHeadingStyle: React.CSSProperties = {
   marginBottom: "0px",
   marginTop: "25px",
-  fontSize: "calc(1vw + 5px)"
+  fontSize: "calc(1vw + 5px)",
 };
 
 const containerStyle: React.CSSProperties = {
   display: "flex",
   flexFlow: "row wrap",
   alignItems: "center",
-  justifyContent: "flex-start"
+  justifyContent: "flex-start",
 };
 
 const chartContainerStyle: React.CSSProperties = {
@@ -61,12 +61,12 @@ const chartContainerStyle: React.CSSProperties = {
   alignItems: "center",
   width: "50%",
   height: "50%",
-  padding: "25px"
+  padding: "25px",
 };
 
 export const assignIndexValue = (
   index: number | string,
-  value: number
+  value: number,
 ): number => {
   const determineValidNumber = Number(index);
   return isNumber(determineValidNumber) ? determineValidNumber + value : 1;
@@ -246,7 +246,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                         (dataPoint: any, i: number) =>
                           `data point ${i + 1} x value is ${
                             dataPoint.x
-                          } and y value is ${dataPoint.y}`
+                          } and y value is ${dataPoint.y}`,
                       )
                     }
                   />

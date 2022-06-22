@@ -10,11 +10,11 @@ const getCalculatedValues = (props) => {
 
   const range = {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const domain = {
     x: Domain.getDomain(props, "x"),
-    y: Domain.getDomain(props, "y")
+    y: Domain.getDomain(props, "y"),
   };
   const scale = {
     x: Scale.getBaseScale(props, "x")
@@ -22,7 +22,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x : range.y)
+      .range(props.horizontal ? range.x : range.y),
   };
   const origin = props.polar
     ? props.origin || Helpers.getPolarOrigin(props)
@@ -55,7 +55,7 @@ export const getBaseProps = (props, fallbackProps) => {
     width,
     labels,
     name,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const initialChildProps = {
     parent: {
@@ -70,7 +70,7 @@ export const getBaseProps = (props, fallbackProps) => {
       polar,
       origin,
       padding,
-      horizontal
+      horizontal,
     },
     all: {
       data: {
@@ -83,9 +83,9 @@ export const getBaseProps = (props, fallbackProps) => {
         groupComponent,
         style: disableInlineStyles ? {} : style.data,
         theme,
-        disableInlineStyles
-      }
-    }
+        disableInlineStyles,
+      },
+    },
   };
   return data.reduce((childProps, datum, index) => {
     const text = LabelHelpers.getText(props, datum, index);

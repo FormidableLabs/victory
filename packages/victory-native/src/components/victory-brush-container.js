@@ -5,7 +5,7 @@ import { flow } from "lodash";
 import {
   VictoryBrushContainer,
   BrushHelpers,
-  brushContainerMixin as originalBrushMixin
+  brushContainerMixin as originalBrushMixin,
 } from "victory-brush-container";
 import VictoryContainer from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
@@ -16,7 +16,7 @@ const RectWithStyle = ({ style, ...otherProps }) => (
 );
 
 RectWithStyle.propTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 const nativeBrushMixin = (base) =>
@@ -26,7 +26,7 @@ const nativeBrushMixin = (base) =>
     static defaultProps = {
       ...VictoryBrushContainer.defaultProps,
       brushComponent: <RectWithStyle />,
-      handleComponent: <RectWithStyle />
+      handleComponent: <RectWithStyle />,
     };
 
     // overrides all web events with native specific events
@@ -53,9 +53,9 @@ const nativeBrushMixin = (base) =>
               }
               BrushHelpers.onGlobalMouseMove.cancel();
               return BrushHelpers.onGlobalMouseUp(evt, targetProps);
-            }
-          }
-        }
+            },
+          },
+        },
       ];
     };
   };

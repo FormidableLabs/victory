@@ -7,7 +7,7 @@ import Timer from "./timer";
  */
 const TimerContext = React.createContext({
   transitionTimer: new Timer(),
-  animationTimer: new Timer()
+  animationTimer: new Timer(),
 });
 TimerContext.displayName = "TimerContext";
 

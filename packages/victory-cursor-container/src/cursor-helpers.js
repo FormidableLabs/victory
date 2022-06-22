@@ -32,14 +32,14 @@ const CursorHelpers = {
       targetProps,
       targetProps.scale,
       cursorSVGPosition.x,
-      cursorSVGPosition.y
+      cursorSVGPosition.y,
     );
 
     const inBounds = this.withinBounds(cursorValue, {
       x1: domain.x[0],
       x2: domain.x[1],
       y1: domain.y[0],
-      y2: domain.y[1]
+      y2: domain.y[1],
     });
 
     if (!inBounds) {
@@ -61,8 +61,8 @@ const CursorHelpers = {
       {
         target: "parent",
         eventKey: "parent",
-        mutation: () => ({ cursorValue, parentSVG })
-      }
+        mutation: () => ({ cursorValue, parentSVG }),
+      },
     ];
   },
 
@@ -77,10 +77,10 @@ const CursorHelpers = {
       {
         target: "parent",
         eventKey: "parent",
-        mutation: () => ({ cursorValue: null })
-      }
+        mutation: () => ({ cursorValue: null }),
+      },
     ];
-  }
+  },
 };
 
 export default {
@@ -90,9 +90,9 @@ export default {
     ON_MOUSE_MOVE_THROTTLE_MS,
     {
       leading: true,
-      trailing: false
-    }
+      trailing: false,
+    },
   ),
   onMouseLeave: CursorHelpers.onMouseMove.bind(CursorHelpers),
-  onTouchEnd: CursorHelpers.onTouchEnd.bind(CursorHelpers)
+  onTouchEnd: CursorHelpers.onTouchEnd.bind(CursorHelpers),
 };

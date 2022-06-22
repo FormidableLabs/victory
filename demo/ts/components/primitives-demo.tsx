@@ -21,14 +21,14 @@ class App extends React.Component<any, PrimitivesDemoState> {
     super(props);
     this.state = {
       axisBackgroundColor: "mediumseagreen",
-      whiskersActive: true
+      whiskersActive: true,
     };
   }
 
   componentDidMount() {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        boxPlotData: this.getBoxPlotData()
+        boxPlotData: this.getBoxPlotData(),
       });
     }, 3000);
   }
@@ -37,7 +37,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
     return range(5).map((i: number) => {
       return {
         x: i,
-        y: [random(2, 100), random(2, 100), random(2, 100), random(2, 100)]
+        y: [random(2, 100), random(2, 100), random(2, 100), random(2, 100)],
       };
     });
   }
@@ -61,26 +61,26 @@ class App extends React.Component<any, PrimitivesDemoState> {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
       parent: {
         border: "1px solid #ccc",
         margin: "2%",
-        maxWidth: "40%"
-      }
+        maxWidth: "40%",
+      },
     };
 
     const axisChartStyle = {
       ...chartStyle,
-      background: { fill: this.state.axisBackgroundColor }
+      background: { fill: this.state.axisBackgroundColor },
     };
 
     const lineSegmentStyle = {
       stroke: "white",
       strokeWidth: 5,
-      cursor: "pointer"
+      cursor: "pointer",
     };
 
     return (

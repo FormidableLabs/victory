@@ -9,49 +9,49 @@ const legendData = [
     name: "Series 1",
     symbol: {
       type: "circle",
-      fill: "green"
-    }
+      fill: "green",
+    },
   },
   {
     name: "Long Series Name",
     symbol: {
       type: "triangleUp",
-      fill: "blue"
-    }
+      fill: "blue",
+    },
   },
   {
     name: "Series 3",
     symbol: {
       type: "diamond",
-      fill: "pink"
-    }
+      fill: "pink",
+    },
   },
   {
     name: "Series 4",
     symbol: {
-      type: "plus"
-    }
+      type: "plus",
+    },
   },
   {
     name: "Series 5",
     symbol: {
       type: "star",
-      fill: "red"
+      fill: "red",
     },
     labels: {
-      fill: "purple"
-    }
+      fill: "purple",
+    },
   },
   {
     name: "Series 6",
     symbol: {
       type: "circle",
-      fill: "orange"
+      fill: "orange",
     },
     labels: {
-      fill: "blue"
-    }
-  }
+      fill: "blue",
+    },
+  },
 ];
 
 const legendStyle = { border: { stroke: "black" } };

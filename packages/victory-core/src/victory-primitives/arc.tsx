@@ -5,7 +5,7 @@ import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import {
   CommonProps,
-  VictoryCommonPrimitiveProps
+  VictoryCommonPrimitiveProps,
 } from "../victory-util/common-props";
 import { Path } from "./path";
 
@@ -55,7 +55,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ stroke: "black", fill: "none" }, props.style),
-    props
+    props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
@@ -76,7 +76,7 @@ export const Arc = (props: ArcProps) => {
     role: props.role,
     shapeRendering: props.shapeRendering,
     transform: props.transform,
-    clipPath: props.clipPath
+    clipPath: props.clipPath,
   });
 };
 
@@ -89,11 +89,11 @@ Arc.propTypes = {
   endAngle: PropTypes.number,
   pathComponent: PropTypes.element,
   r: PropTypes.number,
-  startAngle: PropTypes.number
+  startAngle: PropTypes.number,
 };
 
 Arc.defaultProps = {
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };

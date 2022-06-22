@@ -10,8 +10,8 @@ const NativeVictoryStack = wrapCoreComponent({
   defaultProps: Object.assign({}, VictoryStack.defaultProps, {
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryStack;

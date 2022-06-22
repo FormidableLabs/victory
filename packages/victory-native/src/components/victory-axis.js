@@ -17,8 +17,8 @@ const NativeVictoryAxis = wrapCoreComponent({
     gridComponent: <LineSegment />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryAxis;

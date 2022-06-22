@@ -25,7 +25,7 @@ const getStyles = (props, styleObject) => {
     data: defaults({}, style.data, styleObject.data),
     labels: defaults({}, style.labels, styleObject.labels),
     border: defaults({}, style.border, styleObject.border),
-    title: defaults({}, style.title, styleObject.title)
+    title: defaults({}, style.title, styleObject.title),
   };
 };
 
@@ -73,7 +73,7 @@ const groupData = (props) => {
       fontSize,
       textSize: TextSize.approximateTextSize(datum.name, labelStyles[index]),
       column: getColumn(props, index),
-      row: getRow(props, index)
+      row: getRow(props, index),
     };
   });
 };
@@ -118,7 +118,7 @@ const getTitleDimensions = (props) => {
   const padding = style.padding || 0;
   return {
     height: textSize.height + 2 * padding || 0,
-    width: textSize.width + 2 * padding || 0
+    width: textSize.width + 2 * padding || 0,
   };
 };
 
@@ -132,21 +132,21 @@ const getOffset = (datum, rowHeights, columnWidths) => {
     y: range(row).reduce((memo, curr) => {
       memo += rowHeights[curr];
       return memo;
-    }, 0)
+    }, 0),
   };
 };
 
 const getAnchors = (titleOrientation, centerTitle) => {
   const standardAnchors = {
     textAnchor: titleOrientation === "right" ? "end" : "start",
-    verticalAnchor: titleOrientation === "bottom" ? "end" : "start"
+    verticalAnchor: titleOrientation === "bottom" ? "end" : "start",
   };
   if (centerTitle) {
     const horizontal =
       titleOrientation === "top" || titleOrientation === "bottom";
     return {
       textAnchor: horizontal ? "middle" : standardAnchors.textAnchor,
-      verticalAnchor: horizontal ? standardAnchors.verticalAnchor : "middle"
+      verticalAnchor: horizontal ? standardAnchors.verticalAnchor : "middle",
     };
   } else {
     return standardAnchors;
@@ -176,7 +176,7 @@ const getTitleProps = (props, borderProps) => {
   const yOrientation = titleOrientation === "right" ? "right" : "left";
   const standardPadding = {
     x: centerTitle ? width / 2 : borderPadding[xOrientation] + (padding || 0),
-    y: centerTitle ? height / 2 : borderPadding[yOrientation] + (padding || 0)
+    y: centerTitle ? height / 2 : borderPadding[yOrientation] + (padding || 0),
   };
   const getPadding = () => {
     return borderPadding[titleOrientation] + (padding || 0);
@@ -194,7 +194,7 @@ const getTitleProps = (props, borderProps) => {
         ? props.y + height - yOffset
         : props.y + yOffset,
     style,
-    text: title
+    text: title,
   };
 };
 
@@ -225,7 +225,7 @@ export const getDimensions = (props, fallbackProps) => {
     width:
       titleOrientation === "left" || titleOrientation === "right"
         ? sum(columnWidths) + titleDimensions.width
-        : Math.max(sum(columnWidths), titleDimensions.width)
+        : Math.max(sum(columnWidths), titleDimensions.width),
   };
 };
 
@@ -246,7 +246,7 @@ export const getBaseProps = (props, fallbackProps) => {
     titleOrientation,
     name,
     x = 0,
-    y = 0
+    y = 0,
   } = props;
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
@@ -257,11 +257,11 @@ export const getBaseProps = (props, fallbackProps) => {
     : { height: 0, width: 0 };
   const titleOffset = {
     x: titleOrientation === "left" ? titleDimensions.width : 0,
-    y: titleOrientation === "top" ? titleDimensions.height : 0
+    y: titleOrientation === "top" ? titleDimensions.height : 0,
   };
   const gutterOffset = {
     x: gutter && typeof gutter === "object" ? gutter.left || 0 : 0,
-    y: rowGutter && typeof rowGutter === "object" ? rowGutter.top || 0 : 0
+    y: rowGutter && typeof rowGutter === "object" ? rowGutter.top || 0 : 0,
   };
   const { height, width } = getDimensions(props, fallbackProps);
   const borderProps = getBorderProps(props, height, width);
@@ -275,9 +275,9 @@ export const getBaseProps = (props, fallbackProps) => {
       name,
       height: props.height,
       width: props.width,
-      style: style.parent
+      style: style.parent,
     },
-    all: { border: borderProps, title: titleProps }
+    all: { border: borderProps, title: titleProps },
   };
   return groupedData.reduce((childProps, datum, i) => {
     const color = colorScale[i % colorScale.length];
@@ -294,7 +294,7 @@ export const getBaseProps = (props, fallbackProps) => {
       size: datum.size,
       style: dataStyle,
       y: originY + offset.y + titleOffset.y + gutterOffset.y,
-      x: originX + offset.x + titleOffset.x + gutterOffset.x
+      x: originX + offset.x + titleOffset.x + gutterOffset.x,
     };
 
     const labelProps = {
@@ -303,7 +303,7 @@ export const getBaseProps = (props, fallbackProps) => {
       text: datum.name,
       style: labelStyles[i],
       y: dataProps.y,
-      x: dataProps.x + datum.symbolSpacer + datum.size / 2
+      x: dataProps.x + datum.symbolSpacer + datum.size / 2,
     };
     childProps[eventKey] = { data: dataProps, labels: labelProps };
 

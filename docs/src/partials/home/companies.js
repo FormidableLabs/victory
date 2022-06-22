@@ -17,7 +17,7 @@ import importedTheme from "../../styles/theme";
 import {
   LinkButton,
   LandingSectionWrapper,
-  LandingSectionContent
+  LandingSectionContent,
 } from "./styles";
 
 const SectionHeading = styled.h2`

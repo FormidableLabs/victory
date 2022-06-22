@@ -2,7 +2,7 @@ import * as React from "react";
 import {
   VictoryContainerProps,
   CoordinatesPropType,
-  CallbackArgs
+  CallbackArgs,
 } from "victory-core";
 
 export type CursorCoordinatesPropType = CoordinatesPropType | number;
@@ -17,7 +17,7 @@ export interface VictoryCursorContainerProps extends VictoryContainerProps {
   disable?: boolean;
   onCursorChange?: (
     value: CursorCoordinatesPropType,
-    props: VictoryCursorContainerProps
+    props: VictoryCursorContainerProps,
   ) => void;
 }
 

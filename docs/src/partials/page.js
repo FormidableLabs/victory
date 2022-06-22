@@ -146,7 +146,7 @@ const Page = (props) => {
 Page.propTypes = {
   children: PropTypes.node,
   sidebarContent: PropTypes.array,
-  withSidebar: PropTypes.bool
+  withSidebar: PropTypes.bool,
 };
 
 export default Page;

@@ -26,7 +26,7 @@ type dataType = {
 const multiAxisData: multiAxisDataListType = [
   { strength: 1, intelligence: 250, stealth: 45 },
   { strength: 2, intelligence: 300, stealth: 75 },
-  { strength: 5, intelligence: 225, stealth: 60 }
+  { strength: 5, intelligence: 225, stealth: 60 },
 ];
 
 interface VictoryPolarAxisState {
@@ -46,7 +46,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
       data: this.getData(),
       staticData: this.getStaticData(),
       multiAxisData: this.processMultiAxisData(multiAxisData),
-      multiAxisMaxima: this.getMaxData(multiAxisData)
+      multiAxisMaxima: this.getMaxData(multiAxisData),
     };
   }
 
@@ -55,7 +55,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),
-        staticData: this.getStaticData()
+        staticData: this.getStaticData(),
       });
     }, 3000);
   }
@@ -88,7 +88,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
 
         return memo;
       },
-      {}
+      {},
     );
 
     return keys(groupedData).reduce((memo: any, key: string | number) => {
@@ -115,11 +115,11 @@ class App extends React.Component<any, VictoryPolarAxisState> {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle: { [key: string]: React.CSSProperties } = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -142,7 +142,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             <VictoryArea
               interpolation="catmullRom"
               style={{
-                data: { fill: "tomato" }
+                data: { fill: "tomato" },
               }}
               data={this.state.data}
             />
@@ -168,7 +168,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
               labels={({ datum }: any) => `y: ${Math.round(datum.y)}`}
               interpolation="linear"
               style={{
-                data: { stroke: "tomato", strokeWidth: 2 }
+                data: { stroke: "tomato", strokeWidth: 2 },
               }}
               data={this.state.data}
             />
@@ -194,8 +194,8 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                   width: 10,
                   fillOpacity: 0.4,
                   stroke: "tomato",
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={this.state.staticData}
             />
@@ -220,8 +220,8 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                   fill: "tomato",
                   fillOpacity: 0.4,
                   stroke: "tomato",
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={this.state.staticData}
             />
@@ -248,7 +248,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             <VictoryBar
               alignment="start"
               style={{
-                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 },
               }}
               data={[
                 { x: 45, y: 20, label: 1, fill: "red" },
@@ -256,7 +256,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 135, y: 65, label: 3, fill: "gold" },
                 { x: 250, y: 50, label: 4, fill: "blue" },
                 { x: 270, y: 40, label: 5, fill: "cyan" },
-                { x: 295, y: 30, label: 6, fill: "green" }
+                { x: 295, y: 30, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -267,7 +267,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 135, y: 65 },
                 { x: 250, y: 50 },
                 { x: 270, y: 40 },
-                { x: 295, y: 30 }
+                { x: 295, y: 30 },
               ]}
             />
           </VictoryChart>
@@ -276,7 +276,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             <VictoryBar
               alignment="start"
               style={{
-                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 }
+                data: { fill: ({ datum }) => datum.fill, opacity: 0.5 },
               }}
               data={[
                 { x: 15, y: 20, label: 1, fill: "red" },
@@ -284,7 +284,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 35, y: 65, label: 3, fill: "gold" },
                 { x: 40, y: 50, label: 4, fill: "blue" },
                 { x: 45, y: 40, label: 5, fill: "cyan" },
-                { x: 50, y: 30, label: 6, fill: "green" }
+                { x: 50, y: 30, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -295,7 +295,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 35, y: 65 },
                 { x: 40, y: 50 },
                 { x: 45, y: 40 },
-                { x: 50, y: 30 }
+                { x: 50, y: 30 },
               ]}
             />
           </VictoryChart>
@@ -309,7 +309,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 3, y: 6, label: 3, fill: "gold" },
                 { x: 4, y: 5, label: 4, fill: "blue" },
                 { x: 5, y: 4, label: 5, fill: "cyan" },
-                { x: 6, y: 3, label: 6, fill: "green" }
+                { x: 6, y: 3, label: 6, fill: "green" },
               ]}
             />
             <VictoryScatter
@@ -320,7 +320,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 3, y: 6 },
                 { x: 4, y: 5 },
                 { x: 5, y: 4 },
-                { x: 6, y: 3 }
+                { x: 6, y: 3 },
               ]}
             />
           </VictoryChart>
@@ -345,7 +345,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 90, y: 30, label: 2 },
                 { x: 135, y: 75, label: 3 },
                 { x: 180, y: 50, label: 4 },
-                { x: 270, y: 40, label: 5 }
+                { x: 270, y: 40, label: 5 },
               ]}
             />
 
@@ -356,7 +356,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 90, y: 30 },
                 { x: 135, y: 75 },
                 { x: 180, y: 50 },
-                { x: 270, y: 40 }
+                { x: 270, y: 40 },
               ]}
             />
 
@@ -367,7 +367,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 90, y: 30 },
                 { x: 135, y: 75 },
                 { x: 180, y: 50 },
-                { x: 270, y: 40 }
+                { x: 270, y: 40 },
               ]}
             />
           </VictoryChart>
@@ -387,7 +387,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 "intelligence",
                 "stealth",
                 "luck",
-                "charisma"
+                "charisma",
               ]}
             />
             <VictoryScatter
@@ -398,7 +398,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 2, y: 25 },
                 { x: 3, y: 40 },
                 { x: 4, y: 50 },
-                { x: 5, y: 50 }
+                { x: 5, y: 50 },
               ]}
             />
             <VictoryArea
@@ -408,7 +408,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
                 { x: 2, y: 25 },
                 { x: 3, y: 40 },
                 { x: 4, y: 50 },
-                { x: 5, y: 50 }
+                { x: 5, y: 50 },
               ]}
             />
           </VictoryChart>
@@ -421,7 +421,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             endAngle={380}
             domain={[0, 360]}
             tickValues={[
-              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315
+              0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315,
             ]}
           />
 

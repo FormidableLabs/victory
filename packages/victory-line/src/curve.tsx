@@ -10,7 +10,7 @@ import {
   UserProps,
   StringOrCallback,
   NumberOrCallback,
-  VictoryCommonPrimitiveProps
+  VictoryCommonPrimitiveProps,
 } from "victory-core";
 
 const evaluateProps = (props) => {
@@ -25,7 +25,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ fill: "none", stroke: "black" }, props.style),
-    props
+    props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
@@ -51,7 +51,7 @@ export const Curve: React.FC<CurveProps> = (props) => {
     role: props.role,
     shapeRendering: props.shapeRendering,
     clipPath: props.clipPath,
-    tabIndex: props.tabIndex
+    tabIndex: props.tabIndex,
   });
 };
 
@@ -61,16 +61,16 @@ Curve.propTypes = {
   openCurve: PropTypes.bool,
   origin: PropTypes.shape({
     x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
+    y: PropTypes.number.isRequired,
   }),
   pathComponent: PropTypes.element,
-  polar: PropTypes.bool
+  polar: PropTypes.bool,
 };
 
 Curve.defaultProps = {
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export interface CurveProps extends VictoryCommonPrimitiveProps {

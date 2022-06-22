@@ -1605,6 +1605,6 @@ export default {
     { downloads: 25210, day: "2020-04-17" },
     { downloads: 4634, day: "2020-04-18" },
     { downloads: 3019, day: "2020-04-19" },
-    { downloads: 20497, day: "2020-04-20" }
-  ]
+    { downloads: 20497, day: "2020-04-20" },
+  ],
 };

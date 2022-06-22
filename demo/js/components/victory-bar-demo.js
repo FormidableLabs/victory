@@ -11,7 +11,7 @@ import { VictorySharedEvents } from "victory-shared-events/src/index";
 import {
   VictoryContainer,
   VictoryTheme,
-  VictoryLabel
+  VictoryLabel,
 } from "victory-core/src/index";
 import { assign, random, range, merge } from "lodash";
 
@@ -19,8 +19,8 @@ class Wrapper extends React.Component {
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ])
+      PropTypes.node,
+    ]),
   };
 
   renderChildren(props) {
@@ -42,7 +42,7 @@ export default class App extends React.Component {
       barData: this.getBarData(),
       barTransitionData: this.getBarTransitionData(),
       multiTransitionData: this.getMultiTransitionData(),
-      numericBarData: this.getNumericBarData()
+      numericBarData: this.getNumericBarData(),
     };
   }
 
@@ -53,7 +53,7 @@ export default class App extends React.Component {
         barData: this.getBarData(),
         barTransitionData: this.getBarTransitionData(),
         multiTransitionData: this.getMultiTransitionData(),
-        numericBarData: this.getNumericBarData()
+        numericBarData: this.getNumericBarData(),
       });
     }, 5000);
   }
@@ -67,16 +67,16 @@ export default class App extends React.Component {
       return [
         {
           x: "rabbits",
-          y: random(-5, 5)
+          y: random(-5, 5),
         },
         {
           x: "cats",
-          y: random(-10, 10)
+          y: random(-10, 10),
         },
         {
           x: "dogs",
-          y: random(-15, 15)
-        }
+          y: random(-15, 15),
+        },
       ];
     });
   }
@@ -86,16 +86,16 @@ export default class App extends React.Component {
       return [
         {
           x: random(1, 3),
-          y: random(1, 5)
+          y: random(1, 5),
         },
         {
           x: random(4, 7),
-          y: random(1, 10)
+          y: random(1, 10),
         },
         {
           x: random(9, 11),
-          y: random(0, 15)
-        }
+          y: random(0, 15),
+        },
       ];
     });
   }
@@ -120,7 +120,7 @@ export default class App extends React.Component {
     const parentStyle = {
       border: "1px solid #ccc",
       margin: "2%",
-      maxWidth: "40%"
+      maxWidth: "40%",
     };
 
     const containerStyle = {
@@ -128,7 +128,7 @@ export default class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     return (
@@ -146,7 +146,7 @@ export default class App extends React.Component {
               { x: 5, y: 0.1 },
               { x: 6, y: 1 },
               { x: 7, y: 10 },
-              { x: 8, y: 100 }
+              { x: 8, y: 100 },
             ]}
           />
         </ChartWrap>
@@ -164,7 +164,7 @@ export default class App extends React.Component {
               { x: 5, y: 0.1 },
               { x: 6, y: 1 },
               { x: 7, y: 10 },
-              { x: 8, y: 100 }
+              { x: 8, y: 100 },
             ]}
           />
         </ChartWrap>
@@ -176,7 +176,7 @@ export default class App extends React.Component {
               { x: 1, y: "Label 1" },
               { x: 7, y: "Label 2" },
               { x: 3, y: "Label 3" },
-              { x: 4, y: "Label 4" }
+              { x: 4, y: "Label 4" },
             ]}
           />
         </ChartWrap>
@@ -189,7 +189,7 @@ export default class App extends React.Component {
               { x: 1, y: 20 },
               { x: 7, y: -40 },
               { x: 3, y: -60 },
-              { x: 4, y: 80 }
+              { x: 4, y: 80 },
             ]}
           />
         </ChartWrap>
@@ -201,7 +201,7 @@ export default class App extends React.Component {
               { x: 1, y: 20 },
               { x: 7, y: -40 },
               { x: 3, y: -60 },
-              { x: 4, y: 80 }
+              { x: 4, y: 80 },
             ]}
           />
         </ChartWrap>
@@ -212,7 +212,7 @@ export default class App extends React.Component {
               { x: 1, y: "Alpha" },
               { x: 7, y: "Beta" },
               { x: 3, y: "Charlie" },
-              { x: 4, y: "Delta" }
+              { x: 4, y: "Delta" },
             ]}
           />
         </VictoryChart>
@@ -228,7 +228,7 @@ export default class App extends React.Component {
               { x: 2, y: "Echo" },
               { x: 6, y: "Foxtrot" },
               { x: 3, y: "Golf" },
-              { x: 4, y: "Hotel" }
+              { x: 4, y: "Hotel" },
             ]}
           />
         </VictoryChart>
@@ -242,11 +242,11 @@ export default class App extends React.Component {
           animate={{
             duration: 500,
             onExit: {
-              duration: 1000
+              duration: 1000,
             },
             onEnter: {
-              duration: 500
-            }
+              duration: 500,
+            },
           }}
           containerComponent={
             <VictoryContainer
@@ -263,20 +263,20 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" })
+                          style: merge({}, props.style, { fill: "orange" }),
                         };
-                      }
+                      },
                     },
                     {
                       target: "labels",
                       mutation: () => {
                         return { text: "hey" };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
           data={this.state.barTransitionData}
           x="a"
@@ -389,7 +389,7 @@ export default class App extends React.Component {
               data={[
                 { x: "a", y: 2 },
                 { x: "b", y: 3 },
-                { x: "c", y: 4 }
+                { x: "c", y: 4 },
               ]}
               events={[
                 {
@@ -400,14 +400,14 @@ export default class App extends React.Component {
                         {
                           mutation: (props) => {
                             return {
-                              style: merge({}, props.style, { fill: "orange" })
+                              style: merge({}, props.style, { fill: "orange" }),
                             };
-                          }
-                        }
+                          },
+                        },
                       ];
-                    }
-                  }
-                }
+                    },
+                  },
+                },
               ]}
             />
           </Wrapper>
@@ -415,7 +415,7 @@ export default class App extends React.Component {
             data={[
               { x: "c", y: 2 },
               { x: "d", y: 3 },
-              { x: "e", y: 4 }
+              { x: "e", y: 4 },
             ]}
             events={[
               {
@@ -426,14 +426,14 @@ export default class App extends React.Component {
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "blue" })
+                            style: merge({}, props.style, { fill: "blue" }),
                           };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           />
         </VictoryStack>
@@ -450,12 +450,12 @@ export default class App extends React.Component {
                       childName: "secondBar",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "blue" })
+                          style: merge({}, props.style, { fill: "blue" }),
                         };
-                      }
+                      },
                     };
-                  }
-                }
+                  },
+                },
               },
               {
                 childName: "secondBar",
@@ -470,39 +470,39 @@ export default class App extends React.Component {
                           return props.style.fill === "cyan"
                             ? null
                             : {
-                                style: merge({}, props.style, { fill: "cyan" })
+                                style: merge({}, props.style, { fill: "cyan" }),
                               };
-                        }
+                        },
                       },
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "orange" })
+                            style: merge({}, props.style, { fill: "orange" }),
                           };
-                        }
+                        },
                       },
                       {
                         target: "labels",
                         eventKey: 1,
                         mutation: () => {
                           return { text: "CLICKED" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryBar
               name="firstBar"
               style={{
-                data: { width: 25, fill: "gold" }
+                data: { width: 25, fill: "gold" },
               }}
               data={[
                 { x: "a", y: 2 },
                 { x: "b", y: 3 },
-                { x: "c", y: 4 }
+                { x: "c", y: 4 },
               ]}
             />
             <VictoryBar
@@ -510,7 +510,7 @@ export default class App extends React.Component {
               data={[
                 { x: "a", y: 2 },
                 { x: "b", y: 3 },
-                { x: "c", y: 4 }
+                { x: "c", y: 4 },
               ]}
             />
           </VictorySharedEvents>
@@ -519,7 +519,7 @@ export default class App extends React.Component {
           theme={VictoryTheme.grayscale}
           style={{
             parent: parentStyle,
-            data: { fill: "blue" }
+            data: { fill: "blue" },
           }}
           labels={["a", "b", "c", "d", "e"]}
           data={[
@@ -527,7 +527,7 @@ export default class App extends React.Component {
             { x: 2, y: 2 },
             { x: 3, y: 3, label: "click me" },
             { x: 4, y: 2 },
-            { x: 5, y: 1 }
+            { x: 5, y: 1 },
           ]}
           events={[
             {
@@ -540,11 +540,11 @@ export default class App extends React.Component {
                     {
                       mutation: () => {
                         return { style: { fill: "orange" } };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
+                },
+              },
             },
             {
               target: "parent",
@@ -555,12 +555,12 @@ export default class App extends React.Component {
                       target: "labels",
                       mutation: () => {
                         return { text: "o shit" };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
         />
 
@@ -571,7 +571,7 @@ export default class App extends React.Component {
               { x: 21, y: "Label 1" },
               { x: 28, y: "Label 2" },
               { x: 35, y: "Label 3" },
-              { x: 40, y: "Label 4" }
+              { x: 40, y: "Label 4" },
             ]}
             x={"y"}
             y={"x"}
@@ -584,7 +584,7 @@ export default class App extends React.Component {
               [5, 10],
               [10, 15],
               [15, 20],
-              [20, 25]
+              [20, 25],
             ]}
             x={0}
             y={1}
@@ -599,11 +599,11 @@ class ChartWrap extends React.Component {
   static propTypes = {
     children: PropTypes.any,
     height: PropTypes.number,
-    width: PropTypes.number
+    width: PropTypes.number,
   };
   static defaultProps = {
     height: 250,
-    width: 350
+    width: 350,
   };
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
@@ -611,7 +611,7 @@ class ChartWrap extends React.Component {
     const parentStyle = {
       border: "1px solid #ccc",
       margin: "2%",
-      maxWidth: "40%"
+      maxWidth: "40%",
     };
 
     return (

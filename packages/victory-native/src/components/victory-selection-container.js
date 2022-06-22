@@ -5,7 +5,7 @@ import { Rect } from "react-native-svg";
 import {
   VictorySelectionContainer,
   SelectionHelpers,
-  selectionContainerMixin as originalSelectionMixin
+  selectionContainerMixin as originalSelectionMixin,
 } from "victory-selection-container";
 import VictoryContainer from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
@@ -16,7 +16,7 @@ const DefaultSelectionComponent = ({ style, ...otherProps }) => (
 );
 
 DefaultSelectionComponent.propTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 const nativeSelectionMixin = (base) =>
@@ -26,7 +26,7 @@ const nativeSelectionMixin = (base) =>
     static defaultProps = {
       ...VictorySelectionContainer.defaultProps,
       standalone: true,
-      selectionComponent: <DefaultSelectionComponent />
+      selectionComponent: <DefaultSelectionComponent />,
     };
 
     // overrides all web events with native specific events
@@ -53,9 +53,9 @@ const nativeSelectionMixin = (base) =>
               }
               SelectionHelpers.onMouseMove.cancel();
               return SelectionHelpers.onMouseUp(evt, targetProps);
-            }
-          }
-        }
+            },
+          },
+        },
       ];
     };
   };

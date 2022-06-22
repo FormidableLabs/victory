@@ -9,7 +9,7 @@ const RedirectPage = (props) => {
 };
 
 RedirectPage.propTypes = {
-  redirect: PropTypes.string.isRequired
+  redirect: PropTypes.string.isRequired,
 };
 
 export default withRouteData(RedirectPage);

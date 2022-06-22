@@ -7,7 +7,7 @@ export const useCanvasContext = () => {
   if (!context) {
     throw new Error(
       `This component must be wrapped in a CanvasContext.Provider component.
-      Try setting groupComponent={<CanvasGroup />} in your chart component.`
+      Try setting groupComponent={<CanvasGroup />} in your chart component.`,
     );
   }
   return context;

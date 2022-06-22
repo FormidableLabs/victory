@@ -15,14 +15,14 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      data: this.getData()
+      data: this.getData(),
     };
   }
 
   componentDidMount() {
     window.setInterval(() => {
       this.setState({
-        data: this.getData()
+        data: this.getData(),
       });
     }, 3000);
   }
@@ -31,14 +31,14 @@ class App extends React.Component {
     return range(10).map((i) => {
       return {
         x: i,
-        y: Math.random()
+        y: Math.random(),
       };
     });
   }
 
   removeMutation() {
     this.setState({
-      externalMutation: undefined
+      externalMutation: undefined,
     });
   }
 
@@ -56,9 +56,9 @@ class App extends React.Component {
               ? { style: assign({}, props.style, { fill: "red" }) }
               : { style: assign({}, props.style, { fill: "blue" }) };
           },
-          callback
-        }
-      ]
+          callback,
+        },
+      ],
     });
   }
 
@@ -71,9 +71,9 @@ class App extends React.Component {
           target: "all",
           eventKey: "all",
           mutation: () => ({ style: undefined }),
-          callback
-        }
-      ]
+          callback,
+        },
+      ],
     });
   }
 
@@ -83,10 +83,10 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "35%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "35%" },
     };
     return (
       <div className="demo">
@@ -119,7 +119,7 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return { style: { fill: "orange" } };
-                        }
+                        },
                       },
                       {
                         target: "labels",
@@ -127,12 +127,12 @@ class App extends React.Component {
                           return props.text === "clicked"
                             ? { text: "unclicked" }
                             : { text: "clicked" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryBar
@@ -157,7 +157,7 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return { style: { fill: "orange" } };
-                        }
+                        },
                       },
                       {
                         target: "labels",
@@ -165,12 +165,12 @@ class App extends React.Component {
                           return props.text === "clicked"
                             ? { text: "unclicked" }
                             : { text: "clicked" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           />
           <VictoryChart
@@ -186,7 +186,7 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return { style: { fill: "orange" } };
-                        }
+                        },
                       },
                       {
                         target: "labels",
@@ -194,12 +194,12 @@ class App extends React.Component {
                           return props.text === "clicked"
                             ? { text: "unclicked" }
                             : { text: "clicked" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryStack colorScale={"qualitative"}>
@@ -207,14 +207,14 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 1 },
                   { x: 2, y: 2 },
-                  { x: 3, y: 5 }
+                  { x: 3, y: 5 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 2 },
                   { x: 2, y: 1 },
-                  { x: 3, y: 7 }
+                  { x: 3, y: 7 },
                 ]}
               />
               <VictoryBar
@@ -222,7 +222,7 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
-                  { x: 3, y: 9 }
+                  { x: 3, y: 9 },
                 ]}
               />
             </VictoryStack>
@@ -238,8 +238,8 @@ class App extends React.Component {
                 data: {
                   fill: "tomato",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -249,7 +249,7 @@ class App extends React.Component {
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryBar
@@ -257,8 +257,8 @@ class App extends React.Component {
                 data: {
                   fill: "orange",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -268,7 +268,7 @@ class App extends React.Component {
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
           </VictoryStack>

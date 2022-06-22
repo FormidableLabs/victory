@@ -12,7 +12,7 @@ import {
   VictoryCommonProps,
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface
+  VictoryStyleInterface,
 } from "victory-core";
 
 export type VictorySliceLabelPositionType =

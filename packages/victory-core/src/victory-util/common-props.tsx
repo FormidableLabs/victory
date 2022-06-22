@@ -15,7 +15,7 @@ import {
   RangePropType,
   ScalePropType,
   SortOrderPropType,
-  StringOrNumberOrList
+  StringOrNumberOrList,
 } from "../types/prop-types";
 import { NumberOrCallback, StringOrCallback } from "../types/callbacks";
 
@@ -38,8 +38,8 @@ const dataProps: React.WeakValidationMap<VictoryDatableProps> = {
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.shape({
       x: PropTypes.arrayOf(PropTypes.string),
-      y: PropTypes.arrayOf(PropTypes.string)
-    })
+      y: PropTypes.arrayOf(PropTypes.string),
+    }),
   ]),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
@@ -52,44 +52,44 @@ const dataProps: React.WeakValidationMap<VictoryDatableProps> = {
     PropTypes.func,
     CustomPropTypes.allOfType([
       CustomPropTypes.integer,
-      CustomPropTypes.nonNegative
+      CustomPropTypes.nonNegative,
     ]),
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string.isRequired)
+    PropTypes.arrayOf(PropTypes.string.isRequired),
   ]),
   sortOrder: PropTypes.oneOf(["ascending", "descending"]),
   style: PropTypes.shape({
     parent: PropTypes.object,
     data: PropTypes.object,
-    labels: PropTypes.object
+    labels: PropTypes.object,
   }),
   x: PropTypes.oneOfType([
     PropTypes.func,
     CustomPropTypes.allOfType([
       CustomPropTypes.integer,
-      CustomPropTypes.nonNegative
+      CustomPropTypes.nonNegative,
     ]),
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string.isRequired)
+    PropTypes.arrayOf(PropTypes.string.isRequired),
   ]),
   y: PropTypes.oneOfType([
     PropTypes.func,
     CustomPropTypes.allOfType([
       CustomPropTypes.integer,
-      CustomPropTypes.nonNegative
+      CustomPropTypes.nonNegative,
     ]),
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string.isRequired)
+    PropTypes.arrayOf(PropTypes.string.isRequired),
   ]),
   y0: PropTypes.oneOfType([
     PropTypes.func,
     CustomPropTypes.allOfType([
       CustomPropTypes.integer,
-      CustomPropTypes.nonNegative
+      CustomPropTypes.nonNegative,
     ]),
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string.isRequired)
-  ])
+    PropTypes.arrayOf(PropTypes.string.isRequired),
+  ]),
 };
 
 export interface VictoryCommonThemeProps {
@@ -132,7 +132,7 @@ const baseProps: React.WeakValidationMap<VictoryCommonProps> = {
   containerComponent: PropTypes.element,
   domain: PropTypes.oneOfType([
     CustomPropTypes.domain,
-    PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain }),
   ]),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
   maxDomain: PropTypes.oneOfType([
@@ -140,8 +140,8 @@ const baseProps: React.WeakValidationMap<VictoryCommonProps> = {
     PropTypes.instanceOf(Date),
     PropTypes.shape({
       x: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]),
-      y: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])
-    })
+      y: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]),
+    }),
   ]),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
   minDomain: PropTypes.oneOfType([
@@ -149,31 +149,31 @@ const baseProps: React.WeakValidationMap<VictoryCommonProps> = {
     PropTypes.instanceOf(Date),
     PropTypes.shape({
       x: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]),
-      y: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)])
-    })
+      y: PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]),
+    }),
   ]),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
   domainPadding: PropTypes.oneOfType([
     PropTypes.shape({
       x: PropTypes.oneOfType([
         PropTypes.number,
-        PropTypes.arrayOf(PropTypes.number)
+        PropTypes.arrayOf(PropTypes.number),
       ]),
       y: PropTypes.oneOfType([
         PropTypes.number,
-        PropTypes.arrayOf(PropTypes.number)
-      ])
+        PropTypes.arrayOf(PropTypes.number),
+      ]),
     }),
     PropTypes.number,
-    PropTypes.arrayOf(PropTypes.number)
+    PropTypes.arrayOf(PropTypes.number),
   ]),
   eventKey: PropTypes.oneOfType([
     PropTypes.func,
     CustomPropTypes.allOfType([
       CustomPropTypes.integer,
-      CustomPropTypes.nonNegative
+      CustomPropTypes.nonNegative,
     ]),
-    PropTypes.string
+    PropTypes.string,
   ]),
   events: PropTypes.arrayOf(
     PropTypes.shape({
@@ -182,12 +182,12 @@ const baseProps: React.WeakValidationMap<VictoryCommonProps> = {
         PropTypes.array,
         CustomPropTypes.allOfType([
           CustomPropTypes.integer,
-          CustomPropTypes.nonNegative
+          CustomPropTypes.nonNegative,
         ]),
-        PropTypes.string
+        PropTypes.string,
       ]),
-      eventHandlers: PropTypes.object
-    })
+      eventHandlers: PropTypes.object,
+    }),
   ),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
   externalEventMutations: PropTypes.arrayOf(
@@ -198,13 +198,13 @@ const baseProps: React.WeakValidationMap<VictoryCommonProps> = {
         PropTypes.array,
         CustomPropTypes.allOfType([
           CustomPropTypes.integer,
-          CustomPropTypes.nonNegative
+          CustomPropTypes.nonNegative,
         ]),
-        PropTypes.string
+        PropTypes.string,
       ]),
       mutation: PropTypes.func,
-      target: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
-    })
+      target: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    }),
   ),
   groupComponent: PropTypes.element,
   height: CustomPropTypes.nonNegative,
@@ -218,40 +218,40 @@ const baseProps: React.WeakValidationMap<VictoryCommonProps> = {
       top: PropTypes.number,
       bottom: PropTypes.number,
       left: PropTypes.number,
-      right: PropTypes.number
-    })
+      right: PropTypes.number,
+    }),
   ]),
   polar: PropTypes.bool,
   range: PropTypes.oneOfType([
     CustomPropTypes.domain,
     PropTypes.shape({
       x: CustomPropTypes.domain.isRequired,
-      y: CustomPropTypes.domain.isRequired
-    })
+      y: CustomPropTypes.domain.isRequired,
+    }),
   ]),
   scale: PropTypes.oneOfType([
     CustomPropTypes.scale,
     PropTypes.shape({
       x: CustomPropTypes.scale.isRequired,
-      y: CustomPropTypes.scale.isRequired
-    })
+      y: CustomPropTypes.scale.isRequired,
+    }),
   ]),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
   sharedEvents: PropTypes.shape({
     events: PropTypes.array,
-    getEventState: PropTypes.func
+    getEventState: PropTypes.func,
   }),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
   singleQuadrantDomainPadding: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.shape({
       x: PropTypes.oneOfType([PropTypes.bool]),
-      y: PropTypes.oneOfType([PropTypes.bool])
-    })
+      y: PropTypes.oneOfType([PropTypes.bool]),
+    }),
   ]),
   standalone: PropTypes.bool,
   theme: PropTypes.object,
-  width: CustomPropTypes.nonNegative
+  width: CustomPropTypes.nonNegative,
 };
 
 export interface VictoryCommonPrimitiveProps {
@@ -293,16 +293,16 @@ const primitiveProps: React.WeakValidationMap<VictoryCommonPrimitiveProps> = {
   role: PropTypes.string,
   scale: PropTypes.oneOfType([
     CustomPropTypes.scale,
-    PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+    PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale }),
   ]),
   shapeRendering: PropTypes.string,
   style: PropTypes.object,
   tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  transform: PropTypes.string
+  transform: PropTypes.string,
 };
 
 export const CommonProps = {
   dataProps,
   baseProps,
-  primitiveProps
+  primitiveProps,
 };

@@ -31,7 +31,7 @@ const data: DataType = [
   { name: "Casey", strength: 4, intelligence: 15, speed: 80, luck: 1 },
   { name: "Drew", strength: 3, intelligence: 25, speed: 600, luck: 5 },
   { name: "Erin", strength: 9, intelligence: 50, speed: 350, luck: 4 },
-  { name: "Francis", strength: 2, intelligence: 40, speed: 200, luck: 2 }
+  { name: "Francis", strength: 2, intelligence: 40, speed: 200, luck: 2 },
 ];
 
 interface BrushLineDemoState {
@@ -47,7 +47,7 @@ const attributes: [string, string, string, string] = [
   "strength",
   "intelligence",
   "speed",
-  "luck"
+  "luck",
 ];
 const height = 500;
 const width = 500;
@@ -55,7 +55,7 @@ const padding: { [key: string]: number } = {
   top: 100,
   left: 50,
   right: 50,
-  bottom: 50
+  bottom: 50,
 };
 
 class App extends React.Component<any, BrushLineDemoState> {
@@ -68,7 +68,7 @@ class App extends React.Component<any, BrushLineDemoState> {
       filters: {},
       activeDatasets: [],
       isFiltered: false,
-      externalMutation: undefined
+      externalMutation: undefined,
     };
   }
 
@@ -86,8 +86,8 @@ class App extends React.Component<any, BrushLineDemoState> {
       name: datum.name,
       data: attributes.map((attribute, i) => ({
         x: attribute,
-        y: datum[attribute] / maximumValues[i]
-      }))
+        y: datum[attribute] / maximumValues[i],
+      })),
     }));
   }
 
@@ -145,7 +145,7 @@ class App extends React.Component<any, BrushLineDemoState> {
 
   removeMutation() {
     this.setState({
-      externalMutation: undefined
+      externalMutation: undefined,
     });
   }
 
@@ -164,9 +164,9 @@ class App extends React.Component<any, BrushLineDemoState> {
           mutation: () => {
             return { brushDomain: [0, 1 / Number.MAX_VALUE] };
           },
-          callback
-        }
-      ]
+          callback,
+        },
+      ],
     });
   }
 
@@ -176,13 +176,13 @@ class App extends React.Component<any, BrushLineDemoState> {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const max = this.state.maximumValues || [];
 
     const chartStyle: { [key: string]: React.CSSProperties } = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -200,7 +200,7 @@ class App extends React.Component<any, BrushLineDemoState> {
             <VictoryAxis
               style={{
                 tickLabels: { fontSize: 20 },
-                axis: { stroke: "none" }
+                axis: { stroke: "none" },
               }}
               tickLabelComponent={<VictoryLabel y={padding.top - 40} />}
             />
@@ -213,8 +213,8 @@ class App extends React.Component<any, BrushLineDemoState> {
                 style={{
                   data: {
                     stroke: "tomato",
-                    opacity: this.isActive(dataset) ? 1 : 0.2
-                  }
+                    opacity: this.isActive(dataset) ? 1 : 0.2,
+                  },
                 }}
               />
             ))}
@@ -236,8 +236,8 @@ class App extends React.Component<any, BrushLineDemoState> {
                   tickLabels: {
                     fontSize: 15,
                     padding: 15,
-                    pointerEvents: "none"
-                  }
+                    pointerEvents: "none",
+                  },
                 }}
                 tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
                 tickFormat={(tick) => Math.round(tick * max[index])}
@@ -252,7 +252,7 @@ class App extends React.Component<any, BrushLineDemoState> {
                 data={[
                   { x: "one", y: 4 },
                   { x: "two", y: 5 },
-                  { x: "three", y: 6 }
+                  { x: "three", y: 6 },
                 ]}
               />
               <VictoryAxis
@@ -266,7 +266,7 @@ class App extends React.Component<any, BrushLineDemoState> {
               data={[
                 { x: "one", y: 4 },
                 { x: "two", y: 5 },
-                { x: "three", y: 6 }
+                { x: "three", y: 6 },
               ]}
             />
             <VictoryAxis
@@ -281,7 +281,7 @@ class App extends React.Component<any, BrushLineDemoState> {
               data={[
                 { x: "one", y: 0 },
                 { x: "two", y: 2 },
-                { x: "three", y: 4 }
+                { x: "three", y: 4 },
               ]}
             />
             <VictoryAxis gridComponent={<VictoryBrushLine brushWidth={20} />} />
@@ -291,7 +291,7 @@ class App extends React.Component<any, BrushLineDemoState> {
               data={[
                 { x: "one", y: 0 },
                 { x: "two", y: 2 },
-                { x: "three", y: 4 }
+                { x: "three", y: 4 },
               ]}
             />
             <VictoryAxis

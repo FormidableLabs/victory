@@ -15,7 +15,7 @@ module.exports = {
     "@babel/transform-template-literals",
     "@babel/proposal-object-rest-spread",
     "@babel/proposal-optional-chaining",
-    "@babel/plugin-proposal-export-namespace-from"
+    "@babel/plugin-proposal-export-namespace-from",
   ],
   ignore: ["**/*.d.ts"],
   env: {
@@ -25,10 +25,10 @@ module.exports = {
           "@babel/transform-modules-commonjs",
           {
             strict: false,
-            allowTopLevelThis: true
-          }
-        ]
-      ]
-    }
-  }
+            allowTopLevelThis: true,
+          },
+        ],
+      ],
+    },
+  },
 };

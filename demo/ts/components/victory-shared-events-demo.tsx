@@ -10,7 +10,7 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     return (
@@ -28,12 +28,12 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
                       childName: "secondBar",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "blue" })
+                          style: merge({}, props.style, { fill: "blue" }),
                         };
-                      }
+                      },
                     };
-                  }
-                }
+                  },
+                },
               },
               {
                 childName: "secondBar",
@@ -48,39 +48,39 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
                           return props.style.fill === "cyan"
                             ? null
                             : {
-                                style: merge({}, props.style, { fill: "cyan" })
+                                style: merge({}, props.style, { fill: "cyan" }),
                               };
-                        }
+                        },
                       },
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "orange" })
+                            style: merge({}, props.style, { fill: "orange" }),
                           };
-                        }
+                        },
                       },
                       {
                         target: "labels",
                         eventKey: 1,
                         mutation: () => {
                           return { text: "CLICKED" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryBar
               name="firstBar"
               style={{
-                data: { width: 25, fill: "gold" }
+                data: { width: 25, fill: "gold" },
               }}
               data={[
                 { x: "a", y: 2 },
                 { x: "b", y: 3 },
-                { x: "c", y: 4 }
+                { x: "c", y: 4 },
               ]}
             />
             <VictoryBar
@@ -88,7 +88,7 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
               data={[
                 { x: "a", y: 2 },
                 { x: "b", y: 3 },
-                { x: "c", y: 4 }
+                { x: "c", y: 4 },
               ]}
             />
           </VictorySharedEvents>

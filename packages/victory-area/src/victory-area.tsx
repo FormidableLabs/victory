@@ -29,15 +29,15 @@ const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  interpolation: "linear"
+  interpolation: "linear",
 };
 
 const options = {
   components: [
     { name: "parent", index: "parent" },
     { name: "data", index: "all" },
-    { name: "labels" }
-  ]
+    { name: "labels" },
+  ],
 };
 
 export type VictoryAreaTTargetType = "data" | "labels" | "parent";
@@ -68,7 +68,7 @@ class VictoryAreaBase extends React.Component<VictoryAreaProps> {
     "height",
     "padding",
     "style",
-    "width"
+    "width",
   ];
 
   static propTypes = {
@@ -85,14 +85,14 @@ class VictoryAreaBase extends React.Component<VictoryAreaProps> {
         "natural",
         "step",
         "stepAfter",
-        "stepBefore"
+        "stepBefore",
       ]),
-      PropTypes.func
+      PropTypes.func,
     ]),
     label: CustomPropTypes.deprecated(
       PropTypes.string,
-      "Use `labels` instead for individual data labels"
-    )
+      "Use `labels` instead for individual data labels",
+    ),
   };
 
   static defaultProps = {
@@ -104,7 +104,7 @@ class VictoryAreaBase extends React.Component<VictoryAreaProps> {
     sortKey: "x",
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static displayName = "VictoryArea";
@@ -120,7 +120,7 @@ class VictoryAreaBase extends React.Component<VictoryAreaProps> {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions

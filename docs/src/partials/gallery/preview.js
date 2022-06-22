@@ -36,7 +36,7 @@ const Preview = (props) => {
           return Comp;
         });
       `,
-        { presets: ["es2015", "react", "stage-1"] }
+        { presets: ["es2015", "react", "stage-1"] },
       ).code;
     }
     return transform(
@@ -45,7 +45,7 @@ const Preview = (props) => {
           ${codeText}
         });
       `,
-      { presets: ["es2015", "react", "stage-1"] }
+      { presets: ["es2015", "react", "stage-1"] },
     ).code;
   };
 
@@ -60,10 +60,10 @@ const Preview = (props) => {
     if (noRender) {
       /* eslint-disable no-eval, prefer-spread */
       const Comp = React.createElement(
-        eval(compiledCode).apply(null, tempScope)
+        eval(compiledCode).apply(null, tempScope),
       );
       ReactDOMServer.renderToString(
-        React.createElement(previewComponent, {}, Comp)
+        React.createElement(previewComponent, {}, Comp),
       );
       render(React.createElement(previewComponent, {}, Comp), mountNode);
     } else {
@@ -85,7 +85,7 @@ const Preview = (props) => {
 };
 
 Preview.defaultProps = {
-  previewComponent: "div"
+  previewComponent: "div",
 };
 
 Preview.propTypes = {
@@ -94,7 +94,7 @@ Preview.propTypes = {
   noRender: PropTypes.bool,
   previewComponent: PropTypes.node,
   scope: PropTypes.object.isRequired,
-  theme: PropTypes.string
+  theme: PropTypes.string,
 };
 
 export default Preview;

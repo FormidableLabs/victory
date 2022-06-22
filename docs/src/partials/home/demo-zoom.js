@@ -5,7 +5,7 @@ import {
   VictoryLine,
   VictoryBrushContainer,
   VictoryZoomContainer,
-  VictoryAxis
+  VictoryAxis,
 } from "victory";
 
 import importedTheme from "../../styles/theme";
@@ -13,40 +13,40 @@ import importedTheme from "../../styles/theme";
 const chartData = [
   {
     x: new Date(1982, 1, 1),
-    y: 125
+    y: 125,
   },
   {
     x: new Date(1987, 1, 1),
-    y: 257
+    y: 257,
   },
   {
     x: new Date(1993, 1, 1),
-    y: 345
+    y: 345,
   },
   {
     x: new Date(1997, 1, 1),
-    y: 515
+    y: 515,
   },
   {
     x: new Date(2001, 1, 1),
-    y: 132
+    y: 132,
   },
   {
     x: new Date(2005, 1, 1),
-    y: 305
+    y: 305,
   },
   {
     x: new Date(2011, 1, 1),
-    y: 270
+    y: 270,
   },
   {
     x: new Date(2013, 1, 1),
-    y: 470
+    y: 470,
   },
   {
     x: new Date(2020, 1, 1),
-    y: 340
-  }
+    y: 340,
+  },
 ];
 
 export default class App extends React.Component {
@@ -54,7 +54,7 @@ export default class App extends React.Component {
     super();
     this.state = {
       zoomDomain: { x: [new Date(1990, 1, 1), new Date(2009, 1, 1)] },
-      selectedDomain: { x: [new Date(1990, 1, 1), new Date(2009, 1, 1)] }
+      selectedDomain: { x: [new Date(1990, 1, 1), new Date(2009, 1, 1)] },
     };
   }
 
@@ -73,8 +73,8 @@ export default class App extends React.Component {
         display: "block",
         height: isMain ? "70%" : "30%",
         margin: "0 auto",
-        padding: 0
-      }
+        padding: 0,
+      },
     };
   }
 
@@ -86,7 +86,7 @@ export default class App extends React.Component {
             left: 50,
             right: 50,
             bottom: 35,
-            top: 20
+            top: 20,
           }}
           width={450}
           height={245}
@@ -104,7 +104,7 @@ export default class App extends React.Component {
         >
           <VictoryLine
             style={{
-              data: { stroke: importedTheme.color.red }
+              data: { stroke: importedTheme.color.red },
             }}
             data={chartData}
           />
@@ -114,7 +114,7 @@ export default class App extends React.Component {
             top: 0,
             left: 50,
             right: 50,
-            bottom: 35
+            bottom: 35,
           }}
           width={450}
           height={105}
@@ -139,13 +139,13 @@ export default class App extends React.Component {
               new Date(2005, 1, 1),
               new Date(2010, 1, 1),
               new Date(2015, 1, 1),
-              new Date(2020, 1, 1)
+              new Date(2020, 1, 1),
             ]}
             tickFormat={(x) => new Date(x).getFullYear()}
           />
           <VictoryLine
             style={{
-              data: { stroke: "tomato" }
+              data: { stroke: "tomato" },
             }}
             data={chartData}
           />

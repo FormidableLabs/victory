@@ -85,7 +85,7 @@ const evaluateProps = (props: AreaProps) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
     assign({ fill: "black" }, props.style),
-    props
+    props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
@@ -112,7 +112,7 @@ export const Area: React.FC<AreaProps> = (props) => {
     id,
     style,
     desc,
-    tabIndex
+    tabIndex,
   } = props;
   const userProps = UserProps.getSafeUserProps(props);
   const defaultTransform =
@@ -133,7 +133,7 @@ export const Area: React.FC<AreaProps> = (props) => {
     transform,
     ...events,
     clipPath,
-    tabIndex
+    tabIndex,
   };
 
   const area = React.cloneElement(
@@ -144,11 +144,11 @@ export const Area: React.FC<AreaProps> = (props) => {
         style: assign({}, style, { stroke: areaStroke }),
         d: areaFunction(data),
         desc,
-        tabIndex
+        tabIndex,
       },
       sharedProps,
-      userProps
-    )
+      userProps,
+    ),
   );
 
   const line = renderLine
@@ -158,10 +158,10 @@ export const Area: React.FC<AreaProps> = (props) => {
           {
             key: `${id}-area-stroke`,
             style: assign({}, style, { fill: "none" }),
-            d: lineFunction(data)
+            d: lineFunction(data),
           },
-          sharedProps
-        )
+          sharedProps,
+        ),
       )
     : null;
 
@@ -174,14 +174,14 @@ Area.propTypes = {
   ...CommonProps.primitiveProps,
   groupComponent: PropTypes.element,
   interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  pathComponent: PropTypes.element
+  pathComponent: PropTypes.element,
 };
 
 Area.defaultProps = {
   groupComponent: <g />,
   pathComponent: <Path />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export interface AreaProps extends VictoryCommonPrimitiveProps {

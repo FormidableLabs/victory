@@ -9,7 +9,7 @@ import {
   VictoryStyleObject,
   VictoryLabelStyleObject,
   VictoryLabelableProps,
-  VictoryMultiLabelableProps
+  VictoryMultiLabelableProps,
 } from "victory-core";
 
 export interface VictoryCandlestickStyleInterface {

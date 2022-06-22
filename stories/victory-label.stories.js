@@ -9,13 +9,13 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
   labels: { padding: 0, fontFamily: "arial" },
-  data: { fill: "gold" }
+  data: { fill: "gold" },
 };
 
 const defaultScatterProps = {
@@ -25,12 +25,12 @@ const defaultScatterProps = {
   domain: [-10, 10],
   data: [{ x: 0, y: 0 }],
   labels: () => "Label",
-  size: 5
+  size: 5,
 };
 
 export default {
   title: "VictoryLabel",
-  component: VictoryLabel
+  component: VictoryLabel,
 };
 
 export const DefaultRendering = () => {
@@ -214,7 +214,7 @@ export const Styles = () => {
           <VictoryLabel
             style={[
               { fontSize: 20, fontFamily: "arial" },
-              { fontSize: 18, fill: "red", fontFamily: "arial" }
+              { fontSize: 18, fill: "red", fontFamily: "arial" },
             ]}
             text={["multi", "element", "array"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -247,7 +247,7 @@ export const Styles = () => {
           <VictoryLabel
             style={[
               { fontSize: 20, fontFamily: "arial" },
-              { fontSize: 12, fill: "red", fontFamily: "arial" }
+              { fontSize: 12, fill: "red", fontFamily: "arial" },
             ]}
             text={["multi", "element", "array"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -260,7 +260,7 @@ export const Styles = () => {
           <VictoryLabel
             style={{
               fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
-              fontFamily: "arial"
+              fontFamily: "arial",
             }}
             text={["object", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -274,8 +274,8 @@ export const Styles = () => {
             style={[
               {
                 fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
-                fontFamily: "arial"
-              }
+                fontFamily: "arial",
+              },
             ]}
             text={["single array", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -289,12 +289,12 @@ export const Styles = () => {
             style={[
               {
                 fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
-                fontFamily: "arial"
+                fontFamily: "arial",
               },
               {
                 fill: ({ datum }) => (datum.y === 0 ? "red" : "blue"),
-                fontFamily: "arial"
-              }
+                fontFamily: "arial",
+              },
             ]}
             text={["multi array", "with", "functions"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -307,7 +307,7 @@ export const Styles = () => {
           <VictoryLabel
             style={{
               fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
-              fontFamily: "arial"
+              fontFamily: "arial",
             }}
             text={["object", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -321,8 +321,8 @@ export const Styles = () => {
             style={[
               {
                 fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
-                fontFamily: "arial"
-              }
+                fontFamily: "arial",
+              },
             ]}
             text={["single array", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -336,12 +336,12 @@ export const Styles = () => {
             style={[
               {
                 fontSize: ({ datum }) => (datum.y === 0 ? 12 : 15),
-                fontFamily: "arial"
+                fontFamily: "arial",
               },
               {
                 fill: ({ datum }) => (datum.y === 0 ? "red" : "blue"),
-                fontFamily: "arial"
-              }
+                fontFamily: "arial",
+              },
             ]}
             text={["multi array", "with", "functions"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -505,13 +505,13 @@ export const BackgroundStyles = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "Even if we leave blank arrays",
               "for style or lineHeight,",
-              "Victory will save us with defaults."
+              "Victory will save us with defaults.",
             ]}
             lineHeight={[]}
           />
@@ -525,13 +525,13 @@ export const BackgroundStyles = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "backgrounds work with ",
               "multiple lineHeights,",
-              "but the positioning does change"
+              "but the positioning does change",
             ]}
             lineHeight={[1, 2, 1, 3]}
           />
@@ -546,13 +546,13 @@ export const BackgroundStyles = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "background rects",
               "all get appropriate",
-              "angle transforms"
+              "angle transforms",
             ]}
           />
         }
@@ -583,13 +583,13 @@ export const Inline = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "backgrounds work with ",
               "multiple lineHeights,",
-              "but the positioning does change"
+              "but the positioning does change",
             ]}
             lineHeight={[1, 2, 1, 3]}
           />
@@ -605,13 +605,13 @@ export const Inline = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "background rects",
               "all get appropriate",
-              "angle transforms"
+              "angle transforms",
             ]}
           />
         }
@@ -631,13 +631,13 @@ export const BackgroundPadding = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "backgroundPadding as a number",
               "applies to all lines",
-              "but alters positioning"
+              "but alters positioning",
             ]}
             backgroundPadding={10}
           />
@@ -651,13 +651,13 @@ export const BackgroundPadding = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "backgroundPadding as an object",
               "applies to all lines",
-              "but alters positioning"
+              "but alters positioning",
             ]}
             backgroundPadding={{ top: 0, bottom: 10, left: 20, right: -10 }}
           />
@@ -671,19 +671,19 @@ export const BackgroundPadding = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "backgroundPadding as an array",
               "applies to all lines",
-              "but alters positioning"
+              "but alters positioning",
             ]}
             backgroundPadding={[
               { top: 0, bottom: 10, left: 20, right: -10 },
               -5,
               { top: 0, bottom: 10, left: 40, right: -30 },
-              20
+              20,
             ]}
           />
         }
@@ -697,13 +697,13 @@ export const BackgroundPadding = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "backgroundPadding as a number",
               "applies to all lines",
-              "but alters positioning"
+              "but alters positioning",
             ]}
             backgroundPadding={10}
           />
@@ -718,13 +718,13 @@ export const BackgroundPadding = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "backgroundPadding as an object",
               "applies to all lines",
-              "but alters positioning"
+              "but alters positioning",
             ]}
             backgroundPadding={{ top: 0, bottom: 10, left: 20, right: -10 }}
           />
@@ -739,19 +739,19 @@ export const BackgroundPadding = () => {
               { fill: "pink" },
               { fill: "lavender" },
               { fill: "thistle" },
-              { fill: "plum" }
+              { fill: "plum" },
             ]}
             text={[
               "Victory is awesome.",
               "backgroundPadding as an array",
               "applies to all lines",
-              "but alters positioning"
+              "but alters positioning",
             ]}
             backgroundPadding={[
               { top: 0, bottom: 10, left: 20, right: -10 },
               -5,
               { top: 0, bottom: 10, left: 40, right: -30 },
-              20
+              20,
             ]}
           />
         }

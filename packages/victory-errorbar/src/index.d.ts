@@ -8,7 +8,7 @@ import {
   VictoryCommonPrimitiveProps,
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface
+  VictoryStyleInterface,
 } from "victory-core";
 
 export type VictoryErrorBarTTargetType = "data" | "labels" | "parent";

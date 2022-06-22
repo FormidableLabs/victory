@@ -38,7 +38,7 @@ export function getData({
   y: yAccessor = "y",
   sortKey,
   sortOrder = "ascending",
-  data = []
+  data = [],
 }: DataProps = {}): FormattedDatum[] {
   const formattedData = data.reduce((nonNullData, datum, index) => {
     const x = getValue(datum, xAccessor);
@@ -65,8 +65,8 @@ export function getData({
         // Only set these properties if they exist
         ...(xName ? { xName } : {}),
         ...(yName ? { yName } : {}),
-        ...additionalProperties
-      }
+        ...additionalProperties,
+      },
     ];
   }, [] as FormattedDatum[]);
 

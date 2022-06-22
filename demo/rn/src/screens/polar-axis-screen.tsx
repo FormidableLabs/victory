@@ -5,7 +5,7 @@ import {
   VictoryBar,
   VictoryChart,
   VictoryPolarAxis,
-  VictoryTheme
+  VictoryTheme,
 } from "victory-native";
 
 export const PolarAxisScreen: React.FC = () => {
@@ -31,7 +31,7 @@ export const PolarAxisScreen: React.FC = () => {
             { x: "dog", y: 25 },
             { x: "bird", y: 40 },
             { x: "frog", y: 50 },
-            { x: "fish", y: 50 }
+            { x: "fish", y: 50 },
           ]}
         />
       </VictoryChart>

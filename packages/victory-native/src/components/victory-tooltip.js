@@ -9,7 +9,7 @@ export default class extends VictoryTooltip {
   static defaultProps = Object.assign({}, VictoryTooltip.defaultProps, {
     labelComponent: <VictoryLabel />,
     flyoutComponent: <Flyout />,
-    groupComponent: <G />
+    groupComponent: <G />,
   });
 
   static defaultEvents = [
@@ -20,31 +20,31 @@ export default class extends VictoryTooltip {
           return [
             {
               target: "labels",
-              mutation: () => ({ active: true })
+              mutation: () => ({ active: true }),
             },
             {
               target: "data",
               mutation: () =>
                 targetProps.activateData
                   ? { active: true }
-                  : { active: undefined }
-            }
+                  : { active: undefined },
+            },
           ];
         },
         onPressOut: () => {
           return [
             {
               target: "labels",
-              mutation: () => ({ active: undefined })
+              mutation: () => ({ active: undefined }),
             },
             {
               target: "data",
-              mutation: () => ({ active: undefined })
-            }
+              mutation: () => ({ active: undefined }),
+            },
           ];
-        }
-      }
-    }
+        },
+      },
+    },
   ];
 
   renderTooltip(props) {
@@ -54,7 +54,7 @@ export default class extends VictoryTooltip {
       labelComponent,
       groupComponent,
       active,
-      renderInPortal
+      renderInPortal,
     } = evaluatedProps;
     if (!active) {
       return renderInPortal ? (
@@ -69,17 +69,17 @@ export default class extends VictoryTooltip {
     const children = [
       React.cloneElement(
         flyoutComponent,
-        this.getFlyoutProps(evaluatedProps, calculatedValues)
+        this.getFlyoutProps(evaluatedProps, calculatedValues),
       ),
       React.cloneElement(
         labelComponent,
-        this.getLabelProps(evaluatedProps, calculatedValues)
-      )
+        this.getLabelProps(evaluatedProps, calculatedValues),
+      ),
     ];
     const tooltip = React.cloneElement(
       groupComponent,
       { role: "presentation" },
-      children
+      children,
     );
     return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
   }

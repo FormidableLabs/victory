@@ -9,14 +9,14 @@ import {
   VictoryScatter,
   VictoryArea,
   VictoryStack,
-  VictoryTooltip
+  VictoryTooltip,
 } from "victory-native";
 import viewStyles from "../styles/view-styles";
 import { getTransitionData } from "../data";
 
 export const ChartScreen: React.FC = () => {
   const [transitionData, setTransitionData] = React.useState(
-    getTransitionData()
+    getTransitionData(),
   );
 
   React.useEffect(() => {
@@ -45,21 +45,21 @@ export const ChartScreen: React.FC = () => {
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },
-              { x: 3, y: 5 }
+              { x: 3, y: 5 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 2 },
               { x: 2, y: 1 },
-              { x: 3, y: 7 }
+              { x: 3, y: 7 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 3 },
               { x: 2, y: 4 },
-              { x: 3, y: 9 }
+              { x: 3, y: 9 },
             ]}
           />
         </VictoryGroup>
@@ -69,7 +69,7 @@ export const ChartScreen: React.FC = () => {
         <VictoryScatter
           labelComponent={<VictoryTooltip />}
           style={{
-            data: { fill: ({ datum }) => datum.fill }
+            data: { fill: ({ datum }) => datum.fill },
           }}
           data={[
             {
@@ -78,7 +78,7 @@ export const ChartScreen: React.FC = () => {
               fill: "red",
               symbol: "plus",
               size: 6,
-              label: "Red"
+              label: "Red",
             },
             {
               x: 2,
@@ -86,14 +86,14 @@ export const ChartScreen: React.FC = () => {
               fill: "magenta",
               size: 9,
               opacity: 0.4,
-              label: "Magenta"
+              label: "Magenta",
             },
             {
               x: 3,
               y: 4,
               fill: "orange",
               size: 5,
-              label: "Orange"
+              label: "Orange",
             },
             {
               x: 4,
@@ -101,7 +101,7 @@ export const ChartScreen: React.FC = () => {
               fill: "brown",
               symbol: "square",
               size: 6,
-              label: "Brown"
+              label: "Brown",
             },
             {
               x: 5,
@@ -109,8 +109,8 @@ export const ChartScreen: React.FC = () => {
               fill: "black",
               symbol: "triangleUp",
               size: 5,
-              label: "Black"
-            }
+              label: "Black",
+            },
           ]}
         />
       </VictoryChart>
@@ -124,8 +124,8 @@ export const ChartScreen: React.FC = () => {
           style={{
             data: {
               fill: "tomato",
-              width: 12
-            }
+              width: 12,
+            },
           }}
           animate={{
             onExit: {
@@ -133,9 +133,9 @@ export const ChartScreen: React.FC = () => {
               before: () => ({
                 y: 0,
                 fill: "orange",
-                label: "BYE"
-              })
-            }
+                label: "BYE",
+              }),
+            },
           }}
         />
       </VictoryChart>
@@ -148,7 +148,7 @@ export const ChartScreen: React.FC = () => {
               { x: "b", y: 3 },
               { x: "c", y: 5 },
               { x: "d", y: 4 },
-              { x: "e", y: 7 }
+              { x: "e", y: 7 },
             ]}
           />
           <VictoryArea
@@ -157,7 +157,7 @@ export const ChartScreen: React.FC = () => {
               { x: "b", y: 4 },
               { x: "c", y: 5 },
               { x: "d", y: 7 },
-              { x: "e", y: 5 }
+              { x: "e", y: 5 },
             ]}
           />
           <VictoryArea
@@ -166,7 +166,7 @@ export const ChartScreen: React.FC = () => {
               { x: "b", y: 2 },
               { x: "c", y: 6 },
               { x: "d", y: 2 },
-              { x: "e", y: 6 }
+              { x: "e", y: 6 },
             ]}
           />
           <VictoryArea
@@ -175,7 +175,7 @@ export const ChartScreen: React.FC = () => {
               { x: "b", y: 3 },
               { x: "c", y: 3 },
               { x: "d", y: 4 },
-              { x: "e", y: 7 }
+              { x: "e", y: 7 },
             ]}
           />
         </VictoryStack>

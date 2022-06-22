@@ -120,23 +120,23 @@ const absoluteMeasurementUnitsToPixels = {
   pt: 1.33,
   pc: 16,
   in: 96,
-  px: 1
+  px: 1,
 };
 const relativeMeasurementUnitsCoef = {
   em: 1,
-  ex: 0.5
+  ex: 0.5,
 };
 
 const coefficients = {
   heightOverlapCoef: 1.05, // Coefficient for height value to prevent overlap.
-  lineCapitalCoef: 1.15 // Coefficient for height value. Reserve space for capital chars.
+  lineCapitalCoef: 1.15, // Coefficient for height value. Reserve space for capital chars.
 };
 const defaultStyle = {
   lineHeight: 1,
   letterSpacing: "0px",
   fontSize: 0,
   angle: 0,
-  fontFamily: ""
+  fontFamily: "",
 };
 
 const _degreeToRadian = (angle) => (angle * Math.PI) / 180;
@@ -167,7 +167,7 @@ const _getSizeWithRotate = (axisSize, dependentSize, angle) => {
  */
 export const convertLengthToPixels = (
   length: string,
-  fontSize?: number
+  fontSize?: number,
 ): number => {
   const attribute = length.match(/[a-zA-Z%]+/)?.[0];
   const value = Number(length.match(/[0-9.,]+/));
@@ -198,7 +198,7 @@ const _prepareParams = (inputStyle, index) => {
     fontSize:
       typeof style.fontSize === "number"
         ? style.fontSize
-        : convertLengthToPixels(String(style.fontSize))
+        : convertLengthToPixels(String(style.fontSize)),
   });
 };
 
@@ -211,7 +211,7 @@ const _approximateTextWidthInternal = (text: string | string[], style) => {
     const len = line.toString().length;
     const { fontSize, letterSpacing, fontFamily } = _prepareParams(
       style,
-      index
+      index,
     );
     const fontData = _getFontData(fontFamily);
     const width =
@@ -268,9 +268,9 @@ export const _approximateTextSizeInternal = {
       : height;
     return {
       width: widthWithRotate,
-      height: heightWithRotate * coefficients.heightOverlapCoef
+      height: heightWithRotate * coefficients.heightOverlapCoef,
     };
-  }
+  },
 };
 
 /**
@@ -286,6 +286,6 @@ export const _approximateTextSizeInternal = {
  */
 export const approximateTextSize = (
   text: string | string[],
-  style?: TextSizeStyleInterface
+  style?: TextSizeStyleInterface,
 ): { width: number; height: number } =>
   _approximateTextSizeInternal.impl(text, style);

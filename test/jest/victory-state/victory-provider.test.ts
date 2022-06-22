@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react-hooks";
 describe("Victory Provider", () => {
   it("returns default values", () => {
     const { result } = renderHook(() => useVictoryContext((c) => c), {
-      wrapper: VictoryProvider
+      wrapper: VictoryProvider,
     });
 
     expect(result.current?.data).toHaveLength(0);
