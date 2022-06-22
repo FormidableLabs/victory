@@ -43,6 +43,7 @@ const DEFAULT_AXES = {
   dependent: <VictoryAxis dependentAxis />,
 };
 
+// TODO: This does not accept data
 const VictoryChart = ({
   defaultAxes = DEFAULT_AXES,
   groupComponent = <g />,

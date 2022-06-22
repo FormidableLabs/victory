@@ -63,8 +63,10 @@ function VictoryBar({
     ...props,
   });
   const scale = useScale();
-  const formattedData = useData();
   const domain = useDomain();
+
+  // TODO: Do we need to get this from context?
+  const formattedData = useData();
 
   const children = formattedData.map((datum: Datum, i: number) => {
     const { x, y, x0, y0 } = getBarPosition(

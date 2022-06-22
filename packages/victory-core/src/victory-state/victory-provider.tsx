@@ -29,10 +29,7 @@ export function VictoryProvider({
   const setChildProps = React.useCallback(
     (id: string, newProps: VictoryCalculatedStateProps) => {
       setProps((prevProps) => {
-        const currentData = prevProps.data || [];
-        const nextData = newProps.data || [];
-        const allChildData = Array.from(new Set([...currentData, ...nextData]));
-        return { ...prevProps, ...newProps, data: allChildData };
+        return { ...prevProps, ...newProps };
       });
     },
     [],

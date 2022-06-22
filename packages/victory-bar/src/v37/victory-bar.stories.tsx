@@ -12,14 +12,14 @@ export const Demo = (props) => {
   return <VictoryBar {...props} />;
 };
 
+Demo.args = {
+  barRatio: 0.5,
+};
+
 export const WithChart = (props) => {
   return (
     <VictoryChart {...props}>
       <VictoryBar />
     </VictoryChart>
   );
-};
-
-Demo.args = {
-  barRatio: 0.5,
 };
