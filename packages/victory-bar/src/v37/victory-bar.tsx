@@ -6,7 +6,7 @@ import {
   useData,
   useDomain,
   useScale,
-  useVictoryProps,
+  useVictoryProviderSync,
   VictoryCalculatedStateProps,
   withContainer,
 } from "victory-core";
@@ -34,31 +34,34 @@ export interface VictoryBarProps extends VictoryCalculatedStateProps {
   horizontal?: boolean;
 }
 
-const defaultProps: VictoryBarProps = {
-  data: [
+function VictoryBar({
+  alignment = "middle",
+  barRatio,
+  barWidth,
+  cornerRadius,
+  data = [
     { x: 1, y: 1 },
     { x: 2, y: 2 },
     { x: 3, y: 3 },
     { x: 4, y: 4 },
   ],
-  dataComponent: <Bar />,
-  groupComponent: <g role="presentation" />,
-  includeZero: true,
-  horizontal: false,
-  sortOrder: "ascending" as const,
-};
-
-function VictoryBar(props: VictoryBarProps) {
-  const {
-    alignment,
-    barRatio,
-    barWidth,
-    dataComponent,
-    cornerRadius,
-    horizontal,
-    groupComponent,
+  dataComponent = <Bar />,
+  groupComponent = <g role="presentation" />,
+  includeZero = true,
+  horizontal = false,
+  sortOrder = "ascending",
+  ...props
+}: VictoryBarProps) {
+  // Typescript works best when we provide defaults in the destructured
+  // component props. However, I am anticipating confusion about which props
+  // we will need to pass back up to the provider vs. the props that are only
+  // used in this component.
+  useVictoryProviderSync("bar", {
     data,
-  } = useVictoryProps<VictoryBarProps>("bar", props, defaultProps);
+    includeZero,
+    sortOrder,
+    ...props,
+  });
   const scale = useScale();
   const formattedData = useData();
   const domain = useDomain();
@@ -83,10 +86,9 @@ function VictoryBar(props: VictoryBarProps) {
       y0,
       datum,
     };
-    // TODO: Figure out how to type this properly
-    return React.cloneElement(dataComponent!, dataProps);
+    return React.cloneElement(dataComponent, dataProps);
   });
-  return React.cloneElement(groupComponent!, {}, children);
+  return React.cloneElement(groupComponent, {}, children);
 }
 
 // @ts-expect-error we need to work out what props this withContainer wrapper accepts

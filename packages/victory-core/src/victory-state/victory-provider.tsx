@@ -102,21 +102,15 @@ export function useDomain() {
 }
 
 // This function keeps props in sync betwen the VictoryProvider and child components
-export function useVictoryProps<T extends VictoryCalculatedStateProps>(
+export function useVictoryProviderSync(
   id: string,
-  props: T,
-  defaults: T,
+  props: VictoryCalculatedStateProps,
 ) {
   const setProps = useVictoryContext((value) => value.setProps);
 
-  const propsWithDefaults = {
-    ...defaults,
-    ...props,
-  };
-
   React.useEffect(() => {
-    setProps(propsWithDefaults);
+    setProps(props);
   }, []);
 
-  return propsWithDefaults;
+  return props;
 }
