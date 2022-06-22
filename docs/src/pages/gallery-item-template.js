@@ -26,7 +26,7 @@ const GalleryTemplate = ({ galleryItem }) => {
 };
 
 GalleryTemplate.propTypes = {
-  galleryItem: PropTypes.object
+  galleryItem: PropTypes.object,
 };
 
 export default withRouteData(GalleryTemplate);

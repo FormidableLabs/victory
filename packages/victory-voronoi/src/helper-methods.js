@@ -37,11 +37,11 @@ const getCalculatedValues = (props) => {
   const style = Helpers.getStyles(props.style, defaultStyles);
   const range = {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const domain = {
     x: Domain.getDomain(props, "x"),
-    y: Domain.getDomain(props, "y")
+    y: Domain.getDomain(props, "y"),
   };
   const scale = {
     x: Scale.getBaseScale(props, "x")
@@ -49,7 +49,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x : range.y)
+      .range(props.horizontal ? range.x : range.y),
   };
 
   let data = Data.getData(props);
@@ -94,7 +94,7 @@ export const getBaseProps = (props, fallbackProps) => {
     theme,
     width,
     labels,
-    name
+    name,
   } = props;
   const initialChildProps = {
     parent: {
@@ -109,8 +109,8 @@ export const getBaseProps = (props, fallbackProps) => {
       origin,
       polar,
       padding,
-      name
-    }
+      name,
+    },
   };
 
   return data.reduce((childProps, datum, index) => {
@@ -127,7 +127,7 @@ export const getBaseProps = (props, fallbackProps) => {
       polygon,
       origin,
       size: props.size,
-      style: style.data
+      style: style.data,
     };
 
     childProps[eventKey] = { data: dataProps };

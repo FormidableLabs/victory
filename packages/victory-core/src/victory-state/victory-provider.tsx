@@ -27,7 +27,7 @@ export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
     (newProps: VictoryCalculatedStateProps) => {
       _setProps((prevProps) => ({ ...prevProps, ...newProps }));
     },
-    []
+    [],
   );
 
   const data = React.useMemo(() => {
@@ -37,16 +37,16 @@ export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
   const domain = React.useMemo(() => {
     return {
       x: getDomain(_props, "x"),
-      y: getDomain(_props, "y")
+      y: getDomain(_props, "y"),
     };
   }, [_props]);
 
   const range = React.useMemo(
     () => ({
       x: getRange(_props, "x"),
-      y: getRange(_props, "y")
+      y: getRange(_props, "y"),
     }),
-    [_props]
+    [_props],
   );
 
   const scale = React.useMemo(() => {
@@ -60,7 +60,7 @@ export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
 
     return {
       x: xScaleFn,
-      y: yScaleFn
+      y: yScaleFn,
     };
   }, [_props, domain, range]);
 
@@ -68,7 +68,7 @@ export function VictoryProvider({ children, ...props }: VictoryProviderProps) {
     scale,
     data,
     domain,
-    setProps
+    setProps,
   };
 
   return (
@@ -82,7 +82,7 @@ export function useVictoryContext<T>(selector: (value: ContextType) => T): T {
   return useContextSelector<ContextValue, T>(VictoryContext, (context) => {
     if (!context) {
       throw new Error(
-        "useVictoryContext must be used within a VictoryProvider"
+        "useVictoryContext must be used within a VictoryProvider",
       );
     }
     return selector(context);
@@ -105,13 +105,13 @@ export function useDomain() {
 export function useVictoryProps<T extends VictoryCalculatedStateProps>(
   id: string,
   props: T,
-  defaults: T
+  defaults: T,
 ) {
   const setProps = useVictoryContext((value) => value.setProps);
 
   const propsWithDefaults = {
     ...defaults,
-    ...props
+    ...props,
   };
 
   React.useEffect(() => {

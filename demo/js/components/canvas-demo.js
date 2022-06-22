@@ -10,7 +10,7 @@ import {
   VictoryChart,
   VictoryLine,
   VictoryScatter,
-  CanvasPoint
+  CanvasPoint,
 } from "victory";
 import { range, random } from "lodash";
 
@@ -77,8 +77,8 @@ const populationData = [
       { year: 2016, value: 322941311 },
       { year: 2017, value: 324985539 },
       { year: 2018, value: 326687501 },
-      { year: 2019, value: 328239523 }
-    ]
+      { year: 2019, value: 328239523 },
+    ],
   },
   {
     country: "United Kingdom",
@@ -143,8 +143,8 @@ const populationData = [
       { year: 2017, value: 66058859 },
       { year: 2018, value: 66460344 },
       { year: 2019, value: 66834405 },
-      { year: 2020, value: null }
-    ]
+      { year: 2020, value: null },
+    ],
   },
   {
     country: "China",
@@ -209,9 +209,9 @@ const populationData = [
       { year: 2017, value: 1386395000 },
       { year: 2018, value: 1392730000 },
       { year: 2019, value: 1397715000 },
-      { year: 2020, value: null }
-    ]
-  }
+      { year: 2020, value: null },
+    ],
+  },
 ];
 
 const containerStyle = {
@@ -219,13 +219,13 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
   border: "1px solid #ccc",
   margin: "2%",
-  maxWidth: "40%"
+  maxWidth: "40%",
 };
 
 const formatPopulation = (value) => {
@@ -252,7 +252,7 @@ const CanvasDemo = () => {
     return range(20).map((i) => {
       return {
         x: i,
-        y: Math.random()
+        y: Math.random(),
       };
     });
   };
@@ -260,7 +260,7 @@ const CanvasDemo = () => {
   const getStyles = () => {
     const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
     return {
-      fill: colors[random(0, 5)]
+      fill: colors[random(0, 5)],
     };
   };
 
@@ -283,7 +283,7 @@ const CanvasDemo = () => {
         {populationData.map(({ country, values }) => {
           const data = values.map(({ year, value }) => ({
             x: year,
-            y: value
+            y: value,
           }));
           return (
             <VictoryLine
@@ -311,7 +311,7 @@ const CanvasDemo = () => {
           animate
           data={barData}
           style={{
-            data: barStyle
+            data: barStyle,
           }}
         />
       </VictoryChart>

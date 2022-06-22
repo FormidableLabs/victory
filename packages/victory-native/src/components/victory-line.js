@@ -14,8 +14,8 @@ const NativeVictoryLine = wrapCoreComponent({
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <VictoryClipContainer />,
-    width: Dimensions.get("window").width
-  })
+    width: Dimensions.get("window").width,
+  }),
 });
 
 export default NativeVictoryLine;

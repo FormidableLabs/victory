@@ -25,8 +25,8 @@ defaultConfig.watchFolders = [root];
 defaultConfig.transformer.getTransformOptions = async () => ({
   transform: {
     experimentalImportSupport: false,
-    inlineRequires: true
-  }
+    inlineRequires: true,
+  },
 });
 
 /**
@@ -37,8 +37,8 @@ defaultConfig.transformer.getTransformOptions = async () => ({
 const modules = ["react", "react-native-svg"];
 defaultConfig.resolver.blacklistRE = blacklist(
   modules.map(
-    (m) => new RegExp(`^${escape(path.join(root, "node_modules", m))}\\/.*$`)
-  )
+    (m) => new RegExp(`^${escape(path.join(root, "node_modules", m))}\\/.*$`),
+  ),
 );
 defaultConfig.resolver.extraNodeModules = modules.reduce((acc, name) => {
   acc[name] = path.join(__dirname, "node_modules", name);

@@ -7,7 +7,7 @@ import type { DomainPropType, ScaleXYPropType } from "../types/prop-types";
 function transformTarget(
   target: number,
   matrix: DOMMatrix,
-  dimension: "x" | "y"
+  dimension: "x" | "y",
 ) {
   const { a, d, e, f } = matrix;
   return dimension === "y" ? d * target + f : a * target + e;
@@ -23,7 +23,7 @@ interface ReactNativeTouchEvent extends Event {
   locationY: number;
 }
 function isNativeTouchEvent(
-  nativeEvent: Event | undefined
+  nativeEvent: Event | undefined,
 ): nativeEvent is ReactNativeTouchEvent {
   return !!(
     nativeEvent &&
@@ -41,7 +41,7 @@ function isReactTouchEvent(evt: React.SyntheticEvent): evt is React.TouchEvent {
 
 export function getParentSVG(
   evt: Pick<React.SyntheticEvent, "target"> &
-    Partial<Pick<React.SyntheticEvent, "nativeEvent">>
+    Partial<Pick<React.SyntheticEvent, "nativeEvent">>,
 ): SVGElement {
   if (isNativeTouchEvent(evt.nativeEvent)) {
     // @ts-expect-error Seems like a superfluous check.
@@ -59,14 +59,14 @@ export function getParentSVG(
 
 export function getSVGEventCoordinates(
   evt: React.SyntheticEvent,
-  svg?: SVGElement
+  svg?: SVGElement,
 ): SVGCoordinateType {
   if (isNativeTouchEvent(evt.nativeEvent)) {
     // react-native override. relies on the RN.View being the _exact_ same size as its child SVG.
     // this should be fine: the svg is the only child of View and the View shirks to its children
     return {
       x: evt.nativeEvent.locationX,
-      y: evt.nativeEvent.locationY
+      y: evt.nativeEvent.locationY,
     };
   }
   const location = isReactTouchEvent(evt)
@@ -76,20 +76,20 @@ export function getSVGEventCoordinates(
   const matrix = getTransformationMatrix(svg as SVGGraphicsElement);
   return {
     x: transformTarget(location.clientX, matrix, "x"),
-    y: transformTarget(location.clientY, matrix, "y")
+    y: transformTarget(location.clientY, matrix, "y"),
   };
 }
 
 export function getDomainCoordinates(
   props: Pick<VictoryCommonProps, "scale" | "horizontal">,
-  domain?: DomainPropType
+  domain?: DomainPropType,
 ): DomainPropType {
   const { horizontal } = props;
   const scale = props.scale as ScaleXYPropType;
   // FIXME: add support for DomainTuple: [number, number]
   const domainObj: any = domain || {
     x: scale.x.domain(),
-    y: scale.y.domain()
+    y: scale.y.domain(),
   };
   return {
     x: horizontal
@@ -97,7 +97,7 @@ export function getDomainCoordinates(
       : [scale.x(domainObj.x[0]), scale.x(domainObj.x[1])],
     y: horizontal
       ? [scale.x(domainObj.x[0]), scale.x(domainObj.x[1])]
-      : [scale.y(domainObj.y[0]), scale.y(domainObj.y[1])]
+      : [scale.y(domainObj.y[0]), scale.y(domainObj.y[1])],
   };
 }
 
@@ -106,13 +106,13 @@ export function getDataCoordinates(
   props: any,
   scale: ScaleXYPropType,
   x: number,
-  y: number
+  y: number,
 ): SVGCoordinateType {
   const { polar, horizontal } = props;
   if (!polar) {
     return {
       x: horizontal ? scale.x.invert(y) : scale.x.invert(x),
-      y: horizontal ? scale.y.invert(x) : scale.y.invert(y)
+      y: horizontal ? scale.y.invert(x) : scale.y.invert(y),
     };
   } else {
     const origin = props.origin || { x: 0, y: 0 };
@@ -122,7 +122,7 @@ export function getDataCoordinates(
     const angle = (-Math.atan2(baseY, baseX) + Math.PI * 2) % (Math.PI * 2);
     return {
       x: scale.x.invert(angle),
-      y: scale.y.invert(radius)
+      y: scale.y.invert(radius),
     };
   }
 }
@@ -134,12 +134,12 @@ export function getBounds(props: ComputedCommonProps): SVGCoordinateBounds {
   const makeBound = (a: number, b: number) => {
     return [
       Collection.getMinValue([a, b]) as number,
-      Collection.getMaxValue([a, b]) as number
+      Collection.getMaxValue([a, b]) as number,
     ] as const;
   };
   return {
     x: makeBound(point1.x, point2.x),
-    y: makeBound(point1.y, point2.y)
+    y: makeBound(point1.y, point2.y),
   };
 }
 

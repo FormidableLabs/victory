@@ -7,13 +7,13 @@ module.exports = {
       options: {
         rule: {
           test: [/\.stories\.(jsx?|tsx?)$/],
-          include: [path.resolve(__dirname, "../stories")]
+          include: [path.resolve(__dirname, "../stories")],
         },
         loaderOptions: {
-          prettierConfig: { printWidth: 80, singleQuote: false }
-        }
-      }
-    }
+          prettierConfig: { printWidth: 80, singleQuote: false },
+        },
+      },
+    },
   ],
-  stories: ["../**/*.stories.(js|jsx|ts|tsx)"]
+  stories: ["../stories/*.stories.(js|jsx|ts|tsx)"],
 };

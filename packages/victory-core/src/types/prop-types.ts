@@ -3,11 +3,11 @@ import {
   ScaleLinear,
   ScaleLogarithmic,
   ScalePower,
-  ScaleTime
+  ScaleTime,
 } from "victory-vendor/d3-scale";
 import {
   AnimationEasing,
-  AnimationStyle
+  AnimationStyle,
 } from "../victory-animation/victory-animation";
 import { StringOrNumberOrCallback } from "./callbacks";
 
@@ -78,13 +78,13 @@ export interface EventPropTypeInterface<TTarget, TEventKey> {
       | {
           (
             event: React.SyntheticEvent<any>,
-            props?: any
+            props?: any,
           ): EventCallbackInterface<TTarget, TEventKey>;
         }
       | {
           (
             event: React.SyntheticEvent<any>,
-            props?: any
+            props?: any,
           ): EventCallbackInterface<TTarget, TEventKey>[];
         }
       | {
@@ -102,8 +102,14 @@ export interface D3Scale<TRange = any> {
   base?: () => number;
   ticks: (count?: number) => number[];
   tickFormat: (count?: number) => (d: number) => string;
-  domain: () => number[];
-  range: () => TRange[];
+  domain: {
+    (): number[];
+    (domain: NumberValue[]): D3Scale<TRange>;
+  };
+  range: {
+    (): TRange[];
+    (range: TRange): D3Scale<TRange>;
+  };
   copy: () => this;
   invert: (value: number) => number;
 }

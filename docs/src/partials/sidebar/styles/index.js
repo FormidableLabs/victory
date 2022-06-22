@@ -11,5 +11,5 @@ export {
   SidebarSectionSublist,
   SidebarListItem,
   SidebarListItemAnchorLink,
-  SidebarListItemLink
+  SidebarListItemLink,
 };

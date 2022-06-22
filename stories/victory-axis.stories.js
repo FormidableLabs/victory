@@ -14,16 +14,16 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const defaultChartProps = {
   style: parentStyle,
-  theme: VictoryTheme.material
+  theme: VictoryTheme.material,
 };
 
 const getTimeValues = (num) => {
@@ -49,7 +49,7 @@ const getRandomValues = (num, seed) => {
 
 export default {
   title: "VictoryAxis",
-  component: VictoryAxis
+  component: VictoryAxis,
 };
 
 export const DefaultRendering = () => {
@@ -80,7 +80,7 @@ export const AxisValue = () => {
             new Date(1985, 1, 1),
             new Date(1995, 1, 1),
             new Date(2005, 1, 1),
-            new Date(2015, 1, 1)
+            new Date(2015, 1, 1),
           ]}
           tickFormat={(t) => t.getFullYear()}
         />
@@ -91,7 +91,7 @@ export const AxisValue = () => {
           data={[
             { x: "a", y: 1 },
             { x: "b", y: 2 },
-            { x: "c", y: 5 }
+            { x: "c", y: 5 },
           ]}
         />
         <VictoryAxis dependentAxis axisValue="b" />
@@ -179,7 +179,7 @@ export const WithDomain = () => {
             { x: 1, y: 2 },
             { x: 1, y: 3 },
             { x: 2, y: 4 },
-            { x: 3, y: 3 }
+            { x: 3, y: 3 },
           ]}
         />
         <VictoryAxis dependentAxis />
@@ -192,7 +192,7 @@ export const WithDomain = () => {
             { x: 1, y: 2 },
             { x: 1, y: 3 },
             { x: 2, y: 4 },
-            { x: 3, y: 3 }
+            { x: 3, y: 3 },
           ]}
         />
         <VictoryAxis dependentAxis invertAxis />
@@ -303,7 +303,7 @@ export const Style = () => {
             axisLabel: { fontSize: 20, padding: 30 },
             grid: { stroke: ({ tick }) => (tick > 0.5 ? "red" : "grey") },
             ticks: { stroke: "grey", size: 5 },
-            tickLabels: { fontSize: 15, padding: 5 }
+            tickLabels: { fontSize: 15, padding: 5 },
           }}
         />
       </VictoryChart>

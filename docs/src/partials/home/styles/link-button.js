@@ -9,7 +9,7 @@ const LinkButton = styled(({ isExternal, noMargin, ...props }) =>
     <a {...props} href={props.to} target="_blank" rel="noopener noreferrer" />
   ) : (
     <Link {...props} />
-  )
+  ),
 )`
   background-color: ${({ bg, theme }) => bg || theme.color.white};
   color: ${({ color, theme }) => color || theme.color.black};

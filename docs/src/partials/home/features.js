@@ -7,7 +7,7 @@ import LazyImage from "../lazy-image";
 import {
   LandingSectionWrapper,
   LandingSectionContent,
-  DropShadow
+  DropShadow,
 } from "./styles";
 
 const SectionHeading = styled.h2`
@@ -131,11 +131,11 @@ const featureProps = {
   title: PropTypes.string,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   description: PropTypes.string,
-  code: PropTypes.string
+  code: PropTypes.string,
 };
 
 Features.propTypes = {
-  featureArray: PropTypes.arrayOf(PropTypes.shape(featureProps))
+  featureArray: PropTypes.arrayOf(PropTypes.shape(featureProps)),
 };
 
 export default Features;

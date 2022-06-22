@@ -9,12 +9,12 @@ import {
   VictoryLine,
   VictoryStack,
   VictoryBar,
-  VictoryAxis
+  VictoryAxis,
 } from "victory";
 
 const scatterData = times(20, (i) => ({
   x: (i - 10) / 3,
-  y: i / 2 - 2 * Math.random() - 4
+  y: i / 2 - 2 * Math.random() - 4,
 }));
 
 const toInteger = (number) => parseInt(number).toString();
@@ -24,7 +24,7 @@ const DemoComponent = ({ theme }) => {
     { transform: "translate(0, -15)" },
     { transform: "translate(180, -40)" },
     { transform: "translate(-10, 140)" },
-    { transform: "translate(180, 140)" }
+    { transform: "translate(180, 140)" },
   ];
   return (
     <svg
@@ -33,7 +33,7 @@ const DemoComponent = ({ theme }) => {
       aria-labelledby="title desc"
       style={{
         height: "auto",
-        width: "100%"
+        width: "100%",
       }}
     >
       <g transform={positions[0].transform}>
@@ -76,48 +76,48 @@ const DemoComponent = ({ theme }) => {
               data={[
                 {
                   x: "A",
-                  y: 1
+                  y: 1,
                 },
                 {
                   x: "B",
-                  y: 3
+                  y: 3,
                 },
                 {
                   x: "C",
-                  y: 3
-                }
+                  y: 3,
+                },
               ]}
             />
             <VictoryBar
               data={[
                 {
                   x: "A",
-                  y: 2
+                  y: 2,
                 },
                 {
                   x: "B",
-                  y: 1
+                  y: 1,
                 },
                 {
                   x: "C",
-                  y: 3
-                }
+                  y: 3,
+                },
               ]}
             />
             <VictoryBar
               data={[
                 {
                   x: "A",
-                  y: 3
+                  y: 3,
                 },
                 {
                   x: "B",
-                  y: 1
+                  y: 1,
                 },
                 {
                   x: "C",
-                  y: 1
-                }
+                  y: 1,
+                },
               ]}
             />
           </VictoryStack>
@@ -128,7 +128,7 @@ const DemoComponent = ({ theme }) => {
 };
 
 DemoComponent.propTypes = {
-  theme: PropTypes.object
+  theme: PropTypes.object,
 };
 
 export default DemoComponent;

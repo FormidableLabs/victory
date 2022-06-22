@@ -20,7 +20,7 @@ export function getRange(
     width = DEFAULT_WIDTH,
     ...props
   }: RangeProps,
-  axis: AxisType
+  axis: AxisType,
 ) {
   const rangeFromProps = getValueForAxis<RangeTuple>(range, axis);
 
@@ -32,7 +32,7 @@ export function getRange(
   const padding = getPadding({ padding: props.padding }) as Padding;
   const rangeForAxis = {
     x: [padding.left, width - padding.right],
-    y: [height - padding.top, padding.bottom]
+    y: [height - padding.top, padding.bottom],
   };
 
   return rangeForAxis[axis];

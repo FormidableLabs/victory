@@ -16,7 +16,7 @@ export default class App extends React.Component {
       arrayData: this.getArrayData(),
       groupedData: this.getGroupedData(),
       multiTransitionData: this.getMultiTransitionData(),
-      areaTransitionData: this.getAreaTransitionData()
+      areaTransitionData: this.getAreaTransitionData(),
     };
   }
 
@@ -27,7 +27,7 @@ export default class App extends React.Component {
         groupedData: this.getGroupedData(),
         multiTransitionData: this.getMultiTransitionData(),
         areaTransitionData: this.getAreaTransitionData(),
-        style: this.getStyles()
+        style: this.getStyles(),
       });
     }, 3000);
   }
@@ -52,7 +52,7 @@ export default class App extends React.Component {
     return range(20).map((i) => {
       return {
         x: i,
-        y: Math.random()
+        y: Math.random(),
       };
     });
   }
@@ -62,24 +62,24 @@ export default class App extends React.Component {
       return [
         {
           x: "rabbits",
-          y: random(1, 5)
+          y: random(1, 5),
         },
         {
           x: "cats",
-          y: random(1, 10)
+          y: random(1, 10),
         },
         {
           x: "dogs",
-          y: random(2, 10)
+          y: random(2, 10),
         },
         {
           x: "birds",
-          y: random(2, 10)
+          y: random(2, 10),
         },
         {
           x: "frogs",
-          y: random(2, 15)
-        }
+          y: random(2, 15),
+        },
       ];
     });
   }
@@ -91,13 +91,13 @@ export default class App extends React.Component {
   getStyles() {
     const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
     return {
-      fill: colors[random(0, 5)]
+      fill: colors[random(0, 5)],
     };
   }
 
   render() {
     const style = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     const containerStyle = {
@@ -105,7 +105,7 @@ export default class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     return (
@@ -148,11 +148,11 @@ export default class App extends React.Component {
         <VictoryChart style={style}>
           <VictoryBar
             animate={{
-              animationWhitelist: ["style"]
+              animationWhitelist: ["style"],
             }}
             data={this.state.data}
             style={{
-              data: this.state.style
+              data: this.state.style,
             }}
           />
         </VictoryChart>
@@ -160,11 +160,11 @@ export default class App extends React.Component {
         <VictoryChart style={style}>
           <VictoryBar
             animate={{
-              animationWhitelist: ["data"]
+              animationWhitelist: ["data"],
             }}
             data={this.state.data}
             style={{
-              data: this.state.style
+              data: this.state.style,
             }}
           />
         </VictoryChart>

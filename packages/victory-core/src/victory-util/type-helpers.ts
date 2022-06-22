@@ -3,12 +3,12 @@ import {
   AxisType,
   Tuple,
   Datum,
-  DatumValue
+  DatumValue,
 } from "../types/prop-types";
 
 export function hasValueForAxis<T = unknown>(
   value: unknown | ForAxes<T>,
-  axis: AxisType
+  axis: AxisType,
 ): value is ForAxes<T> {
   if (typeof value === "object" && value !== null) {
     return axis in value;
@@ -22,7 +22,7 @@ export function isTuple<T = unknown>(value: unknown): value is Tuple<T> {
 
 export function getValueForAxis<T = unknown>(
   value: T | ForAxes<T> | undefined,
-  axis: AxisType
+  axis: AxisType,
 ): T | undefined {
   if (hasValueForAxis<T>(value, axis)) {
     return value[axis] as T;
@@ -40,7 +40,7 @@ export function isDate(value: unknown): value is Date {
 }
 
 export function isKeyValueObject(
-  datum: Datum
+  datum: Datum,
 ): datum is { [key: string]: DatumValue } {
   return (
     typeof datum === "object" &&

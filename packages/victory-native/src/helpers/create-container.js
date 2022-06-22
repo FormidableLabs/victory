@@ -12,9 +12,9 @@ export const createContainer = makeCreateContainerFunction(
     voronoi: [voronoiContainerMixin],
     selection: [selectionContainerMixin],
     brush: [brushContainerMixin],
-    cursor: [cursorContainerMixin]
+    cursor: [cursorContainerMixin],
   },
-  VictoryContainer
+  VictoryContainer,
 );
 
 export default createContainer;

@@ -9,7 +9,7 @@ import {
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface
+  VictoryStyleInterface,
 } from "victory-core";
 
 export type VictoryGroupTTargetType = "data" | "labels" | "parent";

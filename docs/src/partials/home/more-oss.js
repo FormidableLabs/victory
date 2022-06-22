@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {
   LinkButton,
   LandingSectionWrapper,
-  LandingSectionContent
+  LandingSectionContent,
 } from "./styles";
 import importedTheme from "../../styles/theme";
 
@@ -140,7 +140,7 @@ const MoreOSS = ({ ossArray, link }) => (
 
 MoreOSS.propTypes = {
   link: PropTypes.shape({ location: PropTypes.string, text: PropTypes.string }),
-  ossArray: PropTypes.array
+  ossArray: PropTypes.array,
 };
 
 export default MoreOSS;

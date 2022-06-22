@@ -37,7 +37,7 @@ VText.propTypes = {
   style: PropTypes.object,
   transform: PropTypes.string,
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 export default VText;

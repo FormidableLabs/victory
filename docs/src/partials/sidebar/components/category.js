@@ -5,7 +5,7 @@ import isEmpty from "lodash/isEmpty";
 import {
   SidebarSectionHeading,
   SidebarSectionList,
-  SidebarSectionSublist
+  SidebarSectionSublist,
 } from "../styles";
 
 const Category = ({ content, title, subCategories }) => {
@@ -39,10 +39,10 @@ Category.propTypes = {
   subCategories: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
-      content: PropTypes.array
-    })
+      content: PropTypes.array,
+    }),
   ),
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 
 export default Category;

@@ -6,7 +6,7 @@ import {
   StringOrNumberOrCallback,
   VictoryCommonProps,
   VictoryStyleInterface,
-  VictoryStyleObject
+  VictoryStyleObject,
 } from "victory-core";
 
 export type AxesType = {

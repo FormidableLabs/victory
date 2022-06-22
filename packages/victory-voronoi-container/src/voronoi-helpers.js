@@ -6,7 +6,7 @@ import {
   isEmpty,
   includes,
   isString,
-  isRegExp
+  isRegExp,
 } from "lodash";
 import isEqual from "react-fast-compare";
 import Delaunay from "delaunay-find/lib/index.js";
@@ -35,7 +35,7 @@ const VoronoiHelpers = {
   getDatasets(props) {
     const minDomain = {
       x: Collection.getMinValue(props.domain.x),
-      y: Collection.getMinValue(props.domain.y)
+      y: Collection.getMinValue(props.domain.y),
     };
     const children = React.Children.toArray(props.children);
     const addMeta = (data, name, child) => {
@@ -53,9 +53,9 @@ const VoronoiHelpers = {
             eventKey: index,
             childName: name,
             continuous,
-            style
+            style,
           },
-          datum
+          datum,
         );
       });
     };
@@ -124,7 +124,7 @@ const VoronoiHelpers = {
     const withinRadius = this.withinRadius(
       scaledData[index],
       mousePosition,
-      props.radius
+      props.radius,
     );
     const points = withinRadius
       ? this.findPoints(datasets, datasets[index])
@@ -153,7 +153,7 @@ const VoronoiHelpers = {
         childName,
         eventKey,
         target,
-        mutation: () => ({ active: true })
+        mutation: () => ({ active: true }),
       };
     });
   },
@@ -178,7 +178,7 @@ const VoronoiHelpers = {
         childName,
         eventKey,
         target,
-        mutation: () => null
+        mutation: () => null,
       };
     });
   },
@@ -189,8 +189,8 @@ const VoronoiHelpers = {
       {
         target: "parent",
         eventKey: "parent",
-        mutation: () => ({ activePoints, mousePosition, parentSVG, vIndex })
-      }
+        mutation: () => ({ activePoints, mousePosition, parentSVG, vIndex }),
+      },
     ];
   },
 
@@ -211,7 +211,7 @@ const VoronoiHelpers = {
     this.onDeactivated(targetProps, activePoints);
     const inactiveMutations = activePoints.length
       ? activePoints.map((point) =>
-          this.getInactiveMutations(targetProps, point)
+          this.getInactiveMutations(targetProps, point),
         )
       : [];
     return this.getParentMutation([]).concat(...inactiveMutations);
@@ -226,22 +226,22 @@ const VoronoiHelpers = {
       this.onDeactivated(targetProps, activePoints);
       const inactiveMutations = activePoints.length
         ? activePoints.map((point) =>
-            this.getInactiveMutations(targetProps, point)
+            this.getInactiveMutations(targetProps, point),
           )
         : [];
       return this.getParentMutation([], mousePosition, parentSVG).concat(
-        ...inactiveMutations
+        ...inactiveMutations,
       );
     }
     const { points = [], index } = this.getVoronoiPoints(
       targetProps,
-      mousePosition
+      mousePosition,
     );
     const parentMutations = this.getParentMutation(
       points,
       mousePosition,
       parentSVG,
-      index
+      index,
     );
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
@@ -253,12 +253,12 @@ const VoronoiHelpers = {
         : [];
       const inactiveMutations = activePoints.length
         ? activePoints.map((point) =>
-            this.getInactiveMutations(targetProps, point)
+            this.getInactiveMutations(targetProps, point),
           )
         : [];
       return parentMutations.concat(...inactiveMutations, ...activeMutations);
     }
-  }
+  },
 };
 
 export default {
@@ -266,6 +266,6 @@ export default {
   onMouseMove: throttle(
     VoronoiHelpers.onMouseMove.bind(VoronoiHelpers),
     32, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false }
-  )
+    { leading: true, trailing: false },
+  ),
 };

@@ -21,7 +21,7 @@ const getTimeData = (num, seed) => {
   return range(num).map((v) => {
     return {
       x: new Date((current / num) * (v + 1)),
-      y: rand()
+      y: rand(),
     };
   });
 };
@@ -51,7 +51,7 @@ const getDescendingSmallData = () => {
     { x: 7, y: -0.2 },
     { x: 8, y: -0.5 },
     { x: 9, y: -1 },
-    { x: 10, y: -2 }
+    { x: 10, y: -2 },
   ];
 };
 
@@ -91,7 +91,7 @@ const getArrayData = (num, samples) => {
   return range(num).map((v) => {
     return {
       x: v + 1,
-      y: range(samples).map(() => rand())
+      y: range(samples).map(() => rand()),
     };
   });
 };
@@ -112,5 +112,5 @@ export {
   getFourQuadrantData,
   getArrayData,
   getStackedData,
-  getDescendingSmallData
+  getDescendingSmallData,
 };

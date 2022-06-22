@@ -51,7 +51,7 @@ export default class Timer {
     const subscriptionID = this.subscribers.push({
       startTime: now(),
       callback,
-      duration
+      duration,
     });
     this.activeSubscriptions++;
     this.start();

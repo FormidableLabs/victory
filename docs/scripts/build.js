@@ -8,7 +8,7 @@ const { log, error } = console; // eslint-disable-line no-undef
 // Main.
 const main = () =>
   build({
-    packageConfig: {}
+    packageConfig: {},
   });
 
 if (require.main === module) {

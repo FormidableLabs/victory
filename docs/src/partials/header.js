@@ -197,7 +197,7 @@ const Header = ({ className = "", onMenuClick }) => {
 
 Header.propTypes = {
   className: PropTypes.string,
-  onMenuClick: PropTypes.func
+  onMenuClick: PropTypes.func,
 };
 
 export default Header;

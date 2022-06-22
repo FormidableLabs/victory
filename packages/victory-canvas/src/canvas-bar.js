@@ -7,7 +7,7 @@ import {
   getBarWidth,
   getCornerRadius,
   getPolarBarPath,
-  getStyle
+  getStyle,
 } from "victory-bar";
 import { useCanvasContext } from "./hooks/use-canvas-context";
 import { CommonProps } from "victory-core";
@@ -23,13 +23,13 @@ const evaluateProps = (props) => {
   const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
   const cornerRadius = getCornerRadius(
     props.cornerRadius,
-    assign({}, props, { style, barWidth })
+    assign({}, props, { style, barWidth }),
   );
 
   return assign({}, props, {
     style,
     barWidth,
-    cornerRadius
+    cornerRadius,
   });
 };
 
@@ -69,7 +69,7 @@ const CanvasBar = (initialProps) => {
       ctx.fill(path);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
     },
-    [style, origin, polar]
+    [style, origin, polar],
   );
 
   // This will clear the previous bar without clearing the entire canvas
@@ -87,7 +87,7 @@ const CanvasBar = (initialProps) => {
         ctx.restore();
       }
     },
-    [draw, previousPath, style]
+    [draw, previousPath, style],
   );
 
   React.useEffect(() => {
@@ -103,7 +103,7 @@ const CanvasBar = (initialProps) => {
     cornerRadius,
     props,
     path2d,
-    clearPreviousPath
+    clearPreviousPath,
   ]);
 
   return null;
@@ -123,8 +123,8 @@ CanvasBar.propTypes = {
       topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
       bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
       bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func])
-    })
+      bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
+    }),
   ]),
   datum: PropTypes.object,
   getPath: PropTypes.func,
@@ -132,7 +132,7 @@ CanvasBar.propTypes = {
   width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
-  y0: PropTypes.number
+  y0: PropTypes.number,
 };
 
 export default CanvasBar;

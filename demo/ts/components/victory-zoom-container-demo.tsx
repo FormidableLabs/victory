@@ -17,12 +17,12 @@ import {
   DomainTuple,
   VictoryClipContainer,
   VictoryPortal,
-  VictoryTheme
+  VictoryTheme,
 } from "victory-core";
 
 const allData = range(0, 10, 0.001).map((x) => ({
   x,
-  y: (Math.sin((Math.PI * x) / 2) * x) / 10
+  y: (Math.sin((Math.PI * x) / 2) * x) / 10,
 }));
 
 interface CustomChartState {
@@ -38,13 +38,13 @@ class CustomChart extends React.Component<any, CustomChartState> {
     this.entireDomain = this.getEntireDomain(props);
 
     this.state = {
-      zoomedXDomain: this.entireDomain.x
+      zoomedXDomain: this.entireDomain.x,
     };
   }
 
   onDomainChange(domain: { x: DomainTuple; y: DomainTuple }) {
     this.setState({
-      zoomedXDomain: domain.x
+      zoomedXDomain: domain.x,
     });
   }
 
@@ -52,7 +52,7 @@ class CustomChart extends React.Component<any, CustomChartState> {
     const { zoomedXDomain } = this.state;
     const { data, maxPoints } = this.props;
     const filtered = data.filter(
-      (d: { x: number }) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]
+      (d: { x: number }) => d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1],
     );
 
     if (filtered.length > maxPoints) {
@@ -79,7 +79,7 @@ class CustomChart extends React.Component<any, CustomChartState> {
 
     return {
       x: xArr,
-      y: yArr
+      y: yArr,
     };
   }
 
@@ -127,7 +127,7 @@ interface VictoryZoomContainerDemoState {
 const parentStyle: React.CSSProperties = {
   border: "1px solid #ccc",
   margin: "2%",
-  maxWidth: "40%"
+  maxWidth: "40%",
 };
 
 const containerStyle: React.CSSProperties = {
@@ -135,7 +135,7 @@ const containerStyle: React.CSSProperties = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const makeData = () => range(-50, 75).map((i) => ({ x: i, y: Math.random() }));
@@ -155,9 +155,9 @@ export default class VictoryZoomContainerDemo extends React.Component<
       arrayData: this.getArrayData(),
       style: {
         stroke: "blue",
-        strokeWidth: 2
+        strokeWidth: 2,
       },
-      zoomDomain: this.getZoomDomain()
+      zoomDomain: this.getZoomDomain(),
     };
   }
 
@@ -167,7 +167,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
       this.setState({
         data: this.getData(),
         transitionData: this.getTransitionData(),
-        style: this.getStyles()
+        style: this.getStyles(),
       });
     }, 3000);
   }
@@ -180,7 +180,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
     const yZoomDomain: DomainTuple = [random(0, 0.4), random(0.6, 1)];
 
     return {
-      y: yZoomDomain
+      y: yZoomDomain,
     };
   }
 
@@ -195,7 +195,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
     return range(50).map((i) => {
       return {
         a: i + 20,
-        b: Math.random()
+        b: Math.random(),
       };
     });
   }
@@ -207,7 +207,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
     const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
     return {
       stroke: colors[random(0, 5)],
-      strokeWidth: random(1, 5)
+      strokeWidth: random(1, 5),
     };
   }
   render() {
@@ -240,13 +240,13 @@ export default class VictoryZoomContainerDemo extends React.Component<
             />
           }
           scale={{
-            x: "time"
+            x: "time",
           }}
         >
           <VictoryAxis tickFormat={(x) => new Date(x).getFullYear()} />
           <VictoryLine
             style={{
-              data: { stroke: "red", strokeWidth: 5 }
+              data: { stroke: "red", strokeWidth: 5 },
             }}
             data={[
               { x: new Date(1982, 1, 1), y: 125 },
@@ -256,7 +256,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
               { x: new Date(2001, 1, 1), y: 132 },
               { x: new Date(2005, 1, 1), y: 305 },
               { x: new Date(2011, 1, 1), y: 270 },
-              { x: new Date(2015, 1, 1), y: 470 }
+              { x: new Date(2015, 1, 1), y: 470 },
             ]}
           />
         </VictoryChart>
@@ -320,7 +320,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
           <VictoryLine
             style={{
               parent: parentStyle,
-              data: { stroke: "red", strokeWidth: 6 }
+              data: { stroke: "red", strokeWidth: 6 },
             }}
             events={[
               {
@@ -331,20 +331,20 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "orange" })
+                            style: merge({}, props.style, { stroke: "orange" }),
                           };
-                        }
+                        },
                       },
                       {
                         target: "labels",
                         mutation: () => {
                           return { text: "hey" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
             data={range(0, 100)}
             y={(d) => d * d}
@@ -358,7 +358,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
           <VictoryArea
             style={{
               parent: parentStyle,
-              data: { stroke: "#333", fill: "#888", opacity: 0.4 }
+              data: { stroke: "#333", fill: "#888", opacity: 0.4 },
             }}
             data={this.state.data}
             x="a"
@@ -417,32 +417,32 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "gold" })
+                          style: merge({}, props.style, { fill: "gold" }),
                         };
-                      }
+                      },
                     },
                     {
                       childName: "area-3",
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" })
+                          style: merge({}, props.style, { fill: "orange" }),
                         };
-                      }
+                      },
                     },
                     {
                       childName: "area-4",
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "red" })
+                          style: merge({}, props.style, { fill: "red" }),
                         };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
         >
           <VictoryLegend
@@ -456,7 +456,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
             data={[
               { name: "One", symbol: { fill: "tomato" } },
               { name: "Two", symbol: { fill: "orange" } },
-              { name: "Three", symbol: { fill: "gold" } }
+              { name: "Three", symbol: { fill: "gold" } },
             ]}
           />
           <VictoryAxis />
@@ -468,7 +468,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                 { x: "b", y: 3 },
                 { x: "c", y: 5 },
                 { x: "d", y: 4 },
-                { x: "e", y: 7 }
+                { x: "e", y: 7 },
               ]}
             />
             <VictoryArea
@@ -478,7 +478,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                 { x: "b", y: 4 },
                 { x: "c", y: 5 },
                 { x: "d", y: 7 },
-                { x: "e", y: 5 }
+                { x: "e", y: 5 },
               ]}
             />
             <VictoryArea
@@ -488,7 +488,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                 { x: "b", y: 2 },
                 { x: "c", y: 6 },
                 { x: "d", y: 2 },
-                { x: "e", y: 6 }
+                { x: "e", y: 6 },
               ]}
             />
             <VictoryArea
@@ -498,7 +498,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                 { x: "b", y: 3 },
                 { x: "c", y: 3 },
                 { x: "d", y: 4 },
-                { x: "e", y: 7 }
+                { x: "e", y: 7 },
               ]}
             />
           </VictoryStack>

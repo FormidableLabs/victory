@@ -4,7 +4,7 @@ import {
   VictoryContainer,
   VictoryLabel,
   LineSegment,
-  Helpers
+  Helpers,
 } from "victory-core";
 import { defaults, assign, isObject } from "lodash";
 import CursorHelpers from "./cursor-helpers";
@@ -21,27 +21,27 @@ export const cursorContainerMixin = (base) =>
         PropTypes.number,
         PropTypes.shape({
           x: PropTypes.number,
-          y: PropTypes.number
-        })
+          y: PropTypes.number,
+        }),
       ]),
       defaultCursorValue: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.shape({
           x: PropTypes.number,
-          y: PropTypes.number
-        })
+          y: PropTypes.number,
+        }),
       ]),
       disable: PropTypes.bool,
-      onCursorChange: PropTypes.func
+      onCursorChange: PropTypes.func,
     };
     static defaultProps = {
       ...VictoryContainer.defaultProps,
       cursorLabelComponent: <VictoryLabel />,
       cursorLabelOffset: {
         x: 5,
-        y: -10
+        y: -10,
       },
-      cursorComponent: <LineSegment />
+      cursorComponent: <LineSegment />,
     };
 
     static defaultEvents = (props) => {
@@ -66,9 +66,9 @@ export const cursorContainerMixin = (base) =>
               return props.disable
                 ? {}
                 : CursorHelpers.onMouseMove(evt, targetProps);
-            }
-          }
-        }
+            },
+          },
+        },
       ];
     };
 
@@ -83,7 +83,7 @@ export const cursorContainerMixin = (base) =>
         return {
           x: (domain.x[0] + domain.x[1]) / 2,
           y: (domain.y[0] + domain.y[1]) / 2,
-          [cursorDimension]: defaultCursorValue
+          [cursorDimension]: defaultCursorValue,
         };
       }
 
@@ -96,7 +96,7 @@ export const cursorContainerMixin = (base) =>
       if (typeof cursorLabelOffset === "number") {
         return {
           x: cursorLabelOffset,
-          y: cursorLabelOffset
+          y: cursorLabelOffset,
         };
       }
 
@@ -125,7 +125,7 @@ export const cursorContainerMixin = (base) =>
         height,
         name,
         horizontal,
-        theme
+        theme,
       } = props;
       const cursorDimension = CursorHelpers.getDimension(props);
       const cursorValue = this.getCursorPosition(props);
@@ -139,7 +139,7 @@ export const cursorContainerMixin = (base) =>
       const padding = this.getPadding(props);
       const cursorCoordinates = {
         x: horizontal ? scale.y(cursorValue.y) : scale.x(cursorValue.x),
-        y: horizontal ? scale.x(cursorValue.x) : scale.y(cursorValue.y)
+        y: horizontal ? scale.x(cursorValue.x) : scale.y(cursorValue.y),
       };
       if (cursorLabel) {
         let labelProps = defaults(
@@ -150,8 +150,8 @@ export const cursorContainerMixin = (base) =>
             y: cursorCoordinates.y + cursorLabelOffset.y,
             datum: cursorValue,
             active: true,
-            key: `${name}-cursor-label`
-          }
+            key: `${name}-cursor-label`,
+          },
         );
         if (Helpers.isTooltip(cursorLabelComponent)) {
           const tooltipTheme = (theme && theme.tooltip) || {};
@@ -161,15 +161,15 @@ export const cursorContainerMixin = (base) =>
           React.cloneElement(
             cursorLabelComponent,
             defaults({}, labelProps, {
-              text: Helpers.evaluateProp(cursorLabel, labelProps)
-            })
-          )
+              text: Helpers.evaluateProp(cursorLabel, labelProps),
+            }),
+          ),
         );
       }
 
       const cursorStyle = assign(
         { stroke: "black" },
-        cursorComponent.props.style
+        cursorComponent.props.style,
       );
       if (cursorDimension === "x" || cursorDimension === undefined) {
         newElements.push(
@@ -179,8 +179,8 @@ export const cursorContainerMixin = (base) =>
             x2: cursorCoordinates.x,
             y1: padding.top,
             y2: height - padding.bottom,
-            style: cursorStyle
-          })
+            style: cursorStyle,
+          }),
         );
       }
       if (cursorDimension === "y" || cursorDimension === undefined) {
@@ -191,8 +191,8 @@ export const cursorContainerMixin = (base) =>
             x2: width - padding.right,
             y1: cursorCoordinates.y,
             y2: cursorCoordinates.y,
-            style: cursorStyle
-          })
+            style: cursorStyle,
+          }),
         );
       }
       return newElements;
@@ -202,7 +202,7 @@ export const cursorContainerMixin = (base) =>
     getChildren(props) {
       return [
         ...React.Children.toArray(props.children),
-        ...this.getCursorElements(props)
+        ...this.getCursorElements(props),
       ];
     }
   };

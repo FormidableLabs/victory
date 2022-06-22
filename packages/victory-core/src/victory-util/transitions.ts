@@ -47,7 +47,7 @@ function getNodeTransitions(oldData, nextData) {
     entering:
       oldDataKeyed && getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
     exiting:
-      nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
+      nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed),
   };
 }
 
@@ -96,7 +96,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
       if (child && child.props && child.props.children && next[idx]) {
         return getTransitionsFromChildren(
           React.Children.toArray(old[idx].props.children),
-          React.Children.toArray(next[idx].props.children)
+          React.Children.toArray(next[idx].props.children),
         );
       }
       // get Transition entering and exiting nodes
@@ -106,7 +106,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
 
   const childrenTransitions = getTransitionsFromChildren(
     React.Children.toArray(oldChildren),
-    React.Children.toArray(nextChildren)
+    React.Children.toArray(nextChildren),
   );
   return {
     nodesWillExit,
@@ -117,7 +117,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     //       is a perfect match for the previous data and domain except
     //       for new nodes. In this case, we wouldn't want a delay before
     //       the new nodes appear.
-    nodesShouldEnter: false
+    nodesShouldEnter: false,
   };
 }
 
@@ -131,7 +131,7 @@ function getInitialChildProps(animate, data): TransitionProps {
   const after =
     animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
   return {
-    data: data.map((datum, idx) => assign({}, datum, after(datum, idx, data)))
+    data: data.map((datum, idx) => assign({}, datum, after(datum, idx, data))),
   };
 }
 
@@ -173,7 +173,7 @@ function getChildPropsOnExit(
   child,
   data,
   exitingNodes,
-  cb
+  cb,
 ): TransitionProps {
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
@@ -206,7 +206,7 @@ function getChildPropsBeforeEnter(
   child,
   data,
   enteringNodes,
-  cb
+  cb,
 ): TransitionProps {
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
@@ -235,7 +235,7 @@ function getChildPropsOnEnter(
   animate,
   data,
   enteringNodes,
-  cb
+  cb,
 ): TransitionProps {
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
@@ -293,7 +293,7 @@ export function getTransitionPropsFactory(props, state, setState) {
       props.animate && props.animate.onExit && props.animate.onExit.duration,
     load:
       props.animate && props.animate.onLoad && props.animate.onLoad.duration,
-    move: props.animate && props.animate.duration
+    move: props.animate && props.animate.duration,
   };
 
   const onLoad = (child, data, animate) => {
@@ -353,7 +353,7 @@ export function getTransitionPropsFactory(props, state, setState) {
     const animate: AnimatePropTypeInterface = defaults(
       {},
       props.animate,
-      child.props.animate
+      child.props.animate,
     );
     const defaultTransitions = child.props.polar
       ? child.type.defaultPolarTransitions || child.type.defaultTransitions
@@ -362,17 +362,17 @@ export function getTransitionPropsFactory(props, state, setState) {
     animate.onExit = defaults(
       {},
       animate.onExit,
-      defaultTransitions && defaultTransitions.onExit
+      defaultTransitions && defaultTransitions.onExit,
     );
     animate.onEnter = defaults(
       {},
       animate.onEnter,
-      defaultTransitions && defaultTransitions.onEnter
+      defaultTransitions && defaultTransitions.onEnter,
     );
     animate.onLoad = defaults(
       {},
       animate.onLoad,
-      defaultTransitions && defaultTransitions.onLoad
+      defaultTransitions && defaultTransitions.onLoad,
     );
 
     const childTransitions =
@@ -405,13 +405,13 @@ export function getTransitionPropsFactory(props, state, setState) {
           ? transitionDurations.move
           : child.props.animate && child.props.animate.duration;
       const animation = {
-        duration: nodesShouldEnter && enteringNodes ? enter : move
+        duration: nodesShouldEnter && enteringNodes ? enter : move,
       };
       return onEnter(
         enteringNodes,
         child,
         data,
-        assign({}, animate, animation)
+        assign({}, animate, animation),
       );
     } else if (!state && animate && animate.onExit) {
       // This is the initial render, and nodes may enter when props change. Because

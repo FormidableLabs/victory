@@ -27,7 +27,7 @@ const getData = () => {
     "orange",
     "turquoise",
     "tomato",
-    "greenyellow"
+    "greenyellow",
   ];
   return range(50).map(() => {
     return {
@@ -38,7 +38,7 @@ const getData = () => {
       low: random(0, 150),
       size: random(15) + 3,
       fill: colors[random(0, 6)],
-      opacity: random(0.3, 1)
+      opacity: random(0.3, 1),
     };
   });
 };
@@ -48,18 +48,18 @@ const containerStyle: React.CSSProperties = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const style: { [key: string]: React.CSSProperties } = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const data = [
   { x: new Date(2016, 6, 1), open: 9, close: 30, high: 56, low: 7 },
   { x: new Date(2016, 6, 2), open: 80, close: 40, high: 120, low: 10 },
   { x: new Date(2016, 6, 3), open: 50, close: 80, high: 90, low: 20 },
-  { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 }
+  { x: new Date(2016, 6, 4), open: 70, close: 22, high: 70, low: 5 },
 ];
 
 export default class VictoryCandlestickDemo extends React.Component<
@@ -71,7 +71,7 @@ export default class VictoryCandlestickDemo extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      data: props.data
+      data: props.data,
     };
   }
 
@@ -79,7 +79,7 @@ export default class VictoryCandlestickDemo extends React.Component<
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: getData()
+        data: getData(),
       });
     }, 2000);
   }
@@ -113,14 +113,14 @@ export default class VictoryCandlestickDemo extends React.Component<
                         mutation: (props) => {
                           return {
                             style: merge({}, props.style.labels, {
-                              fill: "orange"
-                            })
+                              fill: "orange",
+                            }),
                           };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
+                  },
+                },
               },
               {
                 target: "data",
@@ -130,14 +130,14 @@ export default class VictoryCandlestickDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "blue" })
+                            style: merge({}, props.style, { fill: "blue" }),
                           };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           />
         </svg>
@@ -164,14 +164,14 @@ export default class VictoryCandlestickDemo extends React.Component<
                       mutation: (props) => {
                         return {
                           style: merge({}, props.style.labels, {
-                            fill: "orange"
-                          })
+                            fill: "orange",
+                          }),
                         };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
+                },
+              },
             },
             {
               target: "data",
@@ -181,14 +181,14 @@ export default class VictoryCandlestickDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "blue" })
+                          style: merge({}, props.style, { fill: "blue" }),
                         };
-                      }
-                    }
+                      },
+                    },
                   ];
-                }
-              }
-            }
+                },
+              },
+            },
           ]}
         />
 
@@ -213,9 +213,9 @@ export default class VictoryCandlestickDemo extends React.Component<
             data: {
               stroke: "transparent",
               fill: ({ datum }) => datum.fill,
-              opacity: ({ datum }) => datum.opacity
+              opacity: ({ datum }) => datum.opacity,
             },
-            parent: style.parent
+            parent: style.parent,
           }}
         />
 

@@ -50,11 +50,11 @@ const getCalculatedValues = (props) => {
   const style = Helpers.getStyles(props.style, defaultStyles);
   const range = {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const domain = {
     x: Domain.getDomain(props, "x"),
-    y: Domain.getDomain(props, "y")
+    y: Domain.getDomain(props, "y"),
   };
   const scale = {
     x: Scale.getBaseScale(props, "x")
@@ -62,7 +62,7 @@ const getCalculatedValues = (props) => {
       .range(props.horizontal ? range.y : range.x),
     y: Scale.getBaseScale(props, "y")
       .domain(domain.y)
-      .range(props.horizontal ? range.x : range.y)
+      .range(props.horizontal ? range.x : range.y),
   };
   const origin = props.polar
     ? props.origin || Helpers.getPolarOrigin(props)
@@ -95,7 +95,7 @@ export const getBaseProps = (props, fallbackProps) => {
     width,
     labels,
     horizontal,
-    disableInlineStyles
+    disableInlineStyles,
   } = props;
   const initialChildProps = {
     parent: {
@@ -111,8 +111,8 @@ export const getBaseProps = (props, fallbackProps) => {
       polar,
       padding,
       name,
-      horizontal
-    }
+      horizontal,
+    },
   };
 
   return data.reduce((childProps, datum, index) => {
@@ -131,7 +131,7 @@ export const getBaseProps = (props, fallbackProps) => {
       size: getSize(datum, props),
       symbol: getSymbol(datum, props),
       style: disableInlineStyles ? {} : style.data,
-      disableInlineStyles
+      disableInlineStyles,
     };
 
     childProps[eventKey] = { data: dataProps };

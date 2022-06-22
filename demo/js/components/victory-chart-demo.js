@@ -14,7 +14,7 @@ import { VictoryScatter } from "victory-scatter/src/index";
 import {
   VictoryLabel,
   VictoryTheme,
-  VictoryClipContainer
+  VictoryClipContainer,
 } from "victory-core/src/index";
 
 const UPDATE_INTERVAL = 3000;
@@ -23,8 +23,8 @@ class Wrapper extends React.Component {
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node
-    ])
+      PropTypes.node,
+    ]),
   };
 
   renderChildren() {
@@ -47,7 +47,7 @@ class Wrapper extends React.Component {
 
 const dependentAxisTheme = {
   ...VictoryTheme.material,
-  ...{ dependentAxis: { orientation: "right" } }
+  ...{ dependentAxis: { orientation: "right" } },
 };
 
 class App extends React.Component {
@@ -60,7 +60,7 @@ class App extends React.Component {
       barData: this.getBarData(),
       barTransitionData: this.getBarTransitionData(),
       multiBarTransitionData: this.getMultiBarTransitionData(),
-      lineStyle: this.getStyles()
+      lineStyle: this.getStyles(),
     };
   }
 
@@ -74,7 +74,7 @@ class App extends React.Component {
         barTransitionData: this.getBarTransitionData(),
         multiBarTransitionData: this.getMultiBarTransitionData(),
         numericBarData: this.getNumericBarData(),
-        lineStyle: this.getStyles()
+        lineStyle: this.getStyles(),
       });
     }, UPDATE_INTERVAL);
   }
@@ -87,7 +87,7 @@ class App extends React.Component {
     return range(20).map((i) => {
       return {
         x: i,
-        y: Math.random()
+        y: Math.random(),
       };
     });
   }
@@ -97,16 +97,16 @@ class App extends React.Component {
       return [
         {
           x: random(1, 3),
-          y: random(1, 5)
+          y: random(1, 5),
         },
         {
           x: random(4, 7),
-          y: random(1, 10)
+          y: random(1, 10),
         },
         {
           x: random(9, 11),
-          y: random(1, 15)
-        }
+          y: random(1, 15),
+        },
       ];
     });
   }
@@ -116,16 +116,16 @@ class App extends React.Component {
       return [
         {
           x: "apples",
-          y: random(2, 5)
+          y: random(2, 5),
         },
         {
           x: "bananas",
-          y: random(2, 10)
+          y: random(2, 10),
         },
         {
           x: "oranges",
-          y: random(0, 15)
-        }
+          y: random(0, 15),
+        },
       ];
     });
   }
@@ -154,7 +154,7 @@ class App extends React.Component {
       "orange",
       "turquoise",
       "tomato",
-      "greenyellow"
+      "greenyellow",
     ];
     const symbols = [
       "circle",
@@ -163,7 +163,7 @@ class App extends React.Component {
       "triangleUp",
       "triangleDown",
       "diamond",
-      "plus"
+      "plus",
     ];
     const elementNum = random(10, 40);
     return range(elementNum).map((index) => {
@@ -174,7 +174,7 @@ class App extends React.Component {
         size: random(8) + 3,
         symbol: symbols[scaledIndex],
         fill: colors[random(0, 6)],
-        opacity: 1
+        opacity: 1,
       };
     });
   }
@@ -183,7 +183,7 @@ class App extends React.Component {
     const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
     return {
       stroke: colors[random(0, 5)],
-      strokeWidth: [random(1, 3)]
+      strokeWidth: [random(1, 3)],
     };
   }
 
@@ -193,20 +193,20 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
     const axisStyle = {
       grid: { stroke: "grey", strokeWidth: 1 },
       axis: { stroke: "transparent" },
       ticks: { stroke: "transparent" },
-      tickLabels: { fill: "none" }
+      tickLabels: { fill: "none" },
     };
 
     const bgStyle = {
-      background: { fill: "#e6e6ff" }
+      background: { fill: "#e6e6ff" },
     };
 
     return (
@@ -231,7 +231,7 @@ class App extends React.Component {
               data={[
                 { x: -3, y: -3 },
                 { x: -2, y: 2 },
-                { x: 1, y: -1 }
+                { x: 1, y: -1 },
               ]}
             />
           </VictoryChart>
@@ -263,7 +263,7 @@ class App extends React.Component {
                 { x: 6, y: 4 },
                 { x: 7, y: 3 },
                 { x: 8, y: 2 },
-                { x: 9, y: 1 }
+                { x: 9, y: 1 },
               ]}
             />
           </VictoryChart>
@@ -280,7 +280,7 @@ class App extends React.Component {
               data={[
                 { x: "one", y: 1 },
                 { x: "two", y: 2 },
-                { x: "three", y: 7 }
+                { x: "three", y: 7 },
               ]}
             />
           </VictoryChart>
@@ -300,21 +300,21 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 1 },
                   { x: 2, y: 2 },
-                  { x: 3, y: 5 }
+                  { x: 3, y: 5 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 2 },
                   { x: 2, y: 1 },
-                  { x: 3, y: 7 }
+                  { x: 3, y: 7 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
-                  { x: 3, y: 9 }
+                  { x: 3, y: 9 },
                 ]}
               />
             </VictoryGroup>
@@ -326,21 +326,21 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 1 },
                   { x: 2, y: 2 },
-                  { x: 3, y: 5 }
+                  { x: 3, y: 5 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 2 },
                   { x: 2, y: 1 },
-                  { x: 3, y: 7 }
+                  { x: 3, y: 7 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
-                  { x: 3, y: 9 }
+                  { x: 3, y: 9 },
                 ]}
               />
             </VictoryGroup>
@@ -352,21 +352,21 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 1 },
                   { x: 2, y: 2 },
-                  { x: 3, y: 5 }
+                  { x: 3, y: 5 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 2 },
                   { x: 2, y: 1 },
-                  { x: 3, y: 7 }
+                  { x: 3, y: 7 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
-                  { x: 3, y: 9 }
+                  { x: 3, y: 9 },
                 ]}
               />
             </VictoryStack>
@@ -381,21 +381,21 @@ class App extends React.Component {
                 data={[
                   { x: 1, y: 1 },
                   { x: 2, y: 2 },
-                  { x: 3, y: 5 }
+                  { x: 3, y: 5 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 2 },
                   { x: 2, y: 1 },
-                  { x: 3, y: 7 }
+                  { x: 3, y: 7 },
                 ]}
               />
               <VictoryBar
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
-                  { x: 3, y: 9 }
+                  { x: 3, y: 9 },
                 ]}
               />
             </VictoryStack>
@@ -443,11 +443,11 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return { style: { fill: "orange" } };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
+                  },
+                },
               },
               {
                 target: "parent",
@@ -459,12 +459,12 @@ class App extends React.Component {
                         target: "labels",
                         mutation: () => {
                           return { text: "o shit" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryLabel text="Parent Events" y={50} x={150} />
@@ -508,7 +508,7 @@ class App extends React.Component {
           <VictoryChart
             style={chartStyle}
             scale={{
-              x: "time"
+              x: "time",
             }}
           >
             <VictoryAxis
@@ -519,14 +519,14 @@ class App extends React.Component {
                 new Date(1990, 1, 1),
                 new Date(2000, 1, 1),
                 new Date(2010, 1, 1),
-                new Date(2020, 1, 1)
+                new Date(2020, 1, 1),
               ]}
               tickFormat={(x) => new Date(x).getFullYear()}
             />
             <VictoryLine
               style={{
                 data: { stroke: "red", strokeWidth: 5 },
-                labels: { fontSize: 12 }
+                labels: { fontSize: 12 },
               }}
               data={[
                 { x: new Date(1982, 1, 1), y: 125 },
@@ -536,7 +536,7 @@ class App extends React.Component {
                 { x: new Date(2001, 1, 1), y: 132 },
                 { x: new Date(2005, 1, 1), y: 305 },
                 { x: new Date(2011, 1, 1), y: 270 },
-                { x: new Date(2015, 1, 1), y: 470 }
+                { x: new Date(2015, 1, 1), y: 470 },
               ]}
             />
           </VictoryChart>
@@ -548,19 +548,19 @@ class App extends React.Component {
               style={{
                 data: {
                   fill: ({ datum }) => datum.fill,
-                  opacity: ({ datum }) => datum.opacity
-                }
+                  opacity: ({ datum }) => datum.opacity,
+                },
               }}
               animate={{
                 onExit: {
                   duration: 500,
-                  before: () => ({ opacity: 0.3 })
+                  before: () => ({ opacity: 0.3 }),
                 },
                 onEnter: {
                   duration: 500,
                   before: () => ({ opacity: 0.3 }),
-                  after: (datum) => ({ opacity: datum.opacity || 1 })
-                }
+                  after: (datum) => ({ opacity: datum.opacity || 1 }),
+                },
               }}
             />
           </VictoryChart>
@@ -608,7 +608,7 @@ class App extends React.Component {
                         target: "labels",
                         mutation: () => {
                           return { text: "o shit" };
-                        }
+                        },
                       },
                       {
                         childName: "line",
@@ -616,9 +616,9 @@ class App extends React.Component {
                         eventKey: "all",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "lime" })
+                            style: merge({}, props.style, { stroke: "lime" }),
                           };
-                        }
+                        },
                       },
                       {
                         childName: "line",
@@ -627,14 +627,14 @@ class App extends React.Component {
                         mutation: (props) => {
                           return {
                             style: merge({}, props.style, { fill: "green" }),
-                            text: "waddup"
+                            text: "waddup",
                           };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryBar
@@ -654,7 +654,7 @@ class App extends React.Component {
                 { x: 10, y: 2 },
                 { x: 11, y: 3 },
                 { x: 12, y: 2 },
-                { x: 13, y: 1 }
+                { x: 13, y: 1 },
               ]}
             />
             <VictoryLine
@@ -702,32 +702,32 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "gold" })
+                            style: merge({}, props.style, { fill: "gold" }),
                           };
-                        }
+                        },
                       },
                       {
                         childName: "area-3",
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "orange" })
+                            style: merge({}, props.style, { fill: "orange" }),
                           };
-                        }
+                        },
                       },
                       {
                         childName: "area-4",
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "red" })
+                            style: merge({}, props.style, { fill: "red" }),
                           };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           >
             <VictoryStack>
@@ -738,7 +738,7 @@ class App extends React.Component {
                   { x: "b", y: 3 },
                   { x: "c", y: 5 },
                   { x: "d", y: 4 },
-                  { x: "e", y: 7 }
+                  { x: "e", y: 7 },
                 ]}
               />
               <VictoryArea
@@ -748,7 +748,7 @@ class App extends React.Component {
                   { x: "b", y: 4 },
                   { x: "c", y: 5 },
                   { x: "d", y: 7 },
-                  { x: "e", y: 5 }
+                  { x: "e", y: 5 },
                 ]}
               />
               <VictoryArea
@@ -758,7 +758,7 @@ class App extends React.Component {
                   { x: "b", y: 2 },
                   { x: "c", y: 6 },
                   { x: "d", y: 2 },
-                  { x: "e", y: 6 }
+                  { x: "e", y: 6 },
                 ]}
               />
               <VictoryArea
@@ -768,7 +768,7 @@ class App extends React.Component {
                   { x: "b", y: 3 },
                   { x: "c", y: 3 },
                   { x: "d", y: 4 },
-                  { x: "e", y: 7 }
+                  { x: "e", y: 7 },
                 ]}
               />
             </VictoryStack>

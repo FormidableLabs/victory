@@ -52,7 +52,7 @@ export class VictoryTransition extends React.Component<
   static propTypes = {
     animate: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     animationWhitelist: PropTypes.array,
-    children: PropTypes.node
+    children: PropTypes.node,
   };
 
   static contextType = TimerContext;
@@ -64,7 +64,7 @@ export class VictoryTransition extends React.Component<
     super(props, context);
     this.state = {
       nodesShouldLoad: false,
-      nodesDoneLoad: false
+      nodesDoneLoad: false,
     };
     const child = this.props.children;
     const polar = child.props.polar;
@@ -80,7 +80,7 @@ export class VictoryTransition extends React.Component<
     if (!isEqual(this.props, nextProps)) {
       this.timer.bypassAnimation();
       this.setState(this.getTransitionState(this.props, nextProps), () =>
-        this.timer.resumeAnimation()
+        this.timer.resumeAnimation(),
       );
     }
     return true;
@@ -92,7 +92,7 @@ export class VictoryTransition extends React.Component<
 
   private getTransitionState(
     props: VictoryTransitionProps,
-    nextProps: VictoryTransitionProps
+    nextProps: VictoryTransitionProps,
   ): VictoryTransitionState {
     const { animate } = props;
     if (!animate) {
@@ -108,7 +108,7 @@ export class VictoryTransition extends React.Component<
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter
+        nodesShouldEnter,
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
@@ -116,14 +116,14 @@ export class VictoryTransition extends React.Component<
         childrenTransitions,
         nodesShouldEnter,
         oldProps: nodesWillExit ? props : null,
-        nextProps
+        nextProps,
       };
     }
   }
 
   private getDomainFromChildren(
     props: VictoryTransitionProps,
-    axis: "x" | "y"
+    axis: "x" | "y",
   ) {
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
@@ -133,7 +133,7 @@ export class VictoryTransition extends React.Component<
           return childDomain ? memo.concat(childDomain) : memo;
         } else if (child.props && child.props.children) {
           return memo.concat(
-            getChildDomains(React.Children.toArray(child.props.children))
+            getChildDomains(React.Children.toArray(child.props.children)),
           );
         }
         return memo;
@@ -141,7 +141,7 @@ export class VictoryTransition extends React.Component<
     };
 
     const child = React.Children.toArray(
-      props.children
+      props.children,
     )[0] as VictoryTransitionChild;
     const childProps: any = child.props || {};
     const domain = Array.isArray(childProps.domain)
@@ -155,7 +155,7 @@ export class VictoryTransition extends React.Component<
         ? [0, 1]
         : [
             Collection.getMinValue(childDomains),
-            Collection.getMaxValue(childDomains)
+            Collection.getMaxValue(childDomains),
           ];
     }
   }
@@ -197,22 +197,22 @@ export class VictoryTransition extends React.Component<
     const getTransitionProps = this.props.animate?.getTransitions
       ? this.props.animate.getTransitions
       : Transitions.getTransitionPropsFactory(props, this.state, (newState) =>
-          this.setState(newState)
+          this.setState(newState),
         );
     const child = React.Children.toArray(
-      props.children
+      props.children,
     )[0] as VictoryTransitionChild;
     const transitionProps = getTransitionProps(child);
     this.transitionProps = transitionProps;
     const domain = {
       x: this.getDomainFromChildren(this.pickDomainProps(props), "x"),
-      y: this.getDomainFromChildren(props, "y")
+      y: this.getDomainFromChildren(props, "y"),
     };
     const clipWidth = this.getClipWidth(props, child);
     const combinedProps = defaults(
       { domain, clipWidth },
       transitionProps,
-      child.props
+      child.props,
     );
     const animationWhitelist = props.animationWhitelist || [];
     const whitelist = animationWhitelist.concat(["clipWidth"]);
@@ -225,7 +225,7 @@ export class VictoryTransition extends React.Component<
           if (child.props.groupComponent) {
             const groupComponent = this.continuous
               ? React.cloneElement(child.props.groupComponent, {
-                  clipWidth: newProps.clipWidth || 0
+                  clipWidth: newProps.clipWidth || 0,
                 })
               : child.props.groupComponent;
             return React.cloneElement(
@@ -233,8 +233,8 @@ export class VictoryTransition extends React.Component<
               defaults(
                 { animate: null, animating: true, groupComponent },
                 newProps,
-                combinedProps
-              )
+                combinedProps,
+              ),
             );
           }
           return React.cloneElement(
@@ -242,8 +242,8 @@ export class VictoryTransition extends React.Component<
             defaults(
               { animate: null, animating: true },
               newProps,
-              combinedProps
-            )
+              combinedProps,
+            ),
           );
         }}
       </VictoryAnimation>

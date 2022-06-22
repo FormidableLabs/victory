@@ -15,7 +15,7 @@ import { getData, getFourQuadrantData, getArrayData } from "./data";
 
 const dependentAxisTheme = {
   ...VictoryTheme.material,
-  ...{ dependentAxis: { orientation: "right" } }
+  ...{ dependentAxis: { orientation: "right" } },
 };
 
 const containerStyle = {
@@ -23,16 +23,16 @@ const containerStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   alignItems: "center",
-  justifyContent: "center"
+  justifyContent: "center",
 };
 
 const parentStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 export default {
   title: "VictoryChart",
-  component: VictoryChart
+  component: VictoryChart,
 };
 
 export const DefaultRendering = () => {
@@ -201,7 +201,7 @@ export const DomainFromData = () => {
             { x: "cat", y: 2 },
             { x: "dog", y: 3 },
             { x: "bird", y: 1 },
-            { x: "frog", y: 4 }
+            { x: "frog", y: 4 },
           ]}
         />
         <VictoryScatter
@@ -212,7 +212,7 @@ export const DomainFromData = () => {
             { x: "mouse", y: 3 },
             { x: "bird", y: 5 },
             { x: "frog", y: 7 },
-            { x: "dog", y: 1 }
+            { x: "dog", y: 1 },
           ]}
         />
       </VictoryChart>
@@ -224,7 +224,7 @@ export const DomainFromData = () => {
             { x: "cat", y: 2 },
             { x: "dog", y: 3 },
             { x: "bird", y: 1 },
-            { x: "frog", y: 4 }
+            { x: "frog", y: 4 },
           ]}
         />
         <VictoryScatter
@@ -235,7 +235,7 @@ export const DomainFromData = () => {
             { x: "mouse", y: 3 },
             { x: "bird", y: 5 },
             { x: "frog", y: 7 },
-            { x: "dog", y: 1 }
+            { x: "dog", y: 1 },
           ]}
         />
       </VictoryChart>
@@ -260,8 +260,8 @@ export const Style = () => {
             border: "5px solid #000",
             margin: "2%",
             maxWidth: "40%",
-            backgroundColor: "cyan"
-          }
+            backgroundColor: "cyan",
+          },
         }}
       />
       <VictoryChart
@@ -271,8 +271,8 @@ export const Style = () => {
             border: "5px solid #000",
             margin: "2%",
             maxWidth: "40%",
-            backgroundColor: "cyan"
-          }
+            backgroundColor: "cyan",
+          },
         }}
       >
         <VictoryPolarAxis />
@@ -283,9 +283,9 @@ export const Style = () => {
             border: "5px solid #000",
             margin: "2%",
             maxWidth: "40%",
-            backgroundColor: "cyan"
+            backgroundColor: "cyan",
           },
-          background: { fill: "pink" }
+          background: { fill: "pink" },
         }}
       />
       <VictoryChart
@@ -295,9 +295,9 @@ export const Style = () => {
             border: "5px solid #000",
             margin: "2%",
             maxWidth: "40%",
-            backgroundColor: "cyan"
+            backgroundColor: "cyan",
           },
-          background: { fill: "pink" }
+          background: { fill: "pink" },
         }}
       >
         <VictoryPolarAxis />
@@ -309,9 +309,9 @@ export const Style = () => {
             border: "5px solid #000",
             margin: "2%",
             maxWidth: "40%",
-            backgroundColor: "cyan"
+            backgroundColor: "cyan",
           },
-          background: { fill: "pink" }
+          background: { fill: "pink" },
         }}
       >
         <VictoryGroup
@@ -323,21 +323,21 @@ export const Style = () => {
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },
-              { x: 3, y: 5 }
+              { x: 3, y: 5 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 2 },
               { x: 2, y: 1 },
-              { x: 3, y: 7 }
+              { x: 3, y: 7 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 3 },
               { x: 2, y: 4 },
-              { x: 3, y: 9 }
+              { x: 3, y: 9 },
             ]}
           />
         </VictoryGroup>
@@ -351,9 +351,9 @@ export const Style = () => {
             border: "5px solid #000",
             margin: "2%",
             maxWidth: "40%",
-            backgroundColor: "cyan"
+            backgroundColor: "cyan",
           },
-          background: { fill: "pink" }
+          background: { fill: "pink" },
         }}
       >
         <VictoryGroup
@@ -366,21 +366,21 @@ export const Style = () => {
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },
-              { x: 3, y: 5 }
+              { x: 3, y: 5 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 2 },
               { x: 2, y: 1 },
-              { x: 3, y: 7 }
+              { x: 3, y: 7 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 3 },
               { x: 2, y: 4 },
-              { x: 3, y: 9 }
+              { x: 3, y: 9 },
             ]}
           />
         </VictoryGroup>
@@ -393,9 +393,9 @@ export const Style = () => {
             border: "5px solid #000",
             margin: "2%",
             maxWidth: "40%",
-            backgroundColor: "cyan"
+            backgroundColor: "cyan",
           },
-          background: { fill: "pink" }
+          background: { fill: "pink" },
         }}
       >
         <VictoryStack labels={["a", "b", "c"]} colorScale={"qualitative"}>
@@ -403,21 +403,21 @@ export const Style = () => {
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },
-              { x: 3, y: 5 }
+              { x: 3, y: 5 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 2 },
               { x: 2, y: 1 },
-              { x: 3, y: 7 }
+              { x: 3, y: 7 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 3 },
               { x: 2, y: 4 },
-              { x: 3, y: 9 }
+              { x: 3, y: 9 },
             ]}
           />
         </VictoryStack>
@@ -430,9 +430,9 @@ export const Style = () => {
             border: "5px solid #000",
             margin: "2%",
             maxWidth: "40%",
-            backgroundColor: "cyan"
+            backgroundColor: "cyan",
           },
-          background: { fill: "pink" }
+          background: { fill: "pink" },
         }}
       >
         <VictoryStack
@@ -444,21 +444,21 @@ export const Style = () => {
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },
-              { x: 3, y: 5 }
+              { x: 3, y: 5 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 2 },
               { x: 2, y: 1 },
-              { x: 3, y: 7 }
+              { x: 3, y: 7 },
             ]}
           />
           <VictoryBar
             data={[
               { x: 1, y: 3 },
               { x: 2, y: 4 },
-              { x: 3, y: 9 }
+              { x: 3, y: 9 },
             ]}
           />
         </VictoryStack>
@@ -493,7 +493,7 @@ export const Orientations = () => {
             { x: 2, y: 7 },
             { x: 3, y: 4 },
             { x: 4, y: 5 },
-            { x: 5, y: 2 }
+            { x: 5, y: 2 },
           ]}
         />
       </VictoryChart>

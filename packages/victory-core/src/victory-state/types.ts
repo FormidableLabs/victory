@@ -4,7 +4,7 @@ import {
   DomainTuple,
   RangeTuple,
   ScalePropType,
-  ValueOrAxes
+  ValueOrAxes,
 } from "../types/prop-types";
 import { PaddingProps } from "../victory-theme/types";
 

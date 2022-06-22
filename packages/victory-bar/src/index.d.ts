@@ -7,7 +7,7 @@ import {
   VictoryCommonPrimitiveProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
-  VictoryStyleInterface
+  VictoryStyleInterface,
 } from "victory-core";
 
 export type VictoryBarTTargetType = "data" | "labels" | "parent";

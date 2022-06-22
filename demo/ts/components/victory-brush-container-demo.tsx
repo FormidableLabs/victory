@@ -37,11 +37,11 @@ export default class VictoryBrushContainerDemo extends React.Component<
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
     return (
@@ -62,7 +62,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
           >
             <VictoryLine
               style={{
-                data: { stroke: "tomato" }
+                data: { stroke: "tomato" },
               }}
               data={[
                 { x: new Date(1982, 1, 1), y: 125 },
@@ -72,7 +72,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: new Date(2001, 1, 1), y: 132 },
                 { x: new Date(2005, 1, 1), y: 305 },
                 { x: new Date(2011, 1, 1), y: 270 },
-                { x: new Date(2015, 1, 1), y: 470 }
+                { x: new Date(2015, 1, 1), y: 470 },
               ]}
             />
           </VictoryChart>
@@ -97,13 +97,13 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 new Date(1995, 1, 1),
                 new Date(2000, 1, 1),
                 new Date(2005, 1, 1),
-                new Date(2010, 1, 1)
+                new Date(2010, 1, 1),
               ]}
               tickFormat={(x) => new Date(x).getFullYear()}
             />
             <VictoryLine
               style={{
-                data: { stroke: "tomato" }
+                data: { stroke: "tomato" },
               }}
               data={[
                 { x: new Date(1982, 1, 1), y: 125 },
@@ -113,7 +113,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: new Date(2001, 1, 1), y: 132 },
                 { x: new Date(2005, 1, 1), y: 305 },
                 { x: new Date(2011, 1, 1), y: 270 },
-                { x: new Date(2015, 1, 1), y: 470 }
+                { x: new Date(2015, 1, 1), y: 470 },
               ]}
             />
           </VictoryChart>
@@ -141,12 +141,12 @@ export default class VictoryBrushContainerDemo extends React.Component<
               data={[
                 { name: "One", symbol: { fill: "tomato" } },
                 { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } }
+                { name: "Three", symbol: { fill: "gold" } },
               ]}
             />
             <VictoryLine
               style={{
-                data: { stroke: "tomato" }
+                data: { stroke: "tomato" },
               }}
               data={[
                 { x: 1, y: -5 },
@@ -155,12 +155,12 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryLine
               style={{
-                data: { stroke: "blue" }
+                data: { stroke: "blue" },
               }}
               data={[
                 { x: 1, y: -3 },
@@ -169,7 +169,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryLine
@@ -180,7 +180,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
             />
           </VictoryChart>
@@ -189,8 +189,8 @@ export default class VictoryBrushContainerDemo extends React.Component<
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black")
-              }
+                fill: ({ active }) => (active ? "tomato" : "black"),
+              },
             }}
             domain={{ x: [0, 10], y: [-5, 5] }}
             containerComponent={
@@ -207,7 +207,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
               { x: 4, y: 3 },
               { x: 5, y: 1 },
               { x: 6, y: -3 },
-              { x: 7, y: 3 }
+              { x: 7, y: 3 },
             ]}
           />
 
@@ -215,8 +215,8 @@ export default class VictoryBrushContainerDemo extends React.Component<
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black")
-              }
+                fill: ({ active }) => (active ? "tomato" : "black"),
+              },
             }}
             containerComponent={
               <VictoryBrushContainer defaultBrushArea="disable" />
@@ -233,7 +233,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
           >
             <VictoryScatter
               style={{
-                data: { fill: "tomato" }
+                data: { fill: "tomato" },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -243,12 +243,12 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryScatter
               style={{
-                data: { fill: "blue" }
+                data: { fill: "blue" },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -258,7 +258,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryScatter
@@ -269,7 +269,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
               size={({ active }) => (active ? 5 : 3)}
             />
@@ -284,8 +284,8 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 data: {
                   fill: "tomato",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               barWidth={({ active }) => (active ? 5 : 3)}
               data={[
@@ -295,7 +295,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryBar
@@ -303,8 +303,8 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 data: {
                   fill: "orange",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               barWidth={({ active }) => (active ? 5 : 3)}
               data={[
@@ -314,7 +314,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryBar
@@ -322,8 +322,8 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 data: {
                   fill: "gold",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: 1, y: 5 },
@@ -332,7 +332,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
             />
           </VictoryStack>
@@ -354,7 +354,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
               { x: 4, y: 0 },
               { x: 5, y: -5 },
               { x: 6, y: 2 },
-              { x: 7, y: 0 }
+              { x: 7, y: 0 },
             ]}
           />
         </div>

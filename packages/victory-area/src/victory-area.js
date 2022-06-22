@@ -14,22 +14,22 @@ import {
   VictoryTheme,
   Data,
   Domain,
-  UserProps
+  UserProps,
 } from "victory-core";
 
 const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  interpolation: "linear"
+  interpolation: "linear",
 };
 
 const options = {
   components: [
     { name: "parent", index: "parent" },
     { name: "data", index: "all" },
-    { name: "labels" }
-  ]
+    { name: "labels" },
+  ],
 };
 
 class VictoryArea extends React.Component {
@@ -39,7 +39,7 @@ class VictoryArea extends React.Component {
     "height",
     "padding",
     "style",
-    "width"
+    "width",
   ];
 
   static propTypes = {
@@ -56,14 +56,14 @@ class VictoryArea extends React.Component {
         "natural",
         "step",
         "stepAfter",
-        "stepBefore"
+        "stepBefore",
       ]),
-      PropTypes.func
+      PropTypes.func,
     ]),
     label: CustomPropTypes.deprecated(
       PropTypes.string,
-      "Use `labels` instead for individual data labels"
-    )
+      "Use `labels` instead for individual data labels",
+    ),
   };
 
   static defaultProps = {
@@ -75,7 +75,7 @@ class VictoryArea extends React.Component {
     sortKey: "x",
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static displayName = "VictoryArea";
@@ -91,7 +91,7 @@ class VictoryArea extends React.Component {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions

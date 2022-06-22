@@ -25,7 +25,7 @@ const getCandleProps = (props, style) => {
     x: horizontal ? Math.min(open, close) : x - candleWidth / 2,
     y: horizontal ? x - candleWidth / 2 : Math.min(open, close),
     width: horizontal ? candleLength : candleWidth,
-    height: horizontal ? candleWidth : candleLength
+    height: horizontal ? candleWidth : candleLength,
   };
 };
 
@@ -37,7 +37,7 @@ const getHighWickProps = (props, style) => {
     x1: horizontal ? high : x,
     x2: horizontal ? Math.max(open, close) : x,
     y1: horizontal ? x : high,
-    y2: horizontal ? x : Math.min(open, close)
+    y2: horizontal ? x : Math.min(open, close),
   };
 };
 
@@ -49,7 +49,7 @@ const getLowWickProps = (props, style) => {
     x1: horizontal ? Math.min(open, close) : x,
     x2: horizontal ? low : x,
     y1: horizontal ? x : Math.max(open, close),
-    y2: horizontal ? x : low
+    y2: horizontal ? x : low,
   };
 };
 
@@ -67,11 +67,11 @@ const evaluateProps = (props) => {
    */
   const style = Helpers.evaluateStyle(
     assign({ stroke: "black" }, props.style),
-    props
+    props,
   );
   const candleWidth = getCandleWidth(
     props.candleWidth,
-    assign({}, props, { style })
+    assign({}, props, { style }),
   );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
@@ -85,7 +85,7 @@ const evaluateProps = (props) => {
     candleWidth,
     desc,
     id,
-    tabIndex
+    tabIndex,
   });
 };
 
@@ -105,7 +105,7 @@ const Candle = (props) => {
     transform,
     style,
     desc,
-    tabIndex
+    tabIndex,
   } = props;
   const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
   const sharedProps = {
@@ -117,7 +117,7 @@ const Candle = (props) => {
     transform,
     clipPath,
     desc,
-    tabIndex
+    tabIndex,
   };
   const candleProps = assign(getCandleProps(props, style), sharedProps);
   const highWickProps = assign(getHighWickProps(props, wickStyle), sharedProps);
@@ -126,7 +126,7 @@ const Candle = (props) => {
   return React.cloneElement(groupComponent, {}, [
     React.cloneElement(rectComponent, candleProps),
     React.cloneElement(lineComponent, highWickProps),
-    React.cloneElement(lineComponent, lowWickProps)
+    React.cloneElement(lineComponent, lowWickProps),
   ]);
 };
 
@@ -144,7 +144,7 @@ Candle.propTypes = {
   rectComponent: PropTypes.element,
   wickStrokeWidth: PropTypes.number,
   width: PropTypes.number,
-  x: PropTypes.number
+  x: PropTypes.number,
 };
 
 Candle.defaultProps = {
@@ -152,7 +152,7 @@ Candle.defaultProps = {
   lineComponent: <Line />,
   rectComponent: <Rect />,
   role: "presentation",
-  shapeRendering: "auto"
+  shapeRendering: "auto",
 };
 
 export default Candle;

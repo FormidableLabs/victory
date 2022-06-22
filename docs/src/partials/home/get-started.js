@@ -4,7 +4,7 @@ import createPath from "../../helpers/path-helpers";
 import {
   LinkButton,
   LandingSectionWrapper,
-  LandingSectionContent
+  LandingSectionContent,
 } from "./styles";
 import importedTheme from "../../styles/theme";
 import PropTypes from "prop-types";
@@ -53,7 +53,7 @@ const GetStarted = ({ description, link }) => {
 
 GetStarted.propTypes = {
   description: PropTypes.string,
-  link: PropTypes.shape({ text: PropTypes.string, location: PropTypes.string })
+  link: PropTypes.shape({ text: PropTypes.string, location: PropTypes.string }),
 };
 
 export default GetStarted;

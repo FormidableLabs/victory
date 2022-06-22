@@ -19,10 +19,10 @@ class App extends React.Component {
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
     const chartStyle = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
     return (
       <div style={containerStyle}>
@@ -36,7 +36,7 @@ class App extends React.Component {
                 { x: 1, y: 2 },
                 { x: 2, y: 3 },
                 { x: 3, y: 5 },
-                { x: 4, y: 4 }
+                { x: 4, y: 4 },
               ]}
             >
               <VictoryArea />
@@ -49,7 +49,7 @@ class App extends React.Component {
                 { x: 1, y: 4 },
                 { x: 2, y: 3 },
                 { x: 3, y: 2 },
-                { x: 4, y: 5 }
+                { x: 4, y: 5 },
               ]}
             >
               <VictoryArea />
@@ -62,7 +62,7 @@ class App extends React.Component {
                 { x: 1, y: 3 },
                 { x: 2, y: 1 },
                 { x: 3, y: 4 },
-                { x: 4, y: 2 }
+                { x: 4, y: 2 },
               ]}
             >
               <VictoryArea />
@@ -75,7 +75,7 @@ class App extends React.Component {
                 { x: 1, y: 3 },
                 { x: 2, y: 1 },
                 { x: 3, y: 4 },
-                { x: 4, y: 2 }
+                { x: 4, y: 2 },
               ]}
             >
               <VictoryArea />
@@ -95,7 +95,7 @@ class App extends React.Component {
         >
           <VictoryBar
             style={{
-              data: { fill: ({ active }) => (active ? "red" : "black") }
+              data: { fill: ({ active }) => (active ? "red" : "black") },
             }}
             data={[
               { x: 0, y: 3.5, y0: 2.5 },
@@ -103,12 +103,12 @@ class App extends React.Component {
               { x: 1, y: 2, y0: 1 },
               { x: 1, y: 7, y0: 4 },
               { x: 2, y: 4, y0: 3 },
-              { x: 2, y: 12, y0: 7 }
+              { x: 2, y: 12, y0: 7 },
             ]}
           />
           <VictoryScatter
             style={{
-              data: { fill: ({ active }) => (active ? "black" : "red") }
+              data: { fill: ({ active }) => (active ? "black" : "red") },
             }}
             data={[
               { x: 0, y: 3.5 },
@@ -116,7 +116,7 @@ class App extends React.Component {
               { x: 1, y: 2 },
               { x: 1, y: 7 },
               { x: 2, y: 4 },
-              { x: 2, y: 12 }
+              { x: 2, y: 12 },
             ]}
           />
         </VictoryChart>
@@ -129,7 +129,7 @@ class App extends React.Component {
                 stroke: "tomato",
                 strokeWidth: 2,
                 fill: "tomato",
-                fillOpacity: 0.1
+                fillOpacity: 0.1,
               }}
             />
           }
@@ -140,8 +140,8 @@ class App extends React.Component {
                 data: {
                   fill: "tomato",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -151,7 +151,7 @@ class App extends React.Component {
                 { x: 4, y: 3 },
                 { x: 5, y: 1 },
                 { x: 6, y: -3 },
-                { x: 7, y: 3 }
+                { x: 7, y: 3 },
               ]}
             />
             <VictoryBar
@@ -159,8 +159,8 @@ class App extends React.Component {
                 data: {
                   fill: "orange",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -170,7 +170,7 @@ class App extends React.Component {
                 { x: 4, y: 0 },
                 { x: 5, y: -2 },
                 { x: 6, y: -2 },
-                { x: 7, y: 5 }
+                { x: 7, y: 5 },
               ]}
             />
             <VictoryBar
@@ -178,8 +178,8 @@ class App extends React.Component {
                 data: {
                   fill: "gold",
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2
-                }
+                  strokeWidth: 2,
+                },
               }}
               data={[
                 { x: 1, y: 5 },
@@ -188,7 +188,7 @@ class App extends React.Component {
                 { x: 4, y: -3 },
                 { x: 5, y: -1 },
                 { x: 6, y: 3 },
-                { x: 7, y: -3 }
+                { x: 7, y: -3 },
               ]}
             />
           </VictoryStack>

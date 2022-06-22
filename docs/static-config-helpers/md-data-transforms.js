@@ -18,10 +18,10 @@ const orderByIdAndAddThemesEntry = (items) => {
       title: "Themes",
       category: "guides",
       type: "guides",
-      subHeadings: []
+      subHeadings: [],
     },
     component: "src/pages/themes-template",
-    name: "Themes"
+    name: "Themes",
   };
   return _.orderBy(items.concat(themes), ["data.id"], ["asc"]);
 };
@@ -52,7 +52,7 @@ const sidebarTreeMutation = (mdData) => {
       const lastItem = av.pop();
       return av.concat({
         ...lastItem,
-        children: lastItem.children ? [...lastItem.children, cv] : [cv]
+        children: lastItem.children ? [...lastItem.children, cv] : [cv],
       });
     }
 
@@ -65,9 +65,9 @@ const sidebarTreeMutation = (mdData) => {
           ...lastItem.children,
           {
             ...lastChild,
-            children: lastChild.children ? [...lastChild.children, cv] : [cv]
-          }
-        ]
+            children: lastChild.children ? [...lastChild.children, cv] : [cv],
+          },
+        ],
       });
     }
     return null;
@@ -81,7 +81,7 @@ const sidebarTreeMutation = (mdData) => {
 function getDocs(
   mdPath = "./src/content/docs",
   mutations = [slugMutation, sidebarTreeMutation],
-  sort = orderByTitle
+  sort = orderByTitle,
 ) {
   return getMdFiles(mdPath, mutations, sort);
 }
@@ -89,7 +89,7 @@ function getDocs(
 function getFaq(
   mdPath = "./src/content/faq",
   mutations = [sidebarTreeMutation],
-  sort = orderByTitle
+  sort = orderByTitle,
 ) {
   return getMdFiles(mdPath, mutations, sort);
 }
@@ -97,7 +97,7 @@ function getFaq(
 function getIntroduction(
   mdPath = "./src/content/introduction",
   mutations = [slugMutation, sidebarTreeMutation],
-  sort = orderByTitle
+  sort = orderByTitle,
 ) {
   return getMdFiles(mdPath, mutations, sort);
 }
@@ -105,7 +105,7 @@ function getIntroduction(
 function getGallery(
   mdPath = "./src/content/gallery",
   mutations = [slugMutation],
-  sort = orderByTitle
+  sort = orderByTitle,
 ) {
   return getMdFiles(mdPath, mutations, sort);
 }
@@ -113,7 +113,7 @@ function getGallery(
 function getGuides(
   mdPath = "./src/content/guides",
   mutations = [slugMutation, sidebarTypeMutation, sidebarTreeMutation],
-  sort = orderByIdAndAddThemesEntry
+  sort = orderByIdAndAddThemesEntry,
 ) {
   return getMdFiles(mdPath, mutations, sort);
 }
@@ -121,7 +121,7 @@ function getGuides(
 function getCommonProps(
   mdPath = "./src/content/common-props",
   mutations = [slugMutation, sidebarTreeMutation],
-  sort = orderByTitle
+  sort = orderByTitle,
 ) {
   return getMdFiles(mdPath, mutations, sort);
 }
@@ -132,5 +132,5 @@ module.exports = {
   getIntroduction,
   getGallery,
   getGuides,
-  getCommonProps
+  getCommonProps,
 };

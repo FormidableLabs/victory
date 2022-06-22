@@ -18,7 +18,7 @@ VTSpan.propTypes = {
   style: PropTypes.object,
   textAnchor: PropTypes.oneOf(["start", "middle", "end", "inherit"]),
   x: PropTypes.number,
-  y: PropTypes.number
+  y: PropTypes.number,
 };
 
 export default VTSpan;

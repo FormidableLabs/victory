@@ -7,6 +7,6 @@ export {
   getVerticalPolarBarPath,
   getCustomBarPath,
   getPolarBarPath,
-  getBarPath
+  getBarPath,
 } from "./path-helper-methods";
 export { getBarWidth, getStyle, getCornerRadius } from "./bar-helper-methods";

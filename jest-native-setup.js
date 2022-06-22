@@ -2,14 +2,14 @@ import React from "react";
 
 jest.mock("react-native", () => ({
   Dimensions: {
-    get: () => ({ width: 300, height: 100 })
+    get: () => ({ width: 300, height: 100 }),
   },
   PanResponder: {
     create: () => ({
-      panHandlers: []
-    })
+      panHandlers: [],
+    }),
   },
-  View: ({ children }) => <>{children}</>
+  View: ({ children }) => <>{children}</>,
 }));
 
 const createMockComponent = (name) => {
@@ -41,7 +41,7 @@ jest.mock("react-native-svg", () => {
     "Stop",
     "ClipPath",
     "Pattern",
-    "Mask"
+    "Mask",
   ];
 
   const Svg = createMockComponent("Svg");

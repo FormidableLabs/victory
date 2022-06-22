@@ -8,7 +8,7 @@ const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  offset: 0
+  offset: 0,
 };
 
 // eslint-disable-next-line max-statements
@@ -24,25 +24,25 @@ export function getCalculatedProps(props, childComponents) {
     x: Wrapper.getDomain(
       assign({}, props, { categories }),
       "x",
-      childComponents
+      childComponents,
     ),
     y: Wrapper.getDomain(
       assign({}, props, { categories }),
       "y",
-      childComponents
-    )
+      childComponents,
+    ),
   };
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
-    y: Helpers.getRange(props, "y")
+    y: Helpers.getRange(props, "y"),
   };
   const baseScale = {
     x: Scale.getScaleFromProps(props, "x") || Wrapper.getScale(props, "x"),
-    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y")
+    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y"),
   };
   const scale = {
     x: baseScale.x.domain(domain.x).range(props.horizontal ? range.y : range.x),
-    y: baseScale.y.domain(domain.y).range(props.horizontal ? range.x : range.y)
+    y: baseScale.y.domain(domain.y).range(props.horizontal ? range.x : range.y),
   };
 
   const origin = polar ? props.origin : Helpers.getPolarOrigin(props);
@@ -59,7 +59,7 @@ export function getCalculatedProps(props, childComponents) {
     color,
     offset,
     origin,
-    padding
+    padding,
   };
 }
 
@@ -70,7 +70,7 @@ const withoutSharedEvents = (props) => {
   const modifiedChildren = React.Children.toArray(children).map((child) => {
     return {
       ...child,
-      props: Helpers.omit(child.props, ["sharedEvents"])
+      props: Helpers.omit(child.props, ["sharedEvents"]),
     };
   });
   props.children = modifiedChildren;
@@ -158,7 +158,7 @@ function getChildProps(props, calculatedProps) {
     scale,
     horizontal,
     padding,
-    standalone: false
+    standalone: false,
   };
 }
 
@@ -219,10 +219,10 @@ export function getChildren(props, childComponents, calculatedProps) {
           data: getDataWithOffset(props, datasets[index], xOffset),
           colorScale: getColorScale(props, child),
           labelComponent: labelComponent || child.props.labelComponent,
-          xOffset
+          xOffset,
         },
-        childProps
-      )
+        childProps,
+      ),
     );
   });
 }

@@ -10,7 +10,7 @@ import {
   Data,
   Domain,
   CommonProps,
-  UserProps
+  UserProps,
 } from "victory-core";
 import Voronoi from "./voronoi";
 import { getBaseProps } from "./helper-methods";
@@ -18,7 +18,7 @@ import { getBaseProps } from "./helper-methods";
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
 };
 
 class VictoryVoronoi extends React.Component {
@@ -30,7 +30,7 @@ class VictoryVoronoi extends React.Component {
     "samples",
     "size",
     "style",
-    "width"
+    "width",
   ];
 
   static displayName = "VictoryVoronoi";
@@ -40,7 +40,7 @@ class VictoryVoronoi extends React.Component {
   static propTypes = {
     ...CommonProps.baseProps,
     ...CommonProps.dataProps,
-    size: CustomPropTypes.nonNegative
+    size: CustomPropTypes.nonNegative,
   };
 
   static defaultProps = {
@@ -51,7 +51,7 @@ class VictoryVoronoi extends React.Component {
     samples: 50,
     sortOrder: "ascending",
     standalone: true,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
   };
 
   static getDomain = Domain.getDomain;
@@ -61,7 +61,7 @@ class VictoryVoronoi extends React.Component {
     "dataComponent",
     "labelComponent",
     "groupComponent",
-    "containerComponent"
+    "containerComponent",
   ];
 
   // Overridden in native versions

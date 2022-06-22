@@ -41,7 +41,7 @@ export default class VictoryPieDemo extends React.Component<
         "#D73C4C",
         "#FFAF59",
         "#E28300",
-        "#F6A57F"
+        "#F6A57F",
       ],
       sliceWidth: 60,
       style: {
@@ -49,9 +49,9 @@ export default class VictoryPieDemo extends React.Component<
           backgroundColor: "#f7f7f7",
           border: "1px solid #ccc",
           margin: "2%",
-          maxWidth: "40%"
-        }
-      }
+          maxWidth: "40%",
+        },
+      },
     };
   }
 
@@ -60,7 +60,7 @@ export default class VictoryPieDemo extends React.Component<
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),
-        transitionData: this.getTransitionData()
+        transitionData: this.getTransitionData(),
       });
     }, 4000);
   }
@@ -75,7 +75,7 @@ export default class VictoryPieDemo extends React.Component<
       return {
         x: datum,
         y: random(2, 9),
-        label: `#${datum}`
+        label: `#${datum}`,
       };
     });
   }
@@ -89,7 +89,7 @@ export default class VictoryPieDemo extends React.Component<
       { x: "18-24", y: rand() },
       { x: "25-44", y: rand() },
       { x: "45-64", y: rand() },
-      { x: "≥65", y: rand() }
+      { x: "≥65", y: rand() },
     ];
   }
 
@@ -99,14 +99,14 @@ export default class VictoryPieDemo extends React.Component<
       flexDirection: "row",
       flexWrap: "wrap",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
     };
 
     const parentStyle: React.CSSProperties = {
       backgroundColor: "#f7f7f7",
       border: "1px solid #ccc",
       margin: "2%",
-      maxWidth: "40%"
+      maxWidth: "40%",
     };
 
     return (
@@ -119,7 +119,7 @@ export default class VictoryPieDemo extends React.Component<
             endAngle={-90}
             style={{
               parent: parentStyle,
-              labels: { fill: "white", fontSize: 10 }
+              labels: { fill: "white", fontSize: 10 },
             }}
             labelRadius={60}
             padding={{ bottom: 50, left: 50, right: 10 }}
@@ -129,7 +129,7 @@ export default class VictoryPieDemo extends React.Component<
           <VictoryPie
             style={{
               parent: parentStyle,
-              labels: { fill: "white", fontSize: 10 }
+              labels: { fill: "white", fontSize: 10 },
             }}
             labelRadius={({ datum }) => datum.radius - 12}
             padding={{ bottom: 50, left: 50, right: 10 }}
@@ -141,7 +141,7 @@ export default class VictoryPieDemo extends React.Component<
               { x: 2, y: 3, radius: 50 },
               { x: 3, y: 5, radius: 70 },
               { x: 4, y: 2, radius: 80 },
-              { x: 5, y: 3, radius: 60 }
+              { x: 5, y: 3, radius: 60 },
             ]}
           />
           <VictoryPie
@@ -174,8 +174,8 @@ export default class VictoryPieDemo extends React.Component<
                 stroke: "#ffffff",
                 strokeWidth: 3,
                 strokeLinecap: "butt",
-                strokeLinejoin: "miter"
-              }
+                strokeLinejoin: "miter",
+              },
             }}
             data={this.state.transitionData}
           />
@@ -191,14 +191,14 @@ export default class VictoryPieDemo extends React.Component<
                     mutation: (props) => ({
                       radius: 135,
                       sliceStartAngle: props.slice.startAngle + 0.05,
-                      sliceEndAngle: props.slice.endAngle - 0.05
-                    })
+                      sliceEndAngle: props.slice.endAngle - 0.05,
+                    }),
                   }),
                   onMouseOut: () => ({
-                    mutation: () => null
-                  })
-                }
-              }
+                    mutation: () => null,
+                  }),
+                },
+              },
             ]}
           />
 
@@ -215,19 +215,19 @@ export default class VictoryPieDemo extends React.Component<
                         target: "labels",
                         mutation: () => {
                           return { text: "parent click" };
-                        }
-                      }
+                        },
+                      },
                     ];
-                  }
-                }
-              }
+                  },
+                },
+              },
             ]}
           />
 
           <VictoryPie
             style={{
               parent: parentStyle,
-              labels: { fontSize: 10, padding: 10 }
+              labels: { fontSize: 10, padding: 10 },
             }}
             labelComponent={<VictoryTooltip />}
             colorScale="grayscale"
@@ -242,7 +242,7 @@ export default class VictoryPieDemo extends React.Component<
           <VictoryPie
             style={{
               parent: parentStyle,
-              data: { stroke: "transparent", opacity: 0.4 }
+              data: { stroke: "transparent", opacity: 0.4 },
             }}
           />
 
@@ -280,7 +280,7 @@ export default class VictoryPieDemo extends React.Component<
             animate={{ duration: 2000 }}
             style={{
               ...this.state.style,
-              data: { stroke: "#252525", strokeWidth: 2 }
+              data: { stroke: "#252525", strokeWidth: 2 },
             }}
             colorScale="warm"
           />
