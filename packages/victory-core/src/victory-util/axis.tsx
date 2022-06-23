@@ -35,7 +35,7 @@ export function getAxis(props) {
  * @param {Function} predicate: a predicate function that will be called with each
  * @returns {Array} all axis components that pass the given predicate or []
  */
-export function findAxisComponents(childComponents, predicate) {
+export function findAxisComponents(childComponents, predicate?) {
   predicate = predicate || identity;
   const findAxes = (children) => {
     return children.reduce((memo, child) => {

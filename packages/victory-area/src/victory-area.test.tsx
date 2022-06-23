@@ -1,10 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { range } from "lodash";
 import React from "react";
-import { Area, VictoryArea } from "victory-area";
+import { Area, VictoryArea, VictoryAreaProps } from "victory-area";
 import { VictoryChart } from "victory-chart";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
-import { calculateD3Path } from "../../../test/helpers";
+import { calculateD3Path } from "../../../test/helpers/svg";
 
 describe("components/victory-area", () => {
   describe("default component rendering", () => {
@@ -30,7 +30,7 @@ describe("components/victory-area", () => {
           aria-label="Chart"
           unsafe-prop="test"
         />,
-        { wrapper: VictoryChart },
+        { wrapper: VictoryChart as any },
       );
 
       const container = screen.getByTestId("victory-area");
@@ -42,7 +42,7 @@ describe("components/victory-area", () => {
     it("renders an svg with the correct viewbox", () => {
       const { container } = render(<VictoryArea />);
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(container.querySelector("svg").getAttribute("viewBox")).toEqual(
+      expect(container.querySelector("svg")!.getAttribute("viewBox")).toEqual(
         viewBoxValue,
       );
     });
@@ -50,7 +50,7 @@ describe("components/victory-area", () => {
 
   describe("component rendering with data", () => {
     it("renders the correct d3 path", () => {
-      const props = {
+      const props: VictoryAreaProps = {
         width: 400,
         height: 300,
         padding: 50,
@@ -63,13 +63,13 @@ describe("components/victory-area", () => {
         ],
       };
       const { container } = render(<VictoryArea {...props} />);
-      expect(container.querySelector("path").getAttribute("d")).toEqual(
+      expect(container.querySelector("path")!.getAttribute("d")).toEqual(
         calculateD3Path(props, "area"),
       );
     });
 
     it("renders the correct d3 path with custom interpolation string property", () => {
-      const props = {
+      const props: VictoryAreaProps = {
         interpolation: "catmullRom",
         width: 400,
         height: 300,
@@ -84,13 +84,13 @@ describe("components/victory-area", () => {
 
       const { container } = render(<VictoryArea {...props} />);
 
-      expect(container.querySelector("path").getAttribute("d")).toEqual(
+      expect(container.querySelector("path")!.getAttribute("d")).toEqual(
         calculateD3Path(props, "area"),
       );
     });
 
     it("renders the correct d3 path with custom interpolation function", () => {
-      const props = {
+      const props: VictoryAreaProps = {
         interpolation: curveCatmullRom,
         width: 400,
         height: 300,
@@ -105,13 +105,13 @@ describe("components/victory-area", () => {
 
       const { container } = render(<VictoryArea {...props} />);
 
-      expect(container.querySelector("path").getAttribute("d")).toEqual(
+      expect(container.querySelector("path")!.getAttribute("d")).toEqual(
         calculateD3Path(props, "area"),
       );
     });
 
     it("sorts data according to sortKey prop", () => {
-      const props = {
+      const props: VictoryAreaProps = {
         scale: "linear",
         interpolation: "linear",
         sortKey: "x",
@@ -133,14 +133,14 @@ describe("components/victory-area", () => {
       );
 
       const area = screen.getByTestId("area");
-      const data = JSON.parse(area.getAttribute("data-json"));
+      const data = JSON.parse(area.getAttribute("data-json")!);
       const xValues = data.map((d) => d._x);
 
       expect(xValues).toEqual([0, 1, 2, 3, 4]);
     });
 
     it("sorts data according to sortOrder prop", () => {
-      const props = {
+      const props: VictoryAreaProps = {
         scale: "linear",
         interpolation: "linear",
         sortKey: "x",
@@ -162,7 +162,7 @@ describe("components/victory-area", () => {
       );
 
       const area = screen.getByTestId("area");
-      const data = JSON.parse(area.getAttribute("data-json"));
+      const data = JSON.parse(area.getAttribute("data-json")!);
       const xValues = data.map((d) => d._x);
 
       expect(xValues).toEqual([4, 3, 2, 1, 0]);
@@ -251,7 +251,9 @@ describe("components/victory-area", () => {
           data={ariaTestData}
           dataComponent={
             <Area
-              ariaLabel={({ data }) => `data point 1's x value is ${data[0].x}`}
+              ariaLabel={({ data }) =>
+                `data point 1's x value is ${data![0].x}`
+              }
               tabIndex={4}
             />
           }
@@ -262,7 +264,7 @@ describe("components/victory-area", () => {
         expect(p.getAttribute("aria-label")).toEqual(
           `data point 1's x value is ${ariaTestData[i].x}`,
         );
-        expect(parseInt(p.getAttribute("tabindex"))).toEqual(4);
+        expect(parseInt(p.getAttribute("tabindex")!)).toEqual(4);
       });
     });
   });

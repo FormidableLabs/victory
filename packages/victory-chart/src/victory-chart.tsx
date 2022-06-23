@@ -11,6 +11,13 @@ import {
   VictoryContainer,
   VictoryTheme,
   Wrapper,
+  CategoryPropType,
+  DomainPropType,
+  EventPropTypeInterface,
+  StringOrNumberOrCallback,
+  VictoryCommonProps,
+  VictoryStyleInterface,
+  VictoryStyleObject,
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { VictoryAxis } from "victory-axis";
@@ -29,7 +36,7 @@ const fallbackProps = {
   padding: 50,
 };
 
-const VictoryChart = (initialProps) => {
+const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
   const role = "chart";
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
@@ -64,7 +71,7 @@ const VictoryChart = (initialProps) => {
     () => getCalculatedProps(modifiedProps, childComponents),
     [modifiedProps, childComponents],
   );
-  const { domain, scale, style, origin, radius, horizontal } = calculatedProps;
+  const { domain, scale, style, origin, horizontal } = calculatedProps;
 
   const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
@@ -100,7 +107,6 @@ const VictoryChart = (initialProps) => {
         name,
         origin: polar ? origin : undefined,
         polar,
-        radius,
         theme,
         title,
         scale,
@@ -117,7 +123,6 @@ const VictoryChart = (initialProps) => {
     name,
     origin,
     polar,
-    radius,
     scale,
     standalone,
     style,
@@ -175,7 +180,7 @@ const VictoryChart = (initialProps) => {
   return React.cloneElement(container, container.props, newChildren);
 };
 
-VictoryChart.propTypes = {
+VictoryChartImpl.propTypes = {
   ...CommonProps.baseProps,
   backgroundComponent: PropTypes.element,
   children: PropTypes.oneOfType([
@@ -196,7 +201,7 @@ VictoryChart.propTypes = {
   startAngle: PropTypes.number,
 };
 
-VictoryChart.defaultProps = {
+VictoryChartImpl.defaultProps = {
   backgroundComponent: <Background />,
   containerComponent: <VictoryContainer />,
   defaultAxes: {
@@ -212,9 +217,36 @@ VictoryChart.defaultProps = {
   theme: VictoryTheme.grayscale,
 };
 
-const VictoryChartMemo = React.memo(VictoryChart, isEqual);
+export const VictoryChart = React.memo(VictoryChartImpl, isEqual);
 
-VictoryChartMemo.displayName = "VictoryChart";
-VictoryChartMemo.expectedComponents = ["groupComponent", "containerComponent"];
+VictoryChart.displayName = "VictoryChart";
+// @ts-expect-error FIXME: Does this "expectedComponents" do anything?
+VictoryChart.expectedComponents = ["groupComponent", "containerComponent"];
 
-export default VictoryChartMemo;
+export type AxesType = {
+  dependent?: React.ReactElement | null;
+  independent?: React.ReactElement | null;
+};
+
+export interface VictoryChartProps extends VictoryCommonProps {
+  backgroundComponent?: React.ReactElement;
+  categories?: CategoryPropType;
+  children?: React.ReactNode | React.ReactNode[];
+  desc?: string;
+  defaultAxes?: AxesType;
+  defaultPolarAxes?: AxesType;
+  domain?: DomainPropType;
+  endAngle?: number;
+  eventKey?: StringOrNumberOrCallback;
+  events?: EventPropTypeInterface<
+    string,
+    string[] | number[] | string | number
+  >[];
+  innerRadius?: number;
+  prependDefaultAxes?: boolean;
+  startAngle?: number;
+  style?: Pick<VictoryStyleInterface, "parent"> & {
+    background?: VictoryStyleObject;
+  };
+  title?: string;
+}

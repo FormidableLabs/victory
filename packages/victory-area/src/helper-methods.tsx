@@ -19,7 +19,7 @@ export const getDataWithBaseline = (props, scale) => {
     const domain = scale[axis].domain();
     const minY = Collection.getMinValue(domain);
     const maxY = Collection.getMaxValue(domain);
-    let defaultMin = defaultZero;
+    let defaultMin: typeof minY = defaultZero;
     if (minY < 0 && maxY <= 0) {
       defaultMin = maxY;
     } else if (minY >= 0 && maxY > 0) {
