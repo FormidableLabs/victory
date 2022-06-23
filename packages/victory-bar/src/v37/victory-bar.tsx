@@ -11,6 +11,7 @@ import {
   withContainer,
 } from "victory-core";
 import Bar from "../bar";
+import { BarProps } from "..";
 import { getBarPosition } from "../helper-methods";
 
 export type VictoryBarAlignmentType = "start" | "middle" | "end";
@@ -68,12 +69,11 @@ function VictoryBar({
   // TODO: Do we need to get this from context?
   const formattedData = useData();
 
+  const barPositionProps = { domain, scale, horizontal };
+
   const children = formattedData.map((datum: Datum, i: number) => {
-    const { x, y, x0, y0 } = getBarPosition(
-      { domain, scale, horizontal },
-      datum,
-    );
-    const dataProps = {
+    const { x, y, y0 } = getBarPosition(barPositionProps, datum);
+    const dataProps: BarProps & { key: string } = {
       index: i,
       key: `bar-${i}`,
       alignment,
@@ -84,7 +84,6 @@ function VictoryBar({
       data,
       x,
       y,
-      x0,
       y0,
       datum,
     };
