@@ -17593,11 +17593,6 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-context-selector@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/use-context-selector/-/use-context-selector-1.4.1.tgz#eb96279965846b72915d7f899b8e6ef1d768b0ae"
-  integrity sha512-Io2ArvcRO+6MWIhkdfMFt+WKQX+Vb++W8DS2l03z/Vw/rz3BclKpM0ynr4LYGyU85Eke+Yx5oIhTY++QR0ZDoA==
-
 use-subscription@^1.0.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/use-subscription/-/use-subscription-1.7.0.tgz#c7505263315deac9fd2581cdf4ab1e3ff2585d0f"
