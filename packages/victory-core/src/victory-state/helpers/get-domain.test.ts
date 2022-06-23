@@ -66,8 +66,9 @@ describe("getDomain", () => {
           { x: 1, y: 3 },
           { x: 3, y: 5 },
         ],
+        includeZero: true,
       };
-      expect(getDomain(props, "y", true)).toEqual([0, 5]);
+      expect(getDomain(props, "y")).toEqual([0, 5]);
     });
 
     it("allows minimum domain values less than zero", () => {
@@ -76,8 +77,9 @@ describe("getDomain", () => {
           { x: 1, y: -3 },
           { x: 3, y: 5 },
         ],
+        includeZero: true,
       };
-      expect(getDomain(props, "y", true)).toEqual([-3, 5]);
+      expect(getDomain(props, "y")).toEqual([-3, 5]);
     });
 
     // TODO: Investigate this more
@@ -88,8 +90,9 @@ describe("getDomain", () => {
           { x: 1, y: 3, y0: 2 },
           { x: 3, y: 5, y0: 3 },
         ],
+        includeZero: true,
       };
-      expect(getDomain(props, "y", true)).toEqual([2, 5]);
+      expect(getDomain(props, "y")).toEqual([2, 5]);
     });
   });
 });

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { createContext, useContextSelector } from "use-context-selector";
 import { D3ScaleFn, DomainTuple, ForAxes } from "../types/prop-types";
-import { VictoryProviderProps } from "./types";
 import { FormattedDatum, getData } from "./helpers/get-data";
 import { getDomain } from "./helpers/get-domain";
 import { getRange } from "./helpers/get-range";
 import { getScale } from "./helpers/get-scale";
+import { VictoryCalculatedStateProps, VictoryProviderProps } from "./types";
 
 type ScaleType = Required<ForAxes<D3ScaleFn>>;
 type DomainType = Required<ForAxes<DomainTuple>>;
@@ -14,22 +14,37 @@ export interface ContextType {
   data: FormattedDatum[];
   scale: ScaleType;
   domain: DomainType;
+  setChildProps: (id: string, props: VictoryProviderProps) => void;
 }
 
 const VictoryContext = createContext<ContextType | null>(null);
 
 export function VictoryProvider({
   children,
-  includeZero,
-  ...props
+  ...initialProps
 }: VictoryProviderProps) {
-  const domain = React.useMemo(
-    () => ({
-      x: getDomain(props, "x", includeZero),
-      y: getDomain(props, "y", includeZero),
-    }),
-    [props, includeZero],
+  // We need to store the props in state so they can be overwritten by child components
+  const [props, setProps] = React.useState(initialProps);
+
+  const setChildProps = React.useCallback(
+    (id: string, newProps: VictoryCalculatedStateProps) => {
+      setProps((prevProps) => {
+        return { ...prevProps, ...newProps };
+      });
+    },
+    [],
   );
+
+  const data = React.useMemo(() => {
+    return getData(props);
+  }, [props]);
+
+  const domain = React.useMemo(() => {
+    return {
+      x: getDomain(props, "x"),
+      y: getDomain(props, "y"),
+    };
+  }, [props]);
 
   const range = React.useMemo(
     () => ({
@@ -54,12 +69,11 @@ export function VictoryProvider({
     };
   }, [props, domain, range]);
 
-  const data = React.useMemo(() => getData(props), [props]);
-
   const value = {
     scale,
     data,
     domain,
+    setChildProps,
   };
 
   return (
@@ -90,4 +104,18 @@ export function useData() {
 
 export function useDomain() {
   return useVictoryContext<DomainType>((value) => value.domain);
+}
+
+// This function keeps props in sync betwen the VictoryProvider and child components
+export function useVictoryProviderSync(
+  id: string,
+  props: VictoryCalculatedStateProps,
+) {
+  const setChildProps = useVictoryContext((value) => value.setChildProps);
+
+  React.useEffect(() => {
+    setChildProps(id, props);
+  }, []);
+
+  return props;
 }

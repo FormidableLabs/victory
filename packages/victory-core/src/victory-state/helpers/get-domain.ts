@@ -15,7 +15,7 @@ import {
 
 type DomainProps = Pick<
   VictoryProviderProps,
-  "data" | "domain" | "maxDomain" | "minDomain"
+  "data" | "domain" | "maxDomain" | "minDomain" | "includeZero"
 >;
 
 // TODO: What should this default value be?
@@ -34,9 +34,8 @@ function getDomainFromMinMax(
 }
 
 export function getDomain(
-  { data = [], ...props }: DomainProps,
+  { data = [], includeZero, ...props }: DomainProps,
   axis: AxisType,
-  includeZero = false,
 ): DomainTuple {
   const domainFromProps = getValueForAxis<DomainTuple>(props.domain, axis);
   const axisData = getAxisData(data, axis);

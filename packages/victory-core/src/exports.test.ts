@@ -202,6 +202,8 @@ describe("victory-core", () => {
         "useDomain",
         "useScale",
         "useVictoryContext",
+        "useVictoryProviderSync",
+        "withContainer",
       ]
     `);
   });
