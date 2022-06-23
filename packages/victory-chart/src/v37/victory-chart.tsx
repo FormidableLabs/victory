@@ -13,7 +13,7 @@ import {
   useData,
 } from "victory-core";
 import { AxesType } from "..";
-import { VictoryAxis } from "victory-axis";
+import { VictoryAxis, VictoryAxisProps } from "victory-axis";
 
 interface VictoryChartProps extends VictoryCommonProps {
   backgroundComponent?: React.ReactElement;
@@ -58,9 +58,10 @@ const VictoryChart = ({
       ...defaultAxes,
       ...DEFAULT_AXES,
     };
-    const axisProps = {
+    const axisProps: VictoryAxisProps = {
       data,
       domain,
+      // @ts-expect-error we need to fix this scale type
       scale,
       standalone: false,
     };
@@ -76,7 +77,7 @@ const VictoryChart = ({
   const childComponents = React.Children.map(children, (child, index) => {
     // @ts-expect-error Why is this throwing a type error?
     return React.cloneElement(child, {
-      key: `${child}-index`,
+      key: `child-${index}`,
       index,
       standalone: false,
     });
