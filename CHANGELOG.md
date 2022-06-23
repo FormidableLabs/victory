@@ -1,5 +1,22 @@
 # Victory Changelog
 
+## 36.5.1 (2022-06-23)
+* TS migrate: core utils by @scottrippey in https://github.com/FormidableLabs/victory/pull/2289
+* Typescript: added types to `victory-vendor` by @scottrippey in https://github.com/FormidableLabs/victory/pull/2292
+* TypeScript migration: more utils! by @scottrippey in https://github.com/FormidableLabs/victory/pull/2299
+* TS migrate: prop types by @scottrippey in https://github.com/FormidableLabs/victory/pull/2300
+* Modularize calculated props helpers by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2290
+* Build enhancements for move tests PR by @ryan-roemer in https://github.com/FormidableLabs/victory/pull/2305
+* Chore: generate source maps by @scottrippey in https://github.com/FormidableLabs/victory/pull/2307
+* TypeScript: Mark `data` as `readonly` by @scottrippey in https://github.com/FormidableLabs/victory/pull/2313
+* TS migrate: add events by @scottrippey in https://github.com/FormidableLabs/victory/pull/2306
+* Move tests to root directories by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2301
+* Update prettier trailing comma rule by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2315
+* TS: migrate victory-area, victory-chart by @scottrippey in https://github.com/FormidableLabs/victory/pull/2314
+* TypeScript: migrate `victory` to TypeScript by @scottrippey in https://github.com/FormidableLabs/victory/pull/2319
+* Use build config for babel by @ryan-roemer in https://github.com/FormidableLabs/victory/pull/2321
+* Add Victory Bar v37 by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2316
+
 ## 36.5.0 (2022-06-07)
 * victory-histogram jest tests by @heythisispaul in https://github.com/FormidableLabs/victory/pull/2255
 * Convert tests for victory error bar by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2266

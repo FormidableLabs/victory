@@ -68,7 +68,7 @@ const toNewNameClosed = (interpolation: CurveName) => {
   return `${toNewName(interpolation)}Closed` as ShapeMethodClosed;
 };
 
-const getInterpolationFunction = (props) => {
+export const getInterpolationFunction = (props) => {
   const { interpolation } = props;
 
   if (typeof interpolation === "function") {

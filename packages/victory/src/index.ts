@@ -57,32 +57,45 @@ export { VictoryVoronoi, Voronoi } from "victory-voronoi";
 export { VictoryBrushLine } from "victory-brush-line";
 export {
   VictoryBrushContainer,
+  // @ts-expect-error Missing types for this export
   BrushHelpers,
+  // @ts-expect-error Missing types for this export
   brushContainerMixin,
 } from "victory-brush-container";
 export {
   VictoryCursorContainer,
+  // @ts-expect-error Missing types for this export
   CursorHelpers,
+  // @ts-expect-error Missing types for this export
   cursorContainerMixin,
 } from "victory-cursor-container";
 export {
   VictorySelectionContainer,
+  // @ts-expect-error Missing types for this export
   SelectionHelpers,
+  // @ts-expect-error Missing types for this export
   selectionContainerMixin,
 } from "victory-selection-container";
 export {
   VictoryVoronoiContainer,
+  // @ts-expect-error Missing types for this export
   VoronoiHelpers,
+  // @ts-expect-error Missing types for this export
   voronoiContainerMixin,
 } from "victory-voronoi-container";
 export {
   VictoryZoomContainer,
+  // @ts-expect-error Missing types for this export
   ZoomHelpers,
+  // @ts-expect-error Missing types for this export
   zoomContainerMixin,
+  // @ts-expect-error Missing types for this export
   RawZoomHelpers,
 } from "victory-zoom-container";
 export {
+  // @ts-expect-error Missing types for this export
   combineContainerMixins,
+  // @ts-expect-error Missing types for this export
   makeCreateContainerFunction,
   createContainer,
 } from "victory-create-container";
@@ -97,5 +110,6 @@ export {
   CanvasCurve,
   CanvasPoint,
   CanvasBar,
+  // @ts-expect-error Missing types for this export
   useCanvasContext,
 } from "victory-canvas";
