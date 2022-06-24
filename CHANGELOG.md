@@ -1,5 +1,8 @@
 # Victory Changelog
 
+## 36.5.2 (2022-06-23)
+* Remove dependency on use-context-selector by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2325
+
 ## 36.5.1 (2022-06-23)
 * TS migrate: core utils by @scottrippey in https://github.com/FormidableLabs/victory/pull/2289
 * Typescript: added types to `victory-vendor` by @scottrippey in https://github.com/FormidableLabs/victory/pull/2292
