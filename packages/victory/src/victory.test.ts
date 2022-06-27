@@ -1,4 +1,3 @@
-import { omit } from "lodash";
 import * as Victory from "victory";
 import {
   Arc,
@@ -153,8 +152,9 @@ describe("victory", () => {
     expect(Area).toBeInstanceOf(Function);
   });
   it("ensure everything is exported correctly", () => {
-    expect(Object.keys(Victory)).toMatchInlineSnapshot(`
+    expect(Object.keys(Victory).sort()).toMatchInlineSnapshot(`
       Array [
+        "Arc",
         "Area",
         "Axis",
         "Background",
@@ -170,6 +170,7 @@ describe("victory", () => {
         "Circle",
         "ClipPath",
         "Collection",
+        "CommonProps",
         "CursorHelpers",
         "Curve",
         "Data",
@@ -179,13 +180,18 @@ describe("victory", () => {
         "Events",
         "Flyout",
         "Helpers",
+        "Hooks",
+        "Immutable",
         "LabelHelpers",
         "Line",
+        "LineHelpers",
         "LineSegment",
         "Log",
         "Path",
         "Point",
+        "PointPathHelpers",
         "Portal",
+        "PortalContext",
         "PropTypes",
         "RawZoomHelpers",
         "Rect",
@@ -197,6 +203,8 @@ describe("victory", () => {
         "TSpan",
         "Text",
         "TextSize",
+        "Timer",
+        "TimerContext",
         "Transitions",
         "UserProps",
         "VictoryAccessibleGroup",
@@ -221,6 +229,7 @@ describe("victory", () => {
         "VictoryPie",
         "VictoryPolarAxis",
         "VictoryPortal",
+        "VictoryProvider",
         "VictoryScatter",
         "VictorySelectionContainer",
         "VictorySharedEvents",
@@ -241,10 +250,26 @@ describe("victory", () => {
         "combineContainerMixins",
         "createContainer",
         "cursorContainerMixin",
+        "getBarPath",
+        "getBarPosition",
+        "getBarWidth",
+        "getCornerRadius",
+        "getCustomBarPath",
+        "getHorizontalBarPath",
+        "getPolarBarPath",
+        "getStyle",
+        "getVerticalBarPath",
+        "getVerticalPolarBarPath",
         "makeCreateContainerFunction",
         "selectionContainerMixin",
         "useCanvasContext",
+        "useData",
+        "useDomain",
+        "useScale",
+        "useVictoryContext",
+        "useVictoryProviderSync",
         "voronoiContainerMixin",
+        "withContainer",
         "zoomContainerMixin",
       ]
     `);
