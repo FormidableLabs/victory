@@ -1,6 +1,7 @@
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
+import { VictoryLine } from "victory";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 describe("components/victory-chart", () => {
@@ -96,6 +97,18 @@ describe("components/victory-chart", () => {
       fireEvent.click(svg);
 
       expect(clickHandler).toHaveBeenCalled();
+    });
+  });
+
+  describe("animation", () => {
+    it("handles basic animation parameters without crashing", () => {
+      const { container } = render(
+        <VictoryChart animate={{ duration: 2000, easing: "bounce" }}>
+          <VictoryLine />
+        </VictoryChart>,
+      );
+
+      expect(container.querySelector("svg")).toBeTruthy();
     });
   });
 });
