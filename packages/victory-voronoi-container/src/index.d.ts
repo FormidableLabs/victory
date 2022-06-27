@@ -20,3 +20,20 @@ export class VictoryVoronoiContainer extends React.Component<
   VictoryVoronoiContainerProps,
   any
 > {}
+
+export const VoronoiHelpers: {
+  withinBounds(props, point): any;
+  getDatasets(props): any;
+  findPoints(datasets, point): any;
+  withinRadius(point, mousePosition, radius): any;
+  getVoronoiPoints(props, mousePosition): any;
+  getActiveMutations(props, point): any;
+  getInactiveMutations(props, point): any;
+  getParentMutation(activePoints, mousePosition, parentSVG, vIndex): any;
+  onActivated(props, points): any;
+  onDeactivated(props, points): any;
+  onMouseLeave(evt, targetProps): any;
+  onMouseMove(evt, targetProps): any;
+};
+
+export const voronoiContainerMixin: (base: Function) => Function;
