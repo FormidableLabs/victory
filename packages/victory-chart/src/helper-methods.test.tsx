@@ -34,7 +34,7 @@ describe("victory-chart/helpers-methods", () => {
       const children = [axis];
       const result = getChildComponents({ children }, defaultAxes);
       expect(result).toHaveLength(1);
-      expect(result[0].props).toEqual(axis.props);
+      expect((result[0] as typeof axis).props).toEqual(axis.props);
     });
   });
 });

@@ -1,4 +1,6 @@
-function isNonEmptyArray(collection) {
+function isNonEmptyArray<T>(
+  collection: Array<T> | unknown,
+): collection is Array<T> {
   return Array.isArray(collection) && collection.length > 0;
 }
 
@@ -23,15 +25,22 @@ export function containsNumbers(collection) {
   );
 }
 
-export function containsOnlyStrings(collection) {
+export function containsOnlyStrings(
+  collection?: Array<string> | unknown,
+): collection is Array<string> {
   return (
     isNonEmptyArray(collection) &&
     collection.every((value) => typeof value === "string")
   );
 }
 
-export function isArrayOfArrays(collection) {
-  return isNonEmptyArray(collection) && collection.every(Array.isArray);
+export function isArrayOfArrays<T>(
+  collection?: Array<T> | Array<Array<T>>,
+): collection is Array<Array<T>> {
+  return (
+    isNonEmptyArray(collection) &&
+    (collection as Array<Array<T>>).every(Array.isArray)
+  );
 }
 
 export function removeUndefined(arr) {
