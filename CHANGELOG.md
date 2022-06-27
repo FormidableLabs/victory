@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 36.5.3 (2022-06-27)
+* Export all types from Victory
+* Fix for #2329 (use-animation-state crashing charts)
+* Local VSC settings to ignore built files in search
+
 ## 36.5.2 (2022-06-23)
 * Remove dependency on use-context-selector by @becca-bailey in https://github.com/FormidableLabs/victory/pull/2325
 
