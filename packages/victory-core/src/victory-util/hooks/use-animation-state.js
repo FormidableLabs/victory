@@ -24,7 +24,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
   // This is a copy of Wrapper.getAnimationProps
   const getAnimationProps = React.useCallback(
     (props, child, index) => {
-      if (!props.animate) {
+      if (!props?.animate) {
         return child.props.animate;
       }
       const getFilteredState = () => {
@@ -60,7 +60,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
   // This is a copy of Wrapper.setAnimationState
   const setAnimationState = React.useCallback(
     (props, nextProps) => {
-      if (!props.animate) {
+      if (!props || !props.animate) {
         return;
       }
       if (props.animate.parentState) {
