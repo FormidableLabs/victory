@@ -26,7 +26,7 @@ export function containsNumbers(collection) {
 }
 
 export function containsOnlyStrings(
-  collection?: Array<string> | unknown,
+  collection: Array<string> | unknown,
 ): collection is Array<string> {
   return (
     isNonEmptyArray(collection) &&
@@ -35,7 +35,7 @@ export function containsOnlyStrings(
 }
 
 export function isArrayOfArrays<T>(
-  collection?: Array<T> | Array<Array<T>>,
+  collection: Array<T> | Array<Array<T>> | unknown,
 ): collection is Array<Array<T>> {
   return (
     isNonEmptyArray(collection) &&
