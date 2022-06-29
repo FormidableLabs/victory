@@ -4,10 +4,25 @@ import { defaults, some } from "lodash";
 import * as Collection from "../collection";
 import * as Transitions from "../transitions";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: AnimationState = {
   nodesShouldLoad: false,
   nodesDoneLoad: false,
   animating: true,
+};
+
+type AnyObject = Record<string, any>;
+
+export type AnimationState = {
+  nodesShouldLoad?: boolean;
+  nodesDoneLoad?: boolean;
+  animating?: boolean;
+  childrenTransitions?: any[];
+  nodesWillExit?: boolean;
+  nodesWillEnter?: boolean;
+  nodesShouldEnter?: boolean;
+  oldProps?: AnyObject;
+  nextProps?: AnyObject;
+  continuous?: boolean;
 };
 
 export const useAnimationState = (initialState = INITIAL_STATE) => {
@@ -15,7 +30,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
 
   // This allows us to use a state object and maintain the same API as this.setState
   const setState = React.useCallback(
-    (newState) => {
+    (newState: AnimationState) => {
       _setState((oldState) => ({ ...oldState, ...newState }));
     },
     [_setState],
@@ -23,7 +38,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
 
   // This is a copy of Wrapper.getAnimationProps
   const getAnimationProps = React.useCallback(
-    (props, child, index) => {
+    (props: AnyObject | undefined, child, index) => {
       if (!props?.animate) {
         return child.props.animate;
       }
@@ -59,8 +74,8 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
 
   // This is a copy of Wrapper.setAnimationState
   const setAnimationState = React.useCallback(
-    (props, nextProps) => {
-      if (!props || !props.animate) {
+    (props: AnyObject | undefined, nextProps) => {
+      if (!props?.animate) {
         return;
       }
       if (props.animate.parentState) {
@@ -81,7 +96,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
 
         const continuous =
           !props.polar &&
-          some(oldChildren, (child) => {
+          some(oldChildren, (child: React.ReactElement) => {
             return (
               isContinuous(child) ||
               (child.props.children && isContinuous(child.props.children))
@@ -101,7 +116,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
           childrenTransitions: Collection.isArrayOfArrays(childrenTransitions)
             ? childrenTransitions[0]
             : childrenTransitions,
-          oldProps: nodesWillExit ? props : null,
+          oldProps: nodesWillExit ? props : undefined,
           nextProps,
           continuous,
         });
@@ -111,7 +126,7 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
   );
 
   const getProps = React.useCallback(
-    (initialProps) => {
+    (initialProps: AnyObject) => {
       return state && state.nodesWillExit
         ? state.oldProps || initialProps
         : initialProps;

@@ -78,7 +78,7 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
 
     const mappedChildren = children.map((child, index) => {
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index, "victory chart") },
+        { animate: getAnimationProps(props, child, index) },
         child.props,
       );
       return React.cloneElement(child, childProps);
