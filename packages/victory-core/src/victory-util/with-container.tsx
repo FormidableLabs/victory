@@ -2,8 +2,10 @@ import React from "react";
 import {
   VictoryProvider,
   VictoryProviderProps,
+} from "../victory-state";
+import {
   VictoryContainer,
-} from "victory-core";
+} from "../victory-container/victory-container";
 import { VictoryCommonProps } from "./common-props";
 
 const defaultProviderProps = {
