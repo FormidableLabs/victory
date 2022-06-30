@@ -16,12 +16,6 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "**/d3-*",
-      "**/d3-*/**",
-      "**/internmap",
-      "**/internmap/**"
     ]
   },
   "author": "Formidable",

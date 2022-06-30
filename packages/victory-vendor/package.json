@@ -44,6 +44,11 @@
     "d3-timer": "^3.0.1"
   },
   "devDependencies": {
+    "d3-format": "^3.1.0",
+    "d3-path": "^3.0.1",
+    "d3-time-format": "^4.1.0",
+    "d3-voronoi": "^1.1.4",
+    "internmap": "^2.0.3",
     "execa": "^6.1.0",
     "rimraf": "^3.0.2"
   },

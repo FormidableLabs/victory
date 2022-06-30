@@ -595,12 +595,17 @@ importers:
       '@types/d3-timer': ^3.0.0
       d3-array: ^3.1.6
       d3-ease: ^3.0.1
+      d3-format: ^3.1.0
       d3-interpolate: ^3.0.1
+      d3-path: ^3.0.1
       d3-scale: ^4.0.2
       d3-shape: ^3.1.0
       d3-time: ^3.0.0
+      d3-time-format: ^4.1.0
       d3-timer: ^3.0.1
+      d3-voronoi: ^1.1.4
       execa: ^6.1.0
+      internmap: ^2.0.3
       rimraf: ^3.0.2
     dependencies:
       '@types/d3-array': 3.0.3
@@ -618,7 +623,12 @@ importers:
       d3-time: 3.0.0
       d3-timer: 3.0.1
     devDependencies:
+      d3-format: 3.1.0
+      d3-path: 3.0.1
+      d3-time-format: 4.1.0
+      d3-voronoi: 1.1.4
       execa: 6.1.0
+      internmap: 2.0.3
       rimraf: 3.0.2
 
   packages/victory-voronoi:
@@ -9518,7 +9528,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       internmap: 2.0.3
-    dev: false
 
   /d3-color/3.1.0:
     resolution: {integrity: sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA==}
@@ -9533,7 +9542,6 @@ packages:
   /d3-format/3.1.0:
     resolution: {integrity: sha512-YyUI6AEuY/Wpt8KWLgZHsIU86atmikuoOmCfommt0LYHiQSPjvX2AcFc38PX0CBpr2RCyZhjex+NS/LPOv6YqA==}
     engines: {node: '>=12'}
-    dev: false
 
   /d3-interpolate/3.0.1:
     resolution: {integrity: sha512-3bYs1rOD33uo8aqJfKP3JWPAibgw8Zm2+L9vBKEHJ2Rg+viTR7o5Mmv5mZcieN+FRYaAOWX5SJATX6k1PWz72g==}
@@ -9545,7 +9553,6 @@ packages:
   /d3-path/3.0.1:
     resolution: {integrity: sha512-gq6gZom9AFZby0YLduxT1qmrp4xpBA1YZr19OI717WIdKE2OM5ETq5qrHLb301IgxhLwcuxvGZVLeeWc/k1I6w==}
     engines: {node: '>=12'}
-    dev: false
 
   /d3-scale/4.0.2:
     resolution: {integrity: sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==}
@@ -9570,14 +9577,12 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       d3-time: 3.0.0
-    dev: false
 
   /d3-time/3.0.0:
     resolution: {integrity: sha512-zmV3lRnlaLI08y9IMRXSDshQb5Nj77smnfpnd2LrBa/2K281Jijactokeak14QacHs/kKq0AQ121nidNYlarbQ==}
     engines: {node: '>=12'}
     dependencies:
       d3-array: 3.1.6
-    dev: false
 
   /d3-timer/3.0.1:
     resolution: {integrity: sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA==}
@@ -9586,7 +9591,6 @@ packages:
 
   /d3-voronoi/1.1.4:
     resolution: {integrity: sha512-dArJ32hchFsrQ8uMiTBLq256MpnZjeuBtdHpaDlYuQyjU0CVzCJl/BVW+SkszaAeH95D/8gxqAhgx0ouAWAfRg==}
-    dev: false
 
   /dargs/4.1.0:
     resolution: {integrity: sha512-jyweV/k0rbv2WK4r9KLayuBrSh2Py0tNmV7LBoSMH4hMQyrG8OPyIOWB2VEx4DJKXWmK4lopYMVvORlDt2S8Aw==}
@@ -12437,7 +12441,6 @@ packages:
   /internmap/2.0.3:
     resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
     engines: {node: '>=12'}
-    dev: false
 
   /interpret/2.2.0:
     resolution: {integrity: sha512-Ju0Bz/cEia55xDwUWEa8+olFpCiQoypjnQySseKtmjNrnps3P+xfpUmGr90T7yjlVJmOtybRvPXhKMbHr+fWnw==}
