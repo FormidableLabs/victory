@@ -36,14 +36,14 @@ describe("victory-util/scale", () => {
       const props = { scale: "log" };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(propsScale).toBeInstanceOf(Function);
-      expect(propsScale!.base).toBeInstanceOf(Function);
+      expect(propsScale.base).toBeInstanceOf(Function);
     });
 
     it("returns a scale when a scale object contains a scale for an axis", () => {
       const props = { scale: { x: "log" } };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(propsScale).toBeInstanceOf(Function);
-      expect(propsScale!.base).toBeInstanceOf(Function);
+      expect(propsScale.base).toBeInstanceOf(Function);
     });
 
     it("returns undefined when a scale object does not contain a scale for an axis", () => {
