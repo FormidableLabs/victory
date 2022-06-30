@@ -13,6 +13,17 @@
     "url": "https://github.com/formidablelabs/victory.git"
   },
   "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/d3-*",
+      "**/d3-*/**",
+      "**/internmap",
+      "**/internmap/**"
+    ]
+  },
   "author": "Formidable",
   "license": "MIT",
   "bugs": {
