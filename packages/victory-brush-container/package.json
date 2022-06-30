@@ -28,7 +28,7 @@
     "react": ">=16.6.0"
   },
   "scripts": {
-    "version": "yarn run nps build-libs && nps build-dists"
+    "version": "pnpm run nps build-libs && nps build-dists"
   },
   "sideEffects": false
 }

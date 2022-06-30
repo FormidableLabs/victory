@@ -1,7 +1,7 @@
 // TODO(wireit): Refactor this whole thing
 
 const os = require("os");
-// Can override with, e.g., `CONCURRENCY=2 yarn nps build-package-dists`.
+// Can override with, e.g., `CONCURRENCY=2 pnpm nps build-package-dists`.
 const CONCURRENCY = parseInt(process.env.CONCURRENCY || os.cpus().length, 10);
 const npsUtils = require("nps-utils");
 
@@ -43,16 +43,16 @@ module.exports = {
       // Note: Using a base `nps` command with extra args.
       // 1. You need to add double quotes around the extra part (e.g. `test` below)
       // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
-      base: "yarn eslint --color",
-      fix: "yarn eslint --color --fix",
-      src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
+      base: "pnpm eslint --color",
+      fix: "pnpm eslint --color --fix",
+      src: 'lerna exec --ignore victory-vendor --stream -- pnpm nps \\"lint.base src\\"',
       vendor:
-        'lerna exec --scope victory-vendor -- yarn nps \\"lint.base scripts\\"',
-      config: 'yarn nps "lint.base package-scripts.js config"',
-      demo: 'yarn nps "lint.base demo"',
-      docs: 'yarn nps "lint.base docs"',
-      stories: 'yarn nps "lint.base stories"',
-      test: 'yarn nps "lint.base test"',
+        'lerna exec --scope victory-vendor -- pnpm nps \\"lint.base scripts\\"',
+      config: 'pnpm nps "lint.base package-scripts.js config"',
+      demo: 'pnpm nps "lint.base demo"',
+      docs: 'pnpm nps "lint.base docs"',
+      stories: 'pnpm nps "lint.base stories"',
+      test: 'pnpm nps "lint.base test"',
       default: npsUtils.series.nps(
         "lint.config",
         "lint.test",
@@ -66,7 +66,7 @@ module.exports = {
     format: {
       fix: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
       ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
-      default: "yarn nps format.fix",
+      default: "pnpm nps format.fix",
     },
     typecheck: {
       default: npsUtils.series.nps("typecheck.packages", "typecheck.test"),
@@ -146,7 +146,7 @@ module.exports = {
     "build-libs": npsUtils.series.nps("build-lib", "build-es"),
     "build-package-libs-core": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-libs`,
     "build-package-libs-vendor":
-      "lerna exec --scope victory-vendor -- yarn build",
+      "lerna exec --scope victory-vendor -- pnpm build",
     "build-package-libs": npsUtils.series.nps(
       "build-package-libs-vendor",
       "build-package-libs-core",

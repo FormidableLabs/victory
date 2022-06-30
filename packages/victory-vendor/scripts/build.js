@@ -100,7 +100,7 @@ const main = async () => {
   // Transpile.
   log("Transpiling vendor sources.");
   await execa(
-    "yarn" /*yarn*/,
+    "pnpm",
     [
       "babel",
       "--config-file",

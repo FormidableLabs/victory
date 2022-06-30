@@ -38,7 +38,7 @@
     "build-storybook": "build-storybook",
     "chromatic": "chromatic",
     "chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
-    "test": "echo \"Please run 'yarn nps test' instead\" && exit 1"
+    "test": "nps test"
   },
   "devDependencies": {
     "@babel/cli": "7.17.10",

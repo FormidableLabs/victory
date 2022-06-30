@@ -15,7 +15,7 @@ There are some parts of Victory that are in need of a little extra attention rig
 
 ## Monorepo!
 
-Victory is a monorepo built with [Lerna](https://lerna.js.org/) and [Yarn](https://yarnpkg.com/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `yarn` will automatically link all interdependent `victory-*` packages. **You must use `yarn` rather than `npm` when installing and running `package.json` scripts in this project.**
+Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and [pnpm](https://pnpm.io/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `pnpm install` will automatically link all interdependent `victory-*` packages. **You must use `pnpm` rather than `npm` or `yarn` when installing and running `package.json` scripts in this project.**
 
 ## `package-scripts.js`
 
@@ -23,8 +23,8 @@ Victory uses [`nps`](https://github.com/kentcdodds/nps) to organize package scri
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/) 8.10.0 or higher.
-- [Yarn](https://yarnpkg.com/en/docs/install) 1.7.0 or higher.
+- [Node.js](https://nodejs.org/) 14 or higher.
+- [pnpm](https://pnpm.io/) 7 or higher.
 
 ### Setup
 
@@ -35,17 +35,18 @@ $ git clone https://github.com/FormidableLabs/victory.git
 $ cd victory
 ```
 
-Use [Yarn](https://yarnpkg.com/) to install dependencies:
+Use [pnpm](https://pnpm.io/) to install dependencies:
 
 ```sh
-$ yarn install
+# ... if you need pnpm
+$ npm install -g pnpm
+$ pnpm install
 ```
-
-> _Note_: We use Yarn 1 and not the newer, different Yarn 2+ projects. Please use at least the minimum `yarn` version specified in `package.json:engines.yarn`.
 
 Run a development server and check out the demos. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
 
 ```sh
+# TODO(wireit): Refactor these
 $ yarn start
 ```
 
@@ -54,6 +55,7 @@ running this command will serve demo pages at http://localhost:3000/ and tests a
 As a useful tip if you're working in just one package in the monorepo, you can rebuild just that package:
 
 ```sh
+# TODO(wireit): Refactor these
 $ lerna exec --scope <package name> -- yarn nps build-libs
 $ lerna exec --scope victory-core -- yarn nps build-libs
 ```
@@ -63,6 +65,7 @@ $ lerna exec --scope victory-core -- yarn nps build-libs
 Tests can be run in the terminal with:
 
 ```sh
+# TODO(wireit): Refactor these
 # Build and run all tests.
 $ yarn nps test
 
@@ -73,6 +76,7 @@ $ yarn nps test.watch
 You can also run the watch script in a separate terminal window to add arguments or isolate specific tests.
 
 ```sh
+# TODO(wireit): Refactor these
 # In one terminal run a watch on library files
 $ yarn nps watch
 
@@ -83,6 +87,7 @@ $ yarn nps "jest <module> --watch"
 Victory uses eslint and prettier to maintain code style consistency. Before creating a pull request, please lint and format your changes with the following commands:
 
 ```sh
+# TODO(wireit): Refactor these
 # Lint
 $ yarn nps lint                                       # check
 $ lerna exec --scope <pkg name> -- yarn nps lint.fix  # fix specific package
@@ -99,13 +104,15 @@ Victory relies heavily on visual regression testing with [Storybook](https://sto
 Write visual tests for new features by adding them in the `stories` directory. Run storybooks and check out changes. Storybooks are served from http://localhost:6006/
 
 ```sh
-$ yarn storybook
+# TODO(wireit): Implement this
+$ pnpm storybook
 ```
 
 [Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All internal PRs will trigger a new Chromatic build, which will be displayed along with CI status. Chromatic builds for Victory may be viewed in more detail here: https://www.chromaticqa.com/builds?appId=5b4acf7c54c0490024d5980b. Chromatic requires a secret app code to run, so PRs from external contributors will not automatically trigger a Chromatic build. For this reason, changes from external contributors will be checked out and opened as separate PRs so Chromatic may be used to verify any changes. Developers with access to the secret app code may also trigger a chromatic build manually with:
 
 ```sh
-$ yarn chromatic
+# TODO(wireit): Implement this
+$ pnpm chromatic
 ```
 
 ## Release

@@ -24,7 +24,7 @@
     }
   },
   "scripts": {
-    "version": "yarn run build",
+    "version": "pnpm run build",
     "build": "node ./scripts/build.js"
   },
   "dependencies": {
