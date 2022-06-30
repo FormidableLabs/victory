@@ -39,12 +39,13 @@ export const Curve: React.FC<CurveProps> = (props) => {
   const lineFunction = LineHelpers.getLineFunction(props);
   const defaultTransform =
     polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+  const d = lineFunction(props.data);
 
   return React.cloneElement(props.pathComponent!, {
     ...props.events,
     ...userProps,
     "aria-label": props.ariaLabel,
-    d: lineFunction(props.data),
+    d,
     style: props.style,
     transform: props.transform || defaultTransform,
     className: props.className,
