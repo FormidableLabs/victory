@@ -16,5 +16,6 @@ tsconfig.json
 tsconfig.*.json
 storybook-static
 public
+artifacts
 .expo
 .wireit
