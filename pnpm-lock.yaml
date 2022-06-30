@@ -594,6 +594,7 @@ importers:
       '@types/d3-time': ^3.0.0
       '@types/d3-timer': ^3.0.0
       d3-array: ^3.1.6
+      d3-color: ^3.1.0
       d3-ease: ^3.0.1
       d3-format: ^3.1.0
       d3-interpolate: ^3.0.1
@@ -623,6 +624,7 @@ importers:
       d3-time: 3.0.0
       d3-timer: 3.0.1
     devDependencies:
+      d3-color: 3.1.0
       d3-format: 3.1.0
       d3-path: 3.0.1
       d3-time-format: 4.1.0
@@ -9532,7 +9534,6 @@ packages:
   /d3-color/3.1.0:
     resolution: {integrity: sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA==}
     engines: {node: '>=12'}
-    dev: false
 
   /d3-ease/3.0.1:
     resolution: {integrity: sha512-wR/XK3D3XcLIZwpbvQwQ5fK+8Ykds1ip7A2Txe0yxncXSdq1L9skcG7blcedkOX+ZcgxGAmLX1FrRGbADwzi0w==}
