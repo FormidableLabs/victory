@@ -13,20 +13,6 @@
     "url": "https://github.com/formidablelabs/victory.git"
   },
   "private": true,
-  "engines": {
-    "yarn": "^1.22.0"
-  },
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ],
-    "nohoist": [
-      "**/d3-*",
-      "**/d3-*/**",
-      "**/internmap",
-      "**/internmap/**"
-    ]
-  },
   "author": "Formidable",
   "license": "MIT",
   "bugs": {
@@ -124,6 +110,11 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
     "webpack-stats-plugin": "^1.0.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/eslint": "8.4.3"
+    }
   },
   "sideEffects": false
 }
