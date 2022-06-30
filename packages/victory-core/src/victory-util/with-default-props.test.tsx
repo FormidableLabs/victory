@@ -33,6 +33,8 @@ describe("withDefaultProps", () => {
     <MyComponent foo="FOO" bar="BAR" baz="BAZ" />;
 
     // These types should be invalid:
+    // @ts-expect-error "Property 'foo' is missing
+    <MyComponent />;
     // @ts-expect-error "Property 'invalid' does not exist"
     <MyComponent foo="FOO" invalid="invalid" />;
     // @ts-expect-error "Type 'invalid' is not assignable to 'FOO'"
@@ -48,8 +50,6 @@ describe("withDefaultProps", () => {
     withDefaultProps({ foo: "INVALID" }, MyComponentRaw);
     // @ts-expect-error "Type 'INVALID' not assignable to 'BAR'"
     withDefaultProps({ bar: "INVALID" }, MyComponentRaw);
-    // @ts-expect-error "ERROR (withDefaultProps): props with defaults should not be marked optional"
-    withDefaultProps({ baz: "BAZ" }, MyComponentRaw);
     // @ts-expect-error "Object literal may only specify known properties"
     withDefaultProps({ invalid: "INVALID" }, MyComponentRaw);
   });

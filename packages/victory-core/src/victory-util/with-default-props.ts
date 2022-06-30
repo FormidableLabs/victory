@@ -17,9 +17,7 @@ export function withDefaultProps<
   TDefaultPropsKeys extends keyof TProps,
 >(
   defaultProps: {
-    [P in TDefaultPropsKeys]: IsOptional<TProps, P> extends true
-      ? "ERROR (withDefaultProps): props with defaults should not be marked optional"
-      : TProps[P];
+    [P in TDefaultPropsKeys]: TProps[P];
   },
   Component: (props: TProps) => React.ReactElement | null,
 ) {
@@ -27,10 +25,3 @@ export function withDefaultProps<
   C.defaultProps = defaultProps;
   return C;
 }
-
-/**
- * Returns `true` if T[K] is marked as optional
- */
-type IsOptional<T, K extends keyof T> =
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  {} extends Pick<T, K> ? true : false;
