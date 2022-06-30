@@ -21,6 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
+    "victory-bar": "^36.5.3",
     "victory-core": "^36.5.3"
   },
   "peerDependencies": {

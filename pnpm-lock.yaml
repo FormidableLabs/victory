@@ -311,10 +311,12 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
+      victory-bar: ^36.5.3
       victory-core: ^36.5.3
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
+      victory-bar: link:../victory-bar
       victory-core: link:../victory-core
 
   packages/victory-chart:
