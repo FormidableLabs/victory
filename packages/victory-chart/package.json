@@ -60,6 +60,12 @@
       ],
       "output": [
         "es/**"
+      ],
+      "dependencies": [
+        "../victory-axis:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-polar-axis:build:lib:esm",
+        "../victory-shared-events:build:lib:esm"
       ]
     },
     "build:lib:cjs": {
@@ -70,6 +76,12 @@
       ],
       "output": [
         "lib/**"
+      ],
+      "dependencies": [
+        "../victory-axis:build:lib:cjs",
+        "../victory-core:build:lib:cjs",
+        "../victory-polar-axis:build:lib:cjs",
+        "../victory-shared-events:build:lib:cjs"
       ]
     },
     "build:dist": {
@@ -89,6 +101,12 @@
       "output": [
         "victory*.js",
         "!victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-axis:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-polar-axis:build:lib:esm",
+        "../victory-shared-events:build:lib:esm"
       ]
     },
     "build:dist:min": {
@@ -100,6 +118,12 @@
       ],
       "output": [
         "victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-axis:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-polar-axis:build:lib:esm",
+        "../victory-shared-events:build:lib:esm"
       ]
     }
   },

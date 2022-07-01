@@ -60,6 +60,14 @@
       ],
       "output": [
         "es/**"
+      ],
+      "dependencies": [
+        "../victory-brush-container:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-cursor-container:build:lib:esm",
+        "../victory-selection-container:build:lib:esm",
+        "../victory-voronoi-container:build:lib:esm",
+        "../victory-zoom-container:build:lib:esm"
       ]
     },
     "build:lib:cjs": {
@@ -70,6 +78,14 @@
       ],
       "output": [
         "lib/**"
+      ],
+      "dependencies": [
+        "../victory-brush-container:build:lib:cjs",
+        "../victory-core:build:lib:cjs",
+        "../victory-cursor-container:build:lib:cjs",
+        "../victory-selection-container:build:lib:cjs",
+        "../victory-voronoi-container:build:lib:cjs",
+        "../victory-zoom-container:build:lib:cjs"
       ]
     },
     "build:dist": {
@@ -89,6 +105,14 @@
       "output": [
         "victory*.js",
         "!victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-brush-container:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-cursor-container:build:lib:esm",
+        "../victory-selection-container:build:lib:esm",
+        "../victory-voronoi-container:build:lib:esm",
+        "../victory-zoom-container:build:lib:esm"
       ]
     },
     "build:dist:min": {
@@ -100,6 +124,14 @@
       ],
       "output": [
         "victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-brush-container:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-cursor-container:build:lib:esm",
+        "../victory-selection-container:build:lib:esm",
+        "../victory-voronoi-container:build:lib:esm",
+        "../victory-zoom-container:build:lib:esm"
       ]
     }
   },

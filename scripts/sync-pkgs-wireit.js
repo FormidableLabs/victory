@@ -13,11 +13,14 @@
  */
 
 const fs = require("fs/promises");
+const path = require("path");
 const { log, error } = console;
 
 // ============================================================================
 // Config
 // ============================================================================
+const PKGS_ROOT = path.resolve(__dirname, "../packages");
+
 // Special packages
 const PKGS = {
   CORE: "victory-core",
@@ -30,23 +33,51 @@ const PKGS_SET = new Set(Object.values(PKGS));
 // Script
 // ============================================================================
 const cli = async ({ args = [] } = {}) => {
-  const workspaces = (await fs.readdir("packages"))
+  const workspaces = (await fs.readdir(PKGS_ROOT))
     .filter((p) => p.startsWith("victory") && !PKGS_SET.has(p));
 
   // Use the core package as the template for the rest.
-  const corePkg = require("./packages/victory-core/package.json");
+  const corePkg = require(`${PKGS_ROOT}/victory-core/package.json`);
 
   for (let workspace of workspaces) {
-    const pkgPath = `./packages/${workspace}/package.json`;
+    const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
     const pkg = JSON.parse(await fs.readFile(pkgPath));
 
     // Mutate in wireit config while preserving dependencies if already set.
     const scripts = JSON.parse(JSON.stringify(corePkg.scripts));
     pkg.scripts = scripts;
 
-    const oldWireit = pkg.wireit;
+    // Start with wireit task config and add in dependencies
     const wireit = JSON.parse(JSON.stringify(corePkg.wireit));
     pkg.wireit = wireit;
+
+    const addDeps = (key, dep) => {
+      pkg.wireit[key].dependencies = pkg.wireit[key].dependencies || [];
+      pkg.wireit[key].dependencies.push(dep);
+    };
+
+    const crossDeps = Object.keys(pkg.dependencies).filter((p) => p.startsWith("victory"));
+    crossDeps.forEach((dep) => {
+      // Special case victory-vendor
+      if (dep === PKGS.VENDOR) {
+        [
+          "build:lib:esm",
+          "build:lib:cjs",
+          "build:dist:dev",
+          "build:dist:min",
+        ].forEach((key) => addDeps(key, `../${PKGS.VENDOR}:build`));
+        return;
+      }
+
+      // Normal case
+      // Make sure dependent libraries are built.
+      addDeps("build:lib:esm", `../${dep}:build:lib:esm`);
+      addDeps("build:lib:cjs", `../${dep}:build:lib:cjs`);
+
+      // Webpack depends on ESM output from other packages.
+      addDeps("build:dist:dev", `../${dep}:build:lib:esm`);
+      addDeps("build:dist:min", `../${dep}:build:lib:esm`);
+    });
 
     // Hack: move sideEffects back to end
     delete pkg.sideEffects;

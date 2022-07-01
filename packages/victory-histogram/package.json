@@ -59,6 +59,11 @@
       ],
       "output": [
         "es/**"
+      ],
+      "dependencies": [
+        "../victory-bar:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-vendor:build"
       ]
     },
     "build:lib:cjs": {
@@ -69,6 +74,11 @@
       ],
       "output": [
         "lib/**"
+      ],
+      "dependencies": [
+        "../victory-bar:build:lib:cjs",
+        "../victory-core:build:lib:cjs",
+        "../victory-vendor:build"
       ]
     },
     "build:dist": {
@@ -88,6 +98,11 @@
       "output": [
         "victory*.js",
         "!victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-bar:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-vendor:build"
       ]
     },
     "build:dist:min": {
@@ -99,6 +114,11 @@
       ],
       "output": [
         "victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-bar:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-vendor:build"
       ]
     }
   },

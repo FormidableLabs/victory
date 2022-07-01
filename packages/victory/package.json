@@ -81,6 +81,35 @@
       ],
       "output": [
         "es/**"
+      ],
+      "dependencies": [
+        "../victory-area:build:lib:esm",
+        "../victory-axis:build:lib:esm",
+        "../victory-bar:build:lib:esm",
+        "../victory-box-plot:build:lib:esm",
+        "../victory-brush-container:build:lib:esm",
+        "../victory-brush-line:build:lib:esm",
+        "../victory-candlestick:build:lib:esm",
+        "../victory-canvas:build:lib:esm",
+        "../victory-chart:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-create-container:build:lib:esm",
+        "../victory-cursor-container:build:lib:esm",
+        "../victory-errorbar:build:lib:esm",
+        "../victory-group:build:lib:esm",
+        "../victory-histogram:build:lib:esm",
+        "../victory-legend:build:lib:esm",
+        "../victory-line:build:lib:esm",
+        "../victory-pie:build:lib:esm",
+        "../victory-polar-axis:build:lib:esm",
+        "../victory-scatter:build:lib:esm",
+        "../victory-selection-container:build:lib:esm",
+        "../victory-shared-events:build:lib:esm",
+        "../victory-stack:build:lib:esm",
+        "../victory-tooltip:build:lib:esm",
+        "../victory-voronoi:build:lib:esm",
+        "../victory-voronoi-container:build:lib:esm",
+        "../victory-zoom-container:build:lib:esm"
       ]
     },
     "build:lib:cjs": {
@@ -91,6 +120,35 @@
       ],
       "output": [
         "lib/**"
+      ],
+      "dependencies": [
+        "../victory-area:build:lib:cjs",
+        "../victory-axis:build:lib:cjs",
+        "../victory-bar:build:lib:cjs",
+        "../victory-box-plot:build:lib:cjs",
+        "../victory-brush-container:build:lib:cjs",
+        "../victory-brush-line:build:lib:cjs",
+        "../victory-candlestick:build:lib:cjs",
+        "../victory-canvas:build:lib:cjs",
+        "../victory-chart:build:lib:cjs",
+        "../victory-core:build:lib:cjs",
+        "../victory-create-container:build:lib:cjs",
+        "../victory-cursor-container:build:lib:cjs",
+        "../victory-errorbar:build:lib:cjs",
+        "../victory-group:build:lib:cjs",
+        "../victory-histogram:build:lib:cjs",
+        "../victory-legend:build:lib:cjs",
+        "../victory-line:build:lib:cjs",
+        "../victory-pie:build:lib:cjs",
+        "../victory-polar-axis:build:lib:cjs",
+        "../victory-scatter:build:lib:cjs",
+        "../victory-selection-container:build:lib:cjs",
+        "../victory-shared-events:build:lib:cjs",
+        "../victory-stack:build:lib:cjs",
+        "../victory-tooltip:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs",
+        "../victory-voronoi-container:build:lib:cjs",
+        "../victory-zoom-container:build:lib:cjs"
       ]
     },
     "build:dist": {
@@ -110,6 +168,35 @@
       "output": [
         "victory*.js",
         "!victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-area:build:lib:esm",
+        "../victory-axis:build:lib:esm",
+        "../victory-bar:build:lib:esm",
+        "../victory-box-plot:build:lib:esm",
+        "../victory-brush-container:build:lib:esm",
+        "../victory-brush-line:build:lib:esm",
+        "../victory-candlestick:build:lib:esm",
+        "../victory-canvas:build:lib:esm",
+        "../victory-chart:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-create-container:build:lib:esm",
+        "../victory-cursor-container:build:lib:esm",
+        "../victory-errorbar:build:lib:esm",
+        "../victory-group:build:lib:esm",
+        "../victory-histogram:build:lib:esm",
+        "../victory-legend:build:lib:esm",
+        "../victory-line:build:lib:esm",
+        "../victory-pie:build:lib:esm",
+        "../victory-polar-axis:build:lib:esm",
+        "../victory-scatter:build:lib:esm",
+        "../victory-selection-container:build:lib:esm",
+        "../victory-shared-events:build:lib:esm",
+        "../victory-stack:build:lib:esm",
+        "../victory-tooltip:build:lib:esm",
+        "../victory-voronoi:build:lib:esm",
+        "../victory-voronoi-container:build:lib:esm",
+        "../victory-zoom-container:build:lib:esm"
       ]
     },
     "build:dist:min": {
@@ -121,6 +208,35 @@
       ],
       "output": [
         "victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-area:build:lib:esm",
+        "../victory-axis:build:lib:esm",
+        "../victory-bar:build:lib:esm",
+        "../victory-box-plot:build:lib:esm",
+        "../victory-brush-container:build:lib:esm",
+        "../victory-brush-line:build:lib:esm",
+        "../victory-candlestick:build:lib:esm",
+        "../victory-canvas:build:lib:esm",
+        "../victory-chart:build:lib:esm",
+        "../victory-core:build:lib:esm",
+        "../victory-create-container:build:lib:esm",
+        "../victory-cursor-container:build:lib:esm",
+        "../victory-errorbar:build:lib:esm",
+        "../victory-group:build:lib:esm",
+        "../victory-histogram:build:lib:esm",
+        "../victory-legend:build:lib:esm",
+        "../victory-line:build:lib:esm",
+        "../victory-pie:build:lib:esm",
+        "../victory-polar-axis:build:lib:esm",
+        "../victory-scatter:build:lib:esm",
+        "../victory-selection-container:build:lib:esm",
+        "../victory-shared-events:build:lib:esm",
+        "../victory-stack:build:lib:esm",
+        "../victory-tooltip:build:lib:esm",
+        "../victory-voronoi:build:lib:esm",
+        "../victory-voronoi-container:build:lib:esm",
+        "../victory-zoom-container:build:lib:esm"
       ]
     }
   },

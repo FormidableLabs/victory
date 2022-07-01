@@ -34,6 +34,7 @@
     "TODO_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
     "TODO_IMPLEMENT_test": "echo TODO IMPLEMENT GLOBAL TEST",
     "TODO_IMPLEMENT_build": "echo TODO IMPLEMENT GLOBAL BUILD",
+    "build": "pnpm -r run build",
     "check:ci": "echo TODO IMPLEMENT CHECK CI"
   },
   "devDependencies": {
