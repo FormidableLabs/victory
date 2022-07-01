@@ -1,41 +1,23 @@
-import PropTypes, { number } from "prop-types";
-import React, { ReactElement, ValidationMap, WeakValidationMap } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import { assign, defaults, without } from "lodash";
 import { Curve, CurveProps } from "../curve";
 import {
-  PropTypes as CustomPropTypes,
-  Helpers,
-  VictoryLabel,
-  addEvents,
-  VictoryContainer,
-  VictoryTheme,
-  DefaultTransitions,
-  VictoryClipContainer,
-  Data,
-  Domain,
-  CommonProps,
-  UserProps,
-  EventPropTypeInterface,
-  InterpolationPropType,
-  StringOrNumberOrCallback,
-  VictoryCommonProps,
-  VictoryDatableProps,
-  VictoryMultiLabelableProps,
-  VictoryLabelableProps,
-  VictoryStyleInterface,
-  EventsMixinClass,
-  Path,
-  LineHelpers,
-  defaultPropsFor,
-  useData,
-  useDomain,
-  useScale,
-  VictoryClipContainerProps,
-  VictoryLabelProps,
-  withContainer,
-  withDefaultProps,
   Events,
+  InterpolationPropType,
+  VictoryClipContainer,
+  VictoryClipContainerProps,
+  VictoryCommonProps,
+  VictoryContainer,
+  VictoryDatableProps,
+  VictoryLabel,
+  VictoryLabelableProps,
+  VictoryLabelProps,
+  VictoryStyleInterface,
+  VictoryTheme,
 } from "victory-core";
+import { withNormalizedProps } from "victory-core/src";
+import { Clone } from "./clone";
 
 const fallbackProps = {
   width: 450,
@@ -55,68 +37,41 @@ export interface VictoryLineProps
   animate?: boolean;
 }
 
-const Clone = <TProps,>(
-  props: React.PropsWithChildren<
-    {
-      element: React.ReactElement<TProps>;
-      children?: React.ReactNode | React.ReactNode[];
-    } & TProps
-  >,
-) => {
-  const { children, element, ...rest } = props;
-  return React.cloneElement(element, rest as unknown as TProps, children);
-};
+export const VictoryLine = withNormalizedProps(
+  {
+    displayName: "VictoryLine",
+    defaultProps: {
+      data: [
+        { x: 1, y: 1 },
+        { x: 2, y: 2 },
+        { x: 3, y: 3 },
+        { x: 4, y: 4 },
+      ],
+      containerComponent: <VictoryContainer />,
+      dataComponent: (<Curve />) as React.ReactElement<CurveProps>,
+      labelComponent: (
+        <VictoryLabel renderInPortal />
+      ) as React.ReactElement<VictoryLabelProps>,
+      groupComponent: (
+        <VictoryClipContainer />
+      ) as React.ReactElement<VictoryClipContainerProps>,
+      samples: 50,
+      sortKey: "x",
+      sortOrder: "ascending",
+      standalone: true,
+      theme: VictoryTheme.grayscale,
+    },
+  },
+  (props: VictoryLineProps) => {
+    return (
+      <Clone element={props.groupComponent}>
+        <Clone element={props.dataComponent} {...props} />
+      </Clone>
+    );
+  },
+);
 
-export const VictoryLineBase = (props: VictoryLineProps) => {
-  const data = useData();
-  const scale = useScale();
-  const domain = useDomain();
-  const dataProps = { ...props, data, scale, domain };
-
-  return (
-    <Clone element={props.groupComponent}>
-      <Clone element={props.dataComponent} {...dataProps} />
-    </Clone>
-  );
-};
-
-const defaultProps: Pick<
-  VictoryLineProps,
-  | "data"
-  | "containerComponent"
-  | "dataComponent"
-  | "labelComponent"
-  | "groupComponent"
-  | "samples"
-  | "sortKey"
-  | "sortOrder"
-  | "standalone"
-  | "theme"
-> = {
-  data: [
-    { x: 1, y: 1 },
-    { x: 2, y: 2 },
-    { x: 3, y: 3 },
-    { x: 4, y: 4 },
-  ],
-  containerComponent: <VictoryContainer />,
-  dataComponent: (<Curve />) as React.ReactElement<CurveProps>,
-  labelComponent: (
-    <VictoryLabel renderInPortal />
-  ) as React.ReactElement<VictoryLabelProps>,
-  groupComponent: (
-    <VictoryClipContainer />
-  ) as React.ReactElement<VictoryClipContainerProps>,
-  samples: 50,
-  sortKey: "x",
-  sortOrder: "ascending",
-  standalone: true,
-  theme: VictoryTheme.grayscale,
-};
-
-VictoryLineBase.defaultProps = defaultProps;
-
-VictoryLineBase.propTypes = {
+VictoryLine.propTypes = {
   interpolation: PropTypes.oneOfType([
     PropTypes.oneOf([
       "basis",
@@ -134,8 +89,6 @@ VictoryLineBase.propTypes = {
     PropTypes.func,
   ]),
 };
-
-export const VictoryLine = withContainer(VictoryLineBase);
 
 export type VictoryLineTTargetType = "data" | "labels" | "parent";
 

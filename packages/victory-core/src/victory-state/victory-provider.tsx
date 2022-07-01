@@ -92,6 +92,10 @@ export function VictoryProvider({
 
 type ContextValue = ContextType | null;
 
+export function useHasVictoryContext() {
+  const context = useContextSelector(VictoryContext, (v) => v);
+  return !!context;
+}
 export function useVictoryContext<T>(selector: (value: ContextType) => T): T {
   return useContextSelector<ContextValue, T>(VictoryContext, (context) => {
     if (!context) {
