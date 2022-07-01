@@ -31,7 +31,77 @@
     "react": ">=16.6.0"
   },
   "scripts": {
-    "version": "pnpm run nps build-libs && nps build-dists"
+    "build": "wireit",
+    "build:lib": "wireit",
+    "build:lib:esm": "wireit",
+    "build:lib:cjs": "wireit",
+    "build:dist": "wireit",
+    "build:dist:dev": "wireit",
+    "build:dist:min": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "dependencies": [
+        "build:lib",
+        "build:dist"
+      ]
+    },
+    "build:lib": {
+      "dependencies": [
+        "build:lib:esm",
+        "build:lib:cjs"
+      ]
+    },
+    "build:lib:esm": {
+      "command": "nps build:lib:esm",
+      "files": [
+        "src/**",
+        "../../.babelrc.build.js"
+      ],
+      "output": [
+        "es/**"
+      ]
+    },
+    "build:lib:cjs": {
+      "command": "nps build:lib:cjs",
+      "files": [
+        "src/**",
+        "../../.babelrc.build.js"
+      ],
+      "output": [
+        "lib/**"
+      ]
+    },
+    "build:dist": {
+      "dependencies": [
+        "build:dist:dev",
+        "build:dist:min"
+      ]
+    },
+    "build:dist:dev": {
+      "command": "nps build:dist:dev",
+      "files": [
+        "src/**",
+        "../../.babelrc.build.js",
+        "../../config/webpack.config.js",
+        "../../config/webpack.config.dev.js"
+      ],
+      "output": [
+        "victory*.js",
+        "!victory*.min.js*"
+      ]
+    },
+    "build:dist:min": {
+      "command": "nps build:dist:min",
+      "files": [
+        "src/**",
+        "../../.babelrc.build.js",
+        "../../config/webpack.config.js"
+      ],
+      "output": [
+        "victory*.min.js*"
+      ]
+    }
   },
   "sideEffects": false
 }

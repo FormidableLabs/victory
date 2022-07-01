@@ -23,10 +23,6 @@
       "default": "./lib/d3-*.js"
     }
   },
-  "scripts": {
-    "version": "pnpm run build",
-    "build": "node ./scripts/build.js"
-  },
   "dependencies": {
     "@types/d3-array": "^3.0.3",
     "@types/d3-ease": "^3.0.0",
@@ -52,6 +48,9 @@
     "internmap": "^2.0.3",
     "execa": "^6.1.0",
     "rimraf": "^3.0.2"
+  },
+  "scripts": {
+    "build": "echo TODO IMPLEMENT FOR WIREIT node ./scripts/build.js"
   },
   "sideEffects": false
 }

@@ -58,5 +58,8 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-svg": "^12.1.1"
   },
+  "scripts": {
+    "build": "echo TODO IMPLEMENT FOR WIREIT"
+  },
   "sideEffects": false
 }
