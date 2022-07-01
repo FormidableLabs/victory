@@ -10,6 +10,10 @@
  * - victory-core
  * - victory-vendor
  * - victory-native
+ *
+ * If you are editing `victory-vendor` or `victory-native`, directly edit them.
+ * For **all other packages**, make your changes in `victory-core` first, test
+ * out, and then run this script to sync all the other packages.
  */
 
 const fs = require("fs/promises");
@@ -43,7 +47,7 @@ const cli = async ({ args = [] } = {}) => {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
     const pkg = JSON.parse(await fs.readFile(pkgPath));
 
-    // Mutate in wireit config while preserving dependencies if already set.
+    // Overwrite scripts and wireit configuration.
     const scripts = JSON.parse(JSON.stringify(corePkg.scripts));
     pkg.scripts = scripts;
 
