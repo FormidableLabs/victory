@@ -19,10 +19,7 @@ export interface ContextType {
 
 const VictoryContext = createContext<ContextType | null>(null);
 
-export function VictoryProvider({
-  children,
-  ...initialProps
-}: VictoryProviderProps) {
+function useNormalizedProps(initialProps): ContextType {
   // We need to store the props in state so they can be overwritten by child components
   const [props, setProps] = React.useState(initialProps);
 
@@ -69,12 +66,24 @@ export function VictoryProvider({
     };
   }, [props, domain, range]);
 
-  const value = {
-    scale,
-    data,
-    domain,
-    setChildProps,
-  };
+  const normalizedProps = React.useMemo(
+    () => ({
+      scale,
+      data,
+      domain,
+      setChildProps,
+    }),
+    [scale, data, domain, setChildProps],
+  );
+
+  return normalizedProps;
+}
+
+export function VictoryProvider({
+  children,
+  ...initialProps
+}: VictoryProviderProps) {
+  const value = useNormalizedProps(initialProps);
 
   return (
     <VictoryContext.Provider value={value}>{children}</VictoryContext.Provider>
@@ -116,6 +125,4 @@ export function useVictoryProviderSync(
   React.useEffect(() => {
     setChildProps(id, props);
   }, []);
-
-  return props;
 }
