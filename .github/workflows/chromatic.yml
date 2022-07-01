@@ -47,10 +47,10 @@ jobs:
         run: pnpm install
 
       - name: Build Package Libs
-        run: pnpm nps build-package-libs
+        run: echo TODO IMPLEMENT pnpm nps build-package-libs
 
       - name: Build Storybook
-        run: pnpm build-storybook
+        run: echo TODO IMPLEMENT pnpm build-storybook
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
