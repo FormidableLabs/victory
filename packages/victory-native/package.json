@@ -59,7 +59,23 @@
     "react-native-svg": "^12.1.1"
   },
   "scripts": {
-    "build": "echo TODO IMPLEMENT FOR WIREIT"
+    "build": "wireit",
+    "lint": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "echo victory-native has no build",
+      "files": [],
+      "output": []
+    },
+    "lint": {
+      "command": "nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintrc.js"
+      ],
+      "output": []
+    }
   },
   "sideEffects": false
 }

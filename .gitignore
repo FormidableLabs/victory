@@ -47,8 +47,9 @@ build-storybook.log*
 artifacts
 tmp
 
-# Wireit
+# Wireit + caches
 .wireit
+.eslintcache
 
 # Ignore all yarn2+
 .yarn/*

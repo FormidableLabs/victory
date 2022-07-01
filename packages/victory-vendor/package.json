@@ -50,7 +50,8 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "build": "wireit"
+    "build": "wireit",
+    "lint": "wireit"
   },
   "wireit": {
     "build": {
@@ -65,6 +66,14 @@
         "lib-vendor/**",
         "d3-*"
       ]
+    },
+    "lint": {
+      "command": "nps \"lint:base scripts\"",
+      "files": [
+        "scripts/**",
+        "../../.eslintrc.js"
+      ],
+      "output": []
     }
   },
   "sideEffects": false

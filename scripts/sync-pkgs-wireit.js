@@ -51,13 +51,16 @@ const cli = async ({ args = [] } = {}) => {
   const rootPkgPath = `${ROOT}/package.json`;
   const rootPkg = JSON.parse(await fs.readFile(rootPkgPath));
 
-  rootPkg.wireit = {
-    build: {
-      dependencies: []
-        .concat(PKGS.VENDOR, PKGS.CORE, workspaces)
-        .map((p) => `./packages/${p}:build`)
-    },
-  };
+  rootPkg.wireit = rootPkg.wireit || {};
+  [
+    "build",
+    "lint"
+  ].forEach((task) => {
+    rootPkg.wireit[task] = rootPkg.wireit[task] || {};
+    rootPkg.wireit[task].dependencies = []
+      .concat(PKGS.NATIVE, PKGS.VENDOR, PKGS.CORE, workspaces)
+      .map((p) => `./packages/${p}:${task}`)
+  });
 
   delete rootPkg.sideEffects;
   rootPkg.sideEffects = false;

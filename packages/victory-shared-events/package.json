@@ -35,7 +35,8 @@
     "build:lib:cjs": "wireit",
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
-    "build:dist:min": "wireit"
+    "build:dist:min": "wireit",
+    "lint": "wireit"
   },
   "wireit": {
     "build": {
@@ -111,6 +112,14 @@
       "dependencies": [
         "../victory-core:build:lib:esm"
       ]
+    },
+    "lint": {
+      "command": "nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintrc.js"
+      ],
+      "output": []
     }
   },
   "sideEffects": false

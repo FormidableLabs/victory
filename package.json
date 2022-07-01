@@ -122,11 +122,13 @@
     "TODO_IMPLEMENT_test": "echo TODO IMPLEMENT GLOBAL TEST",
     "TODO_IMPLEMENT_build": "echo TODO IMPLEMENT GLOBAL BUILD",
     "build": "wireit",
+    "lint": "wireit",
     "check:ci": "echo TODO IMPLEMENT CHECK CI"
   },
   "wireit": {
     "build": {
       "dependencies": [
+        "./packages/victory-native:build",
         "./packages/victory-vendor:build",
         "./packages/victory-core:build",
         "./packages/victory:build",
@@ -156,6 +158,40 @@
         "./packages/victory-voronoi:build",
         "./packages/victory-voronoi-container:build",
         "./packages/victory-zoom-container:build"
+      ]
+    },
+    "lint": {
+      "dependencies": [
+        "./packages/victory-native:lint",
+        "./packages/victory-vendor:lint",
+        "./packages/victory-core:lint",
+        "./packages/victory:lint",
+        "./packages/victory-area:lint",
+        "./packages/victory-axis:lint",
+        "./packages/victory-bar:lint",
+        "./packages/victory-box-plot:lint",
+        "./packages/victory-brush-container:lint",
+        "./packages/victory-brush-line:lint",
+        "./packages/victory-candlestick:lint",
+        "./packages/victory-canvas:lint",
+        "./packages/victory-chart:lint",
+        "./packages/victory-create-container:lint",
+        "./packages/victory-cursor-container:lint",
+        "./packages/victory-errorbar:lint",
+        "./packages/victory-group:lint",
+        "./packages/victory-histogram:lint",
+        "./packages/victory-legend:lint",
+        "./packages/victory-line:lint",
+        "./packages/victory-pie:lint",
+        "./packages/victory-polar-axis:lint",
+        "./packages/victory-scatter:lint",
+        "./packages/victory-selection-container:lint",
+        "./packages/victory-shared-events:lint",
+        "./packages/victory-stack:lint",
+        "./packages/victory-tooltip:lint",
+        "./packages/victory-voronoi:lint",
+        "./packages/victory-voronoi-container:lint",
+        "./packages/victory-zoom-container:lint"
       ]
     }
   },

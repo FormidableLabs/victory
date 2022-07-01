@@ -16,7 +16,14 @@ module.exports = {
     "build:lib:cjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
     // - UMD distributions
     "build:dist:dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
-    "build:dist:min": "webpack --bail --config ../../config/webpack/webpack.config.js"
+    "build:dist:min": "webpack --bail --config ../../config/webpack/webpack.config.js",
+
+    // Quality.
+    "lint:base": "eslint --cache --color",
+    "lint:pkg": "nps \"lint:base src\"",
+    "lint:pkg:fix": "nps \"lint:base --fix src\"",
+    // - [ ] TODO root: "nps \"lint:base scripts config demo stories test\""
+    // - [ ] TODO docs: "nps \"lint:base docs\""
 
     // TODO: IMPLEMENT `start` support
     // start: {
@@ -53,32 +60,6 @@ module.exports = {
     // storybook: {
     //   server: "start-storybook -p 6006",
     //   default: npsUtils.concurrent.nps("watch", "storybook.server"),
-    // },
-
-    // TODO: IMPLEMENT LINT
-    // lint: {
-    //   // Note: Using a base `nps` command with extra args.
-    //   // 1. You need to add double quotes around the extra part (e.g. `test` below)
-    //   // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
-    //   base: "pnpm eslint --color",
-    //   fix: "pnpm eslint --color --fix",
-    //   src: 'lerna exec --ignore victory-vendor --stream -- pnpm nps \\"lint.base src\\"',
-    //   vendor:
-    //     'lerna exec --scope victory-vendor -- pnpm nps \\"lint.base scripts\\"',
-    //   config: 'pnpm nps "lint.base package-scripts.js config"',
-    //   demo: 'pnpm nps "lint.base demo"',
-    //   docs: 'pnpm nps "lint.base docs"',
-    //   stories: 'pnpm nps "lint.base stories"',
-    //   test: 'pnpm nps "lint.base test"',
-    //   default: npsUtils.series.nps(
-    //     "lint.config",
-    //     "lint.test",
-    //     "lint.stories",
-    //     "lint.demo",
-    //     // TODO: Needs `docs` install to work -- "lint.docs",
-    //     "lint.vendor",
-    //     "lint.src",
-    //   ),
     // },
 
     // TODO: IMPLEMENT FORMAT
@@ -119,8 +100,6 @@ module.exports = {
     // check: {
     //   ci: npsUtils.series.nps(
     //     "format.ci",
-    //     "build-package-libs",
-    //     "build-package-dists",
     //     "lint",
     //     "typecheck",
     //     "test-node",
