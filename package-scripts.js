@@ -10,6 +10,14 @@
 
 module.exports = {
   scripts: {
+    // Build.
+    // - Libraries
+    "build:lib:esm": "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
+    "build:lib:cjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
+    // - UMD distributions
+    "build:dist:dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
+    "build:dist:min": "webpack --bail --config ../../config/webpack/webpack.config.js"
+
     // TODO: IMPLEMENT `start` support
     // start: {
     //   ts: npsUtils.concurrent.nps("watch", "server.dev.ts"),
@@ -22,8 +30,6 @@ module.exports = {
     //       "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app",
     //   },
     //   hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
-    // TODO: REMOVE TEST SERVER ALL TOGETHER?
-    //   test: "webpack serve --config ./config/webpack/webpack.config.test.js",
     // },
 
     // TODO: REDO ALL THE TESTING STUFF

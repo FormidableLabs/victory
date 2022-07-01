@@ -86,6 +86,7 @@ importers:
       webpack-cli: ^4.9.2
       webpack-dev-server: ^4.9.0
       webpack-stats-plugin: ^1.0.3
+      wireit: ^0.7.1
     devDependencies:
       '@babel/cli': 7.17.10_@babel+core@7.17.10
       '@babel/core': 7.17.10
@@ -166,6 +167,7 @@ importers:
       webpack-cli: 4.10.0_6rc575xxn4hngez2jk2zkyfdoi
       webpack-dev-server: 4.9.3_77l47gmqkrqiei5z7sbwz5iaj4
       webpack-stats-plugin: 1.0.3
+      wireit: 0.7.1
 
   packages/victory:
     specifiers:
@@ -13190,6 +13192,10 @@ packages:
     hasBin: true
     dev: true
 
+  /jsonc-parser/3.0.0:
+    resolution: {integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==}
+    dev: true
+
   /jsonfile/2.4.0:
     resolution: {integrity: sha512-PKllAqbgLgxHaj8TElYymKCAgrASebJrWpTnEkOaTowt23VKXXN0sUeriJ+eh7y6ufb/CC5ap11pz71/cM0hUw==}
     optionalDependencies:
@@ -15920,6 +15926,14 @@ packages:
       object-assign: 4.1.1
       react-is: 16.13.1
 
+  /proper-lockfile/4.1.2:
+    resolution: {integrity: sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==}
+    dependencies:
+      graceful-fs: 4.2.10
+      retry: 0.12.0
+      signal-exit: 3.0.7
+    dev: true
+
   /property-information/5.6.0:
     resolution: {integrity: sha512-YUHSPk+A30YPv+0Qf8i9Mbfe/C0hdPXk1s1jPVToV8pk8BQtpw10ct89Eo7OWkutrwqvT0eicAxlOg3dOAu8JA==}
     dependencies:
@@ -16856,6 +16870,11 @@ packages:
 
   /retry/0.10.1:
     resolution: {integrity: sha512-ZXUSQYTHdl3uS7IuCehYfMzKyIDBNoAuUblvy5oGO5UJSUTmStUUVPXbA9Qxd173Bgre53yCQczQuHgRWAdvJQ==}
+    dev: true
+
+  /retry/0.12.0:
+    resolution: {integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==}
+    engines: {node: '>= 4'}
     dev: true
 
   /retry/0.13.1:
@@ -19494,6 +19513,18 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       execa: 1.0.0
+    dev: true
+
+  /wireit/0.7.1:
+    resolution: {integrity: sha512-TwuKae0aHk06DZ2omLW6YF4Y74YxCyuRCcsjZMm+cUPRXhvxAU2JhYyuCvD9wIALWK+cQUpB9GjeRFPRAbKsdw==}
+    engines: {node: '>=14.14.0'}
+    hasBin: true
+    dependencies:
+      braces: 3.0.2
+      chokidar: 3.5.3
+      fast-glob: 3.2.11
+      jsonc-parser: 3.0.0
+      proper-lockfile: 4.1.2
     dev: true
 
   /word-wrap/1.2.3:
