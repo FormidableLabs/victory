@@ -53,13 +53,13 @@ const cli = async () => {
 
   rootPkg.wireit = rootPkg.wireit || {};
   [
-    "build",
-    "lint"
-  ].forEach((task) => {
-    rootPkg.wireit[task] = rootPkg.wireit[task] || {};
-    rootPkg.wireit[task].dependencies = []
+    { rootTask: "build", pkgTask: "build" },
+    { rootTask: "lint:pkgs", pkgTask: "lint" }
+  ].forEach(({ rootTask, pkgTask }) => {
+    rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};
+    rootPkg.wireit[rootTask].dependencies = []
       .concat(PKGS.NATIVE, PKGS.VENDOR, PKGS.CORE, workspaces)
-      .map((p) => `./packages/${p}:${task}`)
+      .map((p) => `./packages/${p}:${pkgTask}`)
   });
 
   delete rootPkg.sideEffects;
