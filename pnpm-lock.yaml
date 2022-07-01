@@ -442,6 +442,7 @@ importers:
   packages/victory-native:
     specifiers:
       '@babel/core': ^7.15.5
+      react-fast-compare: ^3.2.0
       react-native: ^0.65.1
       react-native-gesture-handler: ^1.10.3
       react-native-svg: ^12.1.1
@@ -473,6 +474,7 @@ importers:
       victory-voronoi-container: ^36.5.3
       victory-zoom-container: ^36.5.3
     dependencies:
+      react-fast-compare: 3.2.0
       victory: link:../victory
       victory-area: link:../victory-area
       victory-axis: link:../victory-axis

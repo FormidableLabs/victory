@@ -23,6 +23,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
+    "react-fast-compare": "^3.2.0",
     "victory": "^36.5.3",
     "victory-area": "^36.5.3",
     "victory-axis": "^36.5.3",
