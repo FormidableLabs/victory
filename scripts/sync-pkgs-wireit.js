@@ -23,7 +23,8 @@ const { log, error } = console;
 // ============================================================================
 // Config
 // ============================================================================
-const PKGS_ROOT = path.resolve(__dirname, "../packages");
+const ROOT = path.resolve(__dirname, "..");
+const PKGS_ROOT = path.join(ROOT, "packages");
 
 // Special packages
 const PKGS = {
@@ -40,8 +41,30 @@ const cli = async ({ args = [] } = {}) => {
   const workspaces = (await fs.readdir(PKGS_ROOT))
     .filter((p) => p.startsWith("victory") && !PKGS_SET.has(p));
 
+  // Root mutation
+  // We want to use wireit directly to manage multi-build for better
+  // cache hits (e.g. `pnpm -r run build` seems to get a lot of cache
+  // misses). So create tasks with cross-package deps
+  const rootPkgPath = `${ROOT}/package.json`;
+  const rootPkg = JSON.parse(await fs.readFile(rootPkgPath));
+
+  rootPkg.wireit = {
+    build: {
+      dependencies: []
+        .concat(PKGS.VENDOR, PKGS.CORE, workspaces)
+        .map((p) => `./packages/${p}:build`)
+    },
+  };
+
+  delete rootPkg.sideEffects;
+  rootPkg.sideEffects = false;
+
+  log(`Writing ${rootPkgPath}`);
+  await fs.writeFile(rootPkgPath, JSON.stringify(rootPkg, null, 2));
+
+  // Workspace mutations
   // Use the core package as the template for the rest.
-  const corePkg = require(`${PKGS_ROOT}/victory-core/package.json`);
+  const corePkg = JSON.parse(await fs.readFile(`${PKGS_ROOT}/victory-core/package.json`));
 
   for (let workspace of workspaces) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;

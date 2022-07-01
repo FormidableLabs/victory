@@ -50,7 +50,22 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "build": "echo TODO IMPLEMENT FOR WIREIT node ./scripts/build.js"
+    "build": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "node ./scripts/build.js",
+      "files": [
+        "scripts/build.js",
+        "node_modules/**"
+      ],
+      "output": [
+        "es/**",
+        "lib/**",
+        "lib-vendor/**",
+        "d3-*"
+      ]
+    }
   },
   "sideEffects": false
 }
