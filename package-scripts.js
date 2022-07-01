@@ -22,8 +22,6 @@ module.exports = {
     "lint:base": "eslint --cache --color",
     "lint:pkg": "nps \"lint:base src\"",
     "lint:pkg:fix": "nps \"lint:base --fix src\"",
-    // - [ ] TODO root: "nps \"lint:base scripts config demo stories test\""
-    // - [ ] TODO docs: "nps \"lint:base docs\""
 
     // TODO: IMPLEMENT `start` support
     // start: {

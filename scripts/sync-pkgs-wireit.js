@@ -21,12 +21,12 @@
 
 const fs = require("fs/promises");
 const path = require("path");
-const { log, error } = console;
+const { log, error } = console; // eslint-disable-line no-undef
 
 // ============================================================================
 // Config
 // ============================================================================
-const ROOT = path.resolve(__dirname, "..");
+const ROOT = path.resolve(__dirname, ".."); // eslint-disable-line no-undef
 const PKGS_ROOT = path.join(ROOT, "packages");
 
 // Special packages
@@ -40,7 +40,7 @@ const PKGS_SET = new Set(Object.values(PKGS));
 // ============================================================================
 // Script
 // ============================================================================
-const cli = async ({ args = [] } = {}) => {
+const cli = async () => {
   const workspaces = (await fs.readdir(PKGS_ROOT))
     .filter((p) => p.startsWith("victory") && !PKGS_SET.has(p));
 
@@ -72,7 +72,7 @@ const cli = async ({ args = [] } = {}) => {
   // Use the core package as the template for the rest.
   const corePkg = JSON.parse(await fs.readFile(`${PKGS_ROOT}/victory-core/package.json`));
 
-  for (let workspace of workspaces) {
+  for (const workspace of workspaces) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
     const pkg = JSON.parse(await fs.readFile(pkgPath));
 
@@ -124,9 +124,7 @@ const cli = async ({ args = [] } = {}) => {
 };
 
 if (require.main === module) {
-  cli({
-    args: process.argv.slice(2) // eslint-disable-line no-magic-numbers
-  }).catch((err) => {
+  cli().catch((err) => {
     error(err);
     process.exit(1); // eslint-disable-line no-process-exit
   });

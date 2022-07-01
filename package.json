@@ -123,6 +123,9 @@
     "TODO_IMPLEMENT_build": "echo TODO IMPLEMENT GLOBAL BUILD",
     "build": "wireit",
     "lint": "wireit",
+    "lint:root": "wireit",
+    "lint:pkgs": "wireit",
+    "lint:docs": "echo TODO FIGURE OUT INTEGRATION",
     "check:ci": "echo TODO IMPLEMENT CHECK CI"
   },
   "wireit": {
@@ -161,6 +164,25 @@
       ]
     },
     "lint": {
+      "dependencies": [
+        "lint:root",
+        "lint:pkgs"
+      ]
+    },
+    "lint:root": {
+      "command": "nps \"lint:base *.js scripts config demo stories test\"",
+      "files": [
+        ".eslintrc.js",
+        "*.js",
+        "scripts",
+        "config",
+        "demo",
+        "stories",
+        "typescript"
+      ],
+      "output": []
+    },
+    "lint:pkgs": {
       "dependencies": [
         "./packages/victory-native:lint",
         "./packages/victory-vendor:lint",
