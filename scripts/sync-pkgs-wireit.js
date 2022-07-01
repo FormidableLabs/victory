@@ -2,9 +2,12 @@
 
 /**
  * This helper script uses `victory-core` as a template and then for each
- * other victory package.
+ * other victory package as follows.
+ *
  * 1. Adds all `scripts` and `wireit` configs to that package.
  * 2. Updates wireit config dependencies to match package.json dependencies.
+ *
+ * The script also adds `wireit` configs to the root package.json.
  *
  * Note that this script does _not_ mutate:
  * - victory-core
