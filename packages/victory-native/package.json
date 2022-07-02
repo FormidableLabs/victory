@@ -115,7 +115,7 @@
       "output": []
     },
     "jest": {
-      "command": "echo TODO IMPLEMENT",
+      "command": "nps jest:native",
       "files": [
         "src/**",
         "../../.babelrc.js",
