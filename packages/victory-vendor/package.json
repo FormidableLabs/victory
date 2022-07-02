@@ -52,7 +52,8 @@
   "scripts": {
     "build": "wireit",
     "format": "wireit",
-    "lint": "wireit"
+    "lint": "wireit",
+    "jest": "wireit"
   },
   "wireit": {
     "build": {
@@ -84,6 +85,11 @@
         "scripts/**",
         "../../.eslintrc.js"
       ],
+      "output": []
+    },
+    "jest": {
+      "command": "echo victory-vendor has no tests",
+      "files": [],
       "output": []
     }
   },

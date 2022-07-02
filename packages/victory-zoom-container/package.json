@@ -35,7 +35,8 @@
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
     "format": "wireit",
-    "lint": "wireit"
+    "lint": "wireit",
+    "jest": "wireit"
   },
   "wireit": {
     "build": {
@@ -54,6 +55,7 @@
       "command": "nps build:lib:esm",
       "files": [
         "src/**",
+        "!src/**/*.test.*",
         "../../.babelrc.build.js"
       ],
       "output": [
@@ -67,6 +69,7 @@
       "command": "nps build:lib:cjs",
       "files": [
         "src/**",
+        "!src/**/*.test.*",
         "../../.babelrc.build.js"
       ],
       "output": [
@@ -86,6 +89,7 @@
       "command": "nps build:dist:dev",
       "files": [
         "src/**",
+        "!src/**/*.test.*",
         "../../.babelrc.build.js",
         "../../config/webpack.config.js",
         "../../config/webpack.config.dev.js"
@@ -102,6 +106,7 @@
       "command": "nps build:dist:min",
       "files": [
         "src/**",
+        "!src/**/*.test.*",
         "../../.babelrc.build.js",
         "../../config/webpack.config.js"
       ],
@@ -130,6 +135,19 @@
         "../../.eslintrc.js"
       ],
       "output": []
+    },
+    "jest": {
+      "command": "nps jest:pkg",
+      "files": [
+        "src/**/*.test.*",
+        "../../.babelrc.js",
+        "../../jest-config.js",
+        "../../test/jest-setup.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:lib:cjs"
+      ]
     }
   },
   "sideEffects": false

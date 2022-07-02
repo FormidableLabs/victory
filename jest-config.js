@@ -1,3 +1,6 @@
+const path = require("path");
+const BABEL_TRANSFORM = ["babel-jest", { configFile: path.resolve(__dirname, ".babelrc.js") }];
+
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
@@ -10,7 +13,8 @@ module.exports = {
     "/lib/",
   ],
   transform: {
-    "^.+test.*[jt]sx?$": ["babel-jest", { configFile: "./.babelrc.js" }],
+    "^.+test\\.*[jt]sx?$": BABEL_TRANSFORM,
+    ".*\/test\/.+\\.*[jt]sx?$": BABEL_TRANSFORM
   },
   transformIgnorePatterns: ["/node_modules/", "/es/", "/lib/"],
   setupFilesAfterEnv: ["<rootDir>/test/jest-setup.js"],

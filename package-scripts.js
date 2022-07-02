@@ -8,6 +8,9 @@
  * If you have an actual root task, define it in root `package.json:scripts`.
  */
 
+const path = require("path");
+const PKG_SRC = path.resolve("src");
+
 module.exports = {
   scripts: {
     // Build.
@@ -39,8 +42,9 @@ module.exports = {
     "lint:pkg:fix": 'nps "lint:base --fix src"',
 
     // Tests
+    // - Jest
     "jest:native": "echo TODO",
-    "jest:lib": "echo TODO",
+    "jest:pkg": `cross-env BABEL_ENV=commonjs jest --config=../../jest-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
     // TODO(2348): Hook coverage up to CI
     // https://github.com/FormidableLabs/victory/issues/2348
     "jest:cov": "echo TODO",

@@ -61,13 +61,40 @@
   "scripts": {
     "build": "wireit",
     "format": "wireit",
-    "lint": "wireit"
+    "lint": "wireit",
+    "jest": "wireit"
   },
   "wireit": {
     "build": {
-      "command": "echo victory-native has no build",
-      "files": [],
-      "output": []
+      "dependencies": [
+        "../victory:build:lib:cjs",
+        "../victory-area:build:lib:cjs",
+        "../victory-axis:build:lib:cjs",
+        "../victory-bar:build:lib:cjs",
+        "../victory-box-plot:build:lib:cjs",
+        "../victory-brush-container:build:lib:cjs",
+        "../victory-brush-line:build:lib:cjs",
+        "../victory-candlestick:build:lib:cjs",
+        "../victory-chart:build:lib:cjs",
+        "../victory-core:build:lib:cjs",
+        "../victory-create-container:build:lib:cjs",
+        "../victory-cursor-container:build:lib:cjs",
+        "../victory-errorbar:build:lib:cjs",
+        "../victory-group:build:lib:cjs",
+        "../victory-histogram:build:lib:cjs",
+        "../victory-legend:build:lib:cjs",
+        "../victory-line:build:lib:cjs",
+        "../victory-pie:build:lib:cjs",
+        "../victory-polar-axis:build:lib:cjs",
+        "../victory-scatter:build:lib:cjs",
+        "../victory-selection-container:build:lib:cjs",
+        "../victory-shared-events:build:lib:cjs",
+        "../victory-stack:build:lib:cjs",
+        "../victory-tooltip:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs",
+        "../victory-voronoi-container:build:lib:cjs",
+        "../victory-zoom-container:build:lib:cjs"
+      ]
     },
     "format": {
       "command": "nps format:pkg",
@@ -86,6 +113,19 @@
         "../../.eslintrc.js"
       ],
       "output": []
+    },
+    "jest": {
+      "command": "echo TODO IMPLEMENT",
+      "files": [
+        "src/**",
+        "../../.babelrc.js",
+        "../../jest-native-config.js",
+        "../../jest-native-setup.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "build"
+      ]
     }
   },
   "sideEffects": false

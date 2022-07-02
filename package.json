@@ -130,6 +130,9 @@
     "lint:root": "wireit",
     "lint:pkgs": "wireit",
     "lint:docs": "echo TODO FIGURE OUT INTEGRATION",
+    "jest": "wireit",
+    "jest:root": "wireit",
+    "jest:pkgs": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js"
   },
   "wireit": {
@@ -280,6 +283,53 @@
         "./packages/victory-voronoi:lint",
         "./packages/victory-voronoi-container:lint",
         "./packages/victory-zoom-container:lint"
+      ]
+    },
+    "jest": {
+      "dependencies": [
+        "jest:root",
+        "jest:pkgs"
+      ]
+    },
+    "jest:root": {
+      "command": "echo TODO jest:root",
+      "files": [
+        "test"
+      ],
+      "output": []
+    },
+    "jest:pkgs": {
+      "dependencies": [
+        "./packages/victory-native:jest",
+        "./packages/victory-vendor:jest",
+        "./packages/victory:jest",
+        "./packages/victory-area:jest",
+        "./packages/victory-axis:jest",
+        "./packages/victory-bar:jest",
+        "./packages/victory-box-plot:jest",
+        "./packages/victory-brush-container:jest",
+        "./packages/victory-brush-line:jest",
+        "./packages/victory-candlestick:jest",
+        "./packages/victory-canvas:jest",
+        "./packages/victory-chart:jest",
+        "./packages/victory-core:jest",
+        "./packages/victory-create-container:jest",
+        "./packages/victory-cursor-container:jest",
+        "./packages/victory-errorbar:jest",
+        "./packages/victory-group:jest",
+        "./packages/victory-histogram:jest",
+        "./packages/victory-legend:jest",
+        "./packages/victory-line:jest",
+        "./packages/victory-pie:jest",
+        "./packages/victory-polar-axis:jest",
+        "./packages/victory-scatter:jest",
+        "./packages/victory-selection-container:jest",
+        "./packages/victory-shared-events:jest",
+        "./packages/victory-stack:jest",
+        "./packages/victory-tooltip:jest",
+        "./packages/victory-voronoi:jest",
+        "./packages/victory-voronoi-container:jest",
+        "./packages/victory-zoom-container:jest"
       ]
     }
   },

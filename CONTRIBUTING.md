@@ -17,10 +17,6 @@ There are some parts of Victory that are in need of a little extra attention rig
 
 Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and [pnpm](https://pnpm.io/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `pnpm install` will automatically link all interdependent `victory-*` packages. **You must use `pnpm` rather than `npm` or `yarn` when installing and running `package.json` scripts in this project.**
 
-## `package-scripts.js`
-
-Victory uses [`nps`](https://github.com/kentcdodds/nps) to organize package scripts. Check `package-scripts.js` for the full list of commands. Note that some of these commands are intended to be run for individual packages but require common development dependencies. [Use `lerna exec` to run these scripts](#scoped-package-scripts-with-lerna).
-
 ### Requirements
 
 - [Node.js](https://nodejs.org/) 14 or higher.
@@ -43,59 +39,47 @@ $ npm install -g pnpm
 $ pnpm install
 ```
 
-Run a development server and check out the demos. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
+TODO(wireit): Add back in `pnpm start`?
+
+## Development
+
+Our task system mostly takes care of all task dependencies and things you need. Here are some useful tasks:
 
 ```sh
-# TODO(wireit): Refactor these
-$ yarn start
+# Build all library files and UMD distributions
+$ pnpm run build
+
+# Quality checks
+$ pnpm run format
+$ pnpm run lint
+
+# Tests
+$ pnpm run jest
+
+# Check out what CI is going to run
+$ pnpm run check:ci
 ```
 
-running this command will serve demo pages at http://localhost:3000/ and tests at http://localhost:3001/test/client/test.html
+TODO(wireit): Add watch section.
 
-As a useful tip if you're working in just one package in the monorepo, you can rebuild just that package:
+## Authoring tasks
 
-```sh
-# TODO(wireit): Refactor these
-$ lerna exec --scope <package name> -- yarn nps build-libs
-$ lerna exec --scope victory-core -- yarn nps build-libs
-```
+TODO(wireit): ADD MORE
 
-## Checks, Tests
+We have an optimized, but a bit convoluted, system to run common development tasks. We use three tools primarily:
 
-Tests can be run in the terminal with:
+- `pnpm` to `run` or `exec` scripts
+- `wireit` to cache tasks and run dependent tasks.
+- `nps` to place one off script tasks in the root `/project-scripts.js` in a manner that can be called from within a workspace.
 
-```sh
-# TODO(wireit): Refactor these
-# Build and run all tests.
-$ yarn nps test
+For workspace packages, we primarily focus on four package.json files:
 
-# Run a watch script for tests and packages.
-$ yarn nps test.watch
-```
+- `package.json`: Define root tasks here and aggregate workspace tasks here. Note that instead of relying on `pnpm -r run` to concurrently run tasks in each workspace, we instead rely on `wireit` alone to have dependencies in aggregate tasks on all subtasks. This is more efficient to have `wireit` command concurrency and the task dependency graph.
+- `packages/victory-core/package.json`: This project serves as the template for common tasks for all the other normal library packages. It is written to other package.json's with `pnpm sync:pkgs`.
+- `packages/victory-native/package.json`: A custom package.json that must have implementations or no-ops for all things in `victory-core`.
+- `packages/victory-vendor/package.json`: A custom package.json that must have implementations or no-ops for all things in `victory-core`.
 
-You can also run the watch script in a separate terminal window to add arguments or isolate specific tests.
-
-```sh
-# TODO(wireit): Refactor these
-# In one terminal run a watch on library files
-$ yarn nps watch
-
-# In another terminal the jest script
-$ yarn nps "jest <module> --watch"
-```
-
-Victory uses eslint and prettier to maintain code style consistency. Before creating a pull request, please lint and format your changes with the following commands:
-
-```sh
-# TODO(wireit): Refactor these
-# Lint
-$ yarn nps lint                                       # check
-$ lerna exec --scope <pkg name> -- yarn nps lint.fix  # fix specific package
-
-# Prettier
-$ yarn nps format.ci  # check
-$ yarn nps format.fix # fix
-```
+TODO(wireit): Discuss `pnpm sync:pkgs` and the script.
 
 ## Visual Tests
 
@@ -116,6 +100,11 @@ $ pnpm chromatic
 ```
 
 ## Release
+
+TODO(wireit): REWRITE WHOLE SECTION
+
+<!--
+TODO(wireit): REMOVE
 
 Victory uses [Lerna](https://lerna.js.org/) to automate versioning and publishing packages.
 
@@ -153,6 +142,7 @@ Once the new version has been published, please [draft a new release](https://gi
 ## Scoped package scripts with Lerna
 
 Some of our scripts are intended to run only in the context of individual packages. If you are developing scripts and need to run them individually from the root directory, you can do so with `lerna exec --scope <PACKAGE_NAME> <SCRIPT>`. For example, building `dist` for each package is typically done only when versioning packages, and is run by Lerna for each package, when it runs the `version` script for that package. To test building `dist` for only `victory-core`, run `lerna exec --scope victory-core nps build-dists`
+-->
 
 ## Contributor Covenant Code of Conduct
 
