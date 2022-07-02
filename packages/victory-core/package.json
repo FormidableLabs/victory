@@ -59,6 +59,9 @@
       ],
       "output": [
         "es/**"
+      ],
+      "dependencies": [
+        "../victory-vendor:build"
       ]
     },
     "build:lib:cjs": {
@@ -69,6 +72,9 @@
       ],
       "output": [
         "lib/**"
+      ],
+      "dependencies": [
+        "../victory-vendor:build"
       ]
     },
     "build:dist": {
@@ -88,6 +94,9 @@
       "output": [
         "victory*.js",
         "!victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-vendor:build"
       ]
     },
     "build:dist:min": {
@@ -99,6 +108,9 @@
       ],
       "output": [
         "victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-vendor:build"
       ]
     },
     "format": {

@@ -88,11 +88,18 @@ const cli = async () => {
     const wireit = JSON.parse(JSON.stringify(corePkg.wireit));
     pkg.wireit = wireit;
 
-    const addDeps = (key, dep) => {
-      pkg.wireit[key].dependencies = pkg.wireit[key].dependencies || [];
-      pkg.wireit[key].dependencies.push(dep);
-    };
+    // Clear out existing deps from victory-core
+    // TODO(wireit): Abstract and refactor this whole section better.
+    [
+      "build:lib:esm",
+      "build:lib:cjs",
+      "build:dist:dev",
+      "build:dist:min",
+    ].forEach((key) => {
+      pkg.wireit[key].dependencies = [];
+    });
 
+    const addDeps = (key, dep) => pkg.wireit[key].dependencies.push(dep);
     const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
       p.startsWith("victory"),
     );
