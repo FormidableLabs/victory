@@ -303,7 +303,10 @@
       "files": [
         "test"
       ],
-      "output": []
+      "output": [],
+      "dependencies": [
+        "./packages/victory:build:lib:cjs"
+      ]
     },
     "jest:pkgs": {
       "dependencies": [
