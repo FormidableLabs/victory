@@ -121,6 +121,7 @@
     "TODO_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
     "TODO_IMPLEMENT_test": "echo TODO IMPLEMENT GLOBAL TEST",
     "TODO_IMPLEMENT_build": "echo TODO IMPLEMENT GLOBAL BUILD",
+    "check:ci": "wireit",
     "build": "wireit",
     "format": "wireit",
     "format:pkgs": "wireit",
@@ -129,10 +130,16 @@
     "lint:root": "wireit",
     "lint:pkgs": "wireit",
     "lint:docs": "echo TODO FIGURE OUT INTEGRATION",
-    "check:ci": "echo TODO IMPLEMENT CHECK CI",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js"
   },
   "wireit": {
+    "check:ci": {
+      "dependencies": [
+        "format",
+        "lint",
+        "build"
+      ]
+    },
     "build": {
       "dependencies": [
         "./packages/victory-native:build",
