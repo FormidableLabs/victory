@@ -43,12 +43,18 @@ TODO(wireit): Add back in `pnpm start`?
 
 ## Development
 
-Our task system mostly takes care of all task dependencies and things you need. Here are some useful tasks:
+Our task system mostly takes care of all task dependencies and things you need. When you first clone this repo or a new branch, run:
 
 ```sh
 # Do a full build and run all the checks.
 $ pnpm run check
+```
 
+This will do all the build, seeding the task cache so subsequent tasks are fast, and checks that everything is correctly working.
+
+Here are some other useful tasks:
+
+```sh
 # ... or individually ...
 # Build all library files and UMD distributions
 $ pnpm run build
