@@ -144,7 +144,6 @@
       "dependencies": [
         "./packages/victory-native:build",
         "./packages/victory-vendor:build",
-        "./packages/victory-core:build",
         "./packages/victory:build",
         "./packages/victory-area:build",
         "./packages/victory-axis:build",
@@ -155,6 +154,7 @@
         "./packages/victory-candlestick:build",
         "./packages/victory-canvas:build",
         "./packages/victory-chart:build",
+        "./packages/victory-core:build",
         "./packages/victory-create-container:build",
         "./packages/victory-cursor-container:build",
         "./packages/victory-errorbar:build",
@@ -199,7 +199,6 @@
       "dependencies": [
         "./packages/victory-native:format",
         "./packages/victory-vendor:format",
-        "./packages/victory-core:format",
         "./packages/victory:format",
         "./packages/victory-area:format",
         "./packages/victory-axis:format",
@@ -210,6 +209,7 @@
         "./packages/victory-candlestick:format",
         "./packages/victory-canvas:format",
         "./packages/victory-chart:format",
+        "./packages/victory-core:format",
         "./packages/victory-create-container:format",
         "./packages/victory-cursor-container:format",
         "./packages/victory-errorbar:format",
@@ -252,7 +252,6 @@
       "dependencies": [
         "./packages/victory-native:lint",
         "./packages/victory-vendor:lint",
-        "./packages/victory-core:lint",
         "./packages/victory:lint",
         "./packages/victory-area:lint",
         "./packages/victory-axis:lint",
@@ -263,6 +262,7 @@
         "./packages/victory-candlestick:lint",
         "./packages/victory-canvas:lint",
         "./packages/victory-chart:lint",
+        "./packages/victory-core:lint",
         "./packages/victory-create-container:lint",
         "./packages/victory-cursor-container:lint",
         "./packages/victory-errorbar:lint",

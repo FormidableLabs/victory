@@ -35,14 +35,14 @@ const PKGS = {
   NATIVE: "victory-native",
   VENDOR: "victory-vendor",
 };
-const PKGS_SET = new Set(Object.values(PKGS));
+const SPECIAL_PKGS = new Set([PKGS.NATIVE, PKGS.VENDOR]);
 
 // ============================================================================
 // Script
 // ============================================================================
 const cli = async () => {
   const workspaces = (await fs.readdir(PKGS_ROOT)).filter(
-    (p) => p.startsWith("victory") && !PKGS_SET.has(p),
+    (p) => p.startsWith("victory") && !SPECIAL_PKGS.has(p),
   );
 
   // Root mutation
@@ -60,7 +60,7 @@ const cli = async () => {
   ].forEach(({ rootTask, pkgTask }) => {
     rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};
     rootPkg.wireit[rootTask].dependencies = []
-      .concat(PKGS.NATIVE, PKGS.VENDOR, PKGS.CORE, workspaces)
+      .concat(PKGS.NATIVE, PKGS.VENDOR, workspaces)
       .map((p) => `./packages/${p}:${pkgTask || rootTask}`);
   });
 
