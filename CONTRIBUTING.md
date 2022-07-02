@@ -46,6 +46,10 @@ TODO(wireit): Add back in `pnpm start`?
 Our task system mostly takes care of all task dependencies and things you need. Here are some useful tasks:
 
 ```sh
+# Do a full build and run all the checks.
+$ pnpm run check
+
+# ... or individually ...
 # Build all library files and UMD distributions
 $ pnpm run build
 
@@ -55,9 +59,6 @@ $ pnpm run lint
 
 # Tests
 $ pnpm run jest
-
-# Check out what CI is going to run
-$ pnpm run check:ci
 ```
 
 TODO(wireit): Add watch section.
