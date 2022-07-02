@@ -12,16 +12,55 @@ module.exports = {
   scripts: {
     // Build.
     // - Libraries
-    "build:lib:esm": "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
-    "build:lib:cjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
+    "build:lib:esm":
+      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
+    "build:lib:cjs":
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
     // - UMD distributions
-    "build:dist:dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
-    "build:dist:min": "webpack --bail --config ../../config/webpack/webpack.config.js",
+    // TODO(wireit): Add caching
+    "build:dist:dev":
+      "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
+    "build:dist:min":
+      "webpack --bail --config ../../config/webpack/webpack.config.js",
 
     // Quality.
+    // - Format
+    // TODO(wireit): Can we cache / incremental?
+    "format:pkg":
+      'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --list-different "./**/*.{js,jsx,json,ts,tsx}"',
+    "format:pkg:fix":
+      'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --write "./**/*.{js,jsx,json,ts,tsx}"',
+    "format:root": 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
+    "format:root:fix": 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
+
+    // - Lint
     "lint:base": "eslint --cache --color",
-    "lint:pkg": "nps \"lint:base src\"",
-    "lint:pkg:fix": "nps \"lint:base --fix src\"",
+    "lint:pkg": 'nps "lint:base src"',
+    "lint:pkg:fix": 'nps "lint:base --fix src"',
+
+    // Tests
+    "jest:native": "echo TODO",
+    "jest:lib": "echo TODO",
+    // TODO(2348): Hook coverage up to CI
+    // https://github.com/FormidableLabs/victory/issues/2348
+    "jest:cov": "echo TODO",
+
+    // TODO: REDO ALL THE TESTING STUFF
+    // jest: {
+    //   native: "jest --config=jest-native-config.js",
+    //   default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js",
+    //   watch:
+    //     "cross-env BABEL_ENV=commonjs jest --watch --config=jest-config.js",
+    //   cov: "cross-env BABEL_ENV=commonjs jest --coverage --config=jest-config.js",
+    // },
+    // "test-node": {
+    //   default: "jest ./test/node",
+    // },
+    // test: {
+    //   cov: npsUtils.series.nps("build-package-libs", "jest.default"),
+    //   watch: npsUtils.concurrent.nps("watch", "jest.watch"),
+    //   default: npsUtils.series.nps("build-package-libs", "jest.cov"),
+    // },
 
     // TODO: IMPLEMENT `start` support
     // start: {
@@ -58,13 +97,6 @@ module.exports = {
     // storybook: {
     //   server: "start-storybook -p 6006",
     //   default: npsUtils.concurrent.nps("watch", "storybook.server"),
-    // },
-
-    // TODO: IMPLEMENT FORMAT
-    // format: {
-    //   fix: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
-    //   ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
-    //   default: "pnpm nps format.fix",
     // },
 
     // TODO: IMPLEMENT TYPECHECK

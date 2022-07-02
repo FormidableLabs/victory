@@ -51,6 +51,7 @@
   },
   "scripts": {
     "build": "wireit",
+    "format": "wireit",
     "lint": "wireit"
   },
   "wireit": {
@@ -66,6 +67,16 @@
         "lib-vendor/**",
         "d3-*"
       ]
+    },
+    "format": {
+      "command": "nps format:pkg",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": []
     },
     "lint": {
       "command": "nps \"lint:base scripts\"",

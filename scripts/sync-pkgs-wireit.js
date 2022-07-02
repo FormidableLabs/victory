@@ -33,7 +33,7 @@ const PKGS_ROOT = path.join(ROOT, "packages");
 const PKGS = {
   CORE: "victory-core",
   NATIVE: "victory-native",
-  VENDOR: "victory-vendor"
+  VENDOR: "victory-vendor",
 };
 const PKGS_SET = new Set(Object.values(PKGS));
 
@@ -41,8 +41,9 @@ const PKGS_SET = new Set(Object.values(PKGS));
 // Script
 // ============================================================================
 const cli = async () => {
-  const workspaces = (await fs.readdir(PKGS_ROOT))
-    .filter((p) => p.startsWith("victory") && !PKGS_SET.has(p));
+  const workspaces = (await fs.readdir(PKGS_ROOT)).filter(
+    (p) => p.startsWith("victory") && !PKGS_SET.has(p),
+  );
 
   // Root mutation
   // We want to use wireit directly to manage multi-build for better
@@ -53,24 +54,27 @@ const cli = async () => {
 
   rootPkg.wireit = rootPkg.wireit || {};
   [
-    { rootTask: "build", pkgTask: "build" },
-    { rootTask: "lint:pkgs", pkgTask: "lint" }
+    { rootTask: "build" },
+    { rootTask: "format:pkgs", pkgTask: "format" },
+    { rootTask: "lint:pkgs", pkgTask: "lint" },
   ].forEach(({ rootTask, pkgTask }) => {
     rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};
     rootPkg.wireit[rootTask].dependencies = []
       .concat(PKGS.NATIVE, PKGS.VENDOR, PKGS.CORE, workspaces)
-      .map((p) => `./packages/${p}:${pkgTask}`)
+      .map((p) => `./packages/${p}:${pkgTask || rootTask}`);
   });
 
   delete rootPkg.sideEffects;
   rootPkg.sideEffects = false;
 
   log(`Writing ${rootPkgPath}`);
-  await fs.writeFile(rootPkgPath, JSON.stringify(rootPkg, null, 2));
+  await fs.writeFile(rootPkgPath, JSON.stringify(rootPkg, null, 2) + "\n");
 
   // Workspace mutations
   // Use the core package as the template for the rest.
-  const corePkg = JSON.parse(await fs.readFile(`${PKGS_ROOT}/victory-core/package.json`));
+  const corePkg = JSON.parse(
+    await fs.readFile(`${PKGS_ROOT}/victory-core/package.json`),
+  );
 
   for (const workspace of workspaces) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
@@ -89,7 +93,9 @@ const cli = async () => {
       pkg.wireit[key].dependencies.push(dep);
     };
 
-    const crossDeps = Object.keys(pkg.dependencies).filter((p) => p.startsWith("victory"));
+    const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
+      p.startsWith("victory"),
+    );
     crossDeps.forEach((dep) => {
       // Special case victory-vendor
       if (dep === PKGS.VENDOR) {
@@ -117,7 +123,7 @@ const cli = async () => {
     pkg.sideEffects = false;
 
     log(`Writing ${pkgPath}`);
-    await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2));
+    await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
   }
 
   log("Finished syncing.");
@@ -131,5 +137,5 @@ if (require.main === module) {
 }
 
 module.exports = {
-  cli
+  cli,
 };

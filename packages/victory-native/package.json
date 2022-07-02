@@ -60,12 +60,23 @@
   },
   "scripts": {
     "build": "wireit",
+    "format": "wireit",
     "lint": "wireit"
   },
   "wireit": {
     "build": {
       "command": "echo victory-native has no build",
       "files": [],
+      "output": []
+    },
+    "format": {
+      "command": "nps format:pkg",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
       "output": []
     },
     "lint": {

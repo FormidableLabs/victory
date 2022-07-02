@@ -36,6 +36,7 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "format": "wireit",
     "lint": "wireit"
   },
   "wireit": {
@@ -117,10 +118,21 @@
         "../victory-shared-events:build:lib:esm"
       ]
     },
+    "format": {
+      "command": "nps format:pkg",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": []
+    },
     "lint": {
       "command": "nps lint:pkg",
       "files": [
         "src/**",
+        "../../.eslintignore",
         "../../.eslintrc.js"
       ],
       "output": []

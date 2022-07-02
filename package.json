@@ -122,6 +122,9 @@
     "TODO_IMPLEMENT_test": "echo TODO IMPLEMENT GLOBAL TEST",
     "TODO_IMPLEMENT_build": "echo TODO IMPLEMENT GLOBAL BUILD",
     "build": "wireit",
+    "format": "wireit",
+    "format:pkgs": "wireit",
+    "format:root": "wireit",
     "lint": "wireit",
     "lint:root": "wireit",
     "lint:pkgs": "wireit",
@@ -162,6 +165,61 @@
         "./packages/victory-voronoi:build",
         "./packages/victory-voronoi-container:build",
         "./packages/victory-zoom-container:build"
+      ]
+    },
+    "format": {
+      "dependencies": [
+        "format:root",
+        "format:pkgs"
+      ]
+    },
+    "format:root": {
+      "command": "nps format:root",
+      "files": [
+        ".eslintrc.js",
+        "*.js",
+        "*.json",
+        "scripts",
+        "config",
+        "demo",
+        "docs",
+        "stories",
+        "typescript"
+      ],
+      "output": []
+    },
+    "format:pkgs": {
+      "dependencies": [
+        "./packages/victory-native:format",
+        "./packages/victory-vendor:format",
+        "./packages/victory-core:format",
+        "./packages/victory:format",
+        "./packages/victory-area:format",
+        "./packages/victory-axis:format",
+        "./packages/victory-bar:format",
+        "./packages/victory-box-plot:format",
+        "./packages/victory-brush-container:format",
+        "./packages/victory-brush-line:format",
+        "./packages/victory-candlestick:format",
+        "./packages/victory-canvas:format",
+        "./packages/victory-chart:format",
+        "./packages/victory-create-container:format",
+        "./packages/victory-cursor-container:format",
+        "./packages/victory-errorbar:format",
+        "./packages/victory-group:format",
+        "./packages/victory-histogram:format",
+        "./packages/victory-legend:format",
+        "./packages/victory-line:format",
+        "./packages/victory-pie:format",
+        "./packages/victory-polar-axis:format",
+        "./packages/victory-scatter:format",
+        "./packages/victory-selection-container:format",
+        "./packages/victory-shared-events:format",
+        "./packages/victory-stack:format",
+        "./packages/victory-tooltip:format",
+        "./packages/victory-voronoi:format",
+        "./packages/victory-voronoi-container:format",
+        "./packages/victory-zoom-container:format"
       ]
     },
     "lint": {
