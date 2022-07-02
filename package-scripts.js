@@ -29,6 +29,7 @@ module.exports = {
     // Quality.
     // - Format
     // TODO(wireit): Can we cache / incremental?
+    // TODO(wireit): Implement a full `*:fix` for all packages and root to expose as root `pnpm run format:fix`
     "format:pkg":
       'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --list-different "./**/*.{js,jsx,json,ts,tsx}"',
     "format:pkg:fix":
@@ -37,16 +38,19 @@ module.exports = {
     "format:root:fix": 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
 
     // - Lint
+    // TODO(wireit): Implement a full `*:fix` for all packages and root to expose as root `pnpm run lint:fix`
     "lint:base": "eslint --cache --color",
     "lint:pkg": 'nps "lint:base src"',
     "lint:pkg:fix": 'nps "lint:base --fix src"',
 
     // Tests
     // - Jest
+    // TODO(wireit): Can we cache / incremental?
     "jest:native": "echo TODO",
     "jest:pkg": `cross-env BABEL_ENV=commonjs jest --config=../../jest-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
     // TODO(2348): Hook coverage up to CI
     // https://github.com/FormidableLabs/victory/issues/2348
+    // TODO(wireit): Add this to `check:ci`
     "jest:cov": "echo TODO",
 
     // TODO: REDO ALL THE TESTING STUFF

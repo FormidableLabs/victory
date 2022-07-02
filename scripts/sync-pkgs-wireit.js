@@ -56,7 +56,7 @@ const cli = async () => {
   [
     { rootTask: "build" },
     { rootTask: "format:pkgs", pkgTask: "format" },
-    { rootTask: "lint:pkgs", pkgTask: "lint" },,
+    { rootTask: "lint:pkgs", pkgTask: "lint" },
     { rootTask: "jest:pkgs", pkgTask: "jest" },
   ].forEach(({ rootTask, pkgTask }) => {
     rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};

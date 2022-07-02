@@ -61,6 +61,7 @@ $ pnpm run check:ci
 ```
 
 TODO(wireit): Add watch section.
+TODO(wireit): Add lint + format fix tips.
 
 ## Authoring tasks
 

@@ -112,15 +112,13 @@
     }
   },
   "scripts": {
-    "TODO_REMOVE_preversion": "lerna bootstrap && link-parent-bin && nps check",
     "TODO_REFACTOR_start": "nps start",
     "TODO_REFACTOR_start-ts": "nps start.ts",
     "TODO_REFACTOR_storybook": "nps storybook.server",
     "TODO_REFACTOR_build-storybook": "build-storybook",
     "TODO_REFACTOR_chromatic": "chromatic",
     "TODO_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
-    "TODO_IMPLEMENT_test": "echo TODO IMPLEMENT GLOBAL TEST",
-    "TODO_IMPLEMENT_build": "echo TODO IMPLEMENT GLOBAL BUILD",
+    "check": "wireit",
     "check:ci": "wireit",
     "build": "wireit",
     "format": "wireit",
@@ -136,11 +134,20 @@
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js"
   },
   "wireit": {
+    "check": {
+      "dependencies": [
+        "format",
+        "lint",
+        "build",
+        "jest"
+      ]
+    },
     "check:ci": {
       "dependencies": [
         "format",
         "lint",
-        "build"
+        "build",
+        "jest"
       ]
     },
     "build": {
