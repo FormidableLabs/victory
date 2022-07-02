@@ -299,7 +299,7 @@
       ]
     },
     "jest:root": {
-      "command": "echo TODO jest:root",
+      "command": "jest --testPathPattern=test/node",
       "files": [
         "test"
       ],
