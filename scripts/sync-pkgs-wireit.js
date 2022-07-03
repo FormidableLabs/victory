@@ -47,18 +47,12 @@ const writePkg = async (pkgPath, data) => {
 };
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
-// ============================================================================
-// Script
-// ============================================================================
-const cli = async () => {
-  const workspaces = (await fs.readdir(PKGS_ROOT)).filter(
-    (p) => p.startsWith("victory") && !SPECIAL_PKGS.has(p),
-  );
-
-  // Root mutation
-  // We want to use wireit directly to manage multi-build for better
-  // cache hits (e.g. `pnpm -r run build` seems to get a lot of cache
-  // misses). So create tasks with cross-package deps
+// Root mutation
+//
+// We want to use wireit directly to manage multi-build for better
+// cache hits (e.g. `pnpm -r run build` seems to get a lot of cache
+// misses). So create tasks with cross-package deps
+const updateRootPkg = async ({ allPkgs }) => {
   const rootPkgPath = `${ROOT}/package.json`;
   const rootPkg = await readPkg(rootPkgPath);
 
@@ -70,18 +64,19 @@ const cli = async () => {
     { rootTask: "jest:pkgs", pkgTask: "jest" },
   ].forEach(({ rootTask, pkgTask }) => {
     rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};
-    rootPkg.wireit[rootTask].dependencies = []
-      .concat(PKGS.NATIVE, PKGS.VENDOR, workspaces)
-      .map((p) => `./packages/${p}:${pkgTask || rootTask}`);
+    rootPkg.wireit[rootTask].dependencies = allPkgs.map((p) => `./packages/${p}:${pkgTask || rootTask}`);
   });
 
   await writePkg(rootPkgPath, rootPkg);
+};
 
-  // Workspace mutations
-  // Use the core package as the template for the rest.
+// Common library mutations.
+//
+// Use the core package as the template for the rest.
+const updateLibPkgs = async ({ libPkgs }) => {
   const corePkg = await readPkg(`${PKGS_ROOT}/victory-core/package.json`);
 
-  for (const workspace of workspaces) {
+  for (const workspace of libPkgs) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
     const pkg = await readPkg(pkgPath);
 
@@ -100,7 +95,7 @@ const cli = async () => {
       pkg.wireit[key].dependencies = [];
     });
 
-    // TODO: Need to add victory devDependencies to jest
+    // TODO(HERE): Need to add victory devDependencies to jest
 
     const addDeps = (key, dep) => pkg.wireit[key].dependencies.push(dep);
     const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
@@ -130,6 +125,21 @@ const cli = async () => {
 
     await writePkg(pkgPath, pkg);
   }
+};
+
+// ============================================================================
+// Script
+// ============================================================================
+const cli = async () => {
+  // Get packages.
+  const libPkgs = (await fs.readdir(PKGS_ROOT)).filter(
+    (p) => p.startsWith("victory") && !SPECIAL_PKGS.has(p),
+  );
+  const allPkgs = [PKGS.NATIVE, PKGS.VENDOR].concat(libPkgs);
+
+  // Mutate package.json's
+  await updateRootPkg({ allPkgs });
+  await updateLibPkgs ({ libPkgs });
 
   log("Finished syncing.");
 };
