@@ -38,6 +38,15 @@ const PKGS = {
 const SPECIAL_PKGS = new Set([PKGS.NATIVE, PKGS.VENDOR]);
 
 // ============================================================================
+// Helpers
+// ============================================================================
+const readPkg = async (pkgPath) => JSON.parse(await fs.readFile(pkgPath));
+const writePkg = async (pkgPath, data) => {
+  log(`Writing ${pkgPath}`);
+  await fs.writeFile(pkgPath, JSON.stringify(data, null, 2) + "\n");
+};
+
+// ============================================================================
 // Script
 // ============================================================================
 const cli = async () => {
@@ -50,7 +59,7 @@ const cli = async () => {
   // cache hits (e.g. `pnpm -r run build` seems to get a lot of cache
   // misses). So create tasks with cross-package deps
   const rootPkgPath = `${ROOT}/package.json`;
-  const rootPkg = JSON.parse(await fs.readFile(rootPkgPath));
+  const rootPkg = await readPkg(rootPkgPath);
 
   rootPkg.wireit = rootPkg.wireit || {};
   [
@@ -68,8 +77,7 @@ const cli = async () => {
   delete rootPkg.sideEffects;
   rootPkg.sideEffects = false;
 
-  log(`Writing ${rootPkgPath}`);
-  await fs.writeFile(rootPkgPath, JSON.stringify(rootPkg, null, 2) + "\n");
+  await writePkg(rootPkgPath, rootPkg);
 
   // Workspace mutations
   // Use the core package as the template for the rest.
@@ -79,7 +87,7 @@ const cli = async () => {
 
   for (const workspace of workspaces) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
-    const pkg = JSON.parse(await fs.readFile(pkgPath));
+    const pkg = await readPkg(pkgPath);
 
     // Overwrite scripts and wireit configuration.
     const scripts = JSON.parse(JSON.stringify(corePkg.scripts));
@@ -99,6 +107,8 @@ const cli = async () => {
     ].forEach((key) => {
       pkg.wireit[key].dependencies = [];
     });
+
+    // TODO: Need to add victory devDependencies to jest
 
     const addDeps = (key, dep) => pkg.wireit[key].dependencies.push(dep);
     const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
@@ -130,8 +140,7 @@ const cli = async () => {
     delete pkg.sideEffects;
     pkg.sideEffects = false;
 
-    log(`Writing ${pkgPath}`);
-    await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
+    await writePkg(pkgPath, pkg);
   }
 
   log("Finished syncing.");

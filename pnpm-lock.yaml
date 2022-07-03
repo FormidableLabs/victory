@@ -231,6 +231,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
+      victory-chart: ^36.5.3
       victory-core: ^36.5.3
       victory-vendor: ^36.5.1
     dependencies:
@@ -238,6 +239,8 @@ importers:
       prop-types: 15.8.1
       victory-core: link:../victory-core
       victory-vendor: link:../victory-vendor
+    devDependencies:
+      victory-chart: link:../victory-chart
 
   packages/victory-axis:
     specifiers:
