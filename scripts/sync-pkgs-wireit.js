@@ -95,8 +95,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       pkg.wireit[key].dependencies = [];
     });
 
-    // TODO(HERE): Need to add victory devDependencies to jest
-
+    // Prod dependencies
     const addDeps = (key, dep) => pkg.wireit[key].dependencies.push(dep);
     const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
       p.startsWith("victory"),
@@ -121,6 +120,24 @@ const updateLibPkgs = async ({ libPkgs }) => {
       // Webpack depends on ESM output from other packages.
       addDeps("build:dist:dev", `../${dep}:build:lib:esm`);
       addDeps("build:dist:min", `../${dep}:build:lib:esm`);
+    });
+
+
+    // Dev dependencies
+    const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter((p) =>
+      p.startsWith("victory"),
+    );
+    crossDevDeps.forEach((dep) => {
+      // Special case victory-vendor
+      if (dep === PKGS.VENDOR) {
+        [
+          "jest",
+        ].forEach((key) => addDeps(key, `../${PKGS.VENDOR}:build`));
+        return;
+      }
+
+      // Normal case
+      addDeps("jest", `../${dep}:build:lib:cjs`);
     });
 
     await writePkg(pkgPath, pkg);

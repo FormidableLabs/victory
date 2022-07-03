@@ -155,7 +155,8 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs"
+        "build:lib:cjs",
+        "../victory-chart:build:lib:cjs"
       ]
     }
   }
