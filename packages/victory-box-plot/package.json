@@ -28,6 +28,9 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
+  "devDependencies": {
+    "victory-chart": "^36.5.3"
+  },
   "scripts": {
     "build": "wireit",
     "build:lib": "wireit",
@@ -152,7 +155,8 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs"
+        "build:lib:cjs",
+        "../victory-chart:build:lib:cjs"
       ]
     }
   }
