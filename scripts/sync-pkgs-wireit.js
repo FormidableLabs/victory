@@ -45,6 +45,7 @@ const writePkg = async (pkgPath, data) => {
   log(`Writing ${pkgPath}`);
   await fs.writeFile(pkgPath, JSON.stringify(data, null, 2) + "\n");
 };
+const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
 // ============================================================================
 // Script
@@ -74,28 +75,19 @@ const cli = async () => {
       .map((p) => `./packages/${p}:${pkgTask || rootTask}`);
   });
 
-  delete rootPkg.sideEffects;
-  rootPkg.sideEffects = false;
-
   await writePkg(rootPkgPath, rootPkg);
 
   // Workspace mutations
   // Use the core package as the template for the rest.
-  const corePkg = JSON.parse(
-    await fs.readFile(`${PKGS_ROOT}/victory-core/package.json`),
-  );
+  const corePkg = await readPkg(`${PKGS_ROOT}/victory-core/package.json`);
 
   for (const workspace of workspaces) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
     const pkg = await readPkg(pkgPath);
 
-    // Overwrite scripts and wireit configuration.
-    const scripts = JSON.parse(JSON.stringify(corePkg.scripts));
-    pkg.scripts = scripts;
-
-    // Start with wireit task config and add in dependencies
-    const wireit = JSON.parse(JSON.stringify(corePkg.wireit));
-    pkg.wireit = wireit;
+    // Overwrite scripts and wireit configuration
+    pkg.scripts = clone(corePkg.scripts);
+    pkg.wireit = clone(corePkg.wireit);
 
     // Clear out existing deps from victory-core
     // TODO(wireit): Abstract and refactor this whole section better.
@@ -135,10 +127,6 @@ const cli = async () => {
       addDeps("build:dist:dev", `../${dep}:build:lib:esm`);
       addDeps("build:dist:min", `../${dep}:build:lib:esm`);
     });
-
-    // Hack: move sideEffects back to end
-    delete pkg.sideEffects;
-    pkg.sideEffects = false;
 
     await writePkg(pkgPath, pkg);
   }

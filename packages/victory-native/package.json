@@ -14,6 +14,7 @@
   },
   "homepage": "https://formidable.com/open-source/victory",
   "source": "src/index.js",
+  "sideEffects": false,
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
@@ -127,6 +128,5 @@
         "build"
       ]
     }
-  },
-  "sideEffects": false
+  }
 }

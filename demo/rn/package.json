@@ -1,6 +1,7 @@
 {
   "name": "rn-demo",
   "version": "1.0.0",
+  "sideEffects": false,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

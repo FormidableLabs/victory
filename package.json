@@ -342,6 +342,5 @@
         "./packages/victory-zoom-container:jest"
       ]
     }
-  },
-  "sideEffects": false
+  }
 }
