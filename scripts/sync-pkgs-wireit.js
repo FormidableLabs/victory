@@ -64,7 +64,9 @@ const updateRootPkg = async ({ allPkgs }) => {
     { rootTask: "jest:pkgs", pkgTask: "jest" },
   ].forEach(({ rootTask, pkgTask }) => {
     rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};
-    rootPkg.wireit[rootTask].dependencies = allPkgs.map((p) => `./packages/${p}:${pkgTask || rootTask}`);
+    rootPkg.wireit[rootTask].dependencies = allPkgs.map(
+      (p) => `./packages/${p}:${pkgTask || rootTask}`,
+    );
   });
 
   await writePkg(rootPkgPath, rootPkg);
@@ -122,7 +124,6 @@ const updateLibPkgs = async ({ libPkgs }) => {
       addDeps("build:dist:min", `../${dep}:build:lib:esm`);
     });
 
-
     // Dev dependencies
     const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter((p) =>
       p.startsWith("victory"),
@@ -130,9 +131,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
     crossDevDeps.forEach((dep) => {
       // Special case victory-vendor
       if (dep === PKGS.VENDOR) {
-        [
-          "jest",
-        ].forEach((key) => addDeps(key, `../${PKGS.VENDOR}:build`));
+        ["jest"].forEach((key) => addDeps(key, `../${PKGS.VENDOR}:build`));
         return;
       }
 
@@ -156,7 +155,7 @@ const cli = async () => {
 
   // Mutate package.json's
   await updateRootPkg({ allPkgs });
-  await updateLibPkgs ({ libPkgs });
+  await updateLibPkgs({ libPkgs });
 
   log("Finished syncing.");
 };
