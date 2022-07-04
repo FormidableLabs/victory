@@ -598,6 +598,7 @@ importers:
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       victory-core: ^36.5.3
+      victory-histogram: ^36.5.3
       victory-shared-events: ^36.5.3
     dependencies:
       lodash: 4.17.21
@@ -605,6 +606,8 @@ importers:
       react-fast-compare: 3.2.0
       victory-core: link:../victory-core
       victory-shared-events: link:../victory-shared-events
+    devDependencies:
+      victory-histogram: link:../victory-histogram
 
   packages/victory-tooltip:
     specifiers:
