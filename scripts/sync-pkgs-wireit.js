@@ -124,8 +124,8 @@ const updateLibPkgs = async ({ libPkgs }) => {
     pkg.wireit.jest.dependencies = [
       "build:lib:cjs",
       "../victory-voronoi:build:lib:cjs",
-      "../victory-vendor:build:lib:cjs"
-    ].filter((task) => !task.includes(`/${pkg.name}:`));;
+      "../victory-vendor:build:lib:cjs",
+    ].filter((task) => !task.includes(`/${pkg.name}:`));
     const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter((p) =>
       p.startsWith("victory"),
     );
