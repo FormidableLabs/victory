@@ -58,8 +58,10 @@ module.exports = {
     // - TypeScript
     // Check for errors:
     "types:pkg:check": "tsc --noEmit",
+    // Copy and Create:
+    "types:pkg:esm": "nps types:pkg:copy:esm types:pkg:create:esm",
+    "types:pkg:cjs": "nps types:pkg:copy:cjs types:pkg:create:cjs",
     // Copy vanilla `*.d.ts` files
-    "types:pkg:copy": "nps types:pkg:copy:esm types:pkg:copy:cjs",
     "types:pkg:copy:esm": "nps types:pkg:copy:base -- -- es",
     "types:pkg:copy:cjs": "nps types:pkg:copy:base -- -- lib",
     "types:pkg:copy:base": "cpx 'src/**/*.d.ts'",

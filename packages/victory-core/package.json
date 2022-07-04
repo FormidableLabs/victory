@@ -29,7 +29,8 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-bar": "^36.5.1"
+    "victory-bar": "^36.5.1",
+    "victory-core": "^36.5.3"
   },
   "scripts": {
     "build": "wireit",
@@ -39,6 +40,8 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "types:check": "wireit",
+    "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
     "jest": "wireit"
@@ -121,6 +124,28 @@
       "dependencies": [
         "../victory-vendor:build:lib:esm"
       ]
+    },
+    "types:check": {
+      "command": "nps types:pkg:check",
+      "files": [
+        "src/**/*.{ts|tsx}",
+        "../../tsconfig.base.json",
+        "tsconfig.json"
+      ],
+      "dependencies": [
+        "types:create",
+        "../victory-vendor:build:lib:esm"
+      ]
+    },
+    "types:create": {
+      "command": "nps types:pkg:cjs",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../tsconfig.base.json",
+        "tsconfig.build.json"
+      ],
+      "output": ["lib/**/*.d.ts"]
     },
     "format": {
       "command": "nps format:pkg",
