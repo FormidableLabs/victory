@@ -118,10 +118,14 @@ const updateLibPkgs = async ({ libPkgs }) => {
     });
 
     // Dev dependencies
-    // For jest remove self-references
-    pkg.wireit.jest.dependencies = pkg.wireit.jest.dependencies.filter(
-      (task) => !task.includes(`/${pkg.name}:`),
-    );
+    // We have hidden deps on `victory-voronoi` and `victory-vendor` in
+    // test (`test/helpers/svg`). So, we just write the base deps from scratch
+    // here.
+    pkg.wireit.jest.dependencies = [
+      "build:lib:cjs",
+      "../victory-voronoi:build:lib:cjs",
+      "../victory-vendor:build:lib:cjs"
+    ].filter((task) => !task.includes(`/${pkg.name}:`));;
     const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter((p) =>
       p.startsWith("victory"),
     );
