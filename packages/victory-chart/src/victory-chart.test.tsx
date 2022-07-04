@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
-import { VictoryLine } from "victory";
+import { VictoryLine } from "victory-line";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 describe("components/victory-chart", () => {

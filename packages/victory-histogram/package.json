@@ -68,7 +68,7 @@
       "dependencies": [
         "../victory-bar:build:lib:esm",
         "../victory-core:build:lib:esm",
-        "../victory-vendor:build"
+        "../victory-vendor:build:lib:esm"
       ]
     },
     "build:lib:cjs": {
@@ -84,7 +84,7 @@
       "dependencies": [
         "../victory-bar:build:lib:cjs",
         "../victory-core:build:lib:cjs",
-        "../victory-vendor:build"
+        "../victory-vendor:build:lib:cjs"
       ]
     },
     "build:dist": {
@@ -109,7 +109,7 @@
       "dependencies": [
         "../victory-bar:build:lib:esm",
         "../victory-core:build:lib:esm",
-        "../victory-vendor:build"
+        "../victory-vendor:build:lib:esm"
       ]
     },
     "build:dist:min": {
@@ -126,7 +126,7 @@
       "dependencies": [
         "../victory-bar:build:lib:esm",
         "../victory-core:build:lib:esm",
-        "../victory-vendor:build"
+        "../victory-vendor:build:lib:esm"
       ]
     },
     "format": {
@@ -158,7 +158,9 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs"
+        "build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs",
+        "../victory-vendor:build:lib:cjs"
       ]
     }
   }

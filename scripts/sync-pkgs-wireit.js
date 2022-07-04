@@ -98,45 +98,35 @@ const updateLibPkgs = async ({ libPkgs }) => {
     });
 
     // Prod dependencies
-    const addDeps = (key, dep) => pkg.wireit[key].dependencies.push(dep);
+    const addDeps = (key, dep, task) => {
+      // Only add dependencies that (1) aren't self-references, and (2) are unique.
+      if (dep !== pkg.name && !pkg.wireit[key].dependencies.includes(task)) {
+        pkg.wireit[key].dependencies.push(task);
+      }
+    };
     const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
       p.startsWith("victory"),
     );
     crossDeps.forEach((dep) => {
-      // Special case victory-vendor
-      if (dep === PKGS.VENDOR) {
-        [
-          "build:lib:esm",
-          "build:lib:cjs",
-          "build:dist:dev",
-          "build:dist:min",
-        ].forEach((key) => addDeps(key, `../${PKGS.VENDOR}:build`));
-        return;
-      }
-
-      // Normal case
       // Make sure dependent libraries are built.
-      addDeps("build:lib:esm", `../${dep}:build:lib:esm`);
-      addDeps("build:lib:cjs", `../${dep}:build:lib:cjs`);
+      addDeps("build:lib:esm", dep, `../${dep}:build:lib:esm`);
+      addDeps("build:lib:cjs", dep, `../${dep}:build:lib:cjs`);
 
       // Webpack depends on ESM output from other packages.
-      addDeps("build:dist:dev", `../${dep}:build:lib:esm`);
-      addDeps("build:dist:min", `../${dep}:build:lib:esm`);
+      addDeps("build:dist:dev", dep, `../${dep}:build:lib:esm`);
+      addDeps("build:dist:min", dep, `../${dep}:build:lib:esm`);
     });
 
     // Dev dependencies
+    // For jest remove self-references
+    pkg.wireit.jest.dependencies = pkg.wireit.jest.dependencies.filter(
+      (task) => !task.includes(`/${pkg.name}:`),
+    );
     const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter((p) =>
       p.startsWith("victory"),
     );
     crossDevDeps.forEach((dep) => {
-      // Special case victory-vendor
-      if (dep === PKGS.VENDOR) {
-        ["jest"].forEach((key) => addDeps(key, `../${PKGS.VENDOR}:build`));
-        return;
-      }
-
-      // Normal case
-      addDeps("jest", `../${dep}:build:lib:cjs`);
+      addDeps("jest", dep, `../${dep}:build:lib:cjs`);
     });
 
     await writePkg(pkgPath, pkg);

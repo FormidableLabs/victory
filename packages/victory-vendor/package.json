@@ -51,6 +51,12 @@
   },
   "scripts": {
     "build": "wireit",
+    "build:lib": "wireit",
+    "build:lib:esm": "wireit",
+    "build:lib:cjs": "wireit",
+    "build:dist": "wireit",
+    "build:dist:dev": "wireit",
+    "build:dist:min": "wireit",
     "format": "wireit",
     "lint": "wireit",
     "jest": "wireit"
@@ -67,6 +73,31 @@
         "lib/**",
         "lib-vendor/**",
         "d3-*"
+      ]
+    },
+    "build:lib:esm": {
+      "dependencies": [
+        "build"
+      ]
+    },
+    "build:lib:cjs": {
+      "dependencies": [
+        "build"
+      ]
+    },
+    "build:dist": {
+      "dependencies": [
+        "build"
+      ]
+    },
+    "build:dist:dev": {
+      "dependencies": [
+        "build"
+      ]
+    },
+    "build:dist:min": {
+      "dependencies": [
+        "build"
       ]
     },
     "format": {

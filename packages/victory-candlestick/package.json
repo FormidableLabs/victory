@@ -151,6 +151,8 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs",
+        "../victory-vendor:build:lib:cjs",
         "../victory-chart:build:lib:cjs"
       ]
     }

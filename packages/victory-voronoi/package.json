@@ -148,7 +148,8 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs"
+        "build:lib:cjs",
+        "../victory-vendor:build:lib:cjs"
       ]
     }
   }
