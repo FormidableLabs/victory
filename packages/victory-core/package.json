@@ -28,6 +28,9 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
+  "devDependencies": {
+    "victory-bar": "^36.5.1"
+  },
   "scripts": {
     "build": "wireit",
     "build:lib": "wireit",
@@ -150,7 +153,8 @@
       "dependencies": [
         "build:lib:cjs",
         "../victory-voronoi:build:lib:cjs",
-        "../victory-vendor:build:lib:cjs"
+        "../victory-vendor:build:lib:cjs",
+        "../victory-bar:build:lib:cjs"
       ]
     }
   }
