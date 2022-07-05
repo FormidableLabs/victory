@@ -57,7 +57,7 @@ module.exports = {
 
     // - TypeScript
     // Check for errors:
-    "types:pkg:check": "tsc --noEmit",
+    "types:pkg:check": "tsc --pretty --noEmit",
     // Copy and Create:
     "types:pkg:esm": "nps types:pkg:copy:esm types:pkg:create:esm",
     "types:pkg:cjs": "nps types:pkg:copy:cjs types:pkg:create:cjs",
@@ -70,7 +70,7 @@ module.exports = {
     "types:pkg:create:esm": "nps types:pkg:create:base -- -- --outDir es",
     "types:pkg:create:cjs": "nps types:pkg:create:base -- -- --outDir lib",
     "types:pkg:create:base":
-      "tsc -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
+      "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
 
     // TODO: REDO ALL THE TESTING STUFF
     // jest: {
