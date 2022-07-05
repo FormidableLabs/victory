@@ -150,6 +150,10 @@
       "output": [
         "lib/**/*.d.ts",
         "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory-core:types:create",
+        "../victory-shared-events:types:create"
       ]
     },
     "format": {

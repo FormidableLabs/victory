@@ -103,6 +103,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       "build:dist:dev",
       "build:dist:min",
       "types:check",
+      "types:create",
     ].forEach((key) => {
       pkg.wireit[key].dependencies = [];
     });
@@ -128,6 +129,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
 
       // TypeScript checking depends on types output from other packages.
       addDeps("types:check", dep, `../${dep}:types:create`);
+      addDeps("types:create", dep, `../${dep}:types:create`);
     });
 
     // Dev dependencies

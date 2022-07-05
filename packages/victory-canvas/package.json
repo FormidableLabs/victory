@@ -149,6 +149,10 @@
       "output": [
         "lib/**/*.d.ts",
         "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory-bar:types:create",
+        "../victory-core:types:create"
       ]
     },
     "format": {

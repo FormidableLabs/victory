@@ -149,6 +149,10 @@
       "output": [
         "lib/**/*.d.ts",
         "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory-core:types:create",
+        "../victory-vendor:types:create"
       ]
     },
     "format": {

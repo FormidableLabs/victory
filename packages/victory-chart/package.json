@@ -32,7 +32,7 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-line": "^36.5.3"
+    "victory-line": "*"
   },
   "scripts": {
     "build": "wireit",
@@ -166,6 +166,12 @@
       "output": [
         "lib/**/*.d.ts",
         "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory-axis:types:create",
+        "../victory-core:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-shared-events:types:create"
       ]
     },
     "format": {

@@ -143,6 +143,9 @@
       "output": [
         "lib/**/*.d.ts",
         "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory-core:types:create"
       ]
     },
     "format": {
