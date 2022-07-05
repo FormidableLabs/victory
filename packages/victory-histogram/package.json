@@ -38,6 +38,8 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "types:check": "wireit",
+    "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
     "jest": "wireit"
@@ -127,6 +129,31 @@
         "../victory-bar:build:lib:esm",
         "../victory-core:build:lib:esm",
         "../victory-vendor:build:lib:esm"
+      ]
+    },
+    "types:check": {
+      "command": "nps types:pkg:check",
+      "files": [
+        "src/**/*.{ts|tsx}",
+        "../../tsconfig.base.json",
+        "tsconfig.json"
+      ],
+      "dependencies": [
+        "../victory-bar:types:create",
+        "../victory-core:types:create",
+        "../victory-vendor:types:create"
+      ]
+    },
+    "types:create": {
+      "command": "nps types:pkg:cjs",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../tsconfig.base.json",
+        "tsconfig.build.json"
+      ],
+      "output": [
+        "lib/**/*.d.ts"
       ]
     },
     "format": {
