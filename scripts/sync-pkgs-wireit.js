@@ -35,7 +35,7 @@ const PKGS = {
   NATIVE: "victory-native",
   VENDOR: "victory-vendor",
 };
-const SPECIAL_PKGS = new Set([PKGS.NATIVE, PKGS.VENDOR]);
+const SPECIAL_PKGS = new Set([PKGS.CORE, PKGS.NATIVE, PKGS.VENDOR]);
 
 // ============================================================================
 // Helpers
@@ -43,7 +43,7 @@ const SPECIAL_PKGS = new Set([PKGS.NATIVE, PKGS.VENDOR]);
 const readPkg = async (pkgPath) => JSON.parse(await fs.readFile(pkgPath));
 const writePkg = async (pkgPath, data) => {
   log(`Writing ${pkgPath}`);
-  await fs.writeFile(pkgPath, JSON.stringify(data, null, 2) + "\n");
+  await fs.writeFile(pkgPath, `${JSON.stringify(data, null, 2)}\n`);
 };
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
@@ -58,14 +58,15 @@ const updateRootPkg = async ({ allPkgs }) => {
 
   rootPkg.wireit = rootPkg.wireit || {};
   [
-    { rootTask: "build" },
+    { rootTask: "build", pkgTask: "build" },
     { rootTask: "format:pkgs", pkgTask: "format" },
     { rootTask: "lint:pkgs", pkgTask: "lint" },
     { rootTask: "jest:pkgs", pkgTask: "jest" },
+    { rootTask: "types:check:pkgs", pkgTask: "types:check" },
   ].forEach(({ rootTask, pkgTask }) => {
     rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};
     rootPkg.wireit[rootTask].dependencies = allPkgs.map(
-      (p) => `./packages/${p}:${pkgTask || rootTask}`,
+      (p) => `./packages/${p}:${pkgTask}`,
     );
   });
 
@@ -93,6 +94,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       "build:lib:cjs",
       "build:dist:dev",
       "build:dist:min",
+      "types:check",
     ].forEach((key) => {
       pkg.wireit[key].dependencies = [];
     });
@@ -105,7 +107,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       }
     };
     const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
-      p.startsWith("victory"),
+      p.startsWith("victory-"),
     );
     crossDeps.forEach((dep) => {
       // Make sure dependent libraries are built.
@@ -115,6 +117,9 @@ const updateLibPkgs = async ({ libPkgs }) => {
       // Webpack depends on ESM output from other packages.
       addDeps("build:dist:dev", dep, `../${dep}:build:lib:esm`);
       addDeps("build:dist:min", dep, `../${dep}:build:lib:esm`);
+
+      // TypeScript checking depends on types output from other packages.
+      addDeps("types:check", dep, `../${dep}:types:create`);
     });
 
     // Dev dependencies
@@ -145,7 +150,7 @@ const cli = async () => {
   const libPkgs = (await fs.readdir(PKGS_ROOT)).filter(
     (p) => p.startsWith("victory") && !SPECIAL_PKGS.has(p),
   );
-  const allPkgs = [PKGS.NATIVE, PKGS.VENDOR].concat(libPkgs);
+  const allPkgs = [...SPECIAL_PKGS, ...libPkgs];
 
   // Mutate package.json's
   await updateRootPkg({ allPkgs });

@@ -135,6 +135,7 @@
     "jest": "wireit",
     "jest:root": "wireit",
     "jest:pkgs": "wireit",
+    "types:check:pkgs": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js"
   },
   "wireit": {
@@ -156,6 +157,7 @@
     },
     "build": {
       "dependencies": [
+        "./packages/victory-core:build",
         "./packages/victory-native:build",
         "./packages/victory-vendor:build",
         "./packages/victory:build",
@@ -168,7 +170,6 @@
         "./packages/victory-candlestick:build",
         "./packages/victory-canvas:build",
         "./packages/victory-chart:build",
-        "./packages/victory-core:build",
         "./packages/victory-create-container:build",
         "./packages/victory-cursor-container:build",
         "./packages/victory-errorbar:build",
@@ -211,6 +212,7 @@
     },
     "format:pkgs": {
       "dependencies": [
+        "./packages/victory-core:format",
         "./packages/victory-native:format",
         "./packages/victory-vendor:format",
         "./packages/victory:format",
@@ -223,7 +225,6 @@
         "./packages/victory-candlestick:format",
         "./packages/victory-canvas:format",
         "./packages/victory-chart:format",
-        "./packages/victory-core:format",
         "./packages/victory-create-container:format",
         "./packages/victory-cursor-container:format",
         "./packages/victory-errorbar:format",
@@ -264,6 +265,7 @@
     },
     "lint:pkgs": {
       "dependencies": [
+        "./packages/victory-core:lint",
         "./packages/victory-native:lint",
         "./packages/victory-vendor:lint",
         "./packages/victory:lint",
@@ -276,7 +278,6 @@
         "./packages/victory-candlestick:lint",
         "./packages/victory-canvas:lint",
         "./packages/victory-chart:lint",
-        "./packages/victory-core:lint",
         "./packages/victory-create-container:lint",
         "./packages/victory-cursor-container:lint",
         "./packages/victory-errorbar:lint",
@@ -314,6 +315,7 @@
     },
     "jest:pkgs": {
       "dependencies": [
+        "./packages/victory-core:jest",
         "./packages/victory-native:jest",
         "./packages/victory-vendor:jest",
         "./packages/victory:jest",
@@ -326,7 +328,6 @@
         "./packages/victory-candlestick:jest",
         "./packages/victory-canvas:jest",
         "./packages/victory-chart:jest",
-        "./packages/victory-core:jest",
         "./packages/victory-create-container:jest",
         "./packages/victory-cursor-container:jest",
         "./packages/victory-errorbar:jest",
@@ -344,6 +345,40 @@
         "./packages/victory-voronoi:jest",
         "./packages/victory-voronoi-container:jest",
         "./packages/victory-zoom-container:jest"
+      ]
+    },
+    "types:check:pkgs": {
+      "dependencies": [
+        "./packages/victory-core:types:check",
+        "./packages/victory-native:types:check",
+        "./packages/victory-vendor:types:check",
+        "./packages/victory:types:check",
+        "./packages/victory-area:types:check",
+        "./packages/victory-axis:types:check",
+        "./packages/victory-bar:types:check",
+        "./packages/victory-box-plot:types:check",
+        "./packages/victory-brush-container:types:check",
+        "./packages/victory-brush-line:types:check",
+        "./packages/victory-candlestick:types:check",
+        "./packages/victory-canvas:types:check",
+        "./packages/victory-chart:types:check",
+        "./packages/victory-create-container:types:check",
+        "./packages/victory-cursor-container:types:check",
+        "./packages/victory-errorbar:types:check",
+        "./packages/victory-group:types:check",
+        "./packages/victory-histogram:types:check",
+        "./packages/victory-legend:types:check",
+        "./packages/victory-line:types:check",
+        "./packages/victory-pie:types:check",
+        "./packages/victory-polar-axis:types:check",
+        "./packages/victory-scatter:types:check",
+        "./packages/victory-selection-container:types:check",
+        "./packages/victory-shared-events:types:check",
+        "./packages/victory-stack:types:check",
+        "./packages/victory-tooltip:types:check",
+        "./packages/victory-voronoi:types:check",
+        "./packages/victory-voronoi-container:types:check",
+        "./packages/victory-zoom-container:types:check"
       ]
     }
   }

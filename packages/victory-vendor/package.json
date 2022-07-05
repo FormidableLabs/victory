@@ -57,6 +57,7 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
     "jest": "wireit"
@@ -96,6 +97,11 @@
       ]
     },
     "build:dist:min": {
+      "dependencies": [
+        "build"
+      ]
+    },
+    "types:create": {
       "dependencies": [
         "build"
       ]
