@@ -67,10 +67,14 @@ module.exports = {
     "types:pkg:copy:base": "cpx 'src/**/*.d.ts'",
     // Create `*.d.ts` files from `*.ts` source:
     "types:pkg:create": "nps types:pkg:create:esm types:pkg:create:cjs",
-    "types:pkg:create:esm": "nps types:pkg:create:base -- -- --outDir es",
-    "types:pkg:create:cjs": "nps types:pkg:create:base -- -- --outDir lib",
+    "types:pkg:create:esm":
+      "nps types:pkg:create:base -- -- --outDir es || nps types:warning",
+    "types:pkg:create:cjs":
+      "nps types:pkg:create:base -- -- --outDir lib || nps types:warning",
     "types:pkg:create:base":
       "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
+    "types:warning":
+      'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
 
     // TODO: REDO ALL THE TESTING STUFF
     // jest: {
