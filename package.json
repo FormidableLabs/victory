@@ -383,6 +383,40 @@
         "./packages/victory-voronoi-container:types:check",
         "./packages/victory-zoom-container:types:check"
       ]
+    },
+    "types:create:pkgs": {
+      "dependencies": [
+        "./packages/victory-native:types:create",
+        "./packages/victory-vendor:types:create",
+        "./packages/victory:types:create",
+        "./packages/victory-area:types:create",
+        "./packages/victory-axis:types:create",
+        "./packages/victory-bar:types:create",
+        "./packages/victory-box-plot:types:create",
+        "./packages/victory-brush-container:types:create",
+        "./packages/victory-brush-line:types:create",
+        "./packages/victory-candlestick:types:create",
+        "./packages/victory-canvas:types:create",
+        "./packages/victory-chart:types:create",
+        "./packages/victory-core:types:create",
+        "./packages/victory-create-container:types:create",
+        "./packages/victory-cursor-container:types:create",
+        "./packages/victory-errorbar:types:create",
+        "./packages/victory-group:types:create",
+        "./packages/victory-histogram:types:create",
+        "./packages/victory-legend:types:create",
+        "./packages/victory-line:types:create",
+        "./packages/victory-pie:types:create",
+        "./packages/victory-polar-axis:types:create",
+        "./packages/victory-scatter:types:create",
+        "./packages/victory-selection-container:types:create",
+        "./packages/victory-shared-events:types:create",
+        "./packages/victory-stack:types:create",
+        "./packages/victory-tooltip:types:create",
+        "./packages/victory-voronoi:types:create",
+        "./packages/victory-voronoi-container:types:create",
+        "./packages/victory-zoom-container:types:create"
+      ]
     }
   }
 }
