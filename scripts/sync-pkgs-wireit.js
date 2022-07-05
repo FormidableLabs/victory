@@ -41,9 +41,14 @@ const SPECIAL_PKGS = new Set([PKGS.CORE, PKGS.NATIVE, PKGS.VENDOR]);
 // Helpers
 // ============================================================================
 const readPkg = async (pkgPath) => JSON.parse(await fs.readFile(pkgPath));
-const writePkg = async (pkgPath, data) => {
+const writePkg = async (pkgPath, data, originalPkg) => {
+  const json = JSON.stringify(data, null, 2);
+  if (json === JSON.stringify(originalPkg, null, 2)) {
+    log(`Skipping ${pkgPath} (no changes)`);
+    return;
+  }
   log(`Writing ${pkgPath}`);
-  await fs.writeFile(pkgPath, `${JSON.stringify(data, null, 2)}\n`);
+  await fs.writeFile(pkgPath, `${json}\n`);
 };
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
@@ -54,7 +59,8 @@ const clone = (obj) => JSON.parse(JSON.stringify(obj));
 // misses). So create tasks with cross-package deps
 const updateRootPkg = async ({ allPkgs }) => {
   const rootPkgPath = `${ROOT}/package.json`;
-  const rootPkg = await readPkg(rootPkgPath);
+  const originalPkg = await readPkg(rootPkgPath);
+  const rootPkg = clone(originalPkg);
 
   rootPkg.wireit = rootPkg.wireit || {};
   [
@@ -70,7 +76,7 @@ const updateRootPkg = async ({ allPkgs }) => {
     );
   });
 
-  await writePkg(rootPkgPath, rootPkg);
+  await writePkg(rootPkgPath, rootPkg, originalPkg);
 };
 
 // Common library mutations.
@@ -81,7 +87,8 @@ const updateLibPkgs = async ({ libPkgs }) => {
 
   for (const workspace of libPkgs) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
-    const pkg = await readPkg(pkgPath);
+    const originalPkg = await readPkg(pkgPath);
+    const pkg = clone(originalPkg);
 
     // Overwrite scripts and wireit configuration
     pkg.scripts = clone(corePkg.scripts);
@@ -138,7 +145,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       addDeps("jest", dep, `../${dep}:build:lib:cjs`);
     });
 
-    await writePkg(pkgPath, pkg);
+    await writePkg(pkgPath, pkg, originalPkg);
   }
 };
 
