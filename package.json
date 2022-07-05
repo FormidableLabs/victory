@@ -159,7 +159,6 @@
     },
     "build": {
       "dependencies": [
-        "./packages/victory-core:build",
         "./packages/victory-native:build",
         "./packages/victory-vendor:build",
         "./packages/victory:build",
@@ -172,6 +171,7 @@
         "./packages/victory-candlestick:build",
         "./packages/victory-canvas:build",
         "./packages/victory-chart:build",
+        "./packages/victory-core:build",
         "./packages/victory-create-container:build",
         "./packages/victory-cursor-container:build",
         "./packages/victory-errorbar:build",
@@ -214,7 +214,6 @@
     },
     "format:pkgs": {
       "dependencies": [
-        "./packages/victory-core:format",
         "./packages/victory-native:format",
         "./packages/victory-vendor:format",
         "./packages/victory:format",
@@ -227,6 +226,7 @@
         "./packages/victory-candlestick:format",
         "./packages/victory-canvas:format",
         "./packages/victory-chart:format",
+        "./packages/victory-core:format",
         "./packages/victory-create-container:format",
         "./packages/victory-cursor-container:format",
         "./packages/victory-errorbar:format",
@@ -267,7 +267,6 @@
     },
     "lint:pkgs": {
       "dependencies": [
-        "./packages/victory-core:lint",
         "./packages/victory-native:lint",
         "./packages/victory-vendor:lint",
         "./packages/victory:lint",
@@ -280,6 +279,7 @@
         "./packages/victory-candlestick:lint",
         "./packages/victory-canvas:lint",
         "./packages/victory-chart:lint",
+        "./packages/victory-core:lint",
         "./packages/victory-create-container:lint",
         "./packages/victory-cursor-container:lint",
         "./packages/victory-errorbar:lint",
@@ -317,7 +317,6 @@
     },
     "jest:pkgs": {
       "dependencies": [
-        "./packages/victory-core:jest",
         "./packages/victory-native:jest",
         "./packages/victory-vendor:jest",
         "./packages/victory:jest",
@@ -330,6 +329,7 @@
         "./packages/victory-candlestick:jest",
         "./packages/victory-canvas:jest",
         "./packages/victory-chart:jest",
+        "./packages/victory-core:jest",
         "./packages/victory-create-container:jest",
         "./packages/victory-cursor-container:jest",
         "./packages/victory-errorbar:jest",
@@ -351,7 +351,6 @@
     },
     "types:check:pkgs": {
       "dependencies": [
-        "./packages/victory-core:types:check",
         "./packages/victory-native:types:check",
         "./packages/victory-vendor:types:check",
         "./packages/victory:types:check",
@@ -364,6 +363,7 @@
         "./packages/victory-candlestick:types:check",
         "./packages/victory-canvas:types:check",
         "./packages/victory-chart:types:check",
+        "./packages/victory-core:types:check",
         "./packages/victory-create-container:types:check",
         "./packages/victory-cursor-container:types:check",
         "./packages/victory-errorbar:types:check",

@@ -35,7 +35,7 @@ const PKGS = {
   NATIVE: "victory-native",
   VENDOR: "victory-vendor",
 };
-const SPECIAL_PKGS = new Set([PKGS.CORE, PKGS.NATIVE, PKGS.VENDOR]);
+const SPECIAL_PKGS = new Set([PKGS.NATIVE, PKGS.VENDOR]);
 
 // ============================================================================
 // Helpers
