@@ -29,7 +29,8 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-chart": "^36.5.3"
+    "victory-chart": "*",
+    "victory-line": "."
   },
   "scripts": {
     "build": "wireit",

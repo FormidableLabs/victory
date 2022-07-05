@@ -29,9 +29,10 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-axis": "^36.5.3",
-    "victory-bar": "^36.5.3",
-    "victory-core": "^36.5.3"
+    "victory-axis": "*",
+    "victory-bar": "*",
+    "victory-core": "*",
+    "victory-line": "*"
   },
   "scripts": {
     "build": "wireit",
@@ -136,7 +137,8 @@
       "dependencies": [
         "../victory-vendor:types:create",
         "../victory-axis:types:create",
-        "../victory-bar:types:create"
+        "../victory-bar:types:create",
+        "../victory-line:types:create"
       ]
     },
     "types:create": {
@@ -184,7 +186,8 @@
         "../victory-voronoi:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
         "../victory-axis:build:lib:cjs",
-        "../victory-bar:build:lib:cjs"
+        "../victory-bar:build:lib:cjs",
+        "../victory-line:build:lib:cjs"
       ]
     }
   }

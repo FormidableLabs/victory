@@ -264,7 +264,8 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-chart: ^36.5.3
+      victory-bar: .
+      victory-chart: '*'
       victory-core: ^36.5.3
       victory-vendor: ^36.5.1
     dependencies:
@@ -273,6 +274,7 @@ importers:
       victory-core: link:../victory-core
       victory-vendor: link:../victory-vendor
     devDependencies:
+      victory-bar: 'link:'
       victory-chart: link:../victory-chart
 
   packages/victory-box-plot:
@@ -365,9 +367,10 @@ importers:
       lodash: ^4.17.21
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-axis: ^36.5.3
-      victory-bar: ^36.5.3
-      victory-core: ^36.5.3
+      victory-axis: '*'
+      victory-bar: '*'
+      victory-core: '*'
+      victory-line: '*'
       victory-vendor: ^36.5.1
     dependencies:
       lodash: 4.17.21
@@ -378,6 +381,7 @@ importers:
       victory-axis: link:../victory-axis
       victory-bar: link:../victory-bar
       victory-core: 'link:'
+      victory-line: link:../victory-line
 
   packages/victory-create-container:
     specifiers:
@@ -461,8 +465,9 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-chart: ^36.5.3
+      victory-chart: '*'
       victory-core: ^36.5.3
+      victory-line: .
       victory-vendor: ^36.5.1
     dependencies:
       lodash: 4.17.21
@@ -471,6 +476,7 @@ importers:
       victory-vendor: link:../victory-vendor
     devDependencies:
       victory-chart: link:../victory-chart
+      victory-line: 'link:'
 
   packages/victory-native:
     specifiers:
