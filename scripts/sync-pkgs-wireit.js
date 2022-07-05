@@ -142,7 +142,11 @@ const updateLibPkgs = async ({ libPkgs }) => {
       p.startsWith("victory"),
     );
     crossDevDeps.forEach((dep) => {
+      // Jest depends on CJS output
       addDeps("jest", dep, `../${dep}:build:lib:cjs`);
+
+      // TypeScript checking depends on types output from other packages.
+      addDeps("types:check", dep, `../${dep}:types:create`);
     });
 
     await writePkg(pkgPath, pkg, originalPkg);

@@ -137,7 +137,8 @@
       ],
       "dependencies": [
         "../victory-core:types:create",
-        "../victory-vendor:types:create"
+        "../victory-vendor:types:create",
+        "../victory-chart:types:create"
       ]
     },
     "types:create": {

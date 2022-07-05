@@ -150,7 +150,8 @@
         "../victory-axis:types:create",
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
-        "../victory-shared-events:types:create"
+        "../victory-shared-events:types:create",
+        "../victory-line:types:create"
       ]
     },
     "types:create": {

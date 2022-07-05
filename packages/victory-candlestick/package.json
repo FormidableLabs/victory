@@ -131,7 +131,8 @@
         "tsconfig.json"
       ],
       "dependencies": [
-        "../victory-core:types:create"
+        "../victory-core:types:create",
+        "../victory-chart:types:create"
       ]
     },
     "types:create": {

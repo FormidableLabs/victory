@@ -365,7 +365,8 @@ importers:
       lodash: ^4.17.21
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-bar: ^36.5.1
+      victory-axis: ^36.5.3
+      victory-bar: ^36.5.3
       victory-core: ^36.5.3
       victory-vendor: ^36.5.1
     dependencies:
@@ -374,6 +375,7 @@ importers:
       react-fast-compare: 3.2.0
       victory-vendor: link:../victory-vendor
     devDependencies:
+      victory-axis: link:../victory-axis
       victory-bar: link:../victory-bar
       victory-core: 'link:'
 

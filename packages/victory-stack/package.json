@@ -138,7 +138,8 @@
       ],
       "dependencies": [
         "../victory-core:types:create",
-        "../victory-shared-events:types:create"
+        "../victory-shared-events:types:create",
+        "../victory-histogram:types:create"
       ]
     },
     "types:create": {

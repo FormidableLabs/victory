@@ -29,7 +29,8 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-bar": "^36.5.1",
+    "victory-axis": "^36.5.3",
+    "victory-bar": "^36.5.3",
     "victory-core": "^36.5.3"
   },
   "scripts": {
@@ -133,8 +134,9 @@
         "tsconfig.json"
       ],
       "dependencies": [
-        "types:create",
-        "../victory-vendor:types:create"
+        "../victory-vendor:types:create",
+        "../victory-axis:types:create",
+        "../victory-bar:types:create"
       ]
     },
     "types:create": {
@@ -181,6 +183,7 @@
         "build:lib:cjs",
         "../victory-voronoi:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
+        "../victory-axis:build:lib:cjs",
         "../victory-bar:build:lib:cjs"
       ]
     }
