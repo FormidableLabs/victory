@@ -142,7 +142,8 @@
         "../victory-bar:types:create",
         "../victory-core:types:create",
         "../victory-vendor:types:create"
-      ]
+      ],
+      "output": []
     },
     "types:create": {
       "command": "nps types:pkg:cjs",
@@ -153,7 +154,8 @@
         "tsconfig.build.json"
       ],
       "output": [
-        "lib/**/*.d.ts"
+        "lib/**/*.d.ts",
+        "lib/**/*.d.ts.map"
       ]
     },
     "format": {
