@@ -138,7 +138,8 @@
     "jest:root": "wireit",
     "jest:pkgs": "wireit",
     "types:check:pkgs": "wireit",
-    "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js"
+    "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
+    "sync:tsconfig": "pnpm -r --filter !victory-core exec -- cpx ../victory-core/tsconfig.* ."
   },
   "wireit": {
     "check": {
