@@ -57,6 +57,7 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "types:check": "echo \"No types to check here\"",
     "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",

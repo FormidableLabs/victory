@@ -67,6 +67,7 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "types:check": "echo \"No types to check here\"",
     "format": "wireit",
     "lint": "wireit",
     "jest": "wireit"
