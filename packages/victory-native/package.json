@@ -132,7 +132,7 @@
     },
     "types:check": {
       "command": "echo \"No types to check here\"",
-      "files":  [],
+      "files": [],
       "output": []
     },
     "types:create": {

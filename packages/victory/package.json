@@ -52,6 +52,9 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
+  "devDependencies": {
+    "victory": "*"
+  },
   "scripts": {
     "build": "wireit",
     "build:lib": "wireit",
@@ -286,7 +289,8 @@
         "../victory-tooltip:types:create",
         "../victory-voronoi:types:create",
         "../victory-voronoi-container:types:create",
-        "../victory-zoom-container:types:create"
+        "../victory-zoom-container:types:create",
+        "types:create"
       ],
       "output": []
     },

@@ -32,6 +32,7 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
+    "victory-chart": "*",
     "victory-line": "*"
   },
   "scripts": {
@@ -154,6 +155,7 @@
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
         "../victory-shared-events:types:create",
+        "types:create",
         "../victory-line:types:create"
       ],
       "output": []

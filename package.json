@@ -142,7 +142,7 @@
     "types:create:pkgs": "wireit",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
-    "sync:tsconfig": "pnpm -r --filter !victory-core exec -- cpx ../victory-core/tsconfig.* . --verbose"
+    "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* . --verbose"
   },
   "wireit": {
     "check": {
@@ -150,7 +150,8 @@
         "format",
         "lint",
         "build",
-        "jest"
+        "jest",
+        "types:check:pkgs"
       ]
     },
     "check:ci": {
@@ -158,7 +159,8 @@
         "format",
         "lint",
         "build",
-        "jest"
+        "jest",
+        "types:check:pkgs"
       ]
     },
     "build": {

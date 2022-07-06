@@ -1,6 +1,5 @@
 import * as d3Scale from "victory-vendor/d3-scale";
 import * as d3Shape from "victory-vendor/d3-shape";
-// @ts-expect-error "Missing type declarations"
 import { _internalD3Voronoi as d3Voronoi } from "victory-voronoi/lib/helper-methods";
 import { without, min, max, property } from "lodash";
 

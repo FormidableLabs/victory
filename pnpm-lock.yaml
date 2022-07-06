@@ -181,6 +181,7 @@ importers:
 
   packages/victory:
     specifiers:
+      victory: '*'
       victory-area: ^36.5.3
       victory-axis: ^36.5.3
       victory-bar: ^36.5.3
@@ -236,6 +237,8 @@ importers:
       victory-voronoi: link:../victory-voronoi
       victory-voronoi-container: link:../victory-voronoi-container
       victory-zoom-container: link:../victory-zoom-container
+    devDependencies:
+      victory: 'link:'
 
   packages/victory-area:
     specifiers:
@@ -351,6 +354,7 @@ importers:
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       victory-axis: ^36.5.3
+      victory-chart: '*'
       victory-core: ^36.5.3
       victory-line: '*'
       victory-polar-axis: ^36.5.3
@@ -364,6 +368,7 @@ importers:
       victory-polar-axis: link:../victory-polar-axis
       victory-shared-events: link:../victory-shared-events
     devDependencies:
+      victory-chart: 'link:'
       victory-line: link:../victory-line
 
   packages/victory-core:
@@ -556,12 +561,15 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       victory-core: ^36.5.3
+      victory-pie: '*'
       victory-vendor: ^36.5.1
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
       victory-core: link:../victory-core
       victory-vendor: link:../victory-vendor
+    devDependencies:
+      victory-pie: 'link:'
 
   packages/victory-polar-axis:
     specifiers:

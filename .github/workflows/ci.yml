@@ -7,12 +7,16 @@ on:
   push:
     branches:
       - main
+      # TODO(wireit): Remove before merge.
+      - pnpm-wireit
     paths:
       - '**'
       - '!docs/**'
   pull_request:
     branches:
       - main
+      # TODO(wireit): Remove before merge.
+      - pnpm-wireit
     paths:
       - '**'
       - '!docs/**'

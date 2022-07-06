@@ -28,6 +28,9 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
+  "devDependencies": {
+    "victory-pie": "*"
+  },
   "scripts": {
     "build": "wireit",
     "build:lib": "wireit",
@@ -137,7 +140,8 @@
       ],
       "dependencies": [
         "../victory-core:types:create",
-        "../victory-vendor:types:create"
+        "../victory-vendor:types:create",
+        "types:create"
       ],
       "output": []
     },
