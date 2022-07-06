@@ -186,7 +186,10 @@ export const convertLengthToPixels = (
   return result;
 };
 
-const _prepareParams = (inputStyle: TextSizeStyleInterface | undefined, index: number) => {
+const _prepareParams = (
+  inputStyle: TextSizeStyleInterface | undefined,
+  index: number,
+) => {
   const lineStyle = Array.isArray(inputStyle) ? inputStyle[index] : inputStyle;
   const style = defaults({}, lineStyle, defaultStyle);
   return assign({}, style, {
@@ -244,25 +247,27 @@ const _approximateTextHeightInternal = (text: string | string[], style) => {
 };
 
 const _measureWithDOM = (
-  text: string | string[], 
-  style?: TextSizeStyleInterface
-): { width: number, height: number} => {
-  if (typeof window === 'undefined' ||
-      typeof window.document === 'undefined' || 
-      typeof window.document.createElement === 'undefined') {
-    throw new Error('Cannot measure text in a non-browser environment');
+  text: string | string[],
+  style?: TextSizeStyleInterface,
+): { width: number; height: number } => {
+  if (
+    typeof window === "undefined" ||
+    typeof window.document === "undefined" ||
+    typeof window.document.createElement === "undefined"
+  ) {
+    throw new Error("Cannot measure text in a non-browser environment");
   }
-  
+
   const element = document.createElement("div");
   element.style.position = "absolute";
   element.style.top = "-9999px";
   element.style.left = "-9999px";
-  if (style && style.angle){
+  if (style && style.angle) {
     element.style.transform = `rotate(${style?.angle}deg)`;
   }
-  
+
   const lines = _splitToLines(text);
-  for(const [i, line] of lines.entries()) {
+  for (const [i, line] of lines.entries()) {
     const lineElement = document.createElement("div");
     const params = _prepareParams(style, i);
     lineElement.textContent = line;
@@ -283,12 +288,12 @@ const _measureWithDOM = (
   element.remove();
 
   return result;
-}
+};
 
 const _approximateFromFont = (
   text: string | string[],
-  style?: TextSizeStyleInterface
-): { width: number, height: number } => {
+  style?: TextSizeStyleInterface,
+): { width: number; height: number } => {
   const angle = Array.isArray(style)
     ? style[0] && style[0].angle
     : style && style.angle;
@@ -304,7 +309,7 @@ const _approximateFromFont = (
     width: widthWithRotate,
     height: heightWithRotate * coefficients.heightOverlapCoef,
   };
-}
+};
 
 export interface TextSizeStyleInterface {
   angle?: number;
@@ -321,7 +326,7 @@ export const _approximateTextSizeInternal = {
     // to the less accurate approximation algorithm.
     try {
       return _measureWithDOM(text, style);
-    } catch(e) {
+    } catch (e) {
       return _approximateFromFont(text, style);
     }
   },
