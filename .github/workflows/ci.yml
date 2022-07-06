@@ -56,9 +56,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Check all package.json's are in sync.
+      - name: Check all package.json's and tsconfig.json's are in sync.
         run: |
-          pnpm sync:pkgs
+          pnpm sync
           git diff --no-ext-diff --quiet --exit-code
 
       - name: Check Code ${{ matrix.node-version }}
