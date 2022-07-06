@@ -430,7 +430,11 @@ export const LineHeight = () => {
         labelComponent={
           <VictoryLabel
             lineHeight={[2, 1, 3]}
-            text={["اختبار اللغات التي تُقرأ من اليمين إلى اليسار", "مثل العربية", "هناك أكثر من ذلك بكثير"]}
+            text={[
+              "اختبار اللغات التي تُقرأ من اليمين إلى اليسار",
+              "مثل العربية",
+              "هناك أكثر من ذلك بكثير",
+            ]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
           />
         }
