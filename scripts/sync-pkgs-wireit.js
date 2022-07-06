@@ -116,7 +116,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       }
     };
     const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
-      p.startsWith("victory-"),
+      p.startsWith("victory"),
     );
     crossDeps.forEach((dep) => {
       // Make sure dependent libraries are built.
