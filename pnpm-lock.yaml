@@ -39,6 +39,7 @@ importers:
       '@types/prop-types': ^15.7.5
       '@types/react': ^18.0.10
       '@types/react-dom': ^18.0.5
+      '@types/testing-library__jest-dom': ^5.14.5
       '@typescript-eslint/eslint-plugin': ^5.26.0
       '@typescript-eslint/parser': ^5.26.0
       babel-eslint: ^10.0.3
@@ -124,6 +125,7 @@ importers:
       '@types/prop-types': 15.7.5
       '@types/react': 18.0.14
       '@types/react-dom': 18.0.5
+      '@types/testing-library__jest-dom': 5.14.5
       '@typescript-eslint/eslint-plugin': 5.30.0_feaglfzwjizmzpqo3fq5juxjeu
       '@typescript-eslint/parser': 5.30.0_hxadhbs2xogijvk7vq4t2azzbu
       babel-eslint: 10.1.0_eslint@7.32.0
@@ -239,6 +241,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
+      victory-area: '*'
       victory-chart: ^36.5.3
       victory-core: ^36.5.3
       victory-vendor: ^36.5.1
@@ -248,6 +251,7 @@ importers:
       victory-core: link:../victory-core
       victory-vendor: link:../victory-vendor
     devDependencies:
+      victory-area: 'link:'
       victory-chart: link:../victory-chart
 
   packages/victory-axis:
@@ -348,7 +352,7 @@ importers:
       react-fast-compare: ^3.2.0
       victory-axis: ^36.5.3
       victory-core: ^36.5.3
-      victory-line: ^36.5.3
+      victory-line: '*'
       victory-polar-axis: ^36.5.3
       victory-shared-events: ^36.5.3
     dependencies:
