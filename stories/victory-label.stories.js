@@ -415,6 +415,26 @@ export const LineHeight = () => {
           />
         }
       />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            lineHeight={[2, 1, 3]}
+            text={["测试汉字", "不在正常的 ASCII 范围内", "最后一行"]}
+            backgroundStyle={[{ stroke: "blue", fill: "none" }]}
+          />
+        }
+      />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            lineHeight={[2, 1, 3]}
+            text={["اختبار اللغات التي تُقرأ من اليمين إلى اليسار", "مثل العربية", "هناك أكثر من ذلك بكثير"]}
+            backgroundStyle={[{ stroke: "blue", fill: "none" }]}
+          />
+        }
+      />
     </div>
   );
 };

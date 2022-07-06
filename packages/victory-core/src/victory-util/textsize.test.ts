@@ -16,6 +16,19 @@ describe("victory-util/textsize", () => {
   });
 
   describe("approximateWidth", () => {
+    const { window } = global;
+
+    // Jsdom does not have a window width/height so it is very difficult to test
+    // the _measureWithDOM function.
+    // Default to testing the approximation function
+    beforeAll(() => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      delete global.window;
+    });
+    afterAll(() => {
+      global.window = window;
+    });
     it("return zero width when no style", () => {
       expect(TextSize.approximateTextSize(testString).width).toEqual(0);
     });
