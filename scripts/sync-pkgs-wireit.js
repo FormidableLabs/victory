@@ -110,9 +110,10 @@ const updateLibPkgs = async ({ libPkgs }) => {
 
     // Prod dependencies
     const addDeps = (key, dep, task) => {
-      // Only add dependencies that (1) aren't self-references, and (2) are unique.
-      if (dep !== pkg.name && !pkg.wireit[key].dependencies.includes(task)) {
-        pkg.wireit[key].dependencies.push(task);
+      // Only add dependencies that are unique.
+      const depTask = pkg.name === dep ? task : `../${dep}:${task}`;
+      if (!pkg.wireit[key].dependencies.includes(depTask)) {
+        pkg.wireit[key].dependencies.push(depTask);
       }
     };
     const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
@@ -120,16 +121,16 @@ const updateLibPkgs = async ({ libPkgs }) => {
     );
     crossDeps.forEach((dep) => {
       // Make sure dependent libraries are built.
-      addDeps("build:lib:esm", dep, `../${dep}:build:lib:esm`);
-      addDeps("build:lib:cjs", dep, `../${dep}:build:lib:cjs`);
+      addDeps("build:lib:esm", dep, "build:lib:esm");
+      addDeps("build:lib:cjs", dep, "build:lib:cjs");
 
       // Webpack depends on ESM output from other packages.
-      addDeps("build:dist:dev", dep, `../${dep}:build:lib:esm`);
-      addDeps("build:dist:min", dep, `../${dep}:build:lib:esm`);
+      addDeps("build:dist:dev", dep, "build:lib:esm");
+      addDeps("build:dist:min", dep, "build:lib:esm");
 
       // TypeScript checking depends on types output from other packages.
-      addDeps("types:check", dep, `../${dep}:types:create`);
-      addDeps("types:create", dep, `../${dep}:types:create`);
+      addDeps("types:check", dep, "types:create");
+      addDeps("types:create", dep, "types:create");
     });
 
     // Dev dependencies
@@ -146,10 +147,10 @@ const updateLibPkgs = async ({ libPkgs }) => {
     );
     crossDevDeps.forEach((dep) => {
       // Jest depends on CJS output
-      addDeps("jest", dep, `../${dep}:build:lib:cjs`);
+      addDeps("jest", dep, `build:lib:cjs`);
 
       // TypeScript checking depends on types output from other packages.
-      addDeps("types:check", dep, `../${dep}:types:create`);
+      addDeps("types:check", dep, `types:create`);
     });
 
     await writePkg(pkgPath, pkg, originalPkg);
