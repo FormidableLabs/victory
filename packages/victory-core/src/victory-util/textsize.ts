@@ -186,7 +186,7 @@ export const convertLengthToPixels = (
   return result;
 };
 
-const _prepareParams = (inputStyle, index) => {
+const _prepareParams = (inputStyle: TextSizeStyleInterface | undefined, index: number) => {
   const lineStyle = Array.isArray(inputStyle) ? inputStyle[index] : inputStyle;
   const style = defaults({}, lineStyle, defaultStyle);
   return assign({}, style, {
@@ -243,6 +243,69 @@ const _approximateTextHeightInternal = (text: string | string[], style) => {
   }, 0);
 };
 
+const _measureWithDOM = (
+  text: string | string[], 
+  style?: TextSizeStyleInterface
+): { width: number, height: number} => {
+  if (typeof window === 'undefined' ||
+      typeof window.document === 'undefined' || 
+      typeof window.document.createElement === 'undefined') {
+    throw new Error('Cannot measure text in a non-browser environment');
+  }
+  
+  const element = document.createElement("div");
+  element.style.position = "absolute";
+  element.style.top = "-9999px";
+  element.style.left = "-9999px";
+  if (style && style.angle){
+    element.style.transform = `rotate(${style?.angle}deg)`;
+  }
+  
+  const lines = _splitToLines(text);
+  for(const [i, line] of lines.entries()) {
+    const lineElement = document.createElement("div");
+    const params = _prepareParams(style, i);
+    lineElement.textContent = line;
+    lineElement.style.fontSize = `${params.fontSize}px`;
+    lineElement.style.lineHeight = params.lineHeight;
+    lineElement.style.fontFamily = params.fontFamily;
+    lineElement.style.letterSpacing = params.letterSpacing;
+    element.appendChild(lineElement);
+  }
+
+  document.body.appendChild(element);
+
+  const result = {
+    width: element.clientWidth,
+    height: element.clientHeight,
+  };
+
+  element.remove();
+
+  return result;
+}
+
+const _approximateFromFont = (
+  text: string | string[],
+  style?: TextSizeStyleInterface
+): { width: number, height: number } => {
+  const angle = Array.isArray(style)
+    ? style[0] && style[0].angle
+    : style && style.angle;
+  const height = _approximateTextHeightInternal(text, style);
+  const width = _approximateTextWidthInternal(text, style);
+  const widthWithRotate = angle
+    ? _getSizeWithRotate(width, height, angle)
+    : width;
+  const heightWithRotate = angle
+    ? _getSizeWithRotate(height, width, angle)
+    : height;
+  return {
+    width: widthWithRotate,
+    height: heightWithRotate * coefficients.heightOverlapCoef,
+  };
+}
+
 export interface TextSizeStyleInterface {
   angle?: number;
   characterConstant?: string;
@@ -252,24 +315,15 @@ export interface TextSizeStyleInterface {
   lineHeight?: number;
 }
 
-// Stubbable implementation.
 export const _approximateTextSizeInternal = {
   impl: (text: string | string[], style?: TextSizeStyleInterface) => {
-    const angle = Array.isArray(style)
-      ? style[0] && style[0].angle
-      : style && style.angle;
-    const height = _approximateTextHeightInternal(text, style);
-    const width = _approximateTextWidthInternal(text, style);
-    const widthWithRotate = angle
-      ? _getSizeWithRotate(width, height, angle)
-      : width;
-    const heightWithRotate = angle
-      ? _getSizeWithRotate(height, width, angle)
-      : height;
-    return {
-      width: widthWithRotate,
-      height: heightWithRotate * coefficients.heightOverlapCoef,
-    };
+    // Attempt to first measure the element in DOM. If there is no DOM, fallback
+    // to the less accurate approximation algorithm.
+    try {
+      return _measureWithDOM(text, style);
+    } catch(e) {
+      return _approximateFromFont(text, style);
+    }
   },
 };
 
@@ -282,7 +336,7 @@ export const _approximateTextSizeInternal = {
  * @param {number} style.angle Text rotate angle.
  * @param {string} style.letterSpacing Text letterSpacing(space between letters).
  * @param {number} style.lineHeight Line height coefficient.
- * @returns {number} Approximate text label height.
+ * @returns {number} Approximate text label width and height.
  */
 export const approximateTextSize = (
   text: string | string[],
