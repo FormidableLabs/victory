@@ -57,7 +57,7 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
-    "types:check": "echo \"No types to check here\"",
+    "types:check": "wireit",
     "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
@@ -101,6 +101,11 @@
       "dependencies": [
         "build"
       ]
+    },
+    "types:check": {
+      "command": "echo \"No types to check here\"",
+      "files":  [],
+      "output": []
     },
     "types:create": {
       "dependencies": [
