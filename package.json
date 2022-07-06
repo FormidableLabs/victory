@@ -139,8 +139,9 @@
     "jest:pkgs": "wireit",
     "types:check:pkgs": "wireit",
     "types:create:pkgs": "wireit",
+    "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
-    "sync:tsconfig": "pnpm -r --filter !victory-core exec -- cpx ../victory-core/tsconfig.* ."
+    "sync:tsconfig": "pnpm -r --filter !victory-core exec -- cpx ../victory-core/tsconfig.* . --verbose"
   },
   "wireit": {
     "check": {
@@ -349,6 +350,12 @@
         "./packages/victory-voronoi:jest",
         "./packages/victory-voronoi-container:jest",
         "./packages/victory-zoom-container:jest"
+      ]
+    },
+    "sync": {
+      "dependencies": [
+        "sync:pkgs",
+        "sync:tsconfig"
       ]
     },
     "types:check:pkgs": {
