@@ -29,7 +29,8 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-chart": "^36.5.3"
+    "victory-chart": "*",
+    "victory-area": "*"
   },
   "scripts": {
     "build": "wireit",
@@ -134,14 +135,15 @@
     "types:check": {
       "command": "nps types:pkg:check",
       "files": [
-        "src/**/*.{ts|tsx}",
+        "src/**/*.{ts,tsx}",
         "../../tsconfig.base.json",
         "tsconfig.json"
       ],
       "dependencies": [
         "../victory-core:types:create",
         "../victory-vendor:types:create",
-        "../victory-chart:types:create"
+        "../victory-chart:types:create",
+        "types:create"
       ],
       "output": []
     },
