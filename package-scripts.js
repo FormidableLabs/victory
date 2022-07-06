@@ -56,25 +56,20 @@ module.exports = {
     "jest:cov": "echo TODO",
 
     // - TypeScript
-    // Check for errors:
+    // Check for errors (includes test files):
     "types:pkg:check": "tsc --pretty --noEmit",
-    // Copy and Create:
-    "types:pkg:esm": "nps types:pkg:copy:esm types:pkg:create:esm",
-    "types:pkg:cjs": "nps types:pkg:copy:cjs types:pkg:create:cjs",
-    // Copy vanilla `*.d.ts` files
-    "types:pkg:copy:esm": "nps types:pkg:copy:base -- -- es",
-    "types:pkg:copy:cjs": "nps types:pkg:copy:base -- -- lib",
-    "types:pkg:copy:base": "cpx 'src/**/*.d.ts'",
-    // Create `*.d.ts` files from `*.ts` source:
-    "types:pkg:create": "nps types:pkg:create:esm types:pkg:create:cjs",
-    "types:pkg:create:esm":
-      "nps types:pkg:create:base -- -- --outDir es || nps types:warning",
-    "types:pkg:create:cjs":
-      "nps types:pkg:create:base -- -- --outDir lib || nps types:warning",
-    "types:pkg:create:base":
-      "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
+    // To create types, we must do the following:
+    // 1. Copy all *.d.ts files to the es folder
+    // 2. Compile all *.ts files to the es folder
+    // 3. Copy all output from the es folder to the lib folder
+    "types:pkg:create":
+      "nps types:pkg:copy types:pkg:compile types:pkg:cjs-copy",
+    "types:pkg:copy": "cpx 'src/**/*.d.ts' es",
+    "types:pkg:compile":
+      "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src --outDir es || nps types:warning",
     "types:warning":
       'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
+    "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib --verbose",
 
     // TODO: REDO ALL THE TESTING STUFF
     // jest: {
