@@ -52,7 +52,8 @@
     "build": {
       "dependencies": [
         "build:lib",
-        "build:dist"
+        "build:dist",
+        "types:create"
       ]
     },
     "build:lib": {
@@ -69,7 +70,8 @@
         "../../.babelrc.build.js"
       ],
       "output": [
-        "es/**"
+        "es/**/*.js",
+        "es/**/*.js.map"
       ],
       "dependencies": [
         "../victory-axis:build:lib:esm",
@@ -86,7 +88,8 @@
         "../../.babelrc.build.js"
       ],
       "output": [
-        "lib/**"
+        "lib/**/*.js",
+        "lib/**/*.js.map"
       ],
       "dependencies": [
         "../victory-axis:build:lib:cjs",
@@ -156,7 +159,7 @@
       "output": []
     },
     "types:create": {
-      "command": "nps types:pkg:cjs",
+      "command": "nps types:pkg:create",
       "files": [
         "src/**",
         "!src/**/*.test.*",
@@ -164,6 +167,8 @@
         "tsconfig.build.json"
       ],
       "output": [
+        "es/**/*.d.ts",
+        "es/**/*.d.ts.map",
         "lib/**/*.d.ts",
         "lib/**/*.d.ts.map"
       ],

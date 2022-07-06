@@ -69,7 +69,7 @@ module.exports = {
       "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src --outDir es || nps types:warning",
     "types:warning":
       'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
-    "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib --verbose",
+    "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
 
     // TODO: REDO ALL THE TESTING STUFF
     // jest: {
