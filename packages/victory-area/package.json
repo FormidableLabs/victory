@@ -143,7 +143,8 @@
         "../victory-core:types:create",
         "../victory-vendor:types:create",
         "../victory-chart:types:create",
-        "types:create"
+        "types:create",
+        "../victory-voronoi:types:create"
       ],
       "output": []
     },
@@ -188,7 +189,8 @@
         "../victory-core:types:create",
         "../victory-vendor:types:create",
         "../victory-chart:types:create",
-        "types:create"
+        "types:create",
+        "../victory-voronoi:types:create"
       ]
     },
     "jest": {
@@ -202,9 +204,9 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs",
+        "../victory-chart:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
-        "../victory-chart:build:lib:cjs"
+        "../victory-voronoi:build:lib:cjs"
       ]
     }
   }

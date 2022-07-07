@@ -290,7 +290,8 @@
         "../victory-voronoi:types:create",
         "../victory-voronoi-container:types:create",
         "../victory-zoom-container:types:create",
-        "types:create"
+        "types:create",
+        "../victory-vendor:types:create"
       ],
       "output": []
     },
@@ -384,7 +385,8 @@
         "../victory-voronoi:types:create",
         "../victory-voronoi-container:types:create",
         "../victory-zoom-container:types:create",
-        "types:create"
+        "types:create",
+        "../victory-vendor:types:create"
       ]
     },
     "jest": {
@@ -398,8 +400,8 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs",
-        "../victory-vendor:build:lib:cjs"
+        "../victory-vendor:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs"
       ]
     }
   }

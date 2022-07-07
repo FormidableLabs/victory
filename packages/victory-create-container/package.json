@@ -160,7 +160,9 @@
         "../victory-cursor-container:types:create",
         "../victory-selection-container:types:create",
         "../victory-voronoi-container:types:create",
-        "../victory-zoom-container:types:create"
+        "../victory-zoom-container:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
       ],
       "output": []
     },
@@ -211,7 +213,9 @@
         "../victory-cursor-container:types:create",
         "../victory-selection-container:types:create",
         "../victory-voronoi-container:types:create",
-        "../victory-zoom-container:types:create"
+        "../victory-zoom-container:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
       ]
     },
     "jest": {
@@ -225,8 +229,8 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs",
-        "../victory-vendor:build:lib:cjs"
+        "../victory-vendor:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs"
       ]
     }
   }

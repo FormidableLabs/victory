@@ -132,7 +132,9 @@
         "tsconfig.json"
       ],
       "dependencies": [
-        "../victory-core:types:create"
+        "../victory-core:types:create",
+        "../victory-vendor:types:create",
+        "types:create"
       ],
       "output": []
     },
@@ -173,7 +175,9 @@
       ],
       "output": [],
       "dependencies": [
-        "../victory-core:types:create"
+        "../victory-core:types:create",
+        "../victory-vendor:types:create",
+        "types:create"
       ]
     },
     "jest": {

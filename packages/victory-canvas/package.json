@@ -137,7 +137,9 @@
       ],
       "dependencies": [
         "../victory-bar:types:create",
-        "../victory-core:types:create"
+        "../victory-core:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
       ],
       "output": []
     },
@@ -180,7 +182,9 @@
       "output": [],
       "dependencies": [
         "../victory-bar:types:create",
-        "../victory-core:types:create"
+        "../victory-core:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
       ]
     },
     "jest": {
@@ -194,8 +198,8 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs",
-        "../victory-vendor:build:lib:cjs"
+        "../victory-vendor:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs"
       ]
     }
   }

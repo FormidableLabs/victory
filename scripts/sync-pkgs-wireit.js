@@ -51,6 +51,7 @@ const writePkg = async (pkgPath, data, originalPkg) => {
   await fs.writeFile(pkgPath, `${json}\n`);
 };
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
+const isVictoryPackage = (p) => p.startsWith("victory");
 
 // Root mutation
 //
@@ -85,6 +86,7 @@ const updateRootPkg = async ({ allPkgs }) => {
 // Use the core package as the template for the rest.
 const updateLibPkgs = async ({ libPkgs }) => {
   const corePkg = await readPkg(`${PKGS_ROOT}/victory-core/package.json`);
+  const rootPkg = await readPkg(`${ROOT}/package.json`);
 
   for (const workspace of libPkgs) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
@@ -105,6 +107,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       "types:check",
       "types:create",
       "lint",
+      "jest",
     ].forEach((key) => {
       pkg.wireit[key].dependencies = [];
     });
@@ -117,9 +120,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
         pkg.wireit[key].dependencies.push(depTask);
       }
     };
-    const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
-      p.startsWith("victory"),
-    );
+    const crossDeps = Object.keys(pkg.dependencies).filter(isVictoryPackage);
     crossDeps.forEach((dep) => {
       // Make sure dependent libraries are built.
       addDeps("build:lib:esm", dep, "build:lib:esm");
@@ -136,18 +137,14 @@ const updateLibPkgs = async ({ libPkgs }) => {
     });
 
     // Dev dependencies
-    // We have hidden deps on `victory-voronoi` and `victory-vendor` in
-    // test (`test/helpers/svg`). So, we just write the base deps from scratch
-    // here.
-    pkg.wireit.jest.dependencies = [
-      "build:lib:cjs",
-      "../victory-voronoi:build:lib:cjs",
-      "../victory-vendor:build:lib:cjs",
-    ].filter((task) => !task.includes(`/${pkg.name}:`));
-    const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter((p) =>
-      p.startsWith("victory"),
+    const rootDevDeps = Object.keys(rootPkg.devDependencies).filter(
+      isVictoryPackage,
     );
-    crossDevDeps.forEach((dep) => {
+    addDeps("jest", pkg.name, "build:lib:cjs");
+    const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter(
+      isVictoryPackage,
+    );
+    crossDevDeps.concat(rootDevDeps).forEach((dep) => {
       // Jest depends on CJS output
       addDeps("jest", dep, "build:lib:cjs");
 
@@ -166,7 +163,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
 const cli = async () => {
   // Get packages.
   const libPkgs = (await fs.readdir(PKGS_ROOT)).filter(
-    (p) => p.startsWith("victory") && !SPECIAL_PKGS.has(p),
+    (p) => isVictoryPackage(p) && !SPECIAL_PKGS.has(p),
   );
   const allPkgs = [...SPECIAL_PKGS, ...libPkgs];
 
