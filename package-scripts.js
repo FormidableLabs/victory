@@ -55,6 +55,22 @@ module.exports = {
     // TODO(wireit): Add this to `check:ci`
     "jest:cov": "echo TODO",
 
+    // - TypeScript
+    // Check for errors (includes test files):
+    "types:pkg:check": "tsc --pretty --noEmit",
+    // To create types, we must do the following:
+    // 1. Copy all *.d.ts files to the es folder
+    // 2. Compile all *.ts files to the es folder
+    // 3. Copy all output from the es folder to the lib folder
+    "types:pkg:create":
+      "nps types:pkg:copy types:pkg:compile types:pkg:cjs-copy",
+    "types:pkg:copy": "cpx 'src/**/*.d.ts' es",
+    "types:pkg:compile":
+      "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src --outDir es || nps types:warning",
+    "types:warning":
+      'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
+    "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
+
     // TODO: REDO ALL THE TESTING STUFF
     // jest: {
     //   native: "jest --config=jest-native-config.js",

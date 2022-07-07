@@ -18,5 +18,5 @@ module.exports = {
     ".*/test/.+\\.*[jt]sx?$": BABEL_TRANSFORM,
   },
   transformIgnorePatterns: ["/node_modules/", "/es/", "/lib/"],
-  setupFilesAfterEnv: ["<rootDir>/test/jest-setup.js"],
+  setupFilesAfterEnv: ["<rootDir>/test/jest-setup.ts"],
 };

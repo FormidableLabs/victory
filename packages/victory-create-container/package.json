@@ -39,6 +39,8 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "types:check": "wireit",
+    "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
     "jest": "wireit"
@@ -47,7 +49,8 @@
     "build": {
       "dependencies": [
         "build:lib",
-        "build:dist"
+        "build:dist",
+        "types:create"
       ]
     },
     "build:lib": {
@@ -64,7 +67,8 @@
         "../../.babelrc.build.js"
       ],
       "output": [
-        "es/**"
+        "es/**/*.js",
+        "es/**/*.js.map"
       ],
       "dependencies": [
         "../victory-brush-container:build:lib:esm",
@@ -83,7 +87,8 @@
         "../../.babelrc.build.js"
       ],
       "output": [
-        "lib/**"
+        "lib/**/*.js",
+        "lib/**/*.js.map"
       ],
       "dependencies": [
         "../victory-brush-container:build:lib:cjs",
@@ -142,6 +147,48 @@
         "../victory-zoom-container:build:lib:esm"
       ]
     },
+    "types:check": {
+      "command": "nps types:pkg:check",
+      "files": [
+        "src/**/*.{ts,tsx}",
+        "../../tsconfig.base.json",
+        "tsconfig.json"
+      ],
+      "dependencies": [
+        "../victory-brush-container:types:create",
+        "../victory-core:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
+      ],
+      "output": []
+    },
+    "types:create": {
+      "command": "nps types:pkg:create",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../tsconfig.base.json",
+        "tsconfig.build.json"
+      ],
+      "output": [
+        "es/**/*.d.ts",
+        "es/**/*.d.ts.map",
+        "lib/**/*.d.ts",
+        "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory-brush-container:types:create",
+        "../victory-core:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create"
+      ]
+    },
     "format": {
       "command": "nps format:pkg",
       "files": [
@@ -159,7 +206,17 @@
         "../../.eslintignore",
         "../../.eslintrc.js"
       ],
-      "output": []
+      "output": [],
+      "dependencies": [
+        "../victory-brush-container:types:create",
+        "../victory-core:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
+      ]
     },
     "jest": {
       "command": "nps jest:pkg",
@@ -172,8 +229,8 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs",
-        "../victory-vendor:build:lib:cjs"
+        "../victory-vendor:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs"
       ]
     }
   }

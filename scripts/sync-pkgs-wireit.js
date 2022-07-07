@@ -41,11 +41,17 @@ const SPECIAL_PKGS = new Set([PKGS.NATIVE, PKGS.VENDOR]);
 // Helpers
 // ============================================================================
 const readPkg = async (pkgPath) => JSON.parse(await fs.readFile(pkgPath));
-const writePkg = async (pkgPath, data) => {
+const writePkg = async (pkgPath, data, originalPkg) => {
+  const json = JSON.stringify(data, null, 2);
+  if (json === JSON.stringify(originalPkg, null, 2)) {
+    log(`Skipping ${pkgPath} (no changes)`);
+    return;
+  }
   log(`Writing ${pkgPath}`);
-  await fs.writeFile(pkgPath, JSON.stringify(data, null, 2) + "\n");
+  await fs.writeFile(pkgPath, `${json}\n`);
 };
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
+const isVictoryPackage = (p) => p.startsWith("victory");
 
 // Root mutation
 //
@@ -54,22 +60,25 @@ const clone = (obj) => JSON.parse(JSON.stringify(obj));
 // misses). So create tasks with cross-package deps
 const updateRootPkg = async ({ allPkgs }) => {
   const rootPkgPath = `${ROOT}/package.json`;
-  const rootPkg = await readPkg(rootPkgPath);
+  const originalPkg = await readPkg(rootPkgPath);
+  const rootPkg = clone(originalPkg);
 
   rootPkg.wireit = rootPkg.wireit || {};
   [
-    { rootTask: "build" },
+    { rootTask: "build", pkgTask: "build" },
     { rootTask: "format:pkgs", pkgTask: "format" },
     { rootTask: "lint:pkgs", pkgTask: "lint" },
     { rootTask: "jest:pkgs", pkgTask: "jest" },
+    { rootTask: "types:check:pkgs", pkgTask: "types:check" },
+    { rootTask: "types:create:pkgs", pkgTask: "types:create" },
   ].forEach(({ rootTask, pkgTask }) => {
     rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};
     rootPkg.wireit[rootTask].dependencies = allPkgs.map(
-      (p) => `./packages/${p}:${pkgTask || rootTask}`,
+      (p) => `./packages/${p}:${pkgTask}`,
     );
   });
 
-  await writePkg(rootPkgPath, rootPkg);
+  await writePkg(rootPkgPath, rootPkg, originalPkg);
 };
 
 // Common library mutations.
@@ -77,10 +86,12 @@ const updateRootPkg = async ({ allPkgs }) => {
 // Use the core package as the template for the rest.
 const updateLibPkgs = async ({ libPkgs }) => {
   const corePkg = await readPkg(`${PKGS_ROOT}/victory-core/package.json`);
+  const rootPkg = await readPkg(`${ROOT}/package.json`);
 
   for (const workspace of libPkgs) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
-    const pkg = await readPkg(pkgPath);
+    const originalPkg = await readPkg(pkgPath);
+    const pkg = clone(originalPkg);
 
     // Overwrite scripts and wireit configuration
     pkg.scripts = clone(corePkg.scripts);
@@ -93,47 +104,56 @@ const updateLibPkgs = async ({ libPkgs }) => {
       "build:lib:cjs",
       "build:dist:dev",
       "build:dist:min",
+      "types:check",
+      "types:create",
+      "lint",
+      "jest",
     ].forEach((key) => {
       pkg.wireit[key].dependencies = [];
     });
 
     // Prod dependencies
     const addDeps = (key, dep, task) => {
-      // Only add dependencies that (1) aren't self-references, and (2) are unique.
-      if (dep !== pkg.name && !pkg.wireit[key].dependencies.includes(task)) {
-        pkg.wireit[key].dependencies.push(task);
+      // Only add dependencies that are unique.
+      const depTask = pkg.name === dep ? task : `../${dep}:${task}`;
+      if (!pkg.wireit[key].dependencies.includes(depTask)) {
+        pkg.wireit[key].dependencies.push(depTask);
       }
     };
-    const crossDeps = Object.keys(pkg.dependencies).filter((p) =>
-      p.startsWith("victory"),
-    );
+    const crossDeps = Object.keys(pkg.dependencies).filter(isVictoryPackage);
     crossDeps.forEach((dep) => {
       // Make sure dependent libraries are built.
-      addDeps("build:lib:esm", dep, `../${dep}:build:lib:esm`);
-      addDeps("build:lib:cjs", dep, `../${dep}:build:lib:cjs`);
+      addDeps("build:lib:esm", dep, "build:lib:esm");
+      addDeps("build:lib:cjs", dep, "build:lib:cjs");
 
       // Webpack depends on ESM output from other packages.
-      addDeps("build:dist:dev", dep, `../${dep}:build:lib:esm`);
-      addDeps("build:dist:min", dep, `../${dep}:build:lib:esm`);
+      addDeps("build:dist:dev", dep, "build:lib:esm");
+      addDeps("build:dist:min", dep, "build:lib:esm");
+
+      // These scripts depend on types output from dependencies:
+      addDeps("types:check", dep, "types:create");
+      addDeps("types:create", dep, "types:create");
+      addDeps("lint", dep, "types:create");
     });
 
     // Dev dependencies
-    // We have hidden deps on `victory-voronoi` and `victory-vendor` in
-    // test (`test/helpers/svg`). So, we just write the base deps from scratch
-    // here.
-    pkg.wireit.jest.dependencies = [
-      "build:lib:cjs",
-      "../victory-voronoi:build:lib:cjs",
-      "../victory-vendor:build:lib:cjs",
-    ].filter((task) => !task.includes(`/${pkg.name}:`));
-    const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter((p) =>
-      p.startsWith("victory"),
+    const rootDevDeps = Object.keys(rootPkg.devDependencies).filter(
+      isVictoryPackage,
     );
-    crossDevDeps.forEach((dep) => {
-      addDeps("jest", dep, `../${dep}:build:lib:cjs`);
+    addDeps("jest", pkg.name, "build:lib:cjs");
+    const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter(
+      isVictoryPackage,
+    );
+    crossDevDeps.concat(rootDevDeps).forEach((dep) => {
+      // Jest depends on CJS output
+      addDeps("jest", dep, "build:lib:cjs");
+
+      // These scripts depend on types output from devDependencies:
+      addDeps("types:check", dep, "types:create");
+      addDeps("lint", dep, "types:create");
     });
 
-    await writePkg(pkgPath, pkg);
+    await writePkg(pkgPath, pkg, originalPkg);
   }
 };
 
@@ -143,9 +163,9 @@ const updateLibPkgs = async ({ libPkgs }) => {
 const cli = async () => {
   // Get packages.
   const libPkgs = (await fs.readdir(PKGS_ROOT)).filter(
-    (p) => p.startsWith("victory") && !SPECIAL_PKGS.has(p),
+    (p) => isVictoryPackage(p) && !SPECIAL_PKGS.has(p),
   );
-  const allPkgs = [PKGS.NATIVE, PKGS.VENDOR].concat(libPkgs);
+  const allPkgs = [...SPECIAL_PKGS, ...libPkgs];
 
   // Mutate package.json's
   await updateRootPkg({ allPkgs });

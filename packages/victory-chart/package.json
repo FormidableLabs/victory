@@ -32,7 +32,8 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-line": "^36.5.3"
+    "victory-chart": "*",
+    "victory-line": "*"
   },
   "scripts": {
     "build": "wireit",
@@ -42,6 +43,8 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "types:check": "wireit",
+    "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
     "jest": "wireit"
@@ -50,7 +53,8 @@
     "build": {
       "dependencies": [
         "build:lib",
-        "build:dist"
+        "build:dist",
+        "types:create"
       ]
     },
     "build:lib": {
@@ -67,7 +71,8 @@
         "../../.babelrc.build.js"
       ],
       "output": [
-        "es/**"
+        "es/**/*.js",
+        "es/**/*.js.map"
       ],
       "dependencies": [
         "../victory-axis:build:lib:esm",
@@ -84,7 +89,8 @@
         "../../.babelrc.build.js"
       ],
       "output": [
-        "lib/**"
+        "lib/**/*.js",
+        "lib/**/*.js.map"
       ],
       "dependencies": [
         "../victory-axis:build:lib:cjs",
@@ -137,6 +143,46 @@
         "../victory-shared-events:build:lib:esm"
       ]
     },
+    "types:check": {
+      "command": "nps types:pkg:check",
+      "files": [
+        "src/**/*.{ts,tsx}",
+        "../../tsconfig.base.json",
+        "tsconfig.json"
+      ],
+      "dependencies": [
+        "../victory-axis:types:create",
+        "../victory-core:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-shared-events:types:create",
+        "types:create",
+        "../victory-line:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
+      ],
+      "output": []
+    },
+    "types:create": {
+      "command": "nps types:pkg:create",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../tsconfig.base.json",
+        "tsconfig.build.json"
+      ],
+      "output": [
+        "es/**/*.d.ts",
+        "es/**/*.d.ts.map",
+        "lib/**/*.d.ts",
+        "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory-axis:types:create",
+        "../victory-core:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-shared-events:types:create"
+      ]
+    },
     "format": {
       "command": "nps format:pkg",
       "files": [
@@ -154,7 +200,17 @@
         "../../.eslintignore",
         "../../.eslintrc.js"
       ],
-      "output": []
+      "output": [],
+      "dependencies": [
+        "../victory-axis:types:create",
+        "../victory-core:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-shared-events:types:create",
+        "types:create",
+        "../victory-line:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
+      ]
     },
     "jest": {
       "command": "nps jest:pkg",
@@ -167,9 +223,9 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs",
+        "../victory-line:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
-        "../victory-line:build:lib:cjs"
+        "../victory-voronoi:build:lib:cjs"
       ]
     }
   }

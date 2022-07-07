@@ -53,8 +53,11 @@
     "@testing-library/react-native": "^9.1.0",
     "@types/jest": "^28.1.0",
     "@types/lodash": "^4.14.149",
+    "@types/node": "^18.0.1",
+    "@types/prop-types": "^15.7.5",
     "@types/react": "^18.0.10",
     "@types/react-dom": "^18.0.5",
+    "@types/testing-library__jest-dom": "^5.14.5",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "babel-eslint": "^10.0.3",
@@ -100,12 +103,12 @@
     "ts-jest": "^28.0.3",
     "ts-loader": "^9.3.0",
     "typescript": "^4.7.3",
+    "victory-vendor": "*",
+    "victory-voronoi": "*",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
     "webpack-stats-plugin": "^1.0.3",
-    "victory-vendor": "^36.5.1",
-    "victory-voronoi": "^36.5.1",
     "wireit": "^0.7.1"
   },
   "pnpm": {
@@ -122,6 +125,7 @@
     "TODO_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
     "check": "wireit",
     "check:ci": "wireit",
+    "check:debug": "cross-env WIREIT_PARALLEL=1 pnpm check",
     "clean:build": "rimraf coverage \"packages/*/{dist,es,lib}\"",
     "clean:cache": "rimraf .wireit .eslintcache \"packages/*/{.wireit,.eslintcache}\"",
     "build": "wireit",
@@ -135,7 +139,11 @@
     "jest": "wireit",
     "jest:root": "wireit",
     "jest:pkgs": "wireit",
-    "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js"
+    "types:check:pkgs": "wireit",
+    "types:create:pkgs": "wireit",
+    "sync": "wireit",
+    "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
+    "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
   },
   "wireit": {
     "check": {
@@ -143,15 +151,13 @@
         "format",
         "lint",
         "build",
-        "jest"
+        "jest",
+        "types:check:pkgs"
       ]
     },
     "check:ci": {
       "dependencies": [
-        "format",
-        "lint",
-        "build",
-        "jest"
+        "check"
       ]
     },
     "build": {
@@ -344,6 +350,80 @@
         "./packages/victory-voronoi:jest",
         "./packages/victory-voronoi-container:jest",
         "./packages/victory-zoom-container:jest"
+      ]
+    },
+    "sync": {
+      "dependencies": [
+        "sync:pkgs",
+        "sync:tsconfig"
+      ]
+    },
+    "types:check:pkgs": {
+      "dependencies": [
+        "./packages/victory-native:types:check",
+        "./packages/victory-vendor:types:check",
+        "./packages/victory:types:check",
+        "./packages/victory-area:types:check",
+        "./packages/victory-axis:types:check",
+        "./packages/victory-bar:types:check",
+        "./packages/victory-box-plot:types:check",
+        "./packages/victory-brush-container:types:check",
+        "./packages/victory-brush-line:types:check",
+        "./packages/victory-candlestick:types:check",
+        "./packages/victory-canvas:types:check",
+        "./packages/victory-chart:types:check",
+        "./packages/victory-core:types:check",
+        "./packages/victory-create-container:types:check",
+        "./packages/victory-cursor-container:types:check",
+        "./packages/victory-errorbar:types:check",
+        "./packages/victory-group:types:check",
+        "./packages/victory-histogram:types:check",
+        "./packages/victory-legend:types:check",
+        "./packages/victory-line:types:check",
+        "./packages/victory-pie:types:check",
+        "./packages/victory-polar-axis:types:check",
+        "./packages/victory-scatter:types:check",
+        "./packages/victory-selection-container:types:check",
+        "./packages/victory-shared-events:types:check",
+        "./packages/victory-stack:types:check",
+        "./packages/victory-tooltip:types:check",
+        "./packages/victory-voronoi:types:check",
+        "./packages/victory-voronoi-container:types:check",
+        "./packages/victory-zoom-container:types:check"
+      ]
+    },
+    "types:create:pkgs": {
+      "dependencies": [
+        "./packages/victory-native:types:create",
+        "./packages/victory-vendor:types:create",
+        "./packages/victory:types:create",
+        "./packages/victory-area:types:create",
+        "./packages/victory-axis:types:create",
+        "./packages/victory-bar:types:create",
+        "./packages/victory-box-plot:types:create",
+        "./packages/victory-brush-container:types:create",
+        "./packages/victory-brush-line:types:create",
+        "./packages/victory-candlestick:types:create",
+        "./packages/victory-canvas:types:create",
+        "./packages/victory-chart:types:create",
+        "./packages/victory-core:types:create",
+        "./packages/victory-create-container:types:create",
+        "./packages/victory-cursor-container:types:create",
+        "./packages/victory-errorbar:types:create",
+        "./packages/victory-group:types:create",
+        "./packages/victory-histogram:types:create",
+        "./packages/victory-legend:types:create",
+        "./packages/victory-line:types:create",
+        "./packages/victory-pie:types:create",
+        "./packages/victory-polar-axis:types:create",
+        "./packages/victory-scatter:types:create",
+        "./packages/victory-selection-container:types:create",
+        "./packages/victory-shared-events:types:create",
+        "./packages/victory-stack:types:create",
+        "./packages/victory-tooltip:types:create",
+        "./packages/victory-voronoi:types:create",
+        "./packages/victory-voronoi-container:types:create",
+        "./packages/victory-zoom-container:types:create"
       ]
     }
   }
