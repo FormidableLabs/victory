@@ -125,6 +125,7 @@
     "TODO_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
     "check": "wireit",
     "check:ci": "wireit",
+    "check:debug": "cross-env WIREIT_PARALLEL=1 pnpm check",
     "clean:build": "rimraf coverage \"packages/*/{dist,es,lib}\"",
     "clean:cache": "rimraf .wireit .eslintcache \"packages/*/{.wireit,.eslintcache}\"",
     "build": "wireit",
