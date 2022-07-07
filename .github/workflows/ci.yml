@@ -9,6 +9,8 @@ on:
       - main
       # TODO(wireit): Remove before merge.
       - pnpm-wireit
+      # TODO(wireit): Remove before merge.
+      - infra/pnpm-wireit-typescript
     paths:
       - '**'
       - '!docs/**'
@@ -17,6 +19,8 @@ on:
       - main
       # TODO(wireit): Remove before merge.
       - pnpm-wireit
+      # TODO(wireit): Remove before merge.
+      - infra/pnpm-wireit-typescript
     paths:
       - '**'
       - '!docs/**'
