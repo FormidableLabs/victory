@@ -142,6 +142,7 @@
         "tsconfig.json"
       ],
       "dependencies": [
+        "types:create",
         "../victory-bar:types:create",
         "../victory-core:types:create",
         "../victory-vendor:types:create",

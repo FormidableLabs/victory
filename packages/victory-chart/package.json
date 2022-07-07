@@ -151,11 +151,11 @@
         "tsconfig.json"
       ],
       "dependencies": [
+        "types:create",
         "../victory-axis:types:create",
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
         "../victory-shared-events:types:create",
-        "types:create",
         "../victory-line:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
@@ -206,7 +206,6 @@
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
         "../victory-shared-events:types:create",
-        "types:create",
         "../victory-line:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"

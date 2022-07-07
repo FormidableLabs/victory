@@ -139,9 +139,9 @@
         "tsconfig.json"
       ],
       "dependencies": [
+        "types:create",
         "../victory-core:types:create",
         "../victory-vendor:types:create",
-        "types:create",
         "../victory-voronoi:types:create"
       ],
       "output": []
@@ -186,7 +186,6 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-vendor:types:create",
-        "types:create",
         "../victory-voronoi:types:create"
       ]
     },

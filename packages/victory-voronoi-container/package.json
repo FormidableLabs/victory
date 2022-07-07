@@ -138,6 +138,7 @@
         "tsconfig.json"
       ],
       "dependencies": [
+        "types:create",
         "../victory-core:types:create",
         "../victory-tooltip:types:create",
         "../victory-vendor:types:create",

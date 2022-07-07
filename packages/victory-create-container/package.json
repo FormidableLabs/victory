@@ -155,6 +155,7 @@
         "tsconfig.json"
       ],
       "dependencies": [
+        "types:create",
         "../victory-brush-container:types:create",
         "../victory-core:types:create",
         "../victory-cursor-container:types:create",

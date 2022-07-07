@@ -138,10 +138,10 @@
         "tsconfig.json"
       ],
       "dependencies": [
+        "types:create",
         "../victory-vendor:types:create",
         "../victory-axis:types:create",
         "../victory-bar:types:create",
-        "types:create",
         "../victory-line:types:create",
         "../victory-voronoi:types:create"
       ],
@@ -187,7 +187,6 @@
         "../victory-vendor:types:create",
         "../victory-axis:types:create",
         "../victory-bar:types:create",
-        "types:create",
         "../victory-line:types:create",
         "../victory-voronoi:types:create"
       ]
