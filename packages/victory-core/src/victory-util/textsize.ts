@@ -325,7 +325,7 @@ export const _approximateTextSizeInternal = {
       window.document !== undefined &&
       window.document.createElement !== undefined;
 
-    if (isClient && !approximate){
+    if (isClient && !approximate) {
       return _measureWithDOM(text, style);
     } else {
       return _approximateFromFont(text, style);
