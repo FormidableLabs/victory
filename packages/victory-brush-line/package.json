@@ -171,7 +171,11 @@
         "../../.eslintignore",
         "../../.eslintrc.js"
       ],
-      "output": []
+      "output": [],
+      "dependencies": [
+        "../victory-vendor:types:create",
+        "../victory-core:types:create"
+      ]
     },
     "jest": {
       "command": "nps jest:pkg",

@@ -128,9 +128,10 @@ const updateLibPkgs = async ({ libPkgs }) => {
       addDeps("build:dist:dev", dep, "build:lib:esm");
       addDeps("build:dist:min", dep, "build:lib:esm");
 
-      // TypeScript checking depends on types output from other packages.
+      // These scripts depend on types output from dependencies:
       addDeps("types:check", dep, "types:create");
       addDeps("types:create", dep, "types:create");
+      addDeps("lint", dep, "types:create");
     });
 
     // Dev dependencies
@@ -149,8 +150,9 @@ const updateLibPkgs = async ({ libPkgs }) => {
       // Jest depends on CJS output
       addDeps("jest", dep, `build:lib:cjs`);
 
-      // TypeScript checking depends on types output from other packages.
+      // These scripts depend on types output from devDependencies:
       addDeps("types:check", dep, `types:create`);
+      addDeps("lint", dep, "types:create");
     });
 
     await writePkg(pkgPath, pkg, originalPkg);

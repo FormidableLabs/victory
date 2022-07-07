@@ -182,7 +182,13 @@
         "../../.eslintignore",
         "../../.eslintrc.js"
       ],
-      "output": []
+      "output": [],
+      "dependencies": [
+        "../victory-vendor:types:create",
+        "../victory-core:types:create",
+        "../victory-shared-events:types:create",
+        "../victory-histogram:types:create"
+      ]
     },
     "jest": {
       "command": "nps jest:pkg",

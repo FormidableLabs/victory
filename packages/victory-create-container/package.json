@@ -204,7 +204,16 @@
         "../../.eslintignore",
         "../../.eslintrc.js"
       ],
-      "output": []
+      "output": [],
+      "dependencies": [
+        "../victory-vendor:types:create",
+        "../victory-brush-container:types:create",
+        "../victory-core:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create"
+      ]
     },
     "jest": {
       "command": "nps jest:pkg",
