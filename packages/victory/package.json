@@ -358,9 +358,11 @@
       "output": [],
       "dependencies": [
         "../victory-vendor:types:create",
-        "../victory-area:types:create",
         "../victory-axis:types:create",
         "../victory-bar:types:create",
+        "types:create",
+        "../victory-line:types:create",
+        "../victory-area:types:create",
         "../victory-box-plot:types:create",
         "../victory-brush-container:types:create",
         "../victory-brush-line:types:create",
@@ -374,7 +376,6 @@
         "../victory-group:types:create",
         "../victory-histogram:types:create",
         "../victory-legend:types:create",
-        "../victory-line:types:create",
         "../victory-pie:types:create",
         "../victory-polar-axis:types:create",
         "../victory-scatter:types:create",
@@ -384,8 +385,7 @@
         "../victory-tooltip:types:create",
         "../victory-voronoi:types:create",
         "../victory-voronoi-container:types:create",
-        "../victory-zoom-container:types:create",
-        "types:create"
+        "../victory-zoom-container:types:create"
       ]
     },
     "jest": {
