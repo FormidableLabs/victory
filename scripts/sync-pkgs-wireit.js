@@ -104,6 +104,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       "build:dist:min",
       "types:check",
       "types:create",
+      "lint",
     ].forEach((key) => {
       pkg.wireit[key].dependencies = [];
     });
@@ -148,10 +149,10 @@ const updateLibPkgs = async ({ libPkgs }) => {
     );
     crossDevDeps.forEach((dep) => {
       // Jest depends on CJS output
-      addDeps("jest", dep, `build:lib:cjs`);
+      addDeps("jest", dep, "build:lib:cjs");
 
       // These scripts depend on types output from devDependencies:
-      addDeps("types:check", dep, `types:create`);
+      addDeps("types:check", dep, "types:create");
       addDeps("lint", dep, "types:create");
     });
 

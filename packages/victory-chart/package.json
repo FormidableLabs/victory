@@ -200,14 +200,12 @@
       ],
       "output": [],
       "dependencies": [
-        "../victory-vendor:types:create",
         "../victory-axis:types:create",
-        "../victory-bar:types:create",
-        "types:create",
-        "../victory-line:types:create",
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
-        "../victory-shared-events:types:create"
+        "../victory-shared-events:types:create",
+        "types:create",
+        "../victory-line:types:create"
       ]
     },
     "jest": {
