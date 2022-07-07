@@ -17,6 +17,8 @@ function generateWireitConfig(pkg, rootPkg) {
   /* eslint-disable */
   return {
     "scripts": {
+      "###            THESE SCRIPTS ARE GENERATED           ###": "true",
+      "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
       "build": "wireit",
       "build:lib": "wireit",
       "build:lib:esm": "wireit",
@@ -31,6 +33,8 @@ function generateWireitConfig(pkg, rootPkg) {
       "jest": "wireit",
     },
     "wireit": {
+      "###            THESE WIREIT CONFIGS ARE GENERATED        ####": {},
+      "###            DO NOT MODIFY THESE MANUALLY              ####": {},
       "build": {
         "dependencies": [
           "build:lib",
