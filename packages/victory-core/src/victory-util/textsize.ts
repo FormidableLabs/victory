@@ -250,14 +250,6 @@ const _measureWithDOM = (
   text: string | string[],
   style?: TextSizeStyleInterface,
 ): { width: number; height: number } => {
-  if (
-    typeof window === "undefined" ||
-    typeof window.document === "undefined" ||
-    typeof window.document.createElement === "undefined"
-  ) {
-    throw new Error("Cannot measure text in a non-browser environment");
-  }
-
   const element = document.createElement("div");
   element.style.position = "absolute";
   element.style.top = "-9999px";
@@ -321,12 +313,21 @@ export interface TextSizeStyleInterface {
 }
 
 export const _approximateTextSizeInternal = {
-  impl: (text: string | string[], style?: TextSizeStyleInterface) => {
+  impl: (
+    text: string | string[],
+    style?: TextSizeStyleInterface,
+    approximate = false,
+  ) => {
     // Attempt to first measure the element in DOM. If there is no DOM, fallback
     // to the less accurate approximation algorithm.
-    try {
+    const isClient =
+      window !== undefined &&
+      window.document !== undefined &&
+      window.document.createElement !== undefined;
+
+    if (isClient && !approximate){
       return _measureWithDOM(text, style);
-    } catch (e) {
+    } else {
       return _approximateFromFont(text, style);
     }
   },
@@ -341,10 +342,12 @@ export const _approximateTextSizeInternal = {
  * @param {number} style.angle Text rotate angle.
  * @param {string} style.letterSpacing Text letterSpacing(space between letters).
  * @param {number} style.lineHeight Line height coefficient.
+ * @param {boolean} approximate If true, approximate text size with approximation algorithm.
  * @returns {number} Approximate text label width and height.
  */
 export const approximateTextSize = (
   text: string | string[],
   style?: TextSizeStyleInterface,
+  approximate?: boolean,
 ): { width: number; height: number } =>
-  _approximateTextSizeInternal.impl(text, style);
+  _approximateTextSizeInternal.impl(text, style, approximate);
