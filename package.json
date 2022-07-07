@@ -156,11 +156,7 @@
     },
     "check:ci": {
       "dependencies": [
-        "format",
-        "lint",
-        "build",
-        "jest",
-        "types:check:pkgs"
+        "check"
       ]
     },
     "build": {
