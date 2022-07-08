@@ -1,48 +1,23 @@
-import PropTypes, { number } from "prop-types";
-import React, { ReactElement, ValidationMap, WeakValidationMap } from "react";
-import { assign, defaults, without } from "lodash";
+import PropTypes from "prop-types";
+import React from "react";
 import { Curve, CurveProps } from "../curve";
 import {
-  PropTypes as CustomPropTypes,
-  Helpers,
-  VictoryLabel,
-  addEvents,
-  VictoryContainer,
-  VictoryTheme,
-  DefaultTransitions,
-  VictoryClipContainer,
-  Data,
-  Domain,
-  CommonProps,
-  UserProps,
-  EventPropTypeInterface,
   InterpolationPropType,
-  StringOrNumberOrCallback,
-  VictoryCommonProps,
-  VictoryDatableProps,
-  VictoryMultiLabelableProps,
-  VictoryLabelableProps,
-  VictoryStyleInterface,
-  EventsMixinClass,
-  Path,
-  LineHelpers,
-  defaultPropsFor,
   useData,
   useDomain,
   useScale,
+  VictoryClipContainer,
   VictoryClipContainerProps,
+  VictoryCommonProps,
+  VictoryContainer,
+  VictoryDatableProps,
+  VictoryLabel,
+  VictoryLabelableProps,
   VictoryLabelProps,
+  VictoryStyleInterface,
+  VictoryTheme,
   withContainer,
-  withDefaultProps,
-  Events,
 } from "victory-core";
-
-const fallbackProps = {
-  width: 450,
-  height: 300,
-  padding: 50,
-  interpolation: "linear",
-};
 
 export interface VictoryLineProps
   extends VictoryCommonProps,
@@ -130,100 +105,9 @@ VictoryLineBase.propTypes = {
       "step",
       "stepAfter",
       "stepBefore",
-    ]),
+    ] as const),
     PropTypes.func,
   ]),
 };
 
 export const VictoryLine = withContainer(VictoryLineBase);
-
-export type VictoryLineTTargetType = "data" | "labels" | "parent";
-
-namespace AddEvents {
-  const that: {
-    dataKeys;
-    baseProps;
-    hasEvents;
-    getEvents;
-    props;
-    globalEvents;
-    getEventState;
-    getSharedEventState;
-  } = null as any;
-
-  export function renderContinuousData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
-    const dataKeys = without(that.dataKeys, "all");
-    const labelComponents = dataKeys.reduce((memo, key) => {
-      const labelProps = getComponentProps(labelComponent, "labels", key);
-      if (
-        labelProps &&
-        labelProps.text !== undefined &&
-        labelProps.text !== null
-      ) {
-        memo = memo.concat(React.cloneElement(labelComponent, labelProps));
-      }
-      return memo;
-    }, [] as React.ReactElement[]);
-
-    const dataProps = getComponentProps(dataComponent, "data", "all");
-    const children = [
-      React.cloneElement(dataComponent, dataProps),
-      ...labelComponents,
-    ];
-    return renderContainer(groupComponent, children);
-  }
-
-  function renderContainer(component, children) {
-    const isContainer = component.type && component.type.role === "container";
-    const parentProps = isContainer
-      ? getComponentProps(component, "parent", "parent")
-      : {};
-
-    if (parentProps.events) {
-      that.globalEvents = Events.getGlobalEvents(parentProps.events);
-      parentProps.events = Events.omitGlobalEvents(parentProps.events);
-    }
-
-    return React.cloneElement(component, parentProps, children);
-  }
-
-  function getComponentProps(
-    component: React.ReactElement,
-    type: "labels" | "data" | "parent",
-    index: "parent" | "all" | string | number,
-  ) {
-    const name = that.props.name || WrappedComponent.role;
-    const key = (that.dataKeys && that.dataKeys[index]) || index;
-    const id = `${name}-${type}-${key}`;
-
-    const baseProps =
-      (that.baseProps[key] && that.baseProps[key][type]) || that.baseProps[key];
-
-    if (!baseProps && !that.hasEvents) {
-      return undefined;
-    }
-
-    if (that.hasEvents) {
-      const baseEvents = that.getEvents(that.props, type, key);
-      const componentProps = defaults(
-        { index, key: id },
-        that.getEventState(key, type),
-        that.getSharedEventState(key, type),
-        component.props,
-        baseProps,
-        { id },
-      );
-
-      const events = defaults(
-        {},
-        Events.getPartialEvents(baseEvents, key, componentProps),
-        componentProps.events,
-      );
-
-      return assign({}, componentProps, { events });
-    }
-
-    return defaults({ index, key: id }, component.props, baseProps, { id });
-  }
-}
