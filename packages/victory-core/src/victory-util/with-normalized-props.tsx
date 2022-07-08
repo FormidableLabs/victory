@@ -11,6 +11,7 @@ export function withNormalizedProps<
 >(
   config: {
     displayName: string;
+    propTypes: React.WeakValidationMap<Omit<TProps, keyof VictoryCommonProps>>;
     defaultProps: Pick<TProps, TDefaultPropKeys>;
   },
   WrappedComponent: React.FC<TProps>,
@@ -28,11 +29,7 @@ export function withNormalizedProps<
   };
   WithContainer.displayName = `WithContainer(${config.displayName})`;
   WithContainer.defaultProps = config.defaultProps;
-  // Give `propTypes` a strong type:
-  type StrongPropTypes =
-    | undefined
-    | Required<React.WeakValidationMap<Omit<TProps, keyof VictoryCommonProps>>>;
-  WithContainer.propTypes = undefined as StrongPropTypes;
+  WithContainer.propTypes = config.propTypes;
 
   return withProvider(WithContainer);
 }
