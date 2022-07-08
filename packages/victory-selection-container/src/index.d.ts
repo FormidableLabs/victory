@@ -27,3 +27,15 @@ export class VictorySelectionContainer extends React.Component<
   VictorySelectionContainerProps,
   any
 > {}
+
+export const SelectionHelpers: {
+  getDimension(props): any;
+  getDatasets(props): any;
+  filterDatasets(props, datasets, bounds): any;
+  getSelectedData(props, dataset): any;
+  onMouseDown(evt, targetProps): any;
+  onMouseMove(evt, targetProps): any;
+  onMouseUp(evt, targetProps): any;
+};
+
+export const selectionContainerMixin: (base: Function) => Function;

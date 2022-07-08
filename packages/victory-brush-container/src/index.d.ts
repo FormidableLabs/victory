@@ -32,3 +32,24 @@ export class VictoryBrushContainer extends React.Component<
   VictoryBrushContainerProps,
   any
 > {}
+
+export const BrushHelpers: {
+  getDimension(props): any;
+  withinBounds(point, bounds, padding): any;
+  getDomainBox(props, fullDomain, selectedDomain): any;
+  getHandles(props, domainBox): any;
+  getActiveHandles(point, props, domainBox): any;
+  getResizeMutation(box, handles): any;
+  getMinimumDomain(): any;
+  getDefaultBrushArea(targetProps, cachedDomain, evt): any;
+  getSelectionMutation(point, box, brushDimension): any;
+  panBox(props, point): any;
+  constrainBox(box, fullDomainBox): any;
+  constrainPoint(point, fullDomainBox): any;
+  hasMoved(props): any;
+  onMouseDown(evt, targetProps): any;
+  onGlobalMouseMove(evt, targetProps): any;
+  onGlobalMouseUp(evt, targetProps): any;
+};
+
+export function brushContainerMixin<T>(Component: T): Component;

@@ -1,20 +1,21 @@
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
+import { VictoryLine } from "victory";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 describe("components/victory-chart", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
       const { container } = render(<VictoryChart />);
-      const svg = container.querySelector("svg");
+      const svg = container.querySelector("svg")!;
 
       expect(svg.getAttribute("style")).toContain("width: 100%; height: 100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryChart />);
-      const svg = container.querySelector("svg");
+      const svg = container.querySelector("svg")!;
       const viewBoxValue = `0 0 ${450} ${300}`;
 
       expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
@@ -91,11 +92,23 @@ describe("components/victory-chart", () => {
           ]}
         />,
       );
-      const svg = container.querySelector("svg");
+      const svg = container.querySelector("svg")!;
 
       fireEvent.click(svg);
 
       expect(clickHandler).toHaveBeenCalled();
+    });
+  });
+
+  describe("animation", () => {
+    it("handles basic animation parameters without crashing", () => {
+      const { container } = render(
+        <VictoryChart animate={{ duration: 2000, easing: "bounce" }}>
+          <VictoryLine />
+        </VictoryChart>,
+      );
+
+      expect(container.querySelector("svg")).toBeInTheDocument();
     });
   });
 });

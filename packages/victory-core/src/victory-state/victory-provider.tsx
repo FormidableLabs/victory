@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createContext, useContextSelector } from "use-context-selector";
+import { createContext, useContext } from "react";
 import { D3ScaleFn, DomainTuple, ForAxes } from "../types/prop-types";
 import { FormattedDatum, getData } from "./helpers/get-data";
 import { getDomain } from "./helpers/get-domain";
@@ -90,21 +90,17 @@ export function VictoryProvider({
   );
 }
 
-type ContextValue = ContextType | null;
-
 export function useHasVictoryContext() {
-  const context = useContextSelector(VictoryContext, (v) => v);
+  const context = useContext(VictoryContext);
   return !!context;
 }
+
 export function useVictoryContext<T>(selector: (value: ContextType) => T): T {
-  return useContextSelector<ContextValue, T>(VictoryContext, (context) => {
-    if (!context) {
-      throw new Error(
-        "useVictoryContext must be used within a VictoryProvider",
-      );
-    }
-    return selector(context);
-  });
+  const context = useContext(VictoryContext);
+  if (!context) {
+    throw new Error("useVictoryContext must be used within a VictoryProvider");
+  }
+  return selector(context);
 }
 
 export function useScale() {
