@@ -321,9 +321,9 @@ export const _approximateTextSizeInternal = {
     // Attempt to first measure the element in DOM. If there is no DOM, fallback
     // to the less accurate approximation algorithm.
     const isClient =
-      window !== undefined &&
-      window.document !== undefined &&
-      window.document.createElement !== undefined;
+      typeof window !== "undefined" &&
+      typeof window.document !== "undefined" &&
+      typeof window.document.createElement !== "undefined";
 
     if (isClient && !approximate) {
       return _measureWithDOM(text, style);
