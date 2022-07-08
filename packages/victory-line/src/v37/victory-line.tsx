@@ -18,6 +18,7 @@ import {
   VictoryTheme,
   withContainer,
 } from "victory-core";
+import { Clone } from "./clone";
 
 export interface VictoryLineProps
   extends VictoryCommonProps,
@@ -29,18 +30,6 @@ export interface VictoryLineProps
   style?: VictoryStyleInterface;
   animate?: boolean;
 }
-
-const Clone = <TProps,>(
-  props: React.PropsWithChildren<
-    {
-      element: React.ReactElement<TProps>;
-      children?: React.ReactNode | React.ReactNode[];
-    } & TProps
-  >,
-) => {
-  const { children, element, ...rest } = props;
-  return React.cloneElement(element, rest as unknown as TProps, children);
-};
 
 export const VictoryLineBase = (props: VictoryLineProps) => {
   const data = useData();
