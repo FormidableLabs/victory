@@ -26,6 +26,9 @@
     "victory-core": "^36.5.3",
     "victory-shared-events": "^36.5.3"
   },
+  "devDependencies": {
+    "victory-bar": "*"
+  },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
@@ -144,6 +147,7 @@
         "types:create",
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-bar:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
@@ -189,6 +193,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-bar:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ]
@@ -204,6 +209,7 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
+        "../victory-bar:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
         "../victory-voronoi:build:lib:cjs"
       ]
