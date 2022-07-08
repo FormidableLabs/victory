@@ -25,3 +25,13 @@ export class VictoryCursorContainer extends React.Component<
   VictoryCursorContainerProps,
   any
 > {}
+
+export const CursorHelpers: {
+  getDimension(props): any;
+  withinBounds(point, bounds): any;
+  onMouseMove(evt, targetProps): any;
+  onMouseLeave(evt, targetProps): any;
+  onTouchEnd(evt, targetProps): any;
+};
+
+export const cursorContainerMixin: (base: Function) => Function;

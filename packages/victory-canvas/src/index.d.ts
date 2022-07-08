@@ -63,3 +63,11 @@ export interface CanvasGroupProps {
 }
 
 export class CanvasGroup extends React.Component<CanvasGroupProps, any> {}
+
+export interface CanvasContextValue {
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  clear(ctx): void;
+  clip(ctx): void;
+}
+
+export const useCanvasContext: () => CanvasContextValue;
