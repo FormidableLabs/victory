@@ -31,6 +31,25 @@ export interface VictoryLineProps
   animate?: boolean;
 }
 
+const propTypes: PropTypes.ValidationMap<VictoryLineProps> = {
+  interpolation: PropTypes.oneOfType([
+    PropTypes.oneOf([
+      "basis",
+      "bundle",
+      "cardinal",
+      "catmullRom",
+      "linear",
+      "monotoneX",
+      "monotoneY",
+      "natural",
+      "step",
+      "stepAfter",
+      "stepBefore",
+    ] as const),
+    PropTypes.func,
+  ]).isRequired,
+};
+
 const defaultProps: Required<
   Pick<
     VictoryLineProps,
@@ -67,25 +86,6 @@ const defaultProps: Required<
   sortOrder: "ascending",
   standalone: true,
   theme: VictoryTheme.grayscale,
-};
-
-const propTypes: PropTypes.ValidationMap<VictoryLineProps> = {
-  interpolation: PropTypes.oneOfType([
-    PropTypes.oneOf([
-      "basis",
-      "bundle",
-      "cardinal",
-      "catmullRom",
-      "linear",
-      "monotoneX",
-      "monotoneY",
-      "natural",
-      "step",
-      "stepAfter",
-      "stepBefore",
-    ] as const),
-    PropTypes.func,
-  ]).isRequired,
 };
 
 export const VictoryLineBase = (props: VictoryLineProps) => {
