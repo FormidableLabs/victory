@@ -19,3 +19,6 @@ public
 artifacts
 .expo
 .wireit
+
+# We want this file to look like JSON:
+scripts/sync-pkgs-wireit-helpers.js
