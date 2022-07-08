@@ -31,19 +31,6 @@ export interface VictoryLineProps
   animate?: boolean;
 }
 
-export const VictoryLineBase = (props: VictoryLineProps) => {
-  const data = useData();
-  const scale = useScale();
-  const domain = useDomain();
-  const dataProps = { ...props, data, scale, domain };
-
-  return (
-    <Clone element={props.groupComponent}>
-      <Clone element={props.dataComponent} {...dataProps} />
-    </Clone>
-  );
-};
-
 const defaultProps: Required<
   Pick<
     VictoryLineProps,
@@ -82,8 +69,6 @@ const defaultProps: Required<
   theme: VictoryTheme.grayscale,
 };
 
-VictoryLineBase.defaultProps = defaultProps;
-
 const propTypes: PropTypes.ValidationMap<VictoryLineProps> = {
   interpolation: PropTypes.oneOfType([
     PropTypes.oneOf([
@@ -102,6 +87,20 @@ const propTypes: PropTypes.ValidationMap<VictoryLineProps> = {
     PropTypes.func,
   ]).isRequired,
 };
+
+export const VictoryLineBase = (props: VictoryLineProps) => {
+  const data = useData();
+  const scale = useScale();
+  const domain = useDomain();
+  const dataProps = { ...props, data, scale, domain };
+
+  return (
+    <Clone element={props.groupComponent}>
+      <Clone element={props.dataComponent} {...dataProps} />
+    </Clone>
+  );
+};
 VictoryLineBase.propTypes = propTypes;
+VictoryLineBase.defaultProps = defaultProps;
 
 export const VictoryLine = withContainer(VictoryLineBase);
