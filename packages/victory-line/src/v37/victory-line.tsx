@@ -55,18 +55,21 @@ export const VictoryLineBase = (props: VictoryLineProps) => {
   );
 };
 
-const defaultProps: Pick<
-  VictoryLineProps,
-  | "data"
-  | "containerComponent"
-  | "dataComponent"
-  | "labelComponent"
-  | "groupComponent"
-  | "samples"
-  | "sortKey"
-  | "sortOrder"
-  | "standalone"
-  | "theme"
+const defaultProps: Required<
+  Pick<
+    VictoryLineProps,
+    | "containerComponent"
+    | "data"
+    | "dataComponent"
+    | "interpolation"
+    | "groupComponent"
+    | "labelComponent"
+    | "samples"
+    | "sortKey"
+    | "sortOrder"
+    | "standalone"
+    | "theme"
+  >
 > = {
   data: [
     { x: 1, y: 1 },
@@ -76,6 +79,7 @@ const defaultProps: Pick<
   ],
   containerComponent: <VictoryContainer />,
   dataComponent: (<Curve />) as React.ReactElement<CurveProps>,
+  interpolation: "linear",
   labelComponent: (
     <VictoryLabel renderInPortal />
   ) as React.ReactElement<VictoryLabelProps>,
@@ -91,7 +95,7 @@ const defaultProps: Pick<
 
 VictoryLineBase.defaultProps = defaultProps;
 
-VictoryLineBase.propTypes = {
+const propTypes: PropTypes.ValidationMap<VictoryLineProps> = {
   interpolation: PropTypes.oneOfType([
     PropTypes.oneOf([
       "basis",
@@ -107,7 +111,8 @@ VictoryLineBase.propTypes = {
       "stepBefore",
     ] as const),
     PropTypes.func,
-  ]),
+  ]).isRequired,
 };
+VictoryLineBase.propTypes = propTypes;
 
 export const VictoryLine = withContainer(VictoryLineBase);
