@@ -4,6 +4,7 @@ function unique(arr) {
 function concat(...arrays) {
   return unique([].concat(...arrays));
 }
+
 function generateWireitConfig(pkg, rootPkg) {
   const isVictoryPackage = (p) => p.startsWith("victory") && p !== pkg.name;
   const deps = Object.keys(pkg.dependencies || {}).filter(isVictoryPackage);
@@ -13,8 +14,9 @@ function generateWireitConfig(pkg, rootPkg) {
   const rootDeps = Object.keys(rootPkg.devDependencies).filter(
     isVictoryPackage,
   );
-  /* eslint-disable eslint-comments/no-unlimited-disable */
-  /* eslint-disable */
+
+  // We want this block to look like JSON, so disable prettier:
+  // prettier-ignore
   return {
     "scripts": {
       "###            THESE SCRIPTS ARE GENERATED           ###": "true",
