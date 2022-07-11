@@ -26,10 +26,15 @@
     "victory-core": "^36.5.3",
     "victory-shared-events": "^36.5.3"
   },
+  "devDependencies": {
+    "victory-bar": "*"
+  },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
   "scripts": {
+    "###            THESE SCRIPTS ARE GENERATED           ###": "true",
+    "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
     "build": "wireit",
     "build:lib": "wireit",
     "build:lib:esm": "wireit",
@@ -44,6 +49,8 @@
     "jest": "wireit"
   },
   "wireit": {
+    "###            THESE WIREIT CONFIGS ARE GENERATED        ####": {},
+    "###            DO NOT MODIFY THESE MANUALLY              ####": {},
     "build": {
       "dependencies": [
         "build:lib",
@@ -137,8 +144,10 @@
         "tsconfig.json"
       ],
       "dependencies": [
+        "types:create",
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-bar:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
@@ -184,6 +193,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-bar:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ]
@@ -199,6 +209,7 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
+        "../victory-bar:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
         "../victory-voronoi:build:lib:cjs"
       ]

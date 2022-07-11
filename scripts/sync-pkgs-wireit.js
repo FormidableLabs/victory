@@ -21,6 +21,7 @@
 
 const fs = require("fs/promises");
 const path = require("path");
+const { generateWireitConfig } = require("./sync-pkgs-wireit-helpers");
 const { log, error } = console; // eslint-disable-line no-undef
 
 // ============================================================================
@@ -81,77 +82,17 @@ const updateRootPkg = async ({ allPkgs }) => {
   await writePkg(rootPkgPath, rootPkg, originalPkg);
 };
 
-// Common library mutations.
-//
-// Use the core package as the template for the rest.
+// Generate configurations for all packages:
 const updateLibPkgs = async ({ libPkgs }) => {
-  const corePkg = await readPkg(`${PKGS_ROOT}/victory-core/package.json`);
   const rootPkg = await readPkg(`${ROOT}/package.json`);
 
   for (const workspace of libPkgs) {
     const pkgPath = `${PKGS_ROOT}/${workspace}/package.json`;
     const originalPkg = await readPkg(pkgPath);
-    const pkg = clone(originalPkg);
-
-    // Overwrite scripts and wireit configuration
-    pkg.scripts = clone(corePkg.scripts);
-    pkg.wireit = clone(corePkg.wireit);
-
-    // Clear out existing deps from victory-core
-    // TODO(wireit): Abstract and refactor this whole section better.
-    [
-      "build:lib:esm",
-      "build:lib:cjs",
-      "build:dist:dev",
-      "build:dist:min",
-      "types:check",
-      "types:create",
-      "lint",
-      "jest",
-    ].forEach((key) => {
-      pkg.wireit[key].dependencies = [];
-    });
-
-    // Prod dependencies
-    const addDeps = (key, dep, task) => {
-      // Only add dependencies that are unique.
-      const depTask = pkg.name === dep ? task : `../${dep}:${task}`;
-      if (!pkg.wireit[key].dependencies.includes(depTask)) {
-        pkg.wireit[key].dependencies.push(depTask);
-      }
+    const pkg = {
+      ...originalPkg,
+      ...generateWireitConfig(originalPkg, rootPkg),
     };
-    const crossDeps = Object.keys(pkg.dependencies).filter(isVictoryPackage);
-    crossDeps.forEach((dep) => {
-      // Make sure dependent libraries are built.
-      addDeps("build:lib:esm", dep, "build:lib:esm");
-      addDeps("build:lib:cjs", dep, "build:lib:cjs");
-
-      // Webpack depends on ESM output from other packages.
-      addDeps("build:dist:dev", dep, "build:lib:esm");
-      addDeps("build:dist:min", dep, "build:lib:esm");
-
-      // These scripts depend on types output from dependencies:
-      addDeps("types:check", dep, "types:create");
-      addDeps("types:create", dep, "types:create");
-      addDeps("lint", dep, "types:create");
-    });
-
-    // Dev dependencies
-    const rootDevDeps = Object.keys(rootPkg.devDependencies).filter(
-      isVictoryPackage,
-    );
-    addDeps("jest", pkg.name, "build:lib:cjs");
-    const crossDevDeps = Object.keys(pkg.devDependencies || {}).filter(
-      isVictoryPackage,
-    );
-    crossDevDeps.concat(rootDevDeps).forEach((dep) => {
-      // Jest depends on CJS output
-      addDeps("jest", dep, "build:lib:cjs");
-
-      // These scripts depend on types output from devDependencies:
-      addDeps("types:check", dep, "types:create");
-      addDeps("lint", dep, "types:create");
-    });
 
     await writePkg(pkgPath, pkg, originalPkg);
   }

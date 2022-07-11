@@ -75,60 +75,34 @@
   },
   "wireit": {
     "build": {
-      "dependencies": [
-        "../victory:build:lib:esm",
-        "../victory-area:build:lib:esm",
-        "../victory-axis:build:lib:esm",
-        "../victory-bar:build:lib:esm",
-        "../victory-box-plot:build:lib:esm",
-        "../victory-brush-container:build:lib:esm",
-        "../victory-brush-line:build:lib:esm",
-        "../victory-candlestick:build:lib:esm",
-        "../victory-chart:build:lib:esm",
-        "../victory-core:build:lib:esm",
-        "../victory-create-container:build:lib:esm",
-        "../victory-cursor-container:build:lib:esm",
-        "../victory-errorbar:build:lib:esm",
-        "../victory-group:build:lib:esm",
-        "../victory-histogram:build:lib:esm",
-        "../victory-legend:build:lib:esm",
-        "../victory-line:build:lib:esm",
-        "../victory-pie:build:lib:esm",
-        "../victory-polar-axis:build:lib:esm",
-        "../victory-scatter:build:lib:esm",
-        "../victory-selection-container:build:lib:esm",
-        "../victory-shared-events:build:lib:esm",
-        "../victory-stack:build:lib:esm",
-        "../victory-tooltip:build:lib:esm",
-        "../victory-voronoi:build:lib:esm",
-        "../victory-voronoi-container:build:lib:esm",
-        "../victory-zoom-container:build:lib:esm"
-      ]
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
     },
     "build:lib:esm": {
-      "dependencies": [
-        "build"
-      ]
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
     },
     "build:lib:cjs": {
-      "dependencies": [
-        "build"
-      ]
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
     },
     "build:dist": {
-      "dependencies": [
-        "build"
-      ]
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
     },
     "build:dist:dev": {
-      "dependencies": [
-        "build"
-      ]
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
     },
     "build:dist:min": {
-      "dependencies": [
-        "build"
-      ]
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
     },
     "types:check": {
       "command": "echo \"No types to check here\"",
@@ -154,6 +128,7 @@
       "command": "nps lint:pkg",
       "files": [
         "src/**",
+        "../../.eslintignore",
         "../../.eslintrc.js"
       ],
       "output": []
@@ -168,7 +143,7 @@
       ],
       "output": [],
       "dependencies": [
-        "build"
+        "../victory:build:lib"
       ]
     }
   }
