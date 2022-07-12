@@ -8,18 +8,18 @@ export function withVictoryProvider<
   TProps extends { children?: React.ReactNode | undefined },
 >(Comp: TComp): TComp {
   const WithProvider = React.memo((props: TProps) => {
-    const setChildProps = useVictoryContextMaybe(
-      (value) => value?.setChildProps,
+    const updateChildProps = useVictoryContextMaybe(
+      (value) => value?.updateChildProps,
     );
-    const hasParentProvider = !!setChildProps;
+    const hasParentProvider = !!updateChildProps;
 
     React.useEffect(() => {
       if (!hasParentProvider) return;
 
       const id = Symbol("WithProvider");
-      setChildProps(id, props);
+      updateChildProps(id, props);
       // eslint-disable-next-line consistent-return
-      return () => setChildProps(id, null);
+      return () => updateChildProps(id, null);
     });
 
     //// @ts-expect-error "Comp something something..."

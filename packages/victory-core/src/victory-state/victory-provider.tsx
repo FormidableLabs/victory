@@ -14,22 +14,40 @@ export interface ContextType {
   data: FormattedDatum[];
   scale: ScaleType;
   domain: DomainType;
-  setChildProps: (id: symbol, props: VictoryProviderProps) => void;
+  updateChildProps: (id: symbol, props: VictoryProviderProps | null) => void;
 }
 
 const VictoryContext = createContext<ContextType | null>(null);
 
-function useNormalizedProps(initialProps): ContextType {
-  // We need to store the props in state so they can be overwritten by child components
-  const [props, setProps] = React.useState(initialProps);
+type CollectedProps = { [id: symbol]: VictoryCalculatedStateProps };
 
-  const setChildProps = React.useCallback(
-    (id: symbol, newProps: VictoryCalculatedStateProps) => {
-      setProps((prevProps) => {
-        return { ...prevProps, ...newProps };
+function useNormalizedProps(): ContextType {
+  const [collectedProps, setCollectedProps] = React.useState<CollectedProps>(
+    {},
+  );
+
+  const updateChildProps = React.useCallback(
+    (id: symbol, newProps: VictoryCalculatedStateProps | null) => {
+      setCollectedProps((prev) => {
+        const result = { ...prev };
+        if (newProps === null) {
+          delete result[id];
+        } else {
+          result[id] = newProps;
+        }
+        return result;
       });
     },
     [],
+  );
+
+  // TEMP: combine all props into a single result:
+  // TODO: instead, we should intelligently aggregate all these props
+  const props = Object.values(
+    collectedProps,
+  ).reduce<VictoryCalculatedStateProps>(
+    (result, childProps) => Object.assign(result, childProps),
+    {},
   );
 
   const data = React.useMemo(() => {
@@ -71,9 +89,9 @@ function useNormalizedProps(initialProps): ContextType {
       scale,
       data,
       domain,
-      setChildProps,
+      updateChildProps,
     }),
-    [scale, data, domain, setChildProps],
+    [scale, data, domain, updateChildProps],
   );
 
   return normalizedProps;
@@ -81,9 +99,11 @@ function useNormalizedProps(initialProps): ContextType {
 
 export function VictoryProvider({
   children,
-  ...initialProps
+  ...providerProps
 }: VictoryProviderProps) {
-  const value = useNormalizedProps(initialProps);
+  const value = useNormalizedProps();
+
+  // TODO: sync the providerProps
 
   return (
     <VictoryContext.Provider value={value}>{children}</VictoryContext.Provider>
@@ -122,9 +142,9 @@ export function useVictoryProviderSync(
   id: symbol,
   props: VictoryCalculatedStateProps,
 ) {
-  const setChildProps = useVictoryContext((value) => value.setChildProps);
+  const updateChildProps = useVictoryContext((value) => value.updateChildProps);
 
   React.useEffect(() => {
-    setChildProps(id, props);
-  }, []);
+    updateChildProps(id, props);
+  }, [updateChildProps, id, props]);
 }
