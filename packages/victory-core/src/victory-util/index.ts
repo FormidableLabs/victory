@@ -1,5 +1,6 @@
 export * from "./add-events";
 export * as Axis from "./axis";
+export * from "./clone";
 export * as Collection from "./collection";
 export * from "./common-props";
 export * as Data from "./data";

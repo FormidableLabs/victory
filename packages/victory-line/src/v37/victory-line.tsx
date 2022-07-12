@@ -13,9 +13,9 @@ import {
   VictoryLabelProps,
   VictoryStyleInterface,
   VictoryTheme,
+  Clone,
 } from "victory-core";
 import { withNormalizedProps } from "victory-core/src";
-import { Clone } from "./clone";
 
 export interface VictoryLineProps
   extends VictoryCommonProps,

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useVictoryContextMaybe, VictoryProvider } from "./victory-provider";
 // TODO: Fix this dependency:
-import { Clone } from "victory-line/src/v37/clone";
-import { VictoryCommonProps } from "../victory-util";
+import { VictoryCommonProps, Clone } from "../victory-util";
 
 type ContainerProp = Required<Pick<VictoryCommonProps, "containerComponent">>;
 
