@@ -1,11 +1,11 @@
 import { VictoryCommonProps } from "./common-props";
 import React from "react";
 import { useVictoryContext, VictoryProviderProps } from "../victory-state";
-import { withProvider } from "../victory-state/victory-provider-maybe";
+import { withVictoryProvider } from "../victory-state/victory-provider-maybe";
 
 export function withNormalizedProps<
   TProps extends VictoryCommonProps & {
-    children?: React.ReactNode | React.ReactNode[];
+    children?: React.ReactNode | undefined;
   },
   TDefaultPropKeys extends keyof TProps,
 >(
@@ -13,12 +13,13 @@ export function withNormalizedProps<
     displayName: string;
     propTypes: React.WeakValidationMap<Omit<TProps, keyof VictoryCommonProps>>;
     defaultProps: Pick<TProps, TDefaultPropKeys>;
+    /** @deprecated */
+    initialProviderProps?: Partial<VictoryProviderProps>;
   },
   WrappedComponent: React.FC<TProps>,
-  initialProviderProps: Partial<VictoryProviderProps> = {},
 ) {
   WrappedComponent.displayName = config.displayName;
-  const WithContainer = (props: TProps) => {
+  const WithNormalizedProps = (props: TProps) => {
     const normalizedProps = useVictoryContext((v) => v);
 
     return (
@@ -27,9 +28,9 @@ export function withNormalizedProps<
       </WrappedComponent>
     );
   };
-  WithContainer.displayName = `WithContainer(${config.displayName})`;
-  WithContainer.defaultProps = config.defaultProps;
-  WithContainer.propTypes = config.propTypes;
-
-  return withProvider(WithContainer);
+  return Object.assign(withVictoryProvider(WithNormalizedProps), {
+    displayName: `WithNormalizedProps(${config.displayName}`,
+    defaultProps: config.defaultProps,
+    propTypes: config.propTypes,
+  });
 }

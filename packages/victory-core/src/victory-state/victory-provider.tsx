@@ -14,7 +14,7 @@ export interface ContextType {
   data: FormattedDatum[];
   scale: ScaleType;
   domain: DomainType;
-  setChildProps: (id: string, props: VictoryProviderProps) => void;
+  setChildProps: (id: symbol, props: VictoryProviderProps) => void;
 }
 
 const VictoryContext = createContext<ContextType | null>(null);
@@ -24,7 +24,7 @@ function useNormalizedProps(initialProps): ContextType {
   const [props, setProps] = React.useState(initialProps);
 
   const setChildProps = React.useCallback(
-    (id: string, newProps: VictoryCalculatedStateProps) => {
+    (id: symbol, newProps: VictoryCalculatedStateProps) => {
       setProps((prevProps) => {
         return { ...prevProps, ...newProps };
       });
@@ -90,9 +90,11 @@ export function VictoryProvider({
   );
 }
 
-export function useHasVictoryContext() {
+export function useVictoryContextMaybe<T>(
+  selector: (value: ContextType | null) => T,
+): T {
   const context = useContext(VictoryContext);
-  return !!context;
+  return selector(context);
 }
 
 export function useVictoryContext<T>(selector: (value: ContextType) => T): T {
@@ -117,7 +119,7 @@ export function useDomain() {
 
 // This function keeps props in sync betwen the VictoryProvider and child components
 export function useVictoryProviderSync(
-  id: string,
+  id: symbol,
   props: VictoryCalculatedStateProps,
 ) {
   const setChildProps = useVictoryContext((value) => value.setChildProps);

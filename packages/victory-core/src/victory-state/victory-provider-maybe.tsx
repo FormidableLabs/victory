@@ -1,40 +1,41 @@
-import { VictoryProviderProps } from "./types";
-import { useContextSelector } from "use-context-selector";
 import * as React from "react";
-import {
-  useHasVictoryContext,
-  useVictoryContext,
-  VictoryProvider,
-} from "./victory-provider";
+import { useVictoryContextMaybe, VictoryProvider } from "./victory-provider";
+// TODO: Fix this dependency:
+import { Clone } from "victory-line/src/v37/clone";
 
-export function VictoryProviderMaybe(props: VictoryProviderProps) {
-  const hasParentProvider = useHasVictoryContext();
-  if (!hasParentProvider) {
-    return <VictoryProvider {...props}>{props.children}</VictoryProvider>;
-  }
-  return (
-    <VictoryProviderChild {...props}>{props.children}</VictoryProviderChild>
-  );
-}
-
-export function VictoryProviderChild(props: VictoryProviderProps) {
-  const setChildProps = useVictoryContext((value) => value.setChildProps);
-
-  React.useEffect(() => {
-    setChildProps("TODO: UPDATE THIS ID", props);
-  }, []);
-
-  return <>{props.children}</>;
-}
-
-export function withProvider<TComp extends React.FC<any>>(Comp: TComp): TComp {
-  type TProps = TComp extends React.FC<infer P> ? P : never;
-  const WithProvider = (props: TProps) => {
-    return (
-      <VictoryProviderMaybe {...props}>
-        <Comp {...props}>{props.children}</Comp>
-      </VictoryProviderMaybe>
+export function withVictoryProvider<
+  TComp extends React.FC<TProps>,
+  TProps extends { children?: React.ReactNode | undefined },
+>(Comp: TComp): TComp {
+  const WithProvider = React.memo((props: TProps) => {
+    const setChildProps = useVictoryContextMaybe(
+      (value) => value?.setChildProps,
     );
-  };
+    const hasParentProvider = !!setChildProps;
+
+    React.useEffect(() => {
+      if (!hasParentProvider) return;
+
+      const id = Symbol("WithProvider");
+      setChildProps(id, props);
+      // eslint-disable-next-line consistent-return
+      return () => setChildProps(id, null);
+    });
+
+    //// @ts-expect-error "Comp something something..."
+    const result = <Comp {...props}>{props.children}</Comp>;
+
+    if (!hasParentProvider) {
+      return (
+        <VictoryProvider>
+          <Clone element={props.containerComponent} {...props}>
+            {result}
+          </Clone>
+        </VictoryProvider>
+      );
+    }
+    return result;
+  });
+  WithProvider.displayName = `WithProvider(${Comp.displayName || Comp.name})`;
   return WithProvider as TComp;
 }
