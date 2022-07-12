@@ -2,10 +2,16 @@ import * as React from "react";
 import { useVictoryContextMaybe, VictoryProvider } from "./victory-provider";
 // TODO: Fix this dependency:
 import { Clone } from "victory-line/src/v37/clone";
+import { VictoryCommonProps } from "../victory-util";
+
+type ContainerProp = Required<
+  Pick<VictoryCommonProps, "containerComponent">
+>;
+type ChildrenProp = { children?: React.ReactNode | undefined };
 
 export function withVictoryProvider<
   TComp extends React.FC<TProps>,
-  TProps extends { children?: React.ReactNode | undefined },
+  TProps extends ChildrenProp & ContainerProp,
 >(Comp: TComp): TComp {
   const WithProvider = React.memo((props: TProps) => {
     const updateChildProps = useVictoryContextMaybe(
