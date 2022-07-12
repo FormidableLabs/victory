@@ -4,9 +4,7 @@ import { useVictoryContext, VictoryProviderProps } from "../victory-state";
 import { withVictoryProvider } from "../victory-state/victory-provider-maybe";
 
 export function withNormalizedProps<
-  TProps extends VictoryCommonProps & {
-    children?: React.ReactNode | undefined;
-  },
+  TProps extends React.PropsWithChildren<VictoryCommonProps>,
   TDefaultPropKeys extends keyof TProps,
 >(
   config: {
@@ -28,6 +26,7 @@ export function withNormalizedProps<
       </WrappedComponent>
     );
   };
+
   return Object.assign(withVictoryProvider(WithNormalizedProps), {
     displayName: `WithNormalizedProps(${config.displayName}`,
     defaultProps: config.defaultProps,
