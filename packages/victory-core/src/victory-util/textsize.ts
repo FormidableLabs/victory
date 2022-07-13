@@ -250,31 +250,46 @@ const _measureWithDOM = (
   text: string | string[],
   style?: TextSizeStyleInterface,
 ): { width: number; height: number } => {
-  const element = document.createElement("div");
-  element.style.position = "absolute";
+  const element = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  element.setAttribute("xlink", "http://www.w3.org/1999/xlink");
+
+  const containerElement = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "g",
+  );
+  element.appendChild(containerElement);
+
+  element.style.position = "fixed";
   element.style.top = "-9999px";
   element.style.left = "-9999px";
-  if (style && style.angle) {
-    element.style.transform = `rotate(${style?.angle}deg)`;
-  }
-
-  const lines = _splitToLines(text);
-  for (const [i, line] of lines.entries()) {
-    const lineElement = document.createElement("div");
-    const params = _prepareParams(style, i);
-    lineElement.textContent = line;
-    lineElement.style.fontSize = `${params.fontSize}px`;
-    lineElement.style.lineHeight = params.lineHeight;
-    lineElement.style.fontFamily = params.fontFamily;
-    lineElement.style.letterSpacing = params.letterSpacing;
-    element.appendChild(lineElement);
-  }
 
   document.body.appendChild(element);
 
+  const lines = _splitToLines(text);
+  let aggregatedHeight = 0;
+  for (const [i, line] of lines.entries()) {
+    const textElement = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "text",
+    );
+    const params = _prepareParams(style, i);
+    textElement.setAttribute("transform", "rotate(90)");
+    textElement.setAttribute("fontSize", `${params.fontSize}px`);
+    textElement.setAttribute("line-height", params.lineHeight);
+    textElement.setAttribute("font-family", params.fontFamily);
+    textElement.setAttribute("letter-spacing", params.letterSpacing);
+    textElement.setAttribute("x", "0");
+    textElement.setAttribute("y", aggregatedHeight.toString());
+    textElement.textContent = line;
+
+    containerElement.appendChild(textElement);
+
+    aggregatedHeight += textElement.getBBox().height;
+  }
+
   const result = {
-    width: element.clientWidth,
-    height: element.clientHeight,
+    width: containerElement.getBBox().width,
+    height: containerElement.getBBox().height,
   };
 
   element.remove();
