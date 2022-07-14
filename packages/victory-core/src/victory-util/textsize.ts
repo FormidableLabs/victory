@@ -255,36 +255,35 @@ const _measureWithDOM = (
 
   const containerElement = document.createElementNS(
     "http://www.w3.org/2000/svg",
-    "g",
+    "text",
   );
   element.appendChild(containerElement);
 
   element.style.position = "fixed";
   element.style.top = "-9999px";
   element.style.left = "-9999px";
+  element.style.height = "auto";
+  element.style.width = "auto";
 
   document.body.appendChild(element);
 
   const lines = _splitToLines(text);
-  let aggregatedHeight = 0;
+  // let aggregatedHeight = 0;
   for (const [i, line] of lines.entries()) {
     const textElement = document.createElementNS(
       "http://www.w3.org/2000/svg",
-      "text",
+      "tspan",
     );
     const params = _prepareParams(style, i);
-    textElement.setAttribute("transform", `rotate(${params.angle})`);
-    textElement.setAttribute("fontSize", `${params.fontSize}px`);
-    textElement.setAttribute("line-height", params.lineHeight);
-    textElement.setAttribute("font-family", params.fontFamily);
-    textElement.setAttribute("letter-spacing", params.letterSpacing);
-    textElement.setAttribute("x", "0");
-    textElement.setAttribute("y", aggregatedHeight.toString());
+    textElement.style.fontFamily = "arial";
+    textElement.style.transform = `rotate(${params.angle})`;
+    textElement.style.fontSize = `${params.fontSize}px`;
+    textElement.style.lineHeight = params.lineHeight;
+    textElement.style.fontFamily = params.fontFamily;
+    textElement.style.letterSpacing = params.letterSpacing;
     textElement.textContent = line;
 
     containerElement.appendChild(textElement);
-
-    aggregatedHeight += textElement.getBBox().height;
   }
 
   const result = {
