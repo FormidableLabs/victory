@@ -262,13 +262,10 @@ const _measureWithDOM = (
   element.style.position = "fixed";
   element.style.top = "-9999px";
   element.style.left = "-9999px";
-  element.style.height = "auto";
-  element.style.width = "auto";
 
   document.body.appendChild(element);
 
   const lines = _splitToLines(text);
-  // let aggregatedHeight = 0;
   for (const [i, line] of lines.entries()) {
     const textElement = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -286,10 +283,8 @@ const _measureWithDOM = (
     containerElement.appendChild(textElement);
   }
 
-  const result = {
-    width: containerElement.getBBox().width,
-    height: containerElement.getBBox().height,
-  };
+  const { width, height } = containerElement.getBBox();
+  const result = { width, height };
 
   element.remove();
 
