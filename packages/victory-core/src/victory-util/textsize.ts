@@ -273,7 +273,7 @@ const _measureWithDOM = (
       "text",
     );
     const params = _prepareParams(style, i);
-    textElement.setAttribute("transform", "rotate(90)");
+    textElement.setAttribute("transform", `rotate(${params.angle})`);
     textElement.setAttribute("fontSize", `${params.fontSize}px`);
     textElement.setAttribute("line-height", params.lineHeight);
     textElement.setAttribute("font-family", params.fontFamily);
