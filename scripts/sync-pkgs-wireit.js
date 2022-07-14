@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * This helper script uses `victory-core` as a template and then for each
- * other victory package as follows.
+ * This helper script uses a template to mutate all library package.json's:
  *
  * 1. Adds all `scripts` and `wireit` configs to that package.
  * 2. Updates wireit config dependencies to match package.json dependencies.
@@ -10,13 +9,12 @@
  * The script also adds `wireit` configs to the root package.json.
  *
  * Note that this script does _not_ mutate:
- * - victory-core
  * - victory-vendor
  * - victory-native
  *
  * If you are editing `victory-vendor` or `victory-native`, directly edit them.
- * For **all other packages**, make your changes in `victory-core` first, test
- * out, and then run this script to sync all the other packages.
+ * For **all other packages**, make your changes in
+ * `sync-pkgs-wireit-helpers.js`.
  */
 
 const fs = require("fs/promises");
@@ -32,7 +30,6 @@ const PKGS_ROOT = path.join(ROOT, "packages");
 
 // Special packages
 const PKGS = {
-  CORE: "victory-core",
   NATIVE: "victory-native",
   VENDOR: "victory-vendor",
 };
