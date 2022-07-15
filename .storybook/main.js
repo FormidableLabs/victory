@@ -1,4 +1,6 @@
 var path = require("path");
+var glob = require("glob");
+
 module.exports = {
   addons: [
     "@storybook/addon-options/register",
@@ -15,5 +17,6 @@ module.exports = {
       },
     },
   ],
-  stories: ["../**/*.stories.(js|jsx|ts|tsx)"],
+  // Use glob to locate the stories, because it ignores our circular dependencies:
+  stories: glob.sync("../**/*.stories.@(js|jsx|ts|tsx)", { cwd: __dirname }),
 };
