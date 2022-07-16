@@ -22,7 +22,11 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 18.x
+          # TODO: Upgrade Node version.
+          # Node18 currently hits `Error: error:0308010C:digital envelope routines::unsupported`
+          # https://github.com/storybookjs/storybook/issues/16555
+          # When we upgrade to webpack5 this should go away.
+          node-version: 16.x
 
       # Wireit cache
       - uses: google/wireit@setup-github-actions-caching/v1
@@ -46,11 +50,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Package Libs
-        run: echo TODO IMPLEMENT pnpm nps build-package-libs
-
       - name: Build Storybook
-        run: echo TODO IMPLEMENT pnpm build-storybook
+        run: pnpm run storybook:build
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
