@@ -129,6 +129,7 @@
     "clean:build": "rimraf coverage \"packages/*/{dist,es,lib}\"",
     "clean:cache": "rimraf .wireit .eslintcache \"packages/*/{.wireit,.eslintcache}\"",
     "build": "wireit",
+    "build:lib:esm": "wireit",
     "format": "wireit",
     "format:pkgs": "wireit",
     "format:root": "wireit",
@@ -142,9 +143,8 @@
     "jest:pkgs": "wireit",
     "types:check:pkgs": "wireit",
     "types:create:pkgs": "wireit",
-    "storybook:base": "wireit",
     "storybook:build": "wireit",
-    "storybook:server": "pnpm run storybook:base && start-storybook -p 6006",
+    "storybook:server": "pnpm run build:lib:esm && start-storybook -p 6006",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
     "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
@@ -196,6 +196,40 @@
         "./packages/victory-voronoi:build",
         "./packages/victory-voronoi-container:build",
         "./packages/victory-zoom-container:build"
+      ]
+    },
+    "build:lib:esm": {
+      "dependencies": [
+        "./packages/victory-native:build:lib:esm",
+        "./packages/victory-vendor:build:lib:esm",
+        "./packages/victory:build:lib:esm",
+        "./packages/victory-area:build:lib:esm",
+        "./packages/victory-axis:build:lib:esm",
+        "./packages/victory-bar:build:lib:esm",
+        "./packages/victory-box-plot:build:lib:esm",
+        "./packages/victory-brush-container:build:lib:esm",
+        "./packages/victory-brush-line:build:lib:esm",
+        "./packages/victory-candlestick:build:lib:esm",
+        "./packages/victory-canvas:build:lib:esm",
+        "./packages/victory-chart:build:lib:esm",
+        "./packages/victory-core:build:lib:esm",
+        "./packages/victory-create-container:build:lib:esm",
+        "./packages/victory-cursor-container:build:lib:esm",
+        "./packages/victory-errorbar:build:lib:esm",
+        "./packages/victory-group:build:lib:esm",
+        "./packages/victory-histogram:build:lib:esm",
+        "./packages/victory-legend:build:lib:esm",
+        "./packages/victory-line:build:lib:esm",
+        "./packages/victory-pie:build:lib:esm",
+        "./packages/victory-polar-axis:build:lib:esm",
+        "./packages/victory-scatter:build:lib:esm",
+        "./packages/victory-selection-container:build:lib:esm",
+        "./packages/victory-shared-events:build:lib:esm",
+        "./packages/victory-stack:build:lib:esm",
+        "./packages/victory-tooltip:build:lib:esm",
+        "./packages/victory-voronoi:build:lib:esm",
+        "./packages/victory-voronoi-container:build:lib:esm",
+        "./packages/victory-zoom-container:build:lib:esm"
       ]
     },
     "format": {
@@ -371,40 +405,6 @@
         "./packages/victory-zoom-container:jest"
       ]
     },
-    "storybook:base": {
-      "dependencies": [
-        "./packages/victory-native:build:lib:esm",
-        "./packages/victory-vendor:build:lib:esm",
-        "./packages/victory:build:lib:esm",
-        "./packages/victory-area:build:lib:esm",
-        "./packages/victory-axis:build:lib:esm",
-        "./packages/victory-bar:build:lib:esm",
-        "./packages/victory-box-plot:build:lib:esm",
-        "./packages/victory-brush-container:build:lib:esm",
-        "./packages/victory-brush-line:build:lib:esm",
-        "./packages/victory-candlestick:build:lib:esm",
-        "./packages/victory-canvas:build:lib:esm",
-        "./packages/victory-chart:build:lib:esm",
-        "./packages/victory-core:build:lib:esm",
-        "./packages/victory-create-container:build:lib:esm",
-        "./packages/victory-cursor-container:build:lib:esm",
-        "./packages/victory-errorbar:build:lib:esm",
-        "./packages/victory-group:build:lib:esm",
-        "./packages/victory-histogram:build:lib:esm",
-        "./packages/victory-legend:build:lib:esm",
-        "./packages/victory-line:build:lib:esm",
-        "./packages/victory-pie:build:lib:esm",
-        "./packages/victory-polar-axis:build:lib:esm",
-        "./packages/victory-scatter:build:lib:esm",
-        "./packages/victory-selection-container:build:lib:esm",
-        "./packages/victory-shared-events:build:lib:esm",
-        "./packages/victory-stack:build:lib:esm",
-        "./packages/victory-tooltip:build:lib:esm",
-        "./packages/victory-voronoi:build:lib:esm",
-        "./packages/victory-voronoi-container:build:lib:esm",
-        "./packages/victory-zoom-container:build:lib:esm"
-      ]
-    },
     "storybook:build": {
       "command": "build-storybook",
       "files": [
@@ -416,7 +416,7 @@
         "storybook-static"
       ],
       "dependencies": [
-        "storybook:base"
+        "build:lib:esm"
       ]
     },
     "sync": {

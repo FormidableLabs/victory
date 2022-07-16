@@ -64,10 +64,10 @@ const updateRootPkg = async ({ allPkgs }) => {
   rootPkg.wireit = rootPkg.wireit || {};
   [
     { rootTask: "build", pkgTask: "build" },
+    { rootTask: "build:lib:esm", pkgTask: "build:lib:esm" },
     { rootTask: "format:pkgs", pkgTask: "format" },
     { rootTask: "lint:pkgs", pkgTask: "lint" },
     { rootTask: "jest:pkgs", pkgTask: "jest" },
-    { rootTask: "storybook:base", pkgTask: "build:lib:esm" },
     { rootTask: "types:check:pkgs", pkgTask: "types:check" },
     { rootTask: "types:create:pkgs", pkgTask: "types:create" },
   ].forEach(({ rootTask, pkgTask }) => {
