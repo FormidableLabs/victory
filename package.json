@@ -407,7 +407,8 @@
       "command": "build-storybook",
       "files": [
         ".storybook",
-        "stories"
+        "stories",
+        "packages/**/*.stories.*"
       ],
       "output": [
         "storybook-static"
