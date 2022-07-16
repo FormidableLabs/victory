@@ -144,7 +144,7 @@
     "types:create:pkgs": "wireit",
     "storybook:base": "wireit",
     "storybook:build": "wireit",
-    "storybook:server": "wireit",
+    "storybook:server": "pnpm run storybook:base && start-storybook -p 6006",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
     "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
@@ -412,12 +412,6 @@
       "output": [
         "storybook-static"
       ],
-      "dependencies": [
-        "storybook:base"
-      ]
-    },
-    "storybook:server": {
-      "command": "start-storybook -p 6006",
       "dependencies": [
         "storybook:base"
       ]
