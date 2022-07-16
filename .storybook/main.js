@@ -8,7 +8,6 @@ const STORIES = path.resolve(ROOT, "stories");
 module.exports = {
   webpackFinal: async (config) => {
     // Read all the victory packages and alias.
-    // Note: CWD is currently project root.
     glob.sync(path.join(PKGS, "victory*/package.json"))
       .forEach((pkgPath) => {
         const key = path.dirname(path.relative(PKGS, pkgPath));

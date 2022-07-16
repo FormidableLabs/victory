@@ -1,16 +1,16 @@
 /*eslint-disable no-magic-numbers */
 
 import React from "react";
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryGroup } from "victory-group/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryArea } from "victory-area/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryPortal } from "victory-core/src/index";
-import { VictorySelectionContainer } from "victory-selection-container/src/index";
-import { VictoryVoronoiContainer } from "victory-voronoi-container/src/index";
-import { VictoryZoomContainer } from "victory-zoom-container/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryBar } from "victory-bar";
+import { VictoryArea } from "victory-area";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryPortal } from "victory-core";
+import { VictorySelectionContainer } from "victory-selection-container";
+import { VictoryVoronoiContainer } from "victory-voronoi-container";
+import { VictoryZoomContainer } from "victory-zoom-container";
 
 class App extends React.Component {
   render() {

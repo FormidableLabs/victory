@@ -1,15 +1,15 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryGroup } from "victory-group/src/index";
-import { VictoryAxis } from "victory-axis/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryLine } from "victory-line/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryLegend } from "victory-legend/src/index";
-import { VictoryZoomContainer } from "victory-zoom-container/src/index";
-import { VictoryBrushContainer } from "victory-brush-container/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryAxis } from "victory-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryLegend } from "victory-legend";
+import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryBrushContainer } from "victory-brush-container";
 
 class App extends React.Component {
   constructor() {

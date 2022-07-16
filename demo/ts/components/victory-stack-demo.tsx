@@ -1,6 +1,6 @@
 import React from "react";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryArea } from "victory-area/src/index";
+import { VictoryStack } from "victory-stack";
+import { VictoryArea } from "victory-area";
 
 class App extends React.Component {
   render() {

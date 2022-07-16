@@ -2,9 +2,9 @@
 /*eslint-disable no-magic-numbers,react/no-multi-comp*/
 import { random, range } from "lodash";
 import React from "react";
-import { VictoryPie } from "victory-pie/src/index";
-import { VictoryTooltip } from "victory-tooltip/src/index";
-import { VictoryTheme } from "victory-core/src/index";
+import { VictoryPie } from "victory-pie";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryTheme } from "victory-core";
 
 export default class App extends React.Component {
   constructor(props) {

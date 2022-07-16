@@ -4,37 +4,38 @@ const path = require("path");
 const glob = require("glob");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
-const ROOT = process.cwd();
-const PACKAGES = glob.sync("packages/*/src", { root: ROOT });
-const FILES = PACKAGES.map(function (p) {
-  return path.join(ROOT, p);
-});
+const ROOT = path.resolve(__dirname, "../../..");
+const PKGS = path.join(ROOT, "packages")
+// Read all the victory packages and alias.
+const VICTORY_ALIASES = glob.sync(path.join(PKGS, "victory*/package.json"))
+  .reduce((memo, pkgPath) => {
+    const key = path.dirname(path.relative(PKGS, pkgPath));
+    memo[key] = path.resolve(path.dirname(pkgPath));
+    return memo;
+  }, {});
 const DEMO = path.resolve("demo");
 const WDS_PORT = 3000;
 
 module.exports = {
   mode: "development",
-
-  resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"],
-  },
-
+  cache: true,
   devServer: {
     port: WDS_PORT,
   },
-
   output: {
     path: DEMO,
     pathinfo: true,
     filename: "main.js",
     publicPath: "/assets/",
   },
-
-  cache: true,
   devtool: "source-map",
   stats: {
     colors: true,
     reasons: true,
+  },
+  resolve: {
+    alias: VICTORY_ALIASES,
+    extensions: [".ts", ".tsx", ".js", ".json"],
   },
   module: {
     rules: [
@@ -43,7 +44,7 @@ module.exports = {
         test: /(\.js|\.tsx?)$/,
         // Use include specifically of our sources.
         // Do _not_ use an `exclude` here.
-        include: [DEMO, ...FILES],
+        include: [DEMO],
         use: {
           loader: "babel-loader",
           // eslint-disable-next-line global-require
@@ -60,5 +61,5 @@ module.exports = {
       paths: true,
       placeholders: true,
     }),
-  ],
+  ]
 };

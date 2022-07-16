@@ -1,17 +1,17 @@
 /*global window:false*/
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryGroup } from "victory-group/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryLine } from "victory-line/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryVoronoiContainer } from "victory-voronoi-container/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryVoronoiContainer } from "victory-voronoi-container";
 import { random, range } from "lodash";
-import { Flyout, VictoryTooltip } from "victory-tooltip/src/index";
-import { VictoryLegend } from "victory-legend/src/index";
-import { VictoryLabel, VictoryTheme } from "victory-core/src/index";
+import { Flyout, VictoryTooltip } from "victory-tooltip";
+import { VictoryLegend } from "victory-legend";
+import { VictoryLabel, VictoryTheme } from "victory-core";
 
 const series1 = [
   { x: 0, y: 2500 },

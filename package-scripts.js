@@ -72,17 +72,8 @@ module.exports = {
     "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
 
     // TODO: HERE
-    // TODO: IMPLEMENT `start` support
-    // start: {
-    //   ts: npsUtils.concurrent.nps("watch", "server.dev.ts"),
-    //   default: npsUtils.concurrent.nps("watch", "server.dev", "server.test"),
-    // },
+    // TODO: IMPLEMENT `start:hot` support ???
     // server: {
-    //   dev: {
-    //     ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
-    //     default:
-    //       "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app",
-    //   },
     //   hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
     // },
 
