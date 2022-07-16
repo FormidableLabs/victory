@@ -410,7 +410,7 @@
       "files": [
         ".storybook",
         "stories",
-        "packages/**/*.stories.*"
+        "packages/victory*/src/**/*.stories.*"
       ],
       "output": [
         "storybook-static"
