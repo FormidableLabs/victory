@@ -264,11 +264,12 @@
       "files": [
         ".eslintrc.js",
         "*.js",
+        ".storybook",
         "scripts",
         "config",
         "demo",
         "stories",
-        "typescript"
+        "test"
       ],
       "output": []
     },
@@ -277,11 +278,12 @@
       "files": [
         ".eslintrc.js",
         "*.js",
+        ".storybook",
         "scripts",
         "config",
         "demo",
         "stories",
-        "typescript"
+        "test"
       ],
       "output": []
     },
