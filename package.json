@@ -134,6 +134,7 @@
     "format:root": "wireit",
     "lint": "wireit",
     "lint:root": "wireit",
+    "lint:root:fix": "nps \"lint:base --fix *.js .storybook scripts config demo stories test\"",
     "lint:pkgs": "wireit",
     "lint:docs": "echo TODO FIGURE OUT INTEGRATION",
     "jest": "wireit",
@@ -141,6 +142,8 @@
     "jest:pkgs": "wireit",
     "types:check:pkgs": "wireit",
     "types:create:pkgs": "wireit",
+    "storybook:build": "build-storybook",
+    "storybook:server": "start-storybook -p 6006",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
     "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
@@ -256,7 +259,7 @@
       ]
     },
     "lint:root": {
-      "command": "nps \"lint:base *.js scripts config demo stories test\"",
+      "command": "nps \"lint:base *.js .storybook scripts config demo stories test\"",
       "files": [
         ".eslintrc.js",
         "*.js",
