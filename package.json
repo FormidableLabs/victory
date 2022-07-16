@@ -134,7 +134,7 @@
     "format:root": "wireit",
     "lint": "wireit",
     "lint:root": "wireit",
-    "lint:root:fix": "nps \"lint:base --fix *.js .storybook scripts config demo stories test\"",
+    "lint:root:fix": "wireit",
     "lint:pkgs": "wireit",
     "lint:docs": "echo TODO FIGURE OUT INTEGRATION",
     "jest": "wireit",
@@ -142,8 +142,9 @@
     "jest:pkgs": "wireit",
     "types:check:pkgs": "wireit",
     "types:create:pkgs": "wireit",
-    "storybook:build": "build-storybook",
-    "storybook:server": "start-storybook -p 6006",
+    "storybook:base": "wireit",
+    "storybook:build": "wireit",
+    "storybook:server": "wireit",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
     "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
@@ -271,6 +272,19 @@
       ],
       "output": []
     },
+    "lint:root:fix": {
+      "command": "nps \"lint:base --fix *.js .storybook scripts config demo stories test\"",
+      "files": [
+        ".eslintrc.js",
+        "*.js",
+        "scripts",
+        "config",
+        "demo",
+        "stories",
+        "typescript"
+      ],
+      "output": []
+    },
     "lint:pkgs": {
       "dependencies": [
         "./packages/victory-native:lint",
@@ -353,6 +367,59 @@
         "./packages/victory-voronoi:jest",
         "./packages/victory-voronoi-container:jest",
         "./packages/victory-zoom-container:jest"
+      ]
+    },
+    "storybook:base": {
+      "dependencies": [
+        "./packages/victory-native:build:lib:esm",
+        "./packages/victory-vendor:build:lib:esm",
+        "./packages/victory:build:lib:esm",
+        "./packages/victory-area:build:lib:esm",
+        "./packages/victory-axis:build:lib:esm",
+        "./packages/victory-bar:build:lib:esm",
+        "./packages/victory-box-plot:build:lib:esm",
+        "./packages/victory-brush-container:build:lib:esm",
+        "./packages/victory-brush-line:build:lib:esm",
+        "./packages/victory-candlestick:build:lib:esm",
+        "./packages/victory-canvas:build:lib:esm",
+        "./packages/victory-chart:build:lib:esm",
+        "./packages/victory-core:build:lib:esm",
+        "./packages/victory-create-container:build:lib:esm",
+        "./packages/victory-cursor-container:build:lib:esm",
+        "./packages/victory-errorbar:build:lib:esm",
+        "./packages/victory-group:build:lib:esm",
+        "./packages/victory-histogram:build:lib:esm",
+        "./packages/victory-legend:build:lib:esm",
+        "./packages/victory-line:build:lib:esm",
+        "./packages/victory-pie:build:lib:esm",
+        "./packages/victory-polar-axis:build:lib:esm",
+        "./packages/victory-scatter:build:lib:esm",
+        "./packages/victory-selection-container:build:lib:esm",
+        "./packages/victory-shared-events:build:lib:esm",
+        "./packages/victory-stack:build:lib:esm",
+        "./packages/victory-tooltip:build:lib:esm",
+        "./packages/victory-voronoi:build:lib:esm",
+        "./packages/victory-voronoi-container:build:lib:esm",
+        "./packages/victory-zoom-container:build:lib:esm"
+      ]
+    },
+    "storybook:build": {
+      "command": "build-storybook",
+      "files": [
+        ".storybook",
+        "stories"
+      ],
+      "output": [
+        "storybook-static"
+      ],
+      "dependencies": [
+        "storybook:base"
+      ]
+    },
+    "storybook:server": {
+      "command": "start-storybook -p 6006",
+      "dependencies": [
+        "storybook:base"
       ]
     },
     "sync": {
