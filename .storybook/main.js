@@ -9,7 +9,7 @@ module.exports = {
   webpackFinal: async (config) => {
     // Read all the victory packages and alias.
     // Note: CWD is currently project root.
-    glob.sync(path.join(ROOT, "packages/victory*/package.json"))
+    glob.sync(path.join(PKGS, "victory*/package.json"))
       .forEach((pkgPath) => {
         const key = path.dirname(path.relative(PKGS, pkgPath));
         config.resolve.alias[key] = path.resolve(path.dirname(pkgPath));
@@ -32,7 +32,6 @@ module.exports = {
       },
     },
   ],
-  // Use glob to locate the stories, because it ignores our circular dependencies:
-  // Remove .. ?
+  // Use glob to locate the stories, because it ignores our circular dependencies.
   stories: glob.sync("../**/*.stories.@(js|jsx|ts|tsx)", { cwd: __dirname }),
 };
