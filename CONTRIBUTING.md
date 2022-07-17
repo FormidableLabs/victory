@@ -67,6 +67,36 @@ $ pnpm run lint
 $ pnpm run jest
 ```
 
+### Tips and tricks
+
+#### What should be a package script? What should be a wireit script?
+
+If you look at our `package.json:scripts.start` command, you'll notice that we use both a wireit-based script (`pnpm run build:lib:esm`) as well as a normal shell command (`webpack serve ...`). This is a good example of the types of things that should and shouldn't be wireit script tasks.
+
+1. **Wireit tasks**: Tasks that should run on input file **changes** and then not run again should be wireit tasks. E.g. "transpile files", "lint files".
+2. **Normal script tasks**: Tasks that should _always_ run regardless of the state of cache task execution. E.g. "start a webpack dev server".
+
+#### Cache issues
+
+We use tools caching within subtasks wherever we can. However, that can sometimes lead to weird errors. Here are some familiar ones with remedies.
+
+*Eslint*
+
+If you hit something like:
+
+```
+/PATH/TO/victory/test/jest-setup.ts
+  0:0  error  Parsing error: Debug Failure. False expression: /PATH/TO/victory/packages/victory-native/node_modules/victory-area/es/index.js linked to nonexistent file /PATH/TO/victory/packages/victory-area/es/index.js
+
+✖ 1 problem (1 error, 0 warnings)
+```
+
+Then you've hit an eslint issue that can be fixed with:
+
+```sh
+$ pnpm run
+```
+
 TODO(wireit): Add "cache clear" notes and commands.
 TODO(wireit): Add watch section.
 TODO(wireit): Add lint + format fix tips.
