@@ -117,8 +117,8 @@
     }
   },
   "scripts": {
-    "TODO_REFACTOR_chromatic": "chromatic",
-    "TODO_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
+    "TODO_WIREIT_REFACTOR_chromatic": "chromatic",
+    "TODO_WIREIT_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
     "start": "pnpm run build:lib:esm && webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app",
     "TODO_WIREIT_START_TS": "need create types?",
     "start:ts": "pnpm run build:lib:esm && webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
