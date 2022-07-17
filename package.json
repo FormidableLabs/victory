@@ -155,7 +155,6 @@
       "dependencies": [
         "format",
         "lint",
-        "build",
         "jest",
         "types:check"
       ]

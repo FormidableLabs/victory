@@ -66,5 +66,8 @@ jobs:
           pnpm sync
           git diff --no-ext-diff --quiet --exit-code
 
+      - name: Build libraries and distributions ${{ matrix.node-version }}
+        run: pnpm build
+
       - name: Check Code ${{ matrix.node-version }}
         run: pnpm check:ci

@@ -46,8 +46,12 @@ TODO(wireit): Add back in `pnpm start`?
 Our task system mostly takes care of all task dependencies and things you need. When you first clone this repo or a new branch, run:
 
 ```sh
-# Do a full build and run all the checks.
+# Run all checks. Re-run this command for your normal workflow.
 $ pnpm run check
+
+# Build libraries and UMD distributions.
+# Really only needed to double-check the webpack build still works.
+$ pnpm run build
 ```
 
 This will do all the build, seeding the task cache so subsequent tasks are fast, and checks that everything is correctly working. Your Victory workflow could reasonably just be (1) making some changes to files + tests, and then (2) re-running `pnpm run check`!
@@ -56,8 +60,6 @@ Here are some other useful tasks:
 
 ```sh
 # ... or individually ...
-# Build all library files and UMD distributions
-$ pnpm run build
 
 # Quality checks
 $ pnpm run format
