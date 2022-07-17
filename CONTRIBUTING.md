@@ -50,7 +50,7 @@ Our task system mostly takes care of all task dependencies and things you need. 
 $ pnpm run check
 ```
 
-This will do all the build, seeding the task cache so subsequent tasks are fast, and checks that everything is correctly working.
+This will do all the build, seeding the task cache so subsequent tasks are fast, and checks that everything is correctly working. Your Victory workflow could reasonably just be (1) making some changes to files + tests, and then (2) re-running `pnpm run check`!
 
 Here are some other useful tasks:
 
@@ -68,6 +68,17 @@ $ pnpm run jest
 ```
 
 ### Tips and tricks
+
+#### Unit of work/caching
+
+Wireit is a flexible tool that caches at the task level. So that means that out-of-the box any wireit task will run the entire task again if any of the input `files` change. This leads us to two tips:
+
+1. **Decompose tasks to package level**: Jest could be run over the whole monorepo in one command, but we instead break it out per-package, so that we only re-run Jest tests for packages that have actually changed (or have dependencies that have changed).
+2. **Use tool-specific caching**: Tools like eslint and tsc can cache within a subtask run, so we like to leverage this within single tasks to make subtask re-runs faster.
+
+#### What happens if a check/subtask fails?
+
+The neat thing about wireit caching, is that for any high-level task, all of the sub-tasks that succeeded don't need to be re-run. So, if you're trying to run `pnpm run check` and get a single package lint error, just fix that package lint error and run `pnpm run check` again -- and then repeat until you get a pass! All of the work along the way that _succeeds_ will be cached and won't be run again!
 
 #### What should be a package script? What should be a wireit script?
 
