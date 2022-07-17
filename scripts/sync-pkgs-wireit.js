@@ -68,8 +68,8 @@ const updateRootPkg = async ({ allPkgs }) => {
     { rootTask: "format:pkgs", pkgTask: "format" },
     { rootTask: "lint:pkgs", pkgTask: "lint" },
     { rootTask: "jest:pkgs", pkgTask: "jest" },
-    { rootTask: "types:check:pkgs", pkgTask: "types:check" },
-    { rootTask: "types:create:pkgs", pkgTask: "types:create" },
+    { rootTask: "types:check", pkgTask: "types:check" },
+    { rootTask: "types:create", pkgTask: "types:create" },
   ].forEach(({ rootTask, pkgTask }) => {
     rootPkg.wireit[rootTask] = rootPkg.wireit[rootTask] || {};
     rootPkg.wireit[rootTask].dependencies = allPkgs.map(

@@ -67,6 +67,7 @@ $ pnpm run lint
 $ pnpm run jest
 ```
 
+TODO(wireit): Add "cache clear" notes and commands.
 TODO(wireit): Add watch section.
 TODO(wireit): Add lint + format fix tips.
 

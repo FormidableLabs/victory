@@ -120,6 +120,7 @@
     "TODO_REFACTOR_chromatic": "chromatic",
     "TODO_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
     "start": "pnpm run build:lib:esm && webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app",
+    "TODO_WIREIT_START_TS": "need create types?",
     "start:ts": "pnpm run build:lib:esm && webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
     "check": "wireit",
     "check:ci": "wireit",
@@ -139,8 +140,8 @@
     "jest": "wireit",
     "jest:root": "wireit",
     "jest:pkgs": "wireit",
-    "types:check:pkgs": "wireit",
-    "types:create:pkgs": "wireit",
+    "types:check": "wireit",
+    "types:create": "wireit",
     "storybook:build": "wireit",
     "storybook:server": "pnpm run build:lib:esm && start-storybook -p 6006",
     "sync": "wireit",
@@ -154,7 +155,7 @@
         "lint",
         "build",
         "jest",
-        "types:check:pkgs"
+        "types:check"
       ]
     },
     "check:ci": {
@@ -423,7 +424,7 @@
         "sync:tsconfig"
       ]
     },
-    "types:check:pkgs": {
+    "types:check": {
       "dependencies": [
         "./packages/victory-native:types:check",
         "./packages/victory-vendor:types:check",
@@ -457,7 +458,7 @@
         "./packages/victory-zoom-container:types:check"
       ]
     },
-    "types:create:pkgs": {
+    "types:create": {
       "dependencies": [
         "./packages/victory-native:types:create",
         "./packages/victory-vendor:types:create",
