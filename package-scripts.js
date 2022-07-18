@@ -29,7 +29,6 @@ module.exports = {
     // Quality.
     // - Format
     // TODO(wireit): Can we cache / incremental?
-    // TODO(wireit): Implement a full `*:fix` for all packages and root to expose as root `pnpm run format:fix`
     "format:pkg":
       'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --list-different "./**/*.{js,jsx,json,ts,tsx}"',
     "format:pkg:fix":
@@ -40,7 +39,6 @@ module.exports = {
       'prettier --write "./*.js*" "./{scripts,config,demo,docs,stories,test}/*.{js,jsx,json,ts,tsx}"',
 
     // - Lint
-    // TODO(wireit): Implement a full `*:fix` for all packages and root to expose as root `pnpm run lint:fix`
     "lint:base": "eslint --cache --color",
     "lint:pkg": 'nps "lint:base src"',
     "lint:pkg:fix": 'nps "lint:base --fix src"',
@@ -70,23 +68,5 @@ module.exports = {
     "types:warning":
       'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
     "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
-
-    // TODO(wireit): Implement all watches.
-    // watch: {
-    //   // `victory-vendor` is built 1x up front and not watched.
-    //   default: npsUtils.series.nps("build-package-libs-vendor", "watch.all"),
-    //   all: 'lerna exec --parallel --ignore victory-native --ignore victory-vendor "nps watch.core"',
-    //   core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
-    //   lib: npsUtils.concurrent.nps(
-    //     "babel-lib-watch",
-    //     "types.create-lib-watch",
-    //     "types.copy-lib-watch",
-    //   ),
-    //   es: npsUtils.concurrent.nps(
-    //     "babel-es-watch",
-    //     "types.create-es-watch",
-    //     "types.copy-es-watch",
-    //   ),
-    // },
   },
 };

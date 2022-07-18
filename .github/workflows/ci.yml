@@ -7,17 +7,12 @@ on:
   push:
     branches:
       - main
-      - infra/**
     paths:
       - '**'
       - '!docs/**'
   pull_request:
     branches:
       - main
-      # TODO(wireit): Remove before merge.
-      - pnpm-wireit
-      # TODO(wireit): Remove before merge.
-      - infra/pnpm-wireit-typescript
     paths:
       - '**'
       - '!docs/**'
