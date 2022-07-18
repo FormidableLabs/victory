@@ -61,6 +61,7 @@
     "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
+    "lint:fix": "wireit",
     "jest": "wireit"
   },
   "wireit": {
@@ -124,6 +125,14 @@
     },
     "lint": {
       "command": "nps \"lint:base scripts\"",
+      "files": [
+        "scripts/**",
+        "../../.eslintrc.js"
+      ],
+      "output": []
+    },
+    "lint:fix": {
+      "command": "pnpm run lint || nps \"lint:base --fix scripts\"",
       "files": [
         "scripts/**",
         "../../.eslintrc.js"

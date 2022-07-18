@@ -69,6 +69,7 @@
     "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
+    "lint:fix": "wireit",
     "jest": "wireit"
   },
   "wireit": {
@@ -355,6 +356,45 @@
     },
     "lint": {
       "command": "nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "../victory-area:types:create",
+        "../victory-axis:types:create",
+        "../victory-bar:types:create",
+        "../victory-box-plot:types:create",
+        "../victory-brush-container:types:create",
+        "../victory-brush-line:types:create",
+        "../victory-candlestick:types:create",
+        "../victory-canvas:types:create",
+        "../victory-chart:types:create",
+        "../victory-core:types:create",
+        "../victory-create-container:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-errorbar:types:create",
+        "../victory-group:types:create",
+        "../victory-histogram:types:create",
+        "../victory-legend:types:create",
+        "../victory-line:types:create",
+        "../victory-pie:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-scatter:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-shared-events:types:create",
+        "../victory-stack:types:create",
+        "../victory-tooltip:types:create",
+        "../victory-voronoi:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create",
+        "../victory-vendor:types:create"
+      ]
+    },
+    "lint:fix": {
+      "command": "pnpm run lint || nps lint:pkg:fix",
       "files": [
         "src/**",
         "../../.eslintignore",

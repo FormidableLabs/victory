@@ -14,6 +14,13 @@ function generateWireitConfig(pkg, rootPkg) {
   const rootDeps = Object.keys(rootPkg.devDependencies).filter(
     isVictoryPackage,
   );
+  // Lint require victory-vendor (if dependend) to be built
+  const lintDeps = [
+    // victory-vendor has nested path accesses, which means it needs
+    // to be built for lint to not error on it if a dependency.
+    ...(deps.includes("victory-vendor") ? ["../victory-vendor:build"] : []),
+    ...concat(deps, devDeps, rootDeps).map((dep) => `../${dep}:types:create`),
+  ];
 
   // We want this block to look like JSON, so disable prettier:
   // prettier-ignore
@@ -32,6 +39,7 @@ function generateWireitConfig(pkg, rootPkg) {
       "types:create": "wireit",
       "format": "wireit",
       "lint": "wireit",
+      "lint:fix": "wireit",
       "jest": "wireit",
     },
     "wireit": {
@@ -169,8 +177,21 @@ function generateWireitConfig(pkg, rootPkg) {
         ],
         "output": [],
         "dependencies": [
-          ...concat(deps, devDeps, rootDeps)
-            .map((dep) => `../${dep}:types:create`),
+          ...lintDeps,
+        ],
+      },
+      "lint:fix": {
+        // Run basic lint first to try and get a cache hit.
+        // If it fails, only then run the fix.
+        "command": "pnpm run lint || nps lint:pkg:fix",
+        "files": [
+          "src/**",
+          "../../.eslintignore",
+          "../../.eslintrc.js"
+        ],
+        "output": [],
+        "dependencies": [
+          ...lintDeps,
         ],
       },
       "jest": {

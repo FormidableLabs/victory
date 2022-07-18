@@ -42,6 +42,7 @@
     "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
+    "lint:fix": "wireit",
     "jest": "wireit"
   },
   "wireit": {
@@ -172,6 +173,19 @@
     },
     "lint": {
       "command": "nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "../victory-core:types:create",
+        "../victory-vendor:types:create"
+      ]
+    },
+    "lint:fix": {
+      "command": "pnpm run lint || nps lint:pkg:fix",
       "files": [
         "src/**",
         "../../.eslintignore",

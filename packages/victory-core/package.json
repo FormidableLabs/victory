@@ -48,6 +48,7 @@
     "types:create": "wireit",
     "format": "wireit",
     "lint": "wireit",
+    "lint:fix": "wireit",
     "jest": "wireit"
   },
   "wireit": {
@@ -188,6 +189,24 @@
       ],
       "output": [],
       "dependencies": [
+        "../victory-vendor:build",
+        "../victory-vendor:types:create",
+        "../victory-axis:types:create",
+        "../victory-bar:types:create",
+        "../victory-line:types:create",
+        "../victory-voronoi:types:create"
+      ]
+    },
+    "lint:fix": {
+      "command": "pnpm run lint || nps lint:pkg:fix",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "../victory-vendor:build",
         "../victory-vendor:types:create",
         "../victory-axis:types:create",
         "../victory-bar:types:create",

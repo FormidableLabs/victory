@@ -82,6 +82,13 @@ $ pnpm run types:check
 $ pnpm run jest
 ```
 
+We also have some helper tasks to fix issues that are fixable.
+
+```sh
+$ pnpm run format:fix
+$ pnpm run lint:fix
+```
+
 ### Victory Native
 
 - [ ] TODO(wireit): Add in `start:rn` and getting that demo going.
@@ -139,7 +146,6 @@ $ pnpm run clean:cache:lint
 ```
 
 - [ ] TODO(wireit): Add watch section.
-- [ ] TODO(wireit): Add lint + format fix tips.
 
 ## Authoring tasks
 
