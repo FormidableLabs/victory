@@ -60,6 +60,7 @@
     "types:check": "wireit",
     "types:create": "wireit",
     "format": "wireit",
+    "format:fix": "wireit",
     "lint": "wireit",
     "lint:fix": "wireit",
     "jest": "wireit"
@@ -116,7 +117,17 @@
     "format": {
       "command": "nps format:pkg",
       "files": [
-        "src/**",
+        "scripts/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": []
+    },
+    "format:fix": {
+      "command": "pnpm run format || nps format:pkg:fix",
+      "files": [
+        "scripts/**",
         "*.json",
         "../../.prettierignore",
         "../../.prettierrc.json"

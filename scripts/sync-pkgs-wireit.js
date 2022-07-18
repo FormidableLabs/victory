@@ -66,6 +66,7 @@ const updateRootPkg = async ({ allPkgs }) => {
     { rootTask: "build", pkgTask: "build" },
     { rootTask: "build:lib:esm", pkgTask: "build:lib:esm" },
     { rootTask: "format:pkgs", pkgTask: "format" },
+    { rootTask: "format:pkgs:fix", pkgTask: "format:fix" },
     { rootTask: "lint:pkgs", pkgTask: "lint" },
     { rootTask: "lint:pkgs:fix", pkgTask: "lint:fix" },
     { rootTask: "jest:pkgs", pkgTask: "jest" },

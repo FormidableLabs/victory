@@ -38,6 +38,7 @@ function generateWireitConfig(pkg, rootPkg) {
       "types:check": "wireit",
       "types:create": "wireit",
       "format": "wireit",
+      "format:fix": "wireit",
       "lint": "wireit",
       "lint:fix": "wireit",
       "jest": "wireit",
@@ -162,18 +163,21 @@ function generateWireitConfig(pkg, rootPkg) {
           ...deps.map((dep) => `../${dep}:types:create`)
         ],
       },
-      "format": {
-        "command": "nps format:pkg",
-        "files": [
-          "src/**",
-          "*.json",
-          "../../.prettierignore",
-          "../../.prettierrc.json",
-        ],
-        "output": [],
-      },
-      // lint + fix
+      // lint/format + fix
+      // For the "fix" task, we first run the normal check that may fail so that
+      // we get caching for packages without changed files.
       ...["", ":fix"].reduce((acc, key) => {
+        acc[`format${key}`] = {
+          "command": key === "" ? "nps format:pkg" : "pnpm run lint || nps format:pkg:fix",
+          "files": [
+            "src/**",
+            "*.json",
+            "../../.prettierignore",
+            "../../.prettierrc.json",
+          ],
+          "output": [],
+        };
+
         acc[`lint${key}`] = {
           "command": key === "" ? "nps lint:pkg" : "pnpm run lint || nps lint:pkg:fix",
           "files": [

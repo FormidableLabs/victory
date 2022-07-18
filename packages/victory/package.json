@@ -68,6 +68,7 @@
     "types:check": "wireit",
     "types:create": "wireit",
     "format": "wireit",
+    "format:fix": "wireit",
     "lint": "wireit",
     "lint:fix": "wireit",
     "jest": "wireit"
@@ -392,6 +393,16 @@
         "../victory-zoom-container:types:create",
         "../victory-vendor:types:create"
       ]
+    },
+    "format:fix": {
+      "command": "pnpm run lint || nps format:pkg:fix",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": []
     },
     "lint:fix": {
       "command": "pnpm run lint || nps lint:pkg:fix",

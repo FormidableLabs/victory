@@ -134,9 +134,11 @@
     "build:lib:esm": "wireit",
     "build:typescript": "wireit",
     "format": "wireit",
-    "format:pkgs": "wireit",
+    "format:fix": "wireit",
     "format:root": "wireit",
     "format:root:fix": "wireit",
+    "format:pkgs": "wireit",
+    "format:pkgs:fix": "wireit",
     "lint": "wireit",
     "lint:fix": "wireit",
     "lint:root": "wireit",
@@ -254,6 +256,12 @@
       "dependencies": [
         "format:root",
         "format:pkgs"
+      ]
+    },
+    "format:fix": {
+      "dependencies": [
+        "format:root:fix",
+        "format:pkgs:fix"
       ]
     },
     "format:root": {
@@ -564,6 +572,40 @@
         "./packages/victory-voronoi:lint:fix",
         "./packages/victory-voronoi-container:lint:fix",
         "./packages/victory-zoom-container:lint:fix"
+      ]
+    },
+    "format:pkgs:fix": {
+      "dependencies": [
+        "./packages/victory-native:format:fix",
+        "./packages/victory-vendor:format:fix",
+        "./packages/victory:format:fix",
+        "./packages/victory-area:format:fix",
+        "./packages/victory-axis:format:fix",
+        "./packages/victory-bar:format:fix",
+        "./packages/victory-box-plot:format:fix",
+        "./packages/victory-brush-container:format:fix",
+        "./packages/victory-brush-line:format:fix",
+        "./packages/victory-candlestick:format:fix",
+        "./packages/victory-canvas:format:fix",
+        "./packages/victory-chart:format:fix",
+        "./packages/victory-core:format:fix",
+        "./packages/victory-create-container:format:fix",
+        "./packages/victory-cursor-container:format:fix",
+        "./packages/victory-errorbar:format:fix",
+        "./packages/victory-group:format:fix",
+        "./packages/victory-histogram:format:fix",
+        "./packages/victory-legend:format:fix",
+        "./packages/victory-line:format:fix",
+        "./packages/victory-pie:format:fix",
+        "./packages/victory-polar-axis:format:fix",
+        "./packages/victory-scatter:format:fix",
+        "./packages/victory-selection-container:format:fix",
+        "./packages/victory-shared-events:format:fix",
+        "./packages/victory-stack:format:fix",
+        "./packages/victory-tooltip:format:fix",
+        "./packages/victory-voronoi:format:fix",
+        "./packages/victory-voronoi-container:format:fix",
+        "./packages/victory-zoom-container:format:fix"
       ]
     }
   }
