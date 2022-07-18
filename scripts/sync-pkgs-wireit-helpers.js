@@ -107,6 +107,10 @@ function generateWireitConfig(pkg, rootPkg) {
           "victory*.js",
           "!victory*.min.js*",
         ],
+        // Webpack uses:
+        // 1. Source (`src`) of package being built.
+        // 2. The ESM version of dependencies specified in our
+        //    `package.json:module` fields.
         "dependencies": [
           ...deps.map((dep) => `../${dep}:build:lib:esm`)
         ],
@@ -168,32 +172,23 @@ function generateWireitConfig(pkg, rootPkg) {
         ],
         "output": [],
       },
-      "lint": {
-        "command": "nps lint:pkg",
-        "files": [
-          "src/**",
-          "../../.eslintignore",
-          "../../.eslintrc.js"
-        ],
-        "output": [],
-        "dependencies": [
-          ...lintDeps,
-        ],
-      },
-      "lint:fix": {
-        // Run basic lint first to try and get a cache hit.
-        // If it fails, only then run the fix.
-        "command": "pnpm run lint || nps lint:pkg:fix",
-        "files": [
-          "src/**",
-          "../../.eslintignore",
-          "../../.eslintrc.js"
-        ],
-        "output": [],
-        "dependencies": [
-          ...lintDeps,
-        ],
-      },
+      // lint + fix
+      ...["", ":fix"].reduce((acc, key) => {
+        acc[`lint${key}`] = {
+          "command": key === "" ? "nps lint:pkg" : "pnpm run lint || nps lint:pkg:fix",
+          "files": [
+            "src/**",
+            "../../.eslintignore",
+            "../../.eslintrc.js"
+          ],
+          "output": [],
+          "dependencies": [
+            ...lintDeps,
+          ],
+        };
+
+        return acc;
+      }, {}),
       "jest": {
         "command": "nps jest:pkg",
         "files": [
@@ -203,6 +198,10 @@ function generateWireitConfig(pkg, rootPkg) {
           "../../test/jest-setup.js",
         ],
         "output": [],
+        // Jest uses:
+        // 1. Source (`src`) for actual test files within a package.
+        // 2. The CommonJS (`lib`) versions of library files (dependencies
+        //    and the package at issue).
         "dependencies": [
           "build:lib:cjs",
           ...concat(devDeps, rootDeps).map((dep) => `../${dep}:build:lib:cjs`),
