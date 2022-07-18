@@ -73,11 +73,10 @@ This will do all the build, seeding the task cache so subsequent tasks are fast,
 Here are some other useful tasks:
 
 ```sh
-# ... or individually ...
-
 # Quality checks
 $ pnpm run format
 $ pnpm run lint
+$ pnpm run types:check
 
 # Tests
 $ pnpm run jest
@@ -179,7 +178,7 @@ $ pnpm chromatic
 
 ## Release
 
-TODO(wireit): REWRITE WHOLE SECTION
+- [ ] TODO(wireit): REWRITE WHOLE SECTION
 
 
 ## Contributor Covenant Code of Conduct
