@@ -71,7 +71,6 @@ module.exports = {
       'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
     "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
 
-
     // TODO(wireit): Implement all watches.
     // watch: {
     //   // `victory-vendor` is built 1x up front and not watched.

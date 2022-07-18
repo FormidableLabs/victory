@@ -135,6 +135,7 @@
     "format": "wireit",
     "format:pkgs": "wireit",
     "format:root": "wireit",
+    "format:root:fix": "wireit",
     "lint": "wireit",
     "lint:root": "wireit",
     "lint:root:fix": "wireit",
@@ -241,6 +242,21 @@
     },
     "format:root": {
       "command": "nps format:root",
+      "files": [
+        ".eslintrc.js",
+        "*.js",
+        "*.json",
+        "scripts",
+        "config",
+        "demo",
+        "docs",
+        "stories",
+        "test"
+      ],
+      "output": []
+    },
+    "format:root:fix": {
+      "command": "nps format:root:fix",
       "files": [
         ".eslintrc.js",
         "*.js",
