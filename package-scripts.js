@@ -71,11 +71,6 @@ module.exports = {
       'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
     "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
 
-    // TODO: HERE
-    // TODO: IMPLEMENT `start:hot` support ???
-    // server: {
-    //   hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
-    // },
 
     // TODO(wireit): Implement all watches.
     // watch: {

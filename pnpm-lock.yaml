@@ -49,6 +49,7 @@ importers:
       babel-plugin-module-resolver: ^4.1.0
       babel-preset-react-native: ^4.0.1
       chromatic: ^5.0.0
+      concurrently: ^7.2.2
       cpx2: ^4.2.0
       cross-env: ^7.0.3
       emotion-theming: ^10.0.27
@@ -135,6 +136,7 @@ importers:
       babel-plugin-module-resolver: 4.1.0
       babel-preset-react-native: 4.0.1
       chromatic: 5.10.2_@babel+core@7.17.10
+      concurrently: 7.2.2
       cpx2: 4.2.0
       cross-env: 7.0.3
       emotion-theming: 10.3.0_react@18.2.0
@@ -8036,7 +8038,7 @@ packages:
       minipass-pipeline: 1.2.4
       mkdirp: 1.0.4
       p-map: 4.0.0
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 3.0.2
       ssri: 8.0.1
       tar: 6.1.11
@@ -8439,7 +8441,7 @@ packages:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
     dependencies:
       string-width: 4.2.3
-      strip-ansi: 6.0.0
+      strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
     dev: true
 
@@ -8638,6 +8640,22 @@ packages:
       inherits: 2.0.4
       readable-stream: 3.6.0
       typedarray: 0.0.6
+    dev: true
+
+  /concurrently/7.2.2:
+    resolution: {integrity: sha512-DcQkI0ruil5BA/g7Xy3EWySGrFJovF5RYAYxwGvv9Jf9q9B1v3jPFP2tl6axExNf1qgF30kjoNYrangZ0ey4Aw==}
+    engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      date-fns: 2.28.0
+      lodash: 4.17.21
+      rxjs: 7.5.6
+      shell-quote: 1.7.3
+      spawn-command: 0.0.2-1
+      supports-color: 8.1.1
+      tree-kill: 1.2.2
+      yargs: 17.5.1
     dev: true
 
   /config-chain/1.1.13:
@@ -9211,6 +9229,11 @@ packages:
 
   /date-fns/1.30.1:
     resolution: {integrity: sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==}
+    dev: true
+
+  /date-fns/2.28.0:
+    resolution: {integrity: sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==}
+    engines: {node: '>=0.11'}
     dev: true
 
   /date-format/0.0.2:
@@ -15879,6 +15902,15 @@ packages:
     engines: {node: '>=0.4.0'}
     dev: true
 
+  /promise-inflight/1.0.1:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dev: true
+
   /promise-inflight/1.0.1_bluebird@3.7.2:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
     peerDependencies:
@@ -16970,6 +17002,12 @@ packages:
     engines: {npm: '>=2.0.0'}
     dependencies:
       tslib: 1.14.1
+    dev: true
+
+  /rxjs/7.5.6:
+    resolution: {integrity: sha512-dnyv2/YsXhnm461G+R/Pe5bWP41Nm6LBXEYWI6eiFP4fiwx6WRI/CD0zbdVAudd9xwLEF2IDcKXLHit0FYjUzw==}
+    dependencies:
+      tslib: 2.4.0
     dev: true
 
   /safe-buffer/5.1.1:
@@ -19516,7 +19554,7 @@ packages:
   /wide-align/1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
     dependencies:
-      string-width: 1.0.2
+      string-width: 4.2.3
     dev: true
 
   /widest-line/3.1.0:
@@ -19606,7 +19644,7 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       string-width: 4.2.3
-      strip-ansi: 6.0.0
+      strip-ansi: 6.0.1
     dev: true
 
   /wrappy/1.0.2:
