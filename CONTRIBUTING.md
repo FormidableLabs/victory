@@ -62,10 +62,14 @@ Our task system mostly takes care of all task dependencies and things you need. 
 ```sh
 # Run all checks. Re-run this command for your normal workflow.
 $ pnpm run check
+# ... or add in a `--watch` to watch & re-run checks for only what you change!
+$ pnpm run check --watch
 
 # Build libraries and UMD distributions.
 # Really only needed to double-check the webpack build still works.
 $ pnpm run build
+# ... or add in a `--watch` to watch & re-run the parts of the build that changed!
+$ pnpm run build --watch
 ```
 
 This will do all the build, seeding the task cache so subsequent tasks are fast, and checks that everything is correctly working. Your Victory workflow could reasonably just be (1) making some changes to files + tests, and then (2) re-running `pnpm run check`!
@@ -144,8 +148,6 @@ Then you've hit an eslint issue that can be fixed with:
 ```sh
 $ pnpm run clean:cache:lint
 ```
-
-- [ ] TODO(wireit): Add watch section.
 
 ## Authoring tasks
 
