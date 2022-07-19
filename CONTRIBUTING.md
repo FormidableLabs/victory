@@ -74,16 +74,20 @@ $ pnpm run build --watch
 
 This will do all the build, seeding the task cache so subsequent tasks are fast, and checks that everything is correctly working. Your Victory workflow could reasonably just be (1) making some changes to files + tests, and then (2) re-running `pnpm run check`!
 
-Here are some other useful tasks:
+Here are some other useful tasks (with or without a `--watch` flag):
 
 ```sh
 # Quality checks
 $ pnpm run format
+$ pnpm run format --watch
 $ pnpm run lint
+$ pnpm run lint --watch
 $ pnpm run types:check
+$ pnpm run types:check --watch
 
 # Tests
 $ pnpm run jest
+$ pnpm run jest --watch
 ```
 
 We also have some helper tasks to fix issues that are fixable.
@@ -186,8 +190,7 @@ $ pnpm chromatic
 
 ## Release
 
-- [ ] TODO(wireit): REWRITE WHOLE SECTION
-
+- [ ] TODO(release): REWRITE WHOLE SECTION
 
 ## Contributor Covenant Code of Conduct
 
