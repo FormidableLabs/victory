@@ -6,12 +6,7 @@ const BABEL_TRANSFORM = ["babel-jest", { configFile: BABEL_PATH }];
 module.exports = {
   rootDir: ROOT,
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  testPathIgnorePatterns: [
-    "node_modules",
-    "config",
-    "/es/",
-    "/lib/",
-  ],
+  testPathIgnorePatterns: ["node_modules", "config", "/es/", "/lib/"],
   transform: {
     // TODO(2215): Switch over to only transpiling from within `/test/`
     // https://github.com/FormidableLabs/victory/issues/2215
