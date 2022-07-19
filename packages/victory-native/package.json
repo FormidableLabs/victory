@@ -158,9 +158,9 @@
       "command": "nps jest:native",
       "files": [
         "src/**",
-        "../../.babelrc.js",
-        "../../jest-native-config.js",
-        "../../jest-native-setup.js"
+        "../../.babelrc.native.js",
+        "../../test/jest-native-config.js",
+        "../../test/jest-native-setup.js"
       ],
       "output": [],
       "dependencies": [

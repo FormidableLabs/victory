@@ -1,10 +1,12 @@
 const path = require("path");
-const BABEL_PATH = path.resolve(__dirname, ".babelrc.js"); // eslint-disable-line no-undef
+const ROOT = path.resolve(__dirname, "..");
+const BABEL_PATH = path.resolve(ROOT, ".babelrc.js"); // eslint-disable-line no-undef
 const BABEL_TRANSFORM = ["babel-jest", { configFile: BABEL_PATH }];
 
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
+  rootDir: ROOT,
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testPathIgnorePatterns: [
     "victory-native",

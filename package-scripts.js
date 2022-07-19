@@ -46,8 +46,8 @@ module.exports = {
     // Tests
     // - Jest
     // TODO(wireit): Can we cache / incremental?
-    "jest:native": `cross-env BABEL_ENV=commonjs jest --config=../../jest-native-config.js --testPathPattern=${PKG_SRC}`,
-    "jest:pkg": `cross-env BABEL_ENV=commonjs jest --config=../../jest-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
+    "jest:native": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-native-config.js --testPathPattern=${PKG_SRC}`,
+    "jest:pkg": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
     // TODO(2348): Hook coverage up to CI
     // https://github.com/FormidableLabs/victory/issues/2348
     // TODO(wireit): Add this to `check:ci`

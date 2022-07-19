@@ -198,8 +198,8 @@ function generateWireitConfig(pkg, rootPkg) {
         "files": [
           "src/**/*.test.*",
           "../../.babelrc.js",
-          "../../jest-config.js",
-          "../../test/jest-setup.js",
+          "../../test/jest-config.js",
+          "../../test/jest-setup.ts",
         ],
         "output": [],
         // Jest uses:
