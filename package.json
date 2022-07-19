@@ -85,8 +85,6 @@
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
     "json-loader": "^0.5.4",
-    "lerna": "^3.22.0",
-    "link-parent-bin": "^2.0.0",
     "lodash": "^4.17.19",
     "lodash-webpack-plugin": "^0.11.6",
     "metro-react-native-babel-preset": "0.66.2",
