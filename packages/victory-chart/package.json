@@ -85,6 +85,9 @@
         "../victory-core:build:lib:esm",
         "../victory-polar-axis:build:lib:esm",
         "../victory-shared-events:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:lib:cjs": {
@@ -103,6 +106,9 @@
         "../victory-core:build:lib:cjs",
         "../victory-polar-axis:build:lib:cjs",
         "../victory-shared-events:build:lib:cjs"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:dist": {
@@ -129,6 +135,9 @@
         "../victory-core:build:lib:esm",
         "../victory-polar-axis:build:lib:esm",
         "../victory-shared-events:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:dist:min": {
@@ -147,6 +156,9 @@
         "../victory-core:build:lib:esm",
         "../victory-polar-axis:build:lib:esm",
         "../victory-shared-events:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "types:check": {
@@ -166,7 +178,10 @@
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "types:create": {
       "command": "nps types:pkg:create",
@@ -187,6 +202,9 @@
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
         "../victory-shared-events:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "format": {
@@ -197,7 +215,10 @@
         "../../.prettierignore",
         "../../.prettierrc.json"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint": {
       "command": "nps lint:pkg",
@@ -215,6 +236,9 @@
         "../victory-line:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "format:fix": {
@@ -225,7 +249,10 @@
         "../../.prettierignore",
         "../../.prettierrc.json"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint:fix": {
       "command": "pnpm run lint || nps lint:pkg:fix",
@@ -243,6 +270,9 @@
         "../victory-line:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "jest": {
@@ -259,6 +289,9 @@
         "../victory-line:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
         "../victory-voronoi:build:lib:cjs"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     }
   }

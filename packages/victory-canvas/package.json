@@ -76,6 +76,9 @@
       "dependencies": [
         "../victory-bar:build:lib:esm",
         "../victory-core:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:lib:cjs": {
@@ -92,6 +95,9 @@
       "dependencies": [
         "../victory-bar:build:lib:cjs",
         "../victory-core:build:lib:cjs"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:dist": {
@@ -116,6 +122,9 @@
       "dependencies": [
         "../victory-bar:build:lib:esm",
         "../victory-core:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "build:dist:min": {
@@ -132,6 +141,9 @@
       "dependencies": [
         "../victory-bar:build:lib:esm",
         "../victory-core:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "types:check": {
@@ -148,7 +160,10 @@
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "types:create": {
       "command": "nps types:pkg:create",
@@ -167,6 +182,9 @@
       "dependencies": [
         "../victory-bar:types:create",
         "../victory-core:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "format": {
@@ -177,7 +195,10 @@
         "../../.prettierignore",
         "../../.prettierrc.json"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint": {
       "command": "nps lint:pkg",
@@ -192,6 +213,9 @@
         "../victory-core:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "format:fix": {
@@ -202,7 +226,10 @@
         "../../.prettierignore",
         "../../.prettierrc.json"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint:fix": {
       "command": "pnpm run lint || nps lint:pkg:fix",
@@ -217,6 +244,9 @@
         "../victory-core:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "jest": {
@@ -232,6 +262,9 @@
         "build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
         "../victory-voronoi:build:lib:cjs"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     }
   }

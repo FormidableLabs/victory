@@ -51,6 +51,17 @@ const writePkg = async (pkgPath, data, originalPkg) => {
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
 const isVictoryPackage = (p) => p.startsWith("victory");
 
+// Check for package locks, which we need to set on each wireit config
+// with non-empty `files`.
+const validateLocks = (pkgPath, pkg) =>
+  Object.entries(pkg.wireit).forEach(([key, obj]) => {
+    if (obj.files && obj.files.length && !obj.packageLocks) {
+      throw new Error(
+        `Missing packageLocks for wireit config for: ${key} in ${pkgPath}`,
+      );
+    }
+  });
+
 // Root mutation
 //
 // We want to use wireit directly to manage multi-build for better
@@ -79,6 +90,7 @@ const updateRootPkg = async ({ allPkgs }) => {
     );
   });
 
+  validateLocks(rootPkgPath, rootPkg);
   await writePkg(rootPkgPath, rootPkg, originalPkg);
 };
 
@@ -94,6 +106,7 @@ const updateLibPkgs = async ({ libPkgs }) => {
       ...generateWireitConfig(originalPkg, rootPkg),
     };
 
+    validateLocks(pkgPath, pkg);
     await writePkg(pkgPath, pkg, originalPkg);
   }
 };

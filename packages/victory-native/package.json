@@ -124,7 +124,10 @@
         "../../.prettierignore",
         "../../.prettierrc.json"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "format:fix": {
       "command": "pnpm run format || nps format:pkg:fix",
@@ -134,7 +137,10 @@
         "../../.prettierignore",
         "../../.prettierrc.json"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint": {
       "command": "nps lint:pkg",
@@ -143,7 +149,10 @@
         "../../.eslintignore",
         "../../.eslintrc.js"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint:fix": {
       "command": "pnpm run lint || nps lint:pkg",
@@ -152,7 +161,10 @@
         "../../.eslintignore",
         "../../.eslintrc.js"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "jest": {
       "command": "nps jest:native",
@@ -165,6 +177,9 @@
       "output": [],
       "dependencies": [
         "../victory:build:lib"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     }
   }

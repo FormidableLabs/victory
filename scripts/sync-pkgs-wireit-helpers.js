@@ -73,6 +73,7 @@ function generateWireitConfig(pkg, rootPkg) {
         "dependencies": [
           ...deps.map((dep) => `../${dep}:build:lib:esm`)
         ],
+        "packageLocks": ["pnpm-lock.yaml"]
       },
       "build:lib:cjs": {
         "command": "nps build:lib:cjs",
@@ -88,6 +89,7 @@ function generateWireitConfig(pkg, rootPkg) {
         "dependencies": [
           ...deps.map((dep) => `../${dep}:build:lib:cjs`)
         ],
+        "packageLocks": ["pnpm-lock.yaml"]
       },
       "build:dist": {
         "dependencies": [
@@ -115,6 +117,7 @@ function generateWireitConfig(pkg, rootPkg) {
         "dependencies": [
           ...deps.map((dep) => `../${dep}:build:lib:esm`)
         ],
+        "packageLocks": ["pnpm-lock.yaml"]
       },
       "build:dist:min": {
         "command": "nps build:dist:min",
@@ -130,6 +133,7 @@ function generateWireitConfig(pkg, rootPkg) {
         "dependencies": [
           ...deps.map((dep) => `../${dep}:build:lib:esm`)
         ],
+        "packageLocks": ["pnpm-lock.yaml"]
       },
       "types:check": {
         "command": "nps types:pkg:check",
@@ -144,6 +148,7 @@ function generateWireitConfig(pkg, rootPkg) {
             .map((dep) => `../${dep}:types:create`),
         ],
         "output": [],
+        "packageLocks": ["pnpm-lock.yaml"]
       },
       "types:create": {
         "command": "nps types:pkg:create",
@@ -162,6 +167,7 @@ function generateWireitConfig(pkg, rootPkg) {
         "dependencies": [
           ...deps.map((dep) => `../${dep}:types:create`)
         ],
+        "packageLocks": ["pnpm-lock.yaml"]
       },
       // lint/format + fix
       // For the "fix" task, we first run the normal check that may fail so that
@@ -176,6 +182,7 @@ function generateWireitConfig(pkg, rootPkg) {
             "../../.prettierrc.json",
           ],
           "output": [],
+          "packageLocks": ["pnpm-lock.yaml"]
         };
 
         acc[`lint${key}`] = {
@@ -189,6 +196,7 @@ function generateWireitConfig(pkg, rootPkg) {
           "dependencies": [
             ...lintDeps,
           ],
+          "packageLocks": ["pnpm-lock.yaml"]
         };
 
         return acc;
@@ -210,6 +218,7 @@ function generateWireitConfig(pkg, rootPkg) {
           "build:lib:cjs",
           ...concat(devDeps, rootDeps).map((dep) => `../${dep}:build:lib:cjs`),
         ],
+        "packageLocks": ["pnpm-lock.yaml"]
       },
     },
   };

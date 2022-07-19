@@ -275,7 +275,10 @@
         "stories",
         "test"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "format:root:fix": {
       "command": "nps format:root:fix",
@@ -290,7 +293,10 @@
         "stories",
         "test"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "format:pkgs": {
       "dependencies": [
@@ -350,7 +356,10 @@
         "stories",
         "test"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint:root:fix": {
       "command": "pnpm run lint:root || nps \"lint:base --fix *.js .storybook scripts config demo stories test\"",
@@ -364,7 +373,10 @@
         "stories",
         "test"
       ],
-      "output": []
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "lint:pkgs": {
       "dependencies": [
@@ -414,6 +426,9 @@
       "output": [],
       "dependencies": [
         "./packages/victory:build:lib:cjs"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "jest:pkgs": {
@@ -462,6 +477,9 @@
       ],
       "dependencies": [
         "build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
       ]
     },
     "sync": {
