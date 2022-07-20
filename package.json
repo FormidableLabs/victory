@@ -116,8 +116,6 @@
     }
   },
   "scripts": {
-    "TODO_WIREIT_REFACTOR_chromatic": "chromatic",
-    "TODO_WIREIT_REFACTOR_chromatic-ci": "build-storybook && chromatic --ci --exit-zero-on-changes",
     "start": "concurrently \"pnpm:build:lib:esm --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app\"",
     "start:ts": "concurrently \"pnpm:build:typescript --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app\"",
     "check": "wireit",
@@ -150,7 +148,9 @@
     "types:check": "wireit",
     "types:create": "wireit",
     "storybook:build": "wireit",
-    "storybook:server": "pnpm run build:lib:esm && start-storybook -p 6006",
+    "storybook:server": "concurrently \"pnpm:build:lib:esm --watch\" \"start-storybook -p 6006\"",
+    "chromatic": "wireit",
+    "chromatic:ci": "wireit",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
     "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
@@ -477,6 +477,24 @@
       ],
       "dependencies": [
         "build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "chromatic": {
+      "command": "chromatic",
+      "dependencies": [
+        "storybook:build"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "chromatic:ci": {
+      "command": "chromatic --ci --exit-zero-on-changes",
+      "dependencies": [
+        "storybook:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
