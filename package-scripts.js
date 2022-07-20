@@ -20,7 +20,8 @@ module.exports = {
     "build:lib:cjs":
       "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
     // - UMD distributions
-    // TODO(wireit): Add caching
+    // TODO(2375): Add / verify caching
+    // https://github.com/FormidableLabs/victory/issues/2375
     "build:dist:dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
     "build:dist:min":
@@ -28,7 +29,8 @@ module.exports = {
 
     // Quality.
     // - Format
-    // TODO(wireit): Can we cache / incremental?
+    // TODO(2375): Can we cache / incremental?
+    // https://github.com/FormidableLabs/victory/issues/2375
     "format:pkg":
       'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --list-different "./**/*.{js,jsx,json,ts,tsx}"',
     "format:pkg:fix":
@@ -45,15 +47,18 @@ module.exports = {
 
     // Tests
     // - Jest
-    // TODO(wireit): Can we cache / incremental?
+    // TODO(2375): Can we cache / incremental?
+    // https://github.com/FormidableLabs/victory/issues/2375
     "jest:native": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-native-config.js --testPathPattern=${PKG_SRC}`,
     "jest:pkg": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
     // TODO(2348): Hook coverage up to CI
     // https://github.com/FormidableLabs/victory/issues/2348
-    // TODO(wireit): Add this to `check:ci`
+    // TODO(2348): Add this to `check:ci`
     "jest:cov": "echo TODO",
 
     // - TypeScript
+    // TODO(2375): Can we cache / incremental?
+    // https://github.com/FormidableLabs/victory/issues/2375
     // Check for errors (includes test files):
     "types:pkg:check": "tsc --pretty --noEmit",
     // To create types, we must do the following:

@@ -190,7 +190,10 @@ $ pnpm chromatic
 
 ## Release
 
-- [ ] TODO(release): REWRITE WHOLE SECTION
+<!--
+TODO(release): REWRITE WHOLE SECTION
+https://github.com/FormidableLabs/victory/issues/2373
+-->
 
 ## Contributor Covenant Code of Conduct
 
