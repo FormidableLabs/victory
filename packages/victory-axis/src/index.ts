@@ -1,1 +1,1 @@
-export * from './victory-axis';
+export * from "./victory-axis";

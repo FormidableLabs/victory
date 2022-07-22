@@ -8,7 +8,7 @@ describe("components/victory-axis", () => {
     const chartProps = {
       defaultAxes: {
         independent: <VictoryAxis data-testid="axis" />,
-        dependent: <VictoryAxis data-testid="axis" dependentAxis />
+        dependent: <VictoryAxis data-testid="axis" dependentAxis />,
       },
     };
     render(<VictoryChart {...chartProps} />);
@@ -16,5 +16,5 @@ describe("components/victory-axis", () => {
     const axes = screen.getAllByTestId("axis");
 
     expect(axes).toHaveLength(2);
-  })
-})
+  });
+});
