@@ -212,7 +212,7 @@
       ]
     },
     "format:fix": {
-      "command": "pnpm run lint || nps format:pkg:fix",
+      "command": "pnpm run format || nps format:pkg:fix",
       "files": [
         "src/**",
         "*.json",
