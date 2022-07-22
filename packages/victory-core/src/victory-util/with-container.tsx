@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  VictoryProvider,
-  VictoryProviderProps,
-  VictoryContainer,
-} from "victory-core";
+import { VictoryProvider, VictoryProviderProps } from "../victory-state";
+import { VictoryContainer } from "../victory-container/victory-container";
 import { VictoryCommonProps } from "./common-props";
 
 const defaultProviderProps = {

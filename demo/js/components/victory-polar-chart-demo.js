@@ -1,20 +1,20 @@
 /*global window:false*/
 /*eslint no-magic-numbers:0*/
 import React from "react";
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryGroup } from "victory-group/src/index";
-import { VictoryPolarAxis } from "victory-polar-axis/src/index";
-import { VictoryArea } from "victory-area/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryLine } from "victory-line/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryZoomContainer } from "victory-zoom-container/src/index";
-import { VictoryVoronoiContainer } from "victory-voronoi-container/src/index";
-import { VictorySelectionContainer } from "victory-selection-container/src/index";
-import { VictoryTooltip } from "victory-tooltip/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryPolarAxis } from "victory-polar-axis";
+import { VictoryArea } from "victory-area";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryVoronoiContainer } from "victory-voronoi-container";
+import { VictorySelectionContainer } from "victory-selection-container";
+import { VictoryTooltip } from "victory-tooltip";
 import { random, range, merge, keys } from "lodash";
-import { VictoryTheme, VictoryLabel } from "victory-core/src/index";
+import { VictoryTheme, VictoryLabel } from "victory-core";
 
 const multiAxisData = [
   { strength: 1, intelligence: 250, stealth: 45 },

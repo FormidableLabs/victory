@@ -15,16 +15,12 @@ There are some parts of Victory that are in need of a little extra attention rig
 
 ## Monorepo!
 
-Victory is a monorepo built with [Lerna](https://lerna.js.org/) and [Yarn](https://yarnpkg.com/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `yarn` will automatically link all interdependent `victory-*` packages. **You must use `yarn` rather than `npm` when installing and running `package.json` scripts in this project.**
-
-## `package-scripts.js`
-
-Victory uses [`nps`](https://github.com/kentcdodds/nps) to organize package scripts. Check `package-scripts.js` for the full list of commands. Note that some of these commands are intended to be run for individual packages but require common development dependencies. [Use `lerna exec` to run these scripts](#scoped-package-scripts-with-lerna).
+Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and [pnpm](https://pnpm.io/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `pnpm install` will automatically link all interdependent `victory-*` packages. **You must use `pnpm` rather than `npm` or `yarn` when installing and running `package.json` scripts in this project.**
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/) 8.10.0 or higher.
-- [Yarn](https://yarnpkg.com/en/docs/install) 1.7.0 or higher.
+- [Node.js](https://nodejs.org/) 14 or higher.
+- [pnpm](https://pnpm.io/) 7 or higher.
 
 ### Setup
 
@@ -35,62 +31,154 @@ $ git clone https://github.com/FormidableLabs/victory.git
 $ cd victory
 ```
 
-Use [Yarn](https://yarnpkg.com/) to install dependencies:
+Use [pnpm](https://pnpm.io/) to install dependencies:
 
 ```sh
-$ yarn install
+# ... if you need pnpm
+$ npm install -g pnpm
+$ pnpm install
 ```
 
-> _Note_: We use Yarn 1 and not the newer, different Yarn 2+ projects. Please use at least the minimum `yarn` version specified in `package.json:engines.yarn`.
+## Development
 
-Run a development server and check out the demos. This command will also build and watch `lib/` and `es/` directories in all packages, so your demos will always be in sync with code changes.
+### Dev servers
+
+We have some dev servers available for a sample development environment.
 
 ```sh
-$ yarn start
+# JavaScript demo app
+$ pnpm start
+
+# TypeScript demo app
+$ pnpm start:ts
 ```
 
-running this command will serve demo pages at http://localhost:3000/ and tests at http://localhost:3001/test/client/test.html
+These run appropriate file watchers, so you can just start developing source files and wait for the webpack dev server to pick up the new changes.
 
-As a useful tip if you're working in just one package in the monorepo, you can rebuild just that package:
+### Build and checks
+
+Our task system mostly takes care of all task dependencies and things you need. When you first clone this repo or a new branch, run:
 
 ```sh
-$ lerna exec --scope <package name> -- yarn nps build-libs
-$ lerna exec --scope victory-core -- yarn nps build-libs
+# Run all checks. Re-run this command for your normal workflow.
+$ pnpm run check
+# ... or add in a `--watch` to watch & re-run checks for only what you change!
+$ pnpm run check --watch
+
+# Build libraries and UMD distributions.
+# Really only needed to double-check the webpack build still works.
+$ pnpm run build
+# ... or add in a `--watch` to watch & re-run the parts of the build that changed!
+$ pnpm run build --watch
 ```
 
-## Checks, Tests
+This will do all the build, seeding the task cache so subsequent tasks are fast, and checks that everything is correctly working. Your Victory workflow could reasonably just be (1) making some changes to files + tests, and then (2) re-running `pnpm run check`!
 
-Tests can be run in the terminal with:
+Here are some other useful tasks (with or without a `--watch` flag):
 
 ```sh
-# Build and run all tests.
-$ yarn nps test
+# Quality checks
+$ pnpm run format
+$ pnpm run format --watch
+$ pnpm run lint
+$ pnpm run lint --watch
+$ pnpm run types:check
+$ pnpm run types:check --watch
 
-# Run a watch script for tests and packages.
-$ yarn nps test.watch
+# Tests
+$ pnpm run jest
+$ pnpm run jest --watch
 ```
 
-You can also run the watch script in a separate terminal window to add arguments or isolate specific tests.
+We also have some helper tasks to fix issues that are fixable.
 
 ```sh
-# In one terminal run a watch on library files
-$ yarn nps watch
-
-# In another terminal the jest script
-$ yarn nps "jest <module> --watch"
+$ pnpm run format:fix
+$ pnpm run lint:fix
 ```
 
-Victory uses eslint and prettier to maintain code style consistency. Before creating a pull request, please lint and format your changes with the following commands:
+### Victory Native
+
+To develop against `victory-native`, please see the package [README](./packages/victory-native/README.md).
+
+### Tips and tricks
+
+#### My computer grinds to a halt!
+
+The initial build/check, or one where something that is part of a lot of cache keys changes, can really slow down your computer, especially if you've got an older model. To allow you to do other work on your computer at the same time, consider using the `WIREIT_PARALLEL=<NUM_PROCESS>` environment variable like:
 
 ```sh
-# Lint
-$ yarn nps lint                                       # check
-$ lerna exec --scope <pkg name> -- yarn nps lint.fix  # fix specific package
-
-# Prettier
-$ yarn nps format.ci  # check
-$ yarn nps format.fix # fix
+$ WIREIT_PARALLEL=4 pnpm run check
 ```
+
+A good rubric is "number of cores" for max speed while still a mostly usable system or one less than that number for a much more usable system.
+
+#### Unit of work/caching
+
+Wireit is a flexible tool that caches at the task level. So that means that out-of-the box any wireit task will run the entire task again if any of the input `files` change. This leads us to two tips:
+
+1. **Decompose tasks to package level**: Jest could be run over the whole monorepo in one command, but we instead break it out per-package, so that we only re-run Jest tests for packages that have actually changed (or have dependencies that have changed).
+2. **Use tool-specific caching**: Tools like eslint and tsc can cache within a subtask run, so we like to leverage this within single tasks to make subtask re-runs faster.
+
+#### What happens if a check/subtask fails?
+
+The neat thing about wireit caching, is that for any high-level task, all of the sub-tasks that succeeded don't need to be re-run. So, if you're trying to run `pnpm run check` and get a single package lint error, just fix that package lint error and run `pnpm run check` again -- and then repeat until you get a pass! All of the work along the way that _succeeds_ will be cached and won't be run again!
+
+#### What should be a package script? What should be a wireit script?
+
+If you look at our `package.json:scripts.start` command, you'll notice that we use both a wireit-based script (`pnpm run build:lib:esm`) as well as a normal shell command (`webpack serve ...`). This is a good example of the types of things that should and shouldn't be wireit script tasks.
+
+1. **Wireit tasks**: Tasks that should run on input file **changes** and then not run again should be wireit tasks. E.g. "transpile files", "lint files".
+2. **Normal script tasks**: Tasks that should _always_ run regardless of the state of cache task execution. E.g. "start a webpack dev server".
+
+#### Cache issues
+
+We use tools caching within subtasks wherever we can. However, that can sometimes lead to weird errors. Here are some familiar ones with remedies.
+
+*Everything*
+
+If you want to make sure globally you're not hitting a cache issue, this command cleans the wireit cache as well as all the tool caches:
+
+```sh
+$ pnpm run clean:cache
+```
+
+Your next `pnpm run build|check` will be a full (long) rebuild from scratch.
+
+*Eslint*
+
+If you hit something like:
+
+```
+/PATH/TO/victory/test/jest-setup.ts
+  0:0  error  Parsing error: Debug Failure. False expression: /PATH/TO/victory/packages/victory-native/node_modules/victory-area/es/index.js linked to nonexistent file /PATH/TO/victory/packages/victory-area/es/index.js
+
+✖ 1 problem (1 error, 0 warnings)
+```
+
+Then you've hit an eslint issue that can be fixed with:
+
+```sh
+$ pnpm run clean:cache:lint
+```
+
+## Authoring tasks
+
+Our task system is optimized for fast, easy developer experience, at the acknowledged cost of **extra maintainer burden** when we change task structure, add tasks, etc. If you are editing the scripts in a `package.json` or `package-scripts.js` you'll need to read up on [Wireit](https://github.com/google/wireit) and probably want to talk to an existing Victory maintainer.
+
+We use three tools and some custom scripts as follows:
+
+- `pnpm` to `run` or `exec` scripts
+- `wireit` to cache tasks and run dependent tasks.
+- `nps` to place one off script tasks in the root `/project-scripts.js` in a manner that can be called from within a workspace.
+- `scripts/sync-pkgs-wireit*.js`: Scripts run with `pnpm run sync` to automate dependency management. This is where most of your work for task management will take place.
+
+For our packages, we primarily focus on four types of package.json files:
+
+- `package.json`: Define root tasks here and aggregate workspace tasks here. Note that instead of relying on `pnpm -r run` to concurrently run tasks in each workspace, we instead rely on `wireit` alone to have dependencies in aggregate tasks on all subtasks. This is more efficient to have `wireit` command concurrency and the task dependency graph.
+- `packages/victory*/package.json`: These package scripts are generated by `scripts/sync-pkgs-wireit-helpers.js`. If you want to change them, edit that script and run `pnpm run sync`.
+- `packages/victory-native/package.json`: A custom package.json that must have implementations or no-ops for all things in `victory-core`.
+- `packages/victory-vendor/package.json`: A custom package.json that must have implementations or no-ops for all things in `victory-core`.
 
 ## Visual Tests
 
@@ -99,53 +187,23 @@ Victory relies heavily on visual regression testing with [Storybook](https://sto
 Write visual tests for new features by adding them in the `stories` directory. Run storybooks and check out changes. Storybooks are served from http://localhost:6006/
 
 ```sh
-$ yarn storybook
+$ pnpm run storybook:server
 ```
+
+This task also watches and rebuilds all Victory source files so you can more easily develop against storybook.
 
 [Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All internal PRs will trigger a new Chromatic build, which will be displayed along with CI status. Chromatic builds for Victory may be viewed in more detail here: https://www.chromaticqa.com/builds?appId=5b4acf7c54c0490024d5980b. Chromatic requires a secret app code to run, so PRs from external contributors will not automatically trigger a Chromatic build. For this reason, changes from external contributors will be checked out and opened as separate PRs so Chromatic may be used to verify any changes. Developers with access to the secret app code may also trigger a chromatic build manually with:
 
 ```sh
-$ yarn chromatic
+$ pnpm run chromatic
 ```
 
 ## Release
 
-Victory uses [Lerna](https://lerna.js.org/) to automate versioning and publishing packages.
-
-Each package must contain the following `version` script `package.json`:
-
-```
-"scripts": {
-  "version": "nps build-libs && nps build-dists",
-}
-```
-
-Before versioning, we run `lerna bootstrap` and `link-parent-bin` to ensure that each individual package has the `devDependencies` it needs to run its `version` script. Pre version checks are run _once_ for all packages, and are defined in the root directory `package.json`
-
-```
-"preversion": "lerna bootstrap && link-parent-bin && nps check"
-```
-
-The following commands will let you try a version without publishing or creating git commits:
-
-```sh
-// This command bumps versions, runs checks, builds libs. No git commits will be made, and nothing will be published. `package.json` files in all packages will be altered, so be careful to clean up afterwards. This command will only run all pre-version scripts if there are committed changes to packages, so creating a test commit before running this command will typically be necessary.
-$ nps lerna-dry-run
-```
-
-To publish a package _for real_
-
-```sh
-$ lerna publish
-```
-
-You will be prompted to select an appropriate version before continuing. Lerna will run preversion checks, bump versions in all packages, create git commits, build libs, and publish packages. The whole process takes about 15 minutes. Be patient!
-
-Once the new version has been published, please [draft a new release](https://github.com/FormidableLabs/victory/releases/new) with the recent changes (this can be auto-generated by GitHub) and add the release notes to the [changelog](https://github.com/FormidableLabs/victory/blob/main/CHANGELOG.md).
-
-## Scoped package scripts with Lerna
-
-Some of our scripts are intended to run only in the context of individual packages. If you are developing scripts and need to run them individually from the root directory, you can do so with `lerna exec --scope <PACKAGE_NAME> <SCRIPT>`. For example, building `dist` for each package is typically done only when versioning packages, and is run by Lerna for each package, when it runs the `version` script for that package. To test building `dist` for only `victory-core`, run `lerna exec --scope victory-core nps build-dists`
+<!--
+TODO(release): REWRITE WHOLE SECTION
+https://github.com/FormidableLabs/victory/issues/2373
+-->
 
 ## Contributor Covenant Code of Conduct
 

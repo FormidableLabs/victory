@@ -14,6 +14,7 @@
   },
   "homepage": "https://formidable.com/open-source/victory",
   "source": "src/index.js",
+  "sideEffects": false,
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
@@ -23,6 +24,8 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.21",
+    "react-fast-compare": "^3.2.0",
     "victory": "^36.5.3",
     "victory-area": "^36.5.3",
     "victory-axis": "^36.5.3",
@@ -49,7 +52,8 @@
     "victory-tooltip": "^36.5.3",
     "victory-voronoi": "^36.5.3",
     "victory-voronoi-container": "^36.5.3",
-    "victory-zoom-container": "^36.5.3"
+    "victory-zoom-container": "^36.5.3",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
@@ -57,5 +61,128 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-svg": "^12.1.1"
   },
-  "sideEffects": false
+  "scripts": {
+    "build": "wireit",
+    "build:lib": "wireit",
+    "build:lib:esm": "wireit",
+    "build:lib:cjs": "wireit",
+    "build:dist": "wireit",
+    "build:dist:dev": "wireit",
+    "build:dist:min": "wireit",
+    "types:check": "wireit",
+    "types:create": "wireit",
+    "format": "wireit",
+    "format:fix": "wireit",
+    "lint": "wireit",
+    "lint:fix": "wireit",
+    "jest": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:lib:esm": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:lib:cjs": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:dist": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:dist:dev": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:dist:min": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "types:check": {
+      "command": "echo \"No types to check here\"",
+      "files": [],
+      "output": []
+    },
+    "types:create": {
+      "command": "echo \"No types to create here\"",
+      "files": [],
+      "output": []
+    },
+    "format": {
+      "command": "nps format:pkg",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "format:fix": {
+      "command": "pnpm run format || nps format:pkg:fix",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "lint": {
+      "command": "nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "lint:fix": {
+      "command": "pnpm run lint || nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "jest": {
+      "command": "nps jest:native",
+      "files": [
+        "src/**",
+        "../../.babelrc.native.js",
+        "../../test/jest-native-config.js",
+        "../../test/jest-native-setup.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "../victory:build:lib"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    }
+  }
 }

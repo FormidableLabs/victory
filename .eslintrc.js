@@ -75,8 +75,8 @@ module.exports = {
           },
         ],
         "no-invalid-this": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-invalid-this": ["error"],
-
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",

@@ -11,7 +11,7 @@ import {
   VictoryStack,
   VictoryGroup,
   VictorySelectionContainer,
-} from "victory/src/index";
+} from "victory";
 
 export default class App extends React.Component {
   render() {

@@ -1,14 +1,14 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryGroup } from "victory-group/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryLine } from "victory-line/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryErrorBar } from "victory-errorbar/src/index";
-import { VictoryTooltip } from "victory-tooltip/src/index";
-import { VictoryVoronoi } from "victory-voronoi/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryErrorBar } from "victory-errorbar";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryVoronoi } from "victory-voronoi";
 import { range, random } from "lodash";
 
 class App extends React.Component {

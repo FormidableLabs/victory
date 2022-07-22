@@ -1,9 +1,9 @@
 /*eslint-disable no-magic-numbers */
 import React from "react";
 import { range } from "lodash";
-import { VictorySelectionContainer } from "victory-selection-container/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryChart } from "victory-chart/src/index";
+import { VictorySelectionContainer } from "victory-selection-container";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryChart } from "victory-chart";
 
 const scatterData = range(4000).map(() => ({
   x: Math.random(),

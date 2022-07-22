@@ -9,3 +9,4 @@ artifacts
 tmp
 demo/rn
 **/*.d.ts
+.wireit
