@@ -12,6 +12,13 @@ import {
   addEvents,
   Axis,
   UserProps,
+  DomainPropType,
+  EventPropTypeInterface,
+  OrientationTypes,
+  VictoryAxisCommonProps,
+  VictoryCommonProps,
+  VictorySingleLabelableProps,
+  EventsMixinClass,
 } from "victory-core";
 import { getBaseProps, getStyles } from "./helper-methods";
 
@@ -32,7 +39,31 @@ const options = {
   ],
 };
 
-class VictoryAxis extends React.Component {
+export type VictoryAxisTTargetType =
+  | "axis"
+  | "axisLabel"
+  | "grid"
+  | "ticks"
+  | "tickLabels"
+  | "parent";
+
+export interface VictoryAxisProps
+  extends VictoryAxisCommonProps,
+    VictoryCommonProps,
+    VictorySingleLabelableProps {
+  crossAxis?: boolean;
+  domain?: DomainPropType;
+  events?: EventPropTypeInterface<VictoryAxisTTargetType, number | string>[];
+  fixLabelOverlap?: boolean;
+  offsetX?: number;
+  offsetY?: number;
+  orientation?: OrientationTypes;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryAxisBase extends EventsMixinClass<VictoryAxisProps> {}
+
+class VictoryAxisBase extends React.Component<VictoryAxisProps> {
   static animationWhitelist = [
     "style",
     "domain",
@@ -143,7 +174,7 @@ class VictoryAxis extends React.Component {
 
   static getDomain = Axis.getDomain;
   static getAxis = Axis.getAxis;
-  static getStyles = (props) => getStyles(props, fallbackProps.style);
+  static getStyles = (props) => getStyles(props);
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
   static expectedComponents = [
     "axisComponent",
@@ -291,4 +322,4 @@ class VictoryAxis extends React.Component {
   }
 }
 
-export default addEvents(VictoryAxis, options);
+export const VictoryAxis = addEvents(VictoryAxisBase, options);
