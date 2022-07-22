@@ -282,7 +282,7 @@
       ]
     },
     "format:root:fix": {
-      "command": "nps format:root:fix",
+      "command": "pnpm run format:root || nps format:root:fix",
       "files": [
         ".eslintrc.js",
         "*.js",
