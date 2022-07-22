@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Text } from "react-native";
 import { ScrollView } from "react-native";
 import { VictoryBar, VictoryGroup, VictoryStack } from "victory-native";
 import viewStyles from "../styles/view-styles";
