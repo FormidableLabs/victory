@@ -99,8 +99,7 @@ $ pnpm run lint:fix
 
 ### Victory Native
 
-- [ ] TODO(wireit): Add in `start:rn` and getting that demo going.
-- [ ] TODO(wireit): Move `victory-native` README guide here and link???
+To develop against `victory-native`, please see the package [README](./packages/victory-native/README.md).
 
 ### Tips and tricks
 
