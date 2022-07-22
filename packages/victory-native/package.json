@@ -24,6 +24,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.21",
     "react-fast-compare": "^3.2.0",
     "victory": "^36.5.3",
     "victory-area": "^36.5.3",
@@ -51,7 +52,8 @@
     "victory-tooltip": "^36.5.3",
     "victory-voronoi": "^36.5.3",
     "victory-voronoi-container": "^36.5.3",
-    "victory-zoom-container": "^36.5.3"
+    "victory-zoom-container": "^36.5.3",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
