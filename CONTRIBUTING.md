@@ -104,6 +104,16 @@ $ pnpm run lint:fix
 
 ### Tips and tricks
 
+#### My computer grinds to a halt!
+
+The initial build/check, or one where something that is part of a lot of cache keys changes, can really slow down your computer, especially if you've got an older model. To allow you to do other work on your computer at the same time, consider using the `WIREIT_PARALLEL=<NUM_PROCESS>` environment variable like:
+
+```sh
+$ WIREIT_PARALLEL=4 pnpm run check
+```
+
+A good rubric is "number of cores" for max speed while still a mostly usable system or one less than that number for a much more usable system.
+
 #### Unit of work/caching
 
 Wireit is a flexible tool that caches at the task level. So that means that out-of-the box any wireit task will run the entire task again if any of the input `files` change. This leads us to two tips:

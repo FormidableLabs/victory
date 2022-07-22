@@ -273,7 +273,8 @@
         "demo",
         "docs",
         "stories",
-        "test"
+        "test",
+        "!**/node_modules/**"
       ],
       "output": [],
       "packageLocks": [
@@ -291,7 +292,8 @@
         "demo",
         "docs",
         "stories",
-        "test"
+        "test",
+        "!**/node_modules/**"
       ],
       "output": [],
       "packageLocks": [
@@ -354,7 +356,8 @@
         "config",
         "demo",
         "stories",
-        "test"
+        "test",
+        "!**/node_modules/**"
       ],
       "output": [],
       "packageLocks": [
@@ -371,7 +374,8 @@
         "config",
         "demo",
         "stories",
-        "test"
+        "test",
+        "!**/node_modules/**"
       ],
       "output": [],
       "packageLocks": [
