@@ -174,7 +174,7 @@ function generateWireitConfig(pkg, rootPkg) {
       // we get caching for packages without changed files.
       ...["", ":fix"].reduce((acc, key) => {
         acc[`format${key}`] = {
-          "command": key === "" ? "nps format:pkg" : "pnpm run lint || nps format:pkg:fix",
+          "command": key === "" ? "nps format:pkg" : "pnpm run format || nps format:pkg:fix",
           "files": [
             "src/**",
             "*.json",
