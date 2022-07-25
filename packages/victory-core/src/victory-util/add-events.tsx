@@ -37,7 +37,7 @@ const defaultComponents: NonNullable<MixinOptions["components"]> = [
 export type MixinOptions = {
   components?: Array<{
     name: string;
-    index?: string;
+    index?: string | number;
   }>;
 };
 
@@ -64,6 +64,12 @@ export interface EventsMixinClass<TProps> {
   getEventState: typeof Events.getEventState;
   renderContinuousData(props: TProps);
   animateComponent(props: TProps, defaultAnimationWhitelist);
+  getComponentProps(
+    component: React.ReactElement,
+    type: string,
+    index: number,
+  ): TProps;
+  dataKeys: string[];
 }
 
 /**

@@ -61,7 +61,7 @@ const getStyleObject = (props) => {
     : specificAxisStyle || generalAxisStyle;
 };
 
-export const getStyles = (props, styleObject) => {
+export const getStyles = (props, styleObject?) => {
   const style = props.style || {};
   styleObject = styleObject || {};
   const parentStyleProps = { height: "100%", width: "100%" };
@@ -552,7 +552,6 @@ export const getBaseProps = (props, fallbackProps) => {
     anchors,
     domain,
     stringTicks,
-    name,
   } = calculatedValues;
   const otherAxis = axis === "x" ? "y" : "x";
   const { width, height, standalone, theme, polar, padding, horizontal } =
@@ -585,7 +584,6 @@ export const getBaseProps = (props, fallbackProps) => {
         height,
         padding,
         domain,
-        name,
       },
       sharedProps,
     ),
@@ -608,7 +606,7 @@ export const getBaseProps = (props, fallbackProps) => {
     const tickLayout = {
       position: getTickPosition(styles, orientation, isVertical),
       transform: getTickTransform(
-        scale[axis](tickValue),
+        scale[axis]?.(tickValue),
         globalTransform,
         isVertical,
       ),
@@ -619,9 +617,9 @@ export const getBaseProps = (props, fallbackProps) => {
       transform: {
         x: isVertical
           ? -gridOffset.x + globalTransform.x
-          : scale[axis](tickValue) + globalTransform.x,
+          : scale[axis]?.(tickValue) + globalTransform.x,
         y: isVertical
-          ? scale[axis](tickValue) + globalTransform.y
+          ? scale[axis]?.(tickValue) + globalTransform.y
           : gridOffset.y + globalTransform.y,
       },
     };
