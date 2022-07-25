@@ -27,6 +27,10 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
+  "devDependencies": {
+    "victory-axis": "*",
+    "victory-chart": "*"
+  },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",
     "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
