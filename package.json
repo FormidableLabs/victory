@@ -116,6 +116,8 @@
     }
   },
   "scripts": {
+    "version": "echo TODO RELEASE VERSION",
+    "publish": "echo TODO RELEASE PUBLISH",
     "start": "concurrently --raw \"pnpm:build:lib:esm --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app\"",
     "start:ts": "concurrently --raw \"pnpm:build:typescript --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app\"",
     "check": "wireit",
@@ -646,5 +648,9 @@
         "./packages/victory-zoom-container:format:fix"
       ]
     }
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.24.1",
+    "@svitejs/changesets-changelog-github-compact": "^0.1.1"
   }
 }
