@@ -1,1 +1,1 @@
-export { default as VictoryBoxPlot } from "./victory-box-plot";
+export * from "./victory-box-plot";

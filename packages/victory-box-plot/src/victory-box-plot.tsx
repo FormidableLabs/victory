@@ -14,6 +14,16 @@ import {
   DefaultTransitions,
   CommonProps,
   UserProps,
+  EventPropTypeInterface,
+  DomainPropType,
+  DomainPaddingPropType,
+  OrientationTypes,
+  StringOrNumberOrCallback,
+  VictoryDatableProps,
+  VictoryCommonProps,
+  VictoryStyleObject,
+  VictoryLabelStyleObject,
+  EventsMixinClass,
 } from "victory-core";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -49,7 +59,75 @@ const options = {
   ],
 };
 
-class VictoryBoxPlot extends React.Component {
+export type VictoryBoxPlotLabelType =
+  | boolean
+  | (string | number)[]
+  | { (): any }
+  | { (data: any): string | null };
+
+export interface VictoryBoxPlotStyleInterface {
+  parent?: VictoryStyleObject;
+  max?: VictoryStyleObject;
+  maxLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  min?: VictoryStyleObject;
+  minLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  median?: VictoryStyleObject;
+  medianLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  q1?: VictoryStyleObject;
+  q1Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  q3?: VictoryStyleObject;
+  q3Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+}
+
+export interface VictoryBoxPlotLabelOrientationInterface {
+  max?: OrientationTypes;
+  min?: OrientationTypes;
+  median?: OrientationTypes;
+  q1?: OrientationTypes;
+  q3?: OrientationTypes;
+}
+
+export interface VictoryBoxPlotProps
+  extends VictoryCommonProps,
+    VictoryDatableProps {
+  boxWidth?: number;
+  datum?: any;
+  domain?: DomainPropType;
+  domainPadding?: DomainPaddingPropType;
+  events?: EventPropTypeInterface<string, StringOrNumberOrCallback>[];
+  eventKey?: StringOrNumberOrCallback;
+  horizontal?: boolean;
+  labelOrientation?: OrientationTypes | VictoryBoxPlotLabelOrientationInterface;
+  labels?: boolean;
+  max?: StringOrNumberOrCallback | string[];
+  maxComponent?: React.ReactElement;
+  maxLabelComponent?: React.ReactElement;
+  maxLabels?: VictoryBoxPlotLabelType;
+  median?: StringOrNumberOrCallback | string[];
+  medianComponent?: React.ReactElement;
+  medianLabelComponent?: React.ReactElement;
+  medianLabels?: VictoryBoxPlotLabelType;
+  min?: StringOrNumberOrCallback | string[];
+  minComponent?: React.ReactElement;
+  minLabelComponent?: React.ReactElement;
+  minLabels?: VictoryBoxPlotLabelType;
+  q1?: StringOrNumberOrCallback | string[];
+  q1Component?: React.ReactElement;
+  q1LabelComponent?: React.ReactElement;
+  q1Labels?: VictoryBoxPlotLabelType;
+  q3?: StringOrNumberOrCallback | string[];
+  q3Component?: React.ReactElement;
+  q3LabelComponent?: React.ReactElement;
+  q3Labels?: VictoryBoxPlotLabelType;
+  style?: VictoryBoxPlotStyleInterface;
+  text?: StringOrNumberOrCallback | string[];
+  whiskerWidth?: number;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryBoxPlotBase extends EventsMixinClass<VictoryBoxPlotProps> {}
+
+class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
   static animationWhitelist = [
     "data",
     "domain",
@@ -260,21 +338,30 @@ class VictoryBoxPlot extends React.Component {
             );
           }
           return validDataComponents;
-        }, []);
+        }, [] as React.ReactElement[]);
       }),
     );
 
     const labelComponents = flatten(
       types.map((type) => {
-        const components = this.dataKeys.map((key, index) => {
-          const name = `${type}Labels`;
-          const baseComponent = props[`${type}LabelComponent`];
-          const labelProps = this.getComponentProps(baseComponent, name, index);
-          if (labelProps.text !== undefined && labelProps.text !== null) {
-            return React.cloneElement(baseComponent, labelProps);
-          }
-          return undefined;
-        });
+        const components = this.dataKeys.reduce(
+          (validComponents, _key, index) => {
+            const name = `${type}Labels`;
+            const baseComponent = props[`${type}LabelComponent`];
+            const labelProps = this.getComponentProps(
+              baseComponent,
+              name,
+              index,
+            );
+            if (labelProps.text !== undefined && labelProps.text !== null) {
+              validComponents.push(
+                React.cloneElement(baseComponent, labelProps),
+              );
+            }
+            return validComponents;
+          },
+          [] as React.ReactElement[],
+        );
         return components.filter(Boolean);
       }),
     );
@@ -310,11 +397,11 @@ class VictoryBoxPlot extends React.Component {
 
     const children = this.renderBoxPlot(props);
     const component = props.standalone
-      ? this.renderContainer(props.containerComponent, children)
+      ? this.renderContainer(props.containerComponent, [children])
       : children;
 
     return UserProps.withSafeUserProps(component, props);
   }
 }
 
-export default addEvents(VictoryBoxPlot, options);
+export const VictoryBoxPlot = addEvents(VictoryBoxPlotBase, options);
