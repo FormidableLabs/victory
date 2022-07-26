@@ -48,6 +48,9 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
+          # Note: Our `package.json:scripts.version` currently doesn't have `--fix-lockfile` for
+          # `pnpm install` because of a PNPM bug of some kind.
+          # See spectacle issue: https://github.com/FormidableLabs/spectacle/issues/1156
           version: pnpm run version
           publish: pnpm run publish
         env:

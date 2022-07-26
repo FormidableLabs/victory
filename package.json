@@ -43,10 +43,12 @@
     "@babel/plugin-transform-template-literals": "7.16.7",
     "@babel/preset-react": "7.16.7",
     "@babel/preset-typescript": "^7.17.12",
+    "@changesets/cli": "^2.24.1",
     "@storybook/addon-actions": "^6.5.6",
     "@storybook/addon-options": "^5.3.21",
     "@storybook/addon-storysource": "^6.5.6",
     "@storybook/react": "^6.5.6",
+    "@svitejs/changesets-changelog-github-compact": "^0.1.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/react-hooks": "^8.0.0",
@@ -116,8 +118,8 @@
     }
   },
   "scripts": {
-    "version": "echo TODO RELEASE VERSION",
-    "publish": "echo TODO RELEASE PUBLISH",
+    "version": "pnpm changeset version && pnpm install",
+    "publish": "nps git:tag && pnpm changeset publish --no-git-tag",
     "start": "concurrently --raw \"pnpm:build:lib:esm --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app\"",
     "start:ts": "concurrently --raw \"pnpm:build:typescript --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app\"",
     "check": "wireit",
@@ -648,9 +650,5 @@
         "./packages/victory-zoom-container:format:fix"
       ]
     }
-  },
-  "dependencies": {
-    "@changesets/cli": "^2.24.1",
-    "@svitejs/changesets-changelog-github-compact": "^0.1.1"
   }
 }
