@@ -397,7 +397,7 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
 
     const children = this.renderBoxPlot(props);
     const component = props.standalone
-      ? this.renderContainer(props.containerComponent, [children])
+      ? this.renderContainer(props.containerComponent, children)
       : children;
 
     return UserProps.withSafeUserProps(component, props);

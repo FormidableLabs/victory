@@ -58,7 +58,7 @@ export interface EventMixinCommonProps
 export interface EventsMixinClass<TProps> {
   renderContainer(
     component: React.ReactElement,
-    children: React.ReactElement[],
+    children: React.ReactElement | React.ReactElement[],
   ): React.ReactElement;
   cacheValues<TThis>(this: TThis, obj: Partial<TThis>): void;
   getEventState: typeof Events.getEventState;
