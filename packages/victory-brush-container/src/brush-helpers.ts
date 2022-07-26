@@ -1,8 +1,26 @@
 import { Selection } from "victory-core";
 import { assign, throttle, isFunction, defaults, mapValues } from "lodash";
 import isEqual from "react-fast-compare";
+export interface BrushHelpers {
+  getDimension(props): any;
+  withinBounds(point, bounds, padding?): any;
+  getDomainBox(props, fullDomain, selectedDomain?): any;
+  getHandles(props, domainBox): any;
+  getActiveHandles(point, props, domainBox): any;
+  getResizeMutation(box, handles): any;
+  getMinimumDomain(): any;
+  getDefaultBrushArea(targetProps, cachedDomain, evt): any;
+  getSelectionMutation(point, box, brushDimension): any;
+  panBox(props, point): any;
+  constrainBox(box, fullDomainBox): any;
+  constrainPoint(point, fullDomainBox): any;
+  hasMoved(props): any;
+  onMouseDown(evt, targetProps): any;
+  onGlobalMouseMove(evt, targetProps): any;
+  onGlobalMouseUp(evt, targetProps): any;
+}
 
-const Helpers = {
+const Helpers: BrushHelpers = {
   getDimension(props) {
     const { horizontal, brushDimension } = props;
     if (!horizontal || !brushDimension) {
@@ -99,7 +117,7 @@ const Helpers = {
             : memo;
         return memo;
       },
-      [],
+      [] as string[],
     );
     return activeHandles.length && activeHandles;
   },
@@ -405,7 +423,6 @@ const Helpers = {
         x1: targetProps.x1,
         y1: targetProps.y1,
         scale,
-        horizontal,
       });
 
       const mutatedProps = { x2, y2, currentDomain, parentSVG };
@@ -452,7 +469,11 @@ const Helpers = {
         : targetProps.defaultBrushArea;
     const defaultBrushHasArea =
       defaultBrushArea !== undefined && defaultBrushArea !== "none";
-    const mutatedProps = { isPanning: false, isSelecting: false };
+    const mutatedProps: {
+      isPanning: boolean;
+      isSelecting: boolean;
+      currentDomain?: any;
+    } = { isPanning: false, isSelecting: false };
 
     // if the mouse hasn't moved since a mouseDown event, select the default brush area
     if ((allowResize || defaultBrushHasArea) && (x1 === x2 || y1 === y2)) {
@@ -496,7 +517,7 @@ const Helpers = {
   },
 };
 
-export default {
+export const BrushHelpers = {
   ...Helpers,
   onMouseDown: Helpers.onMouseDown.bind(Helpers),
   onGlobalMouseUp: Helpers.onGlobalMouseUp.bind(Helpers),
