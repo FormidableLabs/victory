@@ -1,6 +1,6 @@
-import { assign, defaults, isEmpty } from 'lodash';
-import PropTypes from 'prop-types';
-import React from 'react';
+import { assign, defaults, isEmpty } from "lodash";
+import PropTypes from "prop-types";
+import React from "react";
 import {
   CommonProps,
   Helpers,
@@ -19,10 +19,10 @@ import {
   VictoryDatableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface,
-} from 'victory-core';
-import { VictorySharedEvents } from 'victory-shared-events';
-import { getChildren, useMemoizedProps } from './helper-methods';
-import isEqual from 'react-fast-compare';
+} from "victory-core";
+import { VictorySharedEvents } from "victory-shared-events";
+import { getChildren, useMemoizedProps } from "./helper-methods";
+import isEqual from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
@@ -61,8 +61,8 @@ const VictoryGroupImpl: React.FC<VictoryGroupProps> = (initialProps) => {
     const children = getChildren(props, childComponents, calculatedProps);
     return children.map((child, index) => {
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index, 'victory-group') },
-        child.props
+        { animate: getAnimationProps(props, child, index, "victory-group") },
+        child.props,
       );
       return React.cloneElement(child, childProps);
     });
@@ -101,7 +101,7 @@ const VictoryGroupImpl: React.FC<VictoryGroupProps> = (initialProps) => {
 
   const userProps = React.useMemo(
     () => UserProps.getSafeUserProps(initialProps),
-    [initialProps]
+    [initialProps],
   );
 
   const container = React.useMemo(() => {
@@ -110,7 +110,7 @@ const VictoryGroupImpl: React.FC<VictoryGroupProps> = (initialProps) => {
         {},
         containerComponent.props,
         containerProps,
-        userProps
+        userProps,
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
@@ -165,14 +165,14 @@ VictoryGroupImpl.propTypes = {
   colorScale: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.oneOf([
-      'grayscale',
-      'qualitative',
-      'heatmap',
-      'warm',
-      'cool',
-      'red',
-      'green',
-      'blue',
+      "grayscale",
+      "qualitative",
+      "heatmap",
+      "warm",
+      "cool",
+      "red",
+      "green",
+      "blue",
     ]),
   ]),
   horizontal: PropTypes.bool,
@@ -183,7 +183,7 @@ VictoryGroupImpl.defaultProps = {
   containerComponent: <VictoryContainer />,
   groupComponent: <g />,
   samples: 50,
-  sortOrder: 'ascending',
+  sortOrder: "ascending",
   standalone: true,
   theme: VictoryTheme.grayscale,
 };
@@ -208,19 +208,19 @@ export interface VictoryGroupProps
   style?: VictoryStyleInterface;
 }
 
-export type VictoryGroupTTargetType = 'data' | 'labels' | 'parent';
+export type VictoryGroupTTargetType = "data" | "labels" | "parent";
 
 // We need to attatch the static properties to the memoized version, or else
 // VictoryChart will not be able to get this component's role type
 const VictoryGroup = React.memo(VictoryGroupImpl, isEqual);
 
-VictoryGroup.displayName = 'VictoryGroup';
-VictoryGroup.role = 'group';
+VictoryGroup.displayName = "VictoryGroup";
+VictoryGroup.role = "group";
 
 VictoryGroup.expectedComponents = [
-  'groupComponent',
-  'containerComponent',
-  'labelComponent',
+  "groupComponent",
+  "containerComponent",
+  "labelComponent",
 ];
 
 VictoryGroup.getChildren = getChildren;

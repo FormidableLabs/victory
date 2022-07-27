@@ -1,8 +1,8 @@
 /* eslint-disable no-use-before-define */
-import { assign } from 'lodash';
-import React from 'react';
-import { Data, Helpers, Scale, Wrapper } from 'victory-core';
-import isEqual from 'react-fast-compare';
+import { assign } from "lodash";
+import React from "react";
+import { Data, Helpers, Scale, Wrapper } from "victory-core";
+import isEqual from "react-fast-compare";
 
 const fallbackProps = {
   width: 450,
@@ -13,7 +13,7 @@ const fallbackProps = {
 
 // eslint-disable-next-line max-statements
 export function getCalculatedProps(props, childComponents) {
-  const role = 'group';
+  const role = "group";
   props = Helpers.modifyProps(props, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const { offset, colorScale, color, polar, horizontal } = props;
@@ -23,22 +23,22 @@ export function getCalculatedProps(props, childComponents) {
   const domain = {
     x: Wrapper.getDomain(
       assign({}, props, { categories }),
-      'x',
-      childComponents
+      "x",
+      childComponents,
     ),
     y: Wrapper.getDomain(
       assign({}, props, { categories }),
-      'y',
-      childComponents
+      "y",
+      childComponents,
     ),
   };
   const range = props.range || {
-    x: Helpers.getRange(props, 'x'),
-    y: Helpers.getRange(props, 'y'),
+    x: Helpers.getRange(props, "x"),
+    y: Helpers.getRange(props, "y"),
   };
   const baseScale = {
-    x: Scale.getScaleFromProps(props, 'x') || Wrapper.getScale(props, 'x'),
-    y: Scale.getScaleFromProps(props, 'y') || Wrapper.getScale(props, 'y'),
+    x: Scale.getScaleFromProps(props, "x") || Wrapper.getScale(props, "x"),
+    y: Scale.getScaleFromProps(props, "y") || Wrapper.getScale(props, "y"),
   };
   const scale = {
     x: baseScale.x.domain(domain.x).range(props.horizontal ? range.y : range.x),
@@ -70,7 +70,7 @@ const withoutSharedEvents = (props) => {
   const modifiedChildren = React.Children.toArray(children).map((child) => {
     return {
       ...child,
-      props: Helpers.omit(child.props, ['sharedEvents']),
+      props: Helpers.omit(child.props, ["sharedEvents"]),
     };
   });
   props.children = modifiedChildren;
@@ -109,18 +109,18 @@ function pixelsToValue(props, axis, calculatedProps) {
 // eslint-disable-next-line max-params
 function getX0(props, calculatedProps, index, role) {
   const groupLength =
-    role === 'stack'
+    role === "stack"
       ? calculatedProps.datasets[0].length
       : calculatedProps.datasets.length;
   const center = (groupLength - 1) / 2;
-  const totalWidth = pixelsToValue(props, 'x', calculatedProps);
+  const totalWidth = pixelsToValue(props, "x", calculatedProps);
   return (index - center) * totalWidth;
 }
 
 // eslint-disable-next-line max-params
 function getPolarX0(props, calculatedProps, index, role) {
   const groupLength =
-    role === 'stack'
+    role === "stack"
       ? calculatedProps.datasets[0].length
       : calculatedProps.datasets.length;
   const center = (groupLength - 1) / 2;
@@ -165,7 +165,7 @@ function getChildProps(props, calculatedProps) {
 function getColorScale(props, child) {
   const role = child.type && child.type.role;
   const colorScaleOptions = child.props.colorScale || props.colorScale;
-  if (role !== 'group' && role !== 'stack') {
+  if (role !== "group" && role !== "stack") {
     return undefined;
   }
   return props.theme && props.theme.group
@@ -187,21 +187,21 @@ function getDataWithOffset(props, defaultDataset = [], offset) {
 }
 
 export function getChildren(props, childComponents, calculatedProps) {
-  props = Helpers.modifyProps(props, fallbackProps, 'stack');
+  props = Helpers.modifyProps(props, fallbackProps, "stack");
   childComponents = childComponents || React.Children.toArray(props.children);
   calculatedProps =
     calculatedProps || getCalculatedProps(props, childComponents);
   const { datasets } = calculatedProps;
   const { labelComponent, polar } = props;
   const childProps = getChildProps(props, calculatedProps);
-  const parentName = props.name || 'group';
+  const parentName = props.name || "group";
   return childComponents.map((child, index) => {
     const role = child.type && child.type.role;
     const xOffset = polar
       ? getPolarX0(props, calculatedProps, index, role)
       : getX0(props, calculatedProps, index, role);
     const style =
-      role === 'voronoi' || role === 'tooltip' || role === 'label'
+      role === "voronoi" || role === "tooltip" || role === "label"
         ? child.props.style
         : Wrapper.getChildStyle(child, index, calculatedProps);
     const labels = props.labels
@@ -221,8 +221,8 @@ export function getChildren(props, childComponents, calculatedProps) {
           labelComponent: labelComponent || child.props.labelComponent,
           xOffset,
         },
-        childProps
-      )
+        childProps,
+      ),
     );
   });
 }
