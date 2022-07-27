@@ -25,6 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21",
+    "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
     "victory": "^36.5.3",
     "victory-area": "^36.5.3",
@@ -52,11 +53,10 @@
     "victory-tooltip": "^36.5.3",
     "victory-voronoi": "^36.5.3",
     "victory-voronoi-container": "^36.5.3",
-    "victory-zoom-container": "^36.5.3",
-    "prop-types": "^15.8.1"
+    "victory-zoom-container": "^36.5.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
+    "@babel/core": "^7.18.9",
     "react-native": "^0.65.1",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-svg": "^12.1.1"
