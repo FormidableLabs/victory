@@ -1,1 +1,1 @@
-export * from "./victory-group";
+export { default as VictoryGroup } from "./victory-group";
