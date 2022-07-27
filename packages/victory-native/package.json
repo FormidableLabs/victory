@@ -59,7 +59,7 @@
     "@babel/core": "^7.18.9",
     "react-native": "^0.65.1",
     "react-native-gesture-handler": "^1.10.3",
-    "react-native-svg": "^12.1.1"
+    "react-native-svg": "^12.4.3"
   },
   "scripts": {
     "build": "wireit",
