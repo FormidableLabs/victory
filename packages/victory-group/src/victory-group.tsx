@@ -31,7 +31,7 @@ const fallbackProps = {
   offset: 0,
 };
 
-const VictoryGroupImpl: React.FC<VictoryGroupProps> = (initialProps) => {
+const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryGroup;
   const { getAnimationProps, setAnimationState, getProps } =
@@ -154,7 +154,7 @@ const VictoryGroupImpl: React.FC<VictoryGroupProps> = (initialProps) => {
   return React.cloneElement(container, container.props, newChildren);
 };
 
-VictoryGroupImpl.propTypes = {
+VictoryGroupBase.propTypes = {
   ...CommonProps.baseProps,
   ...CommonProps.dataProps,
   children: PropTypes.oneOfType([
@@ -179,7 +179,7 @@ VictoryGroupImpl.propTypes = {
   offset: PropTypes.number,
 };
 
-VictoryGroupImpl.defaultProps = {
+VictoryGroupBase.defaultProps = {
   containerComponent: <VictoryContainer />,
   groupComponent: <g />,
   samples: 50,
@@ -212,7 +212,8 @@ export type VictoryGroupTTargetType = "data" | "labels" | "parent";
 
 // We need to attach the static properties to the memoized version, or else
 // VictoryChart will not be able to get this component's role type
-const VictoryGroup = React.memo(VictoryGroupImpl, isEqual);
+
+export const VictoryGroup = React.memo(VictoryGroupBase, isEqual);
 
 VictoryGroup.displayName = "VictoryGroup";
 VictoryGroup.role = "group";
@@ -225,4 +226,5 @@ VictoryGroup.expectedComponents = [
 
 VictoryGroup.getChildren = getChildren;
 
-export default VictoryGroup;
+// We need to attach the static properties to the memoized version, or else
+// VictoryChart will not be able to get this component's role type
