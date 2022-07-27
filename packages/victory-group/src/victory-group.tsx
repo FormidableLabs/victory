@@ -210,7 +210,7 @@ export interface VictoryGroupProps
 
 export type VictoryGroupTTargetType = "data" | "labels" | "parent";
 
-// We need to attatch the static properties to the memoized version, or else
+// We need to attach the static properties to the memoized version, or else
 // VictoryChart will not be able to get this component's role type
 const VictoryGroup = React.memo(VictoryGroupImpl, isEqual);
 
