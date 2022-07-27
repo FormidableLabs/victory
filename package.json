@@ -72,7 +72,6 @@
     "concurrently": "^7.3.0",
     "cpx2": "^4.2.0",
     "cross-env": "^7.0.3",
-    "emotion-theming": "^10.0.27",
     "eslint": "^7.32.0",
     "eslint-config-formidable": "^2.0.1",
     "eslint-config-prettier": "^6.0.0",
@@ -86,11 +85,9 @@
     "immutable": "^3.8.2",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
-    "json-loader": "^0.5.4",
     "lodash": "^4.17.19",
     "lodash-webpack-plugin": "^0.11.6",
     "metro-react-native-babel-preset": "0.66.2",
-    "node-polyfill-webpack-plugin": "^1.1.4",
     "nps": "^5.9.0",
     "prettier": "^2.6.2",
     "prop-types": "^15.8.1",
@@ -109,7 +106,6 @@
     "webpack": "^5.74.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
-    "webpack-stats-plugin": "^1.0.3",
     "wireit": "^0.7.1"
   },
   "pnpm": {
