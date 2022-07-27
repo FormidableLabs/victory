@@ -1,6 +1,6 @@
-import { assign, defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
-import React from "react";
+import { assign, defaults, isEmpty } from 'lodash';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {
   CommonProps,
   Helpers,
@@ -9,10 +9,20 @@ import {
   VictoryContainer,
   VictoryTheme,
   Wrapper,
-} from "victory-core";
-import { VictorySharedEvents } from "victory-shared-events";
-import { getChildren, useMemoizedProps } from "./helper-methods";
-import isEqual from "react-fast-compare";
+  CategoryPropType,
+  ColorScalePropType,
+  DomainPropType,
+  DomainPaddingPropType,
+  EventPropTypeInterface,
+  StringOrNumberOrCallback,
+  VictoryCommonThemeProps,
+  VictoryDatableProps,
+  VictoryMultiLabelableProps,
+  VictoryStyleInterface,
+} from 'victory-core';
+import { VictorySharedEvents } from 'victory-shared-events';
+import { getChildren, useMemoizedProps } from './helper-methods';
+import isEqual from 'react-fast-compare';
 
 const fallbackProps = {
   width: 450,
@@ -21,9 +31,9 @@ const fallbackProps = {
   offset: 0,
 };
 
-const VictoryGroup = (initialProps) => {
+const VictoryGroupImpl: React.FC<VictoryGroupProps> = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
-  const { role } = VictoryGroupMemo;
+  const { role } = VictoryGroup;
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
   const props = getProps(initialProps);
@@ -51,8 +61,8 @@ const VictoryGroup = (initialProps) => {
     const children = getChildren(props, childComponents, calculatedProps);
     return children.map((child, index) => {
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index, "victory-group") },
-        child.props,
+        { animate: getAnimationProps(props, child, index, 'victory-group') },
+        child.props
       );
       return React.cloneElement(child, childProps);
     });
@@ -91,7 +101,7 @@ const VictoryGroup = (initialProps) => {
 
   const userProps = React.useMemo(
     () => UserProps.getSafeUserProps(initialProps),
-    [initialProps],
+    [initialProps]
   );
 
   const container = React.useMemo(() => {
@@ -100,7 +110,7 @@ const VictoryGroup = (initialProps) => {
         {},
         containerComponent.props,
         containerProps,
-        userProps,
+        userProps
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
@@ -144,7 +154,7 @@ const VictoryGroup = (initialProps) => {
   return React.cloneElement(container, container.props, newChildren);
 };
 
-VictoryGroup.propTypes = {
+VictoryGroupImpl.propTypes = {
   ...CommonProps.baseProps,
   ...CommonProps.dataProps,
   children: PropTypes.oneOfType([
@@ -155,42 +165,64 @@ VictoryGroup.propTypes = {
   colorScale: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.oneOf([
-      "grayscale",
-      "qualitative",
-      "heatmap",
-      "warm",
-      "cool",
-      "red",
-      "green",
-      "blue",
+      'grayscale',
+      'qualitative',
+      'heatmap',
+      'warm',
+      'cool',
+      'red',
+      'green',
+      'blue',
     ]),
   ]),
   horizontal: PropTypes.bool,
   offset: PropTypes.number,
 };
 
-VictoryGroup.defaultProps = {
+VictoryGroupImpl.defaultProps = {
   containerComponent: <VictoryContainer />,
   groupComponent: <g />,
   samples: 50,
-  sortOrder: "ascending",
+  sortOrder: 'ascending',
   standalone: true,
   theme: VictoryTheme.grayscale,
 };
 
+export interface VictoryGroupProps
+  extends VictoryCommonThemeProps,
+    VictoryDatableProps,
+    VictoryMultiLabelableProps {
+  categories?: CategoryPropType;
+  children?: React.ReactNode;
+  color?: string;
+  colorScale?: ColorScalePropType;
+  domain?: DomainPropType;
+  domainPadding?: DomainPaddingPropType;
+  events?: EventPropTypeInterface<
+    VictoryGroupTTargetType,
+    StringOrNumberOrCallback
+  >[];
+  eventKey?: StringOrNumberOrCallback;
+  horizontal?: boolean;
+  offset?: number;
+  style?: VictoryStyleInterface;
+}
+
+export type VictoryGroupTTargetType = 'data' | 'labels' | 'parent';
+
 // We need to attatch the static properties to the memoized version, or else
 // VictoryChart will not be able to get this component's role type
-const VictoryGroupMemo = React.memo(VictoryGroup, isEqual);
+const VictoryGroup = React.memo(VictoryGroupImpl, isEqual);
 
-VictoryGroupMemo.displayName = "VictoryGroup";
-VictoryGroupMemo.role = "group";
+VictoryGroup.displayName = 'VictoryGroup';
+VictoryGroup.role = 'group';
 
-VictoryGroupMemo.expectedComponents = [
-  "groupComponent",
-  "containerComponent",
-  "labelComponent",
+VictoryGroup.expectedComponents = [
+  'groupComponent',
+  'containerComponent',
+  'labelComponent',
 ];
 
-VictoryGroupMemo.getChildren = getChildren;
+VictoryGroup.getChildren = getChildren;
 
-export default VictoryGroupMemo;
+export default VictoryGroup;
