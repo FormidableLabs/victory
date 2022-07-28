@@ -28,6 +28,9 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
+  "devDependencies": {
+    "victory-brush-container": "*"
+  },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",
     "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
