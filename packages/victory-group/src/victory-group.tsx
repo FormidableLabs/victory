@@ -31,6 +31,30 @@ const fallbackProps = {
   offset: 0,
 };
 
+export interface VictoryGroupBaseProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryMultiLabelableProps {
+  categories?: CategoryPropType;
+  children?: React.ReactNode;
+  color?: string;
+  colorScale?: ColorScalePropType;
+  domain?: DomainPropType;
+  domainPadding?: DomainPaddingPropType;
+  events?: EventPropTypeInterface<
+    VictoryGroupTTargetType,
+    StringOrNumberOrCallback
+  >[];
+  eventKey?: StringOrNumberOrCallback;
+  expectedComponents?: string[];
+  horizontal?: boolean;
+  offset?: number;
+  style?: VictoryStyleInterface;
+  displayName?: string;
+  role?: string;
+  getChildren?: any;
+}
+
 const VictoryGroupBase: React.FC<VictoryGroupBaseProps> = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const role = VictoryGroup?.role;
@@ -174,9 +198,16 @@ VictoryGroupBase.defaultProps = {
   theme: VictoryTheme.grayscale,
 };
 
+
+// TODO: This utility could be moved and used for other components
+const typedMemo: <T>(component: T, equalityCheck?: any) => T = React.memo;
+
 // We need to attach the static properties to the memoized version, or else
 // VictoryChart will not be able to get this component's role type
-export const VictoryGroup: React.FC<VictoryGroupProps> = React.memo(VictoryGroupBase, isEqual);
+export const VictoryGroup = typedMemo<VictoryGroupBaseProps>(
+  VictoryGroupBase,
+  isEqual,
+);
 
 VictoryGroup.displayName = "VictoryGroup";
 
@@ -190,28 +221,4 @@ VictoryGroup.getChildren = getChildren;
 
 export type VictoryGroupTTargetType = "data" | "labels" | "parent";
 
-export interface VictoryGroupBaseProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictoryMultiLabelableProps {
-  categories?: CategoryPropType;
-  children?: React.ReactNode;
-  color?: string;
-  colorScale?: ColorScalePropType;
-  domain?: DomainPropType;
-  domainPadding?: DomainPaddingPropType;
-  events?: EventPropTypeInterface<
-    VictoryGroupTTargetType,
-    StringOrNumberOrCallback
-  >[];
-  eventKey?: StringOrNumberOrCallback;
-  horizontal?: boolean;
-  offset?: number;
-  style?: VictoryStyleInterface;
-}
-
-
-export interface VictoryGroupProps {
-  children?: React.ReactNode;
-  role?: string;
-}
+export default VictoryGroup;
