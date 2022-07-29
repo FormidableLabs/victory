@@ -27,7 +27,8 @@
     "victory-shared-events": "^36.5.3"
   },
   "devDependencies": {
-    "victory-bar": "*"
+    "victory-bar": "*",
+    "victory-group": "*"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
