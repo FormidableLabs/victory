@@ -31,6 +31,7 @@ const fallbackProps = {
   offset: 0,
 };
 
+export type VictoryGroupTTargetType = "data" | "labels" | "parent";
 export interface VictoryGroupBaseProps
   extends VictoryCommonProps,
     VictoryDatableProps,
@@ -198,7 +199,6 @@ VictoryGroupBase.defaultProps = {
   theme: VictoryTheme.grayscale,
 };
 
-
 // TODO: This utility could be moved and used for other components
 const typedMemo: <T>(component: T, equalityCheck?: any) => T = React.memo;
 
@@ -218,7 +218,3 @@ VictoryGroup.expectedComponents = [
   "labelComponent",
 ];
 VictoryGroup.getChildren = getChildren;
-
-export type VictoryGroupTTargetType = "data" | "labels" | "parent";
-
-export default VictoryGroup;
