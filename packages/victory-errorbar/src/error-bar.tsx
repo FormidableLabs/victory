@@ -1,7 +1,14 @@
 /* eslint-disable max-statements */
 import React from "react";
 import PropTypes from "prop-types";
-import { Helpers, CommonProps, Line, UserProps } from "victory-core";
+import {
+  Helpers,
+  CommonProps,
+  Line,
+  UserProps,
+  VictoryCommonPrimitiveProps,
+  EventsMixinClass,
+} from "victory-core";
 import { assign } from "lodash";
 
 const renderBorder = (props, error, type) => {
@@ -80,11 +87,34 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
-const ErrorBar = (props) => {
+export interface ErrorBarProps extends VictoryCommonPrimitiveProps {
+  borderWidth?: number;
+  datum?: any;
+  errorX?: number | any[] | boolean;
+  errorY?: number | any[] | boolean;
+  groupComponent?: React.ReactElement;
+  lineComponent?: React.ReactElement;
+  x?: number;
+  y?: number;
+}
+
+// ErrorProps for calculateError
+export interface ErrorProps {
+  right?: { error: any; errorIndex: number };
+  left?: { error: any; errorIndex: number };
+  bottom?: { error: any; errorIndex: number };
+  top?: { error: any; errorIndex: number };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface ErrorBar extends EventsMixinClass<ErrorBarProps> {}
+
+export const ErrorBar = (props: ErrorBarProps) => {
   props = evaluateProps(props);
+  const { groupComponent } = props;
   const userProps = UserProps.getSafeUserProps(props);
   const { tabIndex, ariaLabel } = props;
-  const error = calculateError(props);
+  const error: ErrorProps = calculateError(props);
   const children = [
     error.right ? renderBorder(props, error, "right") : null,
     error.left ? renderBorder(props, error, "left") : null,
@@ -96,7 +126,7 @@ const ErrorBar = (props) => {
     error.top ? renderCross(props, error, "top") : null,
   ].filter(Boolean);
   return React.cloneElement(
-    props.groupComponent,
+    groupComponent!,
     { tabIndex, "aria-label": ariaLabel, ...userProps },
     children,
   );
@@ -128,5 +158,3 @@ ErrorBar.defaultProps = {
   role: "presentation",
   shapeRendering: "auto",
 };
-
-export default ErrorBar;

@@ -10,8 +10,17 @@ import {
   DefaultTransitions,
   CommonProps,
   UserProps,
+  EventPropTypeInterface,
+  StringOrNumberOrCallback,
+  StringOrNumberOrList,
+  VictoryDatableProps,
+  VictoryCommonProps,
+  VictoryLabelableProps,
+  VictoryMultiLabelableProps,
+  VictoryStyleInterface,
+  EventsMixinClass,
 } from "victory-core";
-import ErrorBar from "./error-bar";
+import { ErrorBar } from "./error-bar";
 import { getBaseProps, getDomain, getData } from "./helper-methods";
 
 const fallbackProps = {
@@ -27,7 +36,30 @@ const defaultData = [
   { x: 4, y: 4, errorX: 0.4, errorY: 0.4 },
 ];
 
-class VictoryErrorBar extends React.Component {
+export type VictoryErrorBarTTargetType = "data" | "labels" | "parent";
+export type ErrorType =
+  | StringOrNumberOrList
+  | ((...args: any[]) => StringOrNumberOrList);
+
+export interface VictoryErrorBarProps
+  extends Omit<VictoryCommonProps, "polar">,
+    VictoryDatableProps,
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
+  borderWidth?: number;
+  errorX?: ErrorType;
+  errorY?: ErrorType;
+  events?: EventPropTypeInterface<
+    VictoryErrorBarTTargetType,
+    StringOrNumberOrCallback
+  >[];
+  style?: VictoryStyleInterface;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryErrorBarBase extends EventsMixinClass<VictoryErrorBarProps> {}
+
+class VictoryErrorBarBase extends React.Component<VictoryErrorBarProps> {
   static animationWhitelist = [
     "data",
     "domain",
@@ -115,4 +147,4 @@ class VictoryErrorBar extends React.Component {
   }
 }
 
-export default addEvents(VictoryErrorBar);
+export const VictoryErrorBar = addEvents(VictoryErrorBarBase);
