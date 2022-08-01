@@ -32,7 +32,7 @@ const fallbackProps = {
 };
 
 export type VictoryGroupTTargetType = "data" | "labels" | "parent";
-export interface VictoryGroupBaseProps
+export interface VictoryGroupProps
   extends VictoryCommonProps,
     VictoryDatableProps,
     VictoryMultiLabelableProps {
@@ -56,7 +56,7 @@ export interface VictoryGroupBaseProps
   getChildren?: any;
 }
 
-const VictoryGroupBase: React.FC<VictoryGroupBaseProps> = (initialProps) => {
+const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const role = VictoryGroup?.role;
   const { getAnimationProps, setAnimationState, getProps } =
@@ -200,17 +200,19 @@ VictoryGroupBase.defaultProps = {
 };
 
 // TODO: This utility could be moved and used for other components
-const typedMemo: <T>(component: T, equalityCheck?: any) => T = React.memo;
+const typedMemo: <T>(
+  component: React.ComponentType<any>,
+  equalityCheck?: any,
+) => T = React.memo;
 
 // We need to attach the static properties to the memoized version, or else
 // VictoryChart will not be able to get this component's role type
-export const VictoryGroup = typedMemo<VictoryGroupBaseProps>(
+export const VictoryGroup = typedMemo<VictoryGroupProps>(
   VictoryGroupBase,
   isEqual,
 );
 
 VictoryGroup.displayName = "VictoryGroup";
-
 VictoryGroup.role = "group";
 VictoryGroup.expectedComponents = [
   "groupComponent",
