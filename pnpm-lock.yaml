@@ -287,6 +287,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
+      victory-box-plot: '*'
       victory-chart: ^36.5.3
       victory-core: ^36.5.3
       victory-vendor: ^36.5.1
@@ -296,6 +297,7 @@ importers:
       victory-core: link:../victory-core
       victory-vendor: link:../victory-vendor
     devDependencies:
+      victory-box-plot: 'link:'
       victory-chart: link:../victory-chart
 
   packages/victory-brush-container:

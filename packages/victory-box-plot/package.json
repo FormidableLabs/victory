@@ -29,6 +29,7 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
+    "victory-box-plot": "*",
     "victory-chart": "^36.5.3"
   },
   "scripts": {
