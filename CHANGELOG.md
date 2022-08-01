@@ -1,5 +1,8 @@
 # Victory Changelog
 
+> **Note**
+> We have moved to per-package `CHANGELOG.md` files since migrating to changesets. Please refer to those individual changelogs for change history.
+
 ## 36.5.3 (2022-06-27)
 * Export all types from Victory
 * Fix for #2329 (use-animation-state crashing charts)

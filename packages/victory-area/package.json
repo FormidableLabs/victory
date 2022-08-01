@@ -120,8 +120,8 @@
         "../../config/webpack.config.dev.js"
       ],
       "output": [
-        "victory*.js",
-        "!victory*.min.js*"
+        "dist/victory*.js",
+        "!dist/victory*.min.js*"
       ],
       "dependencies": [
         "../victory-core:build:lib:esm",
@@ -140,7 +140,7 @@
         "../../config/webpack.config.js"
       ],
       "output": [
-        "victory*.min.js*"
+        "dist/victory*.min.js*"
       ],
       "dependencies": [
         "../victory-core:build:lib:esm",

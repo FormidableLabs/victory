@@ -29,6 +29,7 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
+    "victory-box-plot": "*",
     "victory-chart": "^36.5.3"
   },
   "scripts": {
@@ -119,8 +120,8 @@
         "../../config/webpack.config.dev.js"
       ],
       "output": [
-        "victory*.js",
-        "!victory*.min.js*"
+        "dist/victory*.js",
+        "!dist/victory*.min.js*"
       ],
       "dependencies": [
         "../victory-core:build:lib:esm",
@@ -139,7 +140,7 @@
         "../../config/webpack.config.js"
       ],
       "output": [
-        "victory*.min.js*"
+        "dist/victory*.min.js*"
       ],
       "dependencies": [
         "../victory-core:build:lib:esm",
