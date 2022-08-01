@@ -114,7 +114,7 @@
     }
   },
   "scripts": {
-    "version": "pnpm changeset version && pnpm install",
+    "version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
     "publish": "nps git:tag && pnpm changeset publish --no-git-tag",
     "start": "concurrently --raw \"pnpm:build:lib:esm --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app\"",
     "start:ts": "concurrently --raw \"pnpm:build:typescript --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app\"",
