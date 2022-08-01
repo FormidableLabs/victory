@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "victory-chart": "*",
-    "victory-line": "."
+    "victory-line": "*"
   },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",
