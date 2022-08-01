@@ -1,18 +1,33 @@
 /**
- * Workspace scripts.
- *
- * We only use `nps` for scripts that we:
+ * We generally use `nps` for scripts that we:
  * 1. define at the root of the monorepo
  * 2. that are meant to execute _within_ a workspace
  *
- * If you have an actual root task, define it in root `package.json:scripts`.
+ * ... or ...
+ *
+ * - That could use a little JS magic that we don't want to write a full
+ *   node script for 😂
+ *
+ * For more cases, if you have an actual root task, define it in root
+ * `package.json:scripts`.
  */
 
 const path = require("path");
 const PKG_SRC = path.resolve("src");
 
+// For publishing, use the core package's version.
+const coreVersion = require("./packages/victory-core/package.json").version;
+if (!coreVersion) {
+  throw new Error("Unable to read core version");
+}
+const coreTag = `v${coreVersion}`;
+
 module.exports = {
   scripts: {
+    // Root tasks.
+    // Try to find an existing tag (from previous attempts, etc.), and if not, create one.
+    "git:tag": `git show-ref ${coreTag} || git tag -a ${coreTag} -m \"Version ${coreVersion}\"`,
+
     // Build.
     // - Libraries
     "build:lib:esm":
