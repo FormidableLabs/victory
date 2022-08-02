@@ -1,5 +1,4 @@
 /* eslint-disable no-magic-numbers */
-/*global window:false */
 import React from "react";
 import {
   CanvasGroup,

@@ -1,10 +1,10 @@
 // http://www.pearsonified.com/2012/01/characters-per-line.php
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import { assign, defaults } from "lodash";
 
 // Based on measuring specific character widths
 // as in the following example https://bl.ocks.org/tophtucker/62f93a4658387bb61e4510c37e2e97cf
-//prettier-ignore
+// prettier-ignore
 const fonts = {
   "American Typewriter": {
     widths: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.25,0.4203125,0.3296875,0.6,0.6375,0.8015625,0.8203125,0.1875,0.45625,0.45625,0.6375,0.5,0.2734375,0.309375,0.2734375,0.4390625,0.6375,0.6375,0.6375,0.6375,0.6375,0.6375,0.6375,0.6375,0.6375,0.6375,0.2734375,0.2734375,0.5,0.5,0.5,0.6,0.6921875,0.7640625,0.6921875,0.6375,0.728125,0.6734375,0.6203125,0.7109375,0.784375,0.3828125,0.6421875,0.7859375,0.6375,0.9484375,0.7640625,0.65625,0.6375,0.65625,0.7296875,0.6203125,0.6375,0.7109375,0.740625,0.940625,0.784375,0.7578125,0.6203125,0.4375,0.5,0.4375,0.5,0.5,0.4921875,0.5734375,0.5890625,0.5109375,0.6,0.528125,0.43125,0.5578125,0.6375,0.3109375,0.40625,0.6234375,0.309375,0.928125,0.6375,0.546875,0.6,0.58125,0.4921875,0.4921875,0.4,0.6203125,0.625,0.825,0.6375,0.640625,0.528125,0.5,0.5,0.5,0.6671875],
@@ -112,7 +112,7 @@ const fonts = {
   }
 }
 
-//https://developer.mozilla.org/en/docs/Web/CSS/length
+// https://developer.mozilla.org/en/docs/Web/CSS/length
 // Absolute sizes in pixels for obsolete measurement units.
 const absoluteMeasurementUnitsToPixels = {
   mm: 3.8,

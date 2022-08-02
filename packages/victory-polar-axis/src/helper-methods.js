@@ -122,7 +122,7 @@ const getAxisAngle = (props) => {
   return Helpers.radiansToDegrees(axisValue);
 };
 
-//eslint-disable-next-line max-params
+// eslint-disable-next-line max-params
 const getTickProps = (props, calculatedValues, tickValue, index) => {
   const {
     axisType,
@@ -190,7 +190,7 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
       };
 };
 
-//eslint-disable-next-line max-params
+// eslint-disable-next-line max-params
 const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
   const {
     axisType,
@@ -255,7 +255,7 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
   };
 };
 
-//eslint-disable-next-line max-params
+// eslint-disable-next-line max-params
 const getGridProps = (props, calculatedValues, tickValue, index) => {
   const {
     axisType,

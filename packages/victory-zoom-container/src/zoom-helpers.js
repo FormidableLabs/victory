@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Children } from "react";
 import { Selection, Collection, Wrapper } from "victory-core";
 import { throttle, isFunction, defaults, delay } from "lodash";
@@ -13,7 +13,10 @@ const RawZoomHelpers = {
       } else if (!val1 || !val2) {
         return false;
       }
-      return +val1[0] === +val2[0] && +val1[1] === +val2[1];
+      return (
+        Number(val1[0]) === Number(val2[0]) &&
+        Number(val1[1]) === Number(val2[1])
+      );
     };
     return checkDimension("x") && checkDimension("y");
   },
@@ -61,8 +64,8 @@ const RawZoomHelpers = {
     const [from, to] = currentDomain;
     const range = Math.abs(to - from);
     const diff = range - range * factor;
-    const newMin = +from + diff * percent;
-    const newMax = +to - diff * (1 - percent);
+    const newMin = Number(from) + diff * percent;
+    const newMax = Number(to) - diff * (1 - percent);
     return [Math.min(newMin, newMax), Math.max(newMin, newMax)];
   },
 
@@ -76,7 +79,9 @@ const RawZoomHelpers = {
     const maxExtent = point + extent / 2;
     return [
       minExtent > from && minExtent < to ? minExtent : from,
-      maxExtent < to && maxExtent > from ? maxExtent : +from + extent / 2,
+      maxExtent < to && maxExtent > from
+        ? maxExtent
+        : Number(from) + extent / 2,
     ];
   },
 
@@ -115,8 +120,8 @@ const RawZoomHelpers = {
    * @return {[Number, Number]}                The translated domain
    */
   pan(currentDomain, originalDomain, delta) {
-    const [fromCurrent, toCurrent] = currentDomain.map((val) => +val);
-    const [fromOriginal, toOriginal] = originalDomain.map((val) => +val);
+    const [fromCurrent, toCurrent] = currentDomain.map((val) => Number(val));
+    const [fromOriginal, toOriginal] = originalDomain.map((val) => Number(val));
     const lowerBound = fromCurrent + delta;
     const upperBound = toCurrent + delta;
     let newDomain;

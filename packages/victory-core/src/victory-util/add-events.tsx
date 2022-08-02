@@ -1,4 +1,3 @@
-/*global window:false */
 import React from "react";
 import {
   assign,
@@ -220,13 +219,12 @@ export function addEvents<
           if (!props.standalone && component.name === "parent") {
             // don't check for changes on parent props for non-standalone components
             return undefined;
-          } else {
-            return component.index !== undefined
-              ? getState(component.index, component.name)
-              : this.dataKeys
-                  .map((key) => getState(key, component.name))
-                  .filter(Boolean);
           }
+          return component.index !== undefined
+            ? getState(component.index, component.name)
+            : this.dataKeys
+                .map((key) => getState(key, component.name))
+                .filter(Boolean);
         })
         .filter(Boolean);
       return stateChanges;

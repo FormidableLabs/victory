@@ -29,10 +29,9 @@ const SelectionHelpers = {
         child = parent ? React.cloneElement(child, parent.props) : child;
         const childData = child.props && child.type.getData(child.props);
         return childData ? { childName, data: childData } : null;
-      } else {
-        const childData = getData(child.props);
-        return childData ? { childName, data: childData } : null;
       }
+      const childData = getData(child.props);
+      return childData ? { childName, data: childData } : null;
     };
     return Helpers.reduceChildren(
       React.Children.toArray(props.children),
@@ -134,24 +133,23 @@ const SelectionHelpers = {
     const dimension = this.getDimension(targetProps);
     if (!allowSelection || !select) {
       return null;
-    } else {
-      const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
-      const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
-      const x2 =
-        polar || dimension !== "y"
-          ? x
-          : Selection.getDomainCoordinates(targetProps).x[1];
-      const y2 =
-        polar || dimension !== "x"
-          ? y
-          : Selection.getDomainCoordinates(targetProps).y[1];
-      return {
-        target: "parent",
-        mutation: () => {
-          return { x2, y2, parentSVG };
-        },
-      };
     }
+    const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
+    const { x, y } = Selection.getSVGEventCoordinates(evt, parentSVG);
+    const x2 =
+      polar || dimension !== "y"
+        ? x
+        : Selection.getDomainCoordinates(targetProps).x[1];
+    const y2 =
+      polar || dimension !== "x"
+        ? y
+        : Selection.getDomainCoordinates(targetProps).y[1];
+    return {
+      target: "parent",
+      mutation: () => {
+        return { x2, y2, parentSVG };
+      },
+    };
   },
 
   onMouseUp(evt, targetProps) {

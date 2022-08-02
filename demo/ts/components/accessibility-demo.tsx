@@ -1,4 +1,4 @@
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import React from "react";
 import { isNumber } from "lodash";
 import { VictoryGroup } from "victory-group";
@@ -80,7 +80,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           <h3>Tabbable charts with aria-labels</h3>
         </div>
         <div className="demo" style={containerStyle}>
-          {/**BAR */}
+          {/** BAR */}
           <div
             style={chartContainerStyle}
             data-testid="bar-accessibility-chart"
@@ -351,7 +351,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             </VictoryChart>
           </div>
 
-          {/**ACCESSIBLE GROUP */}
+          {/** ACCESSIBLE GROUP */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Accessible Group</h3>
             <VictoryChart domainPadding={{ x: 40 }}>

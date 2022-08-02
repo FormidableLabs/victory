@@ -1,5 +1,4 @@
-/*global window:false*/
-/*eslint no-magic-numbers:0*/
+/* eslint no-magic-numbers:0*/
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryPolarAxis } from "victory-polar-axis";

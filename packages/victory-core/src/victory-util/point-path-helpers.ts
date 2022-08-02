@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 2.5, 3] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 2.5, 3] }]*/
 import { range } from "lodash";
 
 export function circle(x: number, y: number, size: number) {

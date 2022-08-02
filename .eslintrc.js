@@ -22,9 +22,10 @@ module.exports = {
     "eslint-comments/disable-enable-pair": "off",
     "func-style": "off",
     "arrow-body-style": "off",
+    "consistent-return": "off", // we're migrating to TS and this is more properly handled there.
     "react/sort-comp": "off",
-    "import/no-unresolved": [2, { ignore: ["victory*"] }],
-    "max-statements": 0,
+    "import/no-unresolved": ["error", { ignore: ["victory*"] }],
+    "max-statements": "off",
     complexity: ["error", { max: 16 }],
     "no-magic-numbers": [
       "error",
@@ -35,7 +36,7 @@ module.exports = {
   parserOptions: {
     babelOptions: {
       configFile: BABEL_PATH,
-    }
+    },
   },
   plugins: ["jest"],
   env: {
@@ -46,9 +47,9 @@ module.exports = {
       files: ["**/*.test.*", "./test/**/*"],
       rules: {
         "react/sort-comp": "off",
-        "no-magic-numbers": 0,
-        "max-statements": 0,
-        "import/no-unresolved": 0,
+        "no-magic-numbers": "off",
+        "max-statements": "off",
+        "import/no-unresolved": "off",
         "no-undef": "off",
         "max-nested-callbacks": "off",
         "@typescript-eslint/no-empty-function": "off",

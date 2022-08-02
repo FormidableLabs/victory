@@ -167,7 +167,7 @@ describe("components/victory-line", () => {
     });
 
     it("renders data ordered by x-value, by default", () => {
-      const data = [{ t: 0 /*x: 10, y: 1*/ }, { t: 1 /*x:  9, y: 1*/ }];
+      const data = [{ t: 0 /* x: 10, y: 1*/ }, { t: 1 /* x:  9, y: 1*/ }];
 
       const { container } = render(
         <VictoryLine
@@ -188,7 +188,7 @@ describe("components/victory-line", () => {
     });
 
     it("renders data ordered by value of sortKey, if given", () => {
-      const data = [{ t: 0 /*x: 10, y: 1*/ }, { t: 1 /*x:  9, y: 1*/ }];
+      const data = [{ t: 0 /* x: 10, y: 1*/ }, { t: 1 /* x:  9, y: 1*/ }];
       const { container } = render(
         <VictoryLine
           data={data}

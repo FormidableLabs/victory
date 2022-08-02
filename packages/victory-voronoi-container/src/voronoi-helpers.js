@@ -22,14 +22,13 @@ const VoronoiHelpers = {
         Math.pow(x - origin.x, 2) + Math.pow(y - origin.y, 2);
       const radius = Math.max(...scale.y.range());
       return distanceSquared < Math.pow(radius, 2);
-    } else {
-      return (
-        x >= padding.left &&
-        x <= width - padding.right &&
-        y >= padding.top &&
-        y <= height - padding.bottom
-      );
     }
+    return (
+      x >= padding.left &&
+      x <= width - padding.right &&
+      y >= padding.top &&
+      y <= height - padding.bottom
+    );
   },
 
   getDatasets(props) {
@@ -43,8 +42,8 @@ const VoronoiHelpers = {
       const style = child ? child.props && child.props.style : props.style;
       return data.map((datum, index) => {
         const { x, y, y0, x0 } = Helpers.getPoint(datum);
-        const voronoiX = (+x + +x0) / 2;
-        const voronoiY = (+y + +y0) / 2;
+        const voronoiX = (Number(x) + Number(x0)) / 2;
+        const voronoiY = (Number(y) + Number(y0)) / 2;
 
         return assign(
           {
@@ -245,19 +244,18 @@ const VoronoiHelpers = {
     );
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
-    } else {
-      this.onActivated(targetProps, points);
-      this.onDeactivated(targetProps, activePoints);
-      const activeMutations = points.length
-        ? points.map((point) => this.getActiveMutations(targetProps, point))
-        : [];
-      const inactiveMutations = activePoints.length
-        ? activePoints.map((point) =>
-            this.getInactiveMutations(targetProps, point),
-          )
-        : [];
-      return parentMutations.concat(...inactiveMutations, ...activeMutations);
     }
+    this.onActivated(targetProps, points);
+    this.onDeactivated(targetProps, activePoints);
+    const activeMutations = points.length
+      ? points.map((point) => this.getActiveMutations(targetProps, point))
+      : [];
+    const inactiveMutations = activePoints.length
+      ? activePoints.map((point) =>
+          this.getInactiveMutations(targetProps, point),
+        )
+      : [];
+    return parentMutations.concat(...inactiveMutations, ...activeMutations);
   },
 };
 

@@ -39,7 +39,7 @@ function isScaleDefined(props, axis: "x" | "y") {
   if (!props.scale) {
     return false;
   } else if (props.scale.x || props.scale.y) {
-    return props.scale[axis] ? true : false;
+    return !!props.scale[axis];
   }
   return true;
 }

@@ -1,5 +1,4 @@
-/*global window:false */
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import {

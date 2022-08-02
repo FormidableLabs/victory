@@ -154,14 +154,13 @@ function getDefaultTickFormat(props) {
     return stringTicks(props)
       ? (x, index) => tickValues[index]
       : fallbackFormat;
-  } else {
-    const invertedStringMap = stringMap && invert(stringMap);
-    const tickValueArray = orderBy(values(stringMap), (n) => n);
-    const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
-    // string ticks should have one tick of padding at the beginning
-    const dataTicks = ["", ...dataNames, ""];
-    return (x) => dataTicks[x];
   }
+  const invertedStringMap = stringMap && invert(stringMap);
+  const tickValueArray = orderBy(values(stringMap), (n) => n);
+  const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
+  // string ticks should have one tick of padding at the beginning
+  const dataTicks = ["", ...dataNames, ""];
+  return (x) => dataTicks[x];
 }
 
 function getStringTicks(props) {
@@ -207,7 +206,7 @@ function getTickArray(props) {
     const newTickArray = [] as Array<{ value: number; index: number }>;
     const domain = (props.domain && props.domain[axis]) || props.domain;
     if (arr) {
-      arr.forEach(function (t, index) {
+      arr.forEach((t, index) => {
         if (Array.isArray(domain)) {
           if (
             t >= Collection.getMinValue(domain) &&
@@ -226,7 +225,8 @@ function getTickArray(props) {
         }
       });
       return newTickArray;
-    } else return undefined;
+    }
+    return undefined;
   };
   return Array.isArray(tickArray) && tickArray.length
     ? buildTickArray(tickArray)
@@ -261,9 +261,8 @@ export function getTickFormat(props, scale) {
       return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
     };
     return stringMap ? applyStringTicks : tickFormat;
-  } else {
-    return (x) => x;
   }
+  return (x) => x;
 }
 
 function downsampleTicks(ticks: number[], tickCount: number) {
@@ -304,7 +303,7 @@ export function getTicks(props, scale: D3Scale, filterZero = false) {
  * @param {String} axis: either x or y
  * @returns {Array} returns a domain from tickValues
  */
-//eslint-disable-next-line max-statements
+// eslint-disable-next-line max-statements
 function getDomainFromData(props, axis) {
   const { polar, startAngle = 0, endAngle = 360 } = props;
   const tickArray = getTickArray(props);
@@ -315,7 +314,7 @@ function getDomainFromData(props, axis) {
   const minDomain = Domain.getMinFromProps(props, axis);
   const maxDomain = Domain.getMaxFromProps(props, axis);
   const tickStrings = stringTicks(props);
-  const ticks = tickValues.map((value) => +value);
+  const ticks = tickValues.map((value) => Number(value));
   const defaultMin = tickStrings ? 1 : Collection.getMinValue(ticks);
   const defaultMax = tickStrings
     ? tickValues.length

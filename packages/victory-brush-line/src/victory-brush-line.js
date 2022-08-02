@@ -279,23 +279,22 @@ export default class VictoryBrushLine extends React.Component {
                       }),
                     },
                   ];
-                } else {
-                  // if the event occurs outside the region, or if the whole domain is selected,
-                  // start a new selection
-                  return allowDraw
-                    ? [
-                        {
-                          mutation: () => ({
-                            isSelecting: allowResize,
-                            brushDomain: null,
-                            startPosition: position,
-                            activeBrushes,
-                            parentSVG,
-                          }),
-                        },
-                      ]
-                    : [];
                 }
+                // if the event occurs outside the region, or if the whole domain is selected,
+                // start a new selection
+                return allowDraw
+                  ? [
+                      {
+                        mutation: () => ({
+                          isSelecting: allowResize,
+                          brushDomain: null,
+                          startPosition: position,
+                          activeBrushes,
+                          parentSVG,
+                        }),
+                      },
+                    ]
+                  : [];
               },
               // eslint-disable-next-line max-statements, complexity
               onMouseMove: (evt, targetProps) => {

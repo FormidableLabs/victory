@@ -19,7 +19,7 @@ if (!libPath) {
 // PascalCase (with first character capitalized).
 const libName = libPath
   .replace(/^\s+|\s+$/g, "")
-  .replace(/(^|[-_ ])+(.)/g, function (match, first, second) {
+  .replace(/(^|[-_ ])+(.)/g, (match, first, second) => {
     // Second match group is the character we want to change. Throw away first.
     return second.toUpperCase();
   });

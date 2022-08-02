@@ -35,11 +35,10 @@ export const getData = (props) => {
   const accessorTypes = ["x", "y", "errorX", "errorY"];
   if (props.data) {
     return Data.formatData(props.data, props, accessorTypes);
-  } else {
-    const generatedData =
-      props.errorX || props.errorY ? Data.generateData(props) : [];
-    return Data.formatData(generatedData, props, accessorTypes);
   }
+  const generatedData =
+    props.errorX || props.errorY ? Data.generateData(props) : [];
+  return Data.formatData(generatedData, props, accessorTypes);
 };
 
 const getDomainFromData = (props, axis) => {

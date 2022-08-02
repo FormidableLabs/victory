@@ -74,7 +74,7 @@ function getExtremeFromData(dataset, axis, type = "min") {
   return containsDate ? new Date(result) : result;
 }
 
-//eslint-disable-next-line max-statements
+// eslint-disable-next-line max-statements
 function padDomain(domain, props, axis) {
   if (!props.domainPadding) {
     return domain;
@@ -311,15 +311,15 @@ export function getDomainFromMinMax(min, max) {
     const verySmallDate = 1;
     const minVal =
       val instanceof Date
-        ? new Date(+val - verySmallDate)
-        : +val - verySmallNumber;
+        ? new Date(Number(val) - verySmallDate)
+        : Number(val) - verySmallNumber;
     const maxVal =
       val instanceof Date
-        ? new Date(+val + verySmallDate)
-        : +val + verySmallNumber;
+        ? new Date(Number(val) + verySmallDate)
+        : Number(val) + verySmallNumber;
     return val === 0 ? [0, maxVal] : [minVal, maxVal];
   };
-  return +min === +max ? getSinglePointDomain(max) : [min, max];
+  return Number(min) === Number(max) ? getSinglePointDomain(max) : [min, max];
 }
 
 /**
