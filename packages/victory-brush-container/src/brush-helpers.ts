@@ -125,7 +125,7 @@ const Helpers = {
   },
 
   getDefaultBrushArea(targetProps, cachedDomain, evt) {
-    const { domain, fullDomain, scale, allowResize } = targetProps;
+    const { domain, fullDomain, scale, horizontal, allowResize } = targetProps;
     const defaultBrushArea =
       !allowResize && !targetProps.defaultBrushArea
         ? "move"
@@ -150,7 +150,7 @@ const Helpers = {
       const fullDomainBox =
         targetProps.fullDomainBox || this.getDomainBox(targetProps, fullDomain);
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
-      return Selection.getBounds({ ...constrainedBox, scale });
+      return Selection.getBounds({ ...constrainedBox, scale, horizontal });
     } else {
       return domain;
     }
@@ -343,6 +343,7 @@ const Helpers = {
       onBrushDomainChange,
       allowResize,
       allowDrag,
+      horizontal,
       mouseMoveThreshold,
       parentSVG,
     } = targetProps;
@@ -362,6 +363,7 @@ const Helpers = {
       const currentDomain = Selection.getBounds({
         ...constrainedBox,
         scale,
+        horizontal,
       });
       const mutatedProps = {
         currentDomain,
@@ -403,6 +405,7 @@ const Helpers = {
         x1: targetProps.x1,
         y1: targetProps.y1,
         scale,
+        horizontal,
       });
 
       const mutatedProps = { x2, y2, currentDomain, parentSVG };
