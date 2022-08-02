@@ -37,7 +37,7 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   ) => void;
 }
 
-type Constructor = new (...ars: any[]) => React.Component;
+type Constructor = new (...args: any[]) => React.Component;
 
 export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
   class VictoryBrushContainer extends base {
