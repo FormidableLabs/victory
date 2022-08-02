@@ -239,7 +239,7 @@ describe("components/victory-scatter", () => {
               ariaLabel={({ datum }) =>
                 `scatter point x: ${datum.x}, y:${datum.y}`
               }
-              tabIndex={({ index }) => (index as number) + 10}
+              tabIndex={({ index }) => +index + 10}
             />
           }
         />,
