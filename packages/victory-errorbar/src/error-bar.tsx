@@ -109,7 +109,7 @@ export interface ErrorProps {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ErrorBar extends EventsMixinClass<ErrorBarProps> {}
 
-export const ErrorBar = (props: ErrorBarProps) => {
+export const ErrorBar = (props: ErrorBarProps & typeof ErrorBar.default) => {
   props = evaluateProps(props);
   const { groupComponent } = props;
   const userProps = UserProps.getSafeUserProps(props);
@@ -126,7 +126,7 @@ export const ErrorBar = (props: ErrorBarProps) => {
     error.top ? renderCross(props, error, "top") : null,
   ].filter(Boolean);
   return React.cloneElement(
-    groupComponent!,
+    groupComponent,
     { tabIndex, "aria-label": ariaLabel, ...userProps },
     children,
   );
