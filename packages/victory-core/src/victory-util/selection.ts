@@ -1,10 +1,6 @@
 import React from "react";
 import { Collection, VictoryCommonProps } from "./index";
-import type {
-  DomainPropType,
-  ScaleXYPropType,
-  Tuple,
-} from "../types/prop-types";
+import type { DomainPropType, ScaleXYPropType } from "../types/prop-types";
 
 // Private Functions
 
@@ -87,7 +83,7 @@ export function getSVGEventCoordinates(
 export function getDomainCoordinates(
   props: Pick<VictoryCommonProps, "scale" | "horizontal">,
   domain?: DomainPropType,
-): { x: Tuple<number>; y: Tuple<number> } {
+) {
   const { horizontal } = props;
   const scale = props.scale as ScaleXYPropType;
   // FIXME: add support for DomainTuple: [number, number]
