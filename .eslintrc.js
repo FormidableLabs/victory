@@ -1,3 +1,6 @@
+const path = require("path");
+const BABEL_PATH = path.resolve(__dirname, ".babelrc.js"); // eslint-disable-line no-undef
+
 module.exports = {
   settings: {
     react: {
@@ -11,13 +14,14 @@ module.exports = {
   },
   extends: [
     "formidable/configurations/es6-react",
-    "prettier",
     "plugin:react-hooks/recommended",
     "plugin:eslint-comments/recommended",
+    "prettier",
   ],
   rules: {
     "eslint-comments/disable-enable-pair": "off",
     "func-style": "off",
+    "arrow-body-style": "off",
     "react/sort-comp": "off",
     "import/no-unresolved": [2, { ignore: ["victory*"] }],
     "max-statements": 0,
@@ -26,6 +30,12 @@ module.exports = {
       "error",
       { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] },
     ],
+  },
+  parser: "@babel/eslint-parser",
+  parserOptions: {
+    babelOptions: {
+      configFile: BABEL_PATH,
+    }
   },
   plugins: ["jest"],
   env: {
