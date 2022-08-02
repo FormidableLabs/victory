@@ -1,26 +1,8 @@
 import { Selection } from "victory-core";
 import { assign, throttle, isFunction, defaults, mapValues } from "lodash";
 import isEqual from "react-fast-compare";
-export interface BrushHelpers {
-  getDimension(props): any;
-  withinBounds(point, bounds, padding?): any;
-  getDomainBox(props, fullDomain, selectedDomain?): any;
-  getHandles(props, domainBox): any;
-  getActiveHandles(point, props, domainBox): any;
-  getResizeMutation(box, handles): any;
-  getMinimumDomain(): any;
-  getDefaultBrushArea(targetProps, cachedDomain, evt): any;
-  getSelectionMutation(point, box, brushDimension): any;
-  panBox(props, point): any;
-  constrainBox(box, fullDomainBox): any;
-  constrainPoint(point, fullDomainBox): any;
-  hasMoved(props): any;
-  onMouseDown(evt, targetProps): any;
-  onGlobalMouseMove(evt, targetProps): any;
-  onGlobalMouseUp(evt, targetProps): any;
-}
 
-const Helpers: BrushHelpers = {
+const Helpers = {
   getDimension(props) {
     const { horizontal, brushDimension } = props;
     if (!horizontal || !brushDimension) {

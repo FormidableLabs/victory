@@ -1,7 +1,10 @@
 import React from "react";
 import { Collection, VictoryCommonProps } from "./index";
-import type { DomainPropType, ScaleXYPropType } from "../types/prop-types";
-import { Tuple } from "../../lib";
+import type {
+  DomainPropType,
+  ScaleXYPropType,
+  Tuple,
+} from "../types/prop-types";
 
 // Private Functions
 
