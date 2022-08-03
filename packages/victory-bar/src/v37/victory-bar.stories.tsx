@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import * as React from "react";
 import VictoryBar from "./victory-bar";
-import VictoryChart from "victory-chart/lib/v37/victory-chart";
+import VictoryChart from "victory-chart/es/v37/victory-chart";
 
 export default {
   title: "v37/VictoryBar",
