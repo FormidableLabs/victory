@@ -1,21 +1,15 @@
 name: CI
 
 # Runs build and test on:
-#   every push to main that has a change in a file not in the docs folder
-#   every pull request with main branch as the base that has a change in a file not in the docs folder
+#   every push to main
+#   every pull request with main branch as the base
 on:
   push:
     branches:
       - main
-    paths:
-      - '**'
-      - '!docs/**'
   pull_request:
     branches:
       - main
-    paths:
-      - '**'
-      - '!docs/**'
 
 jobs:
   test:
