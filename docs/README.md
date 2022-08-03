@@ -20,7 +20,7 @@ First build the static site.
 ```bash
 yarn build
 ```
-Once it builds successfully, serve it
+Once it builds successfully, serve it:
 
 ```bash
 yarn serve
