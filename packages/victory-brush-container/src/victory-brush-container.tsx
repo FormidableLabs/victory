@@ -1,11 +1,45 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, Selection, Rect } from "victory-core";
-import BrushHelpers from "./brush-helpers";
+import {
+  VictoryContainer,
+  Selection,
+  Rect,
+  DomainTuple,
+  VictoryContainerProps,
+} from "victory-core";
+import { BrushHelpers } from "./brush-helpers";
 import { assign, defaults } from "lodash";
 import isEqual from "react-fast-compare";
+export interface VictoryBrushContainerProps extends VictoryContainerProps {
+  allowDrag?: boolean;
+  allowDraw?: boolean;
+  allowResize?: boolean;
+  brushComponent?: React.ReactElement;
+  brushDimension?: "x" | "y";
+  brushDomain?: { x?: DomainTuple; y?: DomainTuple };
+  brushStyle?: React.CSSProperties;
+  defaultBrushArea?: "all" | "none" | "disable" | "move";
+  disable?: boolean;
+  handleComponent?: React.ReactElement;
+  handleStyle?: React.CSSProperties;
+  handleWidth?: number;
+  onBrushCleared?: (
+    domain: { x: DomainTuple; y: DomainTuple },
+    props: VictoryBrushContainerProps,
+  ) => void;
+  onBrushDomainChange?: (
+    domain: { x: DomainTuple; y: DomainTuple },
+    props: VictoryBrushContainerProps,
+  ) => void;
+  onBrushDomainChangeEnd?: (
+    domain: { x: DomainTuple; y: DomainTuple },
+    props: VictoryBrushContainerProps,
+  ) => void;
+}
 
-export const brushContainerMixin = (base) =>
+type Constructor = new (...args: any[]) => React.Component;
+
+export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
   class VictoryBrushContainer extends base {
     static displayName = "VictoryBrushContainer";
     static propTypes = {
@@ -176,7 +210,7 @@ export const brushContainerMixin = (base) =>
             : memo;
           return memo;
         },
-        [],
+        [] as React.ReactElement[],
       );
       return handles.length ? handles : null;
     }
@@ -201,4 +235,4 @@ export const brushContainerMixin = (base) =>
     }
   };
 
-export default brushContainerMixin(VictoryContainer);
+export const VictoryBrushContainer = brushContainerMixin(VictoryContainer);

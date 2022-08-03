@@ -61,6 +61,7 @@ export interface EventsMixinClass<TProps> {
   ): React.ReactElement;
   cacheValues<TThis>(this: TThis, obj: Partial<TThis>): void;
   getEventState: typeof Events.getEventState;
+  renderData(props: TProps);
   renderContinuousData(props: TProps);
   animateComponent(props: TProps, defaultAnimationWhitelist);
   getComponentProps(

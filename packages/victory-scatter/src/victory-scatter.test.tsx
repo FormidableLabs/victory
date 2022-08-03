@@ -29,8 +29,8 @@ describe("components/victory-scatter", () => {
     it("renders an svg with the correct width and height", () => {
       const { container } = render(<VictoryScatter />);
       const svg = container.querySelector("svg");
-      expect(svg.style.width).toEqual("100%");
-      expect(svg.style.height).toEqual("100%");
+      expect(svg?.style.width).toEqual("100%");
+      expect(svg?.style.height).toEqual("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
@@ -163,7 +163,7 @@ describe("components/victory-scatter", () => {
         />,
       );
       const svg = container.querySelector("svg");
-      fireEvent.click(svg);
+      fireEvent.click(svg!);
       expect(clickHandler).toBeCalled();
       // the first argument is the standard evt object
       expect(Object.keys(clickHandler.mock.calls[0][1])).toEqual(
@@ -239,7 +239,7 @@ describe("components/victory-scatter", () => {
               ariaLabel={({ datum }) =>
                 `scatter point x: ${datum.x}, y:${datum.y}`
               }
-              tabIndex={({ index }) => index + 10}
+              tabIndex={({ index }) => +index + 10}
             />
           }
         />,
@@ -250,7 +250,7 @@ describe("components/victory-scatter", () => {
         expect(p.getAttribute("aria-label")).toEqual(
           `scatter point x: ${data[i].x}, y:${data[i].y}`,
         );
-        expect(parseInt(p.getAttribute("tabindex"), 10)).toEqual(i + 10);
+        expect(parseInt(p.getAttribute("tabindex")!, 10)).toEqual(i + 10);
       });
     });
   });

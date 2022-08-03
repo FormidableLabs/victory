@@ -1,7 +1,8 @@
-import Helpers from "victory-brush-container/lib/brush-helpers";
+import { BrushHelpers } from "victory-brush-container";
 
 describe("containers/brush-helpers", () => {
-  const { withinBounds, constrainBox } = Helpers;
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { withinBounds, constrainBox } = BrushHelpers;
   describe("withinBounds", () => {
     it("returns true when within bounds", () => {
       const point = { x: 1, y: 1 };
