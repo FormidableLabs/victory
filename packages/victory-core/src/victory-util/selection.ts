@@ -83,7 +83,7 @@ export function getSVGEventCoordinates(
 export function getDomainCoordinates(
   props: Pick<VictoryCommonProps, "scale" | "horizontal">,
   domain?: DomainPropType,
-): DomainPropType {
+) {
   const { horizontal } = props;
   const scale = props.scale as ScaleXYPropType;
   // FIXME: add support for DomainTuple: [number, number]
@@ -155,4 +155,5 @@ type ComputedCommonProps = {
   x2: number;
   y1: number;
   y2: number;
+  horizontal?: boolean;
 };
