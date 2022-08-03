@@ -198,6 +198,8 @@ This task also watches and rebuilds all Victory source files so you can more eas
 $ pnpm run chromatic
 ```
 
+Note that Chromatic internally runs `npm run build-storybook` around which we have a custom `package.json:scripts.build-storybook` task that is meant to work within Chromatic.
+
 ## Release
 
 We use [changesets](https://github.com/changesets/changesets) to create package versions and publish them.

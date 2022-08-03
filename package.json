@@ -149,7 +149,7 @@
     "types:check": "wireit",
     "types:create": "wireit",
     "storybook:build": "wireit",
-    "build-storybook": "pnpm run storybook:build",
+    "build-storybook": "pnpm run build:lib:esm && pnpm exec build-storybook",
     "storybook:server": "concurrently --raw \"pnpm:build:lib:esm --watch\" \"start-storybook -p 6006\"",
     "chromatic": "wireit",
     "chromatic:ci": "wireit",
