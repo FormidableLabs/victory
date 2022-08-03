@@ -1,8 +1,8 @@
 name: CI
 
 # Runs build and test on:
-#   every push to main that has a change in a file
-#   every pull request with main branch as the base that has a change in a file
+#   every push to main
+#   every pull request with main branch as the base
 on:
   push:
     branches:
