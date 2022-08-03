@@ -1,5 +1,4 @@
-/* globals window */
-/*eslint-disable no-magic-numbers,react/no-multi-comp */
+/* eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
 import { range, merge, random, minBy, maxBy, last } from "lodash";

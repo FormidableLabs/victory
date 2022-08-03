@@ -121,9 +121,8 @@ export const zoomContainerMixin = (base) =>
       return React.Children.toArray(children).map((child) => {
         if (!Data.isDataComponent(child)) {
           return child;
-        } else {
-          return React.cloneElement(child, { groupComponent });
         }
+        return React.cloneElement(child, { groupComponent });
       });
     }
 

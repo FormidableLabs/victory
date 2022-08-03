@@ -49,9 +49,8 @@ const getConstructor = (value) => {
     return undefinedConstructor;
   } else if (value === null) {
     return nullConstructor;
-  } else {
-    return value.constructor;
   }
+  return value.constructor;
 };
 
 /**

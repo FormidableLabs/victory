@@ -40,9 +40,8 @@ export const getSize = (datum, props) => {
     return size;
   } else if (datum[z]) {
     return getBubbleSize(datum, props);
-  } else {
-    return Math.max(size || 0, 1);
   }
+  return Math.max(size || 0, 1);
 };
 
 const getCalculatedValues = (props) => {

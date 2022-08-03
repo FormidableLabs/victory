@@ -102,9 +102,9 @@ const getBrushDomain = (brushDomain, fullDomain) => {
     const domainMin = Collection.getMinValue(fullDomain);
     const domainMax = Collection.getMaxValue(fullDomain);
     const defaultMin =
-      brushMin < domainMin ? domainMin : +domainMax - SMALL_NUMBER;
+      brushMin < domainMin ? domainMin : Number(domainMax) - SMALL_NUMBER;
     const defaultMax =
-      brushMax > domainMax ? domainMax : +domainMin + SMALL_NUMBER;
+      brushMax > domainMax ? domainMax : Number(domainMin) + SMALL_NUMBER;
     const min = withinBound(brushMin, fullDomain) ? brushMin : defaultMin;
     const max = withinBound(brushMax, fullDomain) ? brushMax : defaultMax;
     return [min, max];
@@ -318,23 +318,22 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
                       }),
                     },
                   ];
-                } else {
-                  // if the event occurs outside the region, or if the whole domain is selected,
-                  // start a new selection
-                  return allowDraw
-                    ? [
-                        {
-                          mutation: () => ({
-                            isSelecting: allowResize,
-                            brushDomain: null,
-                            startPosition: position,
-                            activeBrushes,
-                            parentSVG,
-                          }),
-                        },
-                      ]
-                    : [];
                 }
+                // if the event occurs outside the region, or if the whole domain is selected,
+                // start a new selection
+                return allowDraw
+                  ? [
+                      {
+                        mutation: () => ({
+                          isSelecting: allowResize,
+                          brushDomain: null,
+                          startPosition: position,
+                          activeBrushes,
+                          parentSVG,
+                        }),
+                      },
+                    ]
+                  : [];
               },
               // eslint-disable-next-line max-statements, complexity
               onMouseMove: (evt, targetProps) => {

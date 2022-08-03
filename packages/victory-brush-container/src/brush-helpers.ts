@@ -151,9 +151,8 @@ const Helpers = {
         targetProps.fullDomainBox || this.getDomainBox(targetProps, fullDomain);
       const constrainedBox = this.constrainBox(pannedBox, fullDomainBox);
       return Selection.getBounds({ ...constrainedBox, scale, horizontal });
-    } else {
-      return domain;
     }
+    return domain;
   },
 
   getSelectionMutation(point, box, brushDimension) {
@@ -306,31 +305,26 @@ const Helpers = {
           }),
         },
       ];
-    } else {
-      // if the event occurs outside the region, or if the whole domain is selected,
-      // start a new selection
-      return allowDraw
-        ? [
-            {
-              target: "parent",
-              mutation: () => ({
-                isSelecting: allowResize || defaultBrushArea === "move",
-                domainBox,
-                fullDomainBox,
-                parentSVG,
-                cachedBrushDomain: brushDomain,
-                cachedCurrentDomain: currentDomain,
-                currentDomain: this.getMinimumDomain(),
-                ...this.getSelectionMutation(
-                  { x, y },
-                  domainBox,
-                  brushDimension,
-                ),
-              }),
-            },
-          ]
-        : {};
     }
+    // if the event occurs outside the region, or if the whole domain is selected,
+    // start a new selection
+    return allowDraw
+      ? [
+          {
+            target: "parent",
+            mutation: () => ({
+              isSelecting: allowResize || defaultBrushArea === "move",
+              domainBox,
+              fullDomainBox,
+              parentSVG,
+              cachedBrushDomain: brushDomain,
+              cachedCurrentDomain: currentDomain,
+              currentDomain: this.getMinimumDomain(),
+              ...this.getSelectionMutation({ x, y }, domainBox, brushDimension),
+            }),
+          },
+        ]
+      : {};
   },
 
   // eslint-disable-next-line max-statements, complexity

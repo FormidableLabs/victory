@@ -1,4 +1,4 @@
-/*eslint-disable no-magic-numbers*/
+/* eslint-disable no-magic-numbers*/
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 

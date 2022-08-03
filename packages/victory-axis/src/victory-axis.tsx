@@ -286,8 +286,8 @@ class VictoryAxisBase extends React.Component<VictoryAxisProps> {
     const sorted = gridAndTicks.sort(
       (a, b) =>
         isVertical
-          ? getLabelCoord(b) - getLabelCoord(a) //ordinary axis has top-bottom orientation
-          : getLabelCoord(a) - getLabelCoord(b), //ordinary axis has left-right orientation
+          ? getLabelCoord(b) - getLabelCoord(a) // ordinary axis has top-bottom orientation
+          : getLabelCoord(a) - getLabelCoord(b), // ordinary axis has left-right orientation
     );
     return sorted.filter((gridAndTick, index) => index % divider === 0);
   }

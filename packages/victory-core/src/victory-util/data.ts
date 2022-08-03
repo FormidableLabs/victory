@@ -117,9 +117,8 @@ function addEventKeys(props, data) {
     } else if (hasEventKeyAccessor) {
       const eventKey = eventKeyAccessor(datum, index);
       return eventKey !== undefined ? assign({ eventKey }, datum) : datum;
-    } else {
-      return datum;
     }
+    return datum;
   });
 }
 

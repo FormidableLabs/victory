@@ -1,4 +1,3 @@
-/* global window:false */
 /* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
 import { assign, merge, keys, random, range, round } from "lodash";

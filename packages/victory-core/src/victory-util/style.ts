@@ -14,19 +14,18 @@ export const toTransformString = function (obj, ...more) {
         return [memo, toTransformString(currentObj)].join(" ");
       }, toTransformString(obj))
       .trim();
-  } else {
-    if (obj === undefined || obj === null || typeof obj === "string") {
-      return obj;
-    }
-    const transforms = [] as string[];
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const value = obj[key];
-        transforms.push(`${key}(${value})`);
-      }
-    }
-    return transforms.join(" ").trim();
   }
+  if (obj === undefined || obj === null || typeof obj === "string") {
+    return obj;
+  }
+  const transforms = [] as string[];
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      transforms.push(`${key}(${value})`);
+    }
+  }
+  return transforms.join(" ").trim();
 };
 
 /**

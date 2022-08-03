@@ -1,5 +1,4 @@
-/*global window:false*/
-/*eslint-disable no-magic-numbers,react/no-multi-comp*/
+/* eslint-disable no-magic-numbers,react/no-multi-comp*/
 import { random, range } from "lodash";
 import React from "react";
 import { VictoryPie } from "victory-pie";

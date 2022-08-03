@@ -135,7 +135,7 @@ describe("components/victory-box-plot", () => {
           maxComponent={
             <Whisker
               ariaLabel={({ datum }) => buildLabel(datum.x, datum._max)}
-              tabIndex={({ index }) => +index + 1}
+              tabIndex={({ index }) => Number(index) + 1}
             />
           }
         />,
@@ -159,7 +159,7 @@ describe("components/victory-box-plot", () => {
           q3Component={
             <Border
               ariaLabel={({ datum }) => buildLabel(datum.x, datum._q3)}
-              tabIndex={({ index }) => +index + 1}
+              tabIndex={({ index }) => Number(index) + 1}
             />
           }
         />,
@@ -183,7 +183,7 @@ describe("components/victory-box-plot", () => {
           medianComponent={
             <LineSegment
               ariaLabel={({ datum }) => buildLabel(datum.x, datum._median)}
-              tabIndex={({ index }) => +index + 1}
+              tabIndex={({ index }) => Number(index) + 1}
             />
           }
         />,
