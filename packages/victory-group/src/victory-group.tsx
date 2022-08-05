@@ -2,23 +2,23 @@ import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
-  CommonProps,
-  Helpers,
-  Hooks,
-  UserProps,
-  VictoryContainer,
-  VictoryTheme,
-  Wrapper,
   CategoryPropType,
   ColorScalePropType,
-  DomainPropType,
+  CommonProps,
   DomainPaddingPropType,
+  DomainPropType,
   EventPropTypeInterface,
+  Helpers,
+  Hooks,
   StringOrNumberOrCallback,
+  UserProps,
   VictoryCommonProps,
+  VictoryContainer,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface,
+  VictoryTheme,
+  Wrapper,
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
@@ -47,13 +47,10 @@ export interface VictoryGroupProps
     StringOrNumberOrCallback
   >[];
   eventKey?: StringOrNumberOrCallback;
-  expectedComponents?: string[];
   horizontal?: boolean;
   offset?: number;
   style?: VictoryStyleInterface;
   displayName?: string;
-  role?: string;
-  getChildren?: any;
 }
 
 const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
@@ -199,24 +196,16 @@ VictoryGroupBase.defaultProps = {
   theme: VictoryTheme.grayscale,
 };
 
-// TODO: This utility could be moved and used for other components
-const typedMemo: <T>(
-  component: React.ComponentType<any>,
-  equalityCheck?: any,
-) => T = React.memo;
-
-// We need to attach the static properties to the memoized version, or else
-// VictoryChart will not be able to get this component's role type
-export const VictoryGroup = typedMemo<VictoryGroupProps>(
-  VictoryGroupBase,
-  isEqual,
+export const VictoryGroup = Object.assign(
+  React.memo(VictoryGroupBase, isEqual),
+  {
+    displayName: "VictoryGroup",
+    role: "group",
+    expectedComponents: [
+      "groupComponent",
+      "containerComponent",
+      "labelComponent",
+    ],
+    getChildren,
+  },
 );
-
-VictoryGroup.displayName = "VictoryGroup";
-VictoryGroup.role = "group";
-VictoryGroup.expectedComponents = [
-  "groupComponent",
-  "containerComponent",
-  "labelComponent",
-];
-VictoryGroup.getChildren = getChildren;
