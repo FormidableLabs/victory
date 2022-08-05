@@ -35,6 +35,7 @@ function generateWireitConfig(pkg, rootPkg) {
       "build:dist": "wireit",
       "build:dist:dev": "wireit",
       "build:dist:min": "wireit",
+      "check": "wireit",
       "types:check": "wireit",
       "types:create": "wireit",
       "format": "wireit",
@@ -135,6 +136,14 @@ function generateWireitConfig(pkg, rootPkg) {
         ],
         "packageLocks": ["pnpm-lock.yaml"]
       },
+      "check": {
+        "dependencies": [
+          "types:check",
+          "jest",
+          "format",
+          "lint",
+        ]
+      },
       "types:check": {
         "command": "nps types:pkg:check",
         "files": [
@@ -169,12 +178,12 @@ function generateWireitConfig(pkg, rootPkg) {
         ],
         "packageLocks": ["pnpm-lock.yaml"]
       },
-      // lint/format + fix
+
       // For the "fix" task, we first run the normal check that may fail so that
-      // we get caching for packages without changed files.
-      ...["", ":fix"].reduce((acc, key) => {
-        acc[`format${key}`] = {
-          "command": key === "" ? "nps format:pkg" : "pnpm run format || nps format:pkg:fix",
+      // we get caching for packages without changed files:
+      ...["format", "format:fix"].reduce((wireit, key) => {
+        wireit[key] = {
+          "command": key === "format" ? "nps format:pkg" : "pnpm run format || nps format:pkg:fix",
           "files": [
             "src/**",
             "*.json",
@@ -184,9 +193,12 @@ function generateWireitConfig(pkg, rootPkg) {
           "output": [],
           "packageLocks": ["pnpm-lock.yaml"]
         };
-
-        acc[`lint${key}`] = {
-          "command": key === "" ? "nps lint:pkg" : "pnpm run lint || nps lint:pkg:fix",
+        return wireit;
+      }, {}),
+      // Same as above
+      ...["lint", "lint:fix"].reduce((wireit, key) => {
+        wireit[key] = {
+          "command": key === "lint" ? "nps lint:pkg" : "pnpm run lint || nps lint:pkg:fix",
           "files": [
             "src/**",
             "../../.eslintignore",
@@ -199,8 +211,9 @@ function generateWireitConfig(pkg, rootPkg) {
           "packageLocks": ["pnpm-lock.yaml"]
         };
 
-        return acc;
+        return wireit;
       }, {}),
+
       "jest": {
         "command": "nps jest:pkg",
         "files": [
