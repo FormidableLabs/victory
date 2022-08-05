@@ -158,6 +158,7 @@ const main = async () => {
 
 if (require.main === module) {
   main()
+    // eslint-disable-next-line promise/always-return
     .then(() => {
       log("Build finished.");
     })

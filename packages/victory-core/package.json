@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "36.5.3",
+  "version": "36.6.0",
   "description": "Victory Core",
   "keywords": [
     "data visualization",
@@ -23,7 +23,7 @@
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
-    "victory-vendor": "^36.5.1"
+    "victory-vendor": "^36.6.0"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
@@ -120,8 +120,8 @@
         "../../config/webpack.config.dev.js"
       ],
       "output": [
-        "victory*.js",
-        "!victory*.min.js*"
+        "dist/victory*.js",
+        "!dist/victory*.min.js*"
       ],
       "dependencies": [
         "../victory-vendor:build:lib:esm"
@@ -139,7 +139,7 @@
         "../../config/webpack.config.js"
       ],
       "output": [
-        "victory*.min.js*"
+        "dist/victory*.min.js*"
       ],
       "dependencies": [
         "../victory-vendor:build:lib:esm"

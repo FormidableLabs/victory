@@ -148,9 +148,8 @@ const getAnchors = (titleOrientation, centerTitle) => {
       textAnchor: horizontal ? "middle" : standardAnchors.textAnchor,
       verticalAnchor: horizontal ? standardAnchors.verticalAnchor : "middle",
     };
-  } else {
-    return standardAnchors;
   }
+  return standardAnchors;
 };
 
 const getTitleStyle = (props) => {

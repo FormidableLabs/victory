@@ -11,11 +11,11 @@ const dataset = [
   { x: 3, min: 3, max: 12, median: 6, q1: 5, q3: 10 },
 ];
 
-const TestGroup = ({ children }) => {
+const TestGroup = ({ children }: { children?: React.ReactElement[] }) => {
   return <g data-testid={TEST_GROUP_ID}>{children}</g>;
 };
 
-const renderWithTestGroup = (data = dataset) => {
+const renderWithTestGroup = (data: any[] = dataset) => {
   const { container } = render(
     <VictoryBoxPlot data={data} groupComponent={<TestGroup />} />,
   );
@@ -60,14 +60,14 @@ describe("components/victory-box-plot", () => {
     it("renders an svg with the correct width and height", () => {
       const { container } = render(<VictoryBoxPlot data={dataset} />);
       const svg = container.querySelector("svg");
-      expect(svg.getAttribute("style")).toContain("width: 100%; height: 100%");
+      expect(svg?.getAttribute("style")).toContain("width: 100%; height: 100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryBoxPlot data={dataset} />);
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
+      expect(svg?.getAttribute("viewBox")).toEqual(viewBoxValue);
     });
 
     it("renders 3 points", () => {
@@ -135,7 +135,7 @@ describe("components/victory-box-plot", () => {
           maxComponent={
             <Whisker
               ariaLabel={({ datum }) => buildLabel(datum.x, datum._max)}
-              tabIndex={({ index }) => index + 1}
+              tabIndex={({ index }) => Number(index) + 1}
             />
           }
         />,
@@ -159,7 +159,7 @@ describe("components/victory-box-plot", () => {
           q3Component={
             <Border
               ariaLabel={({ datum }) => buildLabel(datum.x, datum._q3)}
-              tabIndex={({ index }) => index + 1}
+              tabIndex={({ index }) => Number(index) + 1}
             />
           }
         />,
@@ -183,7 +183,7 @@ describe("components/victory-box-plot", () => {
           medianComponent={
             <LineSegment
               ariaLabel={({ datum }) => buildLabel(datum.x, datum._median)}
-              tabIndex={({ index }) => index + 1}
+              tabIndex={({ index }) => Number(index) + 1}
             />
           }
         />,

@@ -1,4 +1,3 @@
-/*global window:false */
 import React from "react";
 import {
   assign,
@@ -58,10 +57,11 @@ export interface EventMixinCommonProps
 export interface EventsMixinClass<TProps> {
   renderContainer(
     component: React.ReactElement,
-    children: React.ReactElement[],
+    children: React.ReactElement | React.ReactElement[],
   ): React.ReactElement;
   cacheValues<TThis>(this: TThis, obj: Partial<TThis>): void;
   getEventState: typeof Events.getEventState;
+  renderData(props: TProps);
   renderContinuousData(props: TProps);
   animateComponent(props: TProps, defaultAnimationWhitelist);
   getComponentProps(
@@ -220,13 +220,12 @@ export function addEvents<
           if (!props.standalone && component.name === "parent") {
             // don't check for changes on parent props for non-standalone components
             return undefined;
-          } else {
-            return component.index !== undefined
-              ? getState(component.index, component.name)
-              : this.dataKeys
-                  .map((key) => getState(key, component.name))
-                  .filter(Boolean);
           }
+          return component.index !== undefined
+            ? getState(component.index, component.name)
+            : this.dataKeys
+                .map((key) => getState(key, component.name))
+                .filter(Boolean);
         })
         .filter(Boolean);
       return stateChanges;

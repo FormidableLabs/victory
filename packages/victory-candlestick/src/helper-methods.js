@@ -262,22 +262,21 @@ const calculatePlotValues = (props) => {
         : signX * (labelStyle.padding || 1);
 
     return { yValue, xValue, dx, dy };
-  } else {
-    const xValue = x;
-    const yValue = positions[computedType];
-
-    const dy =
-      orientation === "top" || orientation === "bottom"
-        ? signY * (labelStyle.padding || 1)
-        : 0;
-
-    const dx =
-      orientation === "top" || orientation === "bottom"
-        ? 0
-        : signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
-
-    return { yValue, xValue, dx, dy };
   }
+  const xValue = x;
+  const yValue = positions[computedType];
+
+  const dy =
+    orientation === "top" || orientation === "bottom"
+      ? signY * (labelStyle.padding || 1)
+      : 0;
+
+  const dx =
+    orientation === "top" || orientation === "bottom"
+      ? 0
+      : signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
+
+  return { yValue, xValue, dx, dy };
 };
 /* eslint-enable complexity*/
 

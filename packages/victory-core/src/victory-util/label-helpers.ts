@@ -12,9 +12,8 @@ function getVerticalAnchor(props, datum) {
     return datum.verticalAnchor || labelStyle.verticalAnchor;
   } else if (!props.horizontal) {
     return sign >= 0 ? "end" : "start";
-  } else {
-    return "middle";
   }
+  return "middle";
 }
 
 function getTextAnchor(props, datum) {
@@ -26,9 +25,8 @@ function getTextAnchor(props, datum) {
     return datum.verticalAnchor || labelStyle.verticalAnchor;
   } else if (!horizontal) {
     return "middle";
-  } else {
-    return sign >= 0 ? "start" : "end";
   }
+  return sign >= 0 ? "start" : "end";
 }
 
 function getAngle(props, datum) {
@@ -66,13 +64,12 @@ function getPosition(props, datum) {
   const { x, y } = Helpers.scalePoint(props, datum);
   if (!polar) {
     return { x, y };
-  } else {
-    const polarPadding = getPolarPadding(props, datum);
-    return {
-      x: x + polarPadding.x,
-      y: y + polarPadding.y,
-    };
   }
+  const polarPadding = getPolarPadding(props, datum);
+  return {
+    x: x + polarPadding.x,
+    y: y + polarPadding.y,
+  };
 }
 
 function getPolarPadding(props, datum) {
@@ -106,9 +103,8 @@ function getPolarOrientation(degrees) {
     // eslint-disable-next-line no-magic-numbers
   } else if (degrees > 135 && degrees < 225) {
     return "left";
-  } else {
-    return "bottom";
   }
+  return "bottom";
 }
 
 // Exported Functions

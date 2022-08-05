@@ -1,4 +1,4 @@
-/*eslint-disable no-magic-numbers,react/no-multi-comp */
+/* eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import { range, merge, random, minBy, maxBy, last } from "lodash";
 import { VictoryChart } from "victory-chart";

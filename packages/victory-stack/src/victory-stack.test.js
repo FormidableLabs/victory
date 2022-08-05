@@ -1,4 +1,3 @@
-/* global console */
 /* eslint-disable no-console */
 
 import { render } from "@testing-library/react";

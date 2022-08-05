@@ -73,7 +73,7 @@ export class VictoryTransition extends React.Component<
   }
 
   componentDidMount() {
-    this.setState({ nodesShouldLoad: true }); //eslint-disable-line react/no-did-mount-set-state
+    this.setState({ nodesShouldLoad: true }); // eslint-disable-line react/no-did-mount-set-state
   }
 
   shouldComponentUpdate(nextProps: VictoryTransitionProps) {
@@ -101,24 +101,23 @@ export class VictoryTransition extends React.Component<
       const state = animate.parentState;
       const oldProps = state.nodesWillExit ? props : null;
       return { oldProps, nextProps };
-    } else {
-      const oldChildren = React.Children.toArray(props.children);
-      const nextChildren = React.Children.toArray(nextProps.children);
-      const {
-        nodesWillExit,
-        nodesWillEnter,
-        childrenTransitions,
-        nodesShouldEnter,
-      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
-      return {
-        nodesWillExit,
-        nodesWillEnter,
-        childrenTransitions,
-        nodesShouldEnter,
-        oldProps: nodesWillExit ? props : null,
-        nextProps,
-      };
     }
+    const oldChildren = React.Children.toArray(props.children);
+    const nextChildren = React.Children.toArray(nextProps.children);
+    const {
+      nodesWillExit,
+      nodesWillEnter,
+      childrenTransitions,
+      nodesShouldEnter,
+    } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
+    return {
+      nodesWillExit,
+      nodesWillEnter,
+      childrenTransitions,
+      nodesShouldEnter,
+      oldProps: nodesWillExit ? props : null,
+      nextProps,
+    };
   }
 
   private getDomainFromChildren(
@@ -149,15 +148,14 @@ export class VictoryTransition extends React.Component<
       : childProps.domain && childProps.domain[axis];
     if (!childProps.children && domain) {
       return domain;
-    } else {
-      const childDomains = getChildDomains([child]);
-      return childDomains.length === 0
-        ? [0, 1]
-        : [
-            Collection.getMinValue(childDomains),
-            Collection.getMaxValue(childDomains),
-          ];
     }
+    const childDomains = getChildDomains([child]);
+    return childDomains.length === 0
+      ? [0, 1]
+      : [
+          Collection.getMinValue(childDomains),
+          Collection.getMaxValue(childDomains),
+        ];
   }
 
   pickProps() {

@@ -8,9 +8,43 @@ import {
   Scale,
   Domain,
   Box,
+  DomainTuple,
+  VictoryStyleObject,
 } from "victory-core";
 import { assign, defaults, isFunction, pick } from "lodash";
 import isEqual from "react-fast-compare";
+
+export type VictoryBrushLineTargetType = "data" | "labels" | "parent";
+export interface VictoryBrushLineProps {
+  allowDrag?: boolean;
+  allowDraw?: boolean;
+  allowResize?: boolean;
+  brushAreaComponent?: React.ReactElement;
+  brushAreaStyle?: VictoryStyleObject;
+  brushAreaWidth?: number;
+  brushComponent?: React.ReactElement;
+  brushDomain?: DomainTuple;
+  brushStyle?: VictoryStyleObject;
+  brushWidth?: number;
+  className?: string;
+  dimension?: "x" | "y";
+  events?: React.DOMAttributes<any>;
+  disable?: boolean;
+  groupComponent?: React.ReactElement;
+  handleComponent?: React.ReactElement;
+  handleStyle?: VictoryStyleObject;
+  handleWidth?: number;
+  id?: string | number;
+  lineComponent?: React.ReactElement;
+  name?: string;
+  onBrushDomainChange?: (
+    domain: DomainTuple,
+    props?: VictoryBrushLineProps,
+  ) => void;
+  style?: VictoryStyleObject;
+  type?: string;
+  width?: number;
+}
 
 const SMALL_NUMBER = 1 / Number.MAX_SAFE_INTEGER;
 const getScale = (props) => {
@@ -68,14 +102,19 @@ const getBrushDomain = (brushDomain, fullDomain) => {
     const domainMin = Collection.getMinValue(fullDomain);
     const domainMax = Collection.getMaxValue(fullDomain);
     const defaultMin =
-      brushMin < domainMin ? domainMin : domainMax - SMALL_NUMBER;
+      brushMin < domainMin ? domainMin : Number(domainMax) - SMALL_NUMBER;
     const defaultMax =
-      brushMax > domainMax ? domainMax : domainMin + SMALL_NUMBER;
+      brushMax > domainMax ? domainMax : Number(domainMin) + SMALL_NUMBER;
     const min = withinBound(brushMin, fullDomain) ? brushMin : defaultMin;
     const max = withinBound(brushMax, fullDomain) ? brushMax : defaultMax;
     return [min, max];
   }
   return fullDomain;
+};
+
+type ReduceReturnType = {
+  min?: string;
+  max?: string;
 };
 
 const getActiveHandle = (props, position, range) => {
@@ -91,7 +130,7 @@ const getActiveHandle = (props, position, range) => {
   const active = ["min", "max"].reduce((memo, type) => {
     memo[type] = withinBound(position, getHandle(type)) ? type : undefined;
     return memo;
-  }, {});
+  }, {} as ReduceReturnType);
   return active.min && active.max ? "both" : active.min || active.max;
 };
 
@@ -135,7 +174,7 @@ const fallbackProps = {
   },
 };
 
-export default class VictoryBrushLine extends React.Component {
+export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
   static propTypes = {
     allowDrag: PropTypes.bool,
     allowDraw: PropTypes.bool,
@@ -279,23 +318,22 @@ export default class VictoryBrushLine extends React.Component {
                       }),
                     },
                   ];
-                } else {
-                  // if the event occurs outside the region, or if the whole domain is selected,
-                  // start a new selection
-                  return allowDraw
-                    ? [
-                        {
-                          mutation: () => ({
-                            isSelecting: allowResize,
-                            brushDomain: null,
-                            startPosition: position,
-                            activeBrushes,
-                            parentSVG,
-                          }),
-                        },
-                      ]
-                    : [];
                 }
+                // if the event occurs outside the region, or if the whole domain is selected,
+                // start a new selection
+                return allowDraw
+                  ? [
+                      {
+                        mutation: () => ({
+                          isSelecting: allowResize,
+                          brushDomain: null,
+                          startPosition: position,
+                          activeBrushes,
+                          parentSVG,
+                        }),
+                      },
+                    ]
+                  : [];
               },
               // eslint-disable-next-line max-statements, complexity
               onMouseMove: (evt, targetProps) => {
@@ -476,7 +514,7 @@ export default class VictoryBrushLine extends React.Component {
         ];
   };
 
-  getRectDimensions(props, brushWidth, domain) {
+  getRectDimensions(props, brushWidth, domain?) {
     const { brushDomain } = props;
     const dimension = getDimension(props);
     domain = domain || getBrushDomain(brushDomain, getFullDomain(props));

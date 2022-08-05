@@ -447,9 +447,8 @@ export function getExternalMutation(
       // coerce arrays to strings before matching
       const stringArray = mutation[type].map((m) => `${m}`);
       return includes(stringArray, identifier[type]);
-    } else {
-      return false;
     }
+    return false;
   };
 
   mutations = Array.isArray(mutations) ? mutations : [mutations];

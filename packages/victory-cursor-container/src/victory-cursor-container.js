@@ -109,9 +109,8 @@ export const cursorContainerMixin = (base) =>
           return isObject(c.props) && c.props.padding !== undefined;
         });
         return Helpers.getPadding(child.props);
-      } else {
-        return Helpers.getPadding(props);
       }
+      return Helpers.getPadding(props);
     }
 
     getCursorElements(props) {

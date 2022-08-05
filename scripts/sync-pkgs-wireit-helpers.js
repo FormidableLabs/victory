@@ -107,8 +107,8 @@ function generateWireitConfig(pkg, rootPkg) {
           "../../config/webpack.config.dev.js",
         ],
         "output": [
-          "victory*.js",
-          "!victory*.min.js*",
+          "dist/victory*.js",
+          "!dist/victory*.min.js*",
         ],
         // Webpack uses:
         // 1. Source (`src`) of package being built.
@@ -128,7 +128,7 @@ function generateWireitConfig(pkg, rootPkg) {
           "../../config/webpack.config.js",
         ],
         "output": [
-          "victory*.min.js*"
+          "dist/victory*.min.js*"
         ],
         "dependencies": [
           ...deps.map((dep) => `../${dep}:build:lib:esm`)

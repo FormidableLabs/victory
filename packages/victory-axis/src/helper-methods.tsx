@@ -186,10 +186,10 @@ const getLabelPadding = (props, style) => {
   }
   const isVertical = Axis.isVertical(props);
   // TODO: magic numbers
-  /*eslint-disable no-magic-numbers*/
+  /* eslint-disable no-magic-numbers*/
   const fontSize = labelStyle.fontSize || 14;
   return props.label ? fontSize * (isVertical ? 2.3 : 1.6) : 0;
-  /*eslint-enable no-magic-numbers*/
+  /* eslint-enable no-magic-numbers*/
 };
 
 const getDefaultOrientations = (axis, originSign, horizontal) => {
@@ -471,8 +471,7 @@ const getCalculatedValues = (props) => {
   const yAxisDomain = axis === "y" ? axisDomain : undefined;
   const xAxisScale = axis === "x" ? axisScale : undefined;
   const yAxisScale = axis === "y" ? axisScale : undefined;
-  const crossAxis =
-    props.crossAxis === false || props.standalone === true ? false : true;
+  const crossAxis = !(props.crossAxis === false || props.standalone === true);
   const ticks = Axis.getTicks(props, axisScale, crossAxis);
   const tickFormat = Axis.getTickFormat(props, axisScale);
   const range = {

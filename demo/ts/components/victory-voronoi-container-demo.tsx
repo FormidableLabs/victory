@@ -1,5 +1,4 @@
-/*global window:false*/
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import React from "react";
 import { random, range } from "lodash";
 import { VictoryChart } from "victory-chart";

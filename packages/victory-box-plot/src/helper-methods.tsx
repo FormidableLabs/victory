@@ -152,7 +152,7 @@ export const getDomain = (props, axis) => {
   return Domain.createDomainFunction(getDomainFromData)(props, axis);
 };
 
-const getLabelStyle = (props, styleObject, namespace) => {
+const getLabelStyle = (props, styleObject, namespace?) => {
   const component = props[`${namespace}LabelComponent`] || props.labelComponent;
   const baseStyle = styleObject[`${namespace}Labels`] || styleObject.labels;
   if (!Helpers.isTooltip(component)) {

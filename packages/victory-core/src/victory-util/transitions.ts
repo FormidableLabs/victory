@@ -342,9 +342,8 @@ export function getTransitionPropsFactory(props, state, setState) {
       return animationDuration !== undefined
         ? animationDuration
         : defaultTransitions[type] && defaultTransitions[type].duration;
-    } else {
-      return {};
     }
+    return {};
   };
 
   // eslint-disable-next-line max-statements, complexity, max-len

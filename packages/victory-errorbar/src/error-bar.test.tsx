@@ -27,7 +27,7 @@ describe("victory-primitives/error-bar", () => {
 
   it("should render eight lines", () => {
     const { container } = render(<ErrorBar {...baseProps} />, {
-      wrapper: "svg",
+      wrapper: "svg" as any,
     });
     const lines = container.querySelectorAll("line");
 
@@ -60,7 +60,7 @@ describe("victory-primitives/error-bar", () => {
     const xErrorProps = omit(baseProps, ["errorY"]);
 
     const { container } = render(<ErrorBar {...xErrorProps} />, {
-      wrapper: "svg",
+      wrapper: "svg" as any,
     });
     const lines = container.querySelectorAll("line");
 
@@ -85,7 +85,7 @@ describe("victory-primitives/error-bar", () => {
     const yErrorProps = omit(baseProps, ["errorX"]);
 
     const { container } = render(<ErrorBar {...yErrorProps} />, {
-      wrapper: "svg",
+      wrapper: "svg" as any,
     });
     const lines = container.querySelectorAll("line");
 

@@ -228,9 +228,8 @@ export function getDomainFromChildren(props, axis, childComponents) {
       return null;
     } else if (child.type && isFunction(child.type.getDomain)) {
       return child.props && child.type.getDomain(sharedProps, axis);
-    } else {
-      return Domain.getDomain(sharedProps, axis);
     }
+    return Domain.getDomain(sharedProps, axis);
   };
 
   const childDomains = Helpers.reduceChildren(children, iteratee, props);
@@ -360,15 +359,14 @@ export function getStringsFromCategories(childComponents, axis) {
     const childProps = child.props || {};
     if (!Domain.isDomainComponent(child) || !childProps.categories) {
       return null;
-    } else {
-      const categories =
-        childProps.categories && !Array.isArray(childProps.categories)
-          ? childProps.categories[axis]
-          : childProps.props.categories;
-      const categoryStrings =
-        categories && categories.filter((val) => typeof val === "string");
-      return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
     }
+    const categories =
+      childProps.categories && !Array.isArray(childProps.categories)
+        ? childProps.categories[axis]
+        : childProps.props.categories;
+    const categoryStrings =
+      categories && categories.filter((val) => typeof val === "string");
+    return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
   };
   return Helpers.reduceChildren(childComponents.slice(0), iteratee);
 }

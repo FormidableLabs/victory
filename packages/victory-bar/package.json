@@ -1,6 +1,6 @@
 {
   "name": "victory-bar",
-  "version": "36.5.3",
+  "version": "36.6.0",
   "description": "Bar Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,15 +22,15 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
-    "victory-core": "^36.5.3",
-    "victory-vendor": "^36.5.1"
+    "victory-core": "^36.6.0",
+    "victory-vendor": "^36.6.0"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
   "devDependencies": {
     "victory-chart": "*",
-    "victory-bar": "."
+    "victory-bar": "*"
   },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",
@@ -120,8 +120,8 @@
         "../../config/webpack.config.dev.js"
       ],
       "output": [
-        "victory*.js",
-        "!victory*.min.js*"
+        "dist/victory*.js",
+        "!dist/victory*.min.js*"
       ],
       "dependencies": [
         "../victory-core:build:lib:esm",
@@ -140,7 +140,7 @@
         "../../config/webpack.config.js"
       ],
       "output": [
-        "victory*.min.js*"
+        "dist/victory*.min.js*"
       ],
       "dependencies": [
         "../victory-core:build:lib:esm",

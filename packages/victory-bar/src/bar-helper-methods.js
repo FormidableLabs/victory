@@ -56,11 +56,10 @@ export const getCornerRadius = (cornerRadius, props) => {
   }
   if (isPlainObject(cornerRadius)) {
     return getCornerRadiusFromObject(cornerRadius, props);
-  } else {
-    realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, props);
-    realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, props);
-    return realCornerRadius;
   }
+  realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, props);
+  realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, props);
+  return realCornerRadius;
 };
 
 export const getStyle = (style = {}, props) => {

@@ -19,31 +19,29 @@ function fillData(props, datasets) {
     });
     return prev;
   }, {});
-  const xKeys = keys(xMap).map((k) => +k);
+  const xKeys = keys(xMap).map((k) => Number(k));
   const xArr = orderBy(xKeys);
 
   return datasets.map((dataset) => {
     let indexOffset = 0;
     const isDate = dataset[0] && dataset[0]._x instanceof Date;
     const filledInData = xArr.map((x, index) => {
-      x = +x;
+      x = Number(x);
       const datum = dataset[index - indexOffset];
 
       if (datum) {
         const x1 = isDate ? datum._x.getTime() : datum._x;
         if (x1 === x) {
           return datum;
-        } else {
-          indexOffset++;
-          const y = fillInMissingData ? 0 : null;
-          x = isDate ? new Date(x) : x;
-          return { x, y, _x: x, _y: y };
         }
-      } else {
+        indexOffset++;
         const y = fillInMissingData ? 0 : null;
         x = isDate ? new Date(x) : x;
         return { x, y, _x: x, _y: y };
       }
+      const y = fillInMissingData ? 0 : null;
+      x = isDate ? new Date(x) : x;
+      return { x, y, _x: x, _y: y };
     });
 
     return filledInData;
@@ -75,7 +73,7 @@ function getY0(datum, index, datasets) {
     previousPoints.length &&
     previousPoints.reduce((memo, value) => {
       const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
-      return sameSign ? +value + memo : memo;
+      return sameSign ? Number(value) + memo : memo;
     }, firstDatasetBaseline[group] || 0);
   return previousPoints.some((point) => point instanceof Date)
     ? new Date(y0)
@@ -97,13 +95,13 @@ function addLayoutData(props, datasets, index) {
         datum._y === null
           ? null
           : datum._y instanceof Date
-          ? new Date(+datum._y + +yOffset)
+          ? new Date(Number(datum._y) + Number(yOffset))
           : datum._y + yOffset,
       _x1:
         datum._x === null
           ? null
           : datum._x instanceof Date
-          ? new Date(+datum._x + +xOffset)
+          ? new Date(Number(datum._x) + Number(xOffset))
           : datum._x + xOffset,
     });
   });

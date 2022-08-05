@@ -1,4 +1,4 @@
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import React from "react";
 import { VictoryGroup } from "victory-group";
 import { VictoryStack } from "victory-stack";
@@ -327,7 +327,7 @@ export default class App extends React.Component {
             </VictoryChart>
           </div>
 
-          {/**ACCESSIBLE GROUP */}
+          {/** ACCESSIBLE GROUP */}
           <div style={chartContainerStyle}>
             <h2 style={chartHeadingStyle}>Accessible Group</h2>
             <VictoryChart domainPadding={{ x: 40 }}>
