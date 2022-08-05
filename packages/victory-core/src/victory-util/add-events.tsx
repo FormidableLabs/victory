@@ -100,14 +100,14 @@ export type VictoryComponentCommonRole =
 
 /**
  * A component can have any "role",
- * but there are certain ones that we care about internally
+ * but there are certain ones that we actually care about internally
  */
 export type VictoryComponentRole = VictoryComponentCommonRole | string;
 
 /**
- * Static fields that are used for common behavior
+ * Static component fields used by Victory for common behavior
  */
-export interface VictoryComponentConfiguration<TProps = Record<string, any>> {
+export interface VictoryComponentConfiguration<TProps> {
   getBaseProps?(props: TProps): EventMixinCalculatedValues["baseProps"];
   role?: VictoryComponentRole;
   expectedComponents?: Array<keyof TProps | string>;

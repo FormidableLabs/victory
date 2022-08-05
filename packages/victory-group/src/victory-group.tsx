@@ -197,14 +197,18 @@ VictoryGroupBase.defaultProps = {
   theme: VictoryTheme.grayscale,
 };
 
-const VictoryGroupMemo = React.memo(VictoryGroupBase, isEqual);
-export const VictoryGroup = VictoryGroupMemo as typeof VictoryGroupMemo &
-  VictoryComponentConfiguration<VictoryGroupProps>;
+const componentConfig: VictoryComponentConfiguration<VictoryGroupProps> = {
+  role: "group",
+  expectedComponents: [
+    "groupComponent",
+    "containerComponent",
+    "labelComponent",
+  ],
+  getChildren,
+};
+
+export const VictoryGroup = Object.assign(
+  React.memo(VictoryGroupBase, isEqual),
+  componentConfig,
+);
 VictoryGroup.displayName = "VictoryGroup";
-VictoryGroup.role = "group";
-VictoryGroup.expectedComponents = [
-  "groupComponent",
-  "containerComponent",
-  "labelComponent",
-];
-VictoryGroup.getChildren = getChildren;
