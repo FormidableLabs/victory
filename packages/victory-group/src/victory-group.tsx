@@ -19,6 +19,7 @@ import {
   VictoryStyleInterface,
   VictoryTheme,
   Wrapper,
+  VictoryComponentConfiguration,
 } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
@@ -196,16 +197,14 @@ VictoryGroupBase.defaultProps = {
   theme: VictoryTheme.grayscale,
 };
 
-export const VictoryGroup = Object.assign(
-  React.memo(VictoryGroupBase, isEqual),
-  {
-    displayName: "VictoryGroup",
-    role: "group",
-    expectedComponents: [
-      "groupComponent",
-      "containerComponent",
-      "labelComponent",
-    ],
-    getChildren,
-  },
-);
+const VictoryGroupMemo = React.memo(VictoryGroupBase, isEqual);
+export const VictoryGroup = VictoryGroupMemo as typeof VictoryGroupMemo &
+  VictoryComponentConfiguration<VictoryGroupProps>;
+VictoryGroup.displayName = "VictoryGroup";
+VictoryGroup.role = "group";
+VictoryGroup.expectedComponents = [
+  "groupComponent",
+  "containerComponent",
+  "labelComponent",
+];
+VictoryGroup.getChildren = getChildren;

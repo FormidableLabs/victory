@@ -188,7 +188,7 @@ function getDataWithOffset(props, defaultDataset = [], offset) {
   });
 }
 
-export function getChildren(props, childComponents, calculatedProps) {
+export function getChildren(props, childComponents?, calculatedProps?) {
   props = Helpers.modifyProps(props, fallbackProps, "stack");
   childComponents = childComponents || React.Children.toArray(props.children);
   calculatedProps =

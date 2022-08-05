@@ -85,13 +85,46 @@ export interface EventMixinCalculatedValues {
 }
 
 /**
+ * These are the common roles that we care about internally.
+ */
+export type VictoryComponentCommonRole =
+  | "container"
+  | "group"
+  | "histogram"
+  | "label"
+  | "line"
+  | "portal"
+  | "stack"
+  | "tooltip"
+  | "voronoi";
+
+/**
+ * A component can have any "role",
+ * but there are certain ones that we care about internally
+ */
+export type VictoryComponentRole = VictoryComponentCommonRole | string;
+
+/**
+ * Static fields that are used for common behavior
+ */
+export interface VictoryComponentConfiguration<TProps = Record<string, any>> {
+  getBaseProps?(props: TProps): EventMixinCalculatedValues["baseProps"];
+  role?: VictoryComponentRole;
+  expectedComponents?: Array<keyof TProps | string>;
+  getChildren?: (
+    props: TProps,
+    childComponents?: Array<React.ReactNode>,
+    calculatedProps?: TProps,
+  ) => void;
+  animationWhitelist?: Array<keyof TProps | string>;
+}
+
+/**
  * This represents the class itself, including static fields
  */
-export interface WrappedComponentClass<TProps> {
+export interface WrappedComponentClass<TProps>
+  extends VictoryComponentConfiguration<TProps> {
   new (props: TProps): React.Component<TProps>;
-  getBaseProps?(props: TProps): EventMixinCalculatedValues["baseProps"];
-  role?: string;
-  expectedComponents?: string[];
 }
 
 export function addEvents<
