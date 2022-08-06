@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-empty-function */
 
 import { render } from "@testing-library/react";
 import React from "react";
@@ -15,7 +16,7 @@ describe("components/victory-stack", () => {
           <VictoryBar />
         </VictoryStack>,
       );
-      const svg = container.querySelector("svg");
+      const svg = container.querySelector("svg")!;
       expect(svg.style.width).toEqual("100%");
       expect(svg.style.height).toEqual("100%");
     });
@@ -27,7 +28,7 @@ describe("components/victory-stack", () => {
           <VictoryBar />
         </VictoryStack>,
       );
-      const svg = container.querySelector("svg");
+      const svg = container.querySelector("svg")!;
       const viewBoxValue = `0 0 ${450} ${300}`;
       expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
     });
@@ -40,7 +41,7 @@ describe("components/victory-stack", () => {
         </VictoryStack>,
       );
 
-      const svgNode = container.querySelector("svg");
+      const svgNode = container.querySelector("svg")!;
       expect(svgNode.getAttribute("data-testid")).toEqual("victory-stack");
       expect(svgNode.getAttribute("aria-label")).toEqual("Stack");
     });

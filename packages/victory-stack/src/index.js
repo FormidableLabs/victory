@@ -1,1 +1,1 @@
-export { default as VictoryStack } from "./victory-stack";
+export * from "./victory-stack";

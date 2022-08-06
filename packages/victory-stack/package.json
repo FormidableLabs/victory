@@ -30,7 +30,9 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-histogram": "^36.6.0"
+    "victory-bar": "*",
+    "victory-histogram": "*",
+    "victory-stack": "*"
   },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",
