@@ -125,7 +125,7 @@ class VictoryScatterBase extends React.Component<VictoryScatterProps> {
     return !!this.props.animate;
   }
 
-  render() {
+  render(): React.ReactElement {
     const { animationWhitelist, role } = VictoryScatter;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 

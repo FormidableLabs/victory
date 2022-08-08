@@ -129,7 +129,7 @@ class VictoryErrorBarBase extends React.Component<VictoryErrorBarProps> {
     return !!this.props.animate;
   }
 
-  render() {
+  render(): React.ReactElement {
     const { animationWhitelist, role } = VictoryErrorBar;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
