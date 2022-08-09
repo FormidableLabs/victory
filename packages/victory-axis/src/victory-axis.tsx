@@ -176,7 +176,7 @@ class VictoryAxisBase extends React.Component<VictoryAxisProps> {
   static getAxis = Axis.getAxis;
   static getStyles = (props) => getStyles(props);
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
-  static expectedComponents = [
+  static expectedComponents: Array<keyof VictoryAxisProps> = [
     "axisComponent",
     "axisLabelComponent",
     "groupComponent",
@@ -297,7 +297,7 @@ class VictoryAxisBase extends React.Component<VictoryAxisProps> {
     return !!this.props.animate;
   }
 
-  render() {
+  render(): React.ReactElement {
     const { animationWhitelist } = VictoryAxis;
     const props = Axis.modifyProps(this.props, fallbackProps);
     const userProps = UserProps.getSafeUserProps(this.props);
