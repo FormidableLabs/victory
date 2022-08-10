@@ -103,6 +103,24 @@ To develop against `victory-native`, please see the package [README](./packages/
 
 ### Tips and tricks
 
+#### Scripts can be run from the _root_ AND from inside any _package_ folder
+
+For example, when working on a single package like `victory-core`, you can run `pnpm run check --watch` from the `packages/victory-core` directory, and it will only check the core.  Example:  
+
+```sh
+$ cd packages/victory-core
+$ pnpm run check --watch
+```
+
+This is especially helpful when you're making changes to any package that is _depended upon_, like `victory-core` or `victory-vendor`, and don't want to run every single script during development.
+
+
+#### My IDE shows outdated TypeScript errors
+
+It seems like VS Code and WebStorm both struggle to update their internal cache, whenever the **built types** change.  For example, when making changes to `victory-core`, the TypeScript changes won't be picked up by your IDE automatically.
+
+Instead of restarting your IDE completely, try restarting the TypeScript Service.
+
 #### My computer grinds to a halt!
 
 The initial build/check, or one where something that is part of a lot of cache keys changes, can really slow down your computer, especially if you've got an older model. To allow you to do other work on your computer at the same time, consider using the `WIREIT_PARALLEL=<NUM_PROCESS>` environment variable like:

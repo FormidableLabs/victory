@@ -57,6 +57,7 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "check": "wireit",
     "types:check": "wireit",
     "types:create": "wireit",
     "format": "wireit",
@@ -105,6 +106,14 @@
     "build:dist:min": {
       "dependencies": [
         "build"
+      ]
+    },
+    "check": {
+      "dependencies": [
+        "types:check",
+        "jest",
+        "format",
+        "lint"
       ]
     },
     "types:check": {

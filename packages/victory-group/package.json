@@ -42,6 +42,7 @@
     "build:dist": "wireit",
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
+    "check": "wireit",
     "types:check": "wireit",
     "types:create": "wireit",
     "format": "wireit",
@@ -150,6 +151,14 @@
         "pnpm-lock.yaml"
       ]
     },
+    "check": {
+      "dependencies": [
+        "types:check",
+        "jest",
+        "format",
+        "lint"
+      ]
+    },
     "types:check": {
       "command": "nps types:pkg:check",
       "files": [
@@ -205,6 +214,19 @@
         "pnpm-lock.yaml"
       ]
     },
+    "format:fix": {
+      "command": "pnpm run format || nps format:pkg:fix",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
     "lint": {
       "command": "nps lint:pkg",
       "files": [
@@ -220,19 +242,6 @@
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "format:fix": {
-      "command": "pnpm run format || nps format:pkg:fix",
-      "files": [
-        "src/**",
-        "*.json",
-        "../../.prettierignore",
-        "../../.prettierrc.json"
-      ],
-      "output": [],
       "packageLocks": [
         "pnpm-lock.yaml"
       ]
