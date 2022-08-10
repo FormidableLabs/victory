@@ -20,7 +20,8 @@ export interface ComponentEvent {
   eventKey?: ComponentEventKey | ComponentEventKey[];
   eventHandlers: ComponentEventHandlers;
 }
-export type ComponentEventName = `on${Capitalize<string>}`;
+// Normally we'd use Template Literal Types, but we're avoiding it to maximize TS compatibility with TS < 4.1
+export type ComponentEventName = string; // `on${Capitalize<string>}`;
 export interface ComponentEventHandlers {
   [k: ComponentEventName]: ComponentEventHandler;
 }
