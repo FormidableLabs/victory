@@ -1,16 +1,17 @@
 import { Selection } from "victory-core";
 import { throttle, isFunction, mapValues } from "lodash";
+import { SVGCoordinateType } from "victory-core/src";
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 16;
 
-const CursorHelpers = {
+class CursorHelpersClass {
   getDimension(props) {
     const { horizontal, cursorDimension } = props;
     if (!horizontal || !cursorDimension) {
       return cursorDimension;
     }
     return cursorDimension === "x" ? "y" : "x";
-  },
+  }
 
   withinBounds(point, bounds) {
     const { x1, x2, y1, y2 } = mapValues(bounds, Number);
@@ -21,14 +22,14 @@ const CursorHelpers = {
       y >= Math.min(y1, y2) &&
       y <= Math.max(y1, y2)
     );
-  },
+  }
 
-  onMouseMove(evt, targetProps) {
+  private handleMouseMove = (evt, targetProps) => {
     const { onCursorChange, domain } = targetProps;
     const cursorDimension = this.getDimension(targetProps);
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const cursorSVGPosition = Selection.getSVGEventCoordinates(evt, parentSVG);
-    let cursorValue = Selection.getDataCoordinates(
+    let cursorValue: SVGCoordinateType | null = Selection.getDataCoordinates(
       targetProps,
       targetProps.scale,
       cursorSVGPosition.x,
@@ -47,7 +48,7 @@ const CursorHelpers = {
     }
 
     if (isFunction(onCursorChange)) {
-      if (inBounds) {
+      if (cursorValue) {
         const value = cursorDimension
           ? cursorValue[cursorDimension]
           : cursorValue;
@@ -64,9 +65,16 @@ const CursorHelpers = {
         mutation: () => ({ cursorValue, parentSVG }),
       },
     ];
-  },
+  };
 
-  onTouchEnd(evt, targetProps) {
+  onMouseMove = throttle(this.handleMouseMove, ON_MOUSE_MOVE_THROTTLE_MS, {
+    leading: true,
+    trailing: false,
+  });
+
+  onMouseLeave = this.handleMouseMove;
+
+  onTouchEnd = (evt, targetProps) => {
     const { onCursorChange } = targetProps;
 
     if (isFunction(targetProps.onCursorChange)) {
@@ -80,10 +88,12 @@ const CursorHelpers = {
         mutation: () => ({ cursorValue: null }),
       },
     ];
-  },
-};
+  };
+}
 
-export default {
+export const CursorHelpers = new CursorHelpersClass();
+
+/* {
   ...CursorHelpers,
   onMouseMove: throttle(
     CursorHelpers.onMouseMove.bind(CursorHelpers),
@@ -96,3 +106,6 @@ export default {
   onMouseLeave: CursorHelpers.onMouseMove.bind(CursorHelpers),
   onTouchEnd: CursorHelpers.onTouchEnd.bind(CursorHelpers),
 };
+
+
+   */

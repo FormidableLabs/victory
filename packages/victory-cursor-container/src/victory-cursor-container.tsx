@@ -5,12 +5,37 @@ import {
   VictoryLabel,
   LineSegment,
   Helpers,
+  VictoryContainerProps,
+  CoordinatesPropType,
+  CallbackArgs,
 } from "victory-core";
 import { defaults, assign, isObject } from "lodash";
-import CursorHelpers from "./cursor-helpers";
+import { CursorHelpers } from "./cursor-helpers";
 
-export const cursorContainerMixin = (base) =>
-  class VictoryCursorContainer extends base {
+export type CursorCoordinatesPropType = CoordinatesPropType | number;
+
+export interface VictoryCursorContainerProps extends VictoryContainerProps {
+  cursorComponent?: React.ReactElement;
+  cursorDimension?: "x" | "y";
+  cursorLabel?: (point: CoordinatesPropType, args: CallbackArgs) => any | void;
+  cursorLabelComponent?: React.ReactElement;
+  cursorLabelOffset?: CursorCoordinatesPropType;
+  defaultCursorValue?: CursorCoordinatesPropType;
+  disable?: boolean;
+  onCursorChange?: (
+    value: CursorCoordinatesPropType,
+    props: VictoryCursorContainerProps,
+  ) => void;
+}
+
+type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
+
+export function cursorContainerMixin<
+  TBase extends ComponentClass<TProps>,
+  TProps extends object,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryCursorContainer extends Base {
     static displayName = "VictoryCursorContainer";
     static propTypes = {
       ...VictoryContainer.propTypes,
@@ -134,7 +159,7 @@ export const cursorContainerMixin = (base) =>
         return [];
       }
 
-      const newElements = [];
+      const newElements: React.ReactElement[] = [];
       const padding = this.getPadding(props);
       const cursorCoordinates = {
         x: horizontal ? scale.y(cursorValue.y) : scale.x(cursorValue.x),
@@ -205,5 +230,6 @@ export const cursorContainerMixin = (base) =>
       ];
     }
   };
+}
 
-export default cursorContainerMixin(VictoryContainer);
+export const VictoryCursorContainer = cursorContainerMixin(VictoryContainer);
