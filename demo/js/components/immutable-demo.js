@@ -3,11 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
-import {
-  VictoryClipContainer,
-  VictoryLabel,
-  VictoryTheme,
-} from "victory-core";
+import { VictoryClipContainer, VictoryLabel, VictoryTheme } from "victory-core";
 
 import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
@@ -792,7 +788,7 @@ class App extends React.Component {
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
             containerComponent={
               <VictoryCursorContainer
-                cursorLabel={(datum) =>
+                cursorLabel={({ datum }) =>
                   `${round(datum.x, 2)} , ${round(datum.y, 2)}`
                 }
               />

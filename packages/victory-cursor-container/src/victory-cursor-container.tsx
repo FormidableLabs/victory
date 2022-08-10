@@ -7,7 +7,8 @@ import {
   Helpers,
   VictoryContainerProps,
   CoordinatesPropType,
-  CallbackArgs,
+  VictoryLabelProps,
+  ValueOrCallback,
 } from "victory-core";
 import { defaults, assign, isObject } from "lodash";
 import { CursorHelpers } from "./cursor-helpers";
@@ -17,7 +18,7 @@ export type CursorCoordinatesPropType = CoordinatesPropType | number;
 export interface VictoryCursorContainerProps extends VictoryContainerProps {
   cursorComponent?: React.ReactElement;
   cursorDimension?: "x" | "y";
-  cursorLabel?: (point: CoordinatesPropType, args: CallbackArgs) => any | void;
+  cursorLabel?: ValueOrCallback<VictoryLabelProps["text"]>;
   cursorLabelComponent?: React.ReactElement;
   cursorLabelOffset?: CursorCoordinatesPropType;
   defaultCursorValue?: CursorCoordinatesPropType;
@@ -32,7 +33,7 @@ type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
 
 export function cursorContainerMixin<
   TBase extends ComponentClass<TProps>,
-  TProps extends object,
+  TProps extends VictoryCursorContainerProps,
 >(Base: TBase) {
   // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
   return class VictoryCursorContainer extends Base {
