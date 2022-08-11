@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
 import { defaults, isFunction, property, pick, assign, keys } from "lodash";
+import { CallbackArgs, ValueOrCallback } from "../types/callbacks";
 
 // Private Functions
 
@@ -126,7 +127,10 @@ export function getStyles(style, defaultStyles) {
   };
 }
 
-export function evaluateProp(prop, props) {
+export function evaluateProp<TValue>(
+  prop: ValueOrCallback<TValue>,
+  props: CallbackArgs,
+): TValue {
   return isFunction(prop) ? prop(props) : prop;
 }
 

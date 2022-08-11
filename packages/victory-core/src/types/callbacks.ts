@@ -13,7 +13,7 @@ export interface CallbackArgs {
   data?: Datum[];
   datum?: Datum;
   horizontal?: boolean;
-  index: ID;
+  index?: ID;
   x?: number;
   y?: number;
   scale?: {
