@@ -63,7 +63,10 @@ export interface EventsMixinClass<TProps> {
   getEventState: typeof Events.getEventState;
   renderData(props: TProps);
   renderContinuousData(props: TProps);
-  animateComponent(props: TProps, defaultAnimationWhitelist);
+  animateComponent(
+    props: TProps,
+    defaultAnimationWhitelist: string[],
+  ): React.ReactElement;
   getComponentProps(
     component: React.ReactElement,
     type: string,
@@ -399,7 +402,10 @@ export function addEvents<
       return React.cloneElement(component, parentProps, children);
     }
 
-    animateComponent(props: TProps, defaultAnimationWhitelist: string[]) {
+    animateComponent(
+      props: TProps,
+      defaultAnimationWhitelist: string[],
+    ): React.ReactElement {
       const animationWhitelist =
         (typeof props.animate === "object" &&
           props.animate?.animationWhitelist) ||

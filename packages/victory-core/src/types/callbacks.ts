@@ -13,7 +13,7 @@ export interface CallbackArgs {
   data?: Datum[];
   datum?: Datum;
   horizontal?: boolean;
-  index: ID;
+  index?: ID;
   x?: number;
   y?: number;
   scale?: {
@@ -51,3 +51,5 @@ export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
 export type OrientationOrCallback =
   | OrientationTypes
   | VictoryOrientationCallback;
+
+export type ValueOrCallback<TValue> = TValue | ((args: CallbackArgs) => TValue);

@@ -297,7 +297,7 @@ class VictoryAxisBase extends React.Component<VictoryAxisProps> {
     return !!this.props.animate;
   }
 
-  render() {
+  render(): React.ReactElement {
     const { animationWhitelist } = VictoryAxis;
     const props = Axis.modifyProps(this.props, fallbackProps);
     const userProps = UserProps.getSafeUserProps(this.props);

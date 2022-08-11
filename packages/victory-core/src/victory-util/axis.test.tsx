@@ -4,9 +4,6 @@ import { VictoryBar } from "victory-bar";
 import { Axis, Scale } from "victory-core";
 
 describe("helpers/axis", () => {
-  const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
-  const getVictoryBar = (props) => React.createElement(VictoryBar, props);
-
   describe("isVertical", () => {
     it("returns true when the orientation is vertical", () => {
       const props = { orientation: "left" };
@@ -70,12 +67,11 @@ describe("helpers/axis", () => {
   });
 
   describe("getAxisComponent", () => {
-    const dependentAxis = getVictoryAxis({ dependentAxis: true });
-    const independentAxis = getVictoryAxis({ dependentAxis: false });
-    const bar = getVictoryBar({});
+    const dependentAxis = <VictoryAxis dependentAxis />;
+    const independentAxis = <VictoryAxis dependentAxis={false} />;
+    const bar = <VictoryBar />;
 
     beforeEach(() => {
-      // @ts-expect-error This will error until we convert `victory-axis`
       jest.spyOn(dependentAxis.type, "getAxis");
     });
 
@@ -86,9 +82,7 @@ describe("helpers/axis", () => {
     it("returns the independent axis when called with 'x'", () => {
       const childComponents = [dependentAxis, independentAxis, bar];
       const componentResult = Axis.getAxisComponent(childComponents, "x");
-      // @ts-expect-error This will error until we convert `victory-axis`
       expect(dependentAxis.type.getAxis).toBeCalledWith(dependentAxis.props);
-      // @ts-expect-error This will error until we convert `victory-axis`
       expect(independentAxis.type.getAxis).toBeCalledWith(
         independentAxis.props,
       );

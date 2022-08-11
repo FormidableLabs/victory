@@ -4,13 +4,10 @@ import { Wrapper } from "victory-core";
 import { VictoryLine } from "victory-line";
 
 describe("helpers/wrapper", () => {
-  const getVictoryLine = (props) => React.createElement(VictoryLine, props);
-  const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
-
   describe("getDomain", () => {
-    const victoryLine = getVictoryLine({ domain: [0, 3] });
-    const xAxis = getVictoryAxis({ dependentAxis: false });
-    const yAxis = getVictoryAxis({ dependentAxis: true });
+    const victoryLine = <VictoryLine domain={[0, 3]} />;
+    const xAxis = <VictoryAxis dependentAxis={false} />;
+    const yAxis = <VictoryAxis dependentAxis />;
     const childComponents = [victoryLine, xAxis, yAxis];
 
     it("calculates a domain from props", () => {
@@ -35,7 +32,7 @@ describe("helpers/wrapper", () => {
           { x: "cat", y: 3 },
         ],
       };
-      const childComponents = [getVictoryLine(props)];
+      const childComponents = [<VictoryLine key={0} {...props} />];
       const dataStrings = Wrapper.getStringsFromData(childComponents).x;
       expect(dataStrings).toEqual(["one", "red", "cat"]);
     });
@@ -50,7 +47,7 @@ describe("helpers/wrapper", () => {
         x: 0,
         y: 1,
       };
-      const childComponents = [getVictoryLine(props)];
+      const childComponents = [<VictoryLine key={0} {...props} />];
       const dataStrings = Wrapper.getStringsFromData(childComponents).x;
       expect(dataStrings).toEqual(["one", "red", "cat"]);
     });
@@ -62,7 +59,7 @@ describe("helpers/wrapper", () => {
           { x: "three", y: 3 },
         ],
       };
-      const childComponents = [getVictoryLine(props)];
+      const childComponents = [<VictoryLine key={0} {...props} />];
       expect(Wrapper.getStringsFromData(childComponents).x).toEqual(["three"]);
     });
 
@@ -73,7 +70,7 @@ describe("helpers/wrapper", () => {
           { x: 3, y: 3 },
         ],
       };
-      const childComponents = [getVictoryLine(props)];
+      const childComponents = [<VictoryLine key={0} {...props} />];
       expect(Wrapper.getStringsFromData(childComponents).x).toEqual([]);
     });
 

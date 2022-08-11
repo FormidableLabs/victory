@@ -96,6 +96,7 @@ describe("components/victory-scatter", () => {
     it("renders data values with null accessor", () => {
       const data = range(30);
       const { container } = render(
+        // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryScatter data={data} x={null} y={null} />,
       );
       const points = container.querySelectorAll("path");
