@@ -387,7 +387,7 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
     return hasSummaryStatistics && (this.props.horizontal ? hasY : hasX);
   }
 
-  render() {
+  render(): React.ReactElement {
     const { animationWhitelist, role } = VictoryBoxPlot;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 

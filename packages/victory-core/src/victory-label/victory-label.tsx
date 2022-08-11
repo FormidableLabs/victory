@@ -17,6 +17,7 @@ import {
   NumberOrCallback,
   StringOrCallback,
   StringOrNumberOrCallback,
+  ValueOrCallback,
 } from "../types/callbacks";
 import {
   PaddingProps,
@@ -55,11 +56,11 @@ export interface VictoryLabelProps {
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textComponent?: React.ReactElement;
-  textAnchor?: TextAnchorType | { (): TextAnchorType };
+  textAnchor?: ValueOrCallback<TextAnchorType>;
   title?: string;
-  transform?: string | object | (() => string | object);
+  transform?: ValueOrCallback<string | object>;
   tspanComponent?: React.ReactElement;
-  verticalAnchor?: VerticalAnchorType | { (): VerticalAnchorType };
+  verticalAnchor?: ValueOrCallback<VerticalAnchorType>;
   x?: number;
   y?: number;
   dx?: StringOrNumberOrCallback;
