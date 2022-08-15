@@ -172,6 +172,7 @@
         "types:create",
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-bar:types:create",
         "../victory-histogram:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
@@ -240,6 +241,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-bar:types:create",
         "../victory-histogram:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
@@ -259,6 +261,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-bar:types:create",
         "../victory-histogram:types:create",
         "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
@@ -278,6 +281,7 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
+        "../victory-bar:build:lib:cjs",
         "../victory-histogram:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
         "../victory-voronoi:build:lib:cjs"
