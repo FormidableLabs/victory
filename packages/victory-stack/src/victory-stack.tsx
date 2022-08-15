@@ -16,6 +16,7 @@ import {
   Hooks,
   PropTypes as CustomPropTypes,
   UserProps,
+  VictoryComponentConfiguration,
   VictoryContainer,
   VictoryTheme,
   Wrapper,
@@ -24,7 +25,6 @@ import {
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
 import isEqual from "react-fast-compare";
-import { VictoryComponentConfiguration } from "victory-core/src";
 
 const fallbackProps = {
   width: 450,
