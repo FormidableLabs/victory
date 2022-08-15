@@ -1,5 +1,13 @@
 # victory-box-plot
 
+## 36.6.1
+
+### Patch Changes
+
+- Updated dependencies [[`d1f281104`](https://github.com/FormidableLabs/victory/commit/d1f281104c7598c43e220dafd57546ab03daeeb5)]:
+  - victory-core@36.6.1
+  - victory-vendor@36.6.1
+
 ## 36.6.0
 
 ### Minor Changes
