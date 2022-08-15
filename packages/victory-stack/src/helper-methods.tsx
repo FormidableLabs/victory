@@ -25,7 +25,7 @@ function fillData(props, datasets) {
   return datasets.map((dataset) => {
     let indexOffset = 0;
     const isDate = dataset[0] && dataset[0]._x instanceof Date;
-    const filledInData = xArr.map((x, index) => {
+    const filledInData = xArr.map((x: number | Date, index) => {
       x = Number(x);
       const datum = dataset[index - indexOffset];
 
@@ -162,7 +162,8 @@ export function getCalculatedProps(props, childComponents) {
 // With shared events, the props change on every event, and every value is re-calculated
 const withoutSharedEvents = (props) => {
   const { children } = props;
-  const modifiedChildren = React.Children.toArray(children).map((child) => {
+  const modifiedChildren = React.Children.toArray(children).map((_child) => {
+    const child = _child as React.ReactElement;
     return {
       ...child,
       props: Helpers.omit(child.props, ["sharedEvents"]),

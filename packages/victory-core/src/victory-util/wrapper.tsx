@@ -449,7 +449,7 @@ export function getStringsFromChildren(props, childComponents) {
   };
 }
 
-export function getCategories(props, childComponents, allStrings) {
+export function getCategories(props, childComponents, allStrings?) {
   const xPropCategories =
     props.categories && !Array.isArray(props.categories)
       ? props.categories.x

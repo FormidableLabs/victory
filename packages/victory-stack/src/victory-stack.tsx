@@ -2,15 +2,26 @@ import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
+  CategoryPropType,
+  ColorScalePropType,
+  DomainPropType,
+  EventPropTypeInterface,
+  StringOrNumberOrCallback,
+  VictoryCommonProps,
+  VictoryLabelableProps,
+  VictoryMultiLabelableProps,
+  VictoryStyleInterface,
   CommonProps,
   Helpers,
   Hooks,
   PropTypes as CustomPropTypes,
   UserProps,
+  VictoryComponentConfiguration,
   VictoryContainer,
   VictoryTheme,
   Wrapper,
 } from "victory-core";
+
 import { VictorySharedEvents } from "victory-shared-events";
 import { getChildren, useMemoizedProps } from "./helper-methods";
 import isEqual from "react-fast-compare";
@@ -21,9 +32,29 @@ const fallbackProps = {
   padding: 50,
 };
 
-const VictoryStack = (initialProps) => {
+export type VictoryStackTTargetType = "data" | "labels" | "parent";
+export interface VictoryStackProps
+  extends VictoryCommonProps,
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
+  bins?: number | number[] | Date[];
+  categories?: CategoryPropType;
+  children?: React.ReactNode | React.ReactNode[];
+  colorScale?: ColorScalePropType;
+  domain?: DomainPropType;
+  events?: EventPropTypeInterface<
+    VictoryStackTTargetType,
+    StringOrNumberOrCallback
+  >[];
+  eventKey?: StringOrNumberOrCallback;
+  fillInMissingData?: boolean;
+  style?: VictoryStyleInterface;
+  xOffset?: number;
+}
+
+const VictoryStackBase = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
-  const { role } = VictoryStackMemo;
+  const { role } = VictoryStack;
   const { setAnimationState, getAnimationProps, getProps } =
     Hooks.useAnimationState();
 
@@ -46,13 +77,13 @@ const VictoryStack = (initialProps) => {
 
   const childComponents = React.Children.toArray(modifiedProps.children);
   const calculatedProps = useMemoizedProps(modifiedProps);
-  const { domain, scale, style, origin } = calculatedProps;
+  const { domain, scale, style } = calculatedProps;
 
   const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
     const orderedChildren = children.map((child, index) => {
       const childProps = assign(
-        { animate: getAnimationProps(props, child, index, "victory-stack") },
+        { animate: getAnimationProps(props, child, index) },
         child.props,
       );
       return React.cloneElement(child, childProps);
@@ -77,7 +108,6 @@ const VictoryStack = (initialProps) => {
         style: style.parent,
         horizontal,
         polar,
-        origin,
         name,
       };
     }
@@ -92,7 +122,6 @@ const VictoryStack = (initialProps) => {
     style,
     horizontal,
     polar,
-    origin,
     name,
   ]);
   const userProps = React.useMemo(
@@ -150,7 +179,7 @@ const VictoryStack = (initialProps) => {
   return React.cloneElement(container, container.props, newChildren);
 };
 
-VictoryStack.propTypes = {
+VictoryStackBase.propTypes = {
   ...CommonProps.baseProps,
   bins: PropTypes.oneOfType([
     PropTypes.arrayOf(
@@ -197,7 +226,7 @@ VictoryStack.propTypes = {
   xOffset: PropTypes.number,
 };
 
-VictoryStack.defaultProps = {
+VictoryStackBase.defaultProps = {
   containerComponent: <VictoryContainer />,
   groupComponent: <g />,
   standalone: true,
@@ -205,17 +234,18 @@ VictoryStack.defaultProps = {
   fillInMissingData: true,
 };
 
-const VictoryStackMemo = React.memo(VictoryStack, isEqual);
+const componentConfig: VictoryComponentConfiguration<VictoryStackProps> = {
+  role: "stack",
+  expectedComponents: [
+    "groupComponent",
+    "containerComponent",
+    "labelComponent",
+  ],
+  getChildren,
+};
 
-VictoryStackMemo.displayName = "VictoryStack";
-VictoryStackMemo.role = "stack";
-
-VictoryStackMemo.expectedComponents = [
-  "groupComponent",
-  "containerComponent",
-  "labelComponent",
-];
-
-VictoryStackMemo.getChildren = getChildren;
-
-export default VictoryStackMemo;
+export const VictoryStack = Object.assign(
+  React.memo(VictoryStackBase, isEqual),
+  componentConfig,
+);
+VictoryStack.displayName = "VictoryStack";
