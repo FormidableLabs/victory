@@ -446,6 +446,7 @@ importers:
       react-fast-compare: ^3.2.0
       victory-bar: '*'
       victory-core: ^36.6.0
+      victory-group: '*'
       victory-shared-events: ^36.6.0
     dependencies:
       lodash: 4.17.21
@@ -455,6 +456,7 @@ importers:
       victory-shared-events: link:../victory-shared-events
     devDependencies:
       victory-bar: link:../victory-bar
+      victory-group: 'link:'
 
   packages/victory-histogram:
     specifiers:

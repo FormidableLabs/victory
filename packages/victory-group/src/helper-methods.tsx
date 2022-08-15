@@ -18,8 +18,8 @@ export function getCalculatedProps(props, childComponents) {
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const { offset, colorScale, color, polar, horizontal } = props;
   const categories =
-    props.categories || Wrapper.getCategories(props, childComponents);
-  const datasets = props.datasets || Wrapper.getDataFromChildren(props);
+    props.categories || Wrapper.getCategories(props, childComponents, null);
+  const datasets = props.datasets || Wrapper.getDataFromChildren(props, null);
   const domain = {
     x: Wrapper.getDomain(
       assign({}, props, { categories }),
@@ -67,12 +67,14 @@ export function getCalculatedProps(props, childComponents) {
 // With shared events, the props change on every event, and every value is re-calculated
 const withoutSharedEvents = (props) => {
   const { children } = props;
-  const modifiedChildren = React.Children.toArray(children).map((child) => {
-    return {
-      ...child,
-      props: Helpers.omit(child.props, ["sharedEvents"]),
-    };
-  });
+  const modifiedChildren = React.Children.toArray(children).map(
+    (child: Record<string, any> | any) => {
+      return {
+        ...child,
+        props: Helpers.omit(child.props, ["sharedEvents"]),
+      };
+    },
+  );
   props.children = modifiedChildren;
   return props;
 };
@@ -186,7 +188,7 @@ function getDataWithOffset(props, defaultDataset = [], offset) {
   });
 }
 
-export function getChildren(props, childComponents, calculatedProps) {
+export function getChildren(props, childComponents?, calculatedProps?) {
   props = Helpers.modifyProps(props, fallbackProps, "stack");
   childComponents = childComponents || React.Children.toArray(props.children);
   calculatedProps =

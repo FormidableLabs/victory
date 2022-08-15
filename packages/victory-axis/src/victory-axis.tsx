@@ -64,7 +64,7 @@ export interface VictoryAxisProps
 interface VictoryAxisBase extends EventsMixinClass<VictoryAxisProps> {}
 
 class VictoryAxisBase extends React.Component<VictoryAxisProps> {
-  static animationWhitelist = [
+  static animationWhitelist: Array<keyof VictoryAxisProps> = [
     "style",
     "domain",
     "range",

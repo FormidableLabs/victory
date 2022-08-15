@@ -17,8 +17,8 @@ describe("components/victory-group", () => {
         </VictoryGroup>,
       );
       const svg = container.querySelector("svg");
-      expect(svg.style.width).toEqual("100%");
-      expect(svg.style.height).toEqual("100%");
+      expect(svg?.style.width).toEqual("100%");
+      expect(svg?.style.height).toEqual("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
@@ -30,7 +30,7 @@ describe("components/victory-group", () => {
       );
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
+      expect(svg?.getAttribute("viewBox")).toEqual(viewBoxValue);
     });
 
     it("accepts user props", () => {

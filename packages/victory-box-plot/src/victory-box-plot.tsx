@@ -128,7 +128,7 @@ export interface VictoryBoxPlotProps
 interface VictoryBoxPlotBase extends EventsMixinClass<VictoryBoxPlotProps> {}
 
 class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
-  static animationWhitelist = [
+  static animationWhitelist: Array<keyof VictoryBoxPlotProps> = [
     "data",
     "domain",
     "height",
@@ -306,7 +306,7 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
   static getDomain = getDomain;
   static getData = getData;
   static getBaseProps = (props) => getBaseProps(props, fallbackProps);
-  static expectedComponents = [
+  static expectedComponents: Array<keyof VictoryBoxPlotProps> = [
     "maxComponent",
     "maxLabelComponent",
     "medianComponent",
