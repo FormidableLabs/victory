@@ -1,5 +1,16 @@
 # victory-core
 
+## 36.6.1
+
+### Patch Changes
+
+- - Removed Template Literal Types to increase TS compatibility (fixes [#2418](https://github.com/FormidableLabs/victory/issues/2418)) ([#2420](https://github.com/FormidableLabs/victory/pull/2420))
+  - Improved type for `VictoryLabelProps["textAnchor"]` (fixes [#2361](https://github.com/FormidableLabs/victory/issues/2361))
+  - Fixed exported types for `VictoryAxis`, `VictoryBoxPlot`, `VictoryErrorBar`, and `VictoryScatter` (fixes [#2411](https://github.com/FormidableLabs/victory/issues/2411))
+  - Migrate `victory-cursor-container` to TS (fixes [#2402](https://github.com/FormidableLabs/victory/issues/2402))
+- Updated dependencies []:
+  - victory-vendor@36.6.1
+
 ## 36.6.0
 
 ### Minor Changes
