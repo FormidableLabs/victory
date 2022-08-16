@@ -1,3 +1,6 @@
+const path = require("path");
+const BABEL_PATH = path.resolve(__dirname, ".babelrc.js"); // eslint-disable-line no-undef
+
 module.exports = {
   settings: {
     react: {
@@ -11,21 +14,29 @@ module.exports = {
   },
   extends: [
     "formidable/configurations/es6-react",
-    "prettier",
     "plugin:react-hooks/recommended",
     "plugin:eslint-comments/recommended",
+    "prettier",
   ],
   rules: {
     "eslint-comments/disable-enable-pair": "off",
     "func-style": "off",
+    "arrow-body-style": "off",
+    "consistent-return": "off", // we're migrating to TS and this is more properly handled there.
     "react/sort-comp": "off",
-    "import/no-unresolved": [2, { ignore: ["victory*"] }],
-    "max-statements": 0,
+    "import/no-unresolved": ["error", { ignore: ["victory*"] }],
+    "max-statements": "off",
     complexity: ["error", { max: 16 }],
     "no-magic-numbers": [
       "error",
       { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] },
     ],
+  },
+  parser: "@babel/eslint-parser",
+  parserOptions: {
+    babelOptions: {
+      configFile: BABEL_PATH,
+    },
   },
   plugins: ["jest"],
   env: {
@@ -36,9 +47,9 @@ module.exports = {
       files: ["**/*.test.*", "./test/**/*"],
       rules: {
         "react/sort-comp": "off",
-        "no-magic-numbers": 0,
-        "max-statements": 0,
-        "import/no-unresolved": 0,
+        "no-magic-numbers": "off",
+        "max-statements": "off",
+        "import/no-unresolved": "off",
         "no-undef": "off",
         "max-nested-callbacks": "off",
         "@typescript-eslint/no-empty-function": "off",
@@ -75,8 +86,8 @@ module.exports = {
           },
         ],
         "no-invalid-this": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-invalid-this": ["error"],
-
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",

@@ -1,15 +1,14 @@
-/*global window:false */
-/*eslint-disable no-magic-numbers,react/no-multi-comp */
+/* eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, random, range } from "lodash";
-import { VictoryScatter } from "victory-scatter/src/index";
+import { VictoryScatter } from "victory-scatter";
 import {
   ScatterSymbolType,
   VictoryLabel,
   VictoryContainer,
   VictoryTheme,
-} from "victory-core/src/index";
+} from "victory-core";
 import bubbleData from "./bubble-data";
 import symbolData from "./symbol-data";
 

@@ -6,6 +6,7 @@ lib-vendor
 es
 packages/victory-vendor/d3-*
 node_modules
+.pnpm-debug.log*
 npm-debug.log*
 lerna-debug.log*
 yarn-error.log*
@@ -15,4 +16,6 @@ tsconfig.json
 tsconfig.*.json
 storybook-static
 public
+artifacts
 .expo
+.wireit

@@ -50,9 +50,8 @@ export function getParentSVG(
   const getParent = (target) => {
     if (target.nodeName === "svg") {
       return target;
-    } else {
-      return target.parentNode ? getParent(target.parentNode) : target;
     }
+    return target.parentNode ? getParent(target.parentNode) : target;
   };
   return getParent(evt.target);
 }
@@ -83,7 +82,7 @@ export function getSVGEventCoordinates(
 export function getDomainCoordinates(
   props: Pick<VictoryCommonProps, "scale" | "horizontal">,
   domain?: DomainPropType,
-): DomainPropType {
+) {
   const { horizontal } = props;
   const scale = props.scale as ScaleXYPropType;
   // FIXME: add support for DomainTuple: [number, number]
@@ -114,17 +113,16 @@ export function getDataCoordinates(
       x: horizontal ? scale.x.invert(y) : scale.x.invert(x),
       y: horizontal ? scale.y.invert(x) : scale.y.invert(y),
     };
-  } else {
-    const origin = props.origin || { x: 0, y: 0 };
-    const baseX = x - origin.x;
-    const baseY = y - origin.y;
-    const radius = Math.abs(baseX * Math.sqrt(1 + Math.pow(-baseY / baseX, 2)));
-    const angle = (-Math.atan2(baseY, baseX) + Math.PI * 2) % (Math.PI * 2);
-    return {
-      x: scale.x.invert(angle),
-      y: scale.y.invert(radius),
-    };
   }
+  const origin = props.origin || { x: 0, y: 0 };
+  const baseX = x - origin.x;
+  const baseY = y - origin.y;
+  const radius = Math.abs(baseX * Math.sqrt(1 + Math.pow(-baseY / baseX, 2)));
+  const angle = (-Math.atan2(baseY, baseX) + Math.PI * 2) % (Math.PI * 2);
+  return {
+    x: scale.x.invert(angle),
+    y: scale.y.invert(radius),
+  };
 }
 
 export function getBounds(props: ComputedCommonProps): SVGCoordinateBounds {
@@ -155,4 +153,5 @@ type ComputedCommonProps = {
   x2: number;
   y1: number;
   y2: number;
+  horizontal?: boolean;
 };

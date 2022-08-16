@@ -1,5 +1,5 @@
-/*eslint-disable no-magic-numbers*/
-/*eslint-disable react/no-multi-comp*/
+/* eslint-disable no-magic-numbers*/
+/* eslint-disable react/no-multi-comp*/
 import React from "react";
 import { VictoryBar, Bar } from "victory-bar";
 import { VictoryChart } from "victory-chart";
@@ -289,7 +289,7 @@ export const CornerRadius = () => {
 
 export const GetPath = () => {
   const verticalPathFn = (props) => {
-    //eslint-disable-next-line react/prop-types
+    // eslint-disable-next-line react/prop-types
     const { x0, x1, y0, y1 } = props;
     return `M ${x0}, ${y0}
       L ${(x1 + x0) / 2}, ${y1}
@@ -298,7 +298,7 @@ export const GetPath = () => {
   };
 
   const horizontalPathFn = (props) => {
-    //eslint-disable-next-line react/prop-types
+    // eslint-disable-next-line react/prop-types
     const { x0, x1, y0, y1 } = props;
     return `M ${x0}, ${y1}
       L ${x1}, ${(y0 + y1) / 2}

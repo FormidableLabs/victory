@@ -3,6 +3,7 @@
   "description": "Documentation site for Victory by Formidable",
   "version": "9.3.1",
   "author": "Formidable <hello@formidable.com>",
+  "sideEffects": false,
   "main": "static.config.js",
   "repository": {
     "type": "git",

@@ -4,13 +4,10 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
 
 describe("victory-chart/helpers-methods", () => {
-  const getVictoryLine = (props) => React.createElement(VictoryLine, props);
-  const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
-
   describe("getChildComponents", () => {
     const defaultAxes = {
-      independent: getVictoryAxis({}),
-      dependent: getVictoryAxis({ dependentAxis: true }),
+      independent: <VictoryAxis />,
+      dependent: <VictoryAxis dependentAxis />,
     };
 
     it("returns a pair of default axes when no children are given", () => {
@@ -21,7 +18,7 @@ describe("victory-chart/helpers-methods", () => {
     });
 
     it("adds default axes when none of the children are axis components", () => {
-      const line = getVictoryLine({});
+      const line = <VictoryLine />;
       const children = [line];
       const result = getChildComponents({ children }, defaultAxes);
       expect(result).toHaveLength(3);
@@ -30,7 +27,7 @@ describe("victory-chart/helpers-methods", () => {
     });
 
     it("does not add default axes if axis any axis components exist in children", () => {
-      const axis = getVictoryAxis({});
+      const axis = <VictoryAxis />;
       const children = [axis];
       const result = getChildComponents({ children }, defaultAxes);
       expect(result).toHaveLength(1);

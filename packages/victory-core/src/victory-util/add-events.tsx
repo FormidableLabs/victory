@@ -1,4 +1,3 @@
-/*global window:false */
 import React from "react";
 import {
   assign,
@@ -37,7 +36,7 @@ const defaultComponents: NonNullable<MixinOptions["components"]> = [
 export type MixinOptions = {
   components?: Array<{
     name: string;
-    index?: string;
+    index?: string | number;
   }>;
 };
 
@@ -58,12 +57,22 @@ export interface EventMixinCommonProps
 export interface EventsMixinClass<TProps> {
   renderContainer(
     component: React.ReactElement,
-    children: React.ReactElement[],
+    children: React.ReactElement | React.ReactElement[],
   ): React.ReactElement;
   cacheValues<TThis>(this: TThis, obj: Partial<TThis>): void;
   getEventState: typeof Events.getEventState;
+  renderData(props: TProps);
   renderContinuousData(props: TProps);
-  animateComponent(props: TProps, defaultAnimationWhitelist);
+  animateComponent(
+    props: TProps,
+    defaultAnimationWhitelist: string[],
+  ): React.ReactElement;
+  getComponentProps(
+    component: React.ReactElement,
+    type: string,
+    index: number,
+  ): TProps;
+  dataKeys: string[];
 }
 
 /**
@@ -79,13 +88,46 @@ export interface EventMixinCalculatedValues {
 }
 
 /**
+ * These are the common roles that we care about internally.
+ */
+export type VictoryComponentCommonRole =
+  | "container"
+  | "group"
+  | "histogram"
+  | "label"
+  | "line"
+  | "portal"
+  | "stack"
+  | "tooltip"
+  | "voronoi";
+
+/**
+ * A component can have any "role",
+ * but there are certain ones that we actually care about internally
+ */
+export type VictoryComponentRole = VictoryComponentCommonRole | string;
+
+/**
+ * Static component fields used by Victory for common behavior
+ */
+export interface VictoryComponentConfiguration<TProps> {
+  getBaseProps?(props: TProps): EventMixinCalculatedValues["baseProps"];
+  role?: VictoryComponentRole;
+  expectedComponents?: Array<keyof TProps | string>;
+  getChildren?: (
+    props: TProps,
+    childComponents?: Array<React.ReactNode>,
+    calculatedProps?: TProps,
+  ) => void;
+  animationWhitelist?: Array<keyof TProps | string>;
+}
+
+/**
  * This represents the class itself, including static fields
  */
-export interface WrappedComponentClass<TProps> {
+export interface WrappedComponentClass<TProps>
+  extends VictoryComponentConfiguration<TProps> {
   new (props: TProps): React.Component<TProps>;
-  getBaseProps?(props: TProps): EventMixinCalculatedValues["baseProps"];
-  role?: string;
-  expectedComponents?: string[];
 }
 
 export function addEvents<
@@ -214,13 +256,12 @@ export function addEvents<
           if (!props.standalone && component.name === "parent") {
             // don't check for changes on parent props for non-standalone components
             return undefined;
-          } else {
-            return component.index !== undefined
-              ? getState(component.index, component.name)
-              : this.dataKeys
-                  .map((key) => getState(key, component.name))
-                  .filter(Boolean);
           }
+          return component.index !== undefined
+            ? getState(component.index, component.name)
+            : this.dataKeys
+                .map((key) => getState(key, component.name))
+                .filter(Boolean);
         })
         .filter(Boolean);
       return stateChanges;
@@ -361,7 +402,10 @@ export function addEvents<
       return React.cloneElement(component, parentProps, children);
     }
 
-    animateComponent(props: TProps, defaultAnimationWhitelist: string[]) {
+    animateComponent(
+      props: TProps,
+      defaultAnimationWhitelist: string[],
+    ): React.ReactElement {
       const animationWhitelist =
         (typeof props.animate === "object" &&
           props.animate?.animationWhitelist) ||

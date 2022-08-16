@@ -1,6 +1,6 @@
 {
   "name": "victory-native",
-  "version": "36.5.3",
+  "version": "36.6.0",
   "description": "Native Port for Victory",
   "keywords": [
     "data visualization",
@@ -14,6 +14,7 @@
   },
   "homepage": "https://formidable.com/open-source/victory",
   "source": "src/index.js",
+  "sideEffects": false,
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "files": [
@@ -23,39 +24,174 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "victory": "^36.5.3",
-    "victory-area": "^36.5.3",
-    "victory-axis": "^36.5.3",
-    "victory-bar": "^36.5.3",
-    "victory-box-plot": "^36.5.3",
-    "victory-brush-container": "^36.5.3",
-    "victory-brush-line": "^36.5.3",
-    "victory-candlestick": "^36.5.3",
-    "victory-chart": "^36.5.3",
-    "victory-core": "^36.5.3",
-    "victory-create-container": "^36.5.3",
-    "victory-cursor-container": "^36.5.3",
-    "victory-errorbar": "^36.5.3",
-    "victory-group": "^36.5.3",
-    "victory-histogram": "^36.5.3",
-    "victory-legend": "^36.5.3",
-    "victory-line": "^36.5.3",
-    "victory-pie": "^36.5.3",
-    "victory-polar-axis": "^36.5.3",
-    "victory-scatter": "^36.5.3",
-    "victory-selection-container": "^36.5.3",
-    "victory-shared-events": "^36.5.3",
-    "victory-stack": "^36.5.3",
-    "victory-tooltip": "^36.5.3",
-    "victory-voronoi": "^36.5.3",
-    "victory-voronoi-container": "^36.5.3",
-    "victory-zoom-container": "^36.5.3"
+    "lodash": "^4.17.21",
+    "prop-types": "^15.8.1",
+    "react-fast-compare": "^3.2.0",
+    "victory": "^36.6.0",
+    "victory-area": "^36.6.0",
+    "victory-axis": "^36.6.0",
+    "victory-bar": "^36.6.0",
+    "victory-box-plot": "^36.6.0",
+    "victory-brush-container": "^36.6.0",
+    "victory-brush-line": "^36.6.0",
+    "victory-candlestick": "^36.6.0",
+    "victory-chart": "^36.6.0",
+    "victory-core": "^36.6.0",
+    "victory-create-container": "^36.6.0",
+    "victory-cursor-container": "^36.6.0",
+    "victory-errorbar": "^36.6.0",
+    "victory-group": "^36.6.0",
+    "victory-histogram": "^36.6.0",
+    "victory-legend": "^36.6.0",
+    "victory-line": "^36.6.0",
+    "victory-pie": "^36.6.0",
+    "victory-polar-axis": "^36.6.0",
+    "victory-scatter": "^36.6.0",
+    "victory-selection-container": "^36.6.0",
+    "victory-shared-events": "^36.6.0",
+    "victory-stack": "^36.6.0",
+    "victory-tooltip": "^36.6.0",
+    "victory-voronoi": "^36.6.0",
+    "victory-voronoi-container": "^36.6.0",
+    "victory-zoom-container": "^36.6.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
+    "@babel/core": "^7.18.9",
     "react-native": "^0.65.1",
     "react-native-gesture-handler": "^1.10.3",
-    "react-native-svg": "^12.1.1"
+    "react-native-svg": "^12.4.3"
   },
-  "sideEffects": false
+  "scripts": {
+    "build": "wireit",
+    "build:lib": "wireit",
+    "build:lib:esm": "wireit",
+    "build:lib:cjs": "wireit",
+    "build:dist": "wireit",
+    "build:dist:dev": "wireit",
+    "build:dist:min": "wireit",
+    "check": "wireit",
+    "types:check": "wireit",
+    "types:create": "wireit",
+    "format": "wireit",
+    "format:fix": "wireit",
+    "lint": "wireit",
+    "lint:fix": "wireit",
+    "jest": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:lib:esm": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:lib:cjs": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:dist": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:dist:dev": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "build:dist:min": {
+      "command": "echo \"No build required\"",
+      "files": [],
+      "output": []
+    },
+    "check": {
+      "dependencies": [
+        "types:check",
+        "jest",
+        "format",
+        "lint"
+      ]
+    },
+    "types:check": {
+      "command": "echo \"No types to check here\"",
+      "files": [],
+      "output": []
+    },
+    "types:create": {
+      "command": "echo \"No types to create here\"",
+      "files": [],
+      "output": []
+    },
+    "format": {
+      "command": "nps format:pkg",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "format:fix": {
+      "command": "pnpm run format || nps format:pkg:fix",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "lint": {
+      "command": "nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "lint:fix": {
+      "command": "pnpm run lint || nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "jest": {
+      "command": "nps jest:native",
+      "files": [
+        "src/**",
+        "../../.babelrc.native.js",
+        "../../test/jest-native-config.js",
+        "../../test/jest-native-setup.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "../victory:build:lib"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    }
+  }
 }

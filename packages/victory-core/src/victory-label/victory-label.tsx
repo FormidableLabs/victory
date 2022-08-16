@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
 import { assign, defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
@@ -17,6 +17,7 @@ import {
   NumberOrCallback,
   StringOrCallback,
   StringOrNumberOrCallback,
+  ValueOrCallback,
 } from "../types/callbacks";
 import {
   PaddingProps,
@@ -55,11 +56,11 @@ export interface VictoryLabelProps {
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textComponent?: React.ReactElement;
-  textAnchor?: TextAnchorType | { (): TextAnchorType };
+  textAnchor?: ValueOrCallback<TextAnchorType>;
   title?: string;
-  transform?: string | object | (() => string | object);
+  transform?: ValueOrCallback<string | object>;
   tspanComponent?: React.ReactElement;
-  verticalAnchor?: VerticalAnchorType | { (): VerticalAnchorType };
+  verticalAnchor?: ValueOrCallback<VerticalAnchorType>;
   x?: number;
   y?: number;
   dx?: StringOrNumberOrCallback;
@@ -89,13 +90,12 @@ const getFontSize = (style) => {
   } else if (baseSize === undefined || baseSize === null) {
     return defaultStyles.fontSize;
   } else if (typeof baseSize === "string") {
-    const fontSize = +baseSize.replace("px", "");
+    const fontSize = Number(baseSize.replace("px", ""));
     if (!isNaN(fontSize)) {
       return fontSize;
-    } else {
-      Log.warn("fontSize should be expressed as a number of pixels");
-      return defaultStyles.fontSize;
     }
+    Log.warn("fontSize should be expressed as a number of pixels");
+    return defaultStyles.fontSize;
   }
   return defaultStyles.fontSize;
 };
@@ -146,19 +146,17 @@ const getBackgroundPadding = (props) => {
       const padding = Helpers.evaluateProp(backgroundPadding, props);
       return Helpers.getPadding({ padding });
     });
-  } else {
-    const padding = Helpers.evaluateProp(props.backgroundPadding, props);
-    return Helpers.getPadding({ padding });
   }
+  const padding = Helpers.evaluateProp(props.backgroundPadding, props);
+  return Helpers.getPadding({ padding });
 };
 
 const getLineHeight = (props) => {
   const lineHeight = Helpers.evaluateProp(props.lineHeight, props);
   if (Array.isArray(lineHeight)) {
     return isEmpty(lineHeight) ? [1] : lineHeight;
-  } else {
-    return lineHeight;
   }
+  return lineHeight;
 };
 
 const getContent = (text, props) => {
@@ -200,20 +198,19 @@ const getDy = (props, verticalAnchor, lineHeight) => {
       ? dy + (capHeight / 2 + (0.5 - length) * lineHeights[0]) * fontSizes[0]
       : dy +
           (capHeight / 2 + (0.5 - length / 2) * lineHeights[0]) * fontSizes[0];
-  } else {
-    const allHeights = [...Array(length).keys()].reduce((memo, i) => {
-      return (
-        memo +
-        ((capHeight / 2 + (0.5 - length) * lineHeights[i]) * fontSizes[i]) /
-          length
-      );
-    }, 0);
-    return anchor === "end"
-      ? dy + allHeights
-      : dy +
-          allHeights / 2 +
-          (capHeight / 2) * lineHeights[length - 1] * fontSizes[length - 1];
   }
+  const allHeights = [...Array(length).keys()].reduce((memo, i) => {
+    return (
+      memo +
+      ((capHeight / 2 + (0.5 - length) * lineHeights[i]) * fontSizes[i]) /
+        length
+    );
+  }, 0);
+  return anchor === "end"
+    ? dy + allHeights
+    : dy +
+        allHeights / 2 +
+        (capHeight / 2) * lineHeights[length - 1] * fontSizes[length - 1];
 };
 
 const getTransform = (props, x, y) => {
@@ -455,9 +452,8 @@ const getTSpanDy = (tspanValues, calculatedProps, i) => {
     return calculateSpanDy(tspanValues, i, calculatedProps);
   } else if (inline) {
     return i === 0 ? current.backgroundPadding.top : undefined;
-  } else {
-    return current.backgroundPadding.top;
   }
+  return current.backgroundPadding.top;
 };
 
 const evaluateProps = (props) => {

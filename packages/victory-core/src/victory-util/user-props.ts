@@ -11,7 +11,8 @@ const USER_PROPS_SAFELIST = {
   exactMatch: [] as string[],
 };
 
-type SafeAttribute = `data-${string}` | `aria-${string}`;
+// Normally we'd use Template Literal Types, but we're avoiding it to maximize TS compatibility with TS < 4.1
+type SafeAttribute = string; // `data-${string}` | `aria-${string}`;
 
 /**
  * doesPropStartWith: Function that takes a prop's key and runs it against all

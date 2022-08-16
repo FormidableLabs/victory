@@ -1,4 +1,3 @@
-/*global window:false */
 import {
   assign,
   isFunction,
@@ -222,9 +221,8 @@ export default class VictorySharedEvents extends React.Component {
       if (child.type && isFunction(child.type.getBaseProps)) {
         const baseProps = child.props && child.type.getBaseProps(child.props);
         return baseProps ? [[childName, baseProps]] : null;
-      } else {
-        return null;
       }
+      return null;
     };
 
     const baseProps = Helpers.reduceChildren(childComponents, iteratee);
@@ -293,9 +291,8 @@ export default class VictorySharedEvents extends React.Component {
               ),
             ),
           );
-        } else {
-          return memo.concat(child);
         }
+        return memo.concat(child);
       }, []);
     };
     const childNames = keys(baseProps);

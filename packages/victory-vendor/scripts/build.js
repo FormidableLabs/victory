@@ -1,6 +1,12 @@
 /* global __dirname:false */
 /**
- * Build vendor libraries from `node_modules`
+ * Build d3 vendor libraries from `node_modules`.
+ *
+ * **Note - transitive dependencies**: Because pnpm lacks a `nohoist` option,
+ * if you have a `d3-*` dependency that has a transitive dependency on another
+ * module (e.g., `d3-interpolate` depends on `d3-color`) you need to add a
+ * compatible version to `package.json:devDependencies` here to make sure we
+ * get the library in our `node_modules` and appropriately build it.
  */
 const fs = require("fs").promises;
 const path = require("path");
@@ -100,7 +106,7 @@ const main = async () => {
   // Transpile.
   log("Transpiling vendor sources.");
   await execa(
-    "yarn" /*yarn*/,
+    "pnpm",
     [
       "babel",
       "--config-file",
@@ -152,6 +158,7 @@ const main = async () => {
 
 if (require.main === module) {
   main()
+    // eslint-disable-next-line promise/always-return
     .then(() => {
       log("Build finished.");
     })

@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";

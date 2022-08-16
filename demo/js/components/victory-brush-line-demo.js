@@ -1,13 +1,13 @@
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 
 import React from "react";
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryAxis } from "victory-axis/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryBrushLine } from "victory-brush-line/src/index";
-import { VictoryLine } from "victory-line/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryLabel } from "victory-core/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryAxis } from "victory-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryBrushLine } from "victory-brush-line";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryLabel } from "victory-core";
 import _ from "lodash";
 
 const data = [

@@ -1,4 +1,4 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
 import { assign, defaults, isFunction, isPlainObject, isNil } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
@@ -7,9 +7,8 @@ import { Helpers, Data, Style } from "victory-core";
 const checkForValidText = (text) => {
   if (text === undefined || text === null || isFunction(text)) {
     return text;
-  } else {
-    return `${text}`;
   }
+  return `${text}`;
 };
 
 const getColor = (style, colors, index) => {
@@ -128,9 +127,8 @@ const getLabelOrientation = (degree, labelPlacement) => {
     return "right";
   } else if (degree >= 135 && degree < 225) {
     return "bottom";
-  } else {
-    return "left";
   }
+  return "left";
 };
 
 const getTextAnchor = (orientation) => {

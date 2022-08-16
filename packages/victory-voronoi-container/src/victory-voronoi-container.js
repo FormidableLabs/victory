@@ -230,9 +230,8 @@ export const voronoiContainerMixin = (base) =>
         return showLabel
           ? React.cloneElement(labelComponent, labelProps)
           : null;
-      } else {
-        return null;
       }
+      return null;
     }
 
     // Overrides method in VictoryContainer

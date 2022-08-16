@@ -1,4 +1,3 @@
-/* global window:false */
 /* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
 import { assign, merge, keys, random, range, round } from "lodash";
@@ -825,7 +824,7 @@ export default class ImmutableDemo extends React.Component<
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
             containerComponent={
               <VictoryCursorContainer
-                cursorLabel={(datum) =>
+                cursorLabel={({ datum }) =>
                   `${round(datum.x, 2)} , ${round(datum.y, 2)}`
                 }
               />
