@@ -1,5 +1,38 @@
 # victory-native
 
+## 36.6.2
+
+### Patch Changes
+
+- Updated dependencies [[`877c16923`](https://github.com/FormidableLabs/victory/commit/877c169230c24ab02f570a21dca10a2dce0dcf4e)]:
+  - victory-cursor-container@36.6.2
+  - victory@36.6.2
+  - victory-area@36.6.2
+  - victory-axis@36.6.2
+  - victory-bar@36.6.2
+  - victory-box-plot@36.6.2
+  - victory-brush-container@36.6.2
+  - victory-brush-line@36.6.2
+  - victory-candlestick@36.6.2
+  - victory-chart@36.6.2
+  - victory-core@36.6.2
+  - victory-create-container@36.6.2
+  - victory-errorbar@36.6.2
+  - victory-group@36.6.2
+  - victory-histogram@36.6.2
+  - victory-legend@36.6.2
+  - victory-line@36.6.2
+  - victory-pie@36.6.2
+  - victory-polar-axis@36.6.2
+  - victory-scatter@36.6.2
+  - victory-selection-container@36.6.2
+  - victory-shared-events@36.6.2
+  - victory-stack@36.6.2
+  - victory-tooltip@36.6.2
+  - victory-voronoi@36.6.2
+  - victory-voronoi-container@36.6.2
+  - victory-zoom-container@36.6.2
+
 ## 36.6.1
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # victory-chart
 
+## 36.6.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-axis@36.6.2
+  - victory-core@36.6.2
+  - victory-polar-axis@36.6.2
+  - victory-shared-events@36.6.2
+
 ## 36.6.1
 
 ### Patch Changes

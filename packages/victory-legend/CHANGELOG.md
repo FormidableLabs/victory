@@ -1,5 +1,12 @@
 # victory-legend
 
+## 36.6.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-core@36.6.2
+
 ## 36.6.1
 
 ### Patch Changes

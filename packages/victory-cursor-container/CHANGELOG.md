@@ -1,5 +1,14 @@
 # victory-cursor-container
 
+## 36.6.2
+
+### Patch Changes
+
+- Fixed broken import (fixes [#2426](https://github.com/FormidableLabs/victory/issues/2426)) ([#2427](https://github.com/FormidableLabs/victory/pull/2427))
+
+- Updated dependencies []:
+  - victory-core@36.6.2
+
 ## 36.6.1
 
 ### Patch Changes
