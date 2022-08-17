@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createContext, useContext } from "react";
-import { D3ScaleFn, DomainTuple, ForAxes } from "../types/prop-types";
+import { D3ScaleFn, DomainTuple, ForAxes } from "../../types/prop-types";
 import { FormattedDatum, getData } from "./helpers/get-data";
 import { getDomain } from "./helpers/get-domain";
 import { getRange } from "./helpers/get-range";

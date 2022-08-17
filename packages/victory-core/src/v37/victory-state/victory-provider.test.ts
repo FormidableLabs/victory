@@ -1,4 +1,4 @@
-import { useVictoryContext, VictoryProvider } from "victory-core";
+import { useVictoryContext, VictoryProvider } from "victory-core/es/v37";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 describe("Victory Provider", () => {

@@ -1,4 +1,4 @@
-import { getDomain } from "victory-core/lib/victory-state/helpers/get-domain";
+import { getDomain } from "./get-domain";
 
 describe("getDomain", () => {
   it("returns a default domain if no data is provided", () => {

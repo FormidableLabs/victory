@@ -1,7 +1,7 @@
 import React from "react";
-import { VictoryProvider, VictoryProviderProps } from "../victory-state";
+import { VictoryProvider, VictoryProviderProps } from "./victory-state";
 import { VictoryContainer } from "../victory-container/victory-container";
-import { VictoryCommonProps } from "./common-props";
+import { VictoryCommonProps } from "../victory-util/common-props";
 
 const defaultProviderProps = {
   width: 450,

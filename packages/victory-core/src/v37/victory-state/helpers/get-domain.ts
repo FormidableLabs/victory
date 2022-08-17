@@ -4,14 +4,14 @@ import {
   getValueForAxis,
   isDate,
   isTuple,
-} from "../../victory-util/type-helpers";
+} from "../../../victory-util/type-helpers";
 import { VictoryProviderProps } from "../types";
 import {
   Tuple,
   AxisType,
   DomainTuple,
   DomainValue,
-} from "../../types/prop-types";
+} from "../../../types/prop-types";
 
 type DomainProps = Pick<
   VictoryProviderProps,
