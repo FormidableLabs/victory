@@ -2,7 +2,7 @@
 /* eslint-disable no-magic-numbers */
 import * as React from "react";
 import { VictoryLine } from "./victory-line";
-import VictoryChart from "victory-chart/lib/v37/victory-chart";
+import VictoryChart from "victory-chart/es/v37/victory-chart";
 import { getData } from "../../../../stories/data";
 
 export default {

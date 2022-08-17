@@ -3,7 +3,7 @@
 import React from "react";
 import { VictoryBar } from "victory-bar";
 import { VictoryTooltip, Flyout } from "victory-tooltip";
-import { VictoryLabel } from "victory-core/src";
+import { VictoryLabel } from "victory-core";
 import { getData, getMixedData } from "./data";
 import styled from "styled-components";
 
