@@ -11,9 +11,9 @@ const defaultProviderProps = {
 };
 
 export function withContainer<Props extends VictoryCommonProps>(
-  WrappedComponent: (props: Props) => React.ReactElement,
+  WrappedComponent: React.FC<Props>,
   initialProviderProps: Partial<VictoryProviderProps> = {},
-) {
+): React.FC<Props> {
   return (props: Props) => {
     const providerProps = {
       ...defaultProviderProps,
