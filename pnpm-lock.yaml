@@ -154,7 +154,7 @@ importers:
       jest-environment-jsdom: 28.1.3
       lodash: 4.17.21
       lodash-webpack-plugin: 0.11.6_webpack@5.74.0
-      metro-react-native-babel-preset: 0.71.3
+      metro-react-native-babel-preset: 0.71.3_@babel+core@7.18.9
       nps: 5.10.0
       prettier: 2.7.1
       prop-types: 15.8.1
@@ -178,33 +178,33 @@ importers:
   packages/victory:
     specifiers:
       victory: '*'
-      victory-area: ^36.6.1
-      victory-axis: ^36.6.1
-      victory-bar: ^36.6.1
-      victory-box-plot: ^36.6.1
-      victory-brush-container: ^36.6.1
-      victory-brush-line: ^36.6.1
-      victory-candlestick: ^36.6.1
-      victory-canvas: ^36.6.1
-      victory-chart: ^36.6.1
-      victory-core: ^36.6.1
-      victory-create-container: ^36.6.1
-      victory-cursor-container: ^36.6.1
-      victory-errorbar: ^36.6.1
-      victory-group: ^36.6.1
-      victory-histogram: ^36.6.1
-      victory-legend: ^36.6.1
-      victory-line: ^36.6.1
-      victory-pie: ^36.6.1
-      victory-polar-axis: ^36.6.1
-      victory-scatter: ^36.6.1
-      victory-selection-container: ^36.6.1
-      victory-shared-events: ^36.6.1
-      victory-stack: ^36.6.1
-      victory-tooltip: ^36.6.1
-      victory-voronoi: ^36.6.1
-      victory-voronoi-container: ^36.6.1
-      victory-zoom-container: ^36.6.1
+      victory-area: ^36.6.2
+      victory-axis: ^36.6.2
+      victory-bar: ^36.6.2
+      victory-box-plot: ^36.6.2
+      victory-brush-container: ^36.6.2
+      victory-brush-line: ^36.6.2
+      victory-candlestick: ^36.6.2
+      victory-canvas: ^36.6.2
+      victory-chart: ^36.6.2
+      victory-core: ^36.6.2
+      victory-create-container: ^36.6.2
+      victory-cursor-container: ^36.6.2
+      victory-errorbar: ^36.6.2
+      victory-group: ^36.6.2
+      victory-histogram: ^36.6.2
+      victory-legend: ^36.6.2
+      victory-line: ^36.6.2
+      victory-pie: ^36.6.2
+      victory-polar-axis: ^36.6.2
+      victory-scatter: ^36.6.2
+      victory-selection-container: ^36.6.2
+      victory-shared-events: ^36.6.2
+      victory-stack: ^36.6.2
+      victory-tooltip: ^36.6.2
+      victory-voronoi: ^36.6.2
+      victory-voronoi-container: ^36.6.2
+      victory-zoom-container: ^36.6.2
     dependencies:
       victory-area: link:../victory-area
       victory-axis: link:../victory-axis
@@ -242,8 +242,8 @@ importers:
       prop-types: ^15.8.1
       victory-area: '*'
       victory-chart: '*'
-      victory-core: ^36.6.1
-      victory-vendor: ^36.6.1
+      victory-core: ^36.6.2
+      victory-vendor: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -259,7 +259,7 @@ importers:
       prop-types: ^15.8.1
       victory-axis: '*'
       victory-chart: '*'
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -274,8 +274,8 @@ importers:
       prop-types: ^15.8.1
       victory-bar: '*'
       victory-chart: '*'
-      victory-core: ^36.6.1
-      victory-vendor: ^36.6.1
+      victory-core: ^36.6.2
+      victory-vendor: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -290,9 +290,9 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       victory-box-plot: '*'
-      victory-chart: ^36.6.1
-      victory-core: ^36.6.1
-      victory-vendor: ^36.6.1
+      victory-chart: ^36.6.2
+      victory-core: ^36.6.2
+      victory-vendor: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -308,7 +308,7 @@ importers:
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       victory-brush-container: '*'
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -322,7 +322,7 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -333,8 +333,8 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-chart: ^36.6.1
-      victory-core: ^36.6.1
+      victory-chart: ^36.6.2
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -346,8 +346,8 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-bar: ^36.6.1
-      victory-core: ^36.6.1
+      victory-bar: ^36.6.2
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -359,12 +359,12 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-axis: ^36.6.1
+      victory-axis: ^36.6.2
       victory-chart: '*'
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
       victory-line: '*'
-      victory-polar-axis: ^36.6.1
-      victory-shared-events: ^36.6.1
+      victory-polar-axis: ^36.6.2
+      victory-shared-events: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -386,7 +386,7 @@ importers:
       victory-bar: '*'
       victory-core: '*'
       victory-line: '*'
-      victory-vendor: ^36.6.1
+      victory-vendor: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -401,12 +401,12 @@ importers:
   packages/victory-create-container:
     specifiers:
       lodash: ^4.17.19
-      victory-brush-container: ^36.6.1
-      victory-core: ^36.6.1
-      victory-cursor-container: ^36.6.1
-      victory-selection-container: ^36.6.1
-      victory-voronoi-container: ^36.6.1
-      victory-zoom-container: ^36.6.1
+      victory-brush-container: ^36.6.2
+      victory-core: ^36.6.2
+      victory-cursor-container: ^36.6.2
+      victory-selection-container: ^36.6.2
+      victory-voronoi-container: ^36.6.2
+      victory-zoom-container: ^36.6.2
     dependencies:
       lodash: 4.17.21
       victory-brush-container: link:../victory-brush-container
@@ -420,7 +420,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -430,7 +430,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
       victory-errorbar: '*'
     dependencies:
       lodash: 4.17.21
@@ -445,9 +445,9 @@ importers:
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       victory-bar: '*'
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
       victory-group: '*'
-      victory-shared-events: ^36.6.1
+      victory-shared-events: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -463,9 +463,9 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-bar: ^36.6.1
-      victory-core: ^36.6.1
-      victory-vendor: ^36.6.1
+      victory-bar: ^36.6.2
+      victory-core: ^36.6.2
+      victory-vendor: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -478,7 +478,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -489,9 +489,9 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       victory-chart: '*'
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
       victory-line: '*'
-      victory-vendor: ^36.6.1
+      victory-vendor: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -510,33 +510,33 @@ importers:
       react-native: ^0.65.1
       react-native-gesture-handler: ^1.10.3
       react-native-svg: ^12.4.3
-      victory: ^36.6.1
-      victory-area: ^36.6.1
-      victory-axis: ^36.6.1
-      victory-bar: ^36.6.1
-      victory-box-plot: ^36.6.1
-      victory-brush-container: ^36.6.1
-      victory-brush-line: ^36.6.1
-      victory-candlestick: ^36.6.1
-      victory-chart: ^36.6.1
-      victory-core: ^36.6.1
-      victory-create-container: ^36.6.1
-      victory-cursor-container: ^36.6.1
-      victory-errorbar: ^36.6.1
-      victory-group: ^36.6.1
-      victory-histogram: ^36.6.1
-      victory-legend: ^36.6.1
-      victory-line: ^36.6.1
-      victory-pie: ^36.6.1
-      victory-polar-axis: ^36.6.1
-      victory-scatter: ^36.6.1
-      victory-selection-container: ^36.6.1
-      victory-shared-events: ^36.6.1
-      victory-stack: ^36.6.1
-      victory-tooltip: ^36.6.1
-      victory-voronoi: ^36.6.1
-      victory-voronoi-container: ^36.6.1
-      victory-zoom-container: ^36.6.1
+      victory: ^36.6.2
+      victory-area: ^36.6.2
+      victory-axis: ^36.6.2
+      victory-bar: ^36.6.2
+      victory-box-plot: ^36.6.2
+      victory-brush-container: ^36.6.2
+      victory-brush-line: ^36.6.2
+      victory-candlestick: ^36.6.2
+      victory-chart: ^36.6.2
+      victory-core: ^36.6.2
+      victory-create-container: ^36.6.2
+      victory-cursor-container: ^36.6.2
+      victory-errorbar: ^36.6.2
+      victory-group: ^36.6.2
+      victory-histogram: ^36.6.2
+      victory-legend: ^36.6.2
+      victory-line: ^36.6.2
+      victory-pie: ^36.6.2
+      victory-polar-axis: ^36.6.2
+      victory-scatter: ^36.6.2
+      victory-selection-container: ^36.6.2
+      victory-shared-events: ^36.6.2
+      victory-stack: ^36.6.2
+      victory-tooltip: ^36.6.2
+      victory-voronoi: ^36.6.2
+      victory-voronoi-container: ^36.6.2
+      victory-zoom-container: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -570,7 +570,7 @@ importers:
       victory-zoom-container: link:../victory-zoom-container
     devDependencies:
       '@babel/core': 7.18.9
-      react-native: 0.65.2
+      react-native: 0.65.2_@babel+core@7.18.9
       react-native-gesture-handler: 1.10.3
       react-native-svg: 12.4.3_react-native@0.65.2
 
@@ -578,9 +578,9 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
       victory-pie: '*'
-      victory-vendor: ^36.6.1
+      victory-vendor: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -593,7 +593,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -603,7 +603,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
       victory-scatter: '*'
     dependencies:
       lodash: 4.17.21
@@ -616,8 +616,8 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-bar: ^36.6.1
-      victory-core: ^36.6.1
+      victory-bar: ^36.6.2
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -631,7 +631,7 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       json-stringify-safe: 5.0.1
       lodash: 4.17.21
@@ -645,9 +645,9 @@ importers:
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       victory-bar: '*'
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
       victory-histogram: '*'
-      victory-shared-events: ^36.6.1
+      victory-shared-events: ^36.6.2
       victory-stack: '*'
     dependencies:
       lodash: 4.17.21
@@ -664,7 +664,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -724,7 +724,7 @@ importers:
       d3-voronoi: ^1.1.4
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       d3-voronoi: 1.1.4
       lodash: 4.17.21
@@ -737,8 +737,8 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-core: ^36.6.1
-      victory-tooltip: ^36.6.1
+      victory-core: ^36.6.2
+      victory-tooltip: ^36.6.2
     dependencies:
       delaunay-find: 0.0.6
       lodash: 4.17.21
@@ -751,7 +751,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.1
+      victory-core: ^36.6.2
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -3573,7 +3573,7 @@ packages:
       - encoding
     dev: true
 
-  /@react-native-community/cli-plugin-metro/6.4.0:
+  /@react-native-community/cli-plugin-metro/6.4.0_@babel+core@7.18.9:
     resolution: {integrity: sha512-lcrNODvHd3ZVhiEshXAjyBoqP44rjhkytkOSUpnZHAcmMLiguxDmvhWeWqbwu3XqSX/f0gVKmfj81t+opI1bSw==}
     dependencies:
       '@react-native-community/cli-server-api': 6.4.3
@@ -3582,11 +3582,12 @@ packages:
       metro: 0.66.2
       metro-config: 0.66.2
       metro-core: 0.66.2
-      metro-react-native-babel-transformer: 0.66.2
+      metro-react-native-babel-transformer: 0.66.2_@babel+core@7.18.9
       metro-resolver: 0.66.2
       metro-runtime: 0.66.2
       readline: 1.3.0
     transitivePeerDependencies:
+      - '@babel/core'
       - bufferutil
       - encoding
       - supports-color
@@ -3633,7 +3634,7 @@ packages:
       ora: 3.4.0
     dev: true
 
-  /@react-native-community/cli/6.4.0_react-native@0.65.2:
+  /@react-native-community/cli/6.4.0_ma5pkad5xldlmnk4nrktqemrme:
     resolution: {integrity: sha512-UNvYnWaALa4mJEaWdLY3fVK+csZzx/Ja/FGvXISPJ9W9lrKvGtyXkidViUCPbPtMsJUi7teA4uIShHn0mbGmnQ==}
     engines: {node: '>=12'}
     hasBin: true
@@ -3642,7 +3643,7 @@ packages:
     dependencies:
       '@react-native-community/cli-debugger-ui': 6.0.0
       '@react-native-community/cli-hermes': 6.3.0
-      '@react-native-community/cli-plugin-metro': 6.4.0
+      '@react-native-community/cli-plugin-metro': 6.4.0_@babel+core@7.18.9
       '@react-native-community/cli-server-api': 6.4.3
       '@react-native-community/cli-tools': 6.2.0
       '@react-native-community/cli-types': 6.0.0
@@ -3666,13 +3667,14 @@ packages:
       ora: 3.4.0
       pretty-format: 26.6.2
       prompts: 2.4.2
-      react-native: 0.65.2
+      react-native: 0.65.2_@babel+core@7.18.9
       semver: 6.3.0
       serve-static: 1.15.0
       strip-ansi: 5.2.0
       sudo-prompt: 9.2.1
       wcwidth: 1.0.1
     transitivePeerDependencies:
+      - '@babel/core'
       - bufferutil
       - encoding
       - supports-color
@@ -12633,8 +12635,10 @@ packages:
       uglify-es: 3.3.9
     dev: true
 
-  /metro-react-native-babel-preset/0.66.2:
+  /metro-react-native-babel-preset/0.66.2_@babel+core@7.18.9:
     resolution: {integrity: sha512-H/nLBAz0MgfDloSe1FjyH4EnbokHFdncyERvLPXDACY3ROVRCeUyFNo70ywRGXW2NMbrV4H7KUyU4zkfWhC2HQ==}
+    peerDependencies:
+      '@babel/core': '*'
     dependencies:
       '@babel/core': 7.18.9
       '@babel/plugin-proposal-class-properties': 7.18.6_@babel+core@7.18.9
@@ -12680,8 +12684,10 @@ packages:
       - supports-color
     dev: true
 
-  /metro-react-native-babel-preset/0.71.3:
+  /metro-react-native-babel-preset/0.71.3_@babel+core@7.18.9:
     resolution: {integrity: sha512-ym8xeoK/5fY/TsQPQXVnJN822NB9TZglxc2XVk+DM8kJO0XacWh2GtDRFeFHEehVsYWpIZeaDPF2XES+YU5mhA==}
+    peerDependencies:
+      '@babel/core': '*'
     dependencies:
       '@babel/core': 7.18.9
       '@babel/plugin-proposal-async-generator-functions': 7.18.6_@babel+core@7.18.9
@@ -12726,14 +12732,16 @@ packages:
       - supports-color
     dev: true
 
-  /metro-react-native-babel-transformer/0.66.2:
+  /metro-react-native-babel-transformer/0.66.2_@babel+core@7.18.9:
     resolution: {integrity: sha512-z1ab7ihIT0pJrwgi9q2IH+LcW/xUWMQ0hH+Mrk7wbKQB0RnJdXFoxphrfoVHBHMUu+TBPetUcEkKawkK1e7Cng==}
+    peerDependencies:
+      '@babel/core': '*'
     dependencies:
       '@babel/core': 7.18.9
       babel-preset-fbjs: 3.4.0_@babel+core@7.18.9
       hermes-parser: 0.4.7
       metro-babel-transformer: 0.66.2
-      metro-react-native-babel-preset: 0.66.2
+      metro-react-native-babel-preset: 0.66.2_@babel+core@7.18.9
       metro-source-map: 0.66.2
       nullthrows: 1.1.1
     transitivePeerDependencies:
@@ -12852,7 +12860,7 @@ packages:
       metro-hermes-compiler: 0.66.2
       metro-inspector-proxy: 0.66.2
       metro-minify-uglify: 0.66.2
-      metro-react-native-babel-preset: 0.66.2
+      metro-react-native-babel-preset: 0.66.2_@babel+core@7.18.9
       metro-resolver: 0.66.2
       metro-runtime: 0.66.2
       metro-source-map: 0.66.2
@@ -14561,10 +14569,10 @@ packages:
     dependencies:
       css-select: 5.1.0
       css-tree: 1.1.3
-      react-native: 0.65.2
+      react-native: 0.65.2_@babel+core@7.18.9
     dev: true
 
-  /react-native/0.65.2:
+  /react-native/0.65.2_@babel+core@7.18.9:
     resolution: {integrity: sha512-0pzZFmSv38691PB2Zj2JE3x+57a8vdgGeUw2ai0MR3p6psdRes3BBR8miEv/gB7fgFKNDKdRJGDuyFVioKN1jA==}
     engines: {node: '>=12'}
     hasBin: true
@@ -14572,7 +14580,7 @@ packages:
       react: 17.0.2
     dependencies:
       '@jest/create-cache-key-function': 27.5.1
-      '@react-native-community/cli': 6.4.0_react-native@0.65.2
+      '@react-native-community/cli': 6.4.0_ma5pkad5xldlmnk4nrktqemrme
       '@react-native-community/cli-platform-android': 6.3.0
       '@react-native-community/cli-platform-ios': 6.2.0
       '@react-native/assets': 1.0.0
@@ -14586,7 +14594,7 @@ packages:
       invariant: 2.2.4
       jsc-android: 250230.2.1
       metro-babel-register: 0.66.2
-      metro-react-native-babel-transformer: 0.66.2
+      metro-react-native-babel-transformer: 0.66.2_@babel+core@7.18.9
       metro-runtime: 0.66.2
       metro-source-map: 0.66.2
       nullthrows: 1.1.1
@@ -14602,6 +14610,7 @@ packages:
       whatwg-fetch: 3.6.2
       ws: 6.2.2
     transitivePeerDependencies:
+      - '@babel/core'
       - bufferutil
       - encoding
       - supports-color
@@ -16629,6 +16638,7 @@ packages:
   /unified/9.2.0:
     resolution: {integrity: sha512-vx2Z0vY+a3YoTj8+pttM3tiJHCwY5UFbYdiWrwBEbHmK8pvsPj2rtAX2BFfgXen8T39CJWblWRDT4L5WGXtDdg==}
     dependencies:
+      '@types/unist': 2.0.6
       bail: 1.0.5
       extend: 3.0.2
       is-buffer: 2.0.5
