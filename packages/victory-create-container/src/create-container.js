@@ -20,9 +20,8 @@ const ensureArray = (thing) => {
     return [];
   } else if (!Array.isArray(thing)) {
     return [thing];
-  } else {
-    return thing;
   }
+  return thing;
 };
 
 const combineEventHandlers = (eventHandlersArray) => {

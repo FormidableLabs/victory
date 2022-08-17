@@ -152,9 +152,8 @@ export default class VictoryTooltip extends React.Component {
       const positive = horizontal ? "right" : "top";
       const negative = horizontal ? "left" : "bottom";
       return datum && datum.y < 0 ? negative : positive;
-    } else {
-      return this.getPolarOrientation(props, datum);
     }
+    return this.getPolarOrientation(props, datum);
   }
 
   getPolarOrientation(props, datum) {
@@ -164,9 +163,8 @@ export default class VictoryTooltip extends React.Component {
       return this.getVerticalOrientations(degrees);
     } else if (placement === "parallel") {
       return degrees < 90 || degrees > 270 ? "right" : "left";
-    } else {
-      return degrees > 180 ? "bottom" : "top";
     }
+    return degrees > 180 ? "bottom" : "top";
   }
 
   getVerticalOrientations(degrees) {
@@ -179,9 +177,8 @@ export default class VictoryTooltip extends React.Component {
       // eslint-disable-next-line no-magic-numbers
     } else if (degrees > 135 && degrees < 225) {
       return "left";
-    } else {
-      return "bottom";
     }
+    return "bottom";
   }
 
   getStyles(props) {

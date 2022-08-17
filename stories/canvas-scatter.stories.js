@@ -1,5 +1,5 @@
-/*eslint-disable no-magic-numbers*/
-/*eslint-disable react/no-multi-comp*/
+/* eslint-disable no-magic-numbers*/
+/* eslint-disable react/no-multi-comp*/
 
 import { fromJS } from "immutable";
 import React from "react";

@@ -1,6 +1,6 @@
 {
   "name": "victory-voronoi-container",
-  "version": "36.5.3",
+  "version": "36.6.2",
   "description": "Interactive Voronoi Mouseover Component for Victory",
   "keywords": [
     "data visualization",
@@ -13,6 +13,7 @@
     "url": "https://github.com/formidablelabs/victory.git"
   },
   "homepage": "https://formidable.com/open-source/victory",
+  "sideEffects": false,
   "main": "lib/index.js",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
@@ -23,14 +24,259 @@
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
-    "victory-core": "^36.5.3",
-    "victory-tooltip": "^36.5.3"
+    "victory-core": "^36.6.2",
+    "victory-tooltip": "^36.6.2"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
   "scripts": {
-    "version": "yarn run nps build-libs && nps build-dists"
+    "###            THESE SCRIPTS ARE GENERATED           ###": "true",
+    "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
+    "build": "wireit",
+    "build:lib": "wireit",
+    "build:lib:esm": "wireit",
+    "build:lib:cjs": "wireit",
+    "build:dist": "wireit",
+    "build:dist:dev": "wireit",
+    "build:dist:min": "wireit",
+    "check": "wireit",
+    "types:check": "wireit",
+    "types:create": "wireit",
+    "format": "wireit",
+    "format:fix": "wireit",
+    "lint": "wireit",
+    "lint:fix": "wireit",
+    "jest": "wireit"
   },
-  "sideEffects": false
+  "wireit": {
+    "###            THESE WIREIT CONFIGS ARE GENERATED        ####": {},
+    "###            DO NOT MODIFY THESE MANUALLY              ####": {},
+    "build": {
+      "dependencies": [
+        "build:lib",
+        "build:dist",
+        "types:create"
+      ]
+    },
+    "build:lib": {
+      "dependencies": [
+        "build:lib:esm",
+        "build:lib:cjs"
+      ]
+    },
+    "build:lib:esm": {
+      "command": "nps build:lib:esm",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../.babelrc.build.js"
+      ],
+      "output": [
+        "es/**/*.js",
+        "es/**/*.js.map"
+      ],
+      "dependencies": [
+        "../victory-core:build:lib:esm",
+        "../victory-tooltip:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "build:lib:cjs": {
+      "command": "nps build:lib:cjs",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../.babelrc.build.js"
+      ],
+      "output": [
+        "lib/**/*.js",
+        "lib/**/*.js.map"
+      ],
+      "dependencies": [
+        "../victory-core:build:lib:cjs",
+        "../victory-tooltip:build:lib:cjs"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "build:dist": {
+      "dependencies": [
+        "build:dist:dev",
+        "build:dist:min"
+      ]
+    },
+    "build:dist:dev": {
+      "command": "nps build:dist:dev",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../.babelrc.build.js",
+        "../../config/webpack.config.js",
+        "../../config/webpack.config.dev.js"
+      ],
+      "output": [
+        "dist/victory*.js",
+        "!dist/victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-core:build:lib:esm",
+        "../victory-tooltip:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "build:dist:min": {
+      "command": "nps build:dist:min",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../.babelrc.build.js",
+        "../../config/webpack.config.js"
+      ],
+      "output": [
+        "dist/victory*.min.js*"
+      ],
+      "dependencies": [
+        "../victory-core:build:lib:esm",
+        "../victory-tooltip:build:lib:esm"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "check": {
+      "dependencies": [
+        "types:check",
+        "jest",
+        "format",
+        "lint"
+      ]
+    },
+    "types:check": {
+      "command": "nps types:pkg:check",
+      "files": [
+        "src/**/*.{ts,tsx}",
+        "../../tsconfig.base.json",
+        "tsconfig.json"
+      ],
+      "dependencies": [
+        "types:create",
+        "../victory-core:types:create",
+        "../victory-tooltip:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "types:create": {
+      "command": "nps types:pkg:create",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../tsconfig.base.json",
+        "tsconfig.build.json"
+      ],
+      "output": [
+        "es/**/*.d.ts",
+        "es/**/*.d.ts.map",
+        "lib/**/*.d.ts",
+        "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory-core:types:create",
+        "../victory-tooltip:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "format": {
+      "command": "nps format:pkg",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "format:fix": {
+      "command": "pnpm run format || nps format:pkg:fix",
+      "files": [
+        "src/**",
+        "*.json",
+        "../../.prettierignore",
+        "../../.prettierrc.json"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "lint": {
+      "command": "nps lint:pkg",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "../victory-core:types:create",
+        "../victory-tooltip:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "lint:fix": {
+      "command": "pnpm run lint || nps lint:pkg:fix",
+      "files": [
+        "src/**",
+        "../../.eslintignore",
+        "../../.eslintrc.js"
+      ],
+      "output": [],
+      "dependencies": [
+        "../victory-core:types:create",
+        "../victory-tooltip:types:create",
+        "../victory-vendor:types:create",
+        "../victory-voronoi:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    },
+    "jest": {
+      "command": "nps jest:pkg",
+      "files": [
+        "src/**/*.test.*",
+        "../../.babelrc.js",
+        "../../test/jest-config.js",
+        "../../test/jest-setup.ts"
+      ],
+      "output": [],
+      "dependencies": [
+        "build:lib:cjs",
+        "../victory-vendor:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
+    }
+  }
 }

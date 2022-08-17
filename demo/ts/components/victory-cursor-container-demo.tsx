@@ -1,5 +1,4 @@
-/*global window:false*/
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import React from "react";
 import { random, range, round } from "lodash";
 import { VictoryChart } from "victory-chart";
@@ -70,8 +69,6 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
-    const cursorLabel = (datum: CoordinatesPropType) => round(datum.x, 2);
-
     return (
       <div className="demo">
         <div style={containerStyle}>
@@ -81,7 +78,9 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             height={400}
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
             containerComponent={
-              <VictoryCursorContainer cursorLabel={cursorLabel} />
+              <VictoryCursorContainer
+                cursorLabel={({ datum }) => round(datum.x, 2)}
+              />
             }
           >
             <VictoryLegend
@@ -108,7 +107,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             domainPadding={{ x: 15 }}
             containerComponent={
               <VictoryCursorContainer
-                cursorLabel={cursorLabel}
+                cursorLabel={({ datum }) => round(datum.x, 2)}
                 cursorDimension="y"
                 defaultCursorValue={3}
               />
@@ -160,7 +159,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             }}
             containerComponent={
               <VictoryCursorContainer
-                cursorLabel={(datum: CoordinatesPropType) => round(datum.x, 2)}
+                cursorLabel={({ datum }) => round(datum.x, 2)}
                 cursorDimension="x"
                 defaultCursorValue={1}
               />
@@ -198,7 +197,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
               <VictoryCursorContainer
                 defaultCursorValue={2}
                 cursorDimension="x"
-                cursorLabel={(datum: CoordinatesPropType) => round(datum.x, 2)}
+                cursorLabel={({ datum }) => round(datum.x, 2)}
                 cursorLabelOffset={15}
               />
             }

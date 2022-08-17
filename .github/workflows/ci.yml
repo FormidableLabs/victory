@@ -1,21 +1,15 @@
 name: CI
 
 # Runs build and test on:
-#   every push to main that has a change in a file not in the docs folder
-#   every pull request with main branch as the base that has a change in a file not in the docs folder
+#   every push to main
+#   every pull request with main branch as the base
 on:
   push:
     branches:
       - main
-    paths:
-      - '**'
-      - '!docs/**'
   pull_request:
     branches:
       - main
-    paths:
-      - '**'
-      - '!docs/**'
 
 jobs:
   test:
@@ -28,31 +22,41 @@ jobs:
         node-version: [14.x, 16.x, 18.x]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Get Yarn Cache Directory Path
-        id: cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      # Wireit cache
+      - uses: google/wireit@setup-github-actions-caching/v1
 
-      - name: Use Yarn Cache
-        uses: actions/cache@v2
-        id: cache
+      - uses: pnpm/action-setup@v2.2.2
         with:
-          path: ${{ steps.cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ matrix.node-version }}-${{ hashFiles('./yarn.lock') }}
+          version: 7
 
-      - name: Set Yarn to Ignore Engines
-        run: yarn config set ignore-engines true
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
 
-      - name: Installation ${{ matrix.node-version }}
-        run: yarn --prefer-offline --frozen-lockfile --non-interactive
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check all package.json's and tsconfig.json's are in sync.
+        run: |
+          pnpm sync
+          git diff --no-ext-diff --quiet --exit-code
+
+      - name: Build libraries and distributions ${{ matrix.node-version }}
+        run: pnpm build
 
       - name: Check Code ${{ matrix.node-version }}
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          run: yarn nps check.ci
-
-      - name: Remove Yarn Config to Ignore Engines
-        run: yarn config delete ignore-engines
+        run: pnpm check:ci

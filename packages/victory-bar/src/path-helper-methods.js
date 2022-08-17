@@ -60,9 +60,8 @@ const getStartAngle = (props, index) => {
     return scale.x.range()[0];
   } else if (alignment === "start" || alignment === "end") {
     return alignment === "start" ? previousAngle : currentAngle;
-  } else {
-    return (currentAngle + previousAngle) / 2;
   }
+  return (currentAngle + previousAngle) / 2;
 };
 
 const getEndAngle = (props, index) => {
@@ -81,9 +80,8 @@ const getEndAngle = (props, index) => {
     return lastAngle;
   } else if (alignment === "start" || alignment === "end") {
     return alignment === "start" ? currentAngle : nextAngle;
-  } else {
-    return (currentAngle + nextAngle) / 2;
   }
+  return (currentAngle + nextAngle) / 2;
 };
 
 const mapPointsToPath = (coords, cornerRadius, direction) => {

@@ -17,7 +17,7 @@ import { getBarPosition } from "./helper-methods";
 
 // This is a demo component that uses VictoryProvider to access calculated props and state.
 // This component does not include events, animations, or styling.
-// To test this out, swap out the VictoryBar export in ./index.js and run `yarn storybook`.
+// To test out, swap out the VictoryBar export in ./index.js and run `pnpm run storybook:server`.
 
 const defaultProps: VictoryProviderProps = {
   data: [

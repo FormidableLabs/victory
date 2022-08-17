@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ## Implementation Notes
-- New components should live inside a nested director (currently v37). These components should not make changes to existing functionality.
+- New components should live inside a nested directory (currently v37). These components should not make changes to existing functionality.
 - The victory event system will be excluded for now until we have more clarity on how Victory wants to handle events.
 - [Add other notes here]
 

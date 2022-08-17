@@ -194,7 +194,10 @@ describe("victory-util/domain", () => {
       const min = new Date(1980, 1, 1);
       const max = new Date(1980, 1, 1);
       const resultDomain = Domain.getDomainFromMinMax(min, max);
-      expect(resultDomain).toEqual([new Date(+min - 1), new Date(+max + 1)]);
+      expect(resultDomain).toEqual([
+        new Date(Number(min) - 1),
+        new Date(Number(max) + 1),
+      ]);
     });
   });
 

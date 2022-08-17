@@ -1,9 +1,8 @@
-/*global window:false */
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryBoxPlot } from "victory-box-plot/src/index";
-import { VictoryTheme } from "victory-core/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryBoxPlot } from "victory-box-plot";
+import { VictoryTheme } from "victory-core";
 import { range, random } from "lodash";
 
 interface VictoryBoxPlotDemoState {

@@ -37,6 +37,7 @@ dist
 lib
 es
 node_modules
+.pnpm-debug.log*
 npm-debug.log*
 lerna-debug.log*
 yarn-error.log*
@@ -45,6 +46,10 @@ storybook-static
 build-storybook.log*
 artifacts
 tmp
+
+# Wireit + caches
+.wireit
+.eslintcache
 
 # Ignore all yarn2+
 .yarn/*

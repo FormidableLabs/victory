@@ -15,7 +15,7 @@ import { isNil, flatten } from "lodash";
 import Candle from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 const fallbackProps = {
   width: 450,
   height: 300,
@@ -48,7 +48,7 @@ const defaultData = [
   { x: new Date(2016, 6, 7), open: 35, close: 40, high: 45, low: 30 },
   { x: new Date(2016, 6, 8), open: 40, close: 45, high: 50, low: 35 },
 ];
-/*eslint-enable no-magic-numbers */
+/* eslint-enable no-magic-numbers */
 const datumHasXandY = (datum) => {
   return !isNil(datum._x) && !isNil(datum._y);
 };

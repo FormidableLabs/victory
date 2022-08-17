@@ -1,7 +1,7 @@
-/*eslint-disable no-magic-numbers*/
+/* eslint-disable no-magic-numbers*/
 import React from "react";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryLabel } from "victory-core/src/index";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryLabel } from "victory-core";
 
 const containerStyle = {
   display: "flex",

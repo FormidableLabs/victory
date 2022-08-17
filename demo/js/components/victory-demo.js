@@ -1,4 +1,4 @@
-/*eslint-disable no-magic-numbers*/
+/* eslint-disable no-magic-numbers*/
 import React from "react";
 import {
   VictoryAxis,
@@ -11,7 +11,7 @@ import {
   VictoryStack,
   VictoryGroup,
   VictorySelectionContainer,
-} from "victory/src/index";
+} from "victory";
 
 export default class App extends React.Component {
   render() {

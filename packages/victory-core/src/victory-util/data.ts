@@ -117,16 +117,15 @@ function addEventKeys(props, data) {
     } else if (hasEventKeyAccessor) {
       const eventKey = eventKeyAccessor(datum, index);
       return eventKey !== undefined ? assign({ eventKey }, datum) : datum;
-    } else {
-      return datum;
     }
+    return datum;
   });
 }
 
 // Exported Functions
 
 // This method will remove data points that fall outside of the desired domain (non-continuous charts only)
-export function formatDataFromDomain(dataset, domain, defaultBaseline) {
+export function formatDataFromDomain(dataset, domain, defaultBaseline?) {
   const exists = (val) => val !== undefined;
 
   const minDomainX = Collection.getMinValue(domain.x);

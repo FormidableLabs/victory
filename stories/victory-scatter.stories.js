@@ -1,5 +1,5 @@
-/*eslint-disable no-magic-numbers*/
-/*eslint-disable react/no-multi-comp*/
+/* eslint-disable no-magic-numbers*/
+/* eslint-disable react/no-multi-comp*/
 
 import React from "react";
 import { VictoryStack } from "victory-stack";

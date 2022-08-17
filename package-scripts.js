@@ -1,162 +1,92 @@
-const os = require("os");
-// Can override with, e.g., `CONCURRENCY=2 yarn nps build-package-dists`.
-const CONCURRENCY = parseInt(process.env.CONCURRENCY || os.cpus().length, 10);
-const npsUtils = require("nps-utils");
+/**
+ * We generally use `nps` for scripts that we:
+ * 1. define at the root of the monorepo
+ * 2. that are meant to execute _within_ a workspace
+ *
+ * ... or ...
+ *
+ * - That could use a little JS magic that we don't want to write a full
+ *   node script for 😂
+ *
+ * For more cases, if you have an actual root task, define it in root
+ * `package.json:scripts`.
+ */
+
+const path = require("path");
+const PKG_SRC = path.resolve("src");
+
+// For publishing, use the core package's version.
+const coreVersion = require("./packages/victory-core/package.json").version;
+if (!coreVersion) {
+  throw new Error("Unable to read core version");
+}
+const coreTag = `v${coreVersion}`;
 
 module.exports = {
   scripts: {
-    server: {
-      dev: {
-        ts: "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
-        default:
-          "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/js --entry ./demo/js/app",
-      },
-      hot: "webpack serve --config ./config/webpack/demo/webpack.config.hot.js --inline --hot --content-base demo/js",
-      test: "webpack serve --config ./config/webpack/webpack.config.test.js",
-    },
-    jest: {
-      native: "jest --config=jest-native-config.js",
-      default: "cross-env BABEL_ENV=commonjs jest --config=jest-config.js",
-      watch:
-        "cross-env BABEL_ENV=commonjs jest --watch --config=jest-config.js",
-      cov: "cross-env BABEL_ENV=commonjs jest --coverage --config=jest-config.js",
-    },
-    "test-node": {
-      default: "jest ./test/node",
-    },
-    test: {
-      cov: npsUtils.series.nps("build-package-libs", "jest.default"),
-      watch: npsUtils.concurrent.nps("watch", "jest.watch"),
-      default: npsUtils.series.nps("build-package-libs", "jest.cov"),
-    },
-    storybook: {
-      server: "start-storybook -p 6006",
-      default: npsUtils.concurrent.nps("watch", "storybook.server"),
-    },
-    start: {
-      ts: npsUtils.concurrent.nps("watch", "server.dev.ts"),
-      default: npsUtils.concurrent.nps("watch", "server.dev", "server.test"),
-    },
-    lint: {
-      // Note: Using a base `nps` command with extra args.
-      // 1. You need to add double quotes around the extra part (e.g. `test` below)
-      // 2. If going through a `lerna exec` you need to escape with an extra backslash `\` (e.g. `src` below)
-      base: "yarn eslint --color",
-      fix: "yarn eslint --color --fix",
-      src: 'lerna exec --ignore victory-vendor --stream -- yarn nps \\"lint.base src\\"',
-      vendor:
-        'lerna exec --scope victory-vendor -- yarn nps \\"lint.base scripts\\"',
-      config: 'yarn nps "lint.base package-scripts.js config"',
-      demo: 'yarn nps "lint.base demo"',
-      docs: 'yarn nps "lint.base docs"',
-      stories: 'yarn nps "lint.base stories"',
-      test: 'yarn nps "lint.base test"',
-      default: npsUtils.series.nps(
-        "lint.config",
-        "lint.test",
-        "lint.stories",
-        "lint.demo",
-        // TODO: Needs `docs` install to work -- "lint.docs",
-        "lint.vendor",
-        "lint.src",
-      ),
-    },
-    format: {
-      fix: 'prettier --write "./**/*.{js,jsx,json,ts,tsx}"',
-      ci: 'prettier --list-different "./**/*.{js,jsx,json,ts,tsx}"',
-      default: "yarn nps format.fix",
-    },
-    typecheck: {
-      default: npsUtils.series.nps("typecheck.packages", "typecheck.test"),
-      src: "tsc --noEmit",
-      demo: "tsc -p ./demo/tsconfig.json --noEmit",
-      test: "tsc -p ./test/tsconfig.json --noEmit",
-      core: "lerna exec --scope victory-core -- nps typecheck.src",
-      packages: "lerna exec --ignore victory-vendor -- nps typecheck.src",
-    },
-    types: {
-      lib: npsUtils.concurrent.nps("types.create-lib", "types.copy-lib"),
-      es: npsUtils.concurrent.nps("types.create-es", "types.copy-es"),
-      create:
-        "tsc -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src",
-      "create-lib":
-        'nps types.create -- -- --outDir lib || echo "Ignoring TypeScript Errors"',
-      "create-es":
-        'nps types.create -- -- --outDir es || echo "Ignoring TypeScript Errors"',
-      "create-lib-watch": "nps types.create -- -- --outDir lib --watch",
-      "create-es-watch": "nps types.create -- -- --outDir es --watch",
-      copy: "cpx 'src/**/*.d.ts'",
-      "copy-lib": "nps types.copy -- -- lib",
-      "copy-es": "nps types.copy -- -- es",
-      "copy-lib-watch": "nps types.copy -- -- lib --watch",
-      "copy-es-watch": "nps types.copy -- -- es --watch",
-    },
-    check: {
-      ci: npsUtils.series.nps(
-        "format.ci",
-        "build-package-libs",
-        "build-package-dists",
-        "lint",
-        "typecheck",
-        "test-node",
-        "jest",
-        "jest.native",
-      ),
-      cov: npsUtils.series.nps("lint", "test.cov"),
-      dev: npsUtils.series.nps("lint", "test.dev"),
-      default: npsUtils.series.nps("lint", "test"),
-    },
-    watch: {
-      // `victory-vendor` is built 1x up front and not watched.
-      default: npsUtils.series.nps("build-package-libs-vendor", "watch.all"),
-      all: 'lerna exec --parallel --ignore victory-native --ignore victory-vendor "nps watch.core"',
-      core: npsUtils.concurrent.nps("watch.es", "watch.lib"),
-      lib: npsUtils.concurrent.nps(
-        "babel-lib-watch",
-        "types.create-lib-watch",
-        "types.copy-lib-watch",
-      ),
-      es: npsUtils.concurrent.nps(
-        "babel-es-watch",
-        "types.create-es-watch",
-        "types.copy-es-watch",
-      ),
-    },
-    clean: {
-      lib: "rimraf lib",
-      es: "rimraf es",
-      dist: "rimraf dist",
-      default: npsUtils.concurrent.nps("clean.es", "clean.lib", "clean.dist"),
-      all: "lerna exec --parallel --ignore victory-vendor -- nps clean",
-    },
-    // Version testing helpers
-    "lerna-dry-run":
-      "lerna version --no-git-tag-version --no-push --loglevel silly",
-    // TODO: organize build scripts once build perf is sorted out
-    "babel-es":
+    // Root tasks.
+    // Try to find an existing tag (from previous attempts, etc.), and if not, create one.
+    "git:tag": `git show-ref ${coreTag} || git tag -a ${coreTag} -m \"Version ${coreVersion}\"`,
+
+    // Build.
+    // - Libraries
+    "build:lib:esm":
       "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
-    "babel-lib":
+    "build:lib:cjs":
       "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
-    "babel-es-watch": "nps babel-es -- -- --watch",
-    "babel-lib-watch": "nps babel-lib -- -- --watch",
-    "build-es": npsUtils.series.nps("clean.es", "babel-es", "types.es"),
-    "build-lib": npsUtils.series.nps("clean.lib", "babel-lib", "types.lib"),
-    "build-libs": npsUtils.series.nps("build-lib", "build-es"),
-    "build-package-libs-core": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-libs`,
-    "build-package-libs-vendor":
-      "lerna exec --scope victory-vendor -- yarn build",
-    "build-package-libs": npsUtils.series.nps(
-      "build-package-libs-vendor",
-      "build-package-libs-core",
-    ),
-    "build-dist-dev":
+    // - UMD distributions
+    // TODO(2375): Add / verify caching
+    // https://github.com/FormidableLabs/victory/issues/2375
+    "build:dist:dev":
       "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
-    "build-dist-min":
+    "build:dist:min":
       "webpack --bail --config ../../config/webpack/webpack.config.js",
-    "build-dists": npsUtils.concurrent.nps("build-dist-min", "build-dist-dev"),
-    "build-dist": npsUtils.series.nps("clean.dist", "build-dists"),
-    "build-package-dists": `lerna exec --concurrency ${CONCURRENCY} --stream --ignore victory-native --ignore victory-vendor -- nps build-dists`,
-    bootstrap: "lerna bootstrap",
-    "link-parent-bin": "link-parent-bin",
+
+    // Quality.
+    // - Format
+    // TODO(2375): Can we cache / incremental?
+    // https://github.com/FormidableLabs/victory/issues/2375
+    "format:pkg":
+      'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --list-different "./**/*.{js,jsx,json,ts,tsx}"',
+    "format:pkg:fix":
+      'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --write "./**/*.{js,jsx,json,ts,tsx}"',
+    "format:root":
+      'prettier --list-different "./*.js*" "./{scripts,config,demo,docs,stories,test}/*.{js,jsx,json,ts,tsx}"',
+    "format:root:fix":
+      'prettier --write "./*.js*" "./{scripts,config,demo,docs,stories,test}/*.{js,jsx,json,ts,tsx}"',
+
+    // - Lint
+    "lint:base": "eslint --cache --color",
+    "lint:pkg": 'nps "lint:base src"',
+    "lint:pkg:fix": 'nps "lint:base --fix src"',
+
+    // Tests
+    // - Jest
+    // TODO(2375): Can we cache / incremental?
+    // https://github.com/FormidableLabs/victory/issues/2375
+    "jest:native": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-native-config.js --testPathPattern=${PKG_SRC}`,
+    "jest:pkg": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
+    // TODO(2348): Hook coverage up to CI
+    // https://github.com/FormidableLabs/victory/issues/2348
+    // TODO(2348): Add this to `check:ci`
+    "jest:cov": "echo TODO",
+
+    // - TypeScript
+    // TODO(2375): Can we cache / incremental?
+    // https://github.com/FormidableLabs/victory/issues/2375
+    // Check for errors (includes test files):
+    "types:pkg:check": "tsc --pretty --noEmit",
+    // To create types, we must do the following:
+    // 1. Copy all *.d.ts files to the es folder
+    // 2. Compile all *.ts files to the es folder
+    // 3. Copy all output from the es folder to the lib folder
+    "types:pkg:create":
+      "nps types:pkg:copy types:pkg:compile types:pkg:cjs-copy",
+    "types:pkg:copy": "cpx 'src/**/*.d.ts' es",
+    "types:pkg:compile":
+      "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src --outDir es || nps types:warning",
+    "types:warning":
+      'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
+    "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
   },
 };

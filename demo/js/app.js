@@ -1,5 +1,5 @@
-/*global document:false window:false */
-/*eslint-disable react/no-multi-comp */
+
+/* eslint-disable react/no-multi-comp */
 import React from "react";
 import ReactDOM from "react-dom";
 import { keys } from "lodash";

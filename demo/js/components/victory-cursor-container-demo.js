@@ -1,17 +1,16 @@
-/*global window:false*/
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import React from "react";
 import { random, range, round } from "lodash";
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryGroup } from "victory-group/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryLine } from "victory-line/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryCursorContainer } from "victory-cursor-container/src/index";
-import { VictoryTooltip } from "victory-tooltip/src/index";
-import { VictoryLegend } from "victory-legend/src/index";
-import { VictoryTheme } from "victory-core/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryCursorContainer } from "victory-cursor-container";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryLegend } from "victory-legend";
+import { VictoryTheme } from "victory-core";
 
 const makeData = () =>
   range(1500).map((x) => ({ x, y: x + 10 * Math.random() }));

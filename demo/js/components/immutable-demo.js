@@ -1,34 +1,29 @@
-/* global window:false */
 /* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
 import { assign, merge, keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
-import {
-  VictoryClipContainer,
-  VictoryLabel,
-  VictoryTheme,
-} from "victory-core/src/index";
+import { VictoryClipContainer, VictoryLabel, VictoryTheme } from "victory-core";
 
-import { VictoryChart } from "victory-chart/src/index";
-import { VictoryStack } from "victory-stack/src/index";
-import { VictoryGroup } from "victory-group/src/index";
-import { VictoryArea } from "victory-area/src/index";
-import { VictoryAxis } from "victory-axis/src/index";
-import { VictoryPolarAxis } from "victory-polar-axis/src/index";
-import { VictoryBar } from "victory-bar/src/index";
-import { VictoryLine } from "victory-line/src/index";
-import { VictoryScatter } from "victory-scatter/src/index";
-import { VictoryErrorBar } from "victory-errorbar/src/index";
-import { VictoryCandlestick } from "victory-candlestick/src/index";
-import { VictoryVoronoi } from "victory-voronoi/src/index";
-import { VictoryZoomContainer } from "victory-zoom-container/src/index";
-import { VictoryVoronoiContainer } from "victory-voronoi-container/src/index";
-import { VictorySelectionContainer } from "victory-selection-container/src/index";
-import { VictoryCursorContainer } from "victory-cursor-container/src/index";
-import { VictoryBrushContainer } from "victory-brush-container/src/index";
-import { VictoryTooltip } from "victory-tooltip/src/index";
-import { VictoryLegend } from "victory-legend/src/index";
+import { VictoryChart } from "victory-chart";
+import { VictoryStack } from "victory-stack";
+import { VictoryGroup } from "victory-group";
+import { VictoryArea } from "victory-area";
+import { VictoryAxis } from "victory-axis";
+import { VictoryPolarAxis } from "victory-polar-axis";
+import { VictoryBar } from "victory-bar";
+import { VictoryLine } from "victory-line";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryErrorBar } from "victory-errorbar";
+import { VictoryCandlestick } from "victory-candlestick";
+import { VictoryVoronoi } from "victory-voronoi";
+import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryVoronoiContainer } from "victory-voronoi-container";
+import { VictorySelectionContainer } from "victory-selection-container";
+import { VictoryCursorContainer } from "victory-cursor-container";
+import { VictoryBrushContainer } from "victory-brush-container";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryLegend } from "victory-legend";
 
 class Wrapper extends React.Component {
   static propTypes = {
@@ -793,7 +788,7 @@ class App extends React.Component {
             padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
             containerComponent={
               <VictoryCursorContainer
-                cursorLabel={(datum) =>
+                cursorLabel={({ datum }) =>
                   `${round(datum.x, 2)} , ${round(datum.y, 2)}`
                 }
               />
