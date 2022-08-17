@@ -25,6 +25,18 @@ module.exports = {
     "consistent-return": "off", // we're migrating to TS and this is more properly handled there.
     "react/sort-comp": "off",
     "import/no-unresolved": ["error", { ignore: ["victory*"] }],
+    "no-restricted-imports": [
+      "error",
+      {
+        patterns: [
+          {
+            group: ["victory*/src", "victory*/src/**"],
+            message:
+              "Be sure to import directly from Victory packages, not from /src folders!",
+          },
+        ],
+      },
+    ],
     "max-statements": "off",
     complexity: ["error", { max: 16 }],
     "no-magic-numbers": [
