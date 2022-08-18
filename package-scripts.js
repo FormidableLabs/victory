@@ -31,9 +31,9 @@ module.exports = {
     // Build.
     // - Libraries
     "build:lib:esm":
-      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
+      "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js",
     "build:lib:cjs":
-      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js --source-maps",
+      "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js",
     // - UMD distributions
     // TODO(2375): Add / verify caching
     // https://github.com/FormidableLabs/victory/issues/2375
