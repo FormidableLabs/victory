@@ -65,7 +65,9 @@ function generateWireitConfig(pkg, rootPkg) {
         "files": [
           "src/**",
           "!src/**/*.test.*",
-          "../../.babelrc.build.js"
+          "../../.babelrc.build.js",
+          "../../.babelrc.js",
+          "../../package-scripts.js",
         ],
         "output": [
           "es/**/*.js",
@@ -81,7 +83,9 @@ function generateWireitConfig(pkg, rootPkg) {
         "files": [
           "src/**",
           "!src/**/*.test.*",
-          "../../.babelrc.build.js"
+          "../../.babelrc.build.js",
+          "../../.babelrc.js",
+          "../../package-scripts.js",
         ],
         "output": [
           "lib/**/*.js",
@@ -104,6 +108,8 @@ function generateWireitConfig(pkg, rootPkg) {
           "src/**",
           "!src/**/*.test.*",
           "../../.babelrc.build.js",
+          "../../.babelrc.js",
+          "../../package-scripts.js",
           "../../config/webpack.config.js",
           "../../config/webpack.config.dev.js",
         ],
@@ -126,6 +132,8 @@ function generateWireitConfig(pkg, rootPkg) {
           "src/**",
           "!src/**/*.test.*",
           "../../.babelrc.build.js",
+          "../../.babelrc.js",
+          "../../package-scripts.js",
           "../../config/webpack.config.js",
         ],
         "output": [
