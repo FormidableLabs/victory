@@ -1,5 +1,40 @@
 # victory-native
 
+## 36.6.3
+
+### Patch Changes
+
+- Do not generate \*.js.map sourcemaps (fixes [#2346](https://github.com/FormidableLabs/victory/issues/2346)) ([#2432](https://github.com/FormidableLabs/victory/pull/2432))
+
+- Updated dependencies [[`4bfc65df5`](https://github.com/FormidableLabs/victory/commit/4bfc65df5a10aa6a10084882ed5c6d0d894dec6f)]:
+  - victory@36.6.3
+  - victory-area@36.6.3
+  - victory-axis@36.6.3
+  - victory-bar@36.6.3
+  - victory-box-plot@36.6.3
+  - victory-brush-container@36.6.3
+  - victory-brush-line@36.6.3
+  - victory-candlestick@36.6.3
+  - victory-chart@36.6.3
+  - victory-core@36.6.3
+  - victory-create-container@36.6.3
+  - victory-cursor-container@36.6.3
+  - victory-errorbar@36.6.3
+  - victory-group@36.6.3
+  - victory-histogram@36.6.3
+  - victory-legend@36.6.3
+  - victory-line@36.6.3
+  - victory-pie@36.6.3
+  - victory-polar-axis@36.6.3
+  - victory-scatter@36.6.3
+  - victory-selection-container@36.6.3
+  - victory-shared-events@36.6.3
+  - victory-stack@36.6.3
+  - victory-tooltip@36.6.3
+  - victory-voronoi@36.6.3
+  - victory-voronoi-container@36.6.3
+  - victory-zoom-container@36.6.3
+
 ## 36.6.2
 
 ### Patch Changes
