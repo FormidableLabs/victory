@@ -74,7 +74,9 @@
       "files": [
         "src/**",
         "!src/**/*.test.*",
-        "../../.babelrc.build.js"
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
       ],
       "output": [
         "es/**/*.js",
@@ -92,7 +94,9 @@
       "files": [
         "src/**",
         "!src/**/*.test.*",
-        "../../.babelrc.build.js"
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
       ],
       "output": [
         "lib/**/*.js",
@@ -117,6 +121,8 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js",
         "../../config/webpack.config.js",
         "../../config/webpack.config.dev.js"
       ],
@@ -137,6 +143,8 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js",
         "../../config/webpack.config.js"
       ],
       "output": [
