@@ -45,7 +45,7 @@ export const RawZoomHelpers: {
 };
 
 export const ZoomHelpers: Pick<
-  RawZoomHelpers,
+  typeof RawZoomHelpers,
   | "checkDomainEquality"
   | "onMouseDown"
   | "onMouseUp"
