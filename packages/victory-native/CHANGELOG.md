@@ -1,5 +1,40 @@
 # victory-native
 
+## 36.6.4
+
+### Patch Changes
+
+- Allow data accessors to accept any data types (fixes [#2360](https://github.com/FormidableLabs/victory/issues/2360)) ([#2436](https://github.com/FormidableLabs/victory/pull/2436))
+
+- Updated dependencies [[`57ed0fe30`](https://github.com/FormidableLabs/victory/commit/57ed0fe304dbc8753da1126a02d44de8004e96aa), [`9a6319cff`](https://github.com/FormidableLabs/victory/commit/9a6319cffbc480711b8c286dcae00575081170f0)]:
+  - victory@36.6.4
+  - victory-create-container@36.6.4
+  - victory-selection-container@36.6.4
+  - victory-voronoi-container@36.6.4
+  - victory-zoom-container@36.6.4
+  - victory-core@36.6.4
+  - victory-area@36.6.4
+  - victory-axis@36.6.4
+  - victory-bar@36.6.4
+  - victory-box-plot@36.6.4
+  - victory-brush-container@36.6.4
+  - victory-brush-line@36.6.4
+  - victory-candlestick@36.6.4
+  - victory-chart@36.6.4
+  - victory-cursor-container@36.6.4
+  - victory-errorbar@36.6.4
+  - victory-group@36.6.4
+  - victory-histogram@36.6.4
+  - victory-legend@36.6.4
+  - victory-line@36.6.4
+  - victory-pie@36.6.4
+  - victory-polar-axis@36.6.4
+  - victory-scatter@36.6.4
+  - victory-shared-events@36.6.4
+  - victory-stack@36.6.4
+  - victory-tooltip@36.6.4
+  - victory-voronoi@36.6.4
+
 ## 36.6.3
 
 ### Patch Changes
