@@ -14,7 +14,6 @@ import * as Style from "../victory-util/style";
 import * as TextSize from "../victory-util/textsize";
 import * as UserProps from "../victory-util/user-props";
 import {
-  CallbackArgs,
   NumberOrCallback,
   StringOrCallback,
   StringOrNumberOrCallback,
@@ -57,11 +56,11 @@ export interface VictoryLabelProps {
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textComponent?: React.ReactElement;
-  textAnchor?: ValueOrAccessor<TextAnchorType, CallbackArgs>;
+  textAnchor?: ValueOrAccessor<TextAnchorType>;
   title?: string;
-  transform?: ValueOrAccessor<string | object, CallbackArgs>;
+  transform?: ValueOrAccessor<string | object>;
   tspanComponent?: React.ReactElement;
-  verticalAnchor?: ValueOrAccessor<VerticalAnchorType, CallbackArgs>;
+  verticalAnchor?: ValueOrAccessor<VerticalAnchorType>;
   x?: number;
   y?: number;
   dx?: StringOrNumberOrCallback;

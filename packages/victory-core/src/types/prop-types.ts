@@ -9,14 +9,14 @@ import {
   AnimationEasing,
   AnimationStyle,
 } from "../victory-animation/victory-animation";
-import { StringOrNumberOrCallback } from "./callbacks";
+import { CallbackArgs, StringOrNumberOrCallback } from "./callbacks";
 
 export type AxisType = "x" | "y";
 export type DatumValue = number | string | Date | null | undefined;
 export type Datum = any;
 export type ForAxes<T> = T | { x?: T; y?: T };
 export type ID = number | string;
-export type ValueOrAccessor<ValueType, PropsType> =
+export type ValueOrAccessor<ValueType, PropsType = CallbackArgs> =
   | ValueType
   | ((props: PropsType) => ValueType);
 export type Tuple<T> = [T, T];
