@@ -8,7 +8,7 @@ import {
   VictoryContainerProps,
   CoordinatesPropType,
   VictoryLabelProps,
-  ValueOrCallback,
+  ValueOrAccessor,
 } from "victory-core";
 import { defaults, assign, isObject } from "lodash";
 import { CursorHelpers } from "./cursor-helpers";
@@ -18,7 +18,7 @@ export type CursorCoordinatesPropType = CoordinatesPropType | number;
 export interface VictoryCursorContainerProps extends VictoryContainerProps {
   cursorComponent?: React.ReactElement;
   cursorDimension?: "x" | "y";
-  cursorLabel?: ValueOrCallback<VictoryLabelProps["text"]>;
+  cursorLabel?: ValueOrAccessor<VictoryLabelProps["text"]>;
   cursorLabelComponent?: React.ReactElement;
   cursorLabelOffset?: CursorCoordinatesPropType;
   defaultCursorValue?: CursorCoordinatesPropType;
