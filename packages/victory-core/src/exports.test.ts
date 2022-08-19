@@ -192,18 +192,11 @@ describe("victory-core", () => {
         "VictoryContainer",
         "VictoryLabel",
         "VictoryPortal",
-        "VictoryProvider",
         "VictoryTheme",
         "VictoryTransition",
         "Whisker",
         "Wrapper",
         "addEvents",
-        "useData",
-        "useDomain",
-        "useScale",
-        "useVictoryContext",
-        "useVictoryProviderSync",
-        "withContainer",
       ]
     `);
   });
