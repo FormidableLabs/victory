@@ -11,9 +11,9 @@ export function createContainer<V, W>(
   c2: ContainerType,
 ): React.ComponentType<V & W>;
 
-export function combineContainerMixins(mixins, Container): any;
+export function combineContainerMixins(mixins: any, Container: any): any;
 
 export const makeCreateContainerFunction: (
-  mixinMap,
-  Container,
-) => (behaviorA, behaviorB) => any;
+  mixinMap: any,
+  Container: any,
+) => (behaviorA: any, behaviorB: any) => any;

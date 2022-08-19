@@ -66,8 +66,8 @@ export class CanvasGroup extends React.Component<CanvasGroupProps, any> {}
 
 export interface CanvasContextValue {
   canvasRef: React.RefObject<HTMLCanvasElement>;
-  clear(ctx): void;
-  clip(ctx): void;
+  clear(ctx: CanvasRenderingContext2D): void;
+  clip(ctx: CanvasRenderingContext2D): void;
 }
 
 export const useCanvasContext: () => CanvasContextValue;

@@ -29,13 +29,13 @@ export class VictorySelectionContainer extends React.Component<
 > {}
 
 export const SelectionHelpers: {
-  getDimension(props): any;
-  getDatasets(props): any;
-  filterDatasets(props, datasets, bounds): any;
-  getSelectedData(props, dataset): any;
-  onMouseDown(evt, targetProps): any;
-  onMouseMove(evt, targetProps): any;
-  onMouseUp(evt, targetProps): any;
+  getDimension(props: any): any;
+  getDatasets(props: any): any;
+  filterDatasets(props: any, datasets: any, bounds: any): any;
+  getSelectedData(props: any, dataset: any): any;
+  onMouseDown(evt: any, targetProps: any): any;
+  onMouseMove(evt: any, targetProps: any): any;
+  onMouseUp(evt: any, targetProps: any): any;
 };
 
 export const selectionContainerMixin: (base: Function) => Function;
