@@ -1,5 +1,14 @@
 # victory-core
 
+## 36.6.3
+
+### Patch Changes
+
+- Do not generate \*.js.map sourcemaps (fixes [#2346](https://github.com/FormidableLabs/victory/issues/2346)) ([#2432](https://github.com/FormidableLabs/victory/pull/2432))
+
+- Updated dependencies [[`4bfc65df5`](https://github.com/FormidableLabs/victory/commit/4bfc65df5a10aa6a10084882ed5c6d0d894dec6f)]:
+  - victory-vendor@36.6.3
+
 ## 36.6.2
 
 ### Patch Changes
