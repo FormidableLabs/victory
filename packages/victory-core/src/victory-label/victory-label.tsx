@@ -14,11 +14,12 @@ import * as Style from "../victory-util/style";
 import * as TextSize from "../victory-util/textsize";
 import * as UserProps from "../victory-util/user-props";
 import {
+  CallbackArgs,
   NumberOrCallback,
   StringOrCallback,
   StringOrNumberOrCallback,
-  ValueOrCallback,
 } from "../types/callbacks";
+import { ValueOrAccessor } from "../types/prop-types";
 import {
   PaddingProps,
   VerticalAnchorType,
@@ -56,11 +57,11 @@ export interface VictoryLabelProps {
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textComponent?: React.ReactElement;
-  textAnchor?: ValueOrCallback<TextAnchorType>;
+  textAnchor?: ValueOrAccessor<TextAnchorType, CallbackArgs>;
   title?: string;
-  transform?: ValueOrCallback<string | object>;
+  transform?: ValueOrAccessor<string | object, CallbackArgs>;
   tspanComponent?: React.ReactElement;
-  verticalAnchor?: ValueOrCallback<VerticalAnchorType>;
+  verticalAnchor?: ValueOrAccessor<VerticalAnchorType, CallbackArgs>;
   x?: number;
   y?: number;
   dx?: StringOrNumberOrCallback;
