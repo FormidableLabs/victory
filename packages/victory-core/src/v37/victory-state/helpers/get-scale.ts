@@ -4,9 +4,12 @@ import {
   scaleLog,
   scaleSqrt,
 } from "victory-vendor/d3-scale";
-import { AxisType, D3ScaleFn, ScalePropType } from "../../types/prop-types";
-import * as Collection from "../../victory-util/collection";
-import { getValueForAxis, isFunction } from "../../victory-util/type-helpers";
+import { AxisType, D3ScaleFn, ScalePropType } from "../../../types/prop-types";
+import * as Collection from "../../../victory-util/collection";
+import {
+  getValueForAxis,
+  isFunction,
+} from "../../../victory-util/type-helpers";
 import { VictoryProviderProps } from "../types";
 import { getAxisData } from "./get-axis-data";
 

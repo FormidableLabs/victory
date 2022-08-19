@@ -1,15 +1,14 @@
 /* eslint-disable react/no-multi-comp */
 import * as React from "react";
+import { Datum, NumberOrCallback, withContainer } from "victory-core";
 import {
-  Datum,
-  NumberOrCallback,
   useData,
   useDomain,
   useScale,
   useVictoryProviderSync,
   VictoryCalculatedStateProps,
-  withContainer,
-} from "victory-core";
+} from "victory-core/es/v37";
+
 import Bar from "../bar";
 import { BarProps } from "..";
 import { getBarPosition } from "../helper-methods";

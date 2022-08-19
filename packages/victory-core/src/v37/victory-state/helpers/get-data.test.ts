@@ -1,5 +1,5 @@
 import { range } from "lodash";
-import { getData } from "victory-core/lib/victory-state/helpers/get-data";
+import { getData } from "./get-data";
 
 describe("getData", () => {
   it("returns an empty array if no data is passed in", () => {

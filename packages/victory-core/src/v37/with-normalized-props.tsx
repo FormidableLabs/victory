@@ -1,7 +1,7 @@
-import { VictoryCommonProps } from "./common-props";
+import { VictoryCommonProps } from "../victory-util/common-props";
 import React from "react";
-import { useVictoryContext, VictoryProviderProps } from "../victory-state";
-import { withVictoryProvider } from "../victory-state/victory-provider-maybe";
+import { useVictoryContext, VictoryProviderProps } from "./victory-state";
+import { withVictoryProvider } from "./victory-state/victory-provider-maybe";
 
 export function withNormalizedProps<
   TProps extends React.PropsWithChildren<VictoryCommonProps>,

@@ -1,6 +1,5 @@
 export * from "./add-events";
 export * as Axis from "./axis";
-export * from "./clone";
 export * as Collection from "./collection";
 export * from "./common-props";
 export * as Data from "./data";
@@ -26,5 +25,3 @@ export { default as TimerContext } from "./timer-context";
 export * as Transitions from "./transitions";
 export * as UserProps from "./user-props";
 export * as Wrapper from "./wrapper";
-export * from "./with-container";
-export * from "./with-normalized-props";
