@@ -1,5 +1,5 @@
-import { VictoryCommonProps } from "../victory-util/common-props";
-import { withNormalizedProps } from "./with-normalized-props";
+import { VictoryCommonProps } from "victory-core";
+import { withNormalizedProps } from "victory-core/lib/v37/with-normalized-props";
 import PropTypes from "prop-types";
 import React from "react";
 

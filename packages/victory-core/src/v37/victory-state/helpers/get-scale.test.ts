@@ -1,5 +1,5 @@
 import * as d3Scale from "victory-vendor/d3-scale";
-import { getScale } from "./get-scale";
+import { getScale } from "victory-core/lib/v37/victory-state/helpers/get-scale";
 
 describe("getScale", () => {
   it("gets the d3 scale from props", () => {

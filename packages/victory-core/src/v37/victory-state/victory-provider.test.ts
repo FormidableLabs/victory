@@ -1,4 +1,4 @@
-import { useVictoryContext, VictoryProvider } from "victory-core/es/v37";
+import { useVictoryContext, VictoryProvider } from "victory-core/lib/v37";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 describe("Victory Provider", () => {
@@ -23,7 +23,7 @@ describe("Victory Provider", () => {
     });
 
     act(() => {
-      result.current.setChildProps("chart-1", {
+      result.current.updateChildProps(Symbol("chart-1"), {
         data: [
           { x: 1, y: 1 },
           { x: 2, y: 2 },
@@ -31,7 +31,7 @@ describe("Victory Provider", () => {
       });
     });
     act(() => {
-      result.current.setChildProps("chart-2", {
+      result.current.updateChildProps(Symbol("chart-2"), {
         data: [
           { x: 3, y: 3 },
           { x: 4, y: 4 },

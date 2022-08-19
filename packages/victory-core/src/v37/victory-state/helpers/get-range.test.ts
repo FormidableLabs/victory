@@ -1,4 +1,4 @@
-import { getRange } from "./get-range";
+import { getRange } from "victory-core/lib/v37/victory-state/helpers/get-range";
 
 describe("getRange", () => {
   it("returns a range from props", () => {
