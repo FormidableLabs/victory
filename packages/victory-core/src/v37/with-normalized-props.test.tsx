@@ -36,11 +36,18 @@ it("withNormalizedProps", () => {
   <MyComp foo="FOO" baz="BAZ" />;
 
   // All should error:
+  // @ts-expect-error Invalid props
   <MyComp />;
+  // @ts-expect-error Invalid props
   <MyComp foo="INVALID" />;
+  // @ts-expect-error Invalid props
   <MyComp foo={5} />;
+  // @ts-expect-error Invalid props
   <MyComp foo="FOO" bar="INVALID" />;
+  // @ts-expect-error Invalid props
   <MyComp foo="FOO" bar={5} />;
+  // @ts-expect-error Invalid props
   <MyComp foo="FOO" baz="INVALID" />;
+  // @ts-expect-error Invalid props
   <MyComp foo="FOO" baz={5} />;
 });

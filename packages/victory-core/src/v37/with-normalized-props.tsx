@@ -1,7 +1,12 @@
 import { VictoryCommonProps } from "../victory-util/common-props";
 import React from "react";
-import { useVictoryContext, VictoryProviderProps } from "./victory-state";
-import { withVictoryProvider } from "./victory-state/victory-provider-maybe";
+import {
+  useVictoryContext,
+  VictoryProviderProps,
+  withVictoryProvider,
+} from "./victory-state";
+
+type FC<TProps> = (props: TProps) => JSX.Element;
 
 export function withNormalizedProps<
   TProps extends React.PropsWithChildren<VictoryCommonProps>,
@@ -9,7 +14,7 @@ export function withNormalizedProps<
 >(
   config: {
     displayName: string;
-    propTypes: React.WeakValidationMap<Omit<TProps, keyof VictoryCommonProps>>;
+    propTypes?: React.WeakValidationMap<Omit<TProps, keyof VictoryCommonProps>>;
     defaultProps: Pick<TProps, TDefaultPropKeys>;
     /** @deprecated */
     initialProviderProps?: Partial<VictoryProviderProps>;
@@ -17,7 +22,10 @@ export function withNormalizedProps<
   WrappedComponent: React.FC<TProps>,
 ) {
   WrappedComponent.displayName = config.displayName;
-  const WithNormalizedProps = (props: TProps) => {
+  const WithNormalizedProps: FC<TProps> = withVictoryProvider<
+    FC<TProps>,
+    TProps
+  >((props: TProps) => {
     const normalizedProps = useVictoryContext((v) => v);
 
     return (
@@ -25,9 +33,9 @@ export function withNormalizedProps<
         {props.children}
       </WrappedComponent>
     );
-  };
+  });
 
-  return Object.assign(withVictoryProvider(WithNormalizedProps), {
+  return Object.assign(WithNormalizedProps, {
     displayName: `WithNormalizedProps(${config.displayName}`,
     defaultProps: config.defaultProps,
     propTypes: config.propTypes,

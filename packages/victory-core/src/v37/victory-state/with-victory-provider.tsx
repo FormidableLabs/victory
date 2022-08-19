@@ -2,16 +2,18 @@ import * as React from "react";
 import { useVictoryContextMaybe, VictoryProvider } from "./victory-provider";
 import { VictoryCommonProps } from "../../victory-util/common-props";
 import { Clone } from "../clone";
-
-type ContainerProp = Required<Pick<VictoryCommonProps, "containerComponent">>;
+import { VictoryProviderProps } from "./types";
 
 /* eslint-disable react/prop-types */
 
+/**
+ * Ensures the component is wrapped by a VictoryProvider, if not already.
+ */
 export function withVictoryProvider<
   TComp extends React.FC<TProps>,
-  TProps extends React.PropsWithChildren<ContainerProp>,
+  TProps extends React.PropsWithChildren<VictoryCommonProps>,
 >(Comp: TComp): TComp {
-  const WithProvider = React.memo((props: TProps) => {
+  const WithVictoryProvider = React.memo((props: TProps) => {
     const updateChildProps = useVictoryContextMaybe(
       (value) => value?.updateChildProps,
     );
@@ -20,8 +22,8 @@ export function withVictoryProvider<
     React.useEffect(() => {
       if (!hasParentProvider) return;
 
-      const id = Symbol("WithProvider");
-      updateChildProps(id, props);
+      const id = Symbol("WithVictoryProvider");
+      updateChildProps(id, props as VictoryProviderProps);
       // eslint-disable-next-line consistent-return
       return () => updateChildProps(id, null);
     });
@@ -41,8 +43,11 @@ export function withVictoryProvider<
     }
     return result;
   });
-  WithProvider.displayName = `WithProvider(${Comp.displayName || Comp.name})`;
+  const name = Comp.displayName || Comp.name;
+  WithVictoryProvider.displayName = name
+    ? `WithVictoryProvider(${name})`
+    : "WithVictoryProvider";
 
-  // @ts-expect-error "WithProvider does not overlap with TComp"
-  return WithProvider as TComp;
+  // @ts-expect-error "WithVictoryProvider does not overlap with TComp"
+  return WithVictoryProvider as TComp;
 }
