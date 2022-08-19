@@ -138,13 +138,13 @@ export function useDomain() {
 }
 
 // This function keeps props in sync betwen the VictoryProvider and child components
-export function useVictoryProviderSync(
-  id: symbol,
-  props: VictoryCalculatedStateProps,
-) {
+export function useVictoryProviderSync(props: VictoryCalculatedStateProps) {
   const updateChildProps = useVictoryContext((value) => value.updateChildProps);
+  const [myId] = React.useState(() =>
+    Symbol("UniqueIdFor(VictoryProviderChild)"),
+  );
 
   React.useEffect(() => {
-    updateChildProps(id, props);
-  }, [updateChildProps, id, props]);
+    updateChildProps(myId, props);
+  }, [updateChildProps, props]);
 }

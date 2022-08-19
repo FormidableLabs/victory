@@ -1,12 +1,13 @@
 /* eslint-disable react/no-multi-comp */
 import * as React from "react";
-import { Datum, NumberOrCallback, withContainer } from "victory-core";
+import { Datum, NumberOrCallback } from "victory-core";
 import {
   useData,
   useDomain,
   useScale,
   useVictoryProviderSync,
   VictoryCalculatedStateProps,
+  withContainer,
 } from "victory-core/es/v37";
 
 import Bar from "../bar";
@@ -56,7 +57,7 @@ function VictoryBar({
   // component props. However, I am anticipating confusion about which props
   // we will need to pass back up to the provider vs. the props that are only
   // used in this component.
-  useVictoryProviderSync("bar", {
+  useVictoryProviderSync({
     data,
     includeZero,
     sortOrder,
