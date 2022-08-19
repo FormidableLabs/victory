@@ -1,5 +1,21 @@
 # victory-create-container
 
+## 36.6.4
+
+### Patch Changes
+
+- Added explicit `any` type defs (fixes [#2358](https://github.com/FormidableLabs/victory/issues/2358)) ([`57ed0fe30`](https://github.com/FormidableLabs/victory/commit/57ed0fe304dbc8753da1126a02d44de8004e96aa))
+
+* Allow data accessors to accept any data types (fixes [#2360](https://github.com/FormidableLabs/victory/issues/2360)) ([#2436](https://github.com/FormidableLabs/victory/pull/2436))
+
+* Updated dependencies [[`57ed0fe30`](https://github.com/FormidableLabs/victory/commit/57ed0fe304dbc8753da1126a02d44de8004e96aa), [`9a6319cff`](https://github.com/FormidableLabs/victory/commit/9a6319cffbc480711b8c286dcae00575081170f0)]:
+  - victory-selection-container@36.6.4
+  - victory-voronoi-container@36.6.4
+  - victory-zoom-container@36.6.4
+  - victory-core@36.6.4
+  - victory-brush-container@36.6.4
+  - victory-cursor-container@36.6.4
+
 ## 36.6.3
 
 ### Patch Changes

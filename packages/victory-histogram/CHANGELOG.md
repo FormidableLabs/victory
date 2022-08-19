@@ -1,5 +1,16 @@
 # victory-histogram
 
+## 36.6.4
+
+### Patch Changes
+
+- Allow data accessors to accept any data types (fixes [#2360](https://github.com/FormidableLabs/victory/issues/2360)) ([#2436](https://github.com/FormidableLabs/victory/pull/2436))
+
+- Updated dependencies [[`9a6319cff`](https://github.com/FormidableLabs/victory/commit/9a6319cffbc480711b8c286dcae00575081170f0)]:
+  - victory-core@36.6.4
+  - victory-bar@36.6.4
+  - victory-vendor@36.6.4
+
 ## 36.6.3
 
 ### Patch Changes
