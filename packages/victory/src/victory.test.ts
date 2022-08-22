@@ -369,7 +369,6 @@ describe("victory", () => {
         "VictoryPie",
         "VictoryPolarAxis",
         "VictoryPortal",
-        "VictoryProvider",
         "VictoryScatter",
         "VictorySelectionContainer",
         "VictorySharedEvents",
@@ -403,13 +402,7 @@ describe("victory", () => {
         "makeCreateContainerFunction",
         "selectionContainerMixin",
         "useCanvasContext",
-        "useData",
-        "useDomain",
-        "useScale",
-        "useVictoryContext",
-        "useVictoryProviderSync",
         "voronoiContainerMixin",
-        "withContainer",
         "zoomContainerMixin",
       ]
     `);

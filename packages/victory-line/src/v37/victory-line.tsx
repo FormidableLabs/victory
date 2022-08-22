@@ -3,9 +3,6 @@ import React from "react";
 import { Curve, CurveProps } from "../curve";
 import {
   InterpolationPropType,
-  useData,
-  useDomain,
-  useScale,
   VictoryClipContainer,
   VictoryClipContainerProps,
   VictoryCommonProps,
@@ -16,9 +13,8 @@ import {
   VictoryLabelProps,
   VictoryStyleInterface,
   VictoryTheme,
-  withContainer,
 } from "victory-core";
-import { Clone } from "./clone";
+import { withNormalizedProps, Clone } from "victory-core/es/v37";
 
 export interface VictoryLineProps
   extends VictoryCommonProps,
@@ -31,76 +27,58 @@ export interface VictoryLineProps
   animate?: boolean;
 }
 
-const propTypes: PropTypes.ValidationMap<VictoryLineProps> = {
-  interpolation: PropTypes.oneOfType([
-    PropTypes.oneOf([
-      "basis",
-      "bundle",
-      "cardinal",
-      "catmullRom",
-      "linear",
-      "monotoneX",
-      "monotoneY",
-      "natural",
-      "step",
-      "stepAfter",
-      "stepBefore",
-    ] as const),
-    PropTypes.func,
-  ]).isRequired,
-};
-
-const defaultProps: Required<
-  Pick<
-    VictoryLineProps,
-    | "containerComponent"
-    | "data"
-    | "dataComponent"
-    | "interpolation"
-    | "groupComponent"
-    | "labelComponent"
-    | "samples"
-    | "sortKey"
-    | "sortOrder"
-    | "standalone"
-    | "theme"
-  >
-> = {
-  data: [
-    { x: 1, y: 1 },
-    { x: 2, y: 2 },
-    { x: 3, y: 3 },
-    { x: 4, y: 4 },
-  ],
-  containerComponent: <VictoryContainer />,
-  dataComponent: (<Curve />) as React.ReactElement<CurveProps>,
-  interpolation: "linear",
-  labelComponent: (
-    <VictoryLabel renderInPortal />
-  ) as React.ReactElement<VictoryLabelProps>,
-  groupComponent: (
-    <VictoryClipContainer />
-  ) as React.ReactElement<VictoryClipContainerProps>,
-  samples: 50,
-  sortKey: "x",
-  sortOrder: "ascending",
-  standalone: true,
-  theme: VictoryTheme.grayscale,
-};
-
-export const VictoryLineBase = (props: VictoryLineProps) => {
-  const data = useData();
-  const scale = useScale();
-  const domain = useDomain();
-  const dataProps = { ...props, data, scale, domain };
-
-  return (
-    <Clone element={props.groupComponent}>
-      <Clone element={props.dataComponent} {...dataProps} />
-    </Clone>
-  );
-};
-VictoryLineBase.propTypes = propTypes;
-VictoryLineBase.defaultProps = defaultProps;
-
-export const VictoryLine = withContainer(VictoryLineBase);
+export const VictoryLine = withNormalizedProps(
+  {
+    displayName: "VictoryLine",
+    propTypes: {
+      interpolation: PropTypes.oneOfType([
+        PropTypes.oneOf([
+          "basis",
+          "bundle",
+          "cardinal",
+          "catmullRom",
+          "linear",
+          "monotoneX",
+          "monotoneY",
+          "natural",
+          "step",
+          "stepAfter",
+          "stepBefore",
+        ] as const),
+        PropTypes.func,
+      ]),
+    },
+    defaultProps: {
+      width: 450,
+      height: 300,
+      padding: 50,
+      data: [
+        { x: 1, y: 1 },
+        { x: 2, y: 2 },
+        { x: 3, y: 3 },
+        { x: 4, y: 4 },
+      ],
+      containerComponent: <VictoryContainer />,
+      dataComponent: (<Curve />) as React.ReactElement<CurveProps>,
+      interpolation: "linear",
+      labelComponent: (
+        <VictoryLabel renderInPortal />
+      ) as React.ReactElement<VictoryLabelProps>,
+      groupComponent: (
+        <VictoryClipContainer />
+      ) as React.ReactElement<VictoryClipContainerProps>,
+      samples: 50,
+      sortKey: "x",
+      sortOrder: "ascending",
+      standalone: true,
+      theme: VictoryTheme.grayscale,
+    },
+  },
+  (props: VictoryLineProps) => {
+    return (
+      <Clone element={props.groupComponent}>
+        <Clone element={props.dataComponent} {...props} />
+      </Clone>
+    );
+  },
+);

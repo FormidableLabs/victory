@@ -7,11 +7,13 @@ import {
   VictoryCommonProps,
   VictoryStyleInterface,
   VictoryStyleObject,
+} from "victory-core";
+import {
   withContainer,
   useDomain,
   useScale,
   useData,
-} from "victory-core";
+} from "victory-core/es/v37";
 import { AxesType } from "..";
 import { VictoryAxis, VictoryAxisProps } from "victory-axis";
 

@@ -25,4 +25,3 @@ export { default as TimerContext } from "./timer-context";
 export * as Transitions from "./transitions";
 export * as UserProps from "./user-props";
 export * as Wrapper from "./wrapper";
-export * from "./with-container";
