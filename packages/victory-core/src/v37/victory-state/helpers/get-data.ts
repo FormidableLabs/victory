@@ -1,7 +1,7 @@
-import { get, isNil, orderBy } from "lodash";
 import * as React from "react";
-import { Datum, DatumValue } from "../../types/prop-types";
-import { isKeyValueObject } from "../../victory-util/type-helpers";
+import { get, isNil, orderBy } from "lodash";
+import { Datum, DatumValue } from "../../../types/prop-types";
+import { isKeyValueObject } from "../../../victory-util/type-helpers";
 import { VictoryProviderProps } from "../types";
 
 type DataProps = Pick<

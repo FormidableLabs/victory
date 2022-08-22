@@ -1,6 +1,6 @@
-import { AxisType, Padding, RangeTuple } from "../../types/prop-types";
-import { getPadding } from "../../victory-util/helpers";
-import { getValueForAxis, isTuple } from "../../victory-util/type-helpers";
+import { AxisType, Padding, RangeTuple } from "../../../types/prop-types";
+import { getPadding } from "../../../victory-util/helpers";
+import { getValueForAxis, isTuple } from "../../../victory-util/type-helpers";
 import { VictoryProviderProps } from "../types";
 
 type RangeProps = Pick<

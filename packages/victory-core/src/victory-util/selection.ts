@@ -1,5 +1,7 @@
 import React from "react";
-import { Collection, VictoryCommonProps } from "./index";
+import * as Collection from "./collection";
+import { VictoryCommonProps } from "./common-props";
+
 import type { DomainPropType, ScaleXYPropType } from "../types/prop-types";
 
 // Private Functions

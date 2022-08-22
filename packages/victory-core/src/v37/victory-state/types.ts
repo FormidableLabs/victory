@@ -5,8 +5,8 @@ import {
   RangeTuple,
   ScalePropType,
   ValueOrAxes,
-} from "../types/prop-types";
-import { PaddingProps } from "../victory-theme/types";
+} from "../../types/prop-types";
+import { PaddingProps } from "../../victory-theme/types";
 
 // These are all the props that are used to calculate data, domain, range, and scale
 export interface VictoryCalculatedStateProps {

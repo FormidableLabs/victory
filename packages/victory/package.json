@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "36.6.0",
+  "version": "36.6.4",
   "description": "Data viz for React",
   "keywords": [
     "data visualization",
@@ -21,33 +21,33 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "victory-area": "^36.6.0",
-    "victory-axis": "^36.6.0",
-    "victory-bar": "^36.6.0",
-    "victory-box-plot": "^36.6.0",
-    "victory-brush-container": "^36.6.0",
-    "victory-brush-line": "^36.6.0",
-    "victory-candlestick": "^36.6.0",
-    "victory-canvas": "^36.6.0",
-    "victory-chart": "^36.6.0",
-    "victory-core": "^36.6.0",
-    "victory-create-container": "^36.6.0",
-    "victory-cursor-container": "^36.6.0",
-    "victory-errorbar": "^36.6.0",
-    "victory-group": "^36.6.0",
-    "victory-histogram": "^36.6.0",
-    "victory-legend": "^36.6.0",
-    "victory-line": "^36.6.0",
-    "victory-pie": "^36.6.0",
-    "victory-polar-axis": "^36.6.0",
-    "victory-scatter": "^36.6.0",
-    "victory-selection-container": "^36.6.0",
-    "victory-shared-events": "^36.6.0",
-    "victory-stack": "^36.6.0",
-    "victory-tooltip": "^36.6.0",
-    "victory-voronoi": "^36.6.0",
-    "victory-voronoi-container": "^36.6.0",
-    "victory-zoom-container": "^36.6.0"
+    "victory-area": "^36.6.4",
+    "victory-axis": "^36.6.4",
+    "victory-bar": "^36.6.4",
+    "victory-box-plot": "^36.6.4",
+    "victory-brush-container": "^36.6.4",
+    "victory-brush-line": "^36.6.4",
+    "victory-candlestick": "^36.6.4",
+    "victory-canvas": "^36.6.4",
+    "victory-chart": "^36.6.4",
+    "victory-core": "^36.6.4",
+    "victory-create-container": "^36.6.4",
+    "victory-cursor-container": "^36.6.4",
+    "victory-errorbar": "^36.6.4",
+    "victory-group": "^36.6.4",
+    "victory-histogram": "^36.6.4",
+    "victory-legend": "^36.6.4",
+    "victory-line": "^36.6.4",
+    "victory-pie": "^36.6.4",
+    "victory-polar-axis": "^36.6.4",
+    "victory-scatter": "^36.6.4",
+    "victory-selection-container": "^36.6.4",
+    "victory-shared-events": "^36.6.4",
+    "victory-stack": "^36.6.4",
+    "victory-tooltip": "^36.6.4",
+    "victory-voronoi": "^36.6.4",
+    "victory-voronoi-container": "^36.6.4",
+    "victory-zoom-container": "^36.6.4"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
@@ -95,7 +95,9 @@
       "files": [
         "src/**",
         "!src/**/*.test.*",
-        "../../.babelrc.build.js"
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
       ],
       "output": [
         "es/**/*.js",
@@ -139,7 +141,9 @@
       "files": [
         "src/**",
         "!src/**/*.test.*",
-        "../../.babelrc.build.js"
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
       ],
       "output": [
         "lib/**/*.js",
@@ -190,6 +194,8 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js",
         "../../config/webpack.config.js",
         "../../config/webpack.config.dev.js"
       ],
@@ -236,6 +242,8 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js",
         "../../config/webpack.config.js"
       ],
       "output": [

@@ -1,7 +1,7 @@
 import React from "react";
-import { VictoryProvider, VictoryProviderProps } from "../victory-state";
+import { VictoryProvider, VictoryProviderProps } from "./victory-state";
 import { VictoryContainer } from "../victory-container/victory-container";
-import { VictoryCommonProps } from "./common-props";
+import { VictoryCommonProps } from "../victory-util/common-props";
 
 const defaultProviderProps = {
   width: 450,
@@ -11,9 +11,9 @@ const defaultProviderProps = {
 };
 
 export function withContainer<Props extends VictoryCommonProps>(
-  WrappedComponent: (props: Props) => React.ReactElement,
+  WrappedComponent: React.FC<Props>,
   initialProviderProps: Partial<VictoryProviderProps> = {},
-) {
+): React.FC<Props> {
   return (props: Props) => {
     const providerProps = {
       ...defaultProviderProps,

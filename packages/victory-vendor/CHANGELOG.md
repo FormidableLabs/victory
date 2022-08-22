@@ -1,5 +1,21 @@
 # victory-vendor
 
+## 36.6.4
+
+### Patch Changes
+
+- Allow data accessors to accept any data types (fixes [#2360](https://github.com/FormidableLabs/victory/issues/2360)) ([#2436](https://github.com/FormidableLabs/victory/pull/2436))
+
+## 36.6.3
+
+### Patch Changes
+
+- Do not generate \*.js.map sourcemaps (fixes [#2346](https://github.com/FormidableLabs/victory/issues/2346)) ([#2432](https://github.com/FormidableLabs/victory/pull/2432))
+
+## 36.6.2
+
+## 36.6.1
+
 ## 36.6.0
 
 ### Patch Changes

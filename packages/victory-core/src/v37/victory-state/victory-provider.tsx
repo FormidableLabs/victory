@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createContext, useContext } from "react";
-import { D3ScaleFn, DomainTuple, ForAxes } from "../types/prop-types";
+import { D3ScaleFn, DomainTuple, ForAxes } from "../../types/prop-types";
 import { FormattedDatum, getData } from "./helpers/get-data";
 import { getDomain } from "./helpers/get-domain";
 import { getRange } from "./helpers/get-range";
@@ -14,25 +14,40 @@ export interface ContextType {
   data: FormattedDatum[];
   scale: ScaleType;
   domain: DomainType;
-  setChildProps: (id: string, props: VictoryProviderProps) => void;
+  updateChildProps: (id: symbol, props: VictoryProviderProps | null) => void;
 }
 
 const VictoryContext = createContext<ContextType | null>(null);
 
-export function VictoryProvider({
-  children,
-  ...initialProps
-}: VictoryProviderProps) {
-  // We need to store the props in state so they can be overwritten by child components
-  const [props, setProps] = React.useState(initialProps);
+type CollectedProps = { [id: symbol]: VictoryCalculatedStateProps };
 
-  const setChildProps = React.useCallback(
-    (id: string, newProps: VictoryCalculatedStateProps) => {
-      setProps((prevProps) => {
-        return { ...prevProps, ...newProps };
+function useNormalizedProps(): ContextType {
+  const [collectedProps, setCollectedProps] = React.useState<CollectedProps>(
+    {},
+  );
+
+  const updateChildProps = React.useCallback(
+    (id: symbol, newProps: VictoryCalculatedStateProps | null) => {
+      setCollectedProps((prev) => {
+        const result = { ...prev };
+        if (newProps === null) {
+          delete result[id];
+        } else {
+          result[id] = newProps;
+        }
+        return result;
       });
     },
     [],
+  );
+
+  // TEMP: combine all props into a single result:
+  // TODO: instead, we should intelligently aggregate all these props
+  const props = Object.values(
+    collectedProps,
+  ).reduce<VictoryCalculatedStateProps>(
+    (result, childProps) => Object.assign(result, childProps),
+    {},
   );
 
   const data = React.useMemo(() => {
@@ -69,16 +84,37 @@ export function VictoryProvider({
     };
   }, [props, domain, range]);
 
-  const value = {
-    scale,
-    data,
-    domain,
-    setChildProps,
-  };
+  const normalizedProps = React.useMemo(
+    () => ({
+      scale,
+      data,
+      domain,
+      updateChildProps,
+    }),
+    [scale, data, domain, updateChildProps],
+  );
+
+  return normalizedProps;
+}
+
+export function VictoryProvider({
+  children,
+  ...providerProps
+}: VictoryProviderProps) {
+  const value = useNormalizedProps();
+
+  // TODO: sync the providerProps
 
   return (
     <VictoryContext.Provider value={value}>{children}</VictoryContext.Provider>
   );
+}
+
+export function useVictoryContextMaybe<T>(
+  selector: (value: ContextType | null) => T,
+): T {
+  const context = useContext(VictoryContext);
+  return selector(context);
 }
 
 export function useVictoryContext<T>(selector: (value: ContextType) => T): T {
@@ -102,15 +138,13 @@ export function useDomain() {
 }
 
 // This function keeps props in sync betwen the VictoryProvider and child components
-export function useVictoryProviderSync(
-  id: string,
-  props: VictoryCalculatedStateProps,
-) {
-  const setChildProps = useVictoryContext((value) => value.setChildProps);
+export function useVictoryProviderSync(props: VictoryCalculatedStateProps) {
+  const updateChildProps = useVictoryContext((value) => value.updateChildProps);
+  const [myId] = React.useState(() =>
+    Symbol("UniqueIdFor(VictoryProviderChild)"),
+  );
 
   React.useEffect(() => {
-    setChildProps(id, props);
-  }, []);
-
-  return props;
+    updateChildProps(myId, props);
+  }, [updateChildProps, props]);
 }

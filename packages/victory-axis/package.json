@@ -1,6 +1,6 @@
 {
   "name": "victory-axis",
-  "version": "36.6.0",
+  "version": "36.6.4",
   "description": "Axis Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,7 +22,7 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
-    "victory-core": "^36.6.0"
+    "victory-core": "^36.6.4"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
@@ -71,7 +71,9 @@
       "files": [
         "src/**",
         "!src/**/*.test.*",
-        "../../.babelrc.build.js"
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
       ],
       "output": [
         "es/**/*.js",
@@ -89,7 +91,9 @@
       "files": [
         "src/**",
         "!src/**/*.test.*",
-        "../../.babelrc.build.js"
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
       ],
       "output": [
         "lib/**/*.js",
@@ -114,6 +118,8 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js",
         "../../config/webpack.config.js",
         "../../config/webpack.config.dev.js"
       ],
@@ -134,6 +140,8 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js",
         "../../config/webpack.config.js"
       ],
       "output": [

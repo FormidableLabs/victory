@@ -1,5 +1,43 @@
 # victory-voronoi-container
 
+## 36.6.4
+
+### Patch Changes
+
+- Added explicit `any` type defs (fixes [#2358](https://github.com/FormidableLabs/victory/issues/2358)) ([`57ed0fe30`](https://github.com/FormidableLabs/victory/commit/57ed0fe304dbc8753da1126a02d44de8004e96aa))
+
+* Allow data accessors to accept any data types (fixes [#2360](https://github.com/FormidableLabs/victory/issues/2360)) ([#2436](https://github.com/FormidableLabs/victory/pull/2436))
+
+* Updated dependencies [[`9a6319cff`](https://github.com/FormidableLabs/victory/commit/9a6319cffbc480711b8c286dcae00575081170f0)]:
+  - victory-core@36.6.4
+  - victory-tooltip@36.6.4
+
+## 36.6.3
+
+### Patch Changes
+
+- Do not generate \*.js.map sourcemaps (fixes [#2346](https://github.com/FormidableLabs/victory/issues/2346)) ([#2432](https://github.com/FormidableLabs/victory/pull/2432))
+
+- Updated dependencies [[`4bfc65df5`](https://github.com/FormidableLabs/victory/commit/4bfc65df5a10aa6a10084882ed5c6d0d894dec6f)]:
+  - victory-core@36.6.3
+  - victory-tooltip@36.6.3
+
+## 36.6.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-core@36.6.2
+  - victory-tooltip@36.6.2
+
+## 36.6.1
+
+### Patch Changes
+
+- Updated dependencies [[`d1f281104`](https://github.com/FormidableLabs/victory/commit/d1f281104c7598c43e220dafd57546ab03daeeb5)]:
+  - victory-core@36.6.1
+  - victory-tooltip@36.6.1
+
 ## 36.6.0
 
 ### Patch Changes

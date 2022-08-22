@@ -1,6 +1,6 @@
 {
   "name": "victory-group",
-  "version": "36.6.0",
+  "version": "36.6.4",
   "description": "Group Layout Component for Victory",
   "keywords": [
     "data visualization",
@@ -23,8 +23,8 @@
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
-    "victory-core": "^36.6.0",
-    "victory-shared-events": "^36.6.0"
+    "victory-core": "^36.6.4",
+    "victory-shared-events": "^36.6.4"
   },
   "devDependencies": {
     "victory-bar": "*",
@@ -73,7 +73,9 @@
       "files": [
         "src/**",
         "!src/**/*.test.*",
-        "../../.babelrc.build.js"
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
       ],
       "output": [
         "es/**/*.js",
@@ -92,7 +94,9 @@
       "files": [
         "src/**",
         "!src/**/*.test.*",
-        "../../.babelrc.build.js"
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
       ],
       "output": [
         "lib/**/*.js",
@@ -118,6 +122,8 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js",
         "../../config/webpack.config.js",
         "../../config/webpack.config.dev.js"
       ],
@@ -139,6 +145,8 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js",
         "../../config/webpack.config.js"
       ],
       "output": [

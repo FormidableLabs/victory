@@ -3,17 +3,19 @@ import * as React from "react";
 import {
   Datum,
   NumberOrCallback,
-  useData,
-  useDomain,
-  useScale,
   VictoryCommonProps,
   VictoryContainer,
   VictoryDatableProps,
+} from "victory-core";
+import {
+  useData,
+  useDomain,
+  useScale,
   VictoryProvider,
   VictoryProviderProps,
-} from "victory-core";
-import Bar from "./bar";
-import { getBarPosition } from "./helper-methods";
+} from "victory-core/es/v37";
+import Bar from "../bar";
+import { getBarPosition } from "../helper-methods";
 
 // This is a demo component that uses VictoryProvider to access calculated props and state.
 // This component does not include events, animations, or styling.

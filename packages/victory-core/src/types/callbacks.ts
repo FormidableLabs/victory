@@ -51,5 +51,3 @@ export type PaddingOrCallback = number | BlockProps | VictoryPaddingCallback;
 export type OrientationOrCallback =
   | OrientationTypes
   | VictoryOrientationCallback;
-
-export type ValueOrCallback<TValue> = TValue | ((args: CallbackArgs) => TValue);

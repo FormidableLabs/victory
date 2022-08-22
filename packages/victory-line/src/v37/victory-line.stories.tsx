@@ -1,25 +1,27 @@
 /* eslint-disable react/no-multi-comp */
+/* eslint-disable no-magic-numbers */
 import * as React from "react";
-import VictoryBar from "./victory-bar-v2";
+import { VictoryLine } from "./victory-line";
 import VictoryChart from "victory-chart/es/v37/victory-chart";
+import { getData } from "../../../../stories/data";
 
 export default {
-  title: "v37/VictoryBar",
-  component: VictoryBar,
+  title: "v37/VictoryLine",
+  component: VictoryLine,
 };
 
 export const Demo = (props) => {
-  return <VictoryBar {...props} />;
+  return <VictoryLine {...props} data={getData(8)} />;
 };
 
 Demo.args = {
-  barRatio: 0.5,
+  lineRatio: 0.5,
 };
 
 export const WithChart = (props) => {
   return (
     <VictoryChart {...props}>
-      <VictoryBar />
+      <VictoryLine />
     </VictoryChart>
   );
 };
