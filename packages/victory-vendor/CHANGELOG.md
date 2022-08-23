@@ -1,5 +1,11 @@
 # victory-vendor
 
+## 36.6.5
+
+### Patch Changes
+
+- Export types directly from d3-\* (fixes [#2439](https://github.com/FormidableLabs/victory/issues/2439)) ([#2440](https://github.com/FormidableLabs/victory/pull/2440))
+
 ## 36.6.4
 
 ### Patch Changes

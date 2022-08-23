@@ -1,5 +1,14 @@
 # victory-core
 
+## 36.6.5
+
+### Patch Changes
+
+- Manually included types for Immutable (fixes [#2439](https://github.com/FormidableLabs/victory/issues/2439)) ([#2440](https://github.com/FormidableLabs/victory/pull/2440))
+
+- Updated dependencies [[`6f4972123`](https://github.com/FormidableLabs/victory/commit/6f49721238332bb5ee879571a45b34a04e44d416)]:
+  - victory-vendor@36.6.5
+
 ## 36.6.4
 
 ### Patch Changes
