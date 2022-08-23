@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { VicDataAggregator, useAggregateData } from "./vic-data-aggregator";
 import { VicLine, VicLineProps } from "./vic-line";
 import { VicGroup } from "./vic-group";
-import { DataAggregator } from "./utils/lazy-data-aggregator";
+import { DataSelector } from "./utils/data-selector";
 
 export default {
   title: "v37/VicDataAggregator",
@@ -34,14 +34,13 @@ export const Example = () => {
   );
 };
 
-function getHasPolar(aggregator: DataAggregator<any>) {
+function selectHasPolar(aggregator: DataSelector) {
   return aggregator.propsAs<{ polar: boolean }>().some((p) => p.polar);
 }
-getHasPolar.pure = true as const;
 
 function DebugDisplay() {
   const aggData = useAggregateData();
-  const hasPolar = aggData.get(getHasPolar);
+  const hasPolar = aggData.select(selectHasPolar);
 
   return <pre>{JSON.stringify(aggData.dump(), null, 2)}</pre>;
 }

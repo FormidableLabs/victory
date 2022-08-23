@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { mapChildren, useShallowMemo } from "./utils/helpers";
-import { LazyDataAggregator } from "./utils/lazy-data-aggregator";
+import { DataSelector } from "./utils/data-selector";
 
-const DataAggregatorContext = React.createContext<ReturnType<
-  typeof useDataAggregator
-> | null>(null);
+const DataAggregatorContext = React.createContext<DataSelector | null>(null);
 
 export const VicDataAggregator = ({ children }: React.PropsWithChildren) => {
   const value = useDataAggregator(children);
@@ -22,8 +20,10 @@ export const useAggregateData = () => {
 };
 
 function useDataAggregator(children: React.ReactNode) {
-  const allProps = mapChildren(children, (child) => {
-    return child.props;
-  });
-  return useShallowMemo(() => new LazyDataAggregator(allProps), allProps);
+  return useMemo(() => {
+    const allProps = mapChildren(children, (child) => {
+      return child.props;
+    });
+    return new DataSelector(allProps);
+  }, [children]);
 }
