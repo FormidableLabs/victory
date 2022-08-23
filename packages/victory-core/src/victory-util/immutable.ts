@@ -1,4 +1,4 @@
-import type { Iterable, Record, List, Map } from "immutable";
+import type { Iterable, Record, List, Map } from "./immutable-types";
 
 export const IMMUTABLE_ITERABLE = "@@__IMMUTABLE_ITERABLE__@@";
 export const IMMUTABLE_RECORD = "@@__IMMUTABLE_RECORD__@@";
