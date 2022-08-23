@@ -1,16 +1,15 @@
 import React, { useMemo, useState } from "react";
-import {
-  VicDataAggregator,
-  useAggregateData,
-  DataAggregator,
-} from "./vic-data-aggregator";
+import { VicDataAggregator, useAggregateData } from "./vic-data-aggregator";
 import { VicLine, VicLineProps } from "./vic-line";
 import { VicGroup } from "./vic-group";
+import { DataAggregator } from "./utils/lazy-data-aggregator";
 
 export default {
   title: "v37/VicDataAggregator",
   component: VicDataAggregator,
 };
+
+/* eslint-disable react/no-multi-comp */
 
 // eslint-disable-next-line no-magic-numbers
 function fromEquation(eq: (x: number) => number, count = 10) {
