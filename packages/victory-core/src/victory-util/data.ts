@@ -33,7 +33,7 @@ function parseDatum(datum) {
     : datum;
 }
 
-function getLength(data) {
+function getLength(data: unknown[]) {
   return Immutable.isIterable(data) ? data.size : data.length;
 }
 

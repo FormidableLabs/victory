@@ -1,5 +1,15 @@
 # victory-chart
 
+## 36.6.5
+
+### Patch Changes
+
+- Updated dependencies [[`6f4972123`](https://github.com/FormidableLabs/victory/commit/6f49721238332bb5ee879571a45b34a04e44d416)]:
+  - victory-core@36.6.5
+  - victory-axis@36.6.5
+  - victory-polar-axis@36.6.5
+  - victory-shared-events@36.6.5
+
 ## 36.6.4
 
 ### Patch Changes

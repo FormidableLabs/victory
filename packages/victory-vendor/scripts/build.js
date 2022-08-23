@@ -63,7 +63,7 @@ const getTypeDefinitionFile = (pkg) => `
 // \`victory-vendor/${pkg.name}\` (TypeScript)
 //
 // Export the type definitions for this package:
-export * from "@types/${pkg.name}";
+export * from "${pkg.name}";
 `;
 
 // Main.
