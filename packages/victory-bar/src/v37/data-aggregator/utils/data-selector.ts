@@ -15,7 +15,6 @@ export class DataSelector {
   }
 
   private _selectorResults = new Map<Selector<unknown>, unknown>();
-
   select<TValue>(selector: Selector<TValue>): TValue {
     if (this._selectorResults.has(selector)) {
       return this._selectorResults.get(selector) as TValue;

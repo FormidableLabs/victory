@@ -1,45 +1,21 @@
-import { DataSelector } from "./data-selector";
 import { VictoryDatableProps } from "victory-core";
-import { VictoryProviderProps } from "victory-core/lib/v37";
-import { getData } from "victory-core/lib/v37/victory-state/helpers/get-data";
-import { getDomain } from "victory-core/lib/v37/victory-state/helpers/get-domain";
+import { DataSelector } from "./data-selector";
+import * as Selectors from "./selectors";
 
-// Define some selectors:
-const selectNormalizedData = jest.fn((s: DataSelector) =>
-  s.propsAs<VictoryProviderProps>().map((props) => {
-    const normalizedData = getData(props);
-    return {
-      ...props,
-      data: normalizedData,
-      normalizedData,
-    };
-  }),
-);
-const selectDomains = jest.fn((s: DataSelector) =>
-  s.select(selectNormalizedData).map((props) => {
-    return {
-      x: getDomain(props, "x"),
-      y: getDomain(props, "y"),
-    };
-  }),
-);
-const selectDomain = jest.fn((s: DataSelector) =>
-  s.select(selectDomains).reduce((prev, current) => {
-    return {
-      x: [
-        Math.min(prev.x[0] as number, current.x[0] as number),
-        Math.max(prev.x[1] as number, current.x[1] as number),
-      ],
-      y: [
-        Math.min(prev.y[0] as number, current.y[0] as number),
-        Math.max(prev.y[1] as number, current.y[1] as number),
-      ],
-    };
-  }),
-);
+const { selectDomains, selectNormalizedData, selectDomain } =
+  spyOnAll(Selectors);
+
+function spyOnAll<T>(obj: T) {
+  Object.keys(obj).forEach((method) => {
+    if (typeof obj[method] === "function") {
+      jest.spyOn(obj, method as any);
+    }
+  });
+  return jest.mocked(obj);
+}
 
 describe("DataSelector", () => {
-  const generateData = <TRes,>(
+  const generateData = <TRes>(
     length: number,
     factory: (x: number) => TRes,
   ): TRes[] => {
@@ -230,6 +206,8 @@ describe("DataSelector", () => {
           },
         ]
       `);
+    });
+    it("selectDomain", () => {
       const domain = dataSelector.select(selectDomain);
       expect(domain).toMatchInlineSnapshot(`
         Object {

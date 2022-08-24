@@ -27,19 +27,6 @@ export function mapChildren<TResult>(
   return results;
 }
 
-export function memoOne<TCallback extends (...args) => unknown>(
-  callback: TCallback,
-): TCallback {
-  const initial = null;
-  let value = initial as unknown;
-  return (() => {
-    if (value === initial) {
-      value = callback();
-    }
-    return value;
-  }) as TCallback;
-}
-
 export function shallowEqual(a, b) {
   return a.length === b.length && a.every((val, i) => val === b[i]);
 }
