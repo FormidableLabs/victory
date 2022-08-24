@@ -86,138 +86,152 @@ describe("DataSelector", () => {
       const result = dataSelector.select(selectNormalizedData);
       expect(result.map((props) => props.normalizedData))
         .toMatchInlineSnapshot(`
-      Array [
-        Array [
-          Object {
-            "_x": 0,
-            "_y": 0,
-            "x": 0,
-            "y": 0,
-          },
-          Object {
-            "_x": 1,
-            "_y": 1,
-            "x": 1,
-            "y": 1,
-          },
-          Object {
-            "_x": 2,
-            "_y": 4,
-            "x": 2,
-            "y": 4,
-          },
-          Object {
-            "_x": 3,
-            "_y": 9,
-            "x": 3,
-            "y": 9,
-          },
-          Object {
-            "_x": 4,
-            "_y": 16,
-            "x": 4,
-            "y": 16,
-          },
-        ],
-        Array [
-          Object {
-            "_x": 0,
-            "_y": -5,
-            "x": 0,
-            "xProp": 0,
-            "y": -5,
-            "yProp": -5,
-          },
-          Object {
-            "_x": 1,
-            "_y": -4,
-            "x": 1,
-            "xProp": 1,
-            "y": -4,
-            "yProp": -4,
-          },
-          Object {
-            "_x": 2,
-            "_y": -3,
-            "x": 2,
-            "xProp": 2,
-            "y": -3,
-            "yProp": -3,
-          },
-          Object {
-            "_x": 3,
-            "_y": -2,
-            "x": 3,
-            "xProp": 3,
-            "y": -2,
-            "yProp": -2,
-          },
-          Object {
-            "_x": 4,
-            "_y": -1,
-            "x": 4,
-            "xProp": 4,
-            "y": -1,
-            "yProp": -1,
-          },
-          Object {
-            "_x": 5,
-            "_y": 0,
-            "x": 5,
-            "xProp": 5,
-            "y": 0,
-            "yProp": 0,
-          },
-          Object {
-            "_x": 6,
-            "_y": 1,
-            "x": 6,
-            "xProp": 6,
-            "y": 1,
-            "yProp": 1,
-          },
-          Object {
-            "_x": 7,
-            "_y": 2,
-            "x": 7,
-            "xProp": 7,
-            "y": 2,
-            "yProp": 2,
-          },
-          Object {
-            "_x": 8,
-            "_y": 3,
-            "x": 8,
-            "xProp": 8,
-            "y": 3,
-            "yProp": 3,
-          },
-          Object {
-            "_x": 9,
-            "_y": 4,
-            "x": 9,
-            "xProp": 9,
-            "y": 4,
-            "yProp": 4,
-          },
-        ],
-      ]
-    `);
+          Array [
+            Array [
+              Object {
+                "_x": 0,
+                "_y": 0,
+                "x": 0,
+                "y": 0,
+              },
+              Object {
+                "_x": 1,
+                "_y": 1,
+                "x": 1,
+                "y": 1,
+              },
+              Object {
+                "_x": 2,
+                "_y": 4,
+                "x": 2,
+                "y": 4,
+              },
+              Object {
+                "_x": 3,
+                "_y": 9,
+                "x": 3,
+                "y": 9,
+              },
+              Object {
+                "_x": 4,
+                "_y": 16,
+                "x": 4,
+                "y": 16,
+              },
+            ],
+            Array [
+              Object {
+                "_x": 0,
+                "_y": -5,
+                "x": 0,
+                "xProp": 0,
+                "y": -5,
+                "yProp": -5,
+              },
+              Object {
+                "_x": 1,
+                "_y": -4,
+                "x": 1,
+                "xProp": 1,
+                "y": -4,
+                "yProp": -4,
+              },
+              Object {
+                "_x": 2,
+                "_y": -3,
+                "x": 2,
+                "xProp": 2,
+                "y": -3,
+                "yProp": -3,
+              },
+              Object {
+                "_x": 3,
+                "_y": -2,
+                "x": 3,
+                "xProp": 3,
+                "y": -2,
+                "yProp": -2,
+              },
+              Object {
+                "_x": 4,
+                "_y": -1,
+                "x": 4,
+                "xProp": 4,
+                "y": -1,
+                "yProp": -1,
+              },
+              Object {
+                "_x": 5,
+                "_y": 0,
+                "x": 5,
+                "xProp": 5,
+                "y": 0,
+                "yProp": 0,
+              },
+              Object {
+                "_x": 6,
+                "_y": 1,
+                "x": 6,
+                "xProp": 6,
+                "y": 1,
+                "yProp": 1,
+              },
+              Object {
+                "_x": 7,
+                "_y": 2,
+                "x": 7,
+                "xProp": 7,
+                "y": 2,
+                "yProp": 2,
+              },
+              Object {
+                "_x": 8,
+                "_y": 3,
+                "x": 8,
+                "xProp": 8,
+                "y": 3,
+                "yProp": 3,
+              },
+              Object {
+                "_x": 9,
+                "_y": 4,
+                "x": 9,
+                "xProp": 9,
+                "y": 4,
+                "yProp": 4,
+              },
+            ],
+          ]
+        `);
     });
     it("selectDomains", () => {
       const domains = dataSelector.select(selectDomains);
       expect(domains).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "x": Array [
-            1,
-            4,
-          ],
-          "y": Array [
-            1,
-            16,
-          ],
-        },
+        Array [
+          Object {
+            "x": Array [
+              1,
+              4,
+            ],
+            "y": Array [
+              1,
+              16,
+            ],
+          },
+          Object {
+            "x": Array [
+              1,
+              9,
+            ],
+            "y": Array [
+              -5,
+              4,
+            ],
+          },
+        ]
+      `);
+      const domain = dataSelector.select(selectDomain);
+      expect(domain).toMatchInlineSnapshot(`
         Object {
           "x": Array [
             1,
@@ -225,24 +239,10 @@ describe("DataSelector", () => {
           ],
           "y": Array [
             -5,
-            4,
+            16,
           ],
-        },
-      ]
-    `);
-      const domain = dataSelector.select(selectDomain);
-      expect(domain).toMatchInlineSnapshot(`
-      Object {
-        "x": Array [
-          1,
-          9,
-        ],
-        "y": Array [
-          -5,
-          16,
-        ],
-      }
-    `);
+        }
+      `);
     });
   });
 });
