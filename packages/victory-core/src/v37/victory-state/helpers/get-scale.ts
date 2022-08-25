@@ -15,7 +15,7 @@ import { getAxisData } from "./get-axis-data";
 
 type Scale = ScalePropType | D3ScaleFn;
 
-type ScaleProps = Pick<VictoryProviderProps, "data" | "scale">;
+export type ScaleProps = Pick<VictoryProviderProps, "data" | "scale">;
 
 const DEFAULT_SCALE = scaleLinear;
 

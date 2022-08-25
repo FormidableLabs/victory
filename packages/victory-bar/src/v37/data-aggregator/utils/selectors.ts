@@ -1,8 +1,21 @@
 import { VictoryProviderProps } from "victory-core/lib/v37";
 import { getData } from "victory-core/lib/v37/victory-state/helpers/get-data";
 import { getDomain } from "victory-core/lib/v37/victory-state/helpers/get-domain";
+import { getAxisData } from "victory-core/lib/v37/victory-state/helpers/get-axis-data";
+import {
+  getRange,
+  RangeProps,
+} from "victory-core/lib/v37/victory-state/helpers/get-range";
+import {
+  getScale,
+  ScaleProps,
+} from "victory-core/lib/v37/victory-state/helpers/get-scale";
 import { DataSelector } from "./data-selector";
 
+/**
+ * Normalizes the `data` property, evaluating using other props like x, y, and sortKey.
+ *
+ */
 export const selectNormalizedData = (s: DataSelector) =>
   s.propsAs<VictoryProviderProps>().map((props) => {
     const normalizedData = getData(props);
@@ -13,6 +26,9 @@ export const selectNormalizedData = (s: DataSelector) =>
     };
   });
 
+/**
+ * Returns the domains of each data set
+ */
 export const selectDomains = (s: DataSelector) =>
   s.select(selectNormalizedData).map((props) => {
     return {
@@ -21,6 +37,9 @@ export const selectDomains = (s: DataSelector) =>
     };
   });
 
+/**
+ * Returns the domain of all data sets
+ */
 export const selectDomain = (s: DataSelector) => {
   const domains = s.select(selectDomains);
   return {
@@ -33,4 +52,18 @@ export const selectDomain = (s: DataSelector) => {
       Math.max(...domains.map((d) => d.y[1] as number)),
     ],
   };
+};
+
+export const selectRanges = (s: DataSelector) => {
+  return s.propsAs<RangeProps>().map((props) => ({
+    x: getRange(props, "x"),
+    y: getRange(props, "y"),
+  }));
+};
+
+export const selectScales = (s: DataSelector) => {
+  return s.propsAs<ScaleProps>().map((props) => ({
+    x: getScale(props, "x"),
+    y: getScale(props, "y"),
+  }));
 };
