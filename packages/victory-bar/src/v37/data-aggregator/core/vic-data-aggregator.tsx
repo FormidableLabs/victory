@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { mapChildren, traverseChildren, useShallowMemo } from "../utils/helpers";
+import { traverseChildren } from "../utils/traverse-children";
 import { DataSelector } from "../utils/data-selector";
 import { VictoryDatableProps } from "victory-core";
 
