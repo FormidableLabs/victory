@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
-import { mapChildren, useShallowMemo } from "./utils/helpers";
-import { DataSelector } from "./utils/data-selector";
+import { mapChildren, traverseChildren, useShallowMemo } from "../utils/helpers";
+import { DataSelector } from "../utils/data-selector";
+import { VictoryDatableProps } from "victory-core";
 
 const DataAggregatorContext = React.createContext<DataSelector | null>(null);
 
@@ -21,8 +22,9 @@ export const useAggregateData = () => {
 
 function useDataAggregator(children: React.ReactNode) {
   return useMemo(() => {
-    const allProps = mapChildren(children, (child) => {
-      return child.props;
+    const allProps = [] as VictoryDatableProps[];
+    traverseChildren(children, (child) => {
+      allProps.push(child.props);
     });
     return new DataSelector(allProps);
   }, [children]);

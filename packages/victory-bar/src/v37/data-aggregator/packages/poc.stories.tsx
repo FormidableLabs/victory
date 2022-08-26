@@ -1,8 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { VicDataAggregator, useAggregateData } from "./vic-data-aggregator";
+import {
+  VicDataAggregator,
+  useAggregateData,
+} from "../core/vic-data-aggregator";
 import { VicLine, VicLineProps } from "./vic-line";
 import { VicGroup } from "./vic-group";
-import { DataSelector } from "./utils/data-selector";
+import { DataSelector } from "../utils/data-selector";
 
 export default {
   title: "v37/VicDataAggregator",
