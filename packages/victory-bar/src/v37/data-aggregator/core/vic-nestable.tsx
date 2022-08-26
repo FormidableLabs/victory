@@ -10,9 +10,17 @@ export type NestableConfig = {
   displayName: string;
   getNormalizedProps(props): any;
   getAggregateProps(allComponents, props): any;
+  defaultProps: any;
+  propTypes: any;
 };
 
-export function makeNestable(nestedConfig: NestableConfig, Component) {
+/**
+ * Makes a component nestable, so the props can be normalized and aggregated
+ */
+export function makeNestable(
+  nestedConfig: NestableConfig,
+  Component: (props: NestableProps) => JSX.Element,
+) {
   const NestableComponent = (props: React.PropsWithChildren) => {
     const allNestedProps = React.useContext(NestableContext);
 
@@ -25,6 +33,8 @@ export function makeNestable(nestedConfig: NestableConfig, Component) {
       );
     }
 
+    // We are already nested; this means our props are already normalized.
+    // Let's calculate our aggregate props:
     const aggregateProps = nestedConfig.getAggregateProps(
       allNestedProps,
       props,
@@ -36,10 +46,19 @@ export function makeNestable(nestedConfig: NestableConfig, Component) {
     );
   };
   NestableComponent.nestedConfig = nestedConfig;
+  // Standard React configs:
+  NestableComponent.displayName = `NestableComponent(${nestedConfig.displayName})`;
+  NestableComponent.defaultProps = nestedConfig.defaultProps;
+  NestableComponent.propTypes = nestedConfig.propTypes;
+
   return NestableComponent;
 }
 
+/**
+ * Clones all children, normalizing their properties, and collecting all props
+ */
 function NestableContextProvider({ children }: React.PropsWithChildren) {
+  // Traverse all children, normalizing their props, and collecting the results:
   const allNestedProps: NestableContextValue = [];
   const normalizedTree = mapChildrenProps(children, (child) => {
     if (isNestableNode(child)) {
@@ -66,6 +85,9 @@ type NestableComponentNode = React.ReactElement<
   NestableComponent
 >;
 
+/**
+ * Determines whether the React child is one of our nested nodes
+ */
 function isNestableNode(
   child: React.ReactNode,
 ): child is NestableComponentNode {
