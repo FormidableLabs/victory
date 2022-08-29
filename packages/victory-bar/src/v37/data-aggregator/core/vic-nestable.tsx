@@ -18,7 +18,7 @@ export type NestableConfig = {
  * Makes a component nestable, so the props can be normalized and aggregated
  */
 export function makeNestable(
-  nestedConfig: NestableConfig,
+  config: NestableConfig,
   Component: (props: NestableProps) => JSX.Element,
 ) {
   const NestableComponent = (props: React.PropsWithChildren) => {
@@ -35,21 +35,18 @@ export function makeNestable(
 
     // We are already nested; this means our props are already normalized.
     // Let's calculate our aggregate props:
-    const aggregateProps = nestedConfig.getAggregateProps(
-      allNestedProps,
-      props,
-    );
+    const aggregateProps = config.getAggregateProps(allNestedProps, props);
     return (
       <Component {...props} {...aggregateProps}>
         {props.children}
       </Component>
     );
   };
-  NestableComponent.nestedConfig = nestedConfig;
+  NestableComponent.nestableConfig = config;
   // Standard React configs:
-  NestableComponent.displayName = `NestableComponent(${nestedConfig.displayName})`;
-  NestableComponent.defaultProps = nestedConfig.defaultProps;
-  NestableComponent.propTypes = nestedConfig.propTypes;
+  NestableComponent.displayName = `NestableComponent(${config.displayName})`;
+  NestableComponent.defaultProps = config.defaultProps;
+  NestableComponent.propTypes = config.propTypes;
 
   return NestableComponent;
 }
@@ -62,7 +59,7 @@ function NestableContextProvider({ children }: React.PropsWithChildren) {
   const allNestedProps: NestableContextValue = [];
   const normalizedTree = mapChildrenProps(children, (child) => {
     if (isNestableNode(child)) {
-      const normalizedProps = child.type.nestedConfig.getNormalizedProps(
+      const normalizedProps = child.type.nestableConfig.getNormalizedProps(
         child.props,
       );
       allNestedProps.push({ ...child.props, ...normalizedProps });
@@ -94,6 +91,6 @@ function isNestableNode(
   return !!(
     child &&
     typeof child === "object" &&
-    (child as NestableComponentNode).type?.nestedConfig
+    (child as NestableComponentNode).type?.nestableConfig
   );
 }
