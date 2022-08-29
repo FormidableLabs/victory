@@ -25,10 +25,10 @@ export const VictoryLine = createVictoryComponent(
     // Map and normalize prop names:
     normalizeProps: {
       data: NormalizeProps.data,
-      curve: (curve: "linear" | "smooth" | CurveFn) => {
-        return typeof curve === "function"
-          ? curve
-          : curveMethods[curve] || curveMethods.linear;
+      curve: (props: { curve: "linear" | "smooth" | CurveFn }) => {
+        return typeof props.curve === "function"
+          ? props.curve
+          : curveMethods[props.curve] || curveMethods.linear;
       },
     },
 
