@@ -8,7 +8,7 @@ This is a WIP.
 Here's how we'd define a component:
 
 ```tsx
-import { createVictoryComponent } from "./vic-normalized";
+import { createVictoryComponent } from "./create-victory-component";
 
 export const VictoryLine = createVictoryComponent(
   {
@@ -16,10 +16,10 @@ export const VictoryLine = createVictoryComponent(
     displayName: "VictoryLine",
     defaultProps: {
       curve: "linear",
-      data: [1, 2, 3, 4],
+      data: [ 1, 2, 3, 4 ],
     },
     propTypes: {
-      curve: PropTypes.oneOfType([PropTypes.oneOf("linear", "smooth")]),
+      curve: PropTypes.oneOfType([ PropTypes.oneOf("linear", "smooth") ]),
     },
 
     // Map and normalize prop names:
@@ -43,7 +43,7 @@ export const VictoryLine = createVictoryComponent(
   },
   (props) => {
     // This is where we put the actual component rendering
-    
+
     // All these props are now normalized:
     const { curve, data, domain, scale, range, polar } = props;
     // Implementation details here...

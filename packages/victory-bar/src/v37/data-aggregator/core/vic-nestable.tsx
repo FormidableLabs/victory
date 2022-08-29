@@ -3,15 +3,15 @@ import { mapChildrenProps } from "../utils/traverse-children";
 
 /* eslint-disable react/no-multi-comp */
 
-type NestableContextValue = NestableProps[];
+type NestableContextValue = ReturnType<typeof getNestableContextValue>;
 const NestableContext = React.createContext<NestableContextValue | null>(null);
 
 export type NestableConfig = {
   displayName: string;
-  getNormalizedProps(props): any;
-  getAggregateProps(allComponents, props): any;
-  defaultProps: any;
   propTypes: any;
+  defaultProps: any;
+  normalizeProps: any;
+  aggregateProps: any;
 };
 
 /**
@@ -19,12 +19,14 @@ export type NestableConfig = {
  */
 export function makeNestable(
   config: NestableConfig,
-  Component: (props: NestableProps) => JSX.Element,
+  Component: ((props: NestableProps) => JSX.Element) & { displayName?: string },
 ) {
-  const NestableComponent = (props: React.PropsWithChildren) => {
-    const allNestedProps = React.useContext(NestableContext);
+  Component.displayName = config.displayName;
 
-    if (!allNestedProps) {
+  const NestableComponent = (props: React.PropsWithChildren<NestableProps>) => {
+    const allNormalizedProps = React.useContext(NestableContext);
+
+    if (!allNormalizedProps) {
       // Nest this component in a NestableContext and render again:
       return (
         <NestableContextProvider>
@@ -35,7 +37,7 @@ export function makeNestable(
 
     // We are already nested; this means our props are already normalized.
     // Let's calculate our aggregate props:
-    const aggregateProps = config.getAggregateProps(allNestedProps, props);
+    const aggregateProps = getAggregateProps(config, allNormalizedProps, props);
     return (
       <Component {...props} {...aggregateProps}>
         {props.children}
@@ -56,27 +58,36 @@ export function makeNestable(
  */
 function NestableContextProvider({ children }: React.PropsWithChildren) {
   // Traverse all children, normalizing their props, and collecting the results:
-  const allNestedProps: NestableContextValue = [];
+  const allProps: NestableProps[] = [];
   const normalizedTree = mapChildrenProps(children, (child) => {
     if (isNestableNode(child)) {
-      const normalizedProps = child.type.nestableConfig.getNormalizedProps(
+      const normalizedProps = getNormalizedProps(
+        child.type.nestableConfig,
         child.props,
       );
-      allNestedProps.push({ ...child.props, ...normalizedProps });
+      allProps.push({ ...child.props, ...normalizedProps });
       return normalizedProps;
     }
   });
 
+  const value = getNestableContextValue(allProps);
+
   return (
-    <NestableContext.Provider value={allNestedProps}>
+    <NestableContext.Provider value={value}>
       {normalizedTree}
     </NestableContext.Provider>
   );
 }
 
+function getNestableContextValue(allProps: NestableProps[]) {
+  return {
+    allProps,
+    memo: createMemo(),
+  };
+}
+
 type NestableComponent = ReturnType<typeof makeNestable>;
-// eslint-disable-next-line @typescript-eslint/ban-types
-type NestableProps = {};
+type NestableProps = Record<any, unknown>;
 type NestableComponentNode = React.ReactElement<
   NestableProps,
   NestableComponent
@@ -93,4 +104,42 @@ function isNestableNode(
     typeof child === "object" &&
     (child as NestableComponentNode).type?.nestableConfig
   );
+}
+
+function getAggregateProps(
+  config: NestableConfig,
+  context: NestableContextValue,
+  props: NestableProps,
+): NestableProps {
+  const aggregateResults = mapObject(config.aggregateProps, (aggregator) => {
+    return aggregator(props, context.allProps, context.memo);
+  });
+  return aggregateResults;
+}
+
+function getNormalizedProps(
+  nestableConfig: NestableConfig,
+  props: NestableProps,
+): NestableProps {
+  const normalizedResults = mapObject(
+    nestableConfig.normalizeProps,
+    (normalizer) => {
+      return normalizer(props);
+    },
+  );
+  return normalizedResults;
+}
+
+function mapObject(obj, map) {
+  const mapped = {};
+  Object.keys(obj).forEach((key) => {
+    mapped[key] = map(obj[key], key, obj);
+  });
+  return mapped;
+}
+function createMemo() {
+  return function memo(callback, ...args) {
+    // TODO!
+    return callback(...args);
+  };
 }
