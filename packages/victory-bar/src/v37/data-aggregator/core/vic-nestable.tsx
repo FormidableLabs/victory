@@ -1,4 +1,4 @@
-import React, { WeakValidationMap } from "react";
+import React, { ValidationMap } from "react";
 import { mapChildrenProps } from "../utils/traverse-children";
 
 /* eslint-disable react/no-multi-comp */
@@ -8,6 +8,13 @@ const NestableContext = React.createContext<NestableContextValue | null>(null);
 
 type UnknownProps = unknown;
 
+export type NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps> = {
+  displayName: string;
+  propTypes: ValidationMap<TExternalProps>;
+  defaultProps: TExternalProps;
+  normalizeProps: NormalizePropsConfig<TExternalProps, TNormalizeProps>;
+  aggregateProps: AggregatePropsConfig<TExternalProps, TAggregateProps>;
+};
 export type NormalizePropsConfig<TExternalProps, TNormalizeProps> = {
   [Prop in keyof TNormalizeProps]: (
     props: TExternalProps,
@@ -18,14 +25,6 @@ export type AggregatePropsConfig<TExternalProps, TAggregateProps> = {
     props: TExternalProps,
     allProps: UnknownProps[],
   ) => TAggregateProps[Prop];
-};
-
-export type NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps> = {
-  displayName: string;
-  propTypes: WeakValidationMap<TExternalProps>;
-  defaultProps: TExternalProps;
-  normalizeProps: NormalizePropsConfig<TExternalProps, TNormalizeProps>;
-  aggregateProps: AggregatePropsConfig<TExternalProps, TAggregateProps>;
 };
 
 export type ComponentImplementation<
@@ -41,7 +40,7 @@ export type NormalizedProps<TExternalProps, TNormalizeProps, TAggregateProps> =
     TNormalizeProps &
     TAggregateProps;
 
-// Use currying to allow for explicit TExternalProps and inferred TInternalProps
+// Use currying to allow for explicit TExternalProps while inferring the rest
 export const makeNestableInferred =
   <TExternalProps,>() =>
   <TNormalizeProps, TAggregateProps>(
@@ -76,6 +75,7 @@ export function makeNestable<TExternalProps, TNormalizeProps, TAggregateProps>(
       // Nest this component in a NestableContext and render again:
       return (
         <NestableContextProvider>
+          {/* @ts-expect-error These props are fine, the generics are hard */}
           <NestableComponent {...props}>{props.children}</NestableComponent>
         </NestableContextProvider>
       );
@@ -85,7 +85,7 @@ export function makeNestable<TExternalProps, TNormalizeProps, TAggregateProps>(
     // Let's calculate our aggregate props:
     const aggregateProps = getAggregateProps(config, allNormalizedProps, props);
     return (
-      // @ts-expect-error These props are fine, generics are hard
+      // @ts-expect-error These props are fine, the generics are hard
       <Component {...props} {...aggregateProps}>
         {props.children}
       </Component>
@@ -161,8 +161,8 @@ function getAggregateProps<TExternalProps, TNormalizeProps, TAggregateProps>(
 ): TAggregateProps {
   const aggregateResults = mapObject(config.aggregateProps, (aggregator) => {
     return aggregator(props, context.allProps, context.memo);
-  });
-  return aggregateResults as TAggregateProps;
+  }) as TAggregateProps;
+  return aggregateResults;
 }
 
 function getNormalizedProps<TExternalProps, TNormalizeProps, TAggregateProps>(
@@ -178,8 +178,8 @@ function getNormalizedProps<TExternalProps, TNormalizeProps, TAggregateProps>(
     (normalizer) => {
       return normalizer(props);
     },
-  );
-  return normalizedResults as TNormalizeProps;
+  ) as TNormalizeProps;
+  return normalizedResults;
 }
 
 function mapObject(obj, map) {
@@ -189,6 +189,7 @@ function mapObject(obj, map) {
   });
   return mapped;
 }
+
 function createMemo() {
   return function memo(callback, ...args) {
     // TODO!
