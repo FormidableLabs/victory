@@ -5,35 +5,37 @@ export default {
   title: "v37/createVictoryComponent",
 };
 
-type ExternalPropType<T> = { EXPLICIT_TYPE_PARAM: T };
-function externalPropType<T>() {
-  return null as unknown as ExternalPropType<T>;
-}
-
-type ExampleProps = {
+type ExampleProps = React.PropsWithChildren<{
   title: string;
-};
+  optionalProp?: boolean;
+  defaultedProp: boolean;
+}>;
 
-const ExampleComponent = createVictoryComponent(
+const ExampleComponent = createVictoryComponent<ExampleProps>()(
   {
     displayName: "ExampleComponent",
     propTypes: {},
-    defaultProps: {},
+    defaultProps: {
+      title: "Default Title",
+      defaultedProp: true,
+    },
     normalizeProps: {
       TITLE: (props) => props.title.toUpperCase(),
     },
     aggregateProps: {
       totalCount: (myProps, allProps) => allProps.length,
       titles: (myProps, allProps) =>
-        allProps.map((props) => props.title).join(", "),
+        allProps.map((props) => (props as ExampleProps).title).join(", "),
       TITLES: (myProps, allProps) =>
-        allProps.map((props) => props.TITLE).join(", "),
+        allProps.map((props) => (props as { TITLE: string }).TITLE).join(", "),
     },
   },
   ({ children, ...props }) => {
     const {
       title,
       TITLE,
+      optionalProp,
+      defaultedProp,
       totalCount,
       titles,
       TITLES,
@@ -53,7 +55,7 @@ const ExampleComponent = createVictoryComponent(
 
 export const Example = () => {
   return (
-    <ExampleComponent title="Parent">
+    <ExampleComponent title="Parent" optionalProp>
       <ExampleComponent title="Child">
         <ExampleComponent title="Grandchild" />
       </ExampleComponent>

@@ -1,4 +1,3 @@
-import React from "react";
-import { makeNestable } from "./vic-nestable";
+import { makeNestableInferred } from "./vic-nestable";
 
-export const createVictoryComponent = makeNestable;
+export const createVictoryComponent = makeNestableInferred;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { WeakValidationMap } from "react";
 import { mapChildrenProps } from "../utils/traverse-children";
 
 /* eslint-disable react/no-multi-comp */
@@ -6,24 +6,71 @@ import { mapChildrenProps } from "../utils/traverse-children";
 type NestableContextValue = ReturnType<typeof getNestableContextValue>;
 const NestableContext = React.createContext<NestableContextValue | null>(null);
 
-export type NestableConfig = {
-  displayName: string;
-  propTypes: any;
-  defaultProps: any;
-  normalizeProps: any;
-  aggregateProps: any;
+// eslint-disable-next-line @typescript-eslint/ban-types
+type OtherProps = {};
+
+export type NormalizePropsConfig<TExternalProps, TNormalizeProps> = {
+  [Prop in keyof TNormalizeProps]: (
+    props: TExternalProps,
+  ) => TNormalizeProps[Prop];
 };
+export type AggregatePropsConfig<TExternalProps, TAggregateProps> = {
+  [Prop in keyof TAggregateProps]: (
+    props: TExternalProps,
+    allProps: OtherProps[],
+  ) => TAggregateProps[Prop];
+};
+
+export type NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps> = {
+  displayName: string;
+  propTypes: WeakValidationMap<TExternalProps>;
+  defaultProps: TExternalProps;
+  normalizeProps: NormalizePropsConfig<TExternalProps, TNormalizeProps>;
+  aggregateProps: AggregatePropsConfig<TExternalProps, TAggregateProps>;
+};
+
+export type ComponentImplementation<
+  TExternalProps,
+  TNormalizeProps,
+  TAggregateProps,
+> = ((
+  props: NormalizedProps<TExternalProps, TNormalizeProps, TAggregateProps>,
+) => JSX.Element) & { displayName?: string };
+
+export type NormalizedProps<TExternalProps, TNormalizeProps, TAggregateProps> =
+  Omit<TExternalProps, keyof TNormalizeProps | keyof TAggregateProps> &
+    TNormalizeProps &
+    TAggregateProps;
+
+// Use currying to allow for explicit TExternalProps and inferred TInternalProps
+export const makeNestableInferred =
+  <TExternalProps,>() =>
+  <TNormalizeProps, TAggregateProps>(
+    config: NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps>,
+    Component: ComponentImplementation<
+      TExternalProps,
+      TNormalizeProps,
+      TAggregateProps
+    >,
+  ) =>
+    makeNestable(config, Component);
 
 /**
  * Makes a component nestable, so the props can be normalized and aggregated
  */
-export function makeNestable(
-  config: NestableConfig,
-  Component: ((props: NestableProps) => JSX.Element) & { displayName?: string },
+export function makeNestable<TExternalProps, TNormalizeProps, TAggregateProps>(
+  config: NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps>,
+  Component: ComponentImplementation<
+    TExternalProps,
+    TNormalizeProps,
+    TAggregateProps
+  >,
 ) {
   Component.displayName = config.displayName;
 
-  const NestableComponent = (props: React.PropsWithChildren<NestableProps>) => {
+  const NestableComponent = (
+    props: React.PropsWithChildren<TExternalProps>,
+  ): JSX.Element => {
     const allNormalizedProps = React.useContext(NestableContext);
 
     if (!allNormalizedProps) {
@@ -39,6 +86,7 @@ export function makeNestable(
     // Let's calculate our aggregate props:
     const aggregateProps = getAggregateProps(config, allNormalizedProps, props);
     return (
+      // @ts-expect-error These props are fine, generics are hard
       <Component {...props} {...aggregateProps}>
         {props.children}
       </Component>
@@ -65,6 +113,7 @@ function NestableContextProvider({ children }: React.PropsWithChildren) {
         child.type.nestableConfig,
         child.props,
       );
+      // @ts-expect-error "Can only spread objects"
       allProps.push({ ...child.props, ...normalizedProps });
       return normalizedProps;
     }
@@ -106,28 +155,32 @@ function isNestableNode(
   );
 }
 
-function getAggregateProps(
-  config: NestableConfig,
+function getAggregateProps<TExternalProps, TNormalizeProps, TAggregateProps>(
+  config: NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps>,
   context: NestableContextValue,
   props: NestableProps,
-): NestableProps {
+): TAggregateProps {
   const aggregateResults = mapObject(config.aggregateProps, (aggregator) => {
     return aggregator(props, context.allProps, context.memo);
   });
-  return aggregateResults;
+  return aggregateResults as TAggregateProps;
 }
 
-function getNormalizedProps(
-  nestableConfig: NestableConfig,
+function getNormalizedProps<TExternalProps, TNormalizeProps, TAggregateProps>(
+  nestableConfig: NestableConfig<
+    TExternalProps,
+    TNormalizeProps,
+    TAggregateProps
+  >,
   props: NestableProps,
-): NestableProps {
+): TNormalizeProps {
   const normalizedResults = mapObject(
     nestableConfig.normalizeProps,
     (normalizer) => {
       return normalizer(props);
     },
   );
-  return normalizedResults;
+  return normalizedResults as TNormalizeProps;
 }
 
 function mapObject(obj, map) {
