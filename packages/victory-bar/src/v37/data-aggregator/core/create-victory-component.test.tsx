@@ -1,4 +1,4 @@
-import React, { ValidationMap } from "react";
+import React from "react";
 import { render, RenderResult } from "@testing-library/react";
 import { createVictoryComponent } from "./create-victory-component";
 
@@ -17,22 +17,14 @@ describe("createVictoryComponent", () => {
     optionalProp?: boolean;
     overridableProp: "one" | "two" | "three";
   }>;
-  const config: {
-    displayName: string;
-    defaultProps: ExampleProps;
-    propTypes: ValidationMap<ExampleProps>;
-  } = {
-    displayName: "ExampleComponent",
-    defaultProps: {
-      title: "default title",
-      overridableProp: "two",
-    },
-    propTypes: {},
-  };
-
   const ExampleComponent = createVictoryComponent<ExampleProps>()(
     {
-      ...config,
+      displayName: "ExampleComponent",
+      defaultProps: {
+        title: "default title",
+        overridableProp: "two",
+      },
+      propTypes: {},
       normalizeProps: {
         TITLE: (props) => props.title.toUpperCase(),
         overridableProp: (props) =>
@@ -42,7 +34,7 @@ describe("createVictoryComponent", () => {
         titles: (myProps, allProps) =>
           (allProps as Array<ExampleProps>).map((props) => props.title),
         TITLES: (myProps, allProps) =>
-          (allProps as Array<{ TITLE: string }>).map((props) => props.TITLE),
+          (allProps as Array<typeof myProps>).map((props) => props.TITLE),
       },
     },
     ({ children, ...props }) => {
@@ -260,9 +252,9 @@ describe("createVictoryComponent", () => {
     let lastProps: any;
     const MemoTest = createVictoryComponent<ExampleDataProps>()(
       {
-        ...config,
+        ...ExampleComponent.componentConfig,
         defaultProps: {
-          ...config.defaultProps,
+          ...ExampleComponent.componentConfig.defaultProps,
           data: [0],
         },
         normalizeProps: {},
