@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21",
+    "memoize-weak": "^1.0.2",
     "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
     "victory-vendor": "^36.6.5"
