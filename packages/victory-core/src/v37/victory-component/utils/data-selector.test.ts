@@ -1,4 +1,4 @@
-import { VictoryDatableProps } from "victory-core";
+import { VictoryDatableProps } from "../../..";
 import { DataSelector } from "./data-selector";
 import * as Selectors from "./selectors";
 

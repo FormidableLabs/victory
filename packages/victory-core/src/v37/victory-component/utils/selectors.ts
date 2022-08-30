@@ -1,15 +1,9 @@
-import { VictoryProviderProps } from "victory-core/lib/v37";
-import { getData } from "victory-core/lib/v37/victory-state/helpers/get-data";
-import { getDomain } from "victory-core/lib/v37/victory-state/helpers/get-domain";
-import { getAxisData } from "victory-core/lib/v37/victory-state/helpers/get-axis-data";
-import {
-  getRange,
-  RangeProps,
-} from "victory-core/lib/v37/victory-state/helpers/get-range";
-import {
-  getScale,
-  ScaleProps,
-} from "victory-core/lib/v37/victory-state/helpers/get-scale";
+import { VictoryProviderProps } from "../..";
+import { getData } from "../../victory-state/helpers/get-data";
+import { getDomain } from "../../victory-state/helpers/get-domain";
+import { getAxisData } from "../../victory-state/helpers/get-axis-data";
+import { getRange, RangeProps } from "../../victory-state/helpers/get-range";
+import { getScale, ScaleProps } from "../../victory-state/helpers/get-scale";
 import { DataSelector } from "./data-selector";
 
 /**

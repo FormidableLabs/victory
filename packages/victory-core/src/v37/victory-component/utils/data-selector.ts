@@ -1,4 +1,4 @@
-import { VictoryDatableProps } from "victory-core";
+import { VictoryDatableProps } from "../../..";
 
 export type Selector<TValue> = (data: DataSelector) => TValue;
 
