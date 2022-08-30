@@ -1,5 +1,6 @@
 import React, { ValidationMap } from "react";
 import { mapChildrenProps } from "../utils/traverse-children";
+import { createMemo } from "../utils/create-memo";
 
 /* eslint-disable react/no-multi-comp */
 
@@ -24,6 +25,7 @@ export type AggregatePropsConfig<TExternalProps, TAggregateProps> = {
   [Prop in keyof TAggregateProps]: (
     props: TExternalProps,
     allProps: UnknownProps[],
+    memo: NestableContextValue["memo"],
   ) => TAggregateProps[Prop];
 };
 
@@ -188,11 +190,4 @@ function mapObject(obj, map) {
     mapped[key] = map(obj[key], key, obj);
   });
   return mapped;
-}
-
-function createMemo() {
-  return function memo(callback, ...args) {
-    // TODO!
-    return callback(...args);
-  };
 }

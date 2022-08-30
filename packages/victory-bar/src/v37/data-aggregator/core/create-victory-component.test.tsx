@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ValidationMap } from "react";
 import { render, RenderResult } from "@testing-library/react";
 import { createVictoryComponent } from "./create-victory-component";
 
@@ -17,14 +17,22 @@ describe("createVictoryComponent", () => {
     optionalProp?: boolean;
     overridableProp: "one" | "two" | "three";
   }>;
+  const config: {
+    displayName: string;
+    defaultProps: ExampleProps;
+    propTypes: ValidationMap<ExampleProps>;
+  } = {
+    displayName: "ExampleComponent",
+    defaultProps: {
+      title: "default title",
+      overridableProp: "two",
+    },
+    propTypes: {},
+  };
+
   const ExampleComponent = createVictoryComponent<ExampleProps>()(
     {
-      displayName: "ExampleComponent",
-      propTypes: {},
-      defaultProps: {
-        title: "default title",
-        overridableProp: "two",
-      },
+      ...config,
       normalizeProps: {
         TITLE: (props) => props.title.toUpperCase(),
         overridableProp: (props) =>
@@ -131,6 +139,7 @@ describe("createVictoryComponent", () => {
       `);
     });
   });
+
   describe("rendering nested components", () => {
     let result: RenderResult;
     beforeEach(() => {
@@ -234,6 +243,84 @@ describe("createVictoryComponent", () => {
           </fieldset>
         </div>
       `);
+    });
+  });
+
+  describe("aggregates can memoize data", () => {
+    type ExampleDataProps = ExampleProps & { data: number[] };
+    const calculateDomainFromAllProps = jest.fn(
+      (allProps: Array<ExampleDataProps>) => {
+        const min = Math.min(...allProps.map((p) => Math.min(...p.data)));
+        const max = Math.max(...allProps.map((p) => Math.max(...p.data)));
+        return [min, max] as const;
+      },
+    );
+    const identity = jest.fn((val: number) => val);
+
+    let lastProps: any;
+    const MemoTest = createVictoryComponent<ExampleDataProps>()(
+      {
+        ...config,
+        defaultProps: {
+          ...config.defaultProps,
+          data: [0],
+        },
+        normalizeProps: {},
+        aggregateProps: {
+          domain: (myProps, allProps, memo) => {
+            const res = memo(calculateDomainFromAllProps)(
+              allProps as ExampleDataProps[],
+            );
+            return res;
+          },
+          numberOfElements: (myProps, allProps, memo) => {
+            function typeChecks() {
+              // @ts-expect-error "Expected 1 arguments"
+              memo(identity)();
+              // @ts-expect-error "Expected 1 arguments"
+              memo(identity)(5, 5);
+              // @ts-expect-error "'string' is not assignable to 'number'"
+              memo(identity)("string");
+              // @ts-expect-error "'number' is not assignable to 'string'"
+              const val: string = memo(identity)(5);
+            }
+
+            return memo(identity)(allProps.length);
+          },
+        },
+      },
+      ({ children, ...props }) => {
+        lastProps = props;
+        return <div>{children}</div>;
+      },
+    );
+
+    let result: RenderResult;
+    const renderElements = () => (
+      <MemoTest title="Parent" data={[1, 2, 3]}>
+        <MemoTest title="Child 1" data={[4, 5, 6]} />
+        <MemoTest title="Child 2" data={[7, 8, 9]} />
+      </MemoTest>
+    );
+    beforeEach(() => {
+      result = render(renderElements());
+    });
+
+    it("all components should share their memoized data", () => {
+      expect(lastProps.domain).toEqual([1, 9]);
+      expect(calculateDomainFromAllProps).toHaveBeenCalledTimes(1);
+
+      expect(lastProps.numberOfElements).toEqual(3);
+      expect(identity).toHaveBeenCalledTimes(1);
+    });
+
+    it("rerendering will use a new memo cache", () => {
+      result.rerender(renderElements());
+      expect(lastProps.domain).toEqual([1, 9]);
+      expect(calculateDomainFromAllProps).toHaveBeenCalledTimes(2);
+
+      expect(lastProps.numberOfElements).toEqual(3);
+      expect(identity).toHaveBeenCalledTimes(2);
     });
   });
 });
