@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 export function traverseChildren(
   children: React.ReactNode,
@@ -35,43 +35,4 @@ export function mapChildrenProps<TProps>(
 
 function isIterable(child: React.ReactNode): child is React.ReactFragment {
   return !!(child && child[Symbol.iterator]);
-}
-
-export function mapChildren<TResult>(
-  children: React.ReactNode,
-  callback: (node: React.ReactElement) => TResult | null | undefined,
-): TResult[] {
-  const results = [] as TResult[];
-  traverseChildren(children, (child) => {
-    const result = callback(child) ?? null;
-    if (result !== null) {
-      results.push(result);
-    }
-  });
-  return results;
-}
-
-export function shallowEqual(a, b) {
-  return a.length === b.length && a.every((val, i) => val === b[i]);
-}
-
-export function useShallowMemo<TResult>(
-  factory: () => TResult,
-  dependencies: unknown[],
-): TResult {
-  type TRef = {
-    value: TResult;
-    dependencies: typeof dependencies;
-  };
-  const ref = useRef<TRef | null>(null);
-  if (
-    ref.current === null ||
-    !shallowEqual(dependencies, ref.current.dependencies)
-  ) {
-    ref.current = {
-      value: factory(),
-      dependencies,
-    };
-  }
-  return ref.current.value;
 }
