@@ -28,4 +28,19 @@ describe("createMemo", () => {
     expect(memo(multiply)(5, 6, 7)).toEqual(210);
     expect(multiply).toHaveBeenCalledTimes(3);
   });
+  it("should be type-safe", () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    function typeChecks() {
+      // @ts-expect-error "Expected 2-3 arguments"
+      memo(multiply)();
+      // @ts-expect-error "Expected 2-3 arguments"
+      memo(multiply)(2);
+      // @ts-expect-error "Expected 2-3 arguments"
+      memo(multiply)(2, 3, 4, 5);
+      // @ts-expect-error "'string' is not assignable to 'number'"
+      memo(multiply)("2", "3");
+      // @ts-expect-error "'number' is not assignable to 'string'"
+      const res: string = memo(multiply)(2, 3);
+    }
+  });
 });
