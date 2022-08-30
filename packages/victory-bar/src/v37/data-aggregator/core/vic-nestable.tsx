@@ -6,8 +6,7 @@ import { mapChildrenProps } from "../utils/traverse-children";
 type NestableContextValue = ReturnType<typeof getNestableContextValue>;
 const NestableContext = React.createContext<NestableContextValue | null>(null);
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type OtherProps = {};
+type UnknownProps = unknown;
 
 export type NormalizePropsConfig<TExternalProps, TNormalizeProps> = {
   [Prop in keyof TNormalizeProps]: (
@@ -17,7 +16,7 @@ export type NormalizePropsConfig<TExternalProps, TNormalizeProps> = {
 export type AggregatePropsConfig<TExternalProps, TAggregateProps> = {
   [Prop in keyof TAggregateProps]: (
     props: TExternalProps,
-    allProps: OtherProps[],
+    allProps: UnknownProps[],
   ) => TAggregateProps[Prop];
 };
 
