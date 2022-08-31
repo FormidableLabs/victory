@@ -14,8 +14,7 @@ export type NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps> = {
   defaultProps: TExternalProps;
   normalizeProps: NormalizePropsConfig<TExternalProps, TNormalizeProps>;
   aggregateProps: AggregatePropsConfig<
-    TExternalProps,
-    TNormalizeProps,
+    Override<TExternalProps, TNormalizeProps>,
     TAggregateProps
   >;
 };
@@ -26,17 +25,18 @@ export type NormalizePropsConfig<TExternalProps, TNormalizeProps> = {
   ) => TNormalizeProps[Prop];
 };
 
-export type AggregatePropsConfig<
-  TExternalProps,
-  TNormalizedProps,
-  TAggregateProps,
-> = {
-  [Prop in keyof TAggregateProps]: (
-    props: Override<TExternalProps, TNormalizedProps>,
-    allProps: UnknownProps[],
-    memo: NestableContextValue["memo"],
-  ) => TAggregateProps[Prop];
+export type AggregatePropsConfig<TNormalizedProps, TAggregateProps> = {
+  [Prop in keyof TAggregateProps]: Aggregator<
+    TNormalizedProps,
+    TAggregateProps[Prop]
+  >;
 };
+
+export type Aggregator<TNormalizedProps, TResult> = (
+  props: TNormalizedProps,
+  allProps: UnknownProps[],
+  memo: NestableContextValue["memo"],
+) => TResult;
 
 export type ComponentImplementation<
   TExternalProps,
