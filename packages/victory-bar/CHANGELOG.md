@@ -1,5 +1,13 @@
 # victory-bar
 
+## 36.6.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-core@36.6.6
+  - victory-vendor@36.6.6
+
 ## 36.6.5
 
 ### Patch Changes
