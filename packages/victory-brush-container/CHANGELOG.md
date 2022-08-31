@@ -1,5 +1,14 @@
 # victory-brush-container
 
+## 36.6.6
+
+### Patch Changes
+
+- Improved the exported types (fixes [#2451](https://github.com/FormidableLabs/victory/issues/2451)) ([#2452](https://github.com/FormidableLabs/victory/pull/2452))
+
+- Updated dependencies []:
+  - victory-core@36.6.6
+
 ## 36.6.5
 
 ### Patch Changes
