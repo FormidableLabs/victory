@@ -234,3 +234,4 @@ export function cursorContainerMixin<
 }
 
 export const VictoryCursorContainer = cursorContainerMixin(VictoryContainer);
+export type VictoryCursorContainer = typeof VictoryCursorContainer;

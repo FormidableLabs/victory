@@ -234,3 +234,6 @@ export const zoomContainerMixin = (base) =>
   };
 
 export default zoomContainerMixin(VictoryContainer);
+// @ts-expect-error IMPORTANT: when converting this file to TypeScript, you must export the type as well:
+// export const VictoryZoomContainer = zoomContainerMixin(VictoryContainer);
+// export type VictoryZoomContainer = typeof VictoryZoomContainer;

@@ -96,3 +96,6 @@ export const selectionContainerMixin = (base) =>
   };
 
 export default selectionContainerMixin(VictoryContainer);
+// @ts-expect-error IMPORTANT: when converting this file to TypeScript, you must export the type as well:
+// export const VictorySelectionContainer = selectionContainerMixin(VictoryContainer);
+// export type VictorySelectionContainer = typeof VictorySelectionContainer;
