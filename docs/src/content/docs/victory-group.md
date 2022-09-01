@@ -310,7 +310,7 @@ name = "series-1";
 
 `type: number`
 
-The `offset` prop determines the number of pixels each element in a group should be offset from its original position the on the independent axis. In the case of groups of bars, this number should be equal to the width of the bar plus the desired spacing between bars.
+The `offset` prop determines the number of pixels each element in a group should be offset from its original position on the independent axis. In the case of groups of bars, this number should be equal to the width of the bar plus the desired spacing between bars.
 
 ```playground
 <VictoryGroup
