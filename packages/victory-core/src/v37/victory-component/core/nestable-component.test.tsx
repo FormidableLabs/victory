@@ -1,6 +1,36 @@
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import { makeNestableInferred, NestableParent } from "./nestable-component";
+import {
+  ComponentImplementation,
+  makeNestable,
+  NestableConfig,
+  NestableParent,
+} from "./nestable-component";
+
+// Use currying to allow for explicit TExternalProps while inferring the rest
+const makeNestableTest =
+  <TExternalProps,>() =>
+  <
+    TNormalizeProps,
+    TAggregateProps,
+    TReactConfig extends Pick<
+      React.FC<TExternalProps>,
+      "displayName" | "defaultProps" | "propTypes"
+    >,
+  >(
+    reactConfig: TReactConfig,
+    nestableConfig: NestableConfig<
+      TExternalProps,
+      TNormalizeProps,
+      TAggregateProps
+    >,
+    Component: ComponentImplementation<
+      TExternalProps,
+      TNormalizeProps,
+      TAggregateProps
+    >,
+  ) =>
+    Object.assign(makeNestable(nestableConfig, Component), reactConfig);
 
 describe("makeNestable", () => {
   beforeEach(() => {
@@ -17,7 +47,15 @@ describe("makeNestable", () => {
     optionalProp?: boolean;
     overridableProp: "one" | "two" | "three";
   }>;
-  const ExampleComponent = makeNestableInferred<ExampleProps>()(
+  const ExampleComponent = makeNestableTest<ExampleProps>()(
+    {
+      displayName: "ExampleComponent",
+      defaultProps: {
+        title: "Default Title",
+        overridableProp: "two",
+      },
+      propTypes: {},
+    },
     {
       normalizeProps: {
         TITLE: (props) => props.title.toUpperCase(),
@@ -237,13 +275,15 @@ describe("makeNestable", () => {
       value: number;
     };
     const spyRender = jest.fn();
-    const SecondComponent = makeNestableInferred<SecondProps>()(
+    const SecondComponent = makeNestableTest<SecondProps>()(
       {
         displayName: "SecondComponent",
         propTypes: {},
         defaultProps: {
           value: 0,
         },
+      },
+      {
         normalizeProps: {
           TITLE: (props) => props.title?.toLowerCase(),
         },
@@ -377,13 +417,16 @@ describe("makeNestable", () => {
     const identity = jest.fn((val: number) => val);
 
     let lastProps: any;
-    const MemoTest = makeNestableInferred<ExampleDataProps>()(
+    const MemoTest = makeNestableTest<ExampleDataProps>()(
       {
-        ...ExampleComponent.componentConfig,
+        displayName: "ExampleComponent",
+        propTypes: {},
         defaultProps: {
-          ...ExampleComponent.componentConfig.defaultProps,
           data: [0],
+          overridableProp: "two",
         },
+      },
+      {
         normalizeProps: {},
         aggregateProps: {
           domain: (myProps, allProps, memo) => {
