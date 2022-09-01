@@ -1,4 +1,4 @@
-import React, { ValidationMap } from "react";
+import React from "react";
 import { mapChildrenProps } from "../utils/traverse-children";
 import { createMemo, Memoizer } from "../utils/create-memo";
 
@@ -9,9 +9,6 @@ import { createMemo, Memoizer } from "../utils/create-memo";
 type UnknownProps = unknown;
 
 export type NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps> = {
-  displayName: string;
-  propTypes: ValidationMap<TExternalProps>;
-  defaultProps: TExternalProps;
   normalizeProps: NormalizePropsConfig<TExternalProps, TNormalizeProps>;
   aggregateProps: AggregatePropsConfig<
     Override<TExternalProps, TNormalizeProps>,
@@ -48,13 +45,13 @@ export type ComponentImplementation<
   TExternalProps,
   TNormalizeProps,
   TAggregateProps,
-> = ((
+> = (
   props: ComponentImplementationProps<
     TExternalProps,
     TNormalizeProps,
     TAggregateProps
   >,
-) => JSX.Element) & { displayName?: string };
+) => JSX.Element;
 
 export type NormalizedProps<TExternalProps, TNormalizeProps> = Override<
   TExternalProps,
@@ -87,7 +84,7 @@ export function NestableParent({ children }: React.PropsWithChildren) {
   const normalizedTree = mapChildrenProps(children, (child) => {
     if (isNestableNode(child)) {
       const normalizedProps = getNormalizedProps(
-        child.type.componentConfig,
+        child.type.nestableConfig,
         child.props,
         memo,
       );
@@ -95,6 +92,12 @@ export function NestableParent({ children }: React.PropsWithChildren) {
       return normalizedProps;
     }
   });
+  if (allProps.length === 0) {
+    // eslint-disable-next-line no-console
+    console.error(
+      `[Victory] [NestedParent] Did not find any nestable children`,
+    );
+  }
 
   const value = getNestableContextValue(allProps, memo);
 
@@ -116,7 +119,7 @@ type NestableContextValue = ReturnType<typeof getNestableContextValue>;
 export const makeNestableInferred =
   <TExternalProps,>() =>
   <TNormalizeProps, TAggregateProps>(
-    componentConfig: NestableConfig<
+    nestableConfig: NestableConfig<
       TExternalProps,
       TNormalizeProps,
       TAggregateProps
@@ -127,7 +130,7 @@ export const makeNestableInferred =
       TAggregateProps
     >,
   ) =>
-    makeNestable(componentConfig, Component);
+    makeNestable(nestableConfig, Component);
 
 /**
  * Makes a component nestable, so the props can be normalized and aggregated
@@ -140,8 +143,6 @@ export function makeNestable<TExternalProps, TNormalizeProps, TAggregateProps>(
     TAggregateProps
   >,
 ) {
-  Component.displayName = config.displayName;
-
   const NestableComponent = (
     props: React.PropsWithChildren<TExternalProps>,
   ): JSX.Element => {
@@ -168,12 +169,7 @@ export function makeNestable<TExternalProps, TNormalizeProps, TAggregateProps>(
       </Component>
     );
   };
-  NestableComponent.componentConfig = config;
-  // Standard React configs:
-  NestableComponent.displayName = `NestableComponent(${config.displayName})`;
-  NestableComponent.defaultProps = config.defaultProps;
-  NestableComponent.propTypes = config.propTypes;
-
+  NestableComponent.nestableConfig = config;
   return NestableComponent;
 }
 
@@ -193,7 +189,7 @@ function isNestableNode(
   return !!(
     child &&
     typeof child === "object" &&
-    (child as NestableComponentNode).type?.componentConfig
+    (child as NestableComponentNode).type?.nestableConfig
   );
 }
 
@@ -213,7 +209,7 @@ function getNormalizedProps<
   TNormalizeProps extends object,
   TAggregateProps,
 >(
-  componentConfig: NestableConfig<
+  nestableConfig: NestableConfig<
     TExternalProps,
     TNormalizeProps,
     TAggregateProps
@@ -222,7 +218,7 @@ function getNormalizedProps<
   memo: Memoizer,
 ): TNormalizeProps {
   const normalizedResults = mapObject(
-    componentConfig.normalizeProps,
+    nestableConfig.normalizeProps,
     (normalizer) => {
       return normalizer(props, memo);
     },

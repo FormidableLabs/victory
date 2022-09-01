@@ -3,14 +3,14 @@
 This is a design doc, for formulating + illustrating a working approach for "Victory Turbo" components.
 This is a WIP.
 
-# `createVictoryComponent`
+# `createTurboComponent`
 
 Here's how we'd define a component:
 
 ```tsx
-import { createVictoryComponent } from "./create-victory-component";
+import { createTurboComponent } from "./create-turbo-component";
 
-export const VictoryLine = createVictoryComponent(
+export const VictoryLine = createTurboComponent(
   {
     // Standard React types:
     displayName: "VictoryLine",

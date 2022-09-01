@@ -1,23 +1,28 @@
 import React from "react";
-import { createVictoryComponent } from "./create-victory-component";
+import { createTurboComponent } from "./create-turbo-component";
+import { TurboContainerProps } from "./with-turbo-container";
+import { VictoryContainer } from "../../../victory-container/victory-container";
 
 export default {
-  title: "v37/createVictoryComponent",
+  title: "v37/createTurboComponent",
 };
 
-type ExampleProps = React.PropsWithChildren<{
-  title: string;
-  optionalProp?: boolean;
-  defaultedProp: boolean;
-}>;
+type ExampleProps = React.PropsWithChildren<
+  {
+    title: string;
+    optionalProp?: boolean;
+    defaultedProp: boolean;
+  } & TurboContainerProps
+>;
 
-const ExampleComponent = createVictoryComponent<ExampleProps>()(
+const ExampleComponent = createTurboComponent<ExampleProps>()(
   {
     displayName: "ExampleComponent",
     propTypes: {},
     defaultProps: {
       title: "Default Title",
       defaultedProp: true,
+      containerComponent: <VictoryContainer />,
     },
     normalizeProps: {
       TITLE: (props) => props.title.toUpperCase(),
@@ -44,11 +49,11 @@ const ExampleComponent = createVictoryComponent<ExampleProps>()(
     } = props;
 
     return (
-      <fieldset>
-        <legend>{props.title}</legend>
-        <pre>{JSON.stringify(props, null, 2)}</pre>
+      <g>
+        <text>{props.title}</text>
+        <text>{JSON.stringify(props, null, 2)}</text>
         <>{children}</>
-      </fieldset>
+      </g>
     );
   },
 );

@@ -19,12 +19,6 @@ describe("makeNestable", () => {
   }>;
   const ExampleComponent = makeNestableInferred<ExampleProps>()(
     {
-      displayName: "ExampleComponent",
-      defaultProps: {
-        title: "default title",
-        overridableProp: "two",
-      },
-      propTypes: {},
       normalizeProps: {
         TITLE: (props) => props.title.toUpperCase(),
         overridableProp: (props) =>
@@ -32,9 +26,13 @@ describe("makeNestable", () => {
       },
       aggregateProps: {
         titles: (myProps, allProps) =>
-          (allProps as Array<ExampleProps>).map((props) => props.title),
+          (allProps as Array<ExampleProps>)
+            .map((props) => props.title)
+            .filter(Boolean),
         TITLES: (myProps, allProps) =>
-          (allProps as Array<typeof myProps>).map((props) => props.TITLE),
+          (allProps as Array<typeof myProps>)
+            .map((props) => props.TITLE)
+            .filter(Boolean),
       },
     },
     ({ children, ...props }) => {
@@ -344,7 +342,7 @@ describe("makeNestable", () => {
               Example 1
             </legend>
             <pre>
-              TITLES: EXAMPLE 1, second 1, EXAMPLE 2,
+              TITLES: EXAMPLE 1, second 1, EXAMPLE 2
             </pre>
           </fieldset>
           <fieldset>
@@ -356,7 +354,7 @@ describe("makeNestable", () => {
               Example 2
             </legend>
             <pre>
-              TITLES: EXAMPLE 1, second 1, EXAMPLE 2,
+              TITLES: EXAMPLE 1, second 1, EXAMPLE 2
             </pre>
           </fieldset>
           <fieldset>
