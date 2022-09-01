@@ -73,8 +73,44 @@ export type Override<TOriginal, TOverrides> = Omit<
 > &
   TOverrides;
 
-type NestableContextValue = ReturnType<typeof getNestableContextValue>;
+// NestableParent:
 const NestableContext = React.createContext<NestableContextValue | null>(null);
+/**
+ * Traverses all children, normalizes their properties, and collects all props for aggregation
+ */
+export function NestableParent({ children }: React.PropsWithChildren) {
+  // We use memo to allow components to share calculated data:
+  const memo = createMemo();
+
+  // Traverse all children, normalizing their props, and collecting the results:
+  const allProps: NestableProps[] = [];
+  const normalizedTree = mapChildrenProps(children, (child) => {
+    if (isNestableNode(child)) {
+      const normalizedProps = getNormalizedProps(
+        child.type.componentConfig,
+        child.props,
+        memo,
+      );
+      allProps.push({ ...child.props, ...normalizedProps });
+      return normalizedProps;
+    }
+  });
+
+  const value = getNestableContextValue(allProps, memo);
+
+  return (
+    <NestableContext.Provider value={value}>
+      {normalizedTree}
+    </NestableContext.Provider>
+  );
+}
+function getNestableContextValue(allProps: NestableProps[], memo: Memoizer) {
+  return {
+    allProps,
+    memo,
+  };
+}
+type NestableContextValue = ReturnType<typeof getNestableContextValue>;
 
 // Use currying to allow for explicit TExternalProps while inferring the rest
 export const makeNestableInferred =
@@ -141,43 +177,6 @@ export function makeNestable<TExternalProps, TNormalizeProps, TAggregateProps>(
   return NestableComponent;
 }
 
-/**
- * Traverses all children, normalizes their properties, and collects all props for aggregation
- */
-export function NestableParent({ children }: React.PropsWithChildren) {
-  // We use memo to allow components to share calculated data:
-  const memo = createMemo();
-
-  // Traverse all children, normalizing their props, and collecting the results:
-  const allProps: NestableProps[] = [];
-  const normalizedTree = mapChildrenProps(children, (child) => {
-    if (isNestableNode(child)) {
-      const normalizedProps = getNormalizedProps(
-        child.type.componentConfig,
-        child.props,
-        memo,
-      );
-      allProps.push({ ...child.props, ...normalizedProps });
-      return normalizedProps;
-    }
-  });
-
-  const value = getNestableContextValue(allProps, memo);
-
-  return (
-    <NestableContext.Provider value={value}>
-      {normalizedTree}
-    </NestableContext.Provider>
-  );
-}
-
-function getNestableContextValue(allProps: NestableProps[], memo: Memoizer) {
-  return {
-    allProps,
-    memo,
-  };
-}
-
 type NestableComponent = ReturnType<typeof makeNestable>;
 type NestableProps = Record<any, unknown>;
 type NestableComponentNode = React.ReactElement<
@@ -186,7 +185,7 @@ type NestableComponentNode = React.ReactElement<
 >;
 
 /**
- * Determines whether the React child is one of our nested nodes
+ * Determines whether the React child is one of our nestable nodes
  */
 function isNestableNode(
   child: React.ReactNode,
