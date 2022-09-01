@@ -66,7 +66,7 @@ describe("makeNestable", () => {
       return (
         <fieldset>
           <legend>{props.title}</legend>
-          <pre>{props.TITLES}</pre>
+          <pre>{`TITLES: ${props.TITLES.join(", ")}`}</pre>
           <>{children}</>
         </fieldset>
       );
@@ -138,7 +138,7 @@ describe("makeNestable", () => {
               default title
             </legend>
             <pre>
-              DEFAULT TITLE
+              TITLES: DEFAULT TITLE
             </pre>
           </fieldset>
         </div>
@@ -193,33 +193,21 @@ describe("makeNestable", () => {
               Parent
             </legend>
             <pre>
-              PARENT
-              CHILD 1
-              GRANDCHILD 1
-              GRANDCHILD 2
-              CHILD 2
+              TITLES: PARENT, CHILD 1, GRANDCHILD 1, GRANDCHILD 2, CHILD 2
             </pre>
             <fieldset>
               <legend>
                 Child 1
               </legend>
               <pre>
-                PARENT
-                CHILD 1
-                GRANDCHILD 1
-                GRANDCHILD 2
-                CHILD 2
+                TITLES: PARENT, CHILD 1, GRANDCHILD 1, GRANDCHILD 2, CHILD 2
               </pre>
               <fieldset>
                 <legend>
                   Grandchild 1
                 </legend>
                 <pre>
-                  PARENT
-                  CHILD 1
-                  GRANDCHILD 1
-                  GRANDCHILD 2
-                  CHILD 2
+                  TITLES: PARENT, CHILD 1, GRANDCHILD 1, GRANDCHILD 2, CHILD 2
                 </pre>
               </fieldset>
               <fieldset>
@@ -227,11 +215,7 @@ describe("makeNestable", () => {
                   Grandchild 2
                 </legend>
                 <pre>
-                  PARENT
-                  CHILD 1
-                  GRANDCHILD 1
-                  GRANDCHILD 2
-                  CHILD 2
+                  TITLES: PARENT, CHILD 1, GRANDCHILD 1, GRANDCHILD 2, CHILD 2
                 </pre>
               </fieldset>
             </fieldset>
@@ -240,13 +224,143 @@ describe("makeNestable", () => {
                 Child 2
               </legend>
               <pre>
-                PARENT
-                CHILD 1
-                GRANDCHILD 1
-                GRANDCHILD 2
-                CHILD 2
+                TITLES: PARENT, CHILD 1, GRANDCHILD 1, GRANDCHILD 2, CHILD 2
               </pre>
             </fieldset>
+          </fieldset>
+        </div>
+      `);
+    });
+  });
+
+  describe("mixed nested components", () => {
+    type SecondProps = {
+      title?: string;
+      value: number;
+    };
+    const spyRender = jest.fn();
+    const SecondComponent = makeNestableInferred<SecondProps>()(
+      {
+        displayName: "SecondComponent",
+        propTypes: {},
+        defaultProps: {
+          value: 0,
+        },
+        normalizeProps: {
+          TITLE: (props) => props.title?.toLowerCase(),
+        },
+        aggregateProps: {
+          valueSum: (myProps, allProps, memo) => {
+            return (allProps as Array<SecondProps>).reduce(
+              (sum, props) => (props.value ? sum + props.value : sum),
+              0,
+            );
+          },
+        },
+      },
+      (props) => {
+        spyRender(props);
+        return (
+          <fieldset>
+            {props.title}
+            {`Sum of all values: ${props.valueSum}`}
+          </fieldset>
+        );
+      },
+    );
+
+    it("should render nested in other components", () => {
+      const SimpleWrapper = ({ children }) => <span>{children}</span>;
+      const { container } = render(
+        <NestableParent>
+          <section>
+            <SimpleWrapper>
+              <SecondComponent value={99} />
+            </SimpleWrapper>
+          </section>
+        </NestableParent>,
+      );
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          <section>
+            <span>
+              <fieldset>
+                Sum of all values: 99
+              </fieldset>
+            </span>
+          </section>
+        </div>
+      `);
+    });
+
+    it("should aggregate all components regardless of nesting", () => {
+      const { container } = render(
+        <NestableParent>
+          <section>
+            <SecondComponent value={10} />
+          </section>
+          <SecondComponent value={10} />
+          <div>
+            <span>
+              <SecondComponent value={10} />
+            </span>
+          </div>
+        </NestableParent>,
+      );
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          <section>
+            <fieldset>
+              Sum of all values: 30
+            </fieldset>
+          </section>
+          <fieldset>
+            Sum of all values: 30
+          </fieldset>
+          <div>
+            <span>
+              <fieldset>
+                Sum of all values: 30
+              </fieldset>
+            </span>
+          </div>
+        </div>
+      `);
+    });
+
+    it("mixed nestable components should all participate in aggregation", () => {
+      const { container } = render(
+        <NestableParent>
+          <ExampleComponent title={"Example 1"} />
+          <SecondComponent title={"Second 1"} value={10} />
+          <ExampleComponent title={"Example 2"} />
+          <SecondComponent value={10} />
+        </NestableParent>,
+      );
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          <fieldset>
+            <legend>
+              Example 1
+            </legend>
+            <pre>
+              TITLES: EXAMPLE 1, second 1, EXAMPLE 2,
+            </pre>
+          </fieldset>
+          <fieldset>
+            Second 1
+            Sum of all values: 20
+          </fieldset>
+          <fieldset>
+            <legend>
+              Example 2
+            </legend>
+            <pre>
+              TITLES: EXAMPLE 1, second 1, EXAMPLE 2,
+            </pre>
+          </fieldset>
+          <fieldset>
+            Sum of all values: 20
           </fieldset>
         </div>
       `);
