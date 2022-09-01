@@ -13,7 +13,7 @@ import memoize from "memoize-weak";
  * memo(tuple)(1, 2) === memo(tuple)(1, 2)
  */
 export function createMemo() {
-  type Memoizer = <TMethod>(method: TMethod) => TMethod;
   const memo: Memoizer = memoize((method) => memoize(method));
   return memo;
 }
+export type Memoizer = <TMethod>(method: TMethod) => TMethod;

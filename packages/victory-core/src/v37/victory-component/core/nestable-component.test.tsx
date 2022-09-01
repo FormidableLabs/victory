@@ -1,8 +1,8 @@
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import { createVictoryComponent } from "./create-victory-component";
+import { makeNestableInferred, NestableParent } from "./nestable-component";
 
-describe("createVictoryComponent", () => {
+describe("makeNestable", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -17,7 +17,7 @@ describe("createVictoryComponent", () => {
     optionalProp?: boolean;
     overridableProp: "one" | "two" | "three";
   }>;
-  const ExampleComponent = createVictoryComponent<ExampleProps>()(
+  const ExampleComponent = makeNestableInferred<ExampleProps>()(
     {
       displayName: "ExampleComponent",
       defaultProps: {
@@ -74,8 +74,21 @@ describe("createVictoryComponent", () => {
   );
 
   describe("rendering the component alone", () => {
+    afterEach(() => {
+      jest.restoreAllMocks();
+    });
+
+    it("fails when the <NestedParent> is missing", () => {
+      jest.spyOn(console, "error").mockImplementation(() => void 0);
+      expect(() => {
+        render(<ExampleComponent />);
+      }).toThrowErrorMatchingInlineSnapshot(
+        `"[NestableComponent] Did not find a NestableParent"`,
+      );
+    });
+
     it("props are defaulted, normalized, and aggregated", () => {
-      render(<ExampleComponent />);
+      render(<ExampleComponent />, { wrapper: NestableParent });
       expect(lastRenderedProps()).toMatchInlineSnapshot(`
         Object {
           "TITLE": "DEFAULT TITLE",
@@ -98,6 +111,7 @@ describe("createVictoryComponent", () => {
           optionalProp
           overridableProp="three"
         />,
+        { wrapper: NestableParent },
       );
       expect(lastRenderedProps()).toMatchInlineSnapshot(`
         Object {
@@ -116,7 +130,7 @@ describe("createVictoryComponent", () => {
     });
 
     it("element is rendered correctly", () => {
-      const result = render(<ExampleComponent />);
+      const result = render(<ExampleComponent />, { wrapper: NestableParent });
       expect(result.container).toMatchInlineSnapshot(`
         <div>
           <fieldset>
@@ -143,6 +157,7 @@ describe("createVictoryComponent", () => {
           </ExampleComponent>
           <ExampleComponent title="Child 2" />
         </ExampleComponent>,
+        { wrapper: NestableParent },
       );
     });
 
@@ -250,7 +265,7 @@ describe("createVictoryComponent", () => {
     const identity = jest.fn((val: number) => val);
 
     let lastProps: any;
-    const MemoTest = createVictoryComponent<ExampleDataProps>()(
+    const MemoTest = makeNestableInferred<ExampleDataProps>()(
       {
         ...ExampleComponent.componentConfig,
         defaultProps: {
@@ -295,7 +310,7 @@ describe("createVictoryComponent", () => {
       </MemoTest>
     );
     beforeEach(() => {
-      result = render(renderElements());
+      result = render(renderElements(), { wrapper: NestableParent });
     });
 
     it("all components should share their memoized data", () => {
