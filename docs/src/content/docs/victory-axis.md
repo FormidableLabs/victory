@@ -72,7 +72,7 @@ axisLabelComponent={<VictoryLabel dy={20}/>}
 
 ## axisValue
 
-The `axisValue` prop may be used to position the dependent axis. Ths prop is useful when dependent axes should line up with values on the independent axis.
+The `axisValue` prop may be used to position the dependent axis. This prop is useful when dependent axes should line up with values on the independent axis.
 
 ```playground
  <VictoryChart>

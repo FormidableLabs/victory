@@ -15,7 +15,7 @@ scope:
 
 Not every component uses all of these props. These are all common to things like `VictoryBar`, `VictoryScatter`, but other components like `VictoryStack` use only some of them.
 
-The props explanations given here are general. Each component docs page should be considered as the the source of truth for a component's props, and any caveats will be listed there.
+The props explanations given here are general. Each component docs page should be considered as the source of truth for a component's props, and any caveats will be listed there.
 
 ## animate
 
@@ -292,7 +292,7 @@ ReactDOM.render(<CustomStyledBarChart/>, mountNode);
 
 `type: array[low, high] || { x: [low, high], y: [low, high] }`
 
-The `domain` prop describes the range of data the component will include. This prop can be given as a array of the minimum and maximum expected values of the data or as an object that specifies separate arrays for x and y. If this prop is not provided, a domain will be calculated from data, or other available information.
+The `domain` prop describes the range of data the component will include. This prop can be given as an array of the minimum and maximum expected values of the data or as an object that specifies separate arrays for x and y. If this prop is not provided, a domain will be calculated from data, or other available information.
 
 _note:_ The `x` value supplied to the `domain` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
 
@@ -350,7 +350,7 @@ Identifying properties include:
 
 - `childName`: the name of the component the event should be attached to. When events are specified in `VictorySharedEvents` or on a component that renders several Victory components as children (_i.e._ `VictoryChart`, `VictoryGroup`, `VictoryStack`), it is necessary to specify which child events should apply to. The given `childName` should match the `name` prop of a child component. This identifier can be given as a string, an array of strings, or as "all".
 
-- `target`: the type of element the event should be attached to. Valid targets for most Victory components will be `"parent"`, `"data"`, and `"labels"`. Events with the "parent" target will be attached to to the top level svg. Events with `"data"` and `"labels"` targets will be attached to `dataComponent` and `labelComponent` elements respectively. Some components, like `VictoryAxis` use non-standard targets like `"grid"`. Refer to individual API docs for additional caveats.
+- `target`: the type of element the event should be attached to. Valid targets for most Victory components will be `"parent"`, `"data"`, and `"labels"`. Events with the "parent" target will be attached to the top level svg. Events with `"data"` and `"labels"` targets will be attached to `dataComponent` and `labelComponent` elements respectively. Some components, like `VictoryAxis` use non-standard targets like `"grid"`. Refer to individual API docs for additional caveats.
 
 - `eventKey`: the specific element to be targeted. Events may be attached to specific elements by `eventKey`. By default, `eventKey` corresponds to the index in the `data` array (or `tickValues` array) corresponding to a rendered element. This value may be given as a single string or number, an array of strings or numbers, or as "all". It is not typically necessary to specify an individual `eventKey` for attaching events. When no `eventKey` is given, events will be attached to all elements that match a given `childName` and `target`. Some components like `VictoryArea` and `VictoryLine` render only a single element for an entire series of data. For these, the `eventKey` should be "all".
 
@@ -880,7 +880,7 @@ _default:_ `sortOrder="ascending"`
 
 `type: boolean`
 
-The `standalone` props specifies whether the component should be rendered in a independent `<svg>` element or in a `<g>` tag. This prop defaults to true, and renders an `svg`, however, wrapper components like `VictoryChart`, `VictoryStack`, and `VictoryGroup` force children to use `standalone={false}`.
+The `standalone` props specifies whether the component should be rendered in an independent `<svg>` element or in a `<g>` tag. This prop defaults to true, and renders an `svg`, however, wrapper components like `VictoryChart`, `VictoryStack`, and `VictoryGroup` force children to use `standalone={false}`.
 
 _default:_ `standalone={true}`
 
@@ -923,7 +923,7 @@ _note_ The `style` prop used by `VictoryAxis` has a different format than the st
 
 _note_ When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
 
-_note_ custom `angle` and `verticalAnchor` properties maybe included in labels styles.
+_note_ custom `angle` and `verticalAnchor` properties may be included in labels styles.
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 

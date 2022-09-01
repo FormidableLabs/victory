@@ -91,7 +91,7 @@ _default:_ `<g/>`
 
 `type: { x: number, y: number }`
 
-Victory components will pass an `origin` prop is to define the center point in svg coordinates for polar charts. **This prop should not be set manually.**
+Victory components will pass an `origin` prop to define the center point in svg coordinates for polar charts. **This prop should not be set manually.**
 
 ## polar
 

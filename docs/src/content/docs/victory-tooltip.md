@@ -88,7 +88,7 @@ The `constrainToVisibleArea` prop determines whether to coerce tooltips so that 
 
 `type: number || function`
 
-The `cornerRadius` prop determines corner radius of the flyout container. This prop may be given as a positive number or a function of datum.
+The `cornerRadius` prop determines the corner radius of the flyout container. This prop may be given as a positive number or a function of datum.
 
 ```playground
 <VictoryBar
@@ -127,7 +127,7 @@ The `dy` prop defines a vertical shift from the `y` coordinate.
 
 `type: object`
 
-The `events` prop attaches arbitrary event handlers to the label component. This prop should be given as an object of event names and corresponding event handlers. When events are provided via Victory's event system, event handlers will be called with the event, the props of the component is attached to, and an eventKey.
+The `events` prop attaches arbitrary event handlers to the label component. This prop should be given as an object of event names and corresponding event handlers. When events are provided via Victory's event system, event handlers will be called with the event, the props of the component it is attached to, and an eventKey.
 
 _examples:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
 

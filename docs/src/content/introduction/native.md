@@ -12,7 +12,7 @@ In this guide, we’ll show you how to get started with Victory Native and the R
 
 #### 1. Adding Victory Native to your React Native app
 
-Visit the [the guide on getting started](https://reactnative.dev/docs/getting-started) with React Native if you’re just getting started with React Native.
+Visit [the guide on getting started](https://reactnative.dev/docs/getting-started) with React Native if you’re just getting started with React Native.
 
 Victory Native is compatible with React Native 0.50 or higher.
 
@@ -44,9 +44,9 @@ $ react-native install react-native-svg
 
 #### 3. Using Victory Native in your React Native app
 
-Victory Native behaves and functions the same way for React Native as it does for the web. Just import components from `victory-native` to get started. To learn move about how to use Victory visit the [Getting Started Guide][].
+Victory Native behaves and functions the same way for React Native as it does for the web. Just import components from `victory-native` to get started. To learn more about how to use Victory visit the [Getting Started Guide][].
 
-The example below shows a how Victory Native easily integrates within your React Native app.
+The example below shows how Victory Native easily integrates within your React Native app.
 
 ```jsx
 import React from "react";

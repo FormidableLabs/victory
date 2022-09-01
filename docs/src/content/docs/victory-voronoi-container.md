@@ -66,7 +66,7 @@ When the `disable` prop is set to `true`, `VictoryVoronoiContainer` events will 
 
 When a `labels` prop is provided to `VictoryVoronoiContainer` it will render a label component
 rather than activating labels on the child components it renders. This is useful for creating multi-
-point tooltips. This prop should be given as a function which will be called once for each active point. The `labels` function will be called with the the props that correspond to the active label.
+point tooltips. This prop should be given as a function which will be called once for each active point. The `labels` function will be called with the props that correspond to the active label.
 
 _example:_ `labels={({ datum }) => "y: " + datum.y}`
 
@@ -165,7 +165,7 @@ _example:_ `radius={25}`
 
 `type: array[string]`
 
-The `voronoiBlacklist` prop is used to specify a list of components to ignore when calculating a shared voronoi diagram. Components with a `name` prop matching an element in the `voronoiBlacklist` array will be ignored by `VictoryVoronoiContainer`. Ignored components will never be flagged as active, and will not contribute date to shared tooltips or labels.
+The `voronoiBlacklist` prop is used to specify a list of components to ignore when calculating a shared voronoi diagram. Components with a `name` prop matching an element in the `voronoiBlacklist` array will be ignored by `VictoryVoronoiContainer`. Ignored components will never be flagged as active, and will not contribute data to shared tooltips or labels.
 
 _example:_ `voronoiBlacklist={["redPoints"]}`
 
@@ -199,7 +199,7 @@ _example:_ `voronoiBlacklist={["redPoints"]}`
 When the `voronoiDimension` prop is set, voronoi selection will only take the given dimension into account.
 For example, when `dimension` is set to "x", all data points matching a particular x mouse position
 will be activated regardless of y value. When this prop is not given, voronoi selection is
-determined by both x any y values.
+determined by both x and y values.
 
 _example:_ `voronoiDimension="x"`
 

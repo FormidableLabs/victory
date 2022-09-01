@@ -543,15 +543,15 @@ Use `open` data accessor prop to define the open value of a candle.
 
 _examples:_ `open="opening_value"`
 
-**function:** use a function to translate each element in a data array into a open value
+**function:** use a function to translate each element in a data array into an open value
 
 _examples:_ `open={() => 10}`
 
-**array index:** specify which index of an array should be used as a open value when data is given as an array of arrays
+**array index:** specify which index of an array should be used as an open value when data is given as an array of arrays
 
 _examples:_ `open={1}`
 
-**path string or path array:** specify which property in an array of nested data objects should be used as a open value
+**path string or path array:** specify which property in an array of nested data objects should be used as an open value
 
 _examples:_ `open="bonds.open"`, `open={["bonds", "open"]}`
 

@@ -11,7 +11,7 @@ scope: null
 `VictorySelectionContainer` is used to enable selecting data points within a highlighted region.
 Clicking and dragging will select an x-y region, and add the `active` prop to any elements
 corresponding to data points within the region. Create a select-box control by tying the set of
-selected data points to other elements, such as filtered table.
+selected data points to other elements, such as a filtered table.
 
 `VictorySelectionContainer` is similar to `VictoryBrushContainer`. `VictoryBrushContainer` may be
 used to identify the domain of a selected region, whereas `VictorySelectionContainer` may be used to

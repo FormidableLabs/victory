@@ -222,7 +222,7 @@ Note that Chromatic internally runs `npm run build-storybook` around which we ha
 
 We use [changesets](https://github.com/changesets/changesets) to create package versions and publish them.
 
-### Using changsets
+### Using changesets
 
 Our official release path is to use automation to perform the actual publishing of our packages. The steps are to:
 

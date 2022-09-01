@@ -384,7 +384,7 @@ ReactDOM.render(<App/>, mountNode);
 ```
 
 ## Victory Native
-In Victory Native tooltips are much more reliable when using `VictoryVoronoiContainer`. Using `VictoryVoronoiContainer` registers all touch events on the container itself, which mitigates interference with other chart element, which can be a problem on some platforms. Showing the closest data point with `VictoryVoronoiContainer` also increases the tap targets for the tooltip, which can otherwise be quite small. Set `VictoryVoronoiContainer` as the `containerComponent` prop on the outermost Victory component.
+In Victory Native tooltips are much more reliable when using `VictoryVoronoiContainer`. Using `VictoryVoronoiContainer` registers all touch events on the container itself, which mitigates interference with other chart elements, which can be a problem on some platforms. Showing the closest data point with `VictoryVoronoiContainer` also increases the tap targets for the tooltip, which can otherwise be quite small. Set `VictoryVoronoiContainer` as the `containerComponent` prop on the outermost Victory component.
 
 ```jsx
 <VictoryChart containerComponent={<VictoryVoronoiContainer />} >

@@ -119,7 +119,7 @@ _default:_ `brushComponent={<rect/>}`
 
 `type: "x" || "y"`
 
-When the `brushDimension` prop is set, brushing will only be specific to the to the given dimension
+When the `brushDimension` prop is set, brushing will only be specific to the given dimension
 (either "x" or "y"), and the entire domain of the other dimension will be highlighted. When this prop
 is not specified, highlighting will occur along both dimensions.
 
@@ -206,7 +206,7 @@ _default:_ `handleWidth={8}`
 
 `type: function`
 
-The optional `onBrushCleared` prop accepts an function to be called when tha active brush area is cleared. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
+The optional `onBrushCleared` prop accepts a function to be called when the active brush area is cleared. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
 
 _example:_ `onBrushCleared={(domain, props) => handleBrushCleared(domain, props)}`
 
@@ -214,7 +214,7 @@ _example:_ `onBrushCleared={(domain, props) => handleBrushCleared(domain, props)
 
 `type: function`
 
-The optional `onBrushDomainChange` prop accepts an function to be called on each update to the highlighted domain. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
+The optional `onBrushDomainChange` prop accepts a function to be called on each update to the highlighted domain. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
 
 _example:_ `onBrushDomainChange={(domain, props) => handleDomainChange(domain, props)}`
 
@@ -222,7 +222,7 @@ _example:_ `onBrushDomainChange={(domain, props) => handleDomainChange(domain, p
 
 `type: function`
 
-The optional `onBrushDomainChangeEnd` prop accepts an function to be called only on mouse up events. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
+The optional `onBrushDomainChangeEnd` prop accepts a function to be called only on mouse up events. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
 
 _example:_ `onBrushDomainChangeEnd={(domain, props) => handleDomainChangeEnd(domain, props)}`
 

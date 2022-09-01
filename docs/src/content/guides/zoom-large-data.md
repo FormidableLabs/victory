@@ -131,7 +131,7 @@ when the chart is zoomed out we still render all of the data points!
 
 ## Render a small sample of points
 
-There are a number of possible methods to reducing the number of visible data points rendered.
+There are a number of possible methods to reduce the number of visible data points rendered.
 We'll use the simplest method: selecting only every `k`th point, and discarding all others.
 `k` is determined simply:
 if there are 5,000 points and we only want to show 100, then `k` is 50.
@@ -238,7 +238,7 @@ ReactDOM.render(<CustomChart data={allData} maxPoints={120} />, mountNode);
 
 ## Extending this Demo
 
-This guide serves a start, but you might have some questions:
+This guide serves as a start, but you might have some questions:
 
 * _How big should `maxPoints` be?_ For most situations between 50 and 150 is ideal.
 * _What if I want to render millions of data points?_ This concept can be extended to millions of points, but you'll need the help of a library to handle the sampling. Try [Crossfilter][].
