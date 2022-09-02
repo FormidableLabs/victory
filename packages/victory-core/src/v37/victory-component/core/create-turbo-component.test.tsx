@@ -2,28 +2,27 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { createTurboComponent } from "./create-turbo-component";
 import { TurboContainerProps } from "./with-turbo-container";
-import { VictoryContainer, LineHelpers } from "../../../index";
+import { VictoryContainer, LineHelpers, Path } from "../../../index";
 import { TurboDataProps } from "../utils/props";
 import { Clone } from "../../clone";
 import { AggregateProps, NormalizeProps } from "../utils/aggregate-props";
-import { Curve } from "victory-line";
 
 describe("createTurboComponent", () => {
-  interface VicLineProps<TDatum = any>
+  interface VicExampleProps<TDatum = any>
     extends TurboContainerProps,
       TurboDataProps<TDatum> {
     title: string;
     fill: string;
   }
-  const VicLine = createTurboComponent<VicLineProps>()(
+  const VicExample = createTurboComponent<VicExampleProps>()(
     {
-      displayName: "VicLine",
+      displayName: "VicExample",
       propTypes: {},
       defaultProps: {
         title: "?",
         fill: "?",
         containerComponent: <VictoryContainer />,
-        dataComponent: <Curve />,
+        dataComponent: <Path />,
         data: [
           { x: 0, y: 0 },
           { x: 1, y: 1 },
@@ -52,7 +51,7 @@ describe("createTurboComponent", () => {
 
   it("should render inside an SVG", () => {
     const result = render(
-      <VicLine data-testid="test" title="test-title" fill="test-fill" />,
+      <VicExample data-testid="test" title="test-title" fill="test-fill" />,
     );
     const svg = result.getByTestId("test");
     expect(svg).toMatchInlineSnapshot(`
@@ -72,7 +71,8 @@ describe("createTurboComponent", () => {
           <text>
             test-title
           </text>
-          <line
+          <path
+            d="M-225,450L0,300L225,150L450,0"
             fill="test-fill"
           />
         </g>
