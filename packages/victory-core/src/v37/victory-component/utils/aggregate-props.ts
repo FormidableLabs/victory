@@ -5,6 +5,7 @@ import { getScale } from "../../victory-state/helpers/get-scale";
 import {
   AggregatePropsConfig,
   NormalizePropsConfig,
+  UnknownProps,
 } from "../core/nestable-component";
 import { satisfies } from "./satisfies";
 import { TurboDataProps } from "./props";
@@ -48,12 +49,18 @@ function getAggregateRange(allProps: TurboNormalizedProps[]) {
   };
 }
 
+function findDataProps(allProps: UnknownProps[]) {
+  return (allProps as TurboNormalizedProps[]).filter((p) => p.data);
+}
+
 export const AggregateProps = satisfies<AggregatePropsConfig<any, any>>()({
   domain: (myProps, allProps, memo) => {
-    return memo(getAggregateDomain)(allProps as TurboNormalizedProps[]);
+    const dataProps = memo(findDataProps)(allProps);
+    return memo(getAggregateDomain)(dataProps);
   },
   range: (myProps, allProps, memo) => {
-    return memo(getAggregateRange)(allProps as TurboNormalizedProps[]);
+    const dataProps = memo(findDataProps)(allProps);
+    return memo(getAggregateRange)(dataProps);
   },
   scale: (props, allProps, memo) => {
     const domain = AggregateProps.domain(props, allProps, memo);

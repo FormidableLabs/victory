@@ -6,7 +6,7 @@ import { createMemo, Memoizer } from "../utils/create-memo";
 
 // Start with a bunch of types:
 
-type UnknownProps = unknown;
+export type UnknownProps = unknown;
 
 export type NestableConfig<TExternalProps, TNormalizeProps, TAggregateProps> = {
   normalizeProps: NormalizePropsConfig<TExternalProps, TNormalizeProps>;
