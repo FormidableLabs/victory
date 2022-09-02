@@ -2,10 +2,16 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { createTurboComponent } from "./create-turbo-component";
 import { TurboContainerProps } from "./with-turbo-container";
-import { VictoryContainer } from "../../../victory-container/victory-container";
+import { VictoryContainer, LineHelpers } from "../../../index";
+import { TurboDataProps } from "../utils/props";
+import { Clone } from "../../clone";
+import { AggregateProps, NormalizeProps } from "../utils/aggregate-props";
+import { Curve } from "victory-line";
 
 describe("createTurboComponent", () => {
-  interface VicLineProps extends TurboContainerProps {
+  interface VicLineProps<TDatum = any>
+    extends TurboContainerProps,
+      TurboDataProps<TDatum> {
     title: string;
     fill: string;
   }
@@ -14,18 +20,31 @@ describe("createTurboComponent", () => {
       displayName: "VicLine",
       propTypes: {},
       defaultProps: {
-        title: "",
-        fill: "",
+        title: "?",
+        fill: "?",
         containerComponent: <VictoryContainer />,
+        dataComponent: <Curve />,
+        data: [
+          { x: 0, y: 0 },
+          { x: 1, y: 1 },
+          { x: 2, y: 2 },
+          { x: 3, y: 3 },
+        ],
       },
-      normalizeProps: {},
-      aggregateProps: {},
+      normalizeProps: {
+        ...NormalizeProps,
+      },
+      aggregateProps: {
+        ...AggregateProps,
+      },
     },
     (props) => {
+      const lineFunction = LineHelpers.getLineFunction(props);
+      const d = lineFunction(props.data as any);
       return (
         <g>
           <text>{props.title}</text>
-          <line fill={props.fill} />
+          <Clone element={props.dataComponent} d={d} fill={props.fill} />
         </g>
       );
     },

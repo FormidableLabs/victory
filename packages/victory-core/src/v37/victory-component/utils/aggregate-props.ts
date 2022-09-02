@@ -2,17 +2,17 @@ import { getData } from "../../victory-state/helpers/get-data";
 import { getDomain } from "../../victory-state/helpers/get-domain";
 import { getRange } from "../../victory-state/helpers/get-range";
 import { getScale } from "../../victory-state/helpers/get-scale";
-import { VictoryDatableProps } from "../../../victory-util";
 import {
   AggregatePropsConfig,
   NormalizePropsConfig,
 } from "../core/nestable-component";
 import { satisfies } from "./satisfies";
+import { TurboDataProps } from "./props";
 
 /**
  * Returns the domain of all data sets
  */
-const getAggregateDomain = (allProps: VictoryNormalizedDataProps[]) => {
+const getAggregateDomain = (allProps: TurboNormalizedProps[]) => {
   const domains = allProps.map((props) => ({
     x: getDomain(props, "x"),
     y: getDomain(props, "y"),
@@ -30,7 +30,7 @@ const getAggregateDomain = (allProps: VictoryNormalizedDataProps[]) => {
   };
 };
 
-function getAggregateRange(allProps: VictoryNormalizedDataProps[]) {
+function getAggregateRange(allProps: TurboNormalizedProps[]) {
   const allRanges = allProps.map((props) => ({
     x: getRange(props, "x"),
     y: getRange(props, "y"),
@@ -48,14 +48,12 @@ function getAggregateRange(allProps: VictoryNormalizedDataProps[]) {
   };
 }
 
-type VictoryNormalizedDataProps = VictoryDatableProps;
-
 export const AggregateProps = satisfies<AggregatePropsConfig<any, any>>()({
   domain: (myProps, allProps, memo) => {
-    return memo(getAggregateDomain)(allProps as VictoryNormalizedDataProps[]);
+    return memo(getAggregateDomain)(allProps as TurboNormalizedProps[]);
   },
   range: (myProps, allProps, memo) => {
-    return memo(getAggregateRange)(allProps as VictoryNormalizedDataProps[]);
+    return memo(getAggregateRange)(allProps as TurboNormalizedProps[]);
   },
   scale: (props, allProps, memo) => {
     const domain = AggregateProps.domain(props, allProps, memo);
@@ -73,7 +71,11 @@ export const NormalizeProps = satisfies<NormalizePropsConfig<any, any>>()({
   /**
    * Normalizes the `data` property, evaluating using other props like x, y, and sortKey.
    */
-  data: (props: VictoryDatableProps) => {
+  data: (props: TurboDataProps) => {
     return getData(props);
   },
 });
+
+export type TurboNormalizedProps = {
+  [P in keyof typeof NormalizeProps]: ReturnType<typeof NormalizeProps[P]>;
+};
