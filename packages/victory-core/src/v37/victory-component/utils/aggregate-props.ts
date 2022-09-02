@@ -8,7 +8,7 @@ import {
   UnknownProps,
 } from "../core/nestable-component";
 import { satisfies } from "./satisfies";
-import { TurboDataProps } from "./props";
+import { TurboCommonProps, TurboDataProps } from "./props";
 
 /**
  * Returns the domain of all data sets
@@ -31,7 +31,7 @@ const getAggregateDomain = (allProps: TurboNormalizedProps[]) => {
   };
 };
 
-function getAggregateRange(allProps: TurboNormalizedProps[]) {
+function getAggregateRange(allProps: TurboCommonProps[]) {
   const allRanges = allProps.map((props) => ({
     x: getRange(props, "x"),
     y: getRange(props, "y"),
@@ -59,12 +59,14 @@ export const AggregateProps = satisfies<AggregatePropsConfig<any, any>>()({
     return memo(getAggregateDomain)(dataProps);
   },
   range: (myProps, allProps, memo) => {
-    const dataProps = memo(findDataProps)(allProps);
-    return memo(getAggregateRange)(dataProps);
+    return memo(getAggregateRange)(allProps as TurboCommonProps[]);
   },
   scale: (props, allProps, memo) => {
-    const domain = AggregateProps.domain(props, allProps, memo);
-    const range = AggregateProps.range(props, allProps, memo);
+    // We have to reference these return types, to prevent circular type issues:
+    type Domain = ReturnType<typeof getAggregateDomain>;
+    const domain: Domain = AggregateProps.domain(props, allProps, memo);
+    type Range = ReturnType<typeof getAggregateRange>;
+    const range: Range = AggregateProps.range(props, allProps, memo);
     return {
       // @ts-expect-error ---
       x: getScale(props, "x")().domain(domain.x).range(range.x),
