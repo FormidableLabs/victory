@@ -1,27 +1,61 @@
+import React from "react";
 import { TurboContainerProps } from "../core/with-turbo-container";
-import { TurboDataProps } from "../utils/props";
+import { CommonProps, TurboCommonProps, TurboDataProps } from "../utils/props";
 import { createTurboComponent } from "../core/create-turbo-component";
 import { VictoryContainer } from "../../../victory-container/victory-container";
 import { AggregateProps, NormalizeProps } from "../utils/aggregate-props";
 import { Clone } from "../../clone";
-import { Path, LineHelpers } from "../../../index";
-import React from "react";
+import {
+  Path,
+  LineHelpers,
+  VictoryClipContainer,
+  VictoryClipContainerProps,
+  InterpolationPropType,
+} from "../../../index";
+import PropTypes from "prop-types";
 
 interface VicLineProps<TDatum = any>
   extends TurboContainerProps,
-    TurboDataProps<TDatum> {
-  title: string;
+    TurboDataProps<TDatum>,
+    TurboCommonProps {
   fill: string;
+  interpolation: InterpolationPropType;
+  groupComponent: React.ReactElement;
 }
 export const VicLine = createTurboComponent<VicLineProps>()(
   {
     displayName: "VicLine",
-    propTypes: {},
+    propTypes: {
+      interpolation: PropTypes.oneOfType([
+        PropTypes.oneOf([
+          "basis",
+          "bundle",
+          "cardinal",
+          "catmullRom",
+          "linear",
+          "monotoneX",
+          "monotoneY",
+          "natural",
+          "step",
+          "stepAfter",
+          "stepBefore",
+        ] as const),
+      ]).isRequired,
+    },
     defaultProps: {
-      title: "?",
-      fill: "?",
+      ...CommonProps.defaultProps,
+      interpolation: "linear",
+      fill: "test-fill",
+
+      groupComponent: (
+        <VictoryClipContainer />
+      ) as React.ReactElement<VictoryClipContainerProps>,
       containerComponent: <VictoryContainer />,
       dataComponent: <Path />,
+
+      sortKey: "x",
+      sortOrder: "ascending",
+
       data: [
         { x: 0, y: 0 },
         { x: 1, y: 1 },
@@ -40,10 +74,10 @@ export const VicLine = createTurboComponent<VicLineProps>()(
     const lineFunction = LineHelpers.getLineFunction(props);
     const d = lineFunction(props.data as any);
     return (
-      <g>
+      <Clone element={props.groupComponent}>
         <text>{props.title}</text>
         <Clone element={props.dataComponent} d={d} fill={props.fill} />
-      </g>
+      </Clone>
     );
   },
 );

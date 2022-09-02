@@ -17,6 +17,7 @@ export type TurboComponentConfig<
   // Standard React fields:
   displayName: string;
   propTypes: ValidationMap<TExternalProps>;
+  // For Victory components, ALL props must have defaults:
   defaultProps: TExternalProps;
 };
 
@@ -61,12 +62,16 @@ export function createVictoryComponentInternal<
     normalizeProps,
   } = componentConfig;
 
-  const Result = withTurboContainer(
-    makeNestable({ aggregateProps, normalizeProps }, Component),
-  );
-  return Object.assign(Result, {
+  // Make the component Nestable:
+  const Nestable = makeNestable({ aggregateProps, normalizeProps }, Component);
+  // Ensure it always has a Container:
+  const WithContainer = withTurboContainer(Nestable);
+  // Add in some React configuration:
+  const WithReactProps = Object.assign(WithContainer, {
     displayName,
     defaultProps,
     propTypes,
+    victoryComponentConfig: componentConfig, // For future use
   });
+  return WithReactProps;
 }

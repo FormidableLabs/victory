@@ -7,9 +7,10 @@ import {
   VictoryDatableProps,
 } from "victory-core";
 import {
-  createVictoryComponent,
+  createTurboComponent,
   AggregateProps,
   NormalizeProps,
+  TurboContainerProps,
 } from "victory-core/es/v37/victory-component";
 
 import Bar from "../bar";
@@ -19,7 +20,8 @@ import { getBarPosition } from "../helper-methods";
 export type VictoryBarAlignmentType = "start" | "middle" | "end";
 export interface VictoryBarProps
   extends VictoryCommonProps,
-    VictoryDatableProps {
+    VictoryDatableProps,
+    TurboContainerProps {
   alignment: VictoryBarAlignmentType;
   barRatio?: number;
   barWidth?: NumberOrCallback;
@@ -39,7 +41,7 @@ export interface VictoryBarProps
   horizontal: boolean;
 }
 
-export const VictoryBarV3 = createVictoryComponent<VictoryBarProps>()(
+export const VictoryBarV3 = createTurboComponent<VictoryBarProps>()(
   {
     displayName: "VictoryBar",
     propTypes: {},
