@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import * as CustomPropTypes from "../../../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import { Portal } from "../../../victory-portal/portal";
-import { PortalContext } from "../../../victory-portal/portal-context";
+import {
+  PortalContext,
+  PortalContextValue,
+} from "../../../victory-portal/portal-context";
 import TimerContext from "../../../victory-util/timer-context";
 import * as Helpers from "../../../victory-util/helpers";
 import * as UserProps from "../../../victory-util/user-props";
 import { OriginType } from "../../../victory-label/victory-label";
 import { D3Scale } from "../../../types/prop-types";
 import { VictoryThemeDefinition } from "../../../victory-theme/types";
+import { createTurboComponent } from "../core/create-turbo-component";
+import { TurboContainerProps } from "../core/with-turbo-container";
+import { TurboCommonProps } from "../utils/props";
 
 export interface VictoryContainerProps {
   "aria-describedby"?: string;
@@ -43,119 +49,120 @@ export interface VictoryContainerProps {
   width?: number;
 }
 
-export class VictoryContainer extends React.Component<VictoryContainerProps> {
-  static displayName = "VictoryContainer";
-  static role = "container";
-  static propTypes = {
-    "aria-describedby": PropTypes.string,
-    "aria-labelledby": PropTypes.string,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    className: PropTypes.string,
-    containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    containerRef: PropTypes.func,
-    desc: PropTypes.string,
-    events: PropTypes.object,
-    height: CustomPropTypes.nonNegative,
-    name: PropTypes.string,
-    origin: PropTypes.shape({
-      x: CustomPropTypes.nonNegative,
-      y: CustomPropTypes.nonNegative,
-    }),
-    ouiaId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    ouiaSafe: PropTypes.bool,
-    ouiaType: PropTypes.string,
-    polar: PropTypes.bool,
-    portalComponent: PropTypes.element,
-    portalZIndex: CustomPropTypes.integer,
-    preserveAspectRatio: PropTypes.string,
-    responsive: PropTypes.bool,
-    role: PropTypes.string,
-    style: PropTypes.object,
-    tabIndex: PropTypes.number,
-    theme: PropTypes.object,
-    title: PropTypes.string,
-    width: CustomPropTypes.nonNegative,
-  };
-
-  static defaultProps = {
-    className: "VictoryContainer",
-    portalComponent: <Portal />,
-    portalZIndex: 99,
-    responsive: true,
-    role: "img",
-  };
-
-  static contextType = TimerContext;
-  private containerId: VictoryContainerProps["containerId"];
-  // @ts-expect-error Ref will be initialized on mount
-  private portalRef: Portal;
-  // @ts-expect-error Ref will be initialized on mount
-  private containerRef: HTMLElement;
-  private shouldHandleWheel: boolean;
-
-  constructor(props: VictoryContainerProps) {
-    super(props);
-    this.containerId =
+export const VicContainer = createTurboComponent<VictoryContainerProps>()(
+  {
+    displayName: "VicContainer",
+    // role: "container",
+    propTypes: {
+      "aria-describedby": PropTypes.string,
+      "aria-labelledby": PropTypes.string,
+      children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+      ]),
+      className: PropTypes.string,
+      containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      containerRef: PropTypes.func,
+      desc: PropTypes.string,
+      events: PropTypes.object,
+      height: CustomPropTypes.nonNegative,
+      name: PropTypes.string,
+      origin: PropTypes.shape({
+        x: CustomPropTypes.nonNegative,
+        y: CustomPropTypes.nonNegative,
+      }),
+      ouiaId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      ouiaSafe: PropTypes.bool,
+      ouiaType: PropTypes.string,
+      polar: PropTypes.bool,
+      portalComponent: PropTypes.element,
+      portalZIndex: CustomPropTypes.integer,
+      preserveAspectRatio: PropTypes.string,
+      responsive: PropTypes.bool,
+      role: PropTypes.string,
+      style: PropTypes.object,
+      tabIndex: PropTypes.number,
+      theme: PropTypes.object,
+      title: PropTypes.string,
+      width: CustomPropTypes.nonNegative,
+    },
+    defaultProps: {
+      className: "VictoryContainer",
+      portalComponent: <Portal />,
+      portalZIndex: 99,
+      responsive: true,
+      role: "img",
+    },
+  },
+  (props) => {
+    const containerId: VictoryContainerProps["containerId"] =
       !isObject(props) || props.containerId === undefined
         ? uniqueId("victory-container-")
         : props.containerId;
 
-    this.shouldHandleWheel = !!(props && props.events && props.events.onWheel);
-  }
-  savePortalRef = (portal) => {
-    this.portalRef = portal;
-    return portal;
-  };
-  portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
-  portalRegister = () => this.portalRef.portalRegister();
-  portalDeregister = (key) => this.portalRef.portalDeregister(key);
+    const containerRef = React.useRef<HTMLElement>();
+    const shouldHandleWheel = !!(props && props.events && props.events.onWheel);
+    const handleWheel = useCallback((e) => e.preventDefault(), []);
+    useEffect(() => {
+      if (shouldHandleWheel && containerRef.current) {
+        containerRef.current.addEventListener("wheel", handleWheel);
+      }
+      return () =>
+        containerRef.current.removeEventListener("wheel", handleWheel);
+    }, [shouldHandleWheel]);
 
-  saveContainerRef = (container: HTMLElement) => {
-    if (isFunction(this.props.containerRef)) {
-      this.props.containerRef(container);
-    }
-    this.containerRef = container;
-    return container;
-  };
-
-  handleWheel = (e) => e.preventDefault();
-
-  componentDidMount() {
-    if (this.shouldHandleWheel && this.containerRef) {
-      this.containerRef.addEventListener("wheel", this.handleWheel);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.shouldHandleWheel && this.containerRef) {
-      this.containerRef.removeEventListener("wheel", this.handleWheel);
-    }
-  }
-
-  getIdForElement(elementName) {
-    return `${this.containerId}-${elementName}`;
-  }
-
-  // overridden in custom containers
-  getChildren(props) {
-    return props.children;
-  }
-
-  // Get props defined by the Open UI Automation (OUIA) 1.0-RC spec
-  // See https://ouia.readthedocs.io/en/latest/README.html#ouia-component
-  getOUIAProps(props) {
-    const { ouiaId, ouiaSafe, ouiaType } = props;
-    return {
-      ...(ouiaId && { "data-ouia-component-id": ouiaId }),
-      ...(ouiaType && { "data-ouia-component-type": ouiaType }),
-      ...(ouiaSafe !== undefined && { "data-ouia-safe": ouiaSafe }),
+    const portalRef = React.useRef<Portal>();
+    const portalContext: PortalContextValue = {
+      portalUpdate: (key, el) => portalRef.current!.portalUpdate(key, el),
+      portalRegister: () => portalRef.current!.portalRegister(),
+      portalDeregister: (key) => portalRef.current!.portalDeregister(key),
     };
-  }
+    const getIdForElement = (elementName) => `${containerId}-${elementName}`;
 
-  renderContainer(props, svgProps, style) {
+    // todo: overridden in custom containers
+    function getChildren(props) {
+      return props.children;
+    }
+
+    const {
+      width,
+      height,
+      responsive,
+      events,
+      title,
+      desc,
+      tabIndex,
+      preserveAspectRatio,
+      role,
+    } = props;
+
+    const style = responsive
+      ? props.style
+      : Helpers.omit(props.style!, ["height", "width"]);
+
+    const userProps = UserProps.getSafeUserProps(props);
+
+    const svgProps = assign(
+      {
+        width,
+        height,
+        tabIndex,
+        role,
+        "aria-labelledby":
+          [title && getIdForElement("title"), props["aria-labelledby"]]
+            .filter(Boolean)
+            .join(" ") || undefined,
+        "aria-describedby":
+          [desc && getIdForElement("desc"), props["aria-describedby"]]
+            .filter(Boolean)
+            .join(" ") || undefined,
+        viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
+        preserveAspectRatio: responsive ? preserveAspectRatio : undefined,
+        ...userProps,
+      },
+      events,
+    );
+
     const {
       title,
       desc,
@@ -166,7 +173,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
       portalZIndex,
       responsive,
     } = props;
-    const children = this.getChildren(props);
+    const children = getChildren(props);
     const dimensions = responsive
       ? { width: "100%", height: "100%" }
       : { width, height };
@@ -192,81 +199,39 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
       style: portalSvgStyle,
     };
     return (
-      <PortalContext.Provider
-        value={{
-          portalUpdate: this.portalUpdate,
-          portalRegister: this.portalRegister,
-          portalDeregister: this.portalDeregister,
-        }}
-      >
+      <PortalContext.Provider value={portalContext}>
         <div
           style={defaults({}, style, divStyle)}
           className={className}
-          ref={this.saveContainerRef}
-          {...this.getOUIAProps(props)}
+          ref={containerRef}
+          {...getOUIAProps(props)}
         >
           <svg {...svgProps} style={svgStyle}>
             {title ? (
-              <title id={this.getIdForElement("title")}>{title}</title>
+              <title id={getIdForElement("title")}>{title}</title>
             ) : null}
-            {desc ? (
-              <desc id={this.getIdForElement("desc")}>{desc}</desc>
-            ) : null}
+            {desc ? <desc id={getIdForElement("desc")}>{desc}</desc> : null}
             {children}
           </svg>
           <div style={portalDivStyle}>
             {React.cloneElement(portalComponent, {
               ...portalProps,
-              ref: this.savePortalRef,
+              ref: portalRef,
             })}
           </div>
         </div>
       </PortalContext.Provider>
     );
-  }
+  },
+);
 
-  render() {
-    const {
-      width,
-      height,
-      responsive,
-      events,
-      title,
-      desc,
-      tabIndex,
-      preserveAspectRatio,
-      role,
-    } = this.props;
-
-    const style = responsive
-      ? this.props.style
-      : Helpers.omit(this.props.style!, ["height", "width"]);
-
-    const userProps = UserProps.getSafeUserProps(this.props);
-
-    const svgProps = assign(
-      {
-        width,
-        height,
-        tabIndex,
-        role,
-        "aria-labelledby":
-          [
-            title && this.getIdForElement("title"),
-            this.props["aria-labelledby"],
-          ]
-            .filter(Boolean)
-            .join(" ") || undefined,
-        "aria-describedby":
-          [desc && this.getIdForElement("desc"), this.props["aria-describedby"]]
-            .filter(Boolean)
-            .join(" ") || undefined,
-        viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
-        preserveAspectRatio: responsive ? preserveAspectRatio : undefined,
-        ...userProps,
-      },
-      events,
-    );
-    return this.renderContainer(this.props, svgProps, style);
-  }
+// Get props defined by the Open UI Automation (OUIA) 1.0-RC spec
+// See https://ouia.readthedocs.io/en/latest/README.html#ouia-component
+function getOUIAProps(props) {
+  const { ouiaId, ouiaSafe, ouiaType } = props;
+  return {
+    ...(ouiaId && { "data-ouia-component-id": ouiaId }),
+    ...(ouiaType && { "data-ouia-component-type": ouiaType }),
+    ...(ouiaSafe !== undefined && { "data-ouia-safe": ouiaSafe }),
+  };
 }
