@@ -244,3 +244,6 @@ export const voronoiContainerMixin = (base) =>
   };
 
 export default voronoiContainerMixin(VictoryContainer);
+// @ts-expect-error IMPORTANT: when converting this file to TypeScript, you must export the type as well:
+// export const VictoryVoronoiContainer = voronoiContainerMixin(VictoryContainer);
+// export type VictoryVoronoiContainer = typeof VictoryVoronoiContainer;

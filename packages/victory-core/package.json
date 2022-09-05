@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "36.6.5",
+  "version": "36.6.6",
   "description": "Victory Core",
   "keywords": [
     "data visualization",
@@ -24,7 +24,7 @@
     "memoize-weak": "^1.0.2",
     "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
-    "victory-vendor": "^36.6.5"
+    "victory-vendor": "^36.6.6"
   },
   "peerDependencies": {
     "react": ">=16.6.0"

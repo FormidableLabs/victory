@@ -178,33 +178,33 @@ importers:
   packages/victory:
     specifiers:
       victory: '*'
-      victory-area: ^36.6.5
-      victory-axis: ^36.6.5
-      victory-bar: ^36.6.5
-      victory-box-plot: ^36.6.5
-      victory-brush-container: ^36.6.5
-      victory-brush-line: ^36.6.5
-      victory-candlestick: ^36.6.5
-      victory-canvas: ^36.6.5
-      victory-chart: ^36.6.5
-      victory-core: ^36.6.5
-      victory-create-container: ^36.6.5
-      victory-cursor-container: ^36.6.5
-      victory-errorbar: ^36.6.5
-      victory-group: ^36.6.5
-      victory-histogram: ^36.6.5
-      victory-legend: ^36.6.5
-      victory-line: ^36.6.5
-      victory-pie: ^36.6.5
-      victory-polar-axis: ^36.6.5
-      victory-scatter: ^36.6.5
-      victory-selection-container: ^36.6.5
-      victory-shared-events: ^36.6.5
-      victory-stack: ^36.6.5
-      victory-tooltip: ^36.6.5
-      victory-voronoi: ^36.6.5
-      victory-voronoi-container: ^36.6.5
-      victory-zoom-container: ^36.6.5
+      victory-area: ^36.6.6
+      victory-axis: ^36.6.6
+      victory-bar: ^36.6.6
+      victory-box-plot: ^36.6.6
+      victory-brush-container: ^36.6.6
+      victory-brush-line: ^36.6.6
+      victory-candlestick: ^36.6.6
+      victory-canvas: ^36.6.6
+      victory-chart: ^36.6.6
+      victory-core: ^36.6.6
+      victory-create-container: ^36.6.6
+      victory-cursor-container: ^36.6.6
+      victory-errorbar: ^36.6.6
+      victory-group: ^36.6.6
+      victory-histogram: ^36.6.6
+      victory-legend: ^36.6.6
+      victory-line: ^36.6.6
+      victory-pie: ^36.6.6
+      victory-polar-axis: ^36.6.6
+      victory-scatter: ^36.6.6
+      victory-selection-container: ^36.6.6
+      victory-shared-events: ^36.6.6
+      victory-stack: ^36.6.6
+      victory-tooltip: ^36.6.6
+      victory-voronoi: ^36.6.6
+      victory-voronoi-container: ^36.6.6
+      victory-zoom-container: ^36.6.6
     dependencies:
       victory-area: link:../victory-area
       victory-axis: link:../victory-axis
@@ -242,8 +242,8 @@ importers:
       prop-types: ^15.8.1
       victory-area: '*'
       victory-chart: '*'
-      victory-core: ^36.6.5
-      victory-vendor: ^36.6.5
+      victory-core: ^36.6.6
+      victory-vendor: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -259,7 +259,7 @@ importers:
       prop-types: ^15.8.1
       victory-axis: '*'
       victory-chart: '*'
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -274,8 +274,8 @@ importers:
       prop-types: ^15.8.1
       victory-bar: '*'
       victory-chart: '*'
-      victory-core: ^36.6.5
-      victory-vendor: ^36.6.5
+      victory-core: ^36.6.6
+      victory-vendor: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -290,9 +290,9 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       victory-box-plot: '*'
-      victory-chart: ^36.6.5
-      victory-core: ^36.6.5
-      victory-vendor: ^36.6.5
+      victory-chart: ^36.6.6
+      victory-core: ^36.6.6
+      victory-vendor: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -308,7 +308,7 @@ importers:
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       victory-brush-container: '*'
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -322,7 +322,7 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -333,8 +333,8 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-chart: ^36.6.5
-      victory-core: ^36.6.5
+      victory-chart: ^36.6.6
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -346,8 +346,8 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-bar: ^36.6.5
-      victory-core: ^36.6.5
+      victory-bar: ^36.6.6
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -359,12 +359,12 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-axis: ^36.6.5
+      victory-axis: ^36.6.6
       victory-chart: '*'
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
       victory-line: '*'
-      victory-polar-axis: ^36.6.5
-      victory-shared-events: ^36.6.5
+      victory-polar-axis: ^36.6.6
+      victory-shared-events: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -387,7 +387,7 @@ importers:
       victory-bar: '*'
       victory-core: '*'
       victory-line: '*'
-      victory-vendor: ^36.6.5
+      victory-vendor: ^36.6.6
     dependencies:
       lodash: 4.17.21
       memoize-weak: 1.0.2
@@ -403,12 +403,12 @@ importers:
   packages/victory-create-container:
     specifiers:
       lodash: ^4.17.19
-      victory-brush-container: ^36.6.5
-      victory-core: ^36.6.5
-      victory-cursor-container: ^36.6.5
-      victory-selection-container: ^36.6.5
-      victory-voronoi-container: ^36.6.5
-      victory-zoom-container: ^36.6.5
+      victory-brush-container: ^36.6.6
+      victory-core: ^36.6.6
+      victory-cursor-container: ^36.6.6
+      victory-selection-container: ^36.6.6
+      victory-voronoi-container: ^36.6.6
+      victory-zoom-container: ^36.6.6
     dependencies:
       lodash: 4.17.21
       victory-brush-container: link:../victory-brush-container
@@ -422,7 +422,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -432,7 +432,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
       victory-errorbar: '*'
     dependencies:
       lodash: 4.17.21
@@ -447,9 +447,9 @@ importers:
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       victory-bar: '*'
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
       victory-group: '*'
-      victory-shared-events: ^36.6.5
+      victory-shared-events: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -465,9 +465,9 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-bar: ^36.6.5
-      victory-core: ^36.6.5
-      victory-vendor: ^36.6.5
+      victory-bar: ^36.6.6
+      victory-core: ^36.6.6
+      victory-vendor: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -480,7 +480,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -491,9 +491,9 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       victory-chart: '*'
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
       victory-line: '*'
-      victory-vendor: ^36.6.5
+      victory-vendor: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -512,33 +512,33 @@ importers:
       react-native: ^0.65.1
       react-native-gesture-handler: ^1.10.3
       react-native-svg: ^12.4.3
-      victory: ^36.6.5
-      victory-area: ^36.6.5
-      victory-axis: ^36.6.5
-      victory-bar: ^36.6.5
-      victory-box-plot: ^36.6.5
-      victory-brush-container: ^36.6.5
-      victory-brush-line: ^36.6.5
-      victory-candlestick: ^36.6.5
-      victory-chart: ^36.6.5
-      victory-core: ^36.6.5
-      victory-create-container: ^36.6.5
-      victory-cursor-container: ^36.6.5
-      victory-errorbar: ^36.6.5
-      victory-group: ^36.6.5
-      victory-histogram: ^36.6.5
-      victory-legend: ^36.6.5
-      victory-line: ^36.6.5
-      victory-pie: ^36.6.5
-      victory-polar-axis: ^36.6.5
-      victory-scatter: ^36.6.5
-      victory-selection-container: ^36.6.5
-      victory-shared-events: ^36.6.5
-      victory-stack: ^36.6.5
-      victory-tooltip: ^36.6.5
-      victory-voronoi: ^36.6.5
-      victory-voronoi-container: ^36.6.5
-      victory-zoom-container: ^36.6.5
+      victory: ^36.6.6
+      victory-area: ^36.6.6
+      victory-axis: ^36.6.6
+      victory-bar: ^36.6.6
+      victory-box-plot: ^36.6.6
+      victory-brush-container: ^36.6.6
+      victory-brush-line: ^36.6.6
+      victory-candlestick: ^36.6.6
+      victory-chart: ^36.6.6
+      victory-core: ^36.6.6
+      victory-create-container: ^36.6.6
+      victory-cursor-container: ^36.6.6
+      victory-errorbar: ^36.6.6
+      victory-group: ^36.6.6
+      victory-histogram: ^36.6.6
+      victory-legend: ^36.6.6
+      victory-line: ^36.6.6
+      victory-pie: ^36.6.6
+      victory-polar-axis: ^36.6.6
+      victory-scatter: ^36.6.6
+      victory-selection-container: ^36.6.6
+      victory-shared-events: ^36.6.6
+      victory-stack: ^36.6.6
+      victory-tooltip: ^36.6.6
+      victory-voronoi: ^36.6.6
+      victory-voronoi-container: ^36.6.6
+      victory-zoom-container: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -580,9 +580,9 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
       victory-pie: '*'
-      victory-vendor: ^36.6.5
+      victory-vendor: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -595,7 +595,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -605,7 +605,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
       victory-scatter: '*'
     dependencies:
       lodash: 4.17.21
@@ -618,8 +618,8 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-bar: ^36.6.5
-      victory-core: ^36.6.5
+      victory-bar: ^36.6.6
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -633,7 +633,7 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       json-stringify-safe: 5.0.1
       lodash: 4.17.21
@@ -647,9 +647,9 @@ importers:
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       victory-bar: '*'
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
       victory-histogram: '*'
-      victory-shared-events: ^36.6.5
+      victory-shared-events: ^36.6.6
       victory-stack: '*'
     dependencies:
       lodash: 4.17.21
@@ -666,7 +666,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
@@ -726,7 +726,7 @@ importers:
       d3-voronoi: ^1.1.4
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       d3-voronoi: 1.1.4
       lodash: 4.17.21
@@ -739,8 +739,8 @@ importers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
-      victory-core: ^36.6.5
-      victory-tooltip: ^36.6.5
+      victory-core: ^36.6.6
+      victory-tooltip: ^36.6.6
     dependencies:
       delaunay-find: 0.0.6
       lodash: 4.17.21
@@ -753,7 +753,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       prop-types: ^15.8.1
-      victory-core: ^36.6.5
+      victory-core: ^36.6.6
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
