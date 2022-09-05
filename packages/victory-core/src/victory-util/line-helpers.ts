@@ -1,4 +1,6 @@
 import * as d3Shape from "victory-vendor/d3-shape";
+import { VictoryCommonProps } from "./common-props";
+import { InterpolationPropType } from "../types/prop-types";
 
 const defined = (d) => {
   const y = d._y1 !== undefined ? d._y1 : d._y;
@@ -68,7 +70,14 @@ const toNewNameClosed = (interpolation: CurveName) => {
   return `${toNewName(interpolation)}Closed` as ShapeMethodClosed;
 };
 
-export const getInterpolationFunction = (props) => {
+export interface VictoryCommonLineProps extends VictoryCommonProps {
+  interpolation: InterpolationPropType | d3Shape.CurveFactory;
+  openCurve?: boolean;
+}
+
+export const getInterpolationFunction = (
+  props: Pick<VictoryCommonLineProps, "interpolation" | "polar" | "openCurve">,
+) => {
   const { interpolation } = props;
 
   if (typeof interpolation === "function") {
@@ -86,7 +95,12 @@ export const getInterpolationFunction = (props) => {
   return d3Shape.curveLinear;
 };
 
-export const getLineFunction = (props) => {
+export const getLineFunction = (
+  props: Pick<
+    VictoryCommonLineProps,
+    "polar" | "scale" | "horizontal" | "interpolation" | "openCurve"
+  >,
+) => {
   const { polar, scale, horizontal } = props;
   return polar
     ? d3Shape
