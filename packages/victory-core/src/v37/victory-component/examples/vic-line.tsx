@@ -14,7 +14,6 @@ import { TurboContainerProps } from "../core/with-turbo-container";
 import { createTurboComponent } from "../core/create-turbo-component";
 import { CommonProps, TurboCommonProps, TurboDataProps } from "../utils/props";
 import { AggregateProps, NormalizeProps } from "../utils/aggregate-props";
-import { usePrimitives, useSvgPrimitives } from "../utils/svg-primitives";
 import { Clone } from "../../clone";
 
 interface VicLineProps<TDatum = any>
@@ -66,13 +65,15 @@ export const VicLine = createTurboComponent<VicLineProps>()(
     },
   },
   (props) => {
+    const { data, groupComponent, dataComponent } = props;
+
     const lineFunction = LineHelpers.getLineFunction(props);
-    const d = lineFunction(props.data as any)!;
+    const d = lineFunction(data as any)!;
     const style = { fill: "none", stroke: "black" };
 
     return (
-      <Clone element={props.groupComponent} {...props}>
-        <Clone element={props.dataComponent} d={d} style={style} />
+      <Clone element={groupComponent}>
+        <Clone element={dataComponent} d={d} style={style} />
       </Clone>
     );
   },

@@ -31,7 +31,7 @@ export const createTurboComponent =
       TAggregateProps
     >,
     Component: ComponentImplementation<
-      TExternalProps,
+      Omit<TExternalProps, keyof TurboContainerProps>,
       TNormalizeProps,
       TAggregateProps
     >,
@@ -49,7 +49,7 @@ export function createVictoryComponentInternal<
     TAggregateProps
   >,
   Component: ComponentImplementation<
-    TExternalProps,
+    Omit<TExternalProps, keyof TurboContainerProps>,
     TNormalizeProps,
     TAggregateProps
   >,

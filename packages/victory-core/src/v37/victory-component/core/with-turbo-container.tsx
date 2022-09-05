@@ -2,38 +2,59 @@ import React, { JSXElementConstructor } from "react";
 import { Clone } from "../../clone";
 import { NestableParent } from "./nestable-component";
 import { VictoryCommonProps } from "../../../victory-util";
+import { TurboCommonProps } from "../utils/props";
+import { satisfies } from "../utils/satisfies";
 
 /* eslint-disable react/no-multi-comp */
 
-const TurboContainerExists = React.createContext(false);
+export type TurboContainerProps = TurboCommonProps &
+  Required<Pick<VictoryCommonProps, "containerComponent">>;
 
-export type TurboContainerProps = Required<
-  Pick<VictoryCommonProps, "containerComponent">
->;
+const TurboContainerContext = React.createContext<boolean>(false);
 
-export function withTurboContainer<TProps extends TurboContainerProps>(
+export function withTurboContainer<TProps>(
   Component: JSXElementConstructor<TProps>,
 ) {
-  const WithTurboContainer = (props: TProps) => {
-    const hasVictoryContainer = React.useContext(TurboContainerExists);
+  const WithTurboContainer = (props: TurboContainerProps & TProps) => {
+    const {
+      // Split out all the containerProps:
+      containerComponent,
+      width,
+      padding,
+      theme,
+      title,
+      height,
+      ...rest
+    } = props;
+    // @ts-expect-error "TProps could be instantiated with an arbitrary type"
+    const componentProps = rest as TProps;
 
-    const standaloneComponent = <Component {...props} />;
+    const hasContainer = React.useContext(TurboContainerContext);
 
-    if (hasVictoryContainer) {
-      return standaloneComponent;
+    if (hasContainer) {
+      // The component is already nested, so we can pass through:
+      return <Component {...componentProps} />;
     }
 
-    return <TurboContainer {...props}>{standaloneComponent}</TurboContainer>;
-  };
-  return WithTurboContainer;
-}
+    // Use 'satisfies' to ensure we've included all container fields:
+    const containerProps = satisfies<Required<TurboCommonProps>>()({
+      width,
+      padding,
+      theme,
+      title: title!,
+      height,
+    });
 
-function TurboContainer(props: React.PropsWithChildren<TurboContainerProps>) {
-  return (
-    <TurboContainerExists.Provider value>
-      <NestableParent>
-        <Clone element={props.containerComponent} {...props} />
-      </NestableParent>
-    </TurboContainerExists.Provider>
-  );
+    return (
+      <TurboContainerContext.Provider value>
+        <NestableParent>
+          <Clone element={containerComponent} {...containerProps}>
+            <Component {...componentProps} />
+          </Clone>
+        </NestableParent>
+      </TurboContainerContext.Provider>
+    );
+  };
+
+  return WithTurboContainer;
 }
