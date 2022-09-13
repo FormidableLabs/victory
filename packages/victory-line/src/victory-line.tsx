@@ -150,5 +150,4 @@ export interface VictoryLineProps
   interpolation?: InterpolationPropType | Function;
   samples?: number;
   style?: VictoryStyleInterface;
-  animate?: boolean;
 }
