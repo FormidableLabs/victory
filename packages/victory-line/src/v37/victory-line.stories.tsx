@@ -7,6 +7,9 @@ import { getData } from "../../../../stories/data";
 
 export default {
   title: "v37/VictoryLine",
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   component: VictoryLine,
 };
 
