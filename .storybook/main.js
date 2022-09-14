@@ -8,11 +8,10 @@ const STORIES = path.resolve(ROOT, "stories");
 module.exports = {
   webpackFinal: async (config) => {
     // Read all the victory packages and alias.
-    glob.sync(path.join(PKGS, "victory*/package.json"))
-      .forEach((pkgPath) => {
-        const key = path.dirname(path.relative(PKGS, pkgPath));
-        config.resolve.alias[key] = path.resolve(path.dirname(pkgPath));
-      });
+    glob.sync(path.join(PKGS, "victory*/package.json")).forEach((pkgPath) => {
+      const key = path.dirname(path.relative(PKGS, pkgPath));
+      config.resolve.alias[key] = path.resolve(path.dirname(pkgPath));
+    });
 
     return config;
   },
@@ -32,5 +31,7 @@ module.exports = {
     },
   ],
   // Use glob to locate the stories, because it ignores our circular dependencies.
-  stories: glob.sync("../**/*.stories.@(js|jsx|ts|tsx)", { cwd: __dirname }),
+  stories: glob.sync("../**/*.stories.@(js|jsx|ts|tsx)", {
+    cwd: __dirname,
+  }),
 };
