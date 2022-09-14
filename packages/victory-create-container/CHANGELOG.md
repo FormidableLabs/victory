@@ -1,5 +1,17 @@
 # victory-create-container
 
+## 36.6.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-brush-container@36.6.7
+  - victory-core@36.6.7
+  - victory-cursor-container@36.6.7
+  - victory-selection-container@36.6.7
+  - victory-voronoi-container@36.6.7
+  - victory-zoom-container@36.6.7
+
 ## 36.6.6
 
 ### Patch Changes

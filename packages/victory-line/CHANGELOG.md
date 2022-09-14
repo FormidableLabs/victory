@@ -1,5 +1,15 @@
 # victory-line
 
+## 36.6.7
+
+### Patch Changes
+
+- Type improvement: `VictoryLineProps.animate` can be an object (fixes [#2463](https://github.com/FormidableLabs/victory/issues/2463)) ([`3f476632f`](https://github.com/FormidableLabs/victory/commit/3f476632fcd41c31cb69fcfae74d1bbaaa78103d))
+
+- Updated dependencies []:
+  - victory-core@36.6.7
+  - victory-vendor@36.6.7
+
 ## 36.6.6
 
 ### Patch Changes
