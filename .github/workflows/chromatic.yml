@@ -7,7 +7,8 @@ on:
     branches:
       - main
     paths:
-      - "stories/**"
+      - 'stories/**'
+      - 'packages/**'
 
 jobs:
   chromatic:
