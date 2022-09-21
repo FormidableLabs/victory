@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          token: ${{ secrets.VERSION_PACKAGES_TOKEN }}
 
       - name: Use Node.js
         uses: actions/setup-node@v2
@@ -54,5 +55,5 @@ jobs:
           version: pnpm run version
           publish: pnpm run publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.VERSION_PACKAGES_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
