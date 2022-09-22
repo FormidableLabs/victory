@@ -1,5 +1,13 @@
 # victory-group
 
+## 36.6.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-core@36.6.8
+  - victory-shared-events@36.6.8
+
 ## 36.6.7
 
 ### Patch Changes

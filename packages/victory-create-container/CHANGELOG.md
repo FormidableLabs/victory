@@ -1,5 +1,17 @@
 # victory-create-container
 
+## 36.6.8
+
+### Patch Changes
+
+- Updated dependencies [[`c5b4f660c`](https://github.com/FormidableLabs/victory/commit/c5b4f660cb91d8d1979d216b846a44f0c5030ec1)]:
+  - victory-zoom-container@36.6.8
+  - victory-brush-container@36.6.8
+  - victory-core@36.6.8
+  - victory-cursor-container@36.6.8
+  - victory-selection-container@36.6.8
+  - victory-voronoi-container@36.6.8
+
 ## 36.6.7
 
 ### Patch Changes
