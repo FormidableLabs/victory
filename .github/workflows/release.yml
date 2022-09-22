@@ -55,5 +55,7 @@ jobs:
           version: pnpm run version
           publish: pnpm run publish
         env:
-          GITHUB_TOKEN: ${{ secrets.VERSION_PACKAGES_TOKEN }}
+          # Note: we are using a different GITHUB_TOKEN due to the issues in this thread:
+          # https://github.com/changesets/action/issues/187
+          GITHUB_TOKEN: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
