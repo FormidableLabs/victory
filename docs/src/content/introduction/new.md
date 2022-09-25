@@ -11,11 +11,11 @@ scope:
 
 # New Features
 
-Victory is actively developed. You can read about some of our newest feature here. For more information on improvements and bug fixes, check out our [changelog](https://github.com/FormidableLabs/victory/blob/main/CHANGELOG.md).
+Victory is actively developed. You can read about some of our newest features here. For more information on improvements and bug fixes, check out our [changelog](https://github.com/FormidableLabs/victory/blob/main/CHANGELOG.md).
 
 ## Accessibility Features
 
-With improved chart and chart component accessibilty in mind, we've added a [`VictoryAccessibleGroup`](/docs/victory-accessible-group) for use with the [`groupComponent`](/docs/common-props#groupcomponent) prop. This component will wrap its children in a `g` tag with a user provided `aria-label` and optional description via the `desc` prop. Other available props can be found in the [docs](/docs/victory-accessible-group).
+With improved chart and chart component accessibility in mind, we've added a [`VictoryAccessibleGroup`](/docs/victory-accessible-group) for use with the [`groupComponent`](/docs/common-props#groupcomponent) prop. This component will wrap its children in a `g` tag with a user provided `aria-label` and optional description via the `desc` prop. Other available props can be found in the [docs](/docs/victory-accessible-group).
 
 We've also added `ariaLabel` and `tabIndex` props to all our primitives. Documentation on these can be found in under [`VictoryPrimitives`](/docs/victory-primitives#victory-primitives).
 

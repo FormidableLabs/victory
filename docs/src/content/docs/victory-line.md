@@ -467,7 +467,7 @@ _default:_ `standalone={true}`
 
 `VictoryLine` uses the standard `style` prop. [Read about it here](/docs/common-props#style)
 
-*note:* Since `VictoryLine` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of individual `datum`. Instead, try using [gradient fills](/docs/faq/#how-can-i-use-gradient-fills-in-victory) for styling continuous data.
+*note:* Since `VictoryLine` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of an individual `datum`. Instead, try using [gradient fills](/docs/faq/#how-can-i-use-gradient-fills-in-victory) for styling continuous data.
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 

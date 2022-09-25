@@ -113,7 +113,7 @@ data={[
 ```
 
 - As an array of data objects with pre-calculated summary statistics(`min`, `median`, `max`, `q1`, `q3`)
-  When given in this format, `VictoryBoxPlot` _will not_ preform statistical analysis. Pre-calculating summary statistics for large datasets will improve performance.
+  When given in this format, `VictoryBoxPlot` _will not_ perform statistical analysis. Pre-calculating summary statistics for large datasets will improve performance.
 
 ```jsx
 data={[

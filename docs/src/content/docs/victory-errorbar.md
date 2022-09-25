@@ -147,7 +147,7 @@ _examples:_ `errorX={() => 10}`
 
 _examples:_ `errorX={1}`
 
-**path string or path array:** specify which property in an array of nested data objects should be used as a errorX value
+**path string or path array:** specify which property in an array of nested data objects should be used as an errorX value
 
 _examples:_ `errorX="measurement.uncertainty"`, `errorX={["measurement", "uncertainty"]}`
 
@@ -161,15 +161,15 @@ Use `errorY` data accessor prop to define the y error bar.
 
 _examples:_ `errorY="uncertainty"`
 
-**function:** use a function to translate each element in a data array into a errorY value
+**function:** use a function to translate each element in a data array into an errorY value
 
 _examples:_ `errorY={() => 10}`
 
-**array index:** specify which index of an array should be used as a errorY value when data is given as an array of arrays
+**array index:** specify which index of an array should be used as an errorY value when data is given as an array of arrays
 
 _examples:_ `errorY={1}`
 
-**path string or path array:** specify which property in an array of nested data objects should be used as a errorY value
+**path string or path array:** specify which property in an array of nested data objects should be used as an errorY value
 
 _examples:_ `errorY="measurement.uncertainty"`, `errorY={["measurement", "uncertainty"]}`
 

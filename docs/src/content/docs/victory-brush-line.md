@@ -79,7 +79,7 @@ The `brushAreaWidth` prop is used to specify the width of the interactive brush 
 
 `type: element`
 
-The `brushComponent` prop specifies the component to be rendered for active brush.
+The `brushComponent` prop specifies the component to be rendered for the active brush.
 This component will be supplied with the following props: x, y, width, height, and style.
 When this prop is not specified, a [`Box`][] component will be rendered.
 

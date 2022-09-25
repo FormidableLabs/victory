@@ -103,7 +103,7 @@ Create a gradient def as usual and then reference it by id in your style object.
 
 ### How can I add arbitrary labels to my charts?
 
-Use `VictoryLabel` to as a child of `VictoryChart` to add arbitrary labels. Labels can be positioned with the `x` and `y` props, or with `datum` when used within `VictoryChart` or `VictoryGroup`.
+Use `VictoryLabel` as a child of `VictoryChart` to add arbitrary labels. Labels can be positioned with the `x` and `y` props, or with `datum` when used within `VictoryChart` or `VictoryGroup`.
 
 ```playground
 <VictoryChart domain={[0, 10]}>
@@ -119,7 +119,7 @@ Use `VictoryLabel` to as a child of `VictoryChart` to add arbitrary labels. Labe
 
 ### How can I annotate my charts with lines and markers?
 
-Victory doesn't have specific components for annotations. Instead, use standard component such as `VictoryLine` and `VictoryScatter` to add lines and markers to your chart.
+Victory doesn't have specific components for annotations. Instead, use standard components such as `VictoryLine` and `VictoryScatter` to add lines and markers to your chart.
 
 ```playground
 <VictoryChart domain={[0, 10]}>
@@ -306,7 +306,7 @@ To solve this, you will need to manually set sensible defaults on the `domain` o
 
 ### How can I add tooltips to a line?
 
-`VictoryLine` only renders a single element to represent an entire dataset, so replacing its `labelComponent` with `VictoryTooltip` wont work as expected, since there will be only a single event trigger. Voronoi tooltips can be used to add tooltips and other interactions components without unique event triggers, or with event triggers that are too small, or too close together to be useful. Use `VictoryVoronoiContainer` to associate mouse position with the nearest data points. [Read more about Voronoi Tooltips](/guides/tooltips#tooltips-with-victoryvoronoicontainer) and [`VictoryVoronoiContainer`](/docs/victory-voronoi-container).
+`VictoryLine` only renders a single element to represent an entire dataset, so replacing its `labelComponent` with `VictoryTooltip` won't work as expected, since there will be only a single event trigger. Voronoi tooltips can be used to add tooltips and other interactions to components without unique event triggers, or with event triggers that are too small, or too close together to be useful. Use `VictoryVoronoiContainer` to associate mouse position with the nearest data points. [Read more about Voronoi Tooltips](/guides/tooltips#tooltips-with-victoryvoronoicontainer) and [`VictoryVoronoiContainer`](/docs/victory-voronoi-container).
 
 
 ### How can I add my own events when I'm using VictoryTooltip?
