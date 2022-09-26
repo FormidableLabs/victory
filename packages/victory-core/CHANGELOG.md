@@ -1,5 +1,12 @@
 # victory-core
 
+## 36.6.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-vendor@36.6.8
+
 ## 36.6.7
 
 ### Patch Changes

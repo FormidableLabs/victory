@@ -1,5 +1,15 @@
 # victory-stack
 
+## 36.6.8
+
+### Patch Changes
+
+- TypeScript: Added strongly-typed props to `VictoryStack` (fixes [#2449](https://github.com/FormidableLabs/victory/issues/2449)) ([#2480](https://github.com/FormidableLabs/victory/pull/2480))
+
+- Updated dependencies []:
+  - victory-core@36.6.8
+  - victory-shared-events@36.6.8
+
 ## 36.6.7
 
 ### Patch Changes
