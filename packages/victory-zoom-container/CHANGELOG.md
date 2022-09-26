@@ -1,5 +1,14 @@
 # victory-zoom-container
 
+## 36.6.8
+
+### Patch Changes
+
+- Test for Changesets GitHub Actions workflow fix ([#2469](https://github.com/FormidableLabs/victory/pull/2469))
+
+- Updated dependencies []:
+  - victory-core@36.6.8
+
 ## 36.6.7
 
 ### Patch Changes

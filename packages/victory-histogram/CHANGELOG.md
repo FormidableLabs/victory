@@ -1,5 +1,14 @@
 # victory-histogram
 
+## 36.6.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-bar@36.6.8
+  - victory-core@36.6.8
+  - victory-vendor@36.6.8
+
 ## 36.6.7
 
 ### Patch Changes
