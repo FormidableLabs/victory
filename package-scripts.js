@@ -82,11 +82,11 @@ module.exports = {
     // 3. Copy all output from the es folder to the lib folder
     "types:pkg:create":
       "nps types:pkg:copy types:pkg:compile types:pkg:cjs-copy",
-    "types:pkg:copy": "cpx 'src/**/*.d.ts' es",
+    "types:pkg:copy": 'cpx "src/**/*.d.ts" es',
     "types:pkg:compile":
       "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src --outDir es || nps types:warning",
     "types:warning":
       'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
-    "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
+    "types:pkg:cjs-copy": 'cpx "es/**/*{.d.ts,.d.ts.map}" lib',
   },
 };
