@@ -99,6 +99,8 @@ function useNormalizedProps(): ContextType {
 
 export function VictoryProvider({
   children,
+  // Disabled due to TODO below which will require this obj. spread
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ...providerProps
 }: VictoryProviderProps) {
   const value = useNormalizedProps();
@@ -146,5 +148,5 @@ export function useVictoryProviderSync(props: VictoryCalculatedStateProps) {
 
   React.useEffect(() => {
     updateChildProps(myId, props);
-  }, [updateChildProps, props]);
+  }, [updateChildProps, props, myId]);
 }
