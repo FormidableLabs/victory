@@ -90,6 +90,6 @@ Please see the [Contributing guide](CONTRIBUTING.md).
 
 ## Maintenance Status
 
-**Active:** Formidable is actively working on this project, and we expect to continue for work for the foreseeable future. Bug reports, feature requests and pull requests are welcome.
+**Active:** Formidable is actively working on this project, and we expect to continue to work for the foreseeable future. Bug reports, feature requests and pull requests are welcome.
 
 [react]: https://facebook.github.io/react/
