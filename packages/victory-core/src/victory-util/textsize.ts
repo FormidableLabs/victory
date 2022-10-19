@@ -290,6 +290,7 @@ const _measureDimensionsInternal = (
   const containerElement = _getMeasurementContainer();
 
   const lines = _splitToLines(text);
+  let heightAcc = 0;
   for (const [i, line] of lines.entries()) {
     const textElement = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -303,6 +304,9 @@ const _measureDimensionsInternal = (
     textElement.style.fontFamily = params.fontFamily;
     textElement.style.letterSpacing = params.letterSpacing;
     textElement.textContent = line;
+    textElement.setAttribute("x", "0");
+    textElement.setAttribute("y", `${heightAcc}`);
+    heightAcc += params.lineHeight * params.fontSize;
 
     containerElement.appendChild(textElement);
   }
