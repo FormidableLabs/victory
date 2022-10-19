@@ -325,7 +325,11 @@ export interface TextSizeStyleInterface {
 
 // Stubbable implementation.
 export const _approximateTextSizeInternal = {
-  impl: (text: string | string[], style?: TextSizeStyleInterface) => {
+  impl: (
+    text: string | string[],
+    style?: TextSizeStyleInterface,
+    __debugForceApproximate = false,
+  ) => {
     // Attempt to first measure the element in DOM. If there is no DOM, fallback
     // to the less accurate approximation algorithm.
     const isClient =
@@ -333,7 +337,7 @@ export const _approximateTextSizeInternal = {
       typeof window.document !== "undefined" &&
       typeof window.document.createElement !== "undefined";
 
-    if (!isClient) {
+    if (!isClient || __debugForceApproximate) {
       return _approximateDimensionsInternal(text, style);
     }
 
