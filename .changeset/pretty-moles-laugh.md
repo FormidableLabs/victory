@@ -2,4 +2,4 @@
 "victory-core": patch
 ---
 
-Fixes #2475: Improve accuracy of text size measurements
+Improve accuracy of text size measurements (fixes #2475)
