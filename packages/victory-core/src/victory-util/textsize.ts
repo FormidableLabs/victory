@@ -283,7 +283,15 @@ const _getMeasurementContainer = memoize(() => {
   return containerElement;
 });
 
-const _measureDimensionsInternal = (
+const styleToKeyComponent = (style) => {
+  if (!style) {
+    return "null";
+  }
+
+  return `${style.angle}:${style.fontFamily}:${style.fontSize}:${style.letterSpacing}:${style.lineHeight}`;
+};
+
+const _measureDimensionsInternal = memoize((
   text: string | string[],
   style?: TextSizeStyleInterface,
 ) => {
@@ -316,11 +324,14 @@ const _measureDimensionsInternal = (
   containerElement.innerHTML = "";
 
   return { width, height };
-};
+}, (text, style) => {
+  const totalText = Array.isArray(text) ? text.join() : text;
+  const totalStyle = Array.isArray(style) ? style.map(styleToKeyComponent).join() : styleToKeyComponent(style);
+  return `${totalText}::${totalStyle}`;
+});
 
 export interface TextSizeStyleInterface {
   angle?: number;
-  characterConstant?: string;
   fontFamily?: string;
   fontSize?: number | string;
   letterSpacing?: string;
