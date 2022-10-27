@@ -291,44 +291,46 @@ const styleToKeyComponent = (style) => {
   return `${style.angle}:${style.fontFamily}:${style.fontSize}:${style.letterSpacing}:${style.lineHeight}`;
 };
 
-const _measureDimensionsInternal = memoize((
-  text: string | string[],
-  style?: TextSizeStyleInterface,
-) => {
-  const containerElement = _getMeasurementContainer();
+const _measureDimensionsInternal = memoize(
+  (text: string | string[], style?: TextSizeStyleInterface) => {
+    const containerElement = _getMeasurementContainer();
 
-  const lines = _splitToLines(text);
-  let heightAcc = 0;
-  for (const [i, line] of lines.entries()) {
-    const textElement = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "tspan",
-    );
-    const params = _prepareParams(style, i);
-    textElement.style.fontFamily = params.fontFamily;
-    textElement.style.transform = `rotate(${params.angle})`;
-    textElement.style.fontSize = `${params.fontSize}px`;
-    textElement.style.lineHeight = params.lineHeight;
-    textElement.style.fontFamily = params.fontFamily;
-    textElement.style.letterSpacing = params.letterSpacing;
-    textElement.textContent = line;
-    textElement.setAttribute("x", "0");
-    textElement.setAttribute("y", `${heightAcc}`);
-    heightAcc += params.lineHeight * params.fontSize;
+    const lines = _splitToLines(text);
+    let heightAcc = 0;
+    for (const [i, line] of lines.entries()) {
+      const textElement = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "tspan",
+      );
+      const params = _prepareParams(style, i);
+      textElement.style.fontFamily = params.fontFamily;
+      textElement.style.transform = `rotate(${params.angle})`;
+      textElement.style.fontSize = `${params.fontSize}px`;
+      textElement.style.lineHeight = params.lineHeight;
+      textElement.style.fontFamily = params.fontFamily;
+      textElement.style.letterSpacing = params.letterSpacing;
+      textElement.textContent = line;
+      textElement.setAttribute("x", "0");
+      textElement.setAttribute("y", `${heightAcc}`);
+      heightAcc += params.lineHeight * params.fontSize;
 
-    containerElement.appendChild(textElement);
-  }
+      containerElement.appendChild(textElement);
+    }
 
-  const { width, height } = containerElement.getBoundingClientRect();
+    const { width, height } = containerElement.getBoundingClientRect();
 
-  containerElement.innerHTML = "";
+    containerElement.innerHTML = "";
 
-  return { width, height };
-}, (text, style) => {
-  const totalText = Array.isArray(text) ? text.join() : text;
-  const totalStyle = Array.isArray(style) ? style.map(styleToKeyComponent).join() : styleToKeyComponent(style);
-  return `${totalText}::${totalStyle}`;
-});
+    return { width, height };
+  },
+  (text, style) => {
+    const totalText = Array.isArray(text) ? text.join() : text;
+    const totalStyle = Array.isArray(style)
+      ? style.map(styleToKeyComponent).join()
+      : styleToKeyComponent(style);
+    return `${totalText}::${totalStyle}`;
+  },
+);
 
 export interface TextSizeStyleInterface {
   angle?: number;
