@@ -48,10 +48,9 @@ module.exports = {
               /^node_modules/,
               "lib-vendor",
             );
-            const relPathToPkg = path.relative(
-              path.dirname(currentFileVendor),
-              vendorPkg,
-            ).replaceAll("\\", "/");
+            const relPathToPkg = path
+              .relative(path.dirname(currentFileVendor), vendorPkg)
+              .replaceAll("\\", "/");
 
             return relPathToPkg;
           }
