@@ -70,6 +70,7 @@
     "build": {
       "command": "node ./scripts/build.js",
       "files": [
+        ".babelrc.js",
         "scripts/build.js",
         "node_modules/**"
       ],

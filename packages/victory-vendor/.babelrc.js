@@ -50,7 +50,7 @@ module.exports = {
             );
             const relPathToPkg = path
               .relative(path.dirname(currentFileVendor), vendorPkg)
-              .replaceAll("\\", "/");
+              .replace(/\\/g, "/");
 
             return relPathToPkg;
           }
