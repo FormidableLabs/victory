@@ -8,7 +8,7 @@ const STORIES = path.resolve(ROOT, "stories");
 module.exports = {
   webpackFinal: async (config) => {
     // Read all the victory packages and alias.
-    glob.sync(path.join(PKGS, "victory*/package.json").replaceAll("\\", "/")).forEach((pkgPath) => {
+    glob.sync(path.join(PKGS, "victory*/package.json").replace(/\\/g, "/")).forEach((pkgPath) => {
       const key = path.dirname(path.relative(PKGS, pkgPath));
       config.resolve.alias[key] = path.resolve(path.dirname(pkgPath));
     });
