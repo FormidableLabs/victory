@@ -228,11 +228,12 @@ const baseProps: React.WeakValidationMap<VictoryCommonProps> = {
       y: CustomPropTypes.domain.isRequired,
     }),
   ]),
+  // @ts-expect-error TODO: synchronize the type with this PropTypes
   scale: PropTypes.oneOfType([
     CustomPropTypes.scale,
-    PropTypes.shape({
-      x: CustomPropTypes.scale.isRequired,
-      y: CustomPropTypes.scale.isRequired,
+    PropTypes.exact({
+      x: CustomPropTypes.scale,
+      y: CustomPropTypes.scale,
     }),
   ]),
   // @ts-expect-error TODO: synchronize the type with this PropTypes
@@ -292,7 +293,10 @@ const primitiveProps: React.WeakValidationMap<VictoryCommonPrimitiveProps> = {
   role: PropTypes.string,
   scale: PropTypes.oneOfType([
     CustomPropTypes.scale,
-    PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale }),
+    PropTypes.exact({
+      x: CustomPropTypes.scale,
+      y: CustomPropTypes.scale,
+    }),
   ]),
   shapeRendering: PropTypes.string,
   style: PropTypes.object,
