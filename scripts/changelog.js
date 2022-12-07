@@ -7,7 +7,7 @@ const changelogFunctions = {
   getReleaseLine
 };
 
-module.exports = {
+export default {
   ...changelogFunctions,
   default: changelogFunctions
 };
