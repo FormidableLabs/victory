@@ -31,8 +31,8 @@ export interface VictoryLegendProps
     };
     symbol?: {
       fill?: string;
-      type?: string;
       size?: number;
+      type?: string;
     };
   }>;
   dataComponent?: React.ReactElement;
