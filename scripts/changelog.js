@@ -1,7 +1,4 @@
-const { config } = require('dotenv');
-const { getReleaseLine } = require('@svitejs/changesets-changelog-github-compact');
-
-config();
+import { getReleaseLine } from '@svitejs/changesets-changelog-github-compact';
 
 const changelogFunctions = {
   // Dependencies are updated on every changeset for every package, so
