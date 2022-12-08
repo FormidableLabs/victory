@@ -24,7 +24,7 @@ const evaluateProps = (props) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ fill: "none", stroke: "black" }, props.style),
+    assign({ fill: "none", stroke: "black", pointerEvents: "stroke" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
