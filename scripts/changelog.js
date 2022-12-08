@@ -1,13 +1,13 @@
-import { getReleaseLine } from "@svitejs/changesets-changelog-github-compact";
+const {
+  default: changelogFunctions,
+} = require("@svitejs/changesets-changelog-github-compact");
 
-const changelogFunctions = {
-  // Dependencies are updated on every changeset for every package, so
-  // remove them to reduce noise.
-  getDependencyReleaseLine: () => "",
-  getReleaseLine,
+const customFunctions = {
+  ...changelogFunctions,
+  getDependencyReleaseLine: async () => "",
 };
 
-export default {
-  ...changelogFunctions,
-  default: changelogFunctions,
+module.exports = {
+  ...customFunctions,
+  default: customFunctions,
 };
