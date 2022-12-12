@@ -1,13 +1,14 @@
 import React from "react";
-import { Flyout, VictoryTooltip } from "victory-tooltip";
 import { VictoryContainer, VictoryLabel } from "victory-core";
 import { fireEvent, screen, render } from "@testing-library/react";
+
+import Flyout from './flyout';
+import { VictoryTooltip, VictoryTooltipProps } from './victory-tooltip';
 
 describe("components/victory-tooltip", () => {
   const flyoutId = "flyout-1";
   const labelId = "label-1";
 
-  /** @type {VictoryTooltipProps} */
   const baseProps = {
     x: 0,
     y: 0,
@@ -17,7 +18,7 @@ describe("components/victory-tooltip", () => {
     text: "such text, wow",
     flyoutComponent: <Flyout data-testid={flyoutId} />,
     labelComponent: <VictoryLabel data-testid={labelId} />,
-  };
+  } as VictoryTooltipProps;
 
   it("renders nothing when not active", () => {
     render(<VictoryTooltip {...baseProps} active={false} />, {
@@ -32,7 +33,7 @@ describe("components/victory-tooltip", () => {
     const output = screen.getByTestId(labelId);
     expect(output).toBeInTheDocument();
     expect(output).toBeVisible();
-    expect(output).toHaveTextContent(baseProps.text);
+    expect(output).toHaveTextContent(baseProps.text as string);
   });
 
   it("renders a flyout and a label", () => {

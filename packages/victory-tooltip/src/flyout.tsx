@@ -1,15 +1,21 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
-import PropTypes from "prop-types";
-import { Helpers, CommonProps, Path, UserProps } from "victory-core";
+import {
+  Helpers,
+  Path,
+  UserProps,
+  VictoryCommonPrimitiveProps,
+  OrientationTypes,
+  NumberOrCallback,
+} from "victory-core";
 import { isPlainObject, assign } from "lodash";
 
 const getVerticalPath = (props) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } =
     props;
   const sign = orientation === "bottom" ? 1 : -1;
-  const x = props.x + (props.dx || 0);
-  const y = props.y + (props.dy || 0);
+  const x = props.x || 0 + (props.dx || 0);
+  const y = props.y || 0 + (props.dy || 0);
   const centerX = isPlainObject(center) && center.x;
   const centerY = isPlainObject(center) && center.y;
   const pointerEdge = centerY + sign * (height / 2);
@@ -66,14 +72,14 @@ const getHorizontalPath = (props) => {
     z`;
 };
 
-const getFlyoutPath = (props) => {
+const getFlyoutPath = (props: FlyoutProps) => {
   const orientation = props.orientation || "top";
   return orientation === "left" || orientation === "right"
     ? getHorizontalPath(props)
     : getVerticalPath(props);
 };
 
-const evaluateProps = (props) => {
+const evaluateProps = (props: FlyoutProps) => {
   /**
    * Potential evaluated props are:
    * `id`
@@ -91,38 +97,41 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-const Flyout = (props) => {
+export interface FlyoutProps extends VictoryCommonPrimitiveProps {
+  center?: {
+    x?: number | null;
+    y?: number | null;
+  };
+  cornerRadius?: NumberOrCallback;
+  datum?: object;
+  dx?: NumberOrCallback;
+  dy?: NumberOrCallback;
+  height?: NumberOrCallback;
+  orientation?: OrientationTypes;
+  pathComponent?: React.ReactElement;
+  pointerLength?: NumberOrCallback;
+  pointerWidth?: NumberOrCallback;
+  width?: NumberOrCallback;
+  x?: number;
+  y?: number;
+}
+
+export const Flyout: React.FC<FlyoutProps> = (props) => {
   props = evaluateProps({ ...defaultProps, ...props });
   const userProps = UserProps.getSafeUserProps(props);
 
-  return React.cloneElement(props.pathComponent, {
-    ...props.events,
-    ...userProps,
-    style: props.style,
-    d: getFlyoutPath(props),
-    className: props.className,
-    shapeRendering: props.shapeRendering,
-    role: props.role,
-    transform: props.transform,
-    clipPath: props.clipPath,
-  });
+  return props.pathComponent
+    ? React.cloneElement(props.pathComponent, {
+        ...props.events,
+        ...userProps,
+        style: props.style,
+        d: getFlyoutPath(props),
+        className: props.className,
+        shapeRendering: props.shapeRendering,
+        role: props.role,
+        transform: props.transform,
+        clipPath: props.clipPath,
+      })
+    : null;
 };
-
-Flyout.propTypes = {
-  ...CommonProps.primitiveProps,
-  center: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-  cornerRadius: PropTypes.number,
-  datum: PropTypes.object,
-  dx: PropTypes.number,
-  dy: PropTypes.number,
-  height: PropTypes.number,
-  orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-  pathComponent: PropTypes.element,
-  pointerLength: PropTypes.number,
-  pointerWidth: PropTypes.number,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
-};
-
 export default Flyout;

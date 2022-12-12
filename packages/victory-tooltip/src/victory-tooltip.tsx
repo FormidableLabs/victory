@@ -5,11 +5,19 @@ import {
   TextSize,
   Helpers,
   LabelHelpers,
+  NumberOrCallback,
+  PaddingOrCallback,
+  OrientationTypes,
   VictoryLabel,
+  VictoryLabelProps,
+  VictoryLabelableProps,
+  VictoryLabelStyleObject,
+  VictoryStyleObject,
   VictoryTheme,
+  VictoryThemeDefinition,
   VictoryPortal,
 } from "victory-core";
-import Flyout from "./flyout";
+import { Flyout } from "./flyout";
 import { assign, defaults, uniqueId, isPlainObject, orderBy } from "lodash";
 
 const fallbackProps = {
@@ -18,10 +26,11 @@ const fallbackProps = {
   pointerWidth: 10,
 };
 
-export default class VictoryTooltip extends React.Component {
+export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
   static displayName = "VictoryTooltip";
   static role = "tooltip";
   static propTypes = {
+    ...VictoryLabel.propTypes,
     activateData: PropTypes.bool,
     active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     activePoints: PropTypes.array,
@@ -39,11 +48,6 @@ export default class VictoryTooltip extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func,
     ]),
-    data: PropTypes.array,
-    datum: PropTypes.object,
-    dx: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    dy: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    events: PropTypes.object,
     flyoutComponent: PropTypes.element,
     flyoutHeight: PropTypes.oneOfType([
       CustomPropTypes.nonNegative,
@@ -64,12 +68,8 @@ export default class VictoryTooltip extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func,
     ]),
-    groupComponent: PropTypes.element,
-    height: PropTypes.number,
-    horizontal: PropTypes.bool,
     id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    labelComponent: PropTypes.element,
     orientation: PropTypes.oneOfType([
       PropTypes.oneOf(["top", "bottom", "left", "right"]),
       PropTypes.func,
@@ -86,23 +86,8 @@ export default class VictoryTooltip extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func,
     ]),
-    polar: PropTypes.bool,
-    renderInPortal: PropTypes.bool,
-    scale: PropTypes.shape({
-      x: CustomPropTypes.scale,
-      y: CustomPropTypes.scale,
-    }),
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    text: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.func,
-      PropTypes.array,
-    ]),
-    theme: PropTypes.object,
     width: PropTypes.number,
-    x: PropTypes.number,
-    y: PropTypes.number,
   };
 
   static defaultProps = {
@@ -141,7 +126,9 @@ export default class VictoryTooltip extends React.Component {
     ];
   };
 
-  constructor(props) {
+  id: number | string;
+
+  constructor(props: VictoryTooltipProps) {
     super(props);
     this.id = props.id === undefined ? uniqueId("tooltip-") : props.id;
   }
@@ -159,7 +146,7 @@ export default class VictoryTooltip extends React.Component {
   getPolarOrientation(props, datum) {
     const degrees = LabelHelpers.getDegrees(props, datum);
     const placement = props.labelPlacement || "vertical";
-    if (placement === " vertical") {
+    if (placement === "vertical") {
       return this.getVerticalOrientations(degrees);
     } else if (placement === "parallel") {
       return degrees < 90 || degrees > 270 ? "right" : "left";
@@ -305,6 +292,7 @@ export default class VictoryTooltip extends React.Component {
   getTransform(props) {
     const { x, y, style } = props;
     const labelStyle = style || {};
+
     const angle =
       labelStyle.angle || props.angle || this.getDefaultAngle(props);
     return angle ? `rotate(${angle} ${x} ${y})` : undefined;
@@ -447,10 +435,14 @@ export default class VictoryTooltip extends React.Component {
     return {
       flyoutHeight: flyoutHeight
         ? Helpers.evaluateProp(flyoutHeight, props)
-        : getHeight(props, labelSize, orientation),
+        : // TODO: Any reason for this? Are we replacing this function or something?
+          // Maybe we're just keeping the reference alive?
+          // : getHeight(props, labelSize, orientation),
+          getHeight(),
       flyoutWidth: flyoutWidth
         ? Helpers.evaluateProp(flyoutWidth, props)
-        : getWidth(props, labelSize, orientation),
+        : // : getWidth(props, labelSize, orientation),
+          getWidth(),
     };
   }
 
@@ -557,7 +549,7 @@ export default class VictoryTooltip extends React.Component {
     const active = Helpers.evaluateProp(props.active, props);
     const { renderInPortal } = props;
     if (!active) {
-      return renderInPortal ? <VictoryPortal>{null}</VictoryPortal> : null;
+      return renderInPortal ? <VictoryPortal /> : null;
     }
     const evaluatedProps = this.getEvaluatedProps(props);
     const { flyoutComponent, labelComponent, groupComponent } = evaluatedProps;
@@ -584,4 +576,42 @@ export default class VictoryTooltip extends React.Component {
     const props = Helpers.modifyProps(this.props, fallbackProps, "tooltip");
     return this.renderTooltip(props);
   }
+}
+
+export interface VictoryTooltipProps
+  extends VictoryLabelableProps,
+    VictoryLabelProps {
+  activateData?: boolean;
+  active?: boolean;
+  activePoints?: any[];
+  angle: VictoryLabelStyleObject["angle"];
+  center?: { x?: number; y?: number };
+  centerOffset?: {
+    x?: NumberOrCallback;
+    y?: NumberOrCallback;
+  };
+  constrainToVisibleArea?: boolean;
+  cornerRadius?: NumberOrCallback;
+  height?: number;
+  horizontal?: boolean;
+  flyoutComponent?: React.ReactElement;
+  flyoutHeight?: NumberOrCallback;
+  flyoutPadding?: PaddingOrCallback;
+  flyoutStyle?: VictoryStyleObject;
+  flyoutWidth?: NumberOrCallback;
+  id?: number | string;
+  index?: number | string;
+  orientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
+  pointerLength?: NumberOrCallback;
+  pointerOrientation?:
+    | OrientationTypes
+    | ((...args: any[]) => OrientationTypes);
+  pointerWidth?: NumberOrCallback;
+  style?:
+    | (VictoryLabelStyleObject & {
+        angle?: number;
+      })
+    | VictoryLabelStyleObject[];
+  theme?: VictoryThemeDefinition;
+  width?: number;
 }
