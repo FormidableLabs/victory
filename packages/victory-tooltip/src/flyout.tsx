@@ -1,17 +1,31 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
-import { Helpers, CommonProps, Path, UserProps } from "victory-core";
+import {
+  Helpers,
+  CommonProps,
+  Path,
+  UserProps,
+  VictoryCommonPrimitiveProps,
+  OrientationTypes,
+  NumberOrCallback,
+} from "victory-core";
 import { isPlainObject, assign } from "lodash";
 
 const getVerticalPath = (props) => {
-  const { pointerWidth, cornerRadius, orientation, width, height, center } =
-    props;
+  const {
+    pointerWidth = 0,
+    cornerRadius = 0,
+    orientation = 0,
+    width = 0,
+    height = 0,
+    center,
+  } = props;
   const sign = orientation === "bottom" ? 1 : -1;
-  const x = props.x + (props.dx || 0);
-  const y = props.y + (props.dy || 0);
-  const centerX = isPlainObject(center) && center.x;
-  const centerY = isPlainObject(center) && center.y;
+  const x = props.x || 0 + (props.dx || 0);
+  const y = props.y || 0 + (props.dy || 0);
+  const centerX = center && isPlainObject(center) ? center.x || 0 : 0;
+  const centerY = center && isPlainObject(center) ? center.y || 0 : 0;
   const pointerEdge = centerY + sign * (height / 2);
   const oppositeEdge = centerY - sign * (height / 2);
   const rightEdge = centerX + width / 2;
@@ -36,13 +50,19 @@ const getVerticalPath = (props) => {
 };
 
 const getHorizontalPath = (props) => {
-  const { pointerWidth, cornerRadius, orientation, width, height, center } =
-    props;
+  const {
+    pointerWidth = 0,
+    cornerRadius = 0,
+    orientation = 0,
+    width = 0,
+    height = 0,
+    center = 0,
+  } = props;
   const sign = orientation === "left" ? 1 : -1;
-  const x = props.x + (props.dx || 0);
-  const y = props.y + (props.dy || 0);
-  const centerX = isPlainObject(center) && center.x;
-  const centerY = isPlainObject(center) && center.y;
+  const x = props.x || 0 + (props.dx || 0);
+  const y = props.y || 0 + (props.dy || 0);
+  const centerX = isPlainObject(center) ? center.x : 0;
+  const centerY = isPlainObject(center) ? center.y : 0;
   const pointerEdge = centerX - sign * (width / 2);
   const oppositeEdge = centerX + sign * (width / 2);
   const bottomEdge = centerY + height / 2;
@@ -66,7 +86,7 @@ const getHorizontalPath = (props) => {
     z`;
 };
 
-const getFlyoutPath = (props) => {
+const getFlyoutPath = (props: FlyoutProps) => {
   const orientation = props.orientation || "top";
   return orientation === "left" || orientation === "right"
     ? getHorizontalPath(props)
@@ -85,25 +105,28 @@ const evaluateProps = (props) => {
   return assign({}, props, { id, style });
 };
 
-const Flyout = (props) => {
+export const Flyout: React.FC<FlyoutProps> = (props) => {
   props = evaluateProps(props);
   const userProps = UserProps.getSafeUserProps(props);
 
-  return React.cloneElement(props.pathComponent, {
-    ...props.events,
-    ...userProps,
-    style: props.style,
-    d: getFlyoutPath(props),
-    className: props.className,
-    shapeRendering: props.shapeRendering,
-    role: props.role,
-    transform: props.transform,
-    clipPath: props.clipPath,
-  });
+  return props.pathComponent
+    ? React.cloneElement(props.pathComponent, {
+        ...props.events,
+        ...userProps,
+        style: props.style,
+        d: getFlyoutPath(props),
+        className: props.className,
+        shapeRendering: props.shapeRendering,
+        role: props.role,
+        transform: props.transform,
+        clipPath: props.clipPath,
+      })
+    : null;
 };
 
 Flyout.propTypes = {
   ...CommonProps.primitiveProps,
+  // TODO: Why's this failing?
   center: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
   cornerRadius: PropTypes.number,
   datum: PropTypes.object,
@@ -125,4 +148,21 @@ Flyout.defaultProps = {
   shapeRendering: "auto",
 };
 
-export default Flyout;
+export interface FlyoutProps extends VictoryCommonPrimitiveProps {
+  center?: {
+    x?: number | null;
+    y?: number | null;
+  };
+  cornerRadius?: NumberOrCallback;
+  datum?: object; // TODO: Get an actual type going here
+  dx?: NumberOrCallback;
+  dy?: NumberOrCallback;
+  height?: NumberOrCallback;
+  orientation?: OrientationTypes;
+  pathComponent?: React.ReactElement; // There's a default here we could hopefully use instead
+  pointerLength?: NumberOrCallback;
+  pointerWidth?: NumberOrCallback;
+  width?: NumberOrCallback;
+  x?: NumberOrCallback;
+  y?: NumberOrCallback;
+}

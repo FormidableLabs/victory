@@ -5,11 +5,20 @@ import {
   TextSize,
   Helpers,
   LabelHelpers,
+  NumberOrCallback,
+  PaddingOrCallback,
+  OrientationTypes,
+  StringOrNumberOrCallback,
+  VictoryCommonPrimitiveProps,
   VictoryLabel,
+  VictoryLabelableProps,
+  VictoryLabelStyleObject,
+  VictoryStyleObject,
   VictoryTheme,
+  VictoryThemeDefinition,
   VictoryPortal,
 } from "victory-core";
-import Flyout from "./flyout";
+import { Flyout } from "./flyout";
 import { assign, defaults, uniqueId, isPlainObject, orderBy } from "lodash";
 
 const fallbackProps = {
@@ -18,7 +27,50 @@ const fallbackProps = {
   pointerWidth: 10,
 };
 
-export default class VictoryTooltip extends React.Component {
+export interface VictoryTooltipProps
+  extends VictoryCommonPrimitiveProps,
+    VictoryLabelableProps {
+  active?: boolean;
+  activateData?: boolean;
+  activePoints?: any[];
+  angle?: string | number;
+  center?: { x?: number; y?: number };
+  centerOffset?: {
+    x?: NumberOrCallback;
+    y?: NumberOrCallback;
+  };
+  constrainToVisibleArea?: boolean;
+  cornerRadius?: NumberOrCallback;
+  datum?: any;
+  data?: any[];
+  dx?: NumberOrCallback;
+  dy?: NumberOrCallback;
+  groupComponent?: React.ReactElement;
+  height?: number;
+  horizontal?: boolean;
+  events?: { [key: string]: (event: React.SyntheticEvent<any>) => void };
+  flyoutHeight?: NumberOrCallback;
+  flyoutWidth?: NumberOrCallback;
+  flyoutStyle?: VictoryStyleObject;
+  flyoutComponent?: React.ReactElement;
+  flyoutPadding?: PaddingOrCallback;
+  index?: number | string;
+  orientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
+  pointerLength?: NumberOrCallback;
+  pointerOrientation?:
+    | OrientationTypes
+    | ((...args: any[]) => OrientationTypes);
+  pointerWidth?: NumberOrCallback;
+  renderInPortal?: boolean;
+  style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  text?: StringOrNumberOrCallback | string[] | number[];
+  theme?: VictoryThemeDefinition;
+  width?: number;
+  x?: number;
+  y?: number;
+}
+
+export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
   static displayName = "VictoryTooltip";
   static role = "tooltip";
   static propTypes = {
@@ -140,6 +192,8 @@ export default class VictoryTooltip extends React.Component {
       },
     ];
   };
+
+  id: number;
 
   constructor(props) {
     super(props);
@@ -447,10 +501,14 @@ export default class VictoryTooltip extends React.Component {
     return {
       flyoutHeight: flyoutHeight
         ? Helpers.evaluateProp(flyoutHeight, props)
-        : getHeight(props, labelSize, orientation),
+        : // TODO: Any reason for this? Are we replacing this function or something?
+          // Maybe we're just keeping the reference alive?
+          // : getHeight(props, labelSize, orientation),
+          getHeight(),
       flyoutWidth: flyoutWidth
         ? Helpers.evaluateProp(flyoutWidth, props)
-        : getWidth(props, labelSize, orientation),
+        : // : getWidth(props, labelSize, orientation),
+          getWidth(),
     };
   }
 
@@ -557,7 +615,7 @@ export default class VictoryTooltip extends React.Component {
     const active = Helpers.evaluateProp(props.active, props);
     const { renderInPortal } = props;
     if (!active) {
-      return renderInPortal ? <VictoryPortal>{null}</VictoryPortal> : null;
+      return renderInPortal ? <VictoryPortal /> : null;
     }
     const evaluatedProps = this.getEvaluatedProps(props);
     const { flyoutComponent, labelComponent, groupComponent } = evaluatedProps;
