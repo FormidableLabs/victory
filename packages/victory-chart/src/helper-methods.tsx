@@ -133,7 +133,7 @@ export function getChildren(props, childComponents, calculatedProps) {
   const { origin, horizontal } = calculatedProps;
   const parentName = props.name || "chart";
 
-  return childComponents.map((child, index) => {
+  return childComponents.filter(React.isValidElement).map((child, index) => {
     const role = child.type && child.type.role;
     const style = Array.isArray(child.props.style)
       ? child.props.style
@@ -161,11 +161,10 @@ export function getChildren(props, childComponents, calculatedProps) {
 }
 
 export const getChildComponents = (props, defaultAxes?) => {
-  const childComponents = React.Children.toArray(props.children);
-  let newChildComponents = [...childComponents];
+  let childComponents = React.Children.toArray(props.children);
 
   if (childComponents.length === 0) {
-    newChildComponents.push(defaultAxes.independent, defaultAxes.dependent);
+    childComponents.push(defaultAxes.independent, defaultAxes.dependent);
   } else {
     const axisComponents = {
       dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
@@ -179,18 +178,18 @@ export const getChildComponents = (props, defaultAxes?) => {
       axisComponents.dependent.length === 0 &&
       axisComponents.independent.length === 0
     ) {
-      newChildComponents = props.prependDefaultAxes
+      childComponents = props.prependDefaultAxes
         ? [defaultAxes.independent, defaultAxes.dependent].concat(
-            newChildComponents,
+            childComponents,
           )
-        : newChildComponents.concat([
+        : childComponents.concat([
             defaultAxes.independent,
             defaultAxes.dependent,
           ]);
     }
   }
 
-  return newChildComponents;
+  return childComponents;
 };
 
 const getDomain = (props, axis, childComponents) => {
