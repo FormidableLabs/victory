@@ -270,13 +270,7 @@ export interface VictoryCommonPrimitiveProps {
   origin?: OriginType;
   polar?: boolean;
   role?: string;
-  scale?:
-    | ScalePropType
-    | D3Scale
-    | {
-        x?: ScalePropType | D3Scale;
-        y?: ScalePropType | D3Scale;
-      };
+  scale?: any;
   shapeRendering?: string;
   style?: any;
   tabIndex?: NumberOrCallback;
@@ -297,7 +291,6 @@ const primitiveProps: React.WeakValidationMap<VictoryCommonPrimitiveProps> = {
   origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
   polar: PropTypes.bool,
   role: PropTypes.string,
-  // @ts-expect-error TODO: synchronize the type with this PropType
   scale: PropTypes.oneOfType([
     CustomPropTypes.scale,
     PropTypes.exact({
