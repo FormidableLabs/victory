@@ -1,8 +1,7 @@
 <div align="center">
-    <img width="300" alt="victory" src="https://raw.githubusercontent.com/FormidableLabs/formidable-oss-badges/master/src/assets/featuredLogos/victory.svg?sanitize=true" />
-
-  <br />
-  <br />
+  <a href="https://formidable.com/open-source/" target="_blank">
+    <img alt="Victory — Formidable, We build the modern web" src="./Victory-Hero.png" />
+  </a>
 
   <strong>
     an ecosystem of composable React components for building interactive data visualizations.
