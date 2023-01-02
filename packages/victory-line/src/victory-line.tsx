@@ -45,9 +45,6 @@ const options = {
 interface VictoryLineBase extends EventsMixinClass<VictoryLineProps> {}
 
 class VictoryLineBase extends React.Component<VictoryLineProps> {
-  constructor(props) {
-    super(props);
-  }
 
   static animationWhitelist = [
     "data",
