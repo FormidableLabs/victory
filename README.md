@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://formidable.com/open-source/" target="_blank">
-    <img alt="Victory — Formidable, We build the modern web" src="./Victory-Hero.png" />
+    <img alt="Victory — Formidable, We build the modern web" src="https://raw.githubusercontent.com/FormidableLabs/victory/main//Victory-Hero.png" />
   </a>
 
   <strong>
