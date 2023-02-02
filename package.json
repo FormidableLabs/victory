@@ -21,7 +21,7 @@
   "author": "Formidable",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/formidablelabs/victory/issue"
+    "url": "https://github.com/formidablelabs/victory/issues"
   },
   "homepage": "https://formidable.com/open-source/victory",
   "devDependencies": {
