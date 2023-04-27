@@ -49,6 +49,9 @@
     "execa": "^6.1.0",
     "rimraf": "^3.0.2"
   },
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
     "build": "wireit",
     "build:lib": "wireit",

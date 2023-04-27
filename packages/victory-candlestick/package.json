@@ -30,6 +30,9 @@
   "devDependencies": {
     "victory-chart": "^36.6.8"
   },
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",
     "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
