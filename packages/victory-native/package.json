@@ -64,6 +64,9 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
     "build": "wireit",
     "build:lib": "wireit",

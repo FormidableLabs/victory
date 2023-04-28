@@ -30,6 +30,9 @@
   "devDependencies": {
     "victory-scatter": "*"
   },
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",
     "###            DO NOT MODIFY THESE MANUALLY          ###": "true",

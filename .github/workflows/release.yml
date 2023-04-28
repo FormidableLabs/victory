@@ -8,6 +8,14 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
+      repository-projects: write
+      deployments: write
+      packages: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v2

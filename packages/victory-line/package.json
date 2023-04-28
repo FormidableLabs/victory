@@ -32,6 +32,9 @@
     "victory-chart": "*",
     "victory-line": "*"
   },
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",
     "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
