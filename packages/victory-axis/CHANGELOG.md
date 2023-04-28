@@ -1,5 +1,11 @@
 # victory-axis
 
+## 36.6.9
+
+### Patch Changes
+
+- Setup NPM Provenance ([#2587](https://github.com/FormidableLabs/victory/pull/2587))
+
 ## 36.6.8
 
 ### Patch Changes

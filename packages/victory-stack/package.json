@@ -1,6 +1,6 @@
 {
   "name": "victory-stack",
-  "version": "36.6.8",
+  "version": "36.6.9",
   "description": "Stack Layout Component for Victory",
   "keywords": [
     "data visualization",
@@ -23,8 +23,8 @@
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
-    "victory-core": "^36.6.8",
-    "victory-shared-events": "^36.6.8"
+    "victory-core": "^36.6.9",
+    "victory-shared-events": "^36.6.9"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
