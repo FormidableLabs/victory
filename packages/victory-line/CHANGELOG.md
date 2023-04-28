@@ -1,5 +1,13 @@
 # victory-line
 
+## 36.6.9
+
+### Patch Changes
+
+- Setup NPM Provenance ([#2587](https://github.com/FormidableLabs/victory/pull/2587))
+
+* Set VictoryLine to default to "pointer-events: stroke" so that events fire properly when lines overlap (fixes [#2468](https://github.com/FormidableLabs/victory/issues/2468)) ([#2530](https://github.com/FormidableLabs/victory/pull/2530))
+
 ## 36.6.8
 
 ### Patch Changes
