@@ -1,5 +1,11 @@
 # victory-scatter
 
+## 36.6.10
+
+### Patch Changes
+
+- Setup NPM Provenance ([#2590](https://github.com/FormidableLabs/victory/pull/2590))
+
 ## 36.6.9
 
 ### Patch Changes
