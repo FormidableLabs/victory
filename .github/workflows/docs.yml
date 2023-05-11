@@ -49,16 +49,6 @@ jobs:
       - name: Build Docs
         run: yarn build
 
-      # deploy to staging if the branch is not main
-      - name: Deploy Docs (staging)
-        if: github.ref != 'refs/heads/main'
-        run: yarn deploy:stage
-        env:
-          FORMIDEPLOY_GIT_SHA: ${{ github.event.pull_request.head.sha }}
-          GITHUB_DEPLOYMENT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-
       # deploy to production only if the branch is main
       - name: Deploy docs (production)
         if: github.ref == 'refs/heads/main'
