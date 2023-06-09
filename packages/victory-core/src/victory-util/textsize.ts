@@ -267,6 +267,9 @@ const _approximateDimensionsInternal = (
 const _getMeasurementContainer = memoize(() => {
   const element = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   element.setAttribute("xlink", "http://www.w3.org/1999/xlink");
+  element.setAttribute("width", "300");
+  element.setAttribute("height", "300");
+  element.setAttribute("viewBox", "0 0 300 300");
 
   const containerElement = document.createElementNS(
     "http://www.w3.org/2000/svg",
@@ -304,7 +307,6 @@ const _measureDimensionsInternal = memoize(
       );
       const params = _prepareParams(style, i);
       textElement.style.fontFamily = params.fontFamily;
-      textElement.style.transform = `rotate(${params.angle})`;
       textElement.style.fontSize = `${params.fontSize}px`;
       textElement.style.lineHeight = params.lineHeight;
       textElement.style.fontFamily = params.fontFamily;
@@ -312,16 +314,19 @@ const _measureDimensionsInternal = memoize(
       textElement.textContent = line;
       textElement.setAttribute("x", "0");
       textElement.setAttribute("y", `${heightAcc}`);
-      heightAcc += params.lineHeight * params.fontSize;
-
       containerElement.appendChild(textElement);
-    }
+      
+      heightAcc += params.lineHeight * textElement.getBoundingClientRect().height;
+    } 
 
-    const { width, height } = containerElement.getBoundingClientRect();
+    const { width } = containerElement.getBoundingClientRect();
 
     containerElement.innerHTML = "";
 
-    return { width, height };
+    return {
+      width: style?.angle ? _getSizeWithRotate(width, heightAcc, style?.angle) : width,
+      height: style?.angle ? _getSizeWithRotate(heightAcc, width, style?.angle) : heightAcc,
+    };
   },
   (text, style) => {
     const totalText = Array.isArray(text) ? text.join() : text;
