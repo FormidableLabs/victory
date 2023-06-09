@@ -78,7 +78,7 @@ export const LineHeight = () => {
           orientation="vertical"
           rowGutter={0}
           style={{
-            labels: { lineHeight: 0.275 }
+            labels: { lineHeight: 0.275 },
           }}
           data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
         />
@@ -88,7 +88,7 @@ export const LineHeight = () => {
           orientation="vertical"
           rowGutter={0}
           style={{
-            labels: { lineHeight: 0.75 }
+            labels: { lineHeight: 0.75 },
           }}
           data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
         />

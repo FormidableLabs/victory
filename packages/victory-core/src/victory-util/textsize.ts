@@ -315,17 +315,22 @@ const _measureDimensionsInternal = memoize(
       textElement.setAttribute("x", "0");
       textElement.setAttribute("y", `${heightAcc}`);
       containerElement.appendChild(textElement);
-      
-      heightAcc += params.lineHeight * textElement.getBoundingClientRect().height;
-    } 
+
+      heightAcc +=
+        params.lineHeight * textElement.getBoundingClientRect().height;
+    }
 
     const { width } = containerElement.getBoundingClientRect();
 
     containerElement.innerHTML = "";
 
     return {
-      width: style?.angle ? _getSizeWithRotate(width, heightAcc, style?.angle) : width,
-      height: style?.angle ? _getSizeWithRotate(heightAcc, width, style?.angle) : heightAcc,
+      width: style?.angle
+        ? _getSizeWithRotate(width, heightAcc, style?.angle)
+        : width,
+      height: style?.angle
+        ? _getSizeWithRotate(heightAcc, width, style?.angle)
+        : heightAcc,
     };
   },
   (text, style) => {
