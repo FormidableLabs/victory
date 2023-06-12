@@ -70,6 +70,33 @@ export const DefaultRendering = () => {
   );
 };
 
+export const LineHeight = () => {
+  return (
+    <div style={containerStyle}>
+      <Wrapper>
+        <VictoryLegend
+          orientation="vertical"
+          rowGutter={0}
+          style={{
+            labels: { lineHeight: 0.275 },
+          }}
+          data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
+        />
+      </Wrapper>
+      <Wrapper>
+        <VictoryLegend
+          orientation="vertical"
+          rowGutter={0}
+          style={{
+            labels: { lineHeight: 0.75 },
+          }}
+          data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
+        />
+      </Wrapper>
+    </div>
+  );
+};
+
 export const Title = () => {
   return (
     <div style={containerStyle}>
