@@ -1,5 +1,11 @@
 # victory-core
 
+## 36.6.11
+
+### Patch Changes
+
+- Fix text size regression when using line-height ([#2615](https://github.com/FormidableLabs/victory/pull/2615))
+
 ## 36.6.10
 
 ### Patch Changes
