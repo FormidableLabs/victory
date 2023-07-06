@@ -296,7 +296,11 @@ const styleToKeyComponent = (style) => {
 
 const _measureDimensionsInternal = memoize(
   (text: string | string[], style?: TextSizeStyleInterface) => {
-    const containerElement = _getMeasurementContainer();
+    let containerElement = _getMeasurementContainer();
+    if (!containerElement.isConnected) {
+      _getMeasurementContainer.cache.clear?.();
+      containerElement = _getMeasurementContainer();
+    }
 
     const lines = _splitToLines(text);
     let heightAcc = 0;
