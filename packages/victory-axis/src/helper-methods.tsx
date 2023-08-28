@@ -343,11 +343,11 @@ const getHorizontalOffset = (props, calculatedValues) => {
   };
   const originPosition = {
     x:
-      origin.x === domain.x[0] || origin.x === domain.x[1]
+      isEqual(origin.x, domain.x[0]) || isEqual(origin.x, domain.x[1])
         ? 0
         : scale.x(origin.x),
     y:
-      origin.y === domain.y[0] || origin.y === domain.y[1]
+      isEqual(origin.y, domain.y[0]) || isEqual(origin.y, domain.y[1])
         ? 0
         : scale.y(origin.y),
   };
