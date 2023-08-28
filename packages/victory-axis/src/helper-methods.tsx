@@ -257,6 +257,13 @@ const getStandaloneOffset = (props, calculatedValues) => {
   };
 };
 
+const isEqual = (a, b) => {
+  if (a instanceof Date && b instanceof Date) {
+    return a.getTime() === b.getTime();
+  }
+  return a === b;
+}
+
 // eslint-disable-next-line complexity
 const getOffset = (props, calculatedValues) => {
   const { scale, origin, orientation, orientations, domain, padding } =
@@ -285,15 +292,14 @@ const getOffset = (props, calculatedValues) => {
   };
   const originPosition = {
     x:
-      origin.x === domain.x[0] || origin.x === domain.x[1]
+      isEqual(origin.x, domain.x[0]) || isEqual(origin.x, domain.x[1])
         ? 0
         : scale.x(origin.x),
     y:
-      origin.y === domain.y[0] || origin.y === domain.y[1]
+      isEqual(origin.y, domain.y[0]) || isEqual(origin.y, domain.y[1])
         ? 0
         : scale.y(origin.y),
   };
-
   const x = originPosition.x
     ? Math.abs(originOffset.x - originPosition.x)
     : orientationOffset.x;
