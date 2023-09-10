@@ -1,4 +1,5 @@
-# victory-brush-container
+## 36.6.12
+- Fix brush container
 
 ## 36.6.11
 
