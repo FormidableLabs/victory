@@ -195,8 +195,8 @@ export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
       const handleProps = {
         top: top && assign({ x: top.x1, y: top.y1 }, yProps),
         bottom: bottom && assign({ x: bottom.x1, y: bottom.y1 }, yProps),
-        left: left && assign({ y: left.y1, x: left.x1 }, xProps),
-        right: right && assign({ y: right.y1, x: right.x1 }, xProps),
+        left: left && assign({ y: left.y1, x: left.x1 - handleWidth }, xProps),
+        right: right && assign({ y: right.y1, x: right.x1 + handleWidth }, xProps),
       };
       const handles = ["top", "bottom", "left", "right"].reduce(
         (memo, curr) => {
