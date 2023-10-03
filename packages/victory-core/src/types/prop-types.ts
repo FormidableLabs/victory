@@ -42,6 +42,7 @@ export interface Padding {
 
 export interface AnimatePropTypeInterface {
   duration?: number;
+  delay?: number;
   onEnd?: () => void;
   onExit?: {
     duration?: number;
