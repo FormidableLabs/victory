@@ -17,7 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # requires node16, see https://github.com/FormidableLabs/victory/issues/2668
       - uses: ./.github/actions/setup
+        with:
+          node-version: 16.x
 
       - name: Build Storybook
         run: pnpm run storybook:build
