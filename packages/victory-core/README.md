@@ -1,6 +1,6 @@
 # VictoryCore
 
-`victory-core` exports packages that are used by several Victory components:
+`victory-core@30.0.0` exports packages that are used by several Victory components:
 
 - `VictoryAnimation`
 - `VictoryClipContainer`

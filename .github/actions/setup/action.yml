@@ -31,7 +31,7 @@ runs:
           ${{ runner.os }}-pnpm-store-
 
     # Wireit cache
-    - uses: google/wireit@setup-github-actions-caching/v1
+    # - uses: google/wireit@setup-github-actions-caching/v1
 
     - name: Install dependencies
       shell: bash
