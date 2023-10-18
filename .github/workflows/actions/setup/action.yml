@@ -1,0 +1,38 @@
+name: Setup
+description: Setup Build Step
+inputs:
+  node-version:
+    required: true
+    default: '18.x'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - uses: pnpm/action-setup@v2.2.2
+      with:
+        version: 7
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+    - name: Setup pnpm cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    # Wireit cache
+    - uses: google/wireit@setup-github-actions-caching/v1
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install
