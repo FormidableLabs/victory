@@ -13,7 +13,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
-    - uses: pnpm/action-setup@v2.2.2
+    - uses: pnpm/action-setup@v2
       with:
         version: 7
 
@@ -30,7 +30,7 @@ runs:
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
-    # Wireit cache
+    # # Wireit cache
     # - uses: google/wireit@setup-github-actions-caching/v1
 
     - name: Install dependencies
