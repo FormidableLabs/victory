@@ -270,6 +270,7 @@ const _getMeasurementContainer = memoize(() => {
   element.setAttribute("width", "300");
   element.setAttribute("height", "300");
   element.setAttribute("viewBox", "0 0 300 300");
+  element.setAttribute("aria-hidden", "true");
 
   const containerElement = document.createElementNS(
     "http://www.w3.org/2000/svg",
