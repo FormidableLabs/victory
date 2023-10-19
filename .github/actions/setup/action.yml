@@ -16,11 +16,12 @@ runs:
     - uses: pnpm/action-setup@v2
       with:
         version: 7
+        run_install: false
 
     - name: Get pnpm store directory
-      id: pnpm-cache
       shell: bash
-      run: echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      run: |
+        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
     - name: Setup pnpm cache
       uses: actions/cache@v3
