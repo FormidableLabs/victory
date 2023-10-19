@@ -8,28 +8,15 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 7
+
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
-
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 7
-        run_install: false
-
-    - name: Get pnpm store directory
-      shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-    - name: Setup pnpm cache
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
+        cache: 'pnpm'
 
     # Wireit cache
     - uses: google/wireit@setup-github-actions-caching/v1
