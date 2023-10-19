@@ -1,5 +1,11 @@
 # victory
 
+## 36.6.12
+
+### Patch Changes
+
+- Add aria-hidden flag to svg for textsize util to fix accessibility issue ([#2661](https://github.com/FormidableLabs/victory/pull/2661))
+
 ## 36.6.11
 
 ## 36.6.10
