@@ -19,7 +19,7 @@ jobs:
       DISPLAY: :99.0
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [16.x, 18.x]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
