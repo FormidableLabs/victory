@@ -16,7 +16,10 @@ jobs:
     if: github.event.pull_request.draft == false && github.repository == 'FormidableLabs/victory'
     runs-on: ubuntu-latest
     steps:
+      # requires all branches and tags to be fetched for chromatic
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # requires node16, see https://github.com/FormidableLabs/victory/issues/2668
       - uses: ./.github/actions/setup
