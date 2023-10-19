@@ -96,7 +96,7 @@
     "react-dom": "^18.1.0",
     "react-hot-loader": "4.13.0",
     "react-test-renderer": "^18.1.0",
-    "rimraf": "^3.0.2",
+    "rimraf": "^5.0.5",
     "seedrandom": "^3.0.5",
     "styled-components": "^5.3.5",
     "ts-jest": "^28.0.7",
