@@ -1,6 +1,6 @@
 /**
  * The following code is adapted from a fork of the `changesets/actions` repository
- * to allow us to generated aggregated changelogs for our monorepo.
+ * to allow us to generate aggregated changelogs for our monorepo.
  * This code can be removed when changesets supports monorepo aggregations.
  */
 
@@ -102,16 +102,15 @@ const createAggregatedRelease = async () => {
 
   const link = `Full Changelog: [${prevTag}...${tag_name}](https://github.com/FormidableLabs/victory/compare/${prevTag}...${tag_name})`;
   const body = `## What's Changed\n\n${changelogEntry.content}\n\n${link}`;
-  console.log(body);
 
-  // await octokit.rest.repos.createRelease({
-  //   owner: "FormidableLabs",
-  //   repo: "victory",
-  //   tag_name,
-  //   name: tag_name,
-  //   body,
-  //   prerelease: false,
-  // });
+  await octokit.rest.repos.createRelease({
+    owner: "FormidableLabs",
+    repo: "victory",
+    tag_name,
+    name: tag_name,
+    body,
+    prerelease: false,
+  });
 };
 
 (async () => {
