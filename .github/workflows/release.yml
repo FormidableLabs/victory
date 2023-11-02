@@ -41,3 +41,12 @@ jobs:
           # https://github.com/changesets/action/issues/187
           GITHUB_TOKEN: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Note: We run a custom release notes script so we can generate a single aggregate
+      # release notes file for all packages. This can be removed when `changesets` supports
+      # this feature natively.
+      - name: Github Release notes
+        if: steps.changesets.outputs.published == 'true'
+        run: npx ts-node ./scripts/release-notes.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
