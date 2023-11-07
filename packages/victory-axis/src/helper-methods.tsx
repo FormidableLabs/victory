@@ -595,7 +595,8 @@ export const getBaseProps = (props, fallbackProps) => {
         ? { [otherAxis]: props.scale[otherAxis] }
         : undefined,
   };
-  return ticks.reduce((childProps, tickValue, index) => {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+  return (ticks as number[]).reduce((childProps, tickValue, index) => {
     const tick = stringTicks ? stringTicks[index] : tickValue;
     const text = tickFormat(tickValue, index, ticks);
     const styles = getEvaluatedStyles(
