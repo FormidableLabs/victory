@@ -47,6 +47,6 @@ jobs:
       # this feature natively.
       - name: Github Release notes
         if: steps.changesets.outputs.published == 'true'
-        run: npx ts-node ./scripts/release-notes.ts
+        run: npm run release-notes
         env:
           GITHUB_TOKEN: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
