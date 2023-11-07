@@ -181,6 +181,11 @@ function getStringTicks(props) {
 
 function getTickArray(props) {
   const { tickValues, tickFormat } = props;
+
+  if(tickValues?.length === 0){
+    return [];
+  }
+
   const axis = getAxis(props);
   const stringMap = props.stringMap && props.stringMap[axis];
   const getTicksFromFormat = () => {
@@ -276,6 +281,11 @@ function downsampleTicks(ticks: number[], tickCount: number) {
 export function getTicks(props, scale: D3Scale, filterZero = false) {
   const { tickCount } = props;
   const tickArray = getTickArray(props);
+
+  if(tickArray?.length === 0){
+    return [''];
+  }
+
   const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
   if (tickValues) {
     return downsampleTicks(tickValues, tickCount);
@@ -307,7 +317,7 @@ export function getTicks(props, scale: D3Scale, filterZero = false) {
 function getDomainFromData(props, axis) {
   const { polar, startAngle = 0, endAngle = 360 } = props;
   const tickArray = getTickArray(props);
-  const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
+  const tickValues = tickArray && tickArray?.length !== 0 ? tickArray.map((v) => v.value) : undefined;
   if (!Array.isArray(tickValues)) {
     return undefined;
   }
