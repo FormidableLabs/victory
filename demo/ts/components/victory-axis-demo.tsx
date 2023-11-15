@@ -269,6 +269,14 @@ export default class VictoryAxisDemo extends React.Component<
               "Mariners\nSEA",
             ]}
           />
+
+          <VictoryAxis
+            label="Empty Values"
+            padding={{ top: 40, bottom: 40, left: 40, right: 90 }}
+            orientation="right"
+            style={styleOverrides}
+            tickValues={[]}
+          />
         </div>
       </div>
     );

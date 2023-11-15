@@ -133,6 +133,13 @@ export const TickValues = () => {
       <VictoryChart {...defaultChartProps} scale={{ x: "log" }}>
         <VictoryAxis tickValues={[1, 3, 5, 7, 10, 50, 100, 500, 1000]} />
       </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryAxis
+          label={"Empty Tick Values"}
+          tickValues={[]}
+          orientation="right"
+        />
+      </VictoryChart>
     </div>
   );
 };
