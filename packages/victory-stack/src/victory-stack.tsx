@@ -52,7 +52,7 @@ export interface VictoryStackProps
   xOffset?: number;
 }
 
-const VictoryStackBase = (initialProps) => {
+const VictoryStackBase = (initialProps: VictoryStackProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryStack;
   const { setAnimationState, getAnimationProps, getProps } =

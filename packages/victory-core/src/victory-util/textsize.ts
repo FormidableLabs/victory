@@ -1,6 +1,6 @@
 // http://www.pearsonified.com/2012/01/characters-per-line.php
 /* eslint-disable no-magic-numbers */
-import { assign, defaults } from "lodash";
+import { assign, defaults, memoize } from "lodash";
 
 // Based on measuring specific character widths
 // as in the following example https://bl.ocks.org/tophtucker/62f93a4658387bb61e4510c37e2e97cf
@@ -243,9 +243,108 @@ const _approximateTextHeightInternal = (text: string | string[], style) => {
   }, 0);
 };
 
+const _approximateDimensionsInternal = (
+  text: string | string[],
+  style?: TextSizeStyleInterface,
+) => {
+  const angle = Array.isArray(style)
+    ? style[0] && style[0].angle
+    : style && style.angle;
+  const height = _approximateTextHeightInternal(text, style);
+  const width = _approximateTextWidthInternal(text, style);
+  const widthWithRotate = angle
+    ? _getSizeWithRotate(width, height, angle)
+    : width;
+  const heightWithRotate = angle
+    ? _getSizeWithRotate(height, width, angle)
+    : height;
+  return {
+    width: widthWithRotate,
+    height: heightWithRotate * coefficients.heightOverlapCoef,
+  };
+};
+
+const _getMeasurementContainer = memoize(() => {
+  const element = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  element.setAttribute("xlink", "http://www.w3.org/1999/xlink");
+  element.setAttribute("width", "300");
+  element.setAttribute("height", "300");
+  element.setAttribute("viewBox", "0 0 300 300");
+  element.setAttribute("aria-hidden", "true");
+
+  const containerElement = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "text",
+  );
+  element.appendChild(containerElement);
+
+  element.style.position = "fixed";
+  element.style.top = "-9999px";
+  element.style.left = "-9999px";
+
+  document.body.appendChild(element);
+
+  return containerElement;
+});
+
+const styleToKeyComponent = (style) => {
+  if (!style) {
+    return "null";
+  }
+
+  return `${style.angle}:${style.fontFamily}:${style.fontSize}:${style.letterSpacing}:${style.lineHeight}`;
+};
+
+const _measureDimensionsInternal = memoize(
+  (text: string | string[], style?: TextSizeStyleInterface) => {
+    const containerElement = _getMeasurementContainer();
+
+    const lines = _splitToLines(text);
+    let heightAcc = 0;
+    for (const [i, line] of lines.entries()) {
+      const textElement = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "tspan",
+      );
+      const params = _prepareParams(style, i);
+      textElement.style.fontFamily = params.fontFamily;
+      textElement.style.fontSize = `${params.fontSize}px`;
+      textElement.style.lineHeight = params.lineHeight;
+      textElement.style.fontFamily = params.fontFamily;
+      textElement.style.letterSpacing = params.letterSpacing;
+      textElement.textContent = line;
+      textElement.setAttribute("x", "0");
+      textElement.setAttribute("y", `${heightAcc}`);
+      containerElement.appendChild(textElement);
+
+      heightAcc +=
+        params.lineHeight * textElement.getBoundingClientRect().height;
+    }
+
+    const { width } = containerElement.getBoundingClientRect();
+
+    containerElement.innerHTML = "";
+
+    return {
+      width: style?.angle
+        ? _getSizeWithRotate(width, heightAcc, style?.angle)
+        : width,
+      height: style?.angle
+        ? _getSizeWithRotate(heightAcc, width, style?.angle)
+        : heightAcc,
+    };
+  },
+  (text, style) => {
+    const totalText = Array.isArray(text) ? text.join() : text;
+    const totalStyle = Array.isArray(style)
+      ? style.map(styleToKeyComponent).join()
+      : styleToKeyComponent(style);
+    return `${totalText}::${totalStyle}`;
+  },
+);
+
 export interface TextSizeStyleInterface {
   angle?: number;
-  characterConstant?: string;
   fontFamily?: string;
   fontSize?: number | string;
   letterSpacing?: string;
@@ -254,22 +353,23 @@ export interface TextSizeStyleInterface {
 
 // Stubbable implementation.
 export const _approximateTextSizeInternal = {
-  impl: (text: string | string[], style?: TextSizeStyleInterface) => {
-    const angle = Array.isArray(style)
-      ? style[0] && style[0].angle
-      : style && style.angle;
-    const height = _approximateTextHeightInternal(text, style);
-    const width = _approximateTextWidthInternal(text, style);
-    const widthWithRotate = angle
-      ? _getSizeWithRotate(width, height, angle)
-      : width;
-    const heightWithRotate = angle
-      ? _getSizeWithRotate(height, width, angle)
-      : height;
-    return {
-      width: widthWithRotate,
-      height: heightWithRotate * coefficients.heightOverlapCoef,
-    };
+  impl: (
+    text: string | string[],
+    style?: TextSizeStyleInterface,
+    __debugForceApproximate = false,
+  ) => {
+    // Attempt to first measure the element in DOM. If there is no DOM, fallback
+    // to the less accurate approximation algorithm.
+    const isClient =
+      typeof window !== "undefined" &&
+      typeof window.document !== "undefined" &&
+      typeof window.document.createElement !== "undefined";
+
+    if (!isClient || __debugForceApproximate) {
+      return _approximateDimensionsInternal(text, style);
+    }
+
+    return _measureDimensionsInternal(text, style);
   },
 };
 

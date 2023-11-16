@@ -1,6 +1,6 @@
 {
   "name": "victory-create-container",
-  "version": "36.6.6",
+  "version": "36.6.12",
   "description": "Container Helper for Victory",
   "keywords": [
     "data visualization",
@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/formidablelabs/victory.git"
+    "url": "https://github.com/FormidableLabs/victory"
   },
   "homepage": "https://formidable.com/open-source/victory",
   "sideEffects": false,
@@ -21,15 +21,18 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.19",
-    "victory-brush-container": "^36.6.6",
-    "victory-core": "^36.6.6",
-    "victory-cursor-container": "^36.6.6",
-    "victory-selection-container": "^36.6.6",
-    "victory-voronoi-container": "^36.6.6",
-    "victory-zoom-container": "^36.6.6"
+    "victory-brush-container": "^36.6.12",
+    "victory-core": "^36.6.12",
+    "victory-cursor-container": "^36.6.12",
+    "victory-selection-container": "^36.6.12",
+    "victory-voronoi-container": "^36.6.12",
+    "victory-zoom-container": "^36.6.12"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
+  },
+  "publishConfig": {
+    "provenance": true
   },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",

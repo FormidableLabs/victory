@@ -1,5 +1,41 @@
 # victory-line
 
+## 36.6.12
+
+## 36.6.11
+
+## 36.6.10
+
+### Patch Changes
+
+- Setup NPM Provenance ([#2590](https://github.com/FormidableLabs/victory/pull/2590))
+
+## 36.6.9
+
+### Patch Changes
+
+- Setup NPM Provenance ([#2587](https://github.com/FormidableLabs/victory/pull/2587))
+
+* Set VictoryLine to default to "pointer-events: stroke" so that events fire properly when lines overlap (fixes [#2468](https://github.com/FormidableLabs/victory/issues/2468)) ([#2530](https://github.com/FormidableLabs/victory/pull/2530))
+
+## 36.6.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-core@36.6.8
+  - victory-vendor@36.6.8
+
+## 36.6.7
+
+### Patch Changes
+
+- Type improvement: `VictoryLineProps.animate` can be an object (fixes [#2463](https://github.com/FormidableLabs/victory/issues/2463)) ([`3f476632f`](https://github.com/FormidableLabs/victory/commit/3f476632fcd41c31cb69fcfae74d1bbaaa78103d))
+
+- Updated dependencies []:
+  - victory-core@36.6.7
+  - victory-vendor@36.6.7
+
 ## 36.6.6
 
 ### Patch Changes

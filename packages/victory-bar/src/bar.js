@@ -1,6 +1,6 @@
 import { assign } from "lodash";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { forwardRef } from "react";
 import { CommonProps, Helpers, Path } from "victory-core";
 import { getStyle, getBarWidth, getCornerRadius } from "./bar-helper-methods";
 import { getPolarBarPath, getBarPath } from "./path-helper-methods";
@@ -41,7 +41,8 @@ const evaluateProps = (props) => {
   });
 };
 
-const Bar = (props) => {
+// eslint-disable-next-line prefer-arrow-callback
+const Bar = forwardRef(function Bar(props, ref) {
   props = evaluateProps(props);
   const { polar, origin, style, barWidth, cornerRadius } = props;
 
@@ -63,8 +64,9 @@ const Bar = (props) => {
     shapeRendering: props.shapeRendering,
     transform: props.transform || defaultTransform,
     tabIndex: props.tabIndex,
+    ref,
   });
-};
+});
 
 Bar.propTypes = {
   ...CommonProps.primitiveProps,

@@ -64,7 +64,7 @@ module.exports = {
     // - Jest
     // TODO(2375): Can we cache / incremental?
     // https://github.com/FormidableLabs/victory/issues/2375
-    "jest:native": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-native-config.js --testPathPattern=${PKG_SRC}`,
+    "jest:native": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-native-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
     "jest:pkg": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
     // TODO(2348): Hook coverage up to CI
     // https://github.com/FormidableLabs/victory/issues/2348
@@ -82,11 +82,11 @@ module.exports = {
     // 3. Copy all output from the es folder to the lib folder
     "types:pkg:create":
       "nps types:pkg:copy types:pkg:compile types:pkg:cjs-copy",
-    "types:pkg:copy": "cpx 'src/**/*.d.ts' es",
+    "types:pkg:copy": 'cpx "src/**/*.d.ts" es',
     "types:pkg:compile":
       "tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src --outDir es || nps types:warning",
     "types:warning":
       'echo "Warning: found TypeScript errors during build. Continuing anyway!"',
-    "types:pkg:cjs-copy": "cpx 'es/**/*{.d.ts,.d.ts.map}' lib",
+    "types:pkg:cjs-copy": 'cpx "es/**/*{.d.ts,.d.ts.map}" lib',
   },
 };

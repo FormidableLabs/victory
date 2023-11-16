@@ -429,7 +429,7 @@ _default:_ `<VictoryLabel/>`
 
 `type: "top" || "bottom" || "left" || "right"`
 
-The `titleOrientation` prop specifies where the a title should be rendered in relation to the rest of the legend. Possible values for this prop are "top", "bottom", "left", and "right".
+The `titleOrientation` prop specifies where the title should be rendered in relation to the rest of the legend. Possible values for this prop are "top", "bottom", "left", and "right".
 
 _default (provided by default theme):_ `titleOrientation="top"`
 

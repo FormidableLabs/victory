@@ -7,7 +7,8 @@ on:
     branches:
       - main
     paths:
-      - "stories/**"
+      - 'stories/**'
+      - 'packages/**'
 
 jobs:
   chromatic:
@@ -15,40 +16,15 @@ jobs:
     if: github.event.pull_request.draft == false && github.repository == 'FormidableLabs/victory'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      # requires all branches and tags to be fetched for chromatic
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+      # requires node16, see https://github.com/FormidableLabs/victory/issues/2668
+      - uses: ./.github/actions/setup
         with:
-          # TODO: Upgrade Node version.
-          # Node18 currently hits `Error: error:0308010C:digital envelope routines::unsupported`
-          # https://github.com/storybookjs/storybook/issues/16555
-          # When we upgrade to webpack5 this should go away.
           node-version: 16.x
-
-      # Wireit cache
-      - uses: google/wireit@setup-github-actions-caching/v1
-
-      - uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 7
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install
 
       - name: Build Storybook
         run: pnpm run storybook:build

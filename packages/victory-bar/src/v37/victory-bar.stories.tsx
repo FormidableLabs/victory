@@ -5,6 +5,9 @@ import VictoryChart from "victory-chart/es/v37/victory-chart";
 
 export default {
   title: "v37/VictoryBar",
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   component: VictoryBar,
 };
 

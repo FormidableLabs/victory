@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers*/
 /* eslint-disable react/no-multi-comp*/
-import React from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { VictoryBar, Bar } from "victory-bar";
 import { VictoryChart } from "victory-chart";
 import { VictoryGroup } from "victory-group";
@@ -1024,6 +1024,51 @@ export const DisableInlineStyles = () => {
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryBar dataComponent={<StyledBar disableInlineStyles />} />
+      </VictoryChart>
+    </div>
+  );
+};
+
+export const FocusWithRefs = () => {
+  const barsRef = useRef(null);
+
+  const getMap = () => {
+    if (!barsRef.current) {
+      // Initialize the Map on first usage.
+      barsRef.current = new Map();
+    }
+    return barsRef.current;
+  };
+
+  const focusOnBar = (id) => {
+    const map = getMap();
+    const node = map.get(id);
+    node.focus();
+  };
+
+  useEffect(() => {
+    if (barsRef.current) {
+      focusOnBar("1");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const setRef = useCallback((node) => {
+    const map = getMap();
+    if (node) {
+      map.set(node.attributes.index.value, node);
+    }
+  }, []);
+
+  return (
+    <div style={containerStyle}>
+      <VictoryChart horizontal {...defaultChartProps} domainPadding={10}>
+        <VictoryBar
+          data={getData(5)}
+          labels={({ datum }) => `x: ${datum.x}`}
+          labelComponent={<VictoryTooltip active />}
+          dataComponent={<Bar tabIndex={0} ref={setRef} />}
+        />
       </VictoryChart>
     </div>
   );

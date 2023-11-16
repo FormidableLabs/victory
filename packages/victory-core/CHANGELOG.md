@@ -1,5 +1,47 @@
 # victory-core
 
+## 36.6.12
+
+### Patch Changes
+
+- Add aria-hidden flag to svg for textsize util to fix accessibility issue ([#2661](https://github.com/FormidableLabs/victory/pull/2661))
+
+## 36.6.11
+
+### Patch Changes
+
+- Fix text size regression when using line-height ([#2615](https://github.com/FormidableLabs/victory/pull/2615))
+
+## 36.6.10
+
+### Patch Changes
+
+- Setup NPM Provenance ([#2590](https://github.com/FormidableLabs/victory/pull/2590))
+
+## 36.6.9
+
+### Patch Changes
+
+- Lint fixes. ([#2497](https://github.com/FormidableLabs/victory/pull/2497))
+
+* Setup NPM Provenance ([#2587](https://github.com/FormidableLabs/victory/pull/2587))
+
+- Improve accuracy of text size measurements (fixes [#2475](https://github.com/FormidableLabs/victory/issues/2475)) ([#2505](https://github.com/FormidableLabs/victory/pull/2505))
+
+## 36.6.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-vendor@36.6.8
+
+## 36.6.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - victory-vendor@36.6.7
+
 ## 36.6.6
 
 ### Patch Changes

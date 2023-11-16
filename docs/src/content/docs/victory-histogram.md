@@ -174,7 +174,7 @@ The `cornerRadius` prop specifies a radius to apply to each bar. If this prop is
 
 `type: array[object]`
 
-`VictoryHistogram` uses the standard `data` prop, except for it only expects each object within the array to have `x` properties. The `x` data accessor prop can be used to defined a custom data format. [Read about it here](/docs/common-props#data)
+`VictoryHistogram` uses the standard `data` prop, except for it only expects each object within the array to have `x` properties. The `x` data accessor prop can be used to define a custom data format. [Read about it here](/docs/common-props#data)
 
 Because each bar represents a bin rather than a particular data point (like with `VictoryScatter` for example), when accessing `datum` via a prop that passes `datum` such as `style`, datum will have properties `x`, `x0`, `x1`, `y`, and `binnedData`. `x` is the midpoint between the bin, `x0` is the beginning of the bin, `x1` is the end of the bin, `y` is the aggregate amount of data points within that bin, and `binnedData` is an array of the original data points that were grouped into this bin.
 

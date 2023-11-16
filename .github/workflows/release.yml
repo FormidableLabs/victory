@@ -8,38 +8,21 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
+      repository-projects: write
+      deployments: write
+      packages: write
+      pull-requests: write
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          token: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
 
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18.x
-
-      # Wireit cache
-      - uses: google/wireit@setup-github-actions-caching/v1
-
-      - uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 7
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install
+      - uses: ./.github/actions/setup
 
       - name: Build packages
         run: pnpm run build
@@ -54,5 +37,16 @@ jobs:
           version: pnpm run version
           publish: pnpm run publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Note: we are using a different GITHUB_TOKEN due to the issues in this thread:
+          # https://github.com/changesets/action/issues/187
+          GITHUB_TOKEN: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Note: We run a custom release notes script so we can generate a single aggregate
+      # release notes file for all packages. This can be removed when `changesets` supports
+      # this feature natively.
+      - name: Github Release notes
+        if: steps.changesets.outputs.published == 'true'
+        run: npm run release-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}

@@ -6,8 +6,9 @@ const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 
 const ROOT = path.resolve(__dirname, "../../.."); // eslint-disable-line no-undef
 const PKGS = path.join(ROOT, "packages")
+const VICTORY_GLOB = path.join(PKGS, "victory*/package.json").replace(/\\/g, "/");
 // Read all the victory packages and alias.
-const VICTORY_ALIASES = glob.sync(path.join(PKGS, "victory*/package.json"))
+const VICTORY_ALIASES = glob.sync(VICTORY_GLOB)
   .reduce((memo, pkgPath) => {
     const key = path.dirname(path.relative(PKGS, pkgPath));
     memo[key] = path.resolve(path.dirname(pkgPath));

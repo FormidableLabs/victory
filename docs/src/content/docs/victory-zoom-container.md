@@ -64,7 +64,7 @@ When the `disable` prop is set to `true`, `VictoryZoomContainer` events will not
 
 `type: number || boolean`
 
-The `downsample` prop limits the number of points that will be displayed. This prop may be given as a boolean or a number corresponding to maximum number of points. When given as a boolean, the maximum number of points that will be plotted is 150.
+The `downsample` prop limits the number of points that will be displayed. This prop may be given as a boolean or a number corresponding to the maximum number of points. When given as a boolean, the maximum number of points that will be plotted is 150.
 
 ## minimumZoom
 
@@ -83,7 +83,7 @@ _example:_ `minimumZoom={{x: 1, y: 0.01}}`
 
 `type: function`
 
-The optional `onZoomDomainChange` prop accepts an function to be called on each update to the visible domain. The function accepts the parameters `domain` (the updated domain) and `props` (the props used by `VictoryZoomContainer`).
+The optional `onZoomDomainChange` prop accepts a function to be called on each update to the visible domain. The function accepts the parameters `domain` (the updated domain) and `props` (the props used by `VictoryZoomContainer`).
 
 _example:_ `onZoomDomainChange={(domain, props) => handleDomainChange(domain, props)}`
 

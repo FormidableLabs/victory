@@ -1,5 +1,89 @@
 # victory-native
 
+## 36.6.12
+
+## 36.6.11
+
+## 36.6.10
+
+### Patch Changes
+
+- Setup NPM Provenance ([#2590](https://github.com/FormidableLabs/victory/pull/2590))
+
+## 36.6.9
+
+### Patch Changes
+
+- Setup NPM Provenance ([#2587](https://github.com/FormidableLabs/victory/pull/2587))
+
+## 36.6.8
+
+### Patch Changes
+
+- Added `react` as a `peerDependency` (fixes [#2478](https://github.com/FormidableLabs/victory/issues/2478)) ([#2479](https://github.com/FormidableLabs/victory/pull/2479))
+
+- Updated dependencies [[`c5b4f660c`](https://github.com/FormidableLabs/victory/commit/c5b4f660cb91d8d1979d216b846a44f0c5030ec1), [`1da86d186`](https://github.com/FormidableLabs/victory/commit/1da86d18615bf75db35cfc55cc8e3d5c0b5772b6)]:
+  - victory-zoom-container@36.6.8
+  - victory-stack@36.6.8
+  - victory@36.6.8
+  - victory-area@36.6.8
+  - victory-axis@36.6.8
+  - victory-bar@36.6.8
+  - victory-box-plot@36.6.8
+  - victory-brush-container@36.6.8
+  - victory-brush-line@36.6.8
+  - victory-candlestick@36.6.8
+  - victory-chart@36.6.8
+  - victory-core@36.6.8
+  - victory-create-container@36.6.8
+  - victory-cursor-container@36.6.8
+  - victory-errorbar@36.6.8
+  - victory-group@36.6.8
+  - victory-histogram@36.6.8
+  - victory-legend@36.6.8
+  - victory-line@36.6.8
+  - victory-pie@36.6.8
+  - victory-polar-axis@36.6.8
+  - victory-scatter@36.6.8
+  - victory-selection-container@36.6.8
+  - victory-shared-events@36.6.8
+  - victory-tooltip@36.6.8
+  - victory-voronoi@36.6.8
+  - victory-voronoi-container@36.6.8
+
+## 36.6.7
+
+### Patch Changes
+
+- Updated dependencies [[`3f476632f`](https://github.com/FormidableLabs/victory/commit/3f476632fcd41c31cb69fcfae74d1bbaaa78103d)]:
+  - victory-line@36.6.7
+  - victory@36.6.7
+  - victory-area@36.6.7
+  - victory-axis@36.6.7
+  - victory-bar@36.6.7
+  - victory-box-plot@36.6.7
+  - victory-brush-container@36.6.7
+  - victory-brush-line@36.6.7
+  - victory-candlestick@36.6.7
+  - victory-chart@36.6.7
+  - victory-core@36.6.7
+  - victory-create-container@36.6.7
+  - victory-cursor-container@36.6.7
+  - victory-errorbar@36.6.7
+  - victory-group@36.6.7
+  - victory-histogram@36.6.7
+  - victory-legend@36.6.7
+  - victory-pie@36.6.7
+  - victory-polar-axis@36.6.7
+  - victory-scatter@36.6.7
+  - victory-selection-container@36.6.7
+  - victory-shared-events@36.6.7
+  - victory-stack@36.6.7
+  - victory-tooltip@36.6.7
+  - victory-voronoi@36.6.7
+  - victory-voronoi-container@36.6.7
+  - victory-zoom-container@36.6.7
+
 ## 36.6.6
 
 ### Patch Changes

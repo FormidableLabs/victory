@@ -413,7 +413,7 @@ _note_ `Box` also exported as `Border`
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `slice` _object_ an object specifying the startAngle, endAngle, padAngle, and data of the slice
 - `sliceEndAngle` _number or function_ the end angle the slice. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`.
-- `sliceStartAngle` _number or function_ the start angle the slice. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`.
+- `sliceStartAngle` _number or function_ the start angle of the slice. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`.
 - `style` _object_ the styles to apply to the rendered element
 - `tabIndex` _number or function_ number will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Slice`.
 - `transform` _string_ a transform that will be supplied to elements this component renders

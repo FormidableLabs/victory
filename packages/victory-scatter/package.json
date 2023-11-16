@@ -1,6 +1,6 @@
 {
   "name": "victory-scatter",
-  "version": "36.6.6",
+  "version": "36.6.12",
   "description": "Scatter Component for Victory",
   "keywords": [
     "data visualization",
@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/formidablelabs/victory.git"
+    "url": "https://github.com/FormidableLabs/victory"
   },
   "homepage": "https://formidable.com/open-source/victory",
   "sideEffects": false,
@@ -22,13 +22,16 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
-    "victory-core": "^36.6.6"
+    "victory-core": "^36.6.12"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
   "devDependencies": {
     "victory-scatter": "*"
+  },
+  "publishConfig": {
+    "provenance": true
   },
   "scripts": {
     "###            THESE SCRIPTS ARE GENERATED           ###": "true",

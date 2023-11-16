@@ -7,6 +7,6 @@ export const initGoogleTagManager = () => {
   if (typeof document === "undefined") {
     return {};
   } else {
-    return TagManager.initialize({ gtmId: "GTM-MD32945" });
+    return TagManager.initialize({ gtmId: "GTM-MD32945", allow_google_signals: false });
   }
 };

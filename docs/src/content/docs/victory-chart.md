@@ -49,7 +49,7 @@ animate={{
 
 `type: element`
 
-The `backgroundComponent` prop takes a component instance which will be responsible for rendering a background if the `VictoryChart`'s `style` component includes `background` styles. The new element created from the passed `backgroundComponent` will be provided with the following properties calculated by `VictoryChart`: `height`, `polar`, `scale`, `style`, `x`, `y`, `width`. All of these props on `Background` should take prececence over what `VictoryChart` is trying to set.
+The `backgroundComponent` prop takes a component instance which will be responsible for rendering a background if the `VictoryChart`'s `style` component includes `background` styles. The new element created from the passed `backgroundComponent` will be provided with the following properties calculated by `VictoryChart`: `height`, `polar`, `scale`, `style`, `x`, `y`, `width`. All of these props on `Background` should take precedence over what `VictoryChart` is trying to set.
 
 _default:_ `<Background/>`
 
