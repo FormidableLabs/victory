@@ -7,6 +7,12 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   rootDir: ROOT,
+  globals: {
+    "ts-jest": {
+      tsconfig: path.resolve(ROOT, "./test/tsconfig.json"),
+      isolatedModules: true, // Disables type-checking
+    },
+  },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testPathIgnorePatterns: [
     "victory-native",

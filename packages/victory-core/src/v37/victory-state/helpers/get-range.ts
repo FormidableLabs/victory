@@ -3,7 +3,7 @@ import { getPadding } from "../../../victory-util/helpers";
 import { getValueForAxis, isTuple } from "../../../victory-util/type-helpers";
 import { VictoryProviderProps } from "../types";
 
-type RangeProps = Pick<
+export type RangeProps = Pick<
   VictoryProviderProps,
   "range" | "padding" | "height" | "width"
 >;
@@ -21,7 +21,7 @@ export function getRange(
     ...props
   }: RangeProps,
   axis: AxisType,
-) {
+): RangeTuple {
   const rangeFromProps = getValueForAxis<RangeTuple>(range, axis);
 
   if (isTuple(rangeFromProps)) {

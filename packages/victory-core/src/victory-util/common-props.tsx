@@ -18,6 +18,7 @@ import {
   StringOrNumberOrList,
 } from "../types/prop-types";
 import { NumberOrCallback, StringOrCallback } from "../types/callbacks";
+import { VictoryContainerProps } from "../victory-container/victory-container";
 
 export interface VictoryDatableProps {
   categories?: CategoryPropType;
@@ -94,7 +95,7 @@ const dataProps: React.WeakValidationMap<VictoryDatableProps> = {
 export interface VictoryCommonThemeProps {
   animate?: boolean | AnimatePropTypeInterface;
   colorScale?: ColorScalePropType;
-  containerComponent?: React.ReactElement;
+  containerComponent?: React.ReactElement<VictoryContainerProps>;
   domainPadding?: DomainPaddingPropType;
   externalEventMutations?: EventCallbackInterface<
     string | string[],
