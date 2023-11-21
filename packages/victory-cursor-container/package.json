@@ -71,7 +71,7 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
-        "../../.babelrc.js",
+        "../../babel.config.js",
         "../../package-scripts.js"
       ],
       "output": [
@@ -91,7 +91,7 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
-        "../../.babelrc.js",
+        "../../babel.config.js",
         "../../package-scripts.js"
       ],
       "output": [
@@ -117,7 +117,7 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
-        "../../.babelrc.js",
+        "../../babel.config.js",
         "../../package-scripts.js",
         "../../config/webpack.config.js",
         "../../config/webpack.config.dev.js"
@@ -139,7 +139,7 @@
         "src/**",
         "!src/**/*.test.*",
         "../../.babelrc.build.js",
-        "../../.babelrc.js",
+        "../../babel.config.js",
         "../../package-scripts.js",
         "../../config/webpack.config.js"
       ],
@@ -264,7 +264,7 @@
       "command": "nps jest:pkg",
       "files": [
         "src/**/*.test.*",
-        "../../.babelrc.js",
+        "../../babel.config.js",
         "../../test/jest-config.js",
         "../../test/jest-setup.ts"
       ],

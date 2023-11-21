@@ -1,5 +1,5 @@
 const path = require("path");
-const BABEL_PATH = path.resolve(__dirname, ".babelrc.js"); // eslint-disable-line no-undef
+const BABEL_PATH = path.resolve(__dirname, "babel.config.js"); // eslint-disable-line no-undef
 
 module.exports = {
   settings: {
@@ -17,6 +17,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:eslint-comments/recommended",
     "prettier",
+    "plugin:storybook/recommended",
   ],
   rules: {
     "eslint-comments/disable-enable-pair": "off",

@@ -1,4 +1,4 @@
 module.exports = {
-  extends: "./.babelrc.js",
+  extends: "./babel.config.js",
   ignore: [/^.*(.test.)[j|t]sx?$/],
 };

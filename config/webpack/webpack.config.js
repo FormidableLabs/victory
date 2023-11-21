@@ -58,7 +58,7 @@ module.exports = {
         use: {
           loader: "babel-loader",
           // eslint-disable-next-line global-require
-          options: require("../../.babelrc.js"),
+          options: require("../../babel.config.js"),
         },
       },
     ],

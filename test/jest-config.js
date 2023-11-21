@@ -1,6 +1,6 @@
 const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
-const BABEL_PATH = path.resolve(ROOT, ".babelrc.js"); // eslint-disable-line no-undef
+const BABEL_PATH = path.resolve(ROOT, "babel.config.js"); // eslint-disable-line no-undef
 const BABEL_TRANSFORM = ["babel-jest", { configFile: BABEL_PATH }];
 
 module.exports = {

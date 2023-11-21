@@ -3,6 +3,7 @@
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryBar } from "victory-bar";
+import { VictoryBrushLine } from "victory-brush-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryTheme } from "victory-core";
 import { VictoryChart } from "victory-chart";
@@ -334,6 +335,91 @@ export const WithMultilineLabels = () => {
           orientation="top"
         />
       </VictoryChart>
+    </div>
+  );
+};
+
+export const BrushAxis = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryAxis label="Label" axisComponent={<VictoryBrushLine />} />
+    </div>
+  );
+};
+
+export const BrushAxisWithDomain = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryAxis
+        label="Label"
+        axisComponent={<VictoryBrushLine brushDomain={[0.25, 0.5]} />}
+      />
+    </div>
+  );
+};
+
+export const BrushAxisGridLine = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryAxis label="Label" gridComponent={<VictoryBrushLine />} />
+    </div>
+  );
+};
+
+export const BrushAxisGridLineWithDomain = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryAxis
+        label="Label"
+        gridComponent={<VictoryBrushLine brushDomain={[0.25, 0.5]} />}
+      />
+    </div>
+  );
+};
+
+export const BrushAxisGridLineStyles = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryAxis
+        label="Label"
+        gridComponent={
+          <VictoryBrushLine
+            brushDomain={[0.25, 0.5]}
+            brushAreaStyle={{
+              fill: "orange",
+              stroke: "tomato",
+              strokeWidth: 2,
+            }}
+            brushStyle={{ fill: "teal", stroke: "navy", strokeWidth: 2 }}
+            handleStyle={{ strokeWidth: 1, stroke: "grey" }}
+          />
+        }
+      />
+    </div>
+  );
+};
+
+export const BrushAxisGridLineWidth = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryAxis
+        label="Label"
+        gridComponent={
+          <VictoryBrushLine
+            brushDomain={[0.25, 0.5]}
+            brushWidth={40}
+            brushAreaWidth={20}
+            handleWidth={4}
+            brushAreaStyle={{
+              fill: "orange",
+              stroke: "tomato",
+              strokeWidth: 2,
+            }}
+            brushStyle={{ fill: "teal", stroke: "navy", strokeWidth: 2 }}
+            handleStyle={{ strokeWidth: 1, stroke: "grey" }}
+          />
+        }
+      />
     </div>
   );
 };
