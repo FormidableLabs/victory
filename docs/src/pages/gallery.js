@@ -77,7 +77,13 @@ const Divider = styled.hr`
   margin: 3rem 0;
 `;
 
-const Gallery = ({ gallery, sidebarContent }) => {
+const defaultProps = {
+  params : null
+}
+
+const Gallery = (props) => {
+  props={...defaultProps, ...props}
+  let {gallery,sidebarContent} = props;
   const parseRaw = (str) => {
     const playground = "playground_norender";
     const start = str.indexOf(playground) + playground.length;
@@ -145,10 +151,6 @@ Gallery.propTypes = {
   data: PropTypes.object,
   gallery: PropTypes.array,
   sidebarContent: PropTypes.array,
-};
-
-Gallery.defaultProps = {
-  params: null,
 };
 
 export default withRouteData(Gallery);

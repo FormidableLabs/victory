@@ -38,8 +38,14 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
+const defaultProps = {
+  lineComponent: <Line />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 export const LineSegment = (props: LineSegmentProps) => {
-  props = evaluateProps(props);
+  props = evaluateProps({...defaultProps,...props});
 
   return React.cloneElement(props.lineComponent!, {
     ...props.events,
@@ -67,10 +73,4 @@ LineSegment.propTypes = {
   x2: PropTypes.number,
   y1: PropTypes.number,
   y2: PropTypes.number,
-};
-
-LineSegment.defaultProps = {
-  lineComponent: <Line />,
-  role: "presentation",
-  shapeRendering: "auto",
 };

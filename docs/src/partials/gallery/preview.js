@@ -51,7 +51,7 @@ const Preview = (props) => {
 
   const executeCode = () => {
     const mountNode = ref;
-    const { scope, noRender, previewComponent } = props;
+    const { scope, noRender, previewComponent="div" } = props;
     const tempScope = [];
 
     Object.keys(scope).forEach((s) => tempScope.push(scope[s]));
@@ -82,10 +82,6 @@ const Preview = (props) => {
       }}
     />
   );
-};
-
-Preview.defaultProps = {
-  previewComponent: "div",
 };
 
 Preview.propTypes = {

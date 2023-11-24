@@ -40,8 +40,15 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
+const defaultProps = {
+  groupComponent: <g />,
+  lineComponent: <Line />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 export const Whisker = (props: WhiskerProps) => {
-  props = evaluateProps(props);
+  props = evaluateProps({...defaultProps,...props});
   const {
     ariaLabel,
     groupComponent,
@@ -106,11 +113,4 @@ Whisker.propTypes = {
     y1: PropTypes.number,
     y2: PropTypes.number,
   }),
-};
-
-Whisker.defaultProps = {
-  groupComponent: <g />,
-  lineComponent: <Line />,
-  role: "presentation",
-  shapeRendering: "auto",
 };

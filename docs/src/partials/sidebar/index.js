@@ -108,7 +108,7 @@ const getMatchTree = (link, filterTerm) => {
   return [];
 };
 
-const Sidebar = ({ className, content, onCloseClick }) => {
+const Sidebar = ({ className="", content, onCloseClick }) => {
   const location = useLocation();
   const [filteredResults, setFilteredResults] = useState(content);
   const [filterTerm, setFilterTerm] = useState("");
@@ -255,10 +255,6 @@ Sidebar.propTypes = {
   content: PropTypes.array,
   hideCloseButton: PropTypes.bool,
   onCloseClick: PropTypes.func,
-};
-
-Sidebar.defaultProps = {
-  className: "",
 };
 
 export default withRouteData(Sidebar);

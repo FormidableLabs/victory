@@ -572,11 +572,20 @@ const renderLabel = (calculatedProps, tspanValues) => {
   return React.cloneElement(textComponent, textProps, tspans);
 };
 
+const defaultProps = {
+  backgroundComponent: <Rect />,
+  groupComponent: <g />,
+  direction: "inherit",
+  textComponent: <Text />,
+  tspanComponent: <TSpan />,
+  capHeight: 0.71, // Magic number from d3.
+  lineHeight: 1,
+};
 export const VictoryLabel: {
   role: string;
   defaultStyles: typeof defaultStyles;
 } & React.FC<VictoryLabelProps> = (props) => {
-  props = evaluateProps(props);
+  props = evaluateProps({...defaultProps,...props});
 
   if (props.text === null || props.text === undefined) {
     return null;
@@ -712,14 +721,4 @@ VictoryLabel.propTypes = {
   x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   // @ts-expect-error Number is not assignable to string
   y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-};
-
-VictoryLabel.defaultProps = {
-  backgroundComponent: <Rect />,
-  groupComponent: <g />,
-  direction: "inherit",
-  textComponent: <Text />,
-  tspanComponent: <TSpan />,
-  capHeight: 0.71, // Magic number from d3.
-  lineHeight: 1,
 };

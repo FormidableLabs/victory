@@ -109,8 +109,15 @@ export interface ErrorProps {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ErrorBar extends EventsMixinClass<ErrorBarProps> {}
 
+const defaultProps = {
+  groupComponent: <g />,
+  lineComponent: <Line />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 export const ErrorBar = (props: ErrorBarProps & typeof ErrorBar.default) => {
-  props = evaluateProps(props);
+  props = evaluateProps({...defaultProps,...props});
   const { groupComponent } = props;
   const userProps = UserProps.getSafeUserProps(props);
   const { tabIndex, ariaLabel } = props;
@@ -152,9 +159,3 @@ ErrorBar.propTypes = {
   y: PropTypes.number,
 };
 
-ErrorBar.defaultProps = {
-  groupComponent: <g />,
-  lineComponent: <Line />,
-  role: "presentation",
-  shapeRendering: "auto",
-};

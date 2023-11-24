@@ -68,8 +68,15 @@ const evaluateProps = (props) => {
   });
 };
 
+const defaultProps = {
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
+
 const Slice = (props) => {
-  props = evaluateProps(props);
+  props = evaluateProps({...defaultProps,...props});
   const defaultTransform = props.origin
     ? `translate(${props.origin.x}, ${props.origin.y})`
     : undefined;
@@ -100,12 +107,6 @@ Slice.propTypes = {
   slice: PropTypes.object,
   sliceEndAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   sliceStartAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-};
-
-Slice.defaultProps = {
-  pathComponent: <Path />,
-  role: "presentation",
-  shapeRendering: "auto",
 };
 
 export default Slice;

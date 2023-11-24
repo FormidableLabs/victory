@@ -35,8 +35,17 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, id, size, style, tabIndex });
 };
 
+const defaultProps = {
+  pathComponent: <Path />,
+  circleComponent: <Circle />,
+  clipPathComponent: <ClipPath />,
+  groupComponent: <g />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 const Voronoi = (props) => {
-  props = evaluateProps(props);
+  props = evaluateProps({...defaultProps,...props});
 
   const {
     ariaLabel,
@@ -103,15 +112,6 @@ Voronoi.propTypes = {
   size: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
-};
-
-Voronoi.defaultProps = {
-  pathComponent: <Path />,
-  circleComponent: <Circle />,
-  clipPathComponent: <ClipPath />,
-  groupComponent: <g />,
-  role: "presentation",
-  shapeRendering: "auto",
 };
 
 export default Voronoi;

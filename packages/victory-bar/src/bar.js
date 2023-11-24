@@ -41,9 +41,15 @@ const evaluateProps = (props) => {
   });
 };
 
+const defaultProps = {
+  defaultBarWidth: 8,
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
 // eslint-disable-next-line prefer-arrow-callback
 const Bar = forwardRef(function Bar(props, ref) {
-  props = evaluateProps(props);
+  props = evaluateProps({ ...defaultProps, ...props});
   const { polar, origin, style, barWidth, cornerRadius } = props;
 
   const path = polar
@@ -93,13 +99,6 @@ Bar.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   y0: PropTypes.number,
-};
-
-Bar.defaultProps = {
-  defaultBarWidth: 8,
-  pathComponent: <Path />,
-  role: "presentation",
-  shapeRendering: "auto",
 };
 
 export default Bar;

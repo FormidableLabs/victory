@@ -54,11 +54,20 @@ export interface VictoryGroupProps
   displayName?: string;
 }
 
+const defaultProps = {
+  containerComponent: <VictoryContainer />,
+  groupComponent: <g />,
+  samples: 50,
+  standalone: true,
+  theme: VictoryTheme.grayscale,
+};
+
 const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
   // eslint-disable-next-line no-use-before-define
   const role = VictoryGroup?.role;
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
+  initialProps = {...defaultProps,...initialProps}  
   const props = getProps(initialProps);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
@@ -188,14 +197,6 @@ VictoryGroupBase.propTypes = {
   offset: PropTypes.number,
 };
 
-VictoryGroupBase.defaultProps = {
-  containerComponent: <VictoryContainer />,
-  groupComponent: <g />,
-  samples: 50,
-  sortOrder: "ascending",
-  standalone: true,
-  theme: VictoryTheme.grayscale,
-};
 
 const componentConfig: VictoryComponentConfiguration<VictoryGroupProps> = {
   role: "group",

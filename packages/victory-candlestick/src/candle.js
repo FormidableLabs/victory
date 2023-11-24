@@ -89,8 +89,16 @@ const evaluateProps = (props) => {
   });
 };
 
+const defaultProps = {
+  groupComponent: <g />,
+  lineComponent: <Line />,
+  rectComponent: <Rect />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 const Candle = (props) => {
-  props = evaluateProps(props);
+  props = evaluateProps({ ...defaultProps, ...props});
   const {
     ariaLabel,
     events,
@@ -145,14 +153,6 @@ Candle.propTypes = {
   wickStrokeWidth: PropTypes.number,
   width: PropTypes.number,
   x: PropTypes.number,
-};
-
-Candle.defaultProps = {
-  groupComponent: <g />,
-  lineComponent: <Line />,
-  rectComponent: <Rect />,
-  role: "presentation",
-  shapeRendering: "auto",
 };
 
 export default Candle;
