@@ -3,4 +3,4 @@
 "victory": patch
 ---
 
-fix Date equality in axis
+Fix Date equality in axis
