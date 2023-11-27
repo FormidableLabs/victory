@@ -49,7 +49,7 @@ const defaultProps = {
 };
 // eslint-disable-next-line prefer-arrow-callback
 const Bar = forwardRef(function Bar(props, ref) {
-  props = evaluateProps({ ...defaultProps, ...props});
+  props = evaluateProps({ ...defaultProps, ...props });
   const { polar, origin, style, barWidth, cornerRadius } = props;
 
   const path = polar

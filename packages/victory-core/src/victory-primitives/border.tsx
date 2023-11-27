@@ -44,7 +44,7 @@ const defaultProps = {
 };
 
 export const Border = (props: BorderProps) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
 
   return React.cloneElement(props.rectComponent!, {
     ...props.events,

@@ -117,7 +117,7 @@ const defaultProps = {
 };
 
 export const ErrorBar = (props: ErrorBarProps & typeof ErrorBar.default) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
   const { groupComponent } = props;
   const userProps = UserProps.getSafeUserProps(props);
   const { tabIndex, ariaLabel } = props;
@@ -158,4 +158,3 @@ ErrorBar.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
 };
-

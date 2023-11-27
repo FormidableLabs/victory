@@ -67,7 +67,7 @@ const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
   const role = VictoryGroup?.role;
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
-  initialProps = {...defaultProps,...initialProps}  
+  initialProps = { ...defaultProps, ...initialProps };
   const props = getProps(initialProps);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
@@ -196,7 +196,6 @@ VictoryGroupBase.propTypes = {
   horizontal: PropTypes.bool,
   offset: PropTypes.number,
 };
-
 
 const componentConfig: VictoryComponentConfiguration<VictoryGroupProps> = {
   role: "group",

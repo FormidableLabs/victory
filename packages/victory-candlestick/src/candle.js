@@ -98,7 +98,7 @@ const defaultProps = {
 };
 
 const Candle = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props});
+  props = evaluateProps({ ...defaultProps, ...props });
   const {
     ariaLabel,
     events,

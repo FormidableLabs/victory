@@ -73,7 +73,7 @@ const defaultProps = {
 };
 
 export const Point = (props: PointProps) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
   const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent!, {
@@ -115,4 +115,3 @@ Point.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
 };
-

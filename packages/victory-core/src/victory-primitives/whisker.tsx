@@ -48,7 +48,7 @@ const defaultProps = {
 };
 
 export const Whisker = (props: WhiskerProps) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
   const {
     ariaLabel,
     groupComponent,

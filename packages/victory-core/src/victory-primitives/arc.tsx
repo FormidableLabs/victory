@@ -69,7 +69,7 @@ const defaultProps = {
 };
 
 export const Arc = (props: ArcProps) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
 
   return React.cloneElement(props.pathComponent!, {
     ...props.events,

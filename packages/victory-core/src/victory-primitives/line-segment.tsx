@@ -45,7 +45,7 @@ const defaultProps = {
 };
 
 export const LineSegment = (props: LineSegmentProps) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
 
   return React.cloneElement(props.lineComponent!, {
     ...props.events,

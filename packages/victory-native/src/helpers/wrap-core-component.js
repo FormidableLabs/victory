@@ -7,10 +7,9 @@ import React from "react";
  * @returns {React.FC} WrappedComponent Wrapped component (passes props through)
  */
 export const wrapCoreComponent = ({ Component, defaultProps }) => {
-  
   const WrappedComponent = (props) => {
-    props={...defaultProps,...props};
-    return <Component {...props} />
+    props = { ...defaultProps, ...props };
+    return <Component {...props} />;
   };
 
   /**

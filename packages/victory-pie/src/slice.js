@@ -74,9 +74,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-
 const Slice = (props) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
   const defaultTransform = props.origin
     ? `translate(${props.origin.x}, ${props.origin.y})`
     : undefined;

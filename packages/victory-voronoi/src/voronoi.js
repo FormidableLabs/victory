@@ -45,7 +45,7 @@ const defaultProps = {
 };
 
 const Voronoi = (props) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
 
   const {
     ariaLabel,

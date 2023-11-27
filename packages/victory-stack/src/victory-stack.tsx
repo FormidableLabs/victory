@@ -63,7 +63,7 @@ const defaultProps = {
 const VictoryStackBase = (initialProps: VictoryStackProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryStack;
-  initialProps = {...defaultProps,...initialProps}
+  initialProps = { ...defaultProps, ...initialProps };
   const { setAnimationState, getAnimationProps, getProps } =
     Hooks.useAnimationState();
 

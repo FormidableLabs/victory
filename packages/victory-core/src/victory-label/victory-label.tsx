@@ -585,7 +585,7 @@ export const VictoryLabel: {
   role: string;
   defaultStyles: typeof defaultStyles;
 } & React.FC<VictoryLabelProps> = (props) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
 
   if (props.text === null || props.text === undefined) {
     return null;

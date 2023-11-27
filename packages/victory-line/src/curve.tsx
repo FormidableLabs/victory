@@ -42,7 +42,7 @@ const defaultProps = {
 };
 
 export const Curve: React.FC<CurveProps> = (props) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
   const userProps = UserProps.getSafeUserProps(props);
   const { polar, origin } = props;
   const lineFunction = LineHelpers.getLineFunction(props);
@@ -76,7 +76,6 @@ Curve.propTypes = {
   pathComponent: PropTypes.element,
   polar: PropTypes.bool,
 };
-
 
 export interface CurveProps extends VictoryCommonPrimitiveProps {
   ariaLabel?: StringOrCallback;

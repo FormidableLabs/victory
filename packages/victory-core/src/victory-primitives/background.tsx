@@ -38,7 +38,7 @@ const defaultProps = {
 };
 
 export const Background = (props: BackgroundProps) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
 
   return props.polar
     ? React.cloneElement(props.circleComponent!, {
@@ -77,4 +77,3 @@ Background.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
 };
-

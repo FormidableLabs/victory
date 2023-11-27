@@ -53,7 +53,7 @@ const defaultProps = {
 };
 
 const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
-  initialProps = {...defaultProps,...initialProps}
+  initialProps = { ...defaultProps, ...initialProps };
   const role = "chart";
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
