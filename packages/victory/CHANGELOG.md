@@ -1,5 +1,11 @@
 # victory
 
+## 36.7.0
+
+### Patch Changes
+
+- Fix Date equality in axis ([#2642](https://github.com/FormidableLabs/victory/pull/2642))
+
 ## 36.6.12
 
 ### Patch Changes
