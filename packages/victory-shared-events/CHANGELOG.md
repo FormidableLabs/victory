@@ -1,5 +1,7 @@
 # victory-shared-events
 
+## 36.7.0
+
 ## 36.6.12
 
 ## 36.6.11

@@ -1,5 +1,11 @@
 # victory-bar
 
+## 36.7.0
+
+### Minor Changes
+
+- added ref forwarding for path and bar components ([#2673](https://github.com/FormidableLabs/victory/pull/2673))
+
 ## 36.6.12
 
 ## 36.6.11
