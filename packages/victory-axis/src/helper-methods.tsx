@@ -262,7 +262,7 @@ const isEqual = (a, b) => {
     return a.getTime() === b.getTime();
   }
   return a === b;
-}
+};
 
 // eslint-disable-next-line complexity
 const getOffset = (props, calculatedValues) => {
