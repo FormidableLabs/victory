@@ -92,22 +92,29 @@ const evaluateProps = (props: AreaProps) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
+const defaultProps={
+  groupComponent: <g />,
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto",
+}
+
 /**
  * The area primitive used by VictoryArea
  */
 export const Area: React.FC<AreaProps> = (props) => {
-  props = evaluateProps(props);
+  props = evaluateProps({...defaultProps,...props});
   const {
     ariaLabel,
-    role = "presentation",
-    shapeRendering = "auto",
+    role,
+    shapeRendering,
     className,
     polar,
     origin,
     data,
-    pathComponent = <Path />,
+    pathComponent,
     events,
-    groupComponent = <g />,
+    groupComponent,
     clipPath,
     id,
     style,
@@ -137,7 +144,7 @@ export const Area: React.FC<AreaProps> = (props) => {
   };
 
   const area = React.cloneElement(
-    pathComponent,
+    pathComponent!,
     assign(
       {
         key: `${id}-area`,
@@ -153,7 +160,7 @@ export const Area: React.FC<AreaProps> = (props) => {
 
   const line = renderLine
     ? React.cloneElement(
-        pathComponent,
+        pathComponent!,
         assign(
           {
             key: `${id}-area-stroke`,
@@ -166,7 +173,7 @@ export const Area: React.FC<AreaProps> = (props) => {
     : null;
 
   return renderLine
-    ? React.cloneElement(groupComponent, userProps, [area, line])
+    ? React.cloneElement(groupComponent!, userProps, [area, line])
     : area;
 };
 
