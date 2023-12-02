@@ -92,18 +92,18 @@ const evaluateProps = (props: AreaProps) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
-const defaultProps={
+const defaultProps = {
   groupComponent: <g />,
   pathComponent: <Path />,
   role: "presentation",
   shapeRendering: "auto",
-}
+};
 
 /**
  * The area primitive used by VictoryArea
  */
 export const Area: React.FC<AreaProps> = (props) => {
-  props = evaluateProps({...defaultProps,...props});
+  props = evaluateProps({ ...defaultProps, ...props });
   const {
     ariaLabel,
     role,
