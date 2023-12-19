@@ -46,6 +46,7 @@ const StyledLazyRender = styled(LazyRender)`
   box-shadow: -1.2rem 1.2rem 0px 0px ${({ theme }) => theme.color.brown};
   border: 6px solid ${({ theme }) => theme.color.accentBrown};
   padding: 2rem;
+  overflow: hidden;
 
   @media ${({ theme }) => theme.mediaQuery.md} {
     height: 300px;

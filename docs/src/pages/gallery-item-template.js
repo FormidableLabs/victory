@@ -10,13 +10,38 @@ import createPath from "../helpers/path-helpers";
 
 const GalleryTemplate = ({ galleryItem }) => {
   const { content, data } = galleryItem;
-  const { title, scope } = data;
+  const { description, image, title, scope } = data;
+
+  const metaTitle = `${config.siteTitle} |  ${title}`;
 
   return (
     <Page>
       <Helmet>
-        <title>{`${config.siteTitle} |  ${title}`}</title>
-        <meta name="description" content={config.siteDescription} />
+        <title>{metaTitle}</title>
+        <meta
+          name="description"
+          content={description || config.siteDescription}
+        />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={metaTitle} />
+        <meta
+          property="og:description"
+          content={description || config.siteDescription}
+        />
+        {image && (
+          <meta property="og:image" content={image} />
+        )}
+
+        <meta name="twitter:title" content={metaTitle} />
+        <meta
+          name="twitter:description"
+          content={description || config.siteDescription}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        {image && (
+          <meta name="twitter:image" content={image} />
+        )}
       </Helmet>
       <Link to={createPath("gallery")}>Back to Gallery</Link>
       <h1>{title}</h1>
