@@ -85,7 +85,7 @@ describe("components/victory-candlestick", () => {
         open: i,
         close: i,
         high: i,
-        low: i
+        low: i,
       }));
       const { container } = render(<VictoryCandlestick data={data} />);
       const points = container.querySelectorAll("rect");
