@@ -85,7 +85,7 @@ describe("components/victory-candlestick", () => {
         open: i,
         close: i,
         high: i,
-        low: i,
+        low: i
       }));
       const { container } = render(<VictoryCandlestick data={data} />);
       const points = container.querySelectorAll("rect");
@@ -225,8 +225,9 @@ describe("components/victory-candlestick", () => {
 
       const presentationElements = screen.getAllByRole("presentation");
 
-      // Each data point is 3 (rect and 2 lines) for 9 total, plus the container element
-      expect(presentationElements).toHaveLength(10);
+      // Each data point is 4 (container, rect and 2 lines) for 12 total
+      // plus the chart container element
+      expect(presentationElements).toHaveLength(13);
     });
 
     it("adds an aria-label and tabIndex to Candle primitive", () => {
