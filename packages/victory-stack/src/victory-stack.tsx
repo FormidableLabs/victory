@@ -52,9 +52,18 @@ export interface VictoryStackProps
   xOffset?: number;
 }
 
+const defaultProps = {
+  containerComponent: <VictoryContainer />,
+  groupComponent: <g />,
+  standalone: true,
+  theme: VictoryTheme.grayscale,
+  fillInMissingData: true,
+};
+
 const VictoryStackBase = (initialProps: VictoryStackProps) => {
   // eslint-disable-next-line no-use-before-define
   const { role } = VictoryStack;
+  initialProps = { ...defaultProps, ...initialProps };
   const { setAnimationState, getAnimationProps, getProps } =
     Hooks.useAnimationState();
 
@@ -224,14 +233,6 @@ VictoryStackBase.propTypes = {
     labels: PropTypes.object,
   }),
   xOffset: PropTypes.number,
-};
-
-VictoryStackBase.defaultProps = {
-  containerComponent: <VictoryContainer />,
-  groupComponent: <g />,
-  standalone: true,
-  theme: VictoryTheme.grayscale,
-  fillInMissingData: true,
 };
 
 const componentConfig: VictoryComponentConfiguration<VictoryStackProps> = {

@@ -92,11 +92,18 @@ const evaluateProps = (props: AreaProps) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
+const defaultProps = {
+  groupComponent: <g />,
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 /**
  * The area primitive used by VictoryArea
  */
 export const Area: React.FC<AreaProps> = (props) => {
-  props = evaluateProps(props);
+  props = evaluateProps({ ...defaultProps, ...props });
   const {
     ariaLabel,
     role,
@@ -175,13 +182,6 @@ Area.propTypes = {
   groupComponent: PropTypes.element,
   interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   pathComponent: PropTypes.element,
-};
-
-Area.defaultProps = {
-  groupComponent: <g />,
-  pathComponent: <Path />,
-  role: "presentation",
-  shapeRendering: "auto",
 };
 
 export interface AreaProps extends VictoryCommonPrimitiveProps {

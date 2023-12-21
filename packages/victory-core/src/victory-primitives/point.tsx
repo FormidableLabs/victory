@@ -66,8 +66,14 @@ const evaluateProps = (props) => {
   });
 };
 
+const defaultProps = {
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 export const Point = (props: PointProps) => {
-  props = evaluateProps(props);
+  props = evaluateProps({ ...defaultProps, ...props });
   const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent!, {
@@ -108,10 +114,4 @@ Point.propTypes = {
   ]),
   x: PropTypes.number,
   y: PropTypes.number,
-};
-
-Point.defaultProps = {
-  pathComponent: <Path />,
-  role: "presentation",
-  shapeRendering: "auto",
 };

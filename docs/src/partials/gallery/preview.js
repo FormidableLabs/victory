@@ -6,9 +6,12 @@ import ReactDOMServer from "react-dom/server";
 import { transform } from "babel-standalone";
 
 const PreviewWrapper = styled.div``;
-
+const defaultProps = {
+  previewComponent: "div",
+}
 // <Preview> component from component-playground without updating
-const Preview = (props) => {
+const Preview = (_props) => {
+  const props = {...defaultProps,_props}
   let ref = useRef();
 
   const compileCode = () => {
@@ -82,10 +85,6 @@ const Preview = (props) => {
       }}
     />
   );
-};
-
-Preview.defaultProps = {
-  previewComponent: "div",
 };
 
 Preview.propTypes = {

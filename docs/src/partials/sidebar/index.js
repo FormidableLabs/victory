@@ -107,8 +107,13 @@ const getMatchTree = (link, filterTerm) => {
   }
   return [];
 };
+const defaultProps = {
+  className:""
+}
 
-const Sidebar = ({ className, content, onCloseClick }) => {
+const Sidebar = (_props) => {
+  const props = {...defaultProps,_props}
+  const { className, content, onCloseClick } = props
   const location = useLocation();
   const [filteredResults, setFilteredResults] = useState(content);
   const [filterTerm, setFilterTerm] = useState("");
@@ -255,10 +260,6 @@ Sidebar.propTypes = {
   content: PropTypes.array,
   hideCloseButton: PropTypes.bool,
   onCloseClick: PropTypes.func,
-};
-
-Sidebar.defaultProps = {
-  className: "",
 };
 
 export default withRouteData(Sidebar);

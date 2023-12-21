@@ -7,7 +7,10 @@ import React from "react";
  * @returns {React.FC} WrappedComponent Wrapped component (passes props through)
  */
 export const wrapCoreComponent = ({ Component, defaultProps }) => {
-  const WrappedComponent = (props) => <Component {...props} />;
+  const WrappedComponent = (props) => {
+    props = { ...defaultProps, ...props };
+    return <Component {...props} />;
+  };
 
   /**
    * Any static properties existing on Component class
@@ -18,7 +21,6 @@ export const wrapCoreComponent = ({ Component, defaultProps }) => {
       WrappedComponent[prop] = Component[prop];
     }
   }
-  WrappedComponent.defaultProps = defaultProps;
 
   return WrappedComponent;
 };

@@ -36,7 +36,24 @@ const fallbackProps = {
   padding: 50,
 };
 
+const defaultProps = {
+  backgroundComponent: <Background />,
+  containerComponent: <VictoryContainer />,
+  defaultAxes: {
+    independent: <VictoryAxis />,
+    dependent: <VictoryAxis dependentAxis />,
+  },
+  defaultPolarAxes: {
+    independent: <VictoryPolarAxis />,
+    dependent: <VictoryPolarAxis dependentAxis />,
+  },
+  groupComponent: <g />,
+  standalone: true,
+  theme: VictoryTheme.grayscale,
+};
+
 const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
+  initialProps = { ...defaultProps, ...initialProps };
   const role = "chart";
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
@@ -199,22 +216,6 @@ VictoryChartImpl.propTypes = {
   innerRadius: CustomPropTypes.nonNegative,
   prependDefaultAxes: PropTypes.bool,
   startAngle: PropTypes.number,
-};
-
-VictoryChartImpl.defaultProps = {
-  backgroundComponent: <Background />,
-  containerComponent: <VictoryContainer />,
-  defaultAxes: {
-    independent: <VictoryAxis />,
-    dependent: <VictoryAxis dependentAxis />,
-  },
-  defaultPolarAxes: {
-    independent: <VictoryPolarAxis />,
-    dependent: <VictoryPolarAxis dependentAxis />,
-  },
-  groupComponent: <g />,
-  standalone: true,
-  theme: VictoryTheme.grayscale,
 };
 
 export const VictoryChart = React.memo(VictoryChartImpl, isEqual);

@@ -30,8 +30,15 @@ const evaluateProps = (props) => {
   return assign({}, props, { id });
 };
 
+const defaultProps = {
+  circleComponent: <Circle />,
+  rectComponent: <Rect />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 export const Background = (props: BackgroundProps) => {
-  props = evaluateProps(props);
+  props = evaluateProps({ ...defaultProps, ...props });
 
   return props.polar
     ? React.cloneElement(props.circleComponent!, {
@@ -69,11 +76,4 @@ Background.propTypes = {
   width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
-};
-
-Background.defaultProps = {
-  circleComponent: <Circle />,
-  rectComponent: <Rect />,
-  role: "presentation",
-  shapeRendering: "auto",
 };

@@ -85,8 +85,14 @@ const evaluateProps = (props) => {
   return assign({}, props, { id, style });
 };
 
+const defaultProps = {
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 const Flyout = (props) => {
-  props = evaluateProps(props);
+  props = evaluateProps({ ...defaultProps, ...props });
   const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent, {
@@ -117,12 +123,6 @@ Flyout.propTypes = {
   width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
-};
-
-Flyout.defaultProps = {
-  pathComponent: <Path />,
-  role: "presentation",
-  shapeRendering: "auto",
 };
 
 export default Flyout;

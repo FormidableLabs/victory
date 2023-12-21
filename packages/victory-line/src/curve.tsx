@@ -35,8 +35,14 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
+const defaultProps = {
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 export const Curve: React.FC<CurveProps> = (props) => {
-  props = evaluateProps(props);
+  props = evaluateProps({ ...defaultProps, ...props });
   const userProps = UserProps.getSafeUserProps(props);
   const { polar, origin } = props;
   const lineFunction = LineHelpers.getLineFunction(props);
@@ -69,12 +75,6 @@ Curve.propTypes = {
   }),
   pathComponent: PropTypes.element,
   polar: PropTypes.bool,
-};
-
-Curve.defaultProps = {
-  pathComponent: <Path />,
-  role: "presentation",
-  shapeRendering: "auto",
 };
 
 export interface CurveProps extends VictoryCommonPrimitiveProps {

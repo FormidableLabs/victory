@@ -37,8 +37,14 @@ const evaluateProps = (props) => {
   return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
+const defaultProps = {
+  rectComponent: <Rect />,
+  role: "presentation",
+  shapeRendering: "auto",
+};
+
 export const Border = (props: BorderProps) => {
-  props = evaluateProps(props);
+  props = evaluateProps({ ...defaultProps, ...props });
 
   return React.cloneElement(props.rectComponent!, {
     ...props.events,
@@ -65,10 +71,4 @@ Border.propTypes = {
   width: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
-};
-
-Border.defaultProps = {
-  rectComponent: <Rect />,
-  role: "presentation",
-  shapeRendering: "auto",
 };
