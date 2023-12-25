@@ -11,7 +11,7 @@ const defaultProps = {
 }
 // <Preview> component from component-playground without updating
 const Preview = (_props) => {
-  const props = {...defaultProps,_props}
+  const props = {...defaultProps, ..._props}
   let ref = useRef();
 
   const compileCode = () => {
