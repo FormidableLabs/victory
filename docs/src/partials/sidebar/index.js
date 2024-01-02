@@ -112,7 +112,7 @@ const defaultProps = {
 }
 
 const Sidebar = (_props) => {
-  const props = {...defaultProps,_props}
+  const props = {...defaultProps, ..._props}
   const { className, content, onCloseClick } = props
   const location = useLocation();
   const [filteredResults, setFilteredResults] = useState(content);
