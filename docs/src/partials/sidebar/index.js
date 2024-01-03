@@ -108,12 +108,12 @@ const getMatchTree = (link, filterTerm) => {
   return [];
 };
 const defaultProps = {
-  className:""
-}
+  className: "",
+};
 
 const Sidebar = (_props) => {
-  const props = {...defaultProps,_props}
-  const { className, content, onCloseClick } = props
+  const props = { ...defaultProps, ..._props };
+  const { className, content, onCloseClick } = props;
   const location = useLocation();
   const [filteredResults, setFilteredResults] = useState(content);
   const [filterTerm, setFilterTerm] = useState("");
