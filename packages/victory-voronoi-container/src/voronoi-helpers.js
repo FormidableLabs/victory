@@ -42,7 +42,7 @@ const VoronoiHelpers = {
       const style = child ? child.props && child.props.style : props.style;
       return data.map((datum, index) => {
         const { x, y, y0, x0 } = Helpers.getPoint(datum);
-        const voronoiX = (Number(x) + Number(x0)) / 2;
+        const voronoiX = new Date((Number(x) + Number(x0)) / 2);
         const voronoiY = (Number(y) + Number(y0)) / 2;
 
         return assign(
