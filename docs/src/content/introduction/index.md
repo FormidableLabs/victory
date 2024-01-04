@@ -13,7 +13,7 @@ Victory is an opinionated, but fully overridable, ecosystem of composable React 
 
 Check out the documentation for [Victory Native XL](https://formidable.com/open-source/victory-native/) - the rewrite of Victory Native that favors flexibility, ease of use, and performance.
 
-For the original Victory Native (versions ≤36), see [Getting Started with Victory Native](/docs/native).
+For the legacy versions of Victory Native, see [Getting Started with Victory Native](/docs/native).
 
 ## Tutorial
 

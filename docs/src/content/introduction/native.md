@@ -8,7 +8,8 @@ scope: null
 
 # Getting Started with Victory Native
 
-> These docs are for version ≤36 of Victory Native. If you're looking for docs on versions ≥40, please [see here](https://formidable.com/open-source/victory-native/).
+> These docs are for the legacy versions of Victory Native. If you're looking for Victory Native XL docs, please [see here]
+(https://formidable.com/open-source/victory-native/).
 
 In this guide, we’ll show you how to get started with Victory Native and the React Native SVG dependency running in your React Native app for iOS and Android.
 
