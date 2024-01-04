@@ -251,6 +251,16 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  blockquote {
+    border-left: 0.3rem solid ${({ theme }) => theme.color.red};
+    background: ${({ theme }) => theme.color.nearWhite};
+    padding: 2rem;
+
+    p {
+      margin: 0;
+    }
+  }
 `;
 
 export default GlobalStyle;
