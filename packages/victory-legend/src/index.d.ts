@@ -31,6 +31,7 @@ export interface VictoryLegendProps
     };
     symbol?: {
       fill?: string;
+      size?: number;
       type?: string;
     };
   }>;
