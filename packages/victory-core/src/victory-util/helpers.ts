@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React from "react";
+import React, { isValidElement } from "react";
 import { defaults, isFunction, property, pick, assign, keys } from "lodash";
 import { CallbackArgs } from "../types/callbacks";
 import { ValueOrAccessor } from "../types/prop-types";
@@ -301,8 +301,10 @@ export function reduceChildren<
       return memo;
     }, initialMemo);
   };
-  const childNames = children.map((c, i) => i);
-  return traverseChildren(children, childNames);
+
+  const validChildren = children.filter(isValidElement);
+  const childNames = validChildren.map((c, i) => i);
+  return traverseChildren(validChildren, childNames);
 }
 
 /**
