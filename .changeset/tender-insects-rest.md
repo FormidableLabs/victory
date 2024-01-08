@@ -2,4 +2,4 @@
 "victory-core": patch
 ---
 
-Fix label measurements after SSR hydration mismatch
+Fix text label measurements after SSR hydration mismatch
