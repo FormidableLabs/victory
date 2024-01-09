@@ -1,5 +1,11 @@
 # victory-legend
 
+## 36.8.0
+
+### Patch Changes
+
+- Add missing size property to TS definitions ([#2523](https://github.com/FormidableLabs/victory/pull/2523))
+
 ## 36.7.0
 
 ## 36.6.12
