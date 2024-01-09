@@ -12,11 +12,8 @@ on:
       - main
 
 jobs:
-  test:
-    name: Check Code
+  build:
     runs-on: ubuntu-latest
-    env:
-      DISPLAY: :99.0
     strategy:
       matrix:
         node-version: [16.x, 18.x]
@@ -34,5 +31,56 @@ jobs:
       - name: Build libraries and distributions ${{ matrix.node-version }}
         run: pnpm build
 
-      - name: Check Code ${{ matrix.node-version }}
-        run: pnpm check:ci
+  format:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          node-version: 18.x
+
+      - name: Format
+        run: pnpm format
+
+  lint:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          node-version: 18.x
+
+      - name: Lint
+        run: pnpm lint
+
+  types:
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Types Check ${{ matrix.node-version }}
+        run: pnpm types:check
+
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Test ${{ matrix.node-version }}
+        run: pnpm jest
