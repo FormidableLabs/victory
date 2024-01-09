@@ -1,5 +1,11 @@
 # victory-core
 
+## 36.8.1
+
+### Patch Changes
+
+- Correctly type props in Victory Primitives ([#2695](https://github.com/FormidableLabs/victory/pull/2695))
+
 ## 36.8.0
 
 ### Minor Changes

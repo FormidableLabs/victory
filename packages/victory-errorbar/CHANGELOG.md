@@ -1,5 +1,7 @@
 # victory-errorbar
 
+## 36.8.1
+
 ## 36.8.0
 
 ### Patch Changes
