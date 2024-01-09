@@ -1,16 +1,26 @@
-import React from "react";
+import React, { forwardRef } from "react";
+import { evaluateProp } from "../victory-util/helpers";
 import { VictoryPrimitiveShapeProps } from "./types";
 
-export const Circle = (props: VictoryPrimitiveShapeProps) => {
-  // eslint-disable-next-line react/prop-types
-  const { desc, ...rest } = props;
-  return desc ? (
-    // @ts-expect-error FIXME: "id cannot be a number"
-    <circle vectorEffect="non-scaling-stroke" {...rest}>
-      <desc>{desc}</desc>
-    </circle>
-  ) : (
-    // @ts-expect-error FIXME: "id cannot be a number"
-    <circle vectorEffect="non-scaling-stroke" {...rest} />
-  );
-};
+export const Circle = forwardRef<SVGCircleElement, VictoryPrimitiveShapeProps>(
+  (props, ref) => {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars --
+     * origin conflicts with the SVG element's origin attribute
+     */
+    const { desc, id, tabIndex, origin, ...rest } = props;
+
+    const svgProps: React.SVGProps<SVGCircleElement> = {
+      vectorEffect: "non-scaling-stroke",
+      id: evaluateProp(id, props)?.toString(),
+      tabIndex: evaluateProp(tabIndex, props),
+      ...rest,
+    };
+    return desc ? (
+      <circle {...svgProps} ref={ref}>
+        <desc>{desc}</desc>
+      </circle>
+    ) : (
+      <circle {...svgProps} ref={ref} />
+    );
+  },
+);
