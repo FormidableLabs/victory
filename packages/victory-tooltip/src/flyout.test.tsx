@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import { SVGWrapper } from "../../../test/helpers";
-import Flyout from './flyout';
+import Flyout from "./flyout";
 
 describe("victory-primitives/flyout", () => {
   const baseProps = {
