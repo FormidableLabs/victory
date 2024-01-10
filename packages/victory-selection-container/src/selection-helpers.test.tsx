@@ -1,7 +1,7 @@
 import { assign } from "lodash";
 import React from "react";
 import { VictoryBar } from "victory-bar";
-import SelectionHelpers from "victory-selection-container/lib/selection-helpers";
+import { SelectionHelpers } from "victory-selection-container";
 import * as d3Scale from "victory-vendor/d3-scale";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
@@ -47,12 +47,7 @@ describe("helpers/selection", () => {
         },
       ];
       const props = { scale, x1: 0, y1: 0, x2: 0.5, y2: 0.5 };
-      const bounds = { x: [0, 1], y: [10, 15] };
-      const filteredData = SelectionHelpers.filterDatasets(
-        props,
-        datasets,
-        bounds,
-      );
+      const filteredData = SelectionHelpers.filterDatasets(props, datasets);
       expect(filteredData).toBeNull();
     });
 
@@ -63,13 +58,8 @@ describe("helpers/selection", () => {
       ];
       const childName = "a";
       const datasets = [{ childName, data }];
-      const bounds = { x: [0, 1], y: [0, 10] };
       const props = { scale, x1: 0, y1: 0, x2: 0.5, y2: 0.5 };
-      const filteredData = SelectionHelpers.filterDatasets(
-        props,
-        datasets,
-        bounds,
-      );
+      const filteredData = SelectionHelpers.filterDatasets(props, datasets);
       const expected = { eventKey: [0], data: [data[0]] };
       expect(filteredData).toEqual([assign({ childName }, expected)]);
     });

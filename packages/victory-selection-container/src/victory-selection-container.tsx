@@ -1,23 +1,45 @@
-import PropTypes from "prop-types";
 import React from "react";
-import { VictoryContainer, Rect } from "victory-core";
-import SelectionHelpers from "./selection-helpers";
+import {
+  Datum,
+  Rect,
+  VictoryContainer,
+  VictoryContainerProps,
+} from "victory-core";
+import { SelectionHelpers } from "./selection-helpers";
 
-export const selectionContainerMixin = (base) =>
-  class VictorySelectionContainer extends base {
+export interface VictorySelectionContainerProps extends VictoryContainerProps {
+  activateSelectedData?: boolean;
+  allowSelection?: boolean;
+  disable?: boolean;
+  onSelection?: (
+    points: {
+      childName?: string | string[];
+      eventKey?: string | number;
+      data?: Datum[];
+    }[],
+    bounds: {
+      x: number | Date;
+      y: number | Date;
+    }[],
+    props: VictorySelectionContainerProps,
+  ) => void;
+  horizontal?: boolean;
+  onSelectionCleared?: (props: VictorySelectionContainerProps) => void;
+  selectionBlacklist?: string[];
+  selectionComponent?: React.ReactElement;
+  selectionDimension?: "x" | "y";
+  selectionStyle?: React.CSSProperties;
+}
+
+type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
+
+export function selectionContainerMixin<
+  TBase extends ComponentClass<TProps>,
+  TProps extends VictorySelectionContainerProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictorySelectionContainer extends Base {
     static displayName = "VictorySelectionContainer";
-    static propTypes = {
-      ...VictoryContainer.propTypes,
-      activateSelectedData: PropTypes.bool,
-      allowSelection: PropTypes.bool,
-      disable: PropTypes.bool,
-      onSelection: PropTypes.func,
-      onSelectionCleared: PropTypes.func,
-      selectionBlacklist: PropTypes.arrayOf(PropTypes.string),
-      selectionComponent: PropTypes.element,
-      selectionDimension: PropTypes.oneOf(["x", "y"]),
-      selectionStyle: PropTypes.object,
-    };
     static defaultProps = {
       ...VictoryContainer.defaultProps,
       activateSelectedData: true,
@@ -30,7 +52,7 @@ export const selectionContainerMixin = (base) =>
       },
     };
 
-    static defaultEvents = (props) => {
+    static defaultEvents = (props: TProps) => {
       return [
         {
           target: "parent",
@@ -90,12 +112,12 @@ export const selectionContainerMixin = (base) =>
     }
 
     // Overrides method in VictoryContainer
-    getChildren(props) {
+    getChildren(props: TProps) {
       return [...React.Children.toArray(props.children), this.getRect(props)];
     }
   };
+}
 
-export default selectionContainerMixin(VictoryContainer);
-// @ts-expect-error IMPORTANT: when converting this file to TypeScript, you must export the type as well:
-// export const VictorySelectionContainer = selectionContainerMixin(VictoryContainer);
-// export type VictorySelectionContainer = typeof VictorySelectionContainer;
+export const VictorySelectionContainer =
+  selectionContainerMixin(VictoryContainer);
+export type VictorySelectionContainer = typeof VictorySelectionContainer;

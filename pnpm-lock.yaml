@@ -634,12 +634,14 @@ importers:
       prop-types: ^15.8.1
       victory-bar: ^36.8.1
       victory-core: ^36.8.1
+      victory-selection-container: '*'
     dependencies:
       lodash: 4.17.21
       prop-types: 15.8.1
       victory-core: link:../victory-core
     devDependencies:
       victory-bar: link:../victory-bar
+      victory-selection-container: 'link:'
 
   packages/victory-shared-events:
     specifiers:

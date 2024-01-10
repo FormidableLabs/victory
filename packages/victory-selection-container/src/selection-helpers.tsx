@@ -1,15 +1,17 @@
-import { Selection, Data, Helpers } from "victory-core";
+import { Selection, Data, Helpers, Datum } from "victory-core";
 import { assign, defaults, throttle, isFunction, includes } from "lodash";
 import React from "react";
 
-const SelectionHelpers = {
+const ON_MOUSE_MOVE_THROTTLE_MS = 16;
+
+class SelectionHelpersClass {
   getDimension(props) {
     const { horizontal, selectionDimension } = props;
     if (!horizontal || !selectionDimension) {
       return selectionDimension;
     }
     return selectionDimension === "x" ? "y" : "x";
-  },
+  }
 
   getDatasets(props) {
     if (props.data) {
@@ -38,11 +40,11 @@ const SelectionHelpers = {
       iteratee,
       props,
     );
-  },
+  }
 
-  filterDatasets(props, datasets, bounds) {
+  filterDatasets(props, datasets) {
     const filtered = datasets.reduce((memo, dataset) => {
-      const selectedData = this.getSelectedData(props, dataset.data, bounds);
+      const selectedData = this.getSelectedData(props, dataset.data);
       memo = selectedData
         ? memo.concat({
             childName: dataset.childName,
@@ -53,7 +55,7 @@ const SelectionHelpers = {
       return memo;
     }, []);
     return filtered.length ? filtered : null;
-  },
+  }
 
   getSelectedData(props, dataset) {
     const { x1, y1, x2, y2 } = props;
@@ -66,8 +68,8 @@ const SelectionHelpers = {
         scaledPoint.y <= Math.max(y1, y2)
       );
     };
-    const eventKey = [];
-    const data = [];
+    const eventKey: number[] = [];
+    const data: Datum[] = [];
     let count = 0;
     for (let index = 0, len = dataset.length; index < len; index++) {
       const datum = dataset[index];
@@ -78,10 +80,9 @@ const SelectionHelpers = {
       }
     }
     return count > 0 ? { eventKey, data } : null;
-  },
+  }
 
-  // eslint-disable-next-line complexity, max-statements
-  onMouseDown(evt, targetProps) {
+  onMouseDown = (evt, targetProps) => {
     evt.preventDefault();
     const { activateSelectedData, allowSelection, polar, selectedData } =
       targetProps;
@@ -126,9 +127,9 @@ const SelectionHelpers = {
         : [];
 
     return parentMutation.concat(...dataMutation);
-  },
+  };
 
-  onMouseMove(evt, targetProps) {
+  private handleMouseMove = (evt, targetProps) => {
     const { allowSelection, select, polar } = targetProps;
     const dimension = this.getDimension(targetProps);
     if (!allowSelection || !select) {
@@ -150,9 +151,14 @@ const SelectionHelpers = {
         return { x2, y2, parentSVG };
       },
     };
-  },
+  };
 
-  onMouseUp(evt, targetProps) {
+  onMouseMove = throttle(this.handleMouseMove, ON_MOUSE_MOVE_THROTTLE_MS, {
+    leading: true,
+    trailing: false,
+  });
+
+  onMouseUp = (evt, targetProps) => {
     const { activateSelectedData, allowSelection, x2, y2 } = targetProps;
     if (!allowSelection) {
       return null;
@@ -169,7 +175,7 @@ const SelectionHelpers = {
     }
     const datasets = this.getDatasets(targetProps);
     const bounds = Selection.getBounds(targetProps);
-    const selectedData = this.filterDatasets(targetProps, datasets, bounds);
+    const selectedData = this.filterDatasets(targetProps, datasets);
     const mutatedProps = {
       selectedData,
       datasets,
@@ -209,16 +215,7 @@ const SelectionHelpers = {
         : [];
 
     return parentMutation.concat(dataMutation);
-  },
-};
+  };
+}
 
-export default {
-  ...SelectionHelpers,
-  onMouseDown: SelectionHelpers.onMouseDown.bind(SelectionHelpers),
-  onMouseUp: SelectionHelpers.onMouseUp.bind(SelectionHelpers),
-  onMouseMove: throttle(
-    SelectionHelpers.onMouseMove.bind(SelectionHelpers),
-    16, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false },
-  ),
-};
+export const SelectionHelpers = new SelectionHelpersClass();

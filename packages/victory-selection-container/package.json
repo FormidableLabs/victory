@@ -28,7 +28,8 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-bar": "^36.8.1"
+    "victory-bar": "^36.8.1",
+    "victory-selection-container": "*"
   },
   "publishConfig": {
     "provenance": true
