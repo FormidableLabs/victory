@@ -1,4 +1,4 @@
-import { Selection, Data, Helpers as CoreHelpers, Datum } from "victory-core";
+import { Selection, Data, Helpers, Datum } from "victory-core";
 import { assign, defaults, throttle, isFunction, includes } from "lodash";
 import React from "react";
 
@@ -35,7 +35,7 @@ class SelectionHelpersClass {
       const childData = getData(child.props);
       return childData ? { childName, data: childData } : null;
     };
-    return CoreHelpers.reduceChildren(
+    return Helpers.reduceChildren(
       React.Children.toArray(props.children),
       iteratee,
       props,
@@ -60,7 +60,7 @@ class SelectionHelpersClass {
   getSelectedData(props, dataset) {
     const { x1, y1, x2, y2 } = props;
     const withinBounds = (d) => {
-      const scaledPoint = CoreHelpers.scalePoint(props, d);
+      const scaledPoint = Helpers.scalePoint(props, d);
       return (
         scaledPoint.x >= Math.min(x1, x2) &&
         scaledPoint.x <= Math.max(x1, x2) &&
