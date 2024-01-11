@@ -1,6 +1,14 @@
 import React from "react";
 
-export const CanvasContext = React.createContext();
+export type CanvasContextValue = {
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  clear: (ctx: CanvasRenderingContext2D) => void;
+  clip: (ctx: CanvasRenderingContext2D) => void;
+};
+
+export const CanvasContext = React.createContext<
+  CanvasContextValue | undefined
+>(undefined);
 
 export const useCanvasContext = () => {
   const context = React.useContext(CanvasContext);
