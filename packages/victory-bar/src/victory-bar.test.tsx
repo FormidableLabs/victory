@@ -41,14 +41,14 @@ describe("components/victory-bar", () => {
     it("renders an svg with the correct width and height", () => {
       const { container } = render(<VictoryBar />);
       const svg = container.querySelector("svg");
-      expect(svg.getAttribute("style")).toContain("width: 100%; height: 100%");
+      expect(svg?.getAttribute("style")).toContain("width: 100%; height: 100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryBar />);
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
+      expect(svg?.getAttribute("viewBox")).toEqual(viewBoxValue);
     });
 
     it("renders 4 bars", () => {
@@ -130,6 +130,7 @@ describe("components/victory-bar", () => {
     it("renders bars values with null accessor", () => {
       const data = range(8);
       const { container } = render(
+        // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryBar data={data} x={null} y={null} />,
       );
       const bars = container.querySelectorAll("path");
@@ -152,7 +153,7 @@ describe("components/victory-bar", () => {
         return getBarHeight(commandString);
       });
 
-      expect(Math.trunc(heights[1] / 2)).toEqual(Math.trunc(heights[0], 0.5));
+      expect(Math.trunc(heights[1] / 2)).toEqual(Math.trunc(heights[0]));
       expect(((heights[2] / 3) * 2).toFixed(3)).toEqual(heights[1].toFixed(3));
     });
 
@@ -186,7 +187,7 @@ describe("components/victory-bar", () => {
         />,
       );
       const bar = container.querySelector("path");
-      fireEvent.click(bar);
+      fireEvent.click(bar!);
 
       expect(clickHandler).toHaveBeenCalled();
     });
@@ -262,14 +263,14 @@ describe("components/victory-bar", () => {
           dataComponent={
             <Bar
               ariaLabel={({ datum }) => `x: ${datum.x}`}
-              tabIndex={({ index }) => index + 1}
+              tabIndex={({ index }) => (index as number) + 1}
             />
           }
         />,
       );
 
       container.querySelectorAll("path").forEach((bar, index) => {
-        expect(parseInt(bar.getAttribute("tabindex"))).toEqual(index + 1);
+        expect(parseInt(bar.getAttribute("tabindex")!)).toEqual(index + 1);
         expect(bar.getAttribute("aria-label")).toEqual(`x: ${data[index].x}`);
       });
     });

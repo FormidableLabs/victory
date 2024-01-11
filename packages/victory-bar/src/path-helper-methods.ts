@@ -24,7 +24,7 @@ const getPosition = (props, width) => {
   };
 };
 
-const getAngle = (props, index) => {
+const getAngle = (props, index: number) => {
   const { data, scale } = props;
   const x = data[index]._x1 === undefined ? "_x" : "_x1";
   return scale.x(data[index][x]);
@@ -38,7 +38,7 @@ const getAngularWidth = (props, width) => {
   return (width / (2 * Math.PI * r)) * angularRange;
 };
 
-const transformAngle = (angle) => {
+const transformAngle = (angle: number) => {
   return -1 * angle + Math.PI / 2;
 };
 
@@ -48,7 +48,7 @@ export const getCustomBarPath = (props, width) => {
   return getPath(propsWithCalculatedValues);
 };
 
-const getStartAngle = (props, index) => {
+const getStartAngle = (props, index: number) => {
   const { data, scale, alignment } = props;
   const currentAngle = getAngle(props, index);
   const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
@@ -64,7 +64,7 @@ const getStartAngle = (props, index) => {
   return (currentAngle + previousAngle) / 2;
 };
 
-const getEndAngle = (props, index) => {
+const getEndAngle = (props, index: number) => {
   const { data, scale, alignment } = props;
   const currentAngle = getAngle(props, index);
   const angularRange = Math.abs(scale.x.range()[1] - scale.x.range()[0]);
@@ -268,26 +268,29 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     end = getEndAngle(props, index);
   }
 
-  const getPath = (edge) => {
-    const pathFunction = d3Shape
+  const getPath = (edge): string => {
+    const pathFunction: any = d3Shape
       .arc()
       .innerRadius(r1)
       .outerRadius(r2)
       .startAngle(transformAngle(start))
       .endAngle(transformAngle(end))
       .cornerRadius(cornerRadius[edge]);
+
     return pathFunction();
   };
 
   const getPathData = (edge) => {
     const rightPath = getPath(`${edge}Right`);
-    const rightMoves = rightPath.match(/[A-Z]/g);
+    const rightMoves: string[] = rightPath.match(/[A-Z]/g) || [];
     const rightCoords = rightPath.split(/[A-Z]/).slice(1);
     const rightMiddle = rightMoves.indexOf("L");
+
     const leftPath = getPath(`${edge}Left`);
-    const leftMoves = leftPath.match(/[A-Z]/g);
+    const leftMoves: string[] = leftPath.match(/[A-Z]/g) || [];
     const leftCoords = leftPath.split(/[A-Z]/).slice(1);
     const leftMiddle = leftMoves.indexOf("L");
+
     return {
       rightMoves,
       rightCoords,

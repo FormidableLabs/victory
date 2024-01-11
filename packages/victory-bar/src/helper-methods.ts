@@ -15,8 +15,8 @@ export const getBarPosition = (props, datum) => {
         ? 1 / Number.MAX_SAFE_INTEGER
         : 0;
     let defaultMin = defaultZero;
-    const minY = Collection.getMinValue(props.domain[axis]);
-    const maxY = Collection.getMaxValue(props.domain[axis]);
+    const minY = Collection.getMinValue(props.domain[axis]) as number;
+    const maxY = Collection.getMaxValue(props.domain[axis]) as number;
 
     if (minY < 0 && maxY <= 0) {
       defaultMin = maxY;

@@ -1,8 +1,18 @@
 import { assign, isNil, isPlainObject } from "lodash";
-import { Helpers } from "victory-core";
+import { Helpers, VictoryStyleObject } from "victory-core";
+import { BarProps } from "./bar";
+import {
+  VictoryBarCornerRadiusObject,
+  VictoryBarCornerRadiusKey,
+} from "./victory-bar";
 
-export const getBarWidth = (barWidth, props) => {
-  const { scale, data, defaultBarWidth, style } = props;
+const DEFAULT_BAR_WIDTH = 8;
+
+export const getBarWidth = (
+  barWidth: BarProps["barWidth"],
+  props: BarProps,
+) => {
+  const { scale, data, style } = props;
   if (barWidth) {
     return Helpers.evaluateProp(barWidth, props);
   } else if (style.width) {
@@ -13,18 +23,24 @@ export const getBarWidth = (barWidth, props) => {
   const bars = data.length + 2;
   const barRatio = props.barRatio || 0.5;
   const defaultWidth =
-    barRatio * (data.length < 2 ? defaultBarWidth : extent / bars);
+    barRatio * (data.length < 2 ? DEFAULT_BAR_WIDTH : extent / bars);
   return Math.max(1, defaultWidth);
 };
 
-const getCornerRadiusFromObject = (cornerRadius, props) => {
-  const realCornerRadius = {
+const getCornerRadiusFromObject = (
+  cornerRadius: VictoryBarCornerRadiusObject,
+  props: BarProps,
+) => {
+  const realCornerRadius: VictoryBarCornerRadiusObject = {
     topLeft: 0,
     topRight: 0,
     bottomLeft: 0,
     bottomRight: 0,
   };
-  const updateCornerRadius = (corner, fallback) => {
+  const updateCornerRadius = (
+    corner: VictoryBarCornerRadiusKey,
+    fallback: "top" | "bottom",
+  ) => {
     if (!isNil(cornerRadius[corner])) {
       realCornerRadius[corner] = Helpers.evaluateProp(
         cornerRadius[corner],
@@ -44,8 +60,17 @@ const getCornerRadiusFromObject = (cornerRadius, props) => {
   return realCornerRadius;
 };
 
-export const getCornerRadius = (cornerRadius, props) => {
-  const realCornerRadius = {
+function isCornerRadiusObject(
+  cornerRadius: BarProps["cornerRadius"],
+): cornerRadius is VictoryBarCornerRadiusObject {
+  return isPlainObject(cornerRadius);
+}
+
+export const getCornerRadius = (
+  cornerRadius: BarProps["cornerRadius"],
+  props: BarProps,
+) => {
+  const realCornerRadius: VictoryBarCornerRadiusObject = {
     topLeft: 0,
     topRight: 0,
     bottomLeft: 0,
@@ -54,7 +79,7 @@ export const getCornerRadius = (cornerRadius, props) => {
   if (!cornerRadius) {
     return realCornerRadius;
   }
-  if (isPlainObject(cornerRadius)) {
+  if (isCornerRadiusObject(cornerRadius)) {
     return getCornerRadiusFromObject(cornerRadius, props);
   }
   realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, props);
@@ -62,7 +87,7 @@ export const getCornerRadius = (cornerRadius, props) => {
   return realCornerRadius;
 };
 
-export const getStyle = (style = {}, props) => {
+export const getStyle = (style: VictoryStyleObject = {}, props: BarProps) => {
   if (props.disableInlineStyles) {
     return {};
   }

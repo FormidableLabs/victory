@@ -1,18 +1,57 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
-import Bar from "./bar";
+import { Bar } from "./bar";
 import {
   Helpers,
   VictoryLabel,
   VictoryContainer,
   VictoryTheme,
-  CommonProps,
   addEvents,
   Data,
   Domain,
   UserProps,
+  EventPropTypeInterface,
+  NumberOrCallback,
+  StringOrNumberOrCallback,
+  VictoryCommonProps,
+  VictoryDatableProps,
+  VictoryMultiLabelableProps,
+  VictoryStyleInterface,
+  EventsMixinClass,
 } from "victory-core";
+
+export type VictoryBarCornerRadiusKey =
+  | "top"
+  | "bottom"
+  | "topLeft"
+  | "topRight"
+  | "bottomLeft"
+  | "bottomRight";
+
+export type VictoryBarCornerRadiusObject = Partial<
+  Record<VictoryBarCornerRadiusKey, NumberOrCallback>
+>;
+
+export type VictoryBarTTargetType = "data" | "labels" | "parent";
+
+export type VictoryBarAlignmentType = "start" | "middle" | "end";
+
+export interface VictoryBarProps
+  extends VictoryCommonProps,
+    VictoryDatableProps,
+    VictoryMultiLabelableProps {
+  alignment?: VictoryBarAlignmentType;
+  barRatio?: number;
+  barWidth?: NumberOrCallback;
+  cornerRadius?: NumberOrCallback | VictoryBarCornerRadiusObject;
+  events?: EventPropTypeInterface<
+    VictoryBarTTargetType,
+    number | string | number[] | string[]
+  >[];
+  eventKey?: StringOrNumberOrCallback;
+  horizontal?: boolean;
+  style?: VictoryStyleInterface;
+}
 
 const fallbackProps = {
   width: 450,
@@ -27,8 +66,15 @@ const defaultData = [
   { x: 4, y: 4 },
 ];
 
-class VictoryBar extends React.Component {
-  static animationWhitelist = [
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryBarBase extends EventsMixinClass<VictoryBarProps> {}
+
+/**
+ * Draw SVG bar charts with React. VictoryBar is a composable component, so it doesn"t include axes
+ * Check out VictoryChart for complete bar charts and more.
+ */
+class VictoryBarBase extends React.Component<VictoryBarProps> {
+  static animationWhitelist: (keyof VictoryBarProps)[] = [
     "data",
     "domain",
     "height",
@@ -58,29 +104,7 @@ class VictoryBar extends React.Component {
     },
   };
 
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    alignment: PropTypes.oneOf(["start", "middle", "end"]),
-    barRatio: PropTypes.number,
-    barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    cornerRadius: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.func,
-      PropTypes.shape({
-        top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      }),
-    ]),
-    getPath: PropTypes.func,
-    horizontal: PropTypes.bool,
-  };
-
-  static defaultProps = {
+  static defaultProps: VictoryBarProps = {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <Bar />,
@@ -94,8 +118,9 @@ class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero;
   static getData = Data.getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
-  static expectedComponents = [
+  static getBaseProps = (props: VictoryBarProps) =>
+    getBaseProps(props, fallbackProps);
+  static expectedComponents: (keyof VictoryBarProps)[] = [
     "dataComponent",
     "labelComponent",
     "groupComponent",
@@ -107,7 +132,7 @@ class VictoryBar extends React.Component {
     return !!this.props.animate;
   }
 
-  render() {
+  render(): React.ReactElement {
     const { animationWhitelist, role } = VictoryBar;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
@@ -125,4 +150,4 @@ class VictoryBar extends React.Component {
   }
 }
 
-export default addEvents(VictoryBar);
+export const VictoryBar = addEvents(VictoryBarBase);
