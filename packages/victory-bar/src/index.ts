@@ -1,5 +1,5 @@
-export { VictoryBar } from "./victory-bar";
-export { Bar } from "./bar";
+export * from "./victory-bar";
+export * from "./bar";
 export { getBarPosition } from "./helper-methods";
 export {
   getVerticalBarPath,
