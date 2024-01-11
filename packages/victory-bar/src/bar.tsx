@@ -44,10 +44,7 @@ const evaluateProps = (props: BarProps) => {
    * `tabIndex`
    */
   const style = getStyle(props.style, props);
-  const barWidth = getBarWidth(
-    props.barWidth,
-    assign({}, { props }, { style }),
-  );
+  const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
   const cornerRadius = getCornerRadius(
     props.cornerRadius,
     assign({}, props, { style, barWidth }),

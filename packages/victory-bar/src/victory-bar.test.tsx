@@ -130,6 +130,7 @@ describe("components/victory-bar", () => {
     it("renders bars values with null accessor", () => {
       const data = range(8);
       const { container } = render(
+        // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryBar data={data} x={null} y={null} />,
       );
       const bars = container.querySelectorAll("path");
@@ -269,8 +270,7 @@ describe("components/victory-bar", () => {
       );
 
       container.querySelectorAll("path").forEach((bar, index) => {
-        const tabIndex = parseInt(bar.getAttribute("tabindex") || "");
-        expect(tabIndex).toEqual(index + 1);
+        expect(parseInt(bar.getAttribute("tabindex")!)).toEqual(index + 1);
         expect(bar.getAttribute("aria-label")).toEqual(`x: ${data[index].x}`);
       });
     });
