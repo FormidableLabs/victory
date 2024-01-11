@@ -1,11 +1,36 @@
+/* eslint-disable react/prop-types */
 import { assign } from "lodash";
-import PropTypes from "prop-types";
 import React, { forwardRef } from "react";
-import { CommonProps, Helpers, Path } from "victory-core";
+import {
+  Helpers,
+  NumberOrCallback,
+  Path,
+  VictoryCommonPrimitiveProps,
+} from "victory-core";
 import { getStyle, getBarWidth, getCornerRadius } from "./bar-helper-methods";
 import { getPolarBarPath, getBarPath } from "./path-helper-methods";
+import {
+  VictoryBarAlignmentType,
+  VictoryBarCornerRadiusObject,
+} from "./victory-bar";
 
-const evaluateProps = (props) => {
+export interface BarProps extends VictoryCommonPrimitiveProps {
+  alignment?: VictoryBarAlignmentType;
+  barOffset?: number[];
+  barRatio?: number;
+  barWidth?: NumberOrCallback;
+  cornerRadius?: NumberOrCallback | VictoryBarCornerRadiusObject;
+  datum?: any;
+  getPath?: (x: number, y: number, props: any) => string;
+  horizontal?: boolean;
+  pathComponent?: React.ReactElement;
+  width?: number;
+  x?: number;
+  y?: number;
+  y0?: number;
+}
+
+const evaluateProps = (props: BarProps) => {
   /**
    * Potential evaluated props of following must be evaluated in this order:
    * 1) `style`
@@ -19,7 +44,10 @@ const evaluateProps = (props) => {
    * `tabIndex`
    */
   const style = getStyle(props.style, props);
-  const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
+  const barWidth = getBarWidth(
+    props.barWidth,
+    assign({}, { props }, { style }),
+  );
   const cornerRadius = getCornerRadius(
     props.cornerRadius,
     assign({}, props, { style, barWidth }),
@@ -41,14 +69,17 @@ const evaluateProps = (props) => {
   });
 };
 
-const defaultProps = {
-  defaultBarWidth: 8,
+const defaultProps: Partial<BarProps> = {
   pathComponent: <Path />,
   role: "presentation",
   shapeRendering: "auto",
 };
+
 // eslint-disable-next-line prefer-arrow-callback
-const Bar = forwardRef(function Bar(props, ref) {
+export const Bar = forwardRef<SVGPathElement, BarProps>(function Bar(
+  props,
+  ref,
+) {
   props = evaluateProps({ ...defaultProps, ...props });
   const { polar, origin, style, barWidth, cornerRadius } = props;
 
@@ -57,6 +88,11 @@ const Bar = forwardRef(function Bar(props, ref) {
     : getBarPath(props, barWidth, cornerRadius);
   const defaultTransform =
     polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+
+  if (!props.pathComponent) {
+    return null;
+  }
+
   return React.cloneElement(props.pathComponent, {
     ...props.events,
     "aria-label": props.ariaLabel,
@@ -73,32 +109,3 @@ const Bar = forwardRef(function Bar(props, ref) {
     ref,
   });
 });
-
-Bar.propTypes = {
-  ...CommonProps.primitiveProps,
-  alignment: PropTypes.oneOf(["start", "middle", "end"]),
-  barRatio: PropTypes.number,
-  barWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  cornerRadius: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.func,
-    PropTypes.shape({
-      top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    }),
-  ]),
-  datum: PropTypes.object,
-  getPath: PropTypes.func,
-  horizontal: PropTypes.bool,
-  pathComponent: PropTypes.element,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
-  y0: PropTypes.number,
-};
-
-export default Bar;
