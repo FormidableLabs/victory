@@ -6,16 +6,16 @@ import {
   UserProps,
   VictoryCommonPrimitiveProps,
   OrientationTypes,
-  NumberOrCallback,
 } from "victory-core";
 import { isPlainObject, assign } from "lodash";
 
+// TODO: this needs to be typed to FlyoutProps
 const getVerticalPath = (props) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } =
     props;
   const sign = orientation === "bottom" ? 1 : -1;
-  const x = props.x || 0 + (props.dx || 0);
-  const y = props.y || 0 + (props.dy || 0);
+  const x = props.x + (props.dx || 0);
+  const y = props.y + (props.dy || 0);
   const centerX = isPlainObject(center) && center.x;
   const centerY = isPlainObject(center) && center.y;
   const pointerEdge = centerY + sign * (height / 2);
@@ -41,6 +41,7 @@ const getVerticalPath = (props) => {
     z`;
 };
 
+// TODO: this needs to be typed to FlyoutProps
 const getHorizontalPath = (props) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } =
     props;
@@ -99,19 +100,19 @@ const defaultProps = {
 
 export interface FlyoutProps extends VictoryCommonPrimitiveProps {
   center?: {
-    x?: number | null;
-    y?: number | null;
+    x?: number;
+    y?: number;
   };
-  cornerRadius?: NumberOrCallback;
+  cornerRadius?: number;
   datum?: object;
-  dx?: NumberOrCallback;
-  dy?: NumberOrCallback;
-  height?: NumberOrCallback;
+  dx?: number;
+  dy?: number;
+  height?: number;
   orientation?: OrientationTypes;
   pathComponent?: React.ReactElement;
-  pointerLength?: NumberOrCallback;
-  pointerWidth?: NumberOrCallback;
-  width?: NumberOrCallback;
+  pointerLength?: number;
+  pointerWidth?: number;
+  width?: number;
   x?: number;
   y?: number;
 }
