@@ -11,10 +11,12 @@ import {
   addEvents,
   Arc,
   Axis,
+  EventsMixinClass,
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
+import { VictoryPolarAxisProps } from './types';
 
-const fallbackProps = {
+const fallbackProps: Partial<VictoryPolarAxisProps> = {
   width: 450,
   height: 300,
   padding: 50,
@@ -31,7 +33,10 @@ const options = {
   ],
 };
 
-class VictoryPolarAxis extends React.Component {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryPolarAxisBase extends EventsMixinClass<VictoryPolarAxisProps> {}
+
+class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
   static animationWhitelist = [
     "style",
     "domain",
@@ -258,4 +263,4 @@ class VictoryPolarAxis extends React.Component {
   }
 }
 
-export default addEvents(VictoryPolarAxis, options);
+export const VictoryPolarAxis = addEvents(VictoryPolarAxisBase, options);
