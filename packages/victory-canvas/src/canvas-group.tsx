@@ -12,7 +12,7 @@ export interface CanvasGroupProps {
 
 export const CanvasGroup = (props: CanvasGroupProps) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
-  const { children, width = 0, height = 0, clipWidth = 0, padding } = props;
+  const { children, width = 0, height = 0, clipWidth, padding } = props;
 
   const clear = React.useCallback(
     (ctx: CanvasRenderingContext2D) => {
@@ -34,7 +34,7 @@ export const CanvasGroup = (props: CanvasGroupProps) => {
       ctx.clearRect(
         width - paddingRight,
         0,
-        (maxClipWidth - clipWidth) * -1,
+        clipWidth ? (maxClipWidth - clipWidth) * -1 : 0,
         height,
       );
     },
