@@ -14,7 +14,7 @@ import {
   EventsMixinClass,
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
-import { VictoryPolarAxisProps } from './types';
+import { VictoryPolarAxisProps } from "./types";
 
 const fallbackProps: Partial<VictoryPolarAxisProps> = {
   width: 450,
@@ -34,7 +34,8 @@ const options = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface VictoryPolarAxisBase extends EventsMixinClass<VictoryPolarAxisProps> {}
+interface VictoryPolarAxisBase
+  extends EventsMixinClass<VictoryPolarAxisProps> {}
 
 class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
   static animationWhitelist = [
