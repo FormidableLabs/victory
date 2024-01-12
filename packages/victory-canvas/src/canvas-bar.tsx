@@ -45,7 +45,7 @@ const evaluateProps = (props: CanvasBarProps) => {
   return modifiedProps;
 };
 
-export const usePreviousValue = (value) => {
+const usePreviousValue = (value) => {
   const ref = React.useRef();
   React.useEffect(() => {
     ref.current = value;
