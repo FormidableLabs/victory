@@ -56,3 +56,5 @@ export const CanvasGroup = (props: CanvasGroupProps) => {
     </CanvasContext.Provider>
   );
 };
+
+CanvasGroup.role = "container";
