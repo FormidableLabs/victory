@@ -86,7 +86,7 @@ const getColumnWidths = (props, data) => {
       : gutter || 0;
   const dataByColumn = groupBy(data, "column");
   const columns = keys(dataByColumn);
-  return columns.reduce((memo, curr, index) => {
+  return columns.reduce<number[]>((memo, curr, index) => {
     const lengths = dataByColumn[curr].map((d) => {
       return d.textSize.width + d.size + d.symbolSpacer + gutterWidth;
     });
@@ -102,7 +102,7 @@ const getRowHeights = (props, data) => {
       ? (gutter.top || 0) + (gutter.bottom || 0)
       : gutter || 0;
   const dataByRow = groupBy(data, "row");
-  return keys(dataByRow).reduce((memo, curr, index) => {
+  return keys(dataByRow).reduce<number[]>((memo, curr, index) => {
     const rows = dataByRow[curr];
     const lengths = rows.map((d) => {
       return d.textSize.height + d.symbolSpacer + gutterHeight;
