@@ -68,9 +68,9 @@ export interface EventsMixinClass<TProps> {
     defaultAnimationWhitelist: string[],
   ): React.ReactElement;
   getComponentProps(
-    component: React.ReactElement,
+    component: React.ReactNode,
     type: string,
-    index: number,
+    index: string | number,
   ): TProps;
   dataKeys: string[];
 }
@@ -352,7 +352,11 @@ export function addEvents<
       return props.events;
     }
 
-    getComponentProps(component, type, index) {
+    getComponentProps(
+      component: React.ReactNode,
+      type: string,
+      index: string | number,
+    ) {
       const name = this.props.name || WrappedComponent.role;
       const key = (this.dataKeys && this.dataKeys[index]) || index;
       const id = `${name}-${type}-${key}`;
@@ -365,13 +369,18 @@ export function addEvents<
         return undefined;
       }
 
+      const currentProps =
+        component && typeof component === "object" && "props" in component
+          ? component.props
+          : undefined;
+
       if (this.hasEvents) {
         const baseEvents = this.getEvents(this.props, type, key);
         const componentProps = defaults(
           { index, key: id },
           this.getEventState(key, type),
           this.getSharedEventState(key, type),
-          component.props,
+          currentProps,
           baseProps,
           { id },
         );
@@ -385,7 +394,7 @@ export function addEvents<
         return assign({}, componentProps, { events });
       }
 
-      return defaults({ index, key: id }, component.props, baseProps, { id });
+      return defaults({ index, key: id }, currentProps, baseProps, { id });
     }
 
     renderContainer(component, children) {
