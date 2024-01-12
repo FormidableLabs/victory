@@ -1,8 +1,23 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { assign } from "lodash";
-import { Helpers, CommonProps, PointPathHelpers } from "victory-core";
+import {
+  Helpers,
+  PointPathHelpers,
+  ScatterSymbolType,
+  VictoryCommonPrimitiveProps,
+} from "victory-core";
 import { useCanvasContext } from "./hooks/use-canvas-context";
+
+export interface CanvasPointProps extends VictoryCommonPrimitiveProps {
+  datum?: any;
+  getPath?: (x: number, y: number, size: number) => string;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  size?: number | Function;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  symbol?: ScatterSymbolType | Function;
+  x?: number;
+  y?: number;
+}
 
 const getPath = (props) => {
   const { x, y, size, symbol } = props;
@@ -27,7 +42,7 @@ const getPath = (props) => {
   return symbolFunction(x, y, size);
 };
 
-const evaluateProps = (props) => {
+const evaluateProps = (props: CanvasPointProps) => {
   /**
    * Potential evaluated props are:
    * `size`
@@ -45,37 +60,28 @@ const evaluateProps = (props) => {
   });
 };
 
-const CanvasPoint = (initialProps) => {
+export const CanvasPoint = (props: CanvasPointProps) => {
   const { canvasRef } = useCanvasContext();
-  const props = evaluateProps(initialProps);
+  const modifiedProps = evaluateProps(props);
 
   const draw = React.useCallback(
-    (ctx) => {
-      const { style } = props;
-      const path = getPath(props);
+    (ctx: CanvasRenderingContext2D) => {
+      const { style } = modifiedProps;
+      const path = getPath(modifiedProps);
       ctx.fillStyle = style.fill;
       // eslint-disable-next-line no-undef
       const path2d = new Path2D(path);
       ctx.fill(path2d);
     },
-    [props],
+    [modifiedProps],
   );
 
   React.useEffect(() => {
-    const ctx = canvasRef.current.getContext("2d");
+    const ctx = canvasRef.current?.getContext("2d");
+    if (!ctx) return;
     draw(ctx);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;
 };
-
-CanvasPoint.propTypes = {
-  ...CommonProps.primitiveProps,
-  datum: PropTypes.object,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  x: PropTypes.number,
-  y: PropTypes.number,
-};
-
-export default CanvasPoint;
