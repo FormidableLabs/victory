@@ -7,6 +7,7 @@ import { VictoryTooltip } from "victory-tooltip";
 import { VictoryTheme, Helpers } from "victory-core";
 import { fromJS } from "immutable";
 import styled from "styled-components";
+import { LineSegment } from "../packages/victory-core/lib";
 
 const containerStyle = {
   display: "flex",
@@ -586,3 +587,18 @@ export const DisableInlineStyles = () => {
     </div>
   );
 };
+
+export const LabelIndicator = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryPie labelIndicator innerRadius={0} radius={50} labelRadius={80} padAngle={0.5}/>
+      <VictoryPie
+      labelRadius={100}
+      innerRadius={50} radius={75}
+        labelIndicator={<LineSegment style = {{stroke:"red",strokeDasharray:1,
+        fill: "none",}}/>}
+      />
+    </div>
+  );
+};
+

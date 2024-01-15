@@ -19,6 +19,7 @@ import { getBaseProps } from "./helper-methods";
 const fallbackProps = {
   endAngle: 360,
   height: 400,
+  radius: 100,
   innerRadius: 0,
   cornerRadius: 0,
   padAngle: 0,
@@ -260,6 +261,7 @@ class VictoryPie extends React.Component {
 
   renderComponents(props, shouldRenderDatum = datumHasXandY){
     const { dataComponent, labelComponent, groupComponent, labelIndicator } = props;
+    console.log(props)
     let labelIndicatorComponents=null;
       const dataComponents = this.dataKeys.reduce(
         (validDataComponents, _dataKey, index) => {
@@ -294,7 +296,8 @@ class VictoryPie extends React.Component {
 
         if(labelIndicator){
           let labelIndicatorComponent= <LineSegment/>;
-          if( typeof labelIndicator === React.element){
+
+          if( typeof labelIndicator === "object"){
             labelIndicatorComponent = labelIndicator;
           }
            labelIndicatorComponents =  this.dataKeys
