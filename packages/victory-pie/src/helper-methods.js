@@ -228,6 +228,44 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
+export const radian = Math.PI / 180;
+export const getXOffsetMultiplayerByAngle = angle => Math.cos(angle - 90 * radian);
+export const getYOffsetMultiplayerByAngle = angle => Math.sin(angle - 90 * radian);
+export const getXOffset = (offset, angle) => offset * getXOffsetMultiplayerByAngle(angle);
+export const getYOffset = (offset, angle) => offset * getYOffsetMultiplayerByAngle(angle);
+export const getAverage = array => array.reduce((acc, cur) => acc + cur, 0) / array.length;
+
+export const getLabelIndicatorProps =(props,calculatedValues)=>{
+  const {
+    innerRadius,
+    radius,
+    slice:{startAngle,endAngle},
+    index
+  } = props;
+  const {height,width}=calculatedValues;
+  // calculation
+
+  const middleRadius = getAverage([innerRadius, radius]);
+  const midAngle = getAverage([endAngle, startAngle]);
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const x1 = centerX + getXOffset(middleRadius, midAngle);
+  const y1 = centerY + getYOffset(middleRadius, midAngle);
+
+  const offSetEnd = 2 * radius - middleRadius;
+  const x2 = centerX + getXOffset(offSetEnd, midAngle);
+  const y2 = centerY + getYOffset(offSetEnd, midAngle);
+
+  const labelIndicatorProps ={
+     x1,
+     y1,
+     x2,
+     y2,
+    index
+  }
+  return defaults({}, labelIndicatorProps);
+}
+
 export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
@@ -248,6 +286,7 @@ export const getBaseProps = (props, fallbackProps) => {
     cornerRadius,
     padAngle,
     disableInlineStyles,
+    labelIndicator
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -288,6 +327,12 @@ export const getBaseProps = (props, fallbackProps) => {
         assign({}, props, dataProps),
         calculatedValues,
       );
+      if(labelIndicator ){
+        childProps[eventKey].labelIndicators = getLabelIndicatorProps(
+          assign({}, props, dataProps),
+          calculatedValues,
+        )
+      }
     }
     return childProps;
   }, initialChildProps);

@@ -64,6 +64,7 @@ export interface VictoryPieProps
   >[];
   eventKey?: StringOrNumberOrCallback;
   innerRadius?: NumberOrCallback;
+  labelIndicator?: boolean |  React.ReactElement;
   labelPlacement?:
     | VictorySliceLabelPlacementType
     | ((props: SliceProps) => VictorySliceLabelPlacementType);
@@ -79,5 +80,5 @@ export interface VictoryPieProps
   x?: DataGetterPropType;
   y?: DataGetterPropType;
 }
-
+ 
 export class VictoryPie extends React.Component<VictoryPieProps, any> {}
