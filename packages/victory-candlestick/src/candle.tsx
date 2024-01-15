@@ -1,10 +1,34 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [0, 0.5, 1, 2] }]*/
 import React from "react";
-import PropTypes from "prop-types";
-import { Helpers, CommonProps, Line, Rect } from "victory-core";
+import {
+  Helpers,
+  Line,
+  NumberOrCallback,
+  Rect,
+  VictoryCommonPrimitiveProps,
+  VictoryStyleObject,
+} from "victory-core";
 import { assign, defaults, isFunction } from "lodash";
 
-const getCandleWidth = (candleWidth, props) => {
+export interface CandleProps extends VictoryCommonPrimitiveProps {
+  candleRatio?: number;
+  candleWidth?: NumberOrCallback;
+  close?: number;
+  datum?: any;
+  groupComponent?: React.ReactElement;
+  high?: number;
+  lineComponent?: React.ReactElement;
+  low?: number;
+  open?: number;
+  rectComponent?: React.ReactElement;
+  wickStrokeWidth?: number;
+  width?: number;
+  x?: number;
+}
+
+const getCandleWidth = (
+  candleWidth: CandleProps["candleWidth"],
+  props: CandleProps,
+) => {
   const { style } = props;
   if (candleWidth) {
     return isFunction(candleWidth)
@@ -16,7 +40,7 @@ const getCandleWidth = (candleWidth, props) => {
   return candleWidth;
 };
 
-const getCandleProps = (props, style) => {
+const getCandleProps = (props, style: VictoryStyleObject) => {
   const { id, x, close, open, horizontal, candleWidth } = props;
   const candleLength = Math.abs(close - open);
   return {
@@ -29,7 +53,7 @@ const getCandleProps = (props, style) => {
   };
 };
 
-const getHighWickProps = (props, style) => {
+const getHighWickProps = (props, style: VictoryStyleObject) => {
   const { horizontal, high, open, close, x, id } = props;
   return {
     key: `${id}-highWick`,
@@ -41,7 +65,7 @@ const getHighWickProps = (props, style) => {
   };
 };
 
-const getLowWickProps = (props, style) => {
+const getLowWickProps = (props, style: VictoryStyleObject) => {
   const { horizontal, low, open, close, x, id } = props;
   return {
     key: `${id}-lowWick`,
@@ -89,7 +113,7 @@ const evaluateProps = (props) => {
   });
 };
 
-const defaultProps = {
+const defaultProps: Partial<CandleProps> = {
   groupComponent: <g />,
   lineComponent: <Line />,
   rectComponent: <Rect />,
@@ -97,8 +121,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-const Candle = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Candle = (props: CandleProps) => {
+  const modifiedProps = evaluateProps({ ...defaultProps, ...props });
   const {
     ariaLabel,
     events,
@@ -114,7 +138,7 @@ const Candle = (props) => {
     style,
     desc,
     tabIndex,
-  } = props;
+  } = modifiedProps;
   const wickStyle = defaults({ strokeWidth: wickStrokeWidth }, style);
   const sharedProps = {
     ...events,
@@ -127,9 +151,15 @@ const Candle = (props) => {
     desc,
     tabIndex,
   };
-  const candleProps = assign(getCandleProps(props, style), sharedProps);
-  const highWickProps = assign(getHighWickProps(props, wickStyle), sharedProps);
-  const lowWickProps = assign(getLowWickProps(props, wickStyle), sharedProps);
+  const candleProps = assign(getCandleProps(modifiedProps, style), sharedProps);
+  const highWickProps = assign(
+    getHighWickProps(modifiedProps, wickStyle),
+    sharedProps,
+  );
+  const lowWickProps = assign(
+    getLowWickProps(modifiedProps, wickStyle),
+    sharedProps,
+  );
 
   return React.cloneElement(groupComponent, {}, [
     React.cloneElement(rectComponent, candleProps),
@@ -137,22 +167,3 @@ const Candle = (props) => {
     React.cloneElement(lineComponent, lowWickProps),
   ]);
 };
-
-Candle.propTypes = {
-  ...CommonProps.primitiveProps,
-  candleRatio: PropTypes.number,
-  candleWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  close: PropTypes.number,
-  datum: PropTypes.object,
-  groupComponent: PropTypes.element,
-  high: PropTypes.number,
-  lineComponent: PropTypes.element,
-  low: PropTypes.number,
-  open: PropTypes.number,
-  rectComponent: PropTypes.element,
-  wickStrokeWidth: PropTypes.number,
-  width: PropTypes.number,
-  x: PropTypes.number,
-};
-
-export default Candle;

@@ -47,14 +47,14 @@ describe("components/victory-candlestick", () => {
     it("renders an svg with the correct width and height", () => {
       const { container } = render(<VictoryCandlestick data={dataSet} />);
       const svg = container.querySelector("svg");
-      expect(svg.getAttribute("style")).toContain("width: 100%; height: 100%");
+      expect(svg?.getAttribute("style")).toContain("width: 100%; height: 100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryCandlestick data={dataSet} />);
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
+      expect(svg?.getAttribute("viewBox")).toEqual(viewBoxValue);
     });
 
     it("renders 8 points", () => {
@@ -100,7 +100,9 @@ describe("components/victory-candlestick", () => {
         <VictoryCandlestick data={data} sortKey="x" />,
       );
       const candles = container.querySelectorAll("rect");
-      const xValues = Array.from(candles).map((bar) => bar.getAttribute("x"));
+      const xValues = Array.from(candles).map((bar) =>
+        Number(bar.getAttribute("x")),
+      );
       const xValuesAscending = [...xValues].sort((a, b) => a - b);
       expect(xValues).toEqual(xValuesAscending);
     });
@@ -113,7 +115,9 @@ describe("components/victory-candlestick", () => {
         <VictoryCandlestick data={data} sortKey="x" sortOrder="descending" />,
       );
       const candles = container.querySelectorAll("rect");
-      const xValues = Array.from(candles).map((bar) => bar.getAttribute("x"));
+      const xValues = Array.from(candles).map((bar) =>
+        Number(bar.getAttribute("x")),
+      );
       const xValuesDescending = [...xValues].sort((a, b) => b - a);
       expect(xValues).toEqual(xValuesDescending);
     });
@@ -155,6 +159,7 @@ describe("components/victory-candlestick", () => {
     it("renders data values with null accessor", () => {
       const data = range(10);
       const { container } = render(
+        // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryCandlestick
           data={data}
           x={null}
@@ -245,7 +250,7 @@ describe("components/victory-candlestick", () => {
               ariaLabel={({ datum }) =>
                 `open ${datum.open}, close ${datum.close}`
               }
-              tabIndex={({ index }) => index + 5}
+              tabIndex={({ index }) => Number(index) + 5}
             />
           }
         />,

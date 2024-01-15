@@ -28,7 +28,9 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-chart": "^36.8.1"
+    "victory-vendor": "^36.8.1",
+    "victory-chart": "^36.8.1",
+    "victory-candlestick": "*"
   },
   "publishConfig": {
     "provenance": true
