@@ -1,5 +1,7 @@
 # victory-brush-container
 
+## 36.8.2
+
 ## 36.8.1
 
 ## 36.8.0

@@ -1,5 +1,11 @@
 # victory-stack
 
+## 36.8.2
+
+### Patch Changes
+
+- Assign merged props to a const instead of modifying initialProps ([#2718](https://github.com/FormidableLabs/victory/pull/2718))
+
 ## 36.8.1
 
 ## 36.8.0

@@ -1,5 +1,11 @@
 # victory-selection-container
 
+## 36.8.2
+
+### Patch Changes
+
+- Migrated victory-selection-container to TypeScript ([#2706](https://github.com/FormidableLabs/victory/pull/2706))
+
 ## 36.8.1
 
 ## 36.8.0

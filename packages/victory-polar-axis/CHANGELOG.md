@@ -1,5 +1,11 @@
 # victory-polar-axis
 
+## 36.8.2
+
+### Patch Changes
+
+- Migrate polar axis to typescript ([#2713](https://github.com/FormidableLabs/victory/pull/2713))
+
 ## 36.8.1
 
 ## 36.8.0

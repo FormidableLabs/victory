@@ -1,5 +1,13 @@
 # victory-core
 
+## 36.8.2
+
+### Patch Changes
+
+- Fix the label background position when using dy fns ([#2720](https://github.com/FormidableLabs/victory/pull/2720))
+
+* Migrate victory-legend to TypeScript ([#2712](https://github.com/FormidableLabs/victory/pull/2712))
+
 ## 36.8.1
 
 ### Patch Changes

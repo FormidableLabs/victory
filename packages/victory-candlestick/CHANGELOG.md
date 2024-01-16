@@ -1,5 +1,11 @@
 # victory-candlestick
 
+## 36.8.2
+
+### Patch Changes
+
+- Migrate victory-candlestick to TypeScript ([#2716](https://github.com/FormidableLabs/victory/pull/2716))
+
 ## 36.8.1
 
 ## 36.8.0
