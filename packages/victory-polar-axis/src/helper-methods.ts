@@ -1,11 +1,12 @@
 import { assign, uniqBy, defaults } from "lodash";
 import { Helpers, LabelHelpers, Scale, Axis } from "victory-core";
+import { VictoryPolarAxisProps } from "./types";
 
-const getPosition = (r, angle, axis) => {
+const getPosition = (r: number, angle: number, axis?: string) => {
   return axis === "x" ? r * Math.cos(angle) : -r * Math.sin(angle);
 };
 
-const getAxisType = (props) => {
+const getAxisType = (props: VictoryPolarAxisProps) => {
   const typicalType = props.dependentAxis ? "radial" : "angular";
   const invertedType = typicalType === "angular" ? "radial" : "angular";
   return props.horizontal ? invertedType : typicalType;
@@ -24,7 +25,7 @@ const getEvaluatedStyles = (style, props) => {
   };
 };
 
-const getStyleObject = (props) => {
+const getStyleObject = (props: VictoryPolarAxisProps) => {
   const { theme = {}, dependentAxis } = props;
   const generalAxisStyle =
     (theme.polarAxis && theme.polarAxis.style) ||
@@ -34,8 +35,7 @@ const getStyleObject = (props) => {
     : "polarIndependentAxis";
   const standardAxisType = dependentAxis ? "dependentAxis" : "independentAxis";
   const specificAxisStyle =
-    (theme[polarAxisType] && theme[polarAxisType].style) ||
-    (theme[standardAxisType] && theme[standardAxisType].style);
+    theme?.[polarAxisType]?.style || theme?.[standardAxisType]?.style;
 
   const mergeStyles = () => {
     const styleNamespaces = [
@@ -49,8 +49,8 @@ const getStyleObject = (props) => {
     return styleNamespaces.reduce((memo, curr) => {
       memo[curr] = defaults(
         {},
-        specificAxisStyle[curr],
-        generalAxisStyle[curr],
+        specificAxisStyle?.[curr],
+        generalAxisStyle?.[curr],
       );
       return memo;
     }, {});
@@ -61,13 +61,20 @@ const getStyleObject = (props) => {
     : specificAxisStyle || generalAxisStyle;
 };
 
-const getRadius = (props) => {
+const getRadius = (props: VictoryPolarAxisProps) => {
   const { left, right, top, bottom } = Helpers.getPadding(props);
   const { width, height } = props;
+
+  if (width === undefined || height === undefined) {
+    throw new Error(
+      "VictoryPolarAxis: width and height properties are required for standalone axes.",
+    );
+  }
+
   return Math.min(width - left - right, height - top - bottom) / 2;
 };
 
-const getRange = (props, axis) => {
+const getRange = (props: VictoryPolarAxisProps, axis) => {
   // Return the range from props if one is given.
   if (props.range && props.range[axis]) {
     return props.range[axis];
@@ -84,8 +91,7 @@ const getRange = (props, axis) => {
   return [props.innerRadius || 0, radius];
 };
 
-// exposed for use by VictoryChart (necessary?)
-export const getScale = (props) => {
+export const getScale = (props: VictoryPolarAxisProps) => {
   const axis = Axis.getAxis(props);
   const scale = Scale.getBaseScale(props, axis);
   const domain = Axis.getDomain(props, axis) || scale.domain();
@@ -95,7 +101,7 @@ export const getScale = (props) => {
   return scale;
 };
 
-export const getStyles = (props, styleObject) => {
+export const getStyles = (props: VictoryPolarAxisProps, styleObject) => {
   if (props.disableInlineStyles) {
     return {};
   }
@@ -112,7 +118,11 @@ export const getStyles = (props, styleObject) => {
   };
 };
 
-const getAxisAngle = (props) => {
+const getAxisAngle = (props: {
+  axisAngle?: number;
+  dependentAxis?: boolean;
+  startAngle?: number;
+}) => {
   const { axisAngle, startAngle, dependentAxis } = props;
   const axis = Axis.getAxis(props);
   const axisValue = Axis.getAxisValue(props, axis);
@@ -122,8 +132,22 @@ const getAxisAngle = (props) => {
   return Helpers.radiansToDegrees(axisValue);
 };
 
-// eslint-disable-next-line max-params
-const getTickProps = (props, calculatedValues, tickValue, index) => {
+const getTickProps = (
+  props: VictoryPolarAxisProps,
+  calculatedValues: {
+    axisType: string;
+    radius: number;
+    scale: any;
+    style: any;
+    stringTicks: any;
+    ticks: any;
+    tickFormat: any;
+    origin: { x: number; y: number };
+  },
+  tickValue,
+  index,
+  // eslint-disable-next-line max-params
+) => {
   const {
     axisType,
     radius,
@@ -147,8 +171,7 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
     axisType,
     text,
   });
-  const axisAngle =
-    axisType === "radial" ? getAxisAngle(props, scale) : undefined;
+  const axisAngle = axisType === "radial" ? getAxisAngle(props) : undefined;
   const tickPadding = tickStyle.padding || tickStyle.size || 0;
   const padAngle = Helpers.degreesToRadians(90 - axisAngle);
   const tickAngle =
@@ -190,8 +213,22 @@ const getTickProps = (props, calculatedValues, tickValue, index) => {
       };
 };
 
-// eslint-disable-next-line max-params
-const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
+const getTickLabelProps = (
+  props: VictoryPolarAxisProps,
+  calculatedValues: {
+    axisType: string;
+    radius: number;
+    tickFormat: any;
+    style: any;
+    scale: any;
+    ticks: any;
+    stringTicks: any;
+    origin: { x: number; y: number };
+  },
+  tickValue,
+  index,
+  // eslint-disable-next-line max-params
+) => {
   const {
     axisType,
     radius,
@@ -216,14 +253,12 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
     axisType,
   });
   const { tickLabelComponent } = props;
-  const labelPlacement =
-    tickLabelComponent.props && tickLabelComponent.props.labelPlacement
-      ? tickLabelComponent.props.labelPlacement
-      : props.labelPlacement;
+  const labelPlacement = tickLabelComponent?.props.labelPlacement
+    ? tickLabelComponent.props.labelPlacement
+    : props.labelPlacement;
   const tickPadding = labelStyle.padding || 0;
   const angularPadding = 0; // TODO: do some geometry
-  const axisAngle =
-    axisType === "radial" ? getAxisAngle(props, scale) : undefined;
+  const axisAngle = axisType === "radial" ? getAxisAngle(props) : undefined;
   const labelAngle =
     axisType === "angular"
       ? Helpers.radiansToDegrees(scale(tickValue))
@@ -255,8 +290,22 @@ const getTickLabelProps = (props, calculatedValues, tickValue, index) => {
   };
 };
 
-// eslint-disable-next-line max-params
-const getGridProps = (props, calculatedValues, tickValue, index) => {
+const getGridProps = (
+  props: VictoryPolarAxisProps,
+  calculatedValues: {
+    axisType: string;
+    radius: number;
+    style: any;
+    scale: any;
+    stringTicks: any;
+    ticks: any;
+    tickFormat: any;
+    origin: { x: number; y: number };
+  },
+  tickValue,
+  index,
+  // eslint-disable-next-line max-params
+) => {
   const {
     axisType,
     radius,
@@ -304,19 +353,25 @@ const getGridProps = (props, calculatedValues, tickValue, index) => {
       };
 };
 
-const getAxisLabelProps = (props, calculatedValues) => {
-  const { axisType, radius, style, scale, origin } = calculatedValues;
+const getAxisLabelProps = (
+  props: VictoryPolarAxisProps,
+  calculatedValues: {
+    axisType: string;
+    radius: number;
+    style: any;
+    origin: { x: number; y: number };
+  },
+) => {
+  const { axisType, radius, style, origin } = calculatedValues;
   const { axisLabelComponent } = props;
   if (axisType !== "radial") {
     return {};
   }
-  const labelPlacement =
-    axisLabelComponent.props && axisLabelComponent.props.labelPlacement
-      ? axisLabelComponent.props.labelPlacement
-      : props.labelPlacement;
+  const labelPlacement = axisLabelComponent?.props.labelPlacement
+    ? axisLabelComponent.props.labelPlacement
+    : props.labelPlacement;
   const labelStyle = (style && style.axisLabel) || {};
-  const axisAngle =
-    axisType === "radial" ? getAxisAngle(props, scale) : undefined;
+  const axisAngle = axisType === "radial" ? getAxisAngle(props) : undefined;
   const textAngle =
     labelStyle.angle === undefined
       ? LabelHelpers.getPolarAngle(
@@ -353,11 +408,11 @@ const getAxisLabelProps = (props, calculatedValues) => {
 };
 
 const getAxisProps = (modifiedProps, calculatedValues) => {
-  const { style, axisType, radius, scale, origin } = calculatedValues;
+  const { style, axisType, radius, origin } = calculatedValues;
   const { startAngle, endAngle, innerRadius = 0 } = modifiedProps;
   const axisAngle =
     axisType === "radial"
-      ? Helpers.degreesToRadians(getAxisAngle(modifiedProps, scale))
+      ? Helpers.degreesToRadians(getAxisAngle(modifiedProps))
       : undefined;
   return axisType === "radial"
     ? {
@@ -377,7 +432,7 @@ const getAxisProps = (modifiedProps, calculatedValues) => {
       };
 };
 
-const getCalculatedValues = (props) => {
+const getCalculatedValues = (props: VictoryPolarAxisProps) => {
   props = assign({ polar: true }, props);
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
@@ -410,7 +465,7 @@ const getCalculatedValues = (props) => {
   };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (props: VictoryPolarAxisProps, fallbackProps) => {
   props = Axis.modifyProps(props, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const { style, scale, ticks, domain } = calculatedValues;
