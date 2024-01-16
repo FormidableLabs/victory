@@ -1,5 +1,11 @@
 # victory-bar
 
+## 36.8.2
+
+### Patch Changes
+
+- Migrate victory-bar to TypeScript ([#2709](https://github.com/FormidableLabs/victory/pull/2709))
+
 ## 36.8.1
 
 ## 36.8.0

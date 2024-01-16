@@ -1,5 +1,11 @@
 # victory-group
 
+## 36.8.2
+
+### Patch Changes
+
+- Fix victory-group animation ([#2717](https://github.com/FormidableLabs/victory/pull/2717))
+
 ## 36.8.1
 
 ## 36.8.0

@@ -1,5 +1,11 @@
 # victory-canvas
 
+## 36.8.2
+
+### Patch Changes
+
+- Migrate victory-canvas to TypeScript ([#2710](https://github.com/FormidableLabs/victory/pull/2710))
+
 ## 36.8.1
 
 ## 36.8.0
