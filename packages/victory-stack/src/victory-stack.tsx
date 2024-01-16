@@ -61,13 +61,15 @@ const defaultProps = {
 };
 
 const VictoryStackBase = (initialProps: VictoryStackProps) => {
-  // eslint-disable-next-line no-use-before-define
   const { role } = VictoryStack;
-  initialProps = { ...defaultProps, ...initialProps };
+  const propsWithDefaults = React.useMemo(
+    () => ({ ...defaultProps, ...initialProps }),
+    [initialProps],
+  );
   const { setAnimationState, getAnimationProps, getProps } =
     Hooks.useAnimationState();
 
-  const props = getProps(initialProps);
+  const props = getProps(propsWithDefaults);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
@@ -134,8 +136,8 @@ const VictoryStackBase = (initialProps: VictoryStackProps) => {
     name,
   ]);
   const userProps = React.useMemo(
-    () => UserProps.getSafeUserProps(initialProps),
-    [initialProps],
+    () => UserProps.getSafeUserProps(propsWithDefaults),
+    [propsWithDefaults],
   );
 
   const container = React.useMemo(() => {
@@ -161,16 +163,16 @@ const VictoryStackBase = (initialProps: VictoryStackProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = Hooks.usePreviousProps(initialProps);
+  const previousProps = Hooks.usePreviousProps(propsWithDefaults);
 
   React.useEffect(() => {
     // This is called before dismount to keep state in sync
     return () => {
-      if (initialProps.animate) {
-        setAnimationState(previousProps, initialProps);
+      if (propsWithDefaults.animate) {
+        setAnimationState(previousProps, propsWithDefaults);
       }
     };
-  }, [setAnimationState, previousProps, initialProps]);
+  }, [setAnimationState, previousProps, propsWithDefaults]);
 
   if (!isEmpty(events)) {
     return (

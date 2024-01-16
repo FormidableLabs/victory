@@ -8,8 +8,8 @@ import React from "react";
  */
 export const wrapCoreComponent = ({ Component, defaultProps }) => {
   const WrappedComponent = (props) => {
-    props = { ...defaultProps, ...props };
-    return <Component {...props} />;
+    const propsWithDefaults = { ...defaultProps, ...props };
+    return <Component {...propsWithDefaults} />;
   };
 
   /**
