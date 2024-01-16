@@ -508,7 +508,7 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
     verticalAnchor,
     dx,
     dy,
-    originalDy: props.dy,
+    originalDy: Helpers.evaluateProp(props.dy, props),
     transform,
     x,
     y,
