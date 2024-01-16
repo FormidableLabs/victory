@@ -589,7 +589,11 @@ export const BackgroundStyles = () => {
             verticalAnchor="end"
             backgroundPadding={{ top: 5, right: 5, bottom: 5, left: 5 }}
             backgroundStyle={{ fill: "plum", stroke: "#000000" }}
-            text={["Victory is awesome.", "background styles", "work with dy functions"]}
+            text={[
+              "Victory is awesome.",
+              "background styles",
+              "work with dy functions",
+            ]}
           />
         }
       />
@@ -601,7 +605,11 @@ export const BackgroundStyles = () => {
             verticalAnchor="end"
             backgroundPadding={{ top: 5, right: 5, bottom: 5, left: 5 }}
             backgroundStyle={{ fill: "thistle", stroke: "#000000" }}
-            text={["Victory is awesome.", "background styles", "work with dx functions"]}
+            text={[
+              "Victory is awesome.",
+              "background styles",
+              "work with dx functions",
+            ]}
           />
         }
       />
