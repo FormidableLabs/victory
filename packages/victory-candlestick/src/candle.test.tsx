@@ -50,7 +50,7 @@ describe("victory-primitives/candle", () => {
 
     wicks.forEach((wick, i) => {
       const [x1, x2, y1, y2] = ["x1", "x2", "y1", "y2"].map((prop) =>
-        parseInt(wick.getAttribute(prop)),
+        parseInt(wick.getAttribute(prop) || ""),
       );
       expect(values[i]).toMatchObject({ x1, x2, y1, y2 });
     });
@@ -60,7 +60,7 @@ describe("victory-primitives/candle", () => {
     const { container } = renderCandle();
     const rect = container.querySelector("rect");
     const [width, height, x, y] = ["width", "height", "x", "y"].map((prop) =>
-      rect.getAttribute(prop),
+      rect?.getAttribute(prop),
     );
 
     // width = style.width || 0.5 * (width - 2 * padding) / data.length;

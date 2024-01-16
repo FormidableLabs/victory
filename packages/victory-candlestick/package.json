@@ -28,7 +28,9 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-chart": "^36.8.1"
+    "victory-vendor": "^36.8.1",
+    "victory-chart": "^36.8.1",
+    "victory-candlestick": "*"
   },
   "publishConfig": {
     "provenance": true
@@ -174,8 +176,8 @@
       "dependencies": [
         "types:create",
         "../victory-core:types:create",
-        "../victory-chart:types:create",
         "../victory-vendor:types:create",
+        "../victory-chart:types:create",
         "../victory-voronoi:types:create"
       ],
       "output": [],
@@ -240,8 +242,8 @@
       "output": [],
       "dependencies": [
         "../victory-core:types:create",
-        "../victory-chart:types:create",
         "../victory-vendor:types:create",
+        "../victory-chart:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -258,8 +260,8 @@
       "output": [],
       "dependencies": [
         "../victory-core:types:create",
-        "../victory-chart:types:create",
         "../victory-vendor:types:create",
+        "../victory-chart:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -277,8 +279,8 @@
       "output": [],
       "dependencies": [
         "build:lib:cjs",
-        "../victory-chart:build:lib:cjs",
         "../victory-vendor:build:lib:cjs",
+        "../victory-chart:build:lib:cjs",
         "../victory-voronoi:build:lib:cjs"
       ],
       "packageLocks": [
