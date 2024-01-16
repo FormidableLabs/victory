@@ -1,4 +1,4 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 2.5, 3, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
 import { assign, defaults, isFunction, isPlainObject, isNil } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
@@ -235,7 +235,7 @@ export const getXOffset = (offset, angle) => offset * getXOffsetMultiplayerByAng
 export const getYOffset = (offset, angle) => offset * getYOffsetMultiplayerByAngle(angle);
 export const getAverage = array => array.reduce((acc, cur) => acc + cur, 0) / array.length;
 
-export const getLabelIndicatorProps =(props,calculatedValues)=>{
+export const getLabelIndicatorPropsForLineSegment =(props,calculatedValues)=>{
   const {
     innerRadius,
     radius,
@@ -266,6 +266,37 @@ export const getLabelIndicatorProps =(props,calculatedValues)=>{
   return defaults({}, labelIndicatorProps);
 }
 
+export const getLabelIndicatorPropsForPolylineSegment =(props,calculatedValues)=>{
+  const {
+    innerRadius,
+    radius,
+    slice:{startAngle,endAngle},
+    index
+  } = props;
+  const {height,width}=calculatedValues;
+  // calculation
+
+  const middleRadius = getAverage([innerRadius, radius]);
+  const midAngle = getAverage([endAngle, startAngle]);
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const x1 = centerX + getXOffset(middleRadius, midAngle);
+  const y1 = centerY + getYOffset(middleRadius, midAngle);
+
+  const offSetMiddle = 2 * radius - middleRadius;
+  const xMiddle = centerX + getXOffset(offSetMiddle, midAngle);
+  const yMiddle = centerY + getYOffset(offSetMiddle, midAngle);
+
+  const offSetEnd = 2.5 * radius - middleRadius;
+  const xEnd = centerX + getXOffset(offSetEnd, midAngle);
+  const points =`${x1},${y1} ${xMiddle},${yMiddle} ${xEnd},${yMiddle}`;
+  const labelIndicatorProps = {
+    points,
+    index 
+  }
+  return defaults({}, labelIndicatorProps);
+}
+
 export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
@@ -286,7 +317,8 @@ export const getBaseProps = (props, fallbackProps) => {
     cornerRadius,
     padAngle,
     disableInlineStyles,
-    labelIndicator
+    labelIndicator,
+    labelIndicatorType
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -328,10 +360,18 @@ export const getBaseProps = (props, fallbackProps) => {
         calculatedValues,
       );
       if(labelIndicator ){
-        childProps[eventKey].labelIndicators = getLabelIndicatorProps(
-          assign({}, props, dataProps),
-          calculatedValues,
-        )
+        if(labelIndicatorType === "single"){
+          childProps[eventKey].labelIndicators = getLabelIndicatorPropsForLineSegment(
+            assign({}, props, dataProps),
+            calculatedValues,
+          )
+        }
+        if(labelIndicatorType === "multiple"){
+          childProps[eventKey].labelIndicators = getLabelIndicatorPropsForPolylineSegment(
+            assign({}, props, dataProps),
+            calculatedValues,
+          )
+        }
       }
     }
     return childProps;

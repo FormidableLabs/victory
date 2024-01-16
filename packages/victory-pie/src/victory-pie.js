@@ -6,6 +6,7 @@ import {
   Helpers,
   Data,
   LineSegment,
+  PolylineSegment,
   PropTypes as CustomPropTypes,
   VictoryContainer,
   VictoryLabel,
@@ -38,6 +39,7 @@ const fallbackProps = {
     "#000000",
   ],
   labelPosition: "centroid",
+  labelIndicatorType: "single"
 };
 
 const datumHasXandY = (datum) => {
@@ -152,6 +154,7 @@ class VictoryPie extends React.Component {
       PropTypes.element,
       PropTypes.bool
     ]),
+    labelIndicatorType: PropTypes.oneOf(["single", "multiple"]),
     labelPlacement: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
@@ -260,9 +263,24 @@ class VictoryPie extends React.Component {
   }
 
   renderComponents(props, shouldRenderDatum = datumHasXandY){
-    const { dataComponent, labelComponent, groupComponent, labelIndicator } = props;
-    console.log(props)
-    let labelIndicatorComponents=null;
+      const { 
+        dataComponent, 
+        labelComponent,
+        groupComponent,
+        labelIndicator,
+        labelIndicatorType,
+        labelRadius,
+        radius, 
+        labelPosition
+      } = props;
+
+      const showIndicator = 
+          labelIndicator && 
+          labelRadius > radius && 
+          labelPosition === "centroid" ;
+
+      let labelIndicatorComponents=null;
+
       const dataComponents = this.dataKeys.reduce(
         (validDataComponents, _dataKey, index) => {
           const dataProps = this.getComponentProps(
@@ -294,10 +312,13 @@ class VictoryPie extends React.Component {
         })
         .filter(Boolean);
 
-        if(labelIndicator){
+        if(showIndicator){
           let labelIndicatorComponent= <LineSegment/>;
-
+          if(labelIndicatorType === "multiple" && labelIndicator === true){
+            labelIndicatorComponent= <PolylineSegment/> 
+          }
           if( typeof labelIndicator === "object"){
+            // pass user provided react component
             labelIndicatorComponent = labelIndicator;
           }
            labelIndicatorComponents =  this.dataKeys
@@ -308,7 +329,7 @@ class VictoryPie extends React.Component {
                   return React.cloneElement(labelIndicatorComponent, labelIndicatorProps);
               })
         }
-        const children = labelIndicator ? [
+        const children = showIndicator ? [
           ...dataComponents,
           ...labelComponents,
           ...labelIndicatorComponents,

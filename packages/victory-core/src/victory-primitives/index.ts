@@ -7,6 +7,8 @@ export * from "./line";
 export * from "./line-segment";
 export * from "./path";
 export * from "./point";
+export * from "./polyline";
+export * from "./polyline-segment";
 export * from "./rect";
 export * from "./text";
 export * from "./tspan";

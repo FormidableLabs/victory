@@ -319,14 +319,10 @@ export default class App extends React.Component {
           />
            <VictoryPie
             style={{ parent: parentStyle }}
-            width={200}
-            height={400}
             labelIndicator
           />
            <VictoryPie
             style={{ parent: parentStyle }}
-            width={200}
-            height={400}
             labelIndicator={<LineSegment style={{opacity:"0.3",strokeWidth:"1px",strokeDasharray: "1"}}/>}
           />
         </div>
