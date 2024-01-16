@@ -1,1 +1,1 @@
-export { default as VictoryHistogram } from "./victory-histogram";
+export * from "./victory-histogram";

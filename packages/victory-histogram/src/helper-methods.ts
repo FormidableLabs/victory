@@ -4,6 +4,7 @@ import { getBarPosition } from "victory-bar";
 import isEqual from "react-fast-compare";
 import * as d3Array from "victory-vendor/d3-array";
 import * as d3Scale from "victory-vendor/d3-scale";
+import { VictoryHistogramProps } from "./victory-histogram";
 
 const cacheLastValue = (func) => {
   let called = false;
@@ -25,9 +26,14 @@ const cacheLastValue = (func) => {
   };
 };
 
-const dataOrBinsContainDates = ({ data, bins, x }) => {
+const dataOrBinsContainDates = ({
+  data,
+  bins,
+  x,
+}: Pick<VictoryHistogramProps, "data" | "x" | "bins">) => {
   const xAccessor = Helpers.createAccessor(x || "x");
-  const dataIsDates = data.some((datum) => xAccessor(datum) instanceof Date);
+  const dataIsDates =
+    data?.some((datum) => xAccessor(datum) instanceof Date) || false;
   const binsHasDates =
     Array.isArray(bins) && bins.some((bin) => bin instanceof Date);
 
@@ -39,7 +45,9 @@ const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
   const bin = d3Array.bin().value(xAccessor);
 
   const niceScale = (
-    dataOrBinsContainsDates ? d3Scale.scaleTime() : d3Scale.scaleLinear()
+    (dataOrBinsContainsDates
+      ? d3Scale.scaleTime()
+      : d3Scale.scaleLinear()) as any
   )
     .domain(d3Array.extent(data, xAccessor))
     .nice();
@@ -61,8 +69,7 @@ const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
   if (dataOrBinsContainsDates) {
     bin.domain(niceScale.domain());
     bin.thresholds(niceScale.ticks());
-
-    return bin;
+    return bin as unknown as d3Array.HistogramGeneratorDate<Date, Date>;
   }
 
   bin.domain(niceScale.domain());
@@ -70,42 +77,49 @@ const getBinningFunc = ({ data, x, bins, dataOrBinsContainsDates }) => {
   return bin;
 };
 
-export const getFormattedData = cacheLastValue(({ data = [], x, bins }) => {
-  if ((!data || !data.length) && !Array.isArray(bins)) {
-    return [];
-  }
-  const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, x });
-  const binFunc = getBinningFunc({ data, x, bins, dataOrBinsContainsDates });
-  const foo = binFunc(data);
-  const binnedData = foo.filter(({ x0, x1 }) => {
-    if (dataOrBinsContainsDates) {
-      return new Date(x0).getTime() !== new Date(x1).getTime();
+export const getFormattedData = cacheLastValue(
+  ({
+    data = [],
+    x,
+    bins,
+  }: Pick<VictoryHistogramProps, "data" | "x" | "bins">) => {
+    if ((!data || !data.length) && !Array.isArray(bins)) {
+      return [];
     }
+    const dataOrBinsContainsDates = dataOrBinsContainDates({ data, bins, x });
+    const binFunc = getBinningFunc({ data, x, bins, dataOrBinsContainsDates });
+    const foo = binFunc(data);
+    const binnedData = foo.filter(({ x0, x1 }) => {
+      if (x0 instanceof Date && x1 instanceof Date) {
+        return new Date(x0).getTime() !== new Date(x1).getTime();
+      }
 
-    return x0 !== x1;
-  });
+      return x0 !== x1;
+    });
 
-  const formattedData = binnedData.map((bin) => {
-    const x0 = dataOrBinsContainsDates ? new Date(bin.x0) : bin.x0;
-    const x1 = dataOrBinsContainsDates ? new Date(bin.x1) : bin.x1;
+    const formattedData = binnedData.map((bin) => {
+      const x0 = bin.x0 instanceof Date ? new Date(bin.x0) : bin.x0;
+      const x1 = bin.x1 instanceof Date ? new Date(bin.x1) : bin.x1;
 
-    return {
-      x0,
-      x1,
-      x: dataOrBinsContainsDates
-        ? new Date((x0.getTime() + x1.getTime()) / 2)
-        : (x0 + x1) / 2,
-      y: bin.length,
-      binnedData: [...bin],
-    };
-  });
+      return {
+        x0,
+        x1,
+        x:
+          x0 instanceof Date && x1 instanceof Date
+            ? new Date((x0.getTime() + x1.getTime()) / 2)
+            : ((x0 as number) + (x1 as number)) / 2,
+        y: bin.length,
+        binnedData: [...bin],
+      };
+    });
 
-  return formattedData;
-});
+    return formattedData;
+  },
+);
 
-export const getData = (props) => {
+export const getData = (props: VictoryHistogramProps) => {
   const { bins, data, x } = props;
-  const dataIsPreformatted = data.some(({ _y }) => !isNil(_y));
+  const dataIsPreformatted = data?.some(({ _y }) => !isNil(_y));
 
   const formattedData = dataIsPreformatted
     ? data
@@ -113,7 +127,7 @@ export const getData = (props) => {
   return Data.getData({ ...props, data: formattedData, x: "x" });
 };
 
-export const getDomain = (props, axis) => {
+export const getDomain = (props: VictoryHistogramProps, axis: "x" | "y") => {
   const data = getData(props);
 
   if (!data.length) {
@@ -130,7 +144,7 @@ export const getDomain = (props, axis) => {
     );
   }
 
-  return props.data.length
+  return props.data?.length
     ? Domain.getDomainWithZero({ ...props, data }, "y")
     : [0, 1];
 };
