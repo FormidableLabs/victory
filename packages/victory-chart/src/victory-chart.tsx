@@ -53,11 +53,14 @@ const defaultProps = {
 };
 
 const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
-  initialProps = { ...defaultProps, ...initialProps };
+  const propsWithDefaults = React.useMemo(
+    () => ({ ...defaultProps, ...initialProps }),
+    [initialProps],
+  );
   const role = "chart";
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
-  const props = getProps(initialProps);
+  const props = getProps(propsWithDefaults);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
@@ -154,7 +157,7 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
         {},
         containerComponent.props,
         containerProps,
-        UserProps.getSafeUserProps(initialProps),
+        UserProps.getSafeUserProps(propsWithDefaults),
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
@@ -164,23 +167,23 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
     standalone,
     containerComponent,
     containerProps,
-    initialProps,
+    propsWithDefaults,
   ]);
 
   const events = React.useMemo(() => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = Hooks.usePreviousProps(initialProps);
+  const previousProps = Hooks.usePreviousProps(propsWithDefaults);
 
   React.useEffect(() => {
     // This is called before dismount to keep state in sync
     return () => {
-      if (initialProps.animate) {
-        setAnimationState(previousProps, initialProps);
+      if (propsWithDefaults.animate) {
+        setAnimationState(previousProps, propsWithDefaults);
       }
     };
-  }, [setAnimationState, previousProps, initialProps]);
+  }, [setAnimationState, previousProps, propsWithDefaults]);
 
   if (!isEmpty(events)) {
     return (
