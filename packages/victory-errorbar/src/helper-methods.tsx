@@ -236,7 +236,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     childProps[eventKey] = {
       data: dataProps,
     };
-    const text = LabelHelpers.getText(props, formattedDatum, index);
+    const text = LabelHelpers.getText(props, datum, index);
     if (
       (text !== undefined && text !== null) ||
       (labels && (events || sharedEvents))
