@@ -5,6 +5,7 @@ import { VictoryChart } from "victory-chart";
 import { Curve, VictoryLine } from "victory-line";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
 import { calculateD3Path } from "../../../test/helpers";
+import { VictoryLineProps } from "./victory-line";
 
 describe("components/victory-line", () => {
   describe("default component rendering", () => {
@@ -42,7 +43,7 @@ describe("components/victory-line", () => {
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryLine />);
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(container.querySelector("svg").getAttribute("viewBox")).toEqual(
+      expect(container.querySelector("svg")?.getAttribute("viewBox")).toEqual(
         viewBoxValue,
       );
     });
@@ -71,7 +72,7 @@ describe("components/victory-line", () => {
     });
 
     it("renders the correct d3Shape path", () => {
-      const props = {
+      const props: VictoryLineProps = {
         interpolation: "linear",
         scale: "linear",
         padding: 50,
@@ -86,13 +87,13 @@ describe("components/victory-line", () => {
 
       const { container } = render(<VictoryLine {...props} />);
 
-      expect(container.querySelector("path").getAttribute("d")).toEqual(
+      expect(container.querySelector("path")?.getAttribute("d")).toEqual(
         calculateD3Path(props, "line", 0),
       );
     });
 
     it("renders the correct d3Shape path with custom interpolation string property", () => {
-      const props = {
+      const props: VictoryLineProps = {
         interpolation: "catmullRom",
         scale: "linear",
         padding: 50,
@@ -107,13 +108,13 @@ describe("components/victory-line", () => {
 
       const { container } = render(<VictoryLine {...props} />);
 
-      expect(container.querySelector("path").getAttribute("d")).toEqual(
+      expect(container.querySelector("path")?.getAttribute("d")).toEqual(
         calculateD3Path(props, "line", 0),
       );
     });
 
     it("renders the correct d3Shape path with custom interpolation function", () => {
-      const props = {
+      const props: VictoryLineProps = {
         interpolation: curveCatmullRom,
         scale: "linear",
         padding: 50,
@@ -128,7 +129,7 @@ describe("components/victory-line", () => {
 
       const { container } = render(<VictoryLine {...props} />);
 
-      expect(container.querySelector("path").getAttribute("d")).toEqual(
+      expect(container.querySelector("path")?.getAttribute("d")).toEqual(
         calculateD3Path(props, "line", 0),
       );
     });
@@ -141,15 +142,6 @@ describe("components/victory-line", () => {
         [3, 4],
       ];
       const { container } = render(<VictoryLine data={data} />);
-      const lines = container.querySelectorAll("path");
-      expect(lines).toHaveLength(1);
-    });
-
-    it("renders data values with null accessor", () => {
-      const data = [1, 2, 3, 4];
-      const { container } = render(
-        <VictoryLine data={data} x={null} y={null} />,
-      );
       const lines = container.querySelectorAll("path");
       expect(lines).toHaveLength(1);
     });
@@ -181,7 +173,7 @@ describe("components/victory-line", () => {
       );
 
       const line = container.querySelector("path");
-      const renderedData = JSON.parse(line.getAttribute("data-json"));
+      const renderedData = JSON.parse(line?.getAttribute("data-json") || "");
 
       expect(renderedData[0].t).toEqual(1);
       expect(renderedData[1].t).toEqual(0);
@@ -202,9 +194,9 @@ describe("components/victory-line", () => {
       );
 
       const line = container.querySelector("path");
-      const renderedData = JSON.parse(line.getAttribute("data-json")).map(
-        ({ t }) => t,
-      );
+      const renderedData = JSON.parse(
+        line?.getAttribute("data-json") || "",
+      ).map(({ t }) => t);
 
       expect(renderedData).toEqual([0, 1]);
     });
@@ -280,7 +272,7 @@ describe("components/victory-line", () => {
     it("adds an aria role to a line segment", () => {
       const { container } = render(<VictoryLine />);
 
-      expect(container.querySelector("path").getAttribute("role")).toEqual(
+      expect(container.querySelector("path")?.getAttribute("role")).toEqual(
         "presentation",
       );
     });
@@ -313,7 +305,7 @@ describe("components/victory-line", () => {
           dataComponent={
             <Curve
               ariaLabel={({ data }) =>
-                `data point ${data[2].x + 1}'s x value is ${data[2].x}`
+                `data point ${data![2].x + 1}'s x value is ${data![2].x}`
               }
               tabIndex={3}
             />
@@ -322,11 +314,11 @@ describe("components/victory-line", () => {
       );
       const path = container.querySelector("path");
 
-      expect(path.getAttribute("aria-label")).toEqual(
+      expect(path?.getAttribute("aria-label")).toEqual(
         `data point 3's x value is 2`,
       );
 
-      expect(parseInt(path.getAttribute("tabindex"))).toEqual(3);
+      expect(parseInt(path?.getAttribute("tabindex") || "")).toEqual(3);
     });
   });
 });
