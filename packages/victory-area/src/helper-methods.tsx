@@ -64,9 +64,13 @@ const getCalculatedValues = (props) => {
   return { style, data, scale, domain, origin };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "area");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "area",
+  );
+  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data,
     domain,

@@ -370,9 +370,9 @@ const getLabelProps = (props, text, style, type?: string) => {
 };
 /* eslint-enable max-params*/
 
-export const getBaseProps = (props, fallbackProps) => {
+export const getBaseProps = (initialProps, fallbackProps) => {
   // eslint-disable-line max-statements
-  props = Helpers.modifyProps(props, fallbackProps, "candlestick");
+  const props = Helpers.modifyProps(initialProps, fallbackProps, "candlestick");
   const calculatedValues = getCalculatedValues(props);
   const { data, style, scale, domain, origin, labelOrientation } =
     calculatedValues;

@@ -543,8 +543,8 @@ const getCalculatedValues = (props) => {
   };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  props = Axis.modifyProps(props, fallbackProps);
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const props = Axis.modifyProps(initialProps, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const {
     axis,

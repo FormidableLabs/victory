@@ -165,9 +165,13 @@ const getLabelProps = (dataProps, text, style) => {
   return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "errorbar");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "errorbar",
+  );
+  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     borderWidth,
     data,

@@ -91,8 +91,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-const Flyout = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+const Flyout = (initialProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent, {

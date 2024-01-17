@@ -44,8 +44,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-const Voronoi = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+const Voronoi = (initialProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   const {
     ariaLabel,

@@ -74,9 +74,13 @@ const getCalculatedValues = (props) => {
   return { domain, data, scale, style, origin, z };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "scatter",
+  );
+  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data,
     domain,

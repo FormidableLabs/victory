@@ -205,9 +205,13 @@ const getBorderProps = (props, contentHeight, contentWidth) => {
   return { x, y, height, width, style: assign({ fill: "none" }, style.border) };
 };
 
-export const getDimensions = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getDimensions = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "legend",
+  );
+  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const { title, titleOrientation } = props;
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
@@ -228,9 +232,13 @@ export const getDimensions = (props, fallbackProps) => {
   };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "legend");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "legend",
+  );
+  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     data,
     standalone,
@@ -265,7 +273,7 @@ export const getBaseProps = (props, fallbackProps) => {
   const { height, width } = getDimensions(props, fallbackProps);
   const borderProps = getBorderProps(props, height, width);
   const titleProps = getTitleProps(props, borderProps);
-  const initialProps = {
+  const initialChildProps = {
     parent: {
       data,
       standalone,
@@ -307,5 +315,5 @@ export const getBaseProps = (props, fallbackProps) => {
     childProps[eventKey] = { data: dataProps, labels: labelProps };
 
     return childProps;
-  }, initialProps);
+  }, initialChildProps);
 };

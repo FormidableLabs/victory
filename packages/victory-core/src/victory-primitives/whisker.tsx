@@ -47,8 +47,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Whisker = (props: WhiskerProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Whisker = (initialProps: WhiskerProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const {
     ariaLabel,
     groupComponent,
@@ -77,9 +77,9 @@ export const Whisker = (props: WhiskerProps) => {
     shapeRendering,
   };
 
-  return React.cloneElement(groupComponent!, {}, [
+  return React.cloneElement(groupComponent, {}, [
     React.cloneElement(
-      lineComponent!,
+      lineComponent,
       assign(
         { key: "major-whisker", "aria-label": ariaLabel },
         baseProps,
@@ -87,7 +87,7 @@ export const Whisker = (props: WhiskerProps) => {
       ),
     ),
     React.cloneElement(
-      lineComponent!,
+      lineComponent,
       assign(
         { key: "minor-whisker", "aria-label": ariaLabel },
         baseProps,

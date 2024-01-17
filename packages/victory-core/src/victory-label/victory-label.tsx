@@ -121,8 +121,10 @@ const getStyles = (style, props) => {
     };
   }
   const getSingleStyle = (s) => {
-    s = s ? defaults({}, s, defaultStyles) : defaultStyles;
-    const baseStyles = Helpers.evaluateStyle(s, props);
+    const baseStyles = Helpers.evaluateStyle(
+      s ? defaults({}, s, defaultStyles) : defaultStyles,
+      props,
+    );
     return assign({}, baseStyles, { fontSize: getFontSize(baseStyles) });
   };
 
@@ -584,8 +586,8 @@ const defaultProps = {
 export const VictoryLabel: {
   role: string;
   defaultStyles: typeof defaultStyles;
-} & React.FC<VictoryLabelProps> = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+} & React.FC<VictoryLabelProps> = (initialProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   if (props.text === null || props.text === undefined) {
     return null;
@@ -596,7 +598,7 @@ export const VictoryLabel: {
     calculatedProps;
 
   const tspanValues = (text as string[]).map((line, i) => {
-    const currentStyle = getSingleValue(style!, i);
+    const currentStyle = getSingleValue(style, i);
     const capHeightPx = TextSize.convertLengthToPixels(
       `${capHeight}em`,
       currentStyle.fontSize as number,
@@ -607,7 +609,7 @@ export const VictoryLabel: {
       fontSize: currentStyle.fontSize || defaultStyles.fontSize,
       capHeight: capHeightPx,
       text: line,
-      // @ts-expect-error TODO: This looks like a bug:
+      // TODO: This looks like a bug:
       textSize: TextSize.approximateTextSize(line, currentStyle),
       lineHeight: currentLineHeight,
       backgroundPadding: getSingleValue(backgroundPadding, i),

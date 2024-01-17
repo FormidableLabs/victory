@@ -432,8 +432,8 @@ const getAxisProps = (modifiedProps, calculatedValues) => {
       };
 };
 
-const getCalculatedValues = (props: VictoryPolarAxisProps) => {
-  props = assign({ polar: true }, props);
+const getCalculatedValues = (initialProps: VictoryPolarAxisProps) => {
+  const props = assign({ polar: true }, initialProps);
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
   const padding = Helpers.getPadding(props);
@@ -465,8 +465,11 @@ const getCalculatedValues = (props: VictoryPolarAxisProps) => {
   };
 };
 
-export const getBaseProps = (props: VictoryPolarAxisProps, fallbackProps) => {
-  props = Axis.modifyProps(props, fallbackProps);
+export const getBaseProps = (
+  initialProps: VictoryPolarAxisProps,
+  fallbackProps,
+) => {
+  const props = Axis.modifyProps(initialProps, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const { style, scale, ticks, domain } = calculatedValues;
   const { width, height, standalone, theme, name } = props;
