@@ -41,8 +41,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Curve: React.FC<CurveProps> = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Curve: React.FC<CurveProps> = (initialProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const userProps = UserProps.getSafeUserProps(props);
   const { polar, origin } = props;
   const lineFunction = LineHelpers.getLineFunction(props);

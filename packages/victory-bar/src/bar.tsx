@@ -74,10 +74,10 @@ const defaultProps: Partial<BarProps> = {
 
 // eslint-disable-next-line prefer-arrow-callback
 export const Bar = forwardRef<SVGPathElement, BarProps>(function Bar(
-  props,
+  initialProps,
   ref,
 ) {
-  props = evaluateProps({ ...defaultProps, ...props });
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const { polar, origin, style, barWidth, cornerRadius } = props;
 
   const path = polar

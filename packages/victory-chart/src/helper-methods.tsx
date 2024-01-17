@@ -82,9 +82,9 @@ function getStyles(props) {
   };
 }
 
-export function getCalculatedProps(props, childComponents) {
-  const style = getStyles(props);
-  props = Helpers.modifyProps(props, fallbackProps, "chart");
+export function getCalculatedProps(initialProps, childComponents) {
+  const style = getStyles(initialProps);
+  const props = Helpers.modifyProps(initialProps, fallbackProps, "chart");
   const { horizontal, polar } = props;
   const allStrings = Wrapper.getStringsFromChildren(props, childComponents);
   const categories = Wrapper.getCategories(props, childComponents, allStrings);

@@ -37,8 +37,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Background = (props: BackgroundProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Background = (initialProps: BackgroundProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   return props.polar
     ? React.cloneElement(props.circleComponent!, {

@@ -68,8 +68,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Arc = (props: ArcProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Arc = (initialProps: ArcProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   return React.cloneElement(props.pathComponent!, {
     ...props.events,
