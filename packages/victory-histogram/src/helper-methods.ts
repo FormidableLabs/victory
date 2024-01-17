@@ -98,16 +98,19 @@ export const getFormattedData = cacheLastValue(
     });
 
     const formattedData = binnedData.map((bin) => {
-      const x0 = bin.x0 instanceof Date ? new Date(bin.x0) : bin.x0;
-      const x1 = bin.x1 instanceof Date ? new Date(bin.x1) : bin.x1;
+      const x0 = dataOrBinsContainsDates
+        ? new Date(bin.x0 as Date)
+        : bin.x0 || 0;
+      const x1 = dataOrBinsContainsDates
+        ? new Date(bin.x1 as Date)
+        : bin.x1 || 0;
 
       return {
         x0,
         x1,
-        x:
-          x0 instanceof Date && x1 instanceof Date
-            ? new Date((x0.getTime() + x1.getTime()) / 2)
-            : ((x0 as number) + (x1 as number)) / 2,
+        x: dataOrBinsContainsDates
+          ? new Date(((x0 as Date).getTime() + (x1 as Date).getTime()) / 2)
+          : ((x0 as number) + (x1 as number)) / 2,
         y: bin.length,
         binnedData: [...bin],
       };
