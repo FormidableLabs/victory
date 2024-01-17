@@ -27,6 +27,9 @@
     "victory-core": "^36.8.2",
     "victory-vendor": "^36.8.2"
   },
+  "devDependencies": {
+    "victory-histogram": "*"
+  },
   "peerDependencies": {
     "react": ">=16.6.0"
   },

@@ -1,15 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Bar } from "victory-bar";
 import {
   Helpers,
   VictoryLabel,
   VictoryContainer,
   VictoryTheme,
-  CommonProps,
   addEvents,
-  PropTypes as CustomPropTypes,
   UserProps,
+  EventPropTypeInterface,
+  NumberOrCallback,
+  StringOrNumberOrCallback,
+  VictoryCommonProps,
+  VictoryDatableProps,
+  VictoryMultiLabelableProps,
+  VictoryStyleInterface,
+  EventsMixinClass,
 } from "victory-core";
 import {
   getBaseProps,
@@ -18,7 +23,34 @@ import {
   getFormattedData,
 } from "./helper-methods";
 
-const fallbackProps = {
+export type VictoryHistogramTargetType = "data" | "labels" | "parent";
+
+export interface VictoryHistogramProps
+  extends Omit<VictoryCommonProps, "polar">,
+    Omit<VictoryDatableProps, "y" | "y0">,
+    VictoryMultiLabelableProps {
+  binSpacing?: number;
+  bins?: number | number[] | Date[];
+  cornerRadius?:
+    | NumberOrCallback
+    | {
+        top?: NumberOrCallback;
+        topLeft?: NumberOrCallback;
+        topRight?: NumberOrCallback;
+        bottom?: NumberOrCallback;
+        bottomLeft?: NumberOrCallback;
+        bottomRight?: NumberOrCallback;
+      };
+  events?: EventPropTypeInterface<
+    VictoryHistogramTargetType,
+    number | string | number[] | string[]
+  >[];
+  eventKey?: StringOrNumberOrCallback;
+  horizontal?: boolean;
+  style?: VictoryStyleInterface;
+}
+
+const fallbackProps: Partial<VictoryHistogramProps> = {
   width: 450,
   height: 300,
   padding: 50,
@@ -26,7 +58,15 @@ const fallbackProps = {
 
 const defaultData = [];
 
-export class VictoryHistogram extends React.Component {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryHistogramBase
+  extends EventsMixinClass<VictoryHistogramProps> {}
+
+/**
+ * Draw SVG histogram charts with React. VictoryHistogram is a composable component, so it doesn't include axes
+ * Check out VictoryChart for complete histogram charts and more.
+ */
+class VictoryHistogramBase extends React.Component<VictoryHistogramProps> {
   static animationWhitelist = [
     "data",
     "domain",
@@ -59,33 +99,7 @@ export class VictoryHistogram extends React.Component {
 
   static getFormattedData = getFormattedData;
 
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    binSpacing: CustomPropTypes.nonNegative,
-    bins: PropTypes.oneOfType([
-      PropTypes.arrayOf(
-        PropTypes.oneOfType([PropTypes.number, PropTypes.instanceOf(Date)]),
-      ),
-      CustomPropTypes.nonNegative,
-    ]),
-    cornerRadius: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.func,
-      PropTypes.shape({
-        top: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        topLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        topRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottom: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottomLeft: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-        bottomRight: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      }),
-    ]),
-    getPath: PropTypes.func,
-    horizontal: PropTypes.bool,
-  };
-
-  static defaultProps = {
+  static defaultProps: VictoryHistogramProps = {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <Bar />,
@@ -99,8 +113,9 @@ export class VictoryHistogram extends React.Component {
 
   static getDomain = getDomain;
   static getData = getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
-  static expectedComponents = [
+  static getBaseProps = (props: VictoryHistogramProps) =>
+    getBaseProps(props, fallbackProps);
+  static expectedComponents: Partial<keyof VictoryHistogramProps>[] = [
     "dataComponent",
     "labelComponent",
     "groupComponent",
@@ -112,8 +127,8 @@ export class VictoryHistogram extends React.Component {
     return !!this.props.animate;
   }
 
-  render() {
-    const { animationWhitelist, role } = VictoryHistogram;
+  render(): React.ReactElement {
+    const { animationWhitelist, role } = VictoryHistogramBase;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
     if (this.shouldAnimate()) {
@@ -130,4 +145,4 @@ export class VictoryHistogram extends React.Component {
   }
 }
 
-export default addEvents(VictoryHistogram);
+export const VictoryHistogram = addEvents(VictoryHistogramBase);

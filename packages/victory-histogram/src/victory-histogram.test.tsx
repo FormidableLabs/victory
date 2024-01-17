@@ -21,14 +21,14 @@ describe("components/victory-histogram", () => {
     it("renders an svg with the correct width and height", () => {
       const { container } = render(<VictoryHistogram />);
       const svg = container.querySelector("svg");
-      expect(svg.getAttribute("style")).toContain("width: 100%; height: 100%");
+      expect(svg?.getAttribute("style")).toContain("width: 100%; height: 100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryHistogram />);
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
+      expect(svg?.getAttribute("viewBox")).toEqual(viewBoxValue);
     });
 
     it("renders 0 bars", () => {
@@ -94,6 +94,7 @@ describe("components/victory-histogram", () => {
       render(
         <VictoryHistogram
           data={data}
+          // @ts-expect-error "'null' is not assignable to 'x'"
           x={null}
           y={null}
           dataComponent={<DataComponent />}
@@ -139,7 +140,7 @@ describe("components/victory-histogram", () => {
         />,
       );
       const svg = container.querySelector("svg");
-      fireEvent.click(svg);
+      fireEvent.click(svg!);
 
       expect(clickHandler).toHaveBeenCalled();
       // the first argument is the standard event object

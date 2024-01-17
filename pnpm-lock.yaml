@@ -485,6 +485,7 @@ importers:
       react-fast-compare: ^3.2.0
       victory-bar: ^36.8.2
       victory-core: ^36.8.2
+      victory-histogram: '*'
       victory-vendor: ^36.8.2
     dependencies:
       lodash: 4.17.21
@@ -493,6 +494,8 @@ importers:
       victory-bar: link:../victory-bar
       victory-core: link:../victory-core
       victory-vendor: link:../victory-vendor
+    devDependencies:
+      victory-histogram: 'link:'
 
   packages/victory-legend:
     specifiers:
