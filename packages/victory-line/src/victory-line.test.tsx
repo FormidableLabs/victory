@@ -43,7 +43,7 @@ describe("components/victory-line", () => {
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryLine />);
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(container.querySelector("svg")?.getAttribute("viewBox")).toEqual(
+      expect(container.querySelector("svg")!.getAttribute("viewBox")).toEqual(
         viewBoxValue,
       );
     });
@@ -87,7 +87,7 @@ describe("components/victory-line", () => {
 
       const { container } = render(<VictoryLine {...props} />);
 
-      expect(container.querySelector("path")?.getAttribute("d")).toEqual(
+      expect(container.querySelector("path")!.getAttribute("d")).toEqual(
         calculateD3Path(props, "line", 0),
       );
     });
@@ -108,7 +108,7 @@ describe("components/victory-line", () => {
 
       const { container } = render(<VictoryLine {...props} />);
 
-      expect(container.querySelector("path")?.getAttribute("d")).toEqual(
+      expect(container.querySelector("path")!.getAttribute("d")).toEqual(
         calculateD3Path(props, "line", 0),
       );
     });
@@ -129,7 +129,7 @@ describe("components/victory-line", () => {
 
       const { container } = render(<VictoryLine {...props} />);
 
-      expect(container.querySelector("path")?.getAttribute("d")).toEqual(
+      expect(container.querySelector("path")!.getAttribute("d")).toEqual(
         calculateD3Path(props, "line", 0),
       );
     });
@@ -173,7 +173,7 @@ describe("components/victory-line", () => {
       );
 
       const line = container.querySelector("path");
-      const renderedData = JSON.parse(line?.getAttribute("data-json") || "");
+      const renderedData = JSON.parse(line!.getAttribute("data-json") || "");
 
       expect(renderedData[0].t).toEqual(1);
       expect(renderedData[1].t).toEqual(0);
@@ -195,7 +195,7 @@ describe("components/victory-line", () => {
 
       const line = container.querySelector("path");
       const renderedData = JSON.parse(
-        line?.getAttribute("data-json") || "",
+        line!.getAttribute("data-json")!,
       ).map(({ t }) => t);
 
       expect(renderedData).toEqual([0, 1]);
@@ -272,7 +272,7 @@ describe("components/victory-line", () => {
     it("adds an aria role to a line segment", () => {
       const { container } = render(<VictoryLine />);
 
-      expect(container.querySelector("path")?.getAttribute("role")).toEqual(
+      expect(container.querySelector("path")!.getAttribute("role")).toEqual(
         "presentation",
       );
     });
@@ -318,7 +318,7 @@ describe("components/victory-line", () => {
         `data point 3's x value is 2`,
       );
 
-      expect(parseInt(path?.getAttribute("tabindex") || "")).toEqual(3);
+      expect(parseInt(path!.getAttribute("tabindex")!)).toEqual(3);
     });
   });
 });
