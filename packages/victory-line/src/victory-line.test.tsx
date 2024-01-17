@@ -194,9 +194,9 @@ describe("components/victory-line", () => {
       );
 
       const line = container.querySelector("path");
-      const renderedData = JSON.parse(
-        line!.getAttribute("data-json")!,
-      ).map(({ t }) => t);
+      const renderedData = JSON.parse(line!.getAttribute("data-json")!).map(
+        ({ t }) => t,
+      );
 
       expect(renderedData).toEqual([0, 1]);
     });
