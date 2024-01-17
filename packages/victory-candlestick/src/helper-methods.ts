@@ -6,9 +6,12 @@ import {
   Data,
   LabelHelpers,
   Collection,
+  VictoryStyleObject,
 } from "victory-core";
 
 const TYPES = ["close", "open", "high", "low"];
+
+const DEFAULT_CANDLE_WIDTH = 8;
 
 export const getData = (props) => {
   const accessorTypes = ["x", "high", "low", "close", "open"];
@@ -58,7 +61,15 @@ const getLabelStyle = (props, styleObject, namespace) => {
   return defaults({}, tooltipTheme.style, baseStyle);
 };
 
-const getStyles = (props, style, defaultStyles = {}) => {
+const getStyles = (
+  props,
+  style,
+  defaultStyles: {
+    parent?: any;
+    labels?: any;
+    data?: any;
+  } = {},
+) => {
   if (props.disableInlineStyles) {
     return {};
   }
@@ -207,8 +218,8 @@ const getText = (props, type) => {
   return Array.isArray(labelProp) ? labelProp[index] : labelProp;
 };
 
-const getCandleWidth = (props, style) => {
-  const { data, candleWidth, scale, defaultCandleWidth } = props;
+const getCandleWidth = (props, style?: VictoryStyleObject) => {
+  const { data, candleWidth, scale } = props;
   if (candleWidth) {
     return isFunction(candleWidth)
       ? Helpers.evaluateProp(candleWidth, props)
@@ -221,7 +232,7 @@ const getCandleWidth = (props, style) => {
   const candles = data.length + 2;
   const candleRatio = props.candleRatio || 0.5;
   const defaultWidth =
-    candleRatio * (data.length < 2 ? defaultCandleWidth : extent / candles);
+    candleRatio * (data.length < 2 ? DEFAULT_CANDLE_WIDTH : extent / candles);
   return Math.max(1, defaultWidth);
 };
 
@@ -281,7 +292,7 @@ const calculatePlotValues = (props) => {
 /* eslint-enable complexity*/
 
 /* eslint-disable max-params*/
-const getLabelProps = (props, text, style, type) => {
+const getLabelProps = (props, text, style, type?: string) => {
   const {
     x,
     high,

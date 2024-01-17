@@ -1,37 +1,29 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { assign, isEmpty } from "lodash";
 import {
-  PropTypes as CustomPropTypes,
   VictoryLabel,
-  CommonProps,
   VictoryContainer,
   VictoryTheme,
   LineSegment,
   addEvents,
   Arc,
   Axis,
+  EventsMixinClass,
 } from "victory-core";
 import { getScale, getStyles, getBaseProps } from "./helper-methods";
+import { VictoryPolarAxisProps } from "./types";
 
-const fallbackProps = {
+const fallbackProps: Partial<VictoryPolarAxisProps> = {
   width: 450,
   height: 300,
   padding: 50,
 };
 
-const options = {
-  components: [
-    { name: "axis", index: 0 },
-    { name: "axisLabel", index: 0 },
-    { name: "grid" },
-    { name: "parent", index: "parent" },
-    { name: "ticks" },
-    { name: "tickLabels" },
-  ],
-};
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryPolarAxisBase
+  extends EventsMixinClass<VictoryPolarAxisProps> {}
 
-class VictoryPolarAxis extends React.Component {
+class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
   static animationWhitelist = [
     "style",
     "domain",
@@ -54,75 +46,6 @@ class VictoryPolarAxis extends React.Component {
     onEnter: {
       duration: 500,
     },
-  };
-
-  static propTypes = {
-    ...CommonProps.baseProps,
-    axisAngle: PropTypes.number,
-    axisComponent: PropTypes.element,
-    axisLabelComponent: PropTypes.element,
-    axisValue: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    categories: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.shape({
-        x: PropTypes.arrayOf(PropTypes.string),
-        y: PropTypes.arrayOf(PropTypes.string),
-      }),
-    ]),
-    circularAxisComponent: PropTypes.element,
-    circularGridComponent: PropTypes.element,
-    containerComponent: PropTypes.element,
-    dependentAxis: PropTypes.bool,
-    disableInlineStyles: PropTypes.bool,
-    endAngle: PropTypes.number,
-    events: PropTypes.arrayOf(
-      PropTypes.shape({
-        target: PropTypes.oneOf([
-          "axis",
-          "axisLabel",
-          "grid",
-          "ticks",
-          "tickLabels",
-        ]),
-        eventKey: PropTypes.oneOfType([
-          PropTypes.array,
-          CustomPropTypes.allOfType([
-            CustomPropTypes.integer,
-            CustomPropTypes.nonNegative,
-          ]),
-          PropTypes.string,
-        ]),
-        eventHandlers: PropTypes.object,
-      }),
-    ),
-    gridComponent: PropTypes.element,
-    innerRadius: CustomPropTypes.nonNegative,
-    labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
-    startAngle: PropTypes.number,
-    stringMap: PropTypes.object,
-    style: PropTypes.shape({
-      parent: PropTypes.object,
-      axis: PropTypes.object,
-      axisLabel: PropTypes.object,
-      grid: PropTypes.object,
-      ticks: PropTypes.object,
-      tickLabels: PropTypes.object,
-    }),
-    tickComponent: PropTypes.element,
-    tickCount: CustomPropTypes.allOfType([
-      CustomPropTypes.integer,
-      CustomPropTypes.greaterThanZero,
-    ]),
-    tickFormat: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.homogeneousArray,
-    ]),
-    tickLabelComponent: PropTypes.element,
-    tickValues: CustomPropTypes.homogeneousArray,
   };
 
   static defaultProps = {
@@ -158,16 +81,16 @@ class VictoryPolarAxis extends React.Component {
     "circularGridComponent",
   ];
 
-  renderAxisLine(props) {
+  renderAxisLine(props: VictoryPolarAxisProps) {
     const { dependentAxis } = props;
     const axisComponent = dependentAxis
       ? props.axisComponent
       : props.circularAxisComponent;
     const axisProps = this.getComponentProps(axisComponent, "axis", 0);
-    return React.cloneElement(axisComponent, axisProps);
+    return React.cloneElement(axisComponent!, axisProps);
   }
 
-  renderLabel(props) {
+  renderLabel(props: VictoryPolarAxisProps) {
     const { axisLabelComponent, dependentAxis, label } = props;
     if (!label || !dependentAxis) {
       return null;
@@ -177,10 +100,10 @@ class VictoryPolarAxis extends React.Component {
       "axisLabel",
       0,
     );
-    return React.cloneElement(axisLabelComponent, axisLabelProps);
+    return React.cloneElement(axisLabelComponent!, axisLabelProps);
   }
 
-  renderAxis(props) {
+  renderAxis(props: VictoryPolarAxisProps) {
     const { tickComponent, tickLabelComponent, name } = props;
     const shouldRender = (componentProps) => {
       const { style = {}, events = {} } = componentProps;
@@ -199,7 +122,7 @@ class VictoryPolarAxis extends React.Component {
           { key: `${name}-tick-${key}` },
           this.getComponentProps(tickComponent, "ticks", index),
         );
-        const TickComponent = React.cloneElement(tickComponent, tickProps);
+        const TickComponent = React.cloneElement(tickComponent!, tickProps);
         return shouldRender(TickComponent.props) ? TickComponent : undefined;
       })
       .filter(Boolean);
@@ -210,7 +133,7 @@ class VictoryPolarAxis extends React.Component {
           { key: `${name}-grid-${key}` },
           this.getComponentProps(gridComponent, "grid", index),
         );
-        const GridComponent = React.cloneElement(gridComponent, gridProps);
+        const GridComponent = React.cloneElement(gridComponent!, gridProps);
         return shouldRender(GridComponent.props) ? GridComponent : undefined;
       })
       .filter(Boolean);
@@ -220,7 +143,7 @@ class VictoryPolarAxis extends React.Component {
         { key: `${name}-tick-${key}` },
         this.getComponentProps(tickLabelComponent, "tickLabels", index),
       );
-      return React.cloneElement(tickLabelComponent, tickLabelProps);
+      return React.cloneElement(tickLabelComponent!, tickLabelProps);
     });
     const axis = this.renderAxisLine(props);
     const axisLabel = this.renderLabel(props);
@@ -235,16 +158,16 @@ class VictoryPolarAxis extends React.Component {
   }
 
   // Overridden in victory-native
-  renderGroup(props, children) {
+  renderGroup(props: VictoryPolarAxisProps, children: React.ReactNode) {
     const { groupComponent } = props;
-    return React.cloneElement(groupComponent, {}, children);
+    return React.cloneElement(groupComponent!, {}, children);
   }
 
   shouldAnimate() {
     return !!this.props.animate;
   }
 
-  render() {
+  render(): React.ReactElement {
     const { animationWhitelist } = VictoryPolarAxis;
     const props = Axis.modifyProps(this.props, fallbackProps);
 
@@ -258,4 +181,15 @@ class VictoryPolarAxis extends React.Component {
   }
 }
 
-export default addEvents(VictoryPolarAxis, options);
+const options = {
+  components: [
+    { name: "axis", index: 0 },
+    { name: "axisLabel", index: 0 },
+    { name: "grid" },
+    { name: "parent", index: "parent" },
+    { name: "ticks" },
+    { name: "tickLabels" },
+  ],
+};
+
+export const VictoryPolarAxis = addEvents(VictoryPolarAxisBase, options);
