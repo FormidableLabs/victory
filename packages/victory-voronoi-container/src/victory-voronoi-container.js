@@ -146,8 +146,7 @@ export const voronoiContainerMixin = (base) =>
         const styleArray = textArray.length
           ? textArray.map(() => style)
           : [style];
-        memo = memo.concat(styleArray);
-        return memo;
+        return memo.concat(styleArray);
       }, []);
     }
 
@@ -182,8 +181,7 @@ export const voronoiContainerMixin = (base) =>
         if (t === null || t === undefined) {
           return memo;
         }
-        memo = memo.concat(`${t}`.split("\n"));
-        return memo;
+        return memo.concat(`${t}`.split("\n"));
       }, []);
 
       // remove properties from first point to make datum

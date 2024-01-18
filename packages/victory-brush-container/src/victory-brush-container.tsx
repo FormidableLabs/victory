@@ -199,17 +199,15 @@ export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
         right: right && assign({ y: right.y1, x: right.x1 }, xProps),
       };
       const handles = ["top", "bottom", "left", "right"].reduce(
-        (memo, curr) => {
-          memo = handleProps[curr]
+        (memo, curr) =>
+          handleProps[curr]
             ? memo.concat(
                 React.cloneElement(
                   handleComponent,
                   assign({ key: `${name}-handle-${curr}` }, handleProps[curr]),
                 ),
               )
-            : memo;
-          return memo;
-        },
+            : memo,
         [] as React.ReactElement[],
       );
       return handles.length ? handles : null;

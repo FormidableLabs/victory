@@ -1,5 +1,6 @@
 import { defaults, assign, groupBy, keys, sum, range, isNil } from "lodash";
 import { Helpers, Style, TextSize } from "victory-core";
+import { VictoryLegendProps } from "./victory-legend";
 
 const getColorScale = (props) => {
   const { colorScale } = props;
@@ -16,9 +17,8 @@ const getLabelStyles = (props) => {
   });
 };
 
-const getStyles = (props, styleObject) => {
+const getStyles = (props, styleObject: VictoryLegendProps["style"] = {}) => {
   const style = props.style || {};
-  styleObject = styleObject || {};
   const parentStyleProps = { height: "100%", width: "100%" };
   return {
     parent: defaults(style.parent, styleObject.parent, parentStyleProps),
@@ -125,14 +125,8 @@ const getTitleDimensions = (props) => {
 const getOffset = (datum, rowHeights, columnWidths) => {
   const { column, row } = datum;
   return {
-    x: range(column).reduce((memo, curr) => {
-      memo += columnWidths[curr];
-      return memo;
-    }, 0),
-    y: range(row).reduce((memo, curr) => {
-      memo += rowHeights[curr];
-      return memo;
-    }, 0),
+    x: range(column).reduce((memo, curr) => memo + columnWidths[curr], 0),
+    y: range(row).reduce((memo, curr) => memo + rowHeights[curr], 0),
   };
 };
 

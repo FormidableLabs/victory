@@ -1,11 +1,11 @@
 /* eslint-disable no-use-before-define */
+import { VictoryLabelProps } from "../victory-label/victory-label";
 import * as Helpers from "./helpers";
 import { defaults } from "lodash";
 
 // Private Functions
 
-function getVerticalAnchor(props, datum) {
-  datum = datum || {};
+function getVerticalAnchor(props, datum: VictoryLabelProps["datum"] = {}) {
   const sign = datum._y >= 0 ? 1 : -1;
   const labelStyle = (props.style && props.style.labels) || {};
   if (datum.verticalAnchor || labelStyle.verticalAnchor) {
@@ -16,8 +16,7 @@ function getVerticalAnchor(props, datum) {
   return "middle";
 }
 
-function getTextAnchor(props, datum) {
-  datum = datum || {};
+function getTextAnchor(props, datum: VictoryLabelProps["datum"] = {}) {
   const { style, horizontal } = props;
   const sign = datum._y >= 0 ? 1 : -1;
   const labelStyle = (style && style.labels) || {};
@@ -29,14 +28,12 @@ function getTextAnchor(props, datum) {
   return sign >= 0 ? "start" : "end";
 }
 
-function getAngle(props, datum) {
-  datum = datum || {};
+function getAngle(props, datum: VictoryLabelProps["datum"] = {}) {
   const labelStyle = (props.style && props.style.labels) || {};
   return datum.angle === undefined ? labelStyle.angle : datum.angle;
 }
 
-function getPadding(props, datum) {
-  datum = datum || {};
+function getPadding(props, datum: VictoryLabelProps["datum"] = {}) {
   const { horizontal, style } = props;
   const labelStyle = style.labels || {};
   const defaultPadding = Helpers.evaluateProp(labelStyle.padding, props) || 0;
@@ -109,8 +106,7 @@ function getPolarOrientation(degrees) {
 
 // Exported Functions
 
-export function getText(props, datum, index) {
-  datum = datum || {};
+export function getText(props, datum: VictoryLabelProps["datum"] = {}, index) {
   if (datum.label !== undefined) {
     return datum.label;
   }

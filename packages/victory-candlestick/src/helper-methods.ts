@@ -190,11 +190,14 @@ const isTransparent = (attr) => {
   return attr === "none" || attr === "transparent";
 };
 
-const getDataStyles = (datum, style, props) => {
+const getDataStyles = (
+  datum,
+  style: { fill?: string; stroke?: string } = {},
+  props,
+) => {
   if (props.disableInlineStyles) {
     return {};
   }
-  style = style || {};
   const candleColor =
     datum._open > datum._close
       ? props.candleColors.negative
@@ -416,14 +419,14 @@ export const getBaseProps = (initialProps, fallbackProps) => {
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
-    datum = formatDataFromDomain(datum, domain);
-    const { _low, _open, _close, _high } = datum;
+    const formattedDatum = formatDataFromDomain(datum, domain);
+    const { _low, _open, _close, _high } = formattedDatum;
     const high = scale.y(_high);
     const close = scale.y(_close);
     const open = scale.y(_open);
     const low = scale.y(_low);
 
-    const dataStyle = getDataStyles(datum, style.data, props);
+    const dataStyle = getDataStyles(formattedDatum, style.data, props);
     const dataProps = {
       x,
       high,
@@ -432,7 +435,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       candleRatio,
       scale,
       data,
-      datum,
+      datum: formattedDatum,
       groupComponent,
       index,
       style: dataStyle,
@@ -454,7 +457,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     };
 
     if (labels) {
-      const text = LabelHelpers.getText(props, datum, index);
+      const text = LabelHelpers.getText(props, formattedDatum, index);
       if (
         (text !== undefined && text !== null) ||
         (labels && (events || sharedEvents))

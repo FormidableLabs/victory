@@ -30,10 +30,10 @@ export default class SelectionDemo extends React.Component<
   }
 
   handleSelection(datasets: DataSet[]) {
-    const points = datasets.reduce((memo: any, dataset: DataSet) => {
-      memo = memo.concat(dataset.data);
-      return memo;
-    }, []);
+    const points = datasets.reduce(
+      (memo: any, dataset: DataSet) => memo.concat(dataset.data),
+      [],
+    );
     this.setState({ points });
   }
 

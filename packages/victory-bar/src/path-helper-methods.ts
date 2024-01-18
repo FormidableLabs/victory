@@ -100,10 +100,10 @@ const mapPointsToPath = (coords, cornerRadius, direction) => {
     "L",
     `A ${bottomRightPath},`,
   ];
-  const path = commands.reduce((acc, command, i) => {
-    acc += `${command} ${coords[i].x}, ${coords[i].y} \n`;
-    return acc;
-  }, "");
+  const path = commands.reduce(
+    (acc, command, i) => `${acc}${command} ${coords[i].x}, ${coords[i].y} \n`,
+    "",
+  );
   return `${path} z`;
 };
 
@@ -402,10 +402,10 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
   const topPath = getTopPath();
   const bottomPath = getBottomPath();
   const moves = [...topPath, ...bottomPath];
-  const path = moves.reduce((memo, move) => {
-    memo += `${move.command} ${move.coords.join()}`;
-    return memo;
-  }, "");
+  const path = moves.reduce(
+    (memo, move) => `${memo}${move.command} ${move.coords.join()}`,
+    "",
+  );
   return `${path} z`;
 };
 

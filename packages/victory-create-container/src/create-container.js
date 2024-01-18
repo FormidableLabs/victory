@@ -52,8 +52,8 @@ const combineDefaultEvents = (defaultEvents) => {
   // by combining any events that have the same target
   const eventsByTarget = groupBy(defaultEvents, "target");
   const events = toPairs(eventsByTarget).map(([target, eventsArray]) => {
-    eventsArray = eventsArray.filter(Boolean);
-    return isEmpty(eventsArray)
+    const newEventsArray = eventsArray.filter(Boolean);
+    return isEmpty(newEventsArray)
       ? null
       : {
           target,

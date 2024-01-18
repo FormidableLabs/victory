@@ -101,12 +101,14 @@ export const getScale = (props: VictoryPolarAxisProps) => {
   return scale;
 };
 
-export const getStyles = (props: VictoryPolarAxisProps, styleObject) => {
+export const getStyles = (
+  props: VictoryPolarAxisProps,
+  styleObject: VictoryPolarAxisProps["style"] = {},
+) => {
   if (props.disableInlineStyles) {
     return {};
   }
   const style = props.style || {};
-  styleObject = styleObject || {};
   const parentStyleProps = { height: "auto", width: "100%" };
   return {
     parent: defaults(parentStyleProps, style.parent, styleObject.parent),

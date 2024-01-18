@@ -25,14 +25,16 @@ class SelectionHelpersClass {
 
     const iteratee = (child, childName, parent) => {
       const blacklist = props.selectionBlacklist || [];
+      let childElement;
       if (!Data.isDataComponent(child) || includes(blacklist, childName)) {
         return null;
       } else if (child.type && isFunction(child.type.getData)) {
-        child = parent ? React.cloneElement(child, parent.props) : child;
-        const childData = child.props && child.type.getData(child.props);
+        childElement = parent ? React.cloneElement(child, parent.props) : child;
+        const childData =
+          childElement.props && childElement.type.getData(childElement.props);
         return childData ? { childName, data: childData } : null;
       }
-      const childData = getData(child.props);
+      const childData = getData(childElement.props);
       return childData ? { childName, data: childData } : null;
     };
     return Helpers.reduceChildren(
@@ -45,14 +47,13 @@ class SelectionHelpersClass {
   filterDatasets(props, datasets) {
     const filtered = datasets.reduce((memo, dataset) => {
       const selectedData = this.getSelectedData(props, dataset.data);
-      memo = selectedData
+      return selectedData
         ? memo.concat({
             childName: dataset.childName,
             eventKey: selectedData.eventKey,
             data: selectedData.data,
           })
         : memo;
-      return memo;
     }, []);
     return filtered.length ? filtered : null;
   }

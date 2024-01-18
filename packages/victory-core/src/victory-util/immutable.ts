@@ -31,10 +31,11 @@ export function shallowToJS(x, whitelist?: Record<string, boolean | unknown>) {
   return isIterable(x)
     ? x.reduce(
         (result: any, curr: any, key: any) => {
+          let newCurr = curr;
           if (whitelist && whitelist[key]) {
-            curr = shallowToJS(curr);
+            newCurr = shallowToJS(curr);
           }
-          result[key] = curr;
+          result[key] = newCurr;
           return result;
         },
         isList(x) ? [] : {},

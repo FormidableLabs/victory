@@ -270,12 +270,10 @@ export function addEvents<
     applyExternalMutations(props, externalMutations) {
       if (!isEmpty(externalMutations)) {
         const callbacks = props.externalEventMutations.reduce(
-          (memo, mutation) => {
-            memo = isFunction(mutation.callback)
+          (memo, mutation) =>
+            isFunction(mutation.callback)
               ? memo.concat(mutation.callback)
-              : memo;
-            return memo;
-          },
+              : memo,
           [] as Array<() => void>,
         );
         const compiledCallbacks = callbacks.length
@@ -327,9 +325,9 @@ export function addEvents<
     }
 
     getBaseProps(props, getSharedEventState): this["baseProps"] {
-      getSharedEventState =
+      const getSharedEventStateFunction =
         getSharedEventState || this.getSharedEventState.bind(this);
-      const sharedParentState = getSharedEventState("parent", "parent");
+      const sharedParentState = getSharedEventStateFunction("parent", "parent");
       const parentState = this.getEventState("parent", "parent");
       const baseParentProps = defaults({}, parentState, sharedParentState);
       const parentPropsList = baseParentProps.parentControlledProps;
@@ -437,6 +435,7 @@ export function addEvents<
       const { dataComponent, labelComponent, groupComponent } = props;
       const dataKeys = without(this.dataKeys, "all");
       const labelComponents = dataKeys.reduce((memo, key) => {
+        let newMemo = memo;
         const labelProps = this.getComponentProps(
           labelComponent,
           "labels",
@@ -447,9 +446,11 @@ export function addEvents<
           labelProps.text !== undefined &&
           labelProps.text !== null
         ) {
-          memo = memo.concat(React.cloneElement(labelComponent!, labelProps));
+          newMemo = newMemo.concat(
+            React.cloneElement(labelComponent!, labelProps),
+          );
         }
-        return memo;
+        return newMemo;
       }, [] as React.ReactElement[]);
 
       const dataProps = this.getComponentProps(dataComponent, "data", "all");

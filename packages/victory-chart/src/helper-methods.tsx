@@ -125,20 +125,20 @@ export function getCalculatedProps(initialProps, childComponents) {
 }
 
 export function getChildren(props, childComponents, calculatedProps) {
-  childComponents = childComponents || getChildComponents(props);
-  calculatedProps =
-    calculatedProps || getCalculatedProps(props, childComponents);
-  const baseStyle = calculatedProps.style.parent;
+  const children = childComponents || getChildComponents(props);
+  const newCalculatedProps =
+    calculatedProps || getCalculatedProps(props, children);
+  const baseStyle = newCalculatedProps.style.parent;
   const { height, polar, theme, width } = props;
-  const { origin, horizontal } = calculatedProps;
+  const { origin, horizontal } = newCalculatedProps;
   const parentName = props.name || "chart";
 
-  return childComponents.filter(React.isValidElement).map((child, index) => {
+  return children.filter(React.isValidElement).map((child, index) => {
     const role = child.type && child.type.role;
     const style = Array.isArray(child.props.style)
       ? child.props.style
       : defaults({}, child.props.style, { parent: baseStyle });
-    const childProps = getChildProps(child, props, calculatedProps);
+    const childProps = getChildProps(child, props, newCalculatedProps);
     const name = child.props.name || `${parentName}-${role}-${index}`;
     const newProps = defaults(
       {
@@ -150,7 +150,7 @@ export function getChildren(props, childComponents, calculatedProps) {
         style,
         name,
         origin: polar ? origin : undefined,
-        padding: calculatedProps.padding,
+        padding: newCalculatedProps.padding,
         key: `${name}-key-${index}`,
         standalone: false,
       },
@@ -193,9 +193,9 @@ export const getChildComponents = (props, defaultAxes?) => {
 };
 
 const getDomain = (props, axis, childComponents) => {
-  childComponents = childComponents || React.Children.toArray(props.children);
-  const domain = Wrapper.getDomain(props, axis, childComponents);
-  const axisComponent = Axis.getAxisComponent(childComponents, axis);
+  const children = childComponents || React.Children.toArray(props.children);
+  const domain = Wrapper.getDomain(props, axis, children);
+  const axisComponent = Axis.getAxisComponent(children, axis);
   const invertDomain =
     axisComponent && axisComponent.props && axisComponent.props.invertAxis;
   return invertDomain ? domain.concat().reverse() : domain;

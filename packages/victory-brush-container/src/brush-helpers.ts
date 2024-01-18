@@ -14,23 +14,23 @@ const Helpers = {
   withinBounds(point, bounds, padding?) {
     const { x1, x2, y1, y2 } = mapValues(bounds, Number);
     const { x, y } = mapValues(point, Number);
-    padding = padding ? padding / 2 : 0;
+    const paddingValue = padding ? padding / 2 : 0;
     return (
-      x + padding >= Math.min(x1, x2) &&
-      x - padding <= Math.max(x1, x2) &&
-      y + padding >= Math.min(y1, y2) &&
-      y - padding <= Math.max(y1, y2)
+      x + paddingValue >= Math.min(x1, x2) &&
+      x - paddingValue <= Math.max(x1, x2) &&
+      y + paddingValue >= Math.min(y1, y2) &&
+      y - paddingValue <= Math.max(y1, y2)
     );
   },
 
   getDomainBox(props, fullDomain, selectedDomain?) {
     const brushDimension = this.getDimension(props);
-    fullDomain = defaults({}, fullDomain, props.domain);
-    selectedDomain = defaults({}, selectedDomain, fullDomain);
-    const fullCoords = Selection.getDomainCoordinates(props, fullDomain);
+    const fullDomainObject = defaults({}, fullDomain, props.domain);
+    const selectedDomainObject = defaults({}, selectedDomain, fullDomainObject);
+    const fullCoords = Selection.getDomainCoordinates(props, fullDomainObject);
     const selectedCoords = Selection.getDomainCoordinates(
       props,
-      selectedDomain,
+      selectedDomainObject,
     );
 
     return {
@@ -92,13 +92,10 @@ const Helpers = {
   getActiveHandles(point, props, domainBox) {
     const handles = this.getHandles(props, domainBox);
     const activeHandles = ["top", "bottom", "left", "right"].reduce(
-      (memo, opt) => {
-        memo =
-          handles[opt] && this.withinBounds(point, handles[opt])
-            ? memo.concat(opt)
-            : memo;
-        return memo;
-      },
+      (memo, opt) =>
+        handles[opt] && this.withinBounds(point, handles[opt])
+          ? memo.concat(opt)
+          : memo,
       [] as string[],
     );
     return activeHandles.length && activeHandles;

@@ -137,12 +137,12 @@ export function getScopedEvents(
 
   // Mandatory usage: `getScopedEvents.bind(this)`
   // eslint-disable-next-line no-invalid-this
-  baseProps = baseProps || this.baseProps;
+  const newBaseProps = baseProps || this.baseProps;
   // returns the original base props or base state of a given target element
   const getTargetProps = (identifier, type) => {
     const { childName, target, key } = identifier;
     // eslint-disable-next-line no-invalid-this
-    const baseType = type === "props" ? baseProps : this.state || {};
+    const baseType = type === "props" ? newBaseProps : this.state || {};
     const base =
       childName === undefined || childName === null || !baseType[childName]
         ? baseType
@@ -249,10 +249,10 @@ export function getScopedEvents(
   // Parses an array of event returns into a single state mutation
   const parseEventReturn = (eventReturn, eventKey) => {
     return Array.isArray(eventReturn)
-      ? eventReturn.reduce((memo, props) => {
-          memo = assign({}, memo, parseEvent(props, eventKey));
-          return memo;
-        }, {})
+      ? eventReturn.reduce(
+          (memo, props) => assign({}, memo, parseEvent(props, eventKey)),
+          {},
+        )
       : parseEvent(eventReturn, eventKey);
   };
 
@@ -347,13 +347,10 @@ export function getEventState(
 // eslint-disable-next-line max-params
 export function getExternalMutationsWithChildren(
   mutations,
-  baseProps,
-  baseState,
+  baseProps = {},
+  baseState = {},
   childNames,
 ) {
-  baseProps = baseProps || {};
-  baseState = baseState || {};
-
   return childNames.reduce((memo, childName) => {
     const childState = baseState[childName];
     const mutation = getExternalMutations(
@@ -380,13 +377,10 @@ export function getExternalMutationsWithChildren(
 // eslint-disable-next-line max-params
 export function getExternalMutations(
   mutations,
-  baseProps,
-  baseState,
+  baseProps = {},
+  baseState = {},
   childName?,
 ) {
-  baseProps = baseProps || {};
-  baseState = baseState || {};
-
   const eventKeys = keys(baseProps);
   return eventKeys.reduce((memo, eventKey) => {
     const keyState = baseState[eventKey] || {};
@@ -452,8 +446,7 @@ export function getExternalMutation(
     return false;
   };
 
-  mutations = Array.isArray(mutations) ? mutations : [mutations];
-  let scopedMutations = mutations;
+  let scopedMutations = Array.isArray(mutations) ? mutations : [mutations];
   if (identifier.childName) {
     scopedMutations = mutations.filter((m) => filterMutations(m, "childName"));
   }
@@ -491,10 +484,9 @@ export function getComponentEvents(props, components) {
       const componentEvents = isFunction(defaultEvents)
         ? defaultEvents(component.props)
         : defaultEvents;
-      memo = Array.isArray(componentEvents)
+      return Array.isArray(componentEvents)
         ? memo.concat(...componentEvents)
         : memo;
-      return memo;
     }, [] as ComponentEvent[]);
   return events && events.length ? events : undefined;
 }
