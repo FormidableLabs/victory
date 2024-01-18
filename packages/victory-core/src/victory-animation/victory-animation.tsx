@@ -259,8 +259,9 @@ export class VictoryAnimation extends React.Component<
       step can generate imprecise values, sometimes greater than 1
       if this happens set the state to 1 and return, cancelling the timer
     */
-    duration = duration !== undefined ? duration : this.props.duration;
-    const step = duration ? elapsed / duration : 1;
+    const animationDuration =
+      duration !== undefined ? duration : this.props.duration;
+    const step = animationDuration ? elapsed / animationDuration : 1;
     if (step >= 1) {
       this.setState({
         data: this.interpolator!(1),

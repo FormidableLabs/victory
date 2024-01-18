@@ -10,8 +10,7 @@ import seedrandom from "seedrandom";
 import { fromJS } from "immutable";
 import styled from "styled-components";
 
-const getData = (num, symmetric, seed) => {
-  seed = seed || "getData";
+const getData = (num, symmetric, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 3;
   return range(num).map((v) => {

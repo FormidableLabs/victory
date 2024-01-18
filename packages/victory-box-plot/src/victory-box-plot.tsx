@@ -77,6 +77,8 @@ export interface VictoryBoxPlotStyleInterface {
   q1Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   q3?: VictoryStyleObject;
   q3Labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  boxes?: VictoryStyleObject;
+  whiskers?: VictoryStyleObject;
 }
 
 export interface VictoryBoxPlotLabelOrientationInterface {

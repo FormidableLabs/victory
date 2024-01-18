@@ -97,11 +97,11 @@ export const interpolateFunction = function (a, b) {
  * differs in that it uses our custom interpolators when interpolating the value of each property in
  * an object. This allows the correct interpolation of nested objects, including styles
  *
- * @param {any} a - Start value.
- * @param {any} b - End value.
+ * @param {any} startValue - Start value.
+ * @param {any} endValue - End value.
  * @returns {Function} An interpolation function.
  */
-export const interpolateObject = function (a, b) {
+export const interpolateObject = function (startValue, endValue) {
   const interpolateTypes = (x, y) => {
     if (x === y || !isInterpolatable(x) || !isInterpolatable(y)) {
       return interpolateImmediate(x, y);
@@ -126,6 +126,8 @@ export const interpolateObject = function (a, b) {
 
   const i = {};
   const c = {};
+  let a = startValue;
+  let b = endValue;
   let k;
 
   if (a === null || typeof a !== "object") {

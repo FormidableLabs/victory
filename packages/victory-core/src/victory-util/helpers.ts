@@ -258,6 +258,7 @@ export function reduceChildren<
   ];
   const traverseChildren = (childArray, names, parent?) => {
     return childArray.reduce((memo, child, index) => {
+      let newMemo = memo;
       const childRole = child.type && child.type.role;
       const childName = child.props.name || `${childRole}-${names[index]}`;
       if (child.props && child.props.children) {
@@ -291,14 +292,14 @@ export function reduceChildren<
           childNames,
           child,
         );
-        memo = combine(memo, nestedResults);
+        newMemo = combine(newMemo, nestedResults);
       } else {
         const result = iteratee(child, childName, parent);
         if (result) {
-          memo = combine(memo, result);
+          newMemo = combine(newMemo, result);
         }
       }
-      return memo;
+      return newMemo;
     }, initialMemo);
   };
 
@@ -320,8 +321,7 @@ export function isHorizontal(props) {
     return childArray.reduce((memo, child) => {
       const childProps = child.props || {};
       if (memo || childProps.horizontal || !childProps.children) {
-        memo = memo || childProps.horizontal;
-        return memo;
+        return memo || childProps.horizontal;
       }
       return traverseChildren(React.Children.toArray(childProps.children));
     }, false);

@@ -34,14 +34,11 @@ const getTimeValues = (num) => {
   });
 };
 
-const getValues = (num, min, step) => {
-  min = min || 0;
-  step = step || 1;
+const getValues = (num, min = 0, step = 1) => {
   return range(num).map((v) => v * step + min);
 };
 
-const getRandomValues = (num, seed) => {
-  seed = seed || "random";
+const getRandomValues = (num, seed = "random") => {
   const baseSeed = seedrandom(seed);
   const rand = () => Math.round(baseSeed.quick() * 100);
   const result = range(num).map(() => rand());

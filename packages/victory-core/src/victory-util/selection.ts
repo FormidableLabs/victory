@@ -73,8 +73,9 @@ export function getSVGEventCoordinates(
   const location = isReactTouchEvent(evt)
     ? evt.changedTouches[0]
     : (evt as React.MouseEvent);
-  svg = svg || getParentSVG(location);
-  const matrix = getTransformationMatrix(svg as SVGGraphicsElement);
+  const matrix = getTransformationMatrix(
+    (svg as SVGGraphicsElement) || getParentSVG(location),
+  );
   return {
     x: transformTarget(location.clientX, matrix, "x"),
     y: transformTarget(location.clientY, matrix, "y"),

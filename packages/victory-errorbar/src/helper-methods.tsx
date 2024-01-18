@@ -214,13 +214,13 @@ export const getBaseProps = (initialProps, fallbackProps) => {
   return data.reduce((childProps, datum, index) => {
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y } = Helpers.scalePoint(assign({}, props, { scale }), datum);
-    datum = formatDataFromDomain(datum, domain);
-    const errorX = getErrors(props, datum, "x");
-    const errorY = getErrors(props, datum, "y");
+    const formattedDatum = formatDataFromDomain(datum, domain);
+    const errorX = getErrors(props, formattedDatum, "x");
+    const errorY = getErrors(props, formattedDatum, "y");
     const dataProps = {
       borderWidth,
       data,
-      datum,
+      datum: formattedDatum,
       errorX: horizontal ? errorY : errorX,
       errorY: horizontal ? errorX : errorY,
       groupComponent,

@@ -38,7 +38,7 @@ export interface VictoryLabelProps {
   capHeight?: StringOrNumberOrCallback;
   children?: StringOrNumberOrCallback;
   className?: string;
-  datum?: object;
+  datum?: Record<string, any>;
   data?: any[];
   desc?: string;
   direction?: string;
@@ -322,21 +322,20 @@ const getInlineXOffset = (calculatedProps, textElements, index) => {
   const centerOffset = -totalWidth / 2;
   switch (textAnchor) {
     case "start":
-      return widths.reduce((memo, width, i) => {
-        memo = i < index ? memo + width : memo;
-        return memo;
-      }, 0);
+      return widths.reduce(
+        (memo, width, i) => (i < index ? memo + width : memo),
+        0,
+      );
     case "end":
-      return widths.reduce((memo, width, i) => {
-        memo = i > index ? memo - width : memo;
-        return memo;
-      }, 0);
+      return widths.reduce(
+        (memo, width, i) => (i > index ? memo - width : memo),
+        0,
+      );
     default:
       // middle
       return widths.reduce((memo, width, i) => {
         const offsetWidth = i < index ? width : 0;
-        memo = i === index ? memo + width / 2 : memo + offsetWidth;
-        return memo;
+        return i === index ? memo + width / 2 : memo + offsetWidth;
       }, centerOffset);
   }
 };

@@ -137,34 +137,39 @@ function getInitialChildProps(animate, data): TransitionProps {
 
 // eslint-disable-next-line max-params
 function getChildBeforeLoad(animate, child, data, cb): TransitionProps {
-  animate = assign({}, animate, { onEnd: cb });
-  if (animate && animate.onLoad && !animate.onLoad.duration) {
-    return { animate, data };
+  const newAnimate = assign({}, animate, { onEnd: cb });
+
+  if (newAnimate && newAnimate.onLoad && !newAnimate.onLoad.duration) {
+    return { animate: newAnimate, data };
   }
   const before =
-    animate.onLoad && animate.onLoad.before ? animate.onLoad.before : identity;
+    newAnimate.onLoad && newAnimate.onLoad.before
+      ? newAnimate.onLoad.before
+      : identity;
   // If nodes need to exit, transform them with the provided onLoad.before function.
-  data = data.map((datum, idx) => {
+  const newData = data.map((datum, idx) => {
     return assign({}, datum, before(datum, idx, data));
   });
 
-  return { animate, data, clipWidth: 0 };
+  return { animate: newAnimate, data: newData, clipWidth: 0 };
 }
 
 // eslint-disable-next-line max-params
 function getChildOnLoad(animate, data, cb): TransitionProps {
-  animate = assign({}, animate, { onEnd: cb });
-  if (animate && animate.onLoad && !animate.onLoad.duration) {
+  const newAnimate = assign({}, animate, { onEnd: cb });
+  let newData = data;
+
+  if (newAnimate && newAnimate.onLoad && !newAnimate.onLoad.duration) {
     return { animate, data };
   }
   const after =
     animate.onLoad && animate.onLoad.after ? animate.onLoad.after : identity;
   // If nodes need to exit, transform them with the provided onLoad.after function.
-  data = data.map((datum, idx) => {
+  newData = data.map((datum, idx) => {
     return assign({}, datum, after(datum, idx, data));
   });
 
-  return { animate, data };
+  return { animate: newAnimate, data: newData };
 }
 
 // eslint-disable-next-line max-params, max-len
@@ -178,7 +183,8 @@ function getChildPropsOnExit(
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
   const onExit = animate && animate.onExit;
-  animate = assign({}, animate, onExit);
+  const newAnimate = assign({}, animate, onExit);
+  let newData = data;
 
   if (exitingNodes) {
     // After the exit transition occurs, trigger the animations for
@@ -189,7 +195,7 @@ function getChildPropsOnExit(
         ? animate.onExit.before
         : identity;
     // If nodes need to exit, transform them with the provided onExit.before function.
-    data = data.map((datum, idx) => {
+    newData = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
       return exitingNodes[key]
         ? assign({}, datum, before(datum, idx, data))
@@ -197,7 +203,7 @@ function getChildPropsOnExit(
     });
   }
 
-  return { animate, data };
+  return { animate: newAnimate, data: newData };
 }
 
 // eslint-disable-next-line max-params,max-len
@@ -208,10 +214,12 @@ function getChildPropsBeforeEnter(
   enteringNodes,
   cb,
 ): TransitionProps {
+  let newAnimate = animate;
+  let newData = data;
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
-    animate = assign({}, animate, { onEnd: cb });
+    newAnimate = assign({}, animate, { onEnd: cb });
     const before =
       animate.onEnter && animate.onEnter.before
         ? animate.onEnter.before
@@ -219,7 +227,7 @@ function getChildPropsBeforeEnter(
     // We want the entering nodes to be included in the transition target
     // domain.  However, we may not want these nodes to be displayed initially,
     // so perform the `onEnter.before` transformation on each node.
-    data = data.map((datum, idx) => {
+    newData = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
       return enteringNodes[key]
         ? assign({}, datum, before(datum, idx, data))
@@ -227,7 +235,7 @@ function getChildPropsBeforeEnter(
     });
   }
 
-  return { animate, data };
+  return { animate: newAnimate, data: newData };
 }
 
 // eslint-disable-next-line max-params, max-len
@@ -240,25 +248,26 @@ function getChildPropsOnEnter(
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
   const onEnter = animate && animate.onEnter;
-  animate = assign({}, animate, onEnter);
+  const newAnimate = assign({}, animate, onEnter);
+  let newData = data;
 
   if (enteringNodes) {
     // Old nodes have been transitioned to their new values, and the
     // domain should encompass the nodes that will now enter. So perform
     // the `onEnter.after` transformation on each node.
-    animate.onEnd = cb;
+    newAnimate.onEnd = cb;
     const after =
-      animate.onEnter && animate.onEnter.after
-        ? animate.onEnter.after
+      newAnimate.onEnter && newAnimate.onEnter.after
+        ? newAnimate.onEnter.after
         : identity;
-    data = data.map((datum, idx) => {
+    newData = data.map((datum, idx) => {
       const key = getDatumKey(datum, idx);
       return enteringNodes[key]
         ? assign({}, datum, after(datum, idx, data))
         : datum;
     });
   }
-  return { animate, data };
+  return { animate: newAnimate, data: newData };
 }
 
 /**

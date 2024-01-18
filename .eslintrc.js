@@ -43,6 +43,7 @@ module.exports = {
       "error",
       { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] },
     ],
+    "no-param-reassign": "error",
   },
   parser: "@babel/eslint-parser",
   parserOptions: {
