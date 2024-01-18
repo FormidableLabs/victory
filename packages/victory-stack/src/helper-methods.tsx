@@ -41,7 +41,7 @@ function fillData(props, datasets) {
       }
       const y = fillInMissingData ? 0 : null;
       parsedX = isDate ? new Date(parsedX) : parsedX;
-      return { x, y, _x: parsedX, _y: y };
+      return { x: parsedX, y, _x: parsedX, _y: y };
     });
 
     return filledInData;
