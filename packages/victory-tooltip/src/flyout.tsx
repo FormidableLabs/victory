@@ -141,7 +141,7 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Flyout = (initialProps: FlyoutProps) => {
+export const Flyout: React.FC<FlyoutProps> = (initialProps) => {
   const props = evaluateProps({ ...defaultProps, ...initialProps });
   const userProps = UserProps.getSafeUserProps(props);
 
