@@ -1,16 +1,24 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import PropTypes from "prop-types";
 import {
-  PropTypes as CustomPropTypes,
   TextSize,
   Helpers,
   LabelHelpers,
   VictoryLabel,
   VictoryTheme,
   VictoryPortal,
+  VictoryLabelableProps,
+  VictoryLabelProps,
+  VictoryLabelStyleObject,
+  NumberOrCallback,
+  PaddingOrCallback,
+  VictoryStyleObject,
+  OrientationTypes,
+  VictoryThemeDefinition,
 } from "victory-core";
-import Flyout from "./flyout";
 import { assign, defaults, uniqueId, isPlainObject, orderBy } from "lodash";
+
+import { Flyout } from "./flyout";
 
 const fallbackProps = {
   cornerRadius: 5,
@@ -18,92 +26,70 @@ const fallbackProps = {
   pointerWidth: 10,
 };
 
-export default class VictoryTooltip extends React.Component {
+export interface VictoryTooltipProps
+  extends VictoryLabelableProps,
+    VictoryLabelProps {
+  activateData?: boolean;
+  active?: boolean;
+  activePoints?: any[];
+  angle?: number;
+  center?: { x?: number; y?: number };
+  centerOffset?: {
+    x?: NumberOrCallback;
+    y?: NumberOrCallback;
+  };
+  constrainToVisibleArea?: boolean;
+  cornerRadius?: NumberOrCallback;
+  events?: any;
+  height?: number;
+  horizontal?: boolean;
+  flyoutComponent?: React.ReactElement;
+  flyoutHeight?: NumberOrCallback;
+  flyoutPadding?: PaddingOrCallback;
+  flyoutStyle?: VictoryStyleObject;
+  flyoutWidth?: NumberOrCallback;
+  id?: number | string;
+  index?: number | string;
+  orientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
+  pointerLength?: NumberOrCallback;
+  pointerOrientation?:
+    | OrientationTypes
+    | ((...args: any[]) => OrientationTypes);
+  pointerWidth?: NumberOrCallback;
+  style?:
+    | (VictoryLabelStyleObject & {
+        angle?: number;
+      })
+    | VictoryLabelStyleObject[];
+  theme?: VictoryThemeDefinition;
+  width?: number;
+}
+
+type InternalEvaluatedProps = VictoryTooltipProps & {
+  centerOffset: { x: number; y: number };
+  cornerRadius?: number;
+  dx?: string | number;
+  dy?: string | number;
+  flyoutHeight: number;
+  flyoutPadding: {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  };
+  flyoutWidth: number;
+  orientation: OrientationTypes;
+  pointerLength?: number;
+  pointerWidth?: number;
+  // TODO: This is a hack to get around the fact that the type of
+  // style is used in akward ways in the functions
+  style: any;
+  text: string | string[];
+};
+
+export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
   static displayName = "VictoryTooltip";
   static role = "tooltip";
-  static propTypes = {
-    activateData: PropTypes.bool,
-    active: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    activePoints: PropTypes.array,
-    angle: PropTypes.number,
-    center: PropTypes.shape({
-      x: CustomPropTypes.nonNegative,
-      y: CustomPropTypes.nonNegative,
-    }),
-    centerOffset: PropTypes.shape({
-      x: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-      y: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    }),
-    constrainToVisibleArea: PropTypes.bool,
-    cornerRadius: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func,
-    ]),
-    data: PropTypes.array,
-    datum: PropTypes.object,
-    dx: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    dy: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-    events: PropTypes.object,
-    flyoutComponent: PropTypes.element,
-    flyoutHeight: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func,
-    ]),
-    flyoutPadding: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.number,
-      PropTypes.shape({
-        top: PropTypes.number,
-        bottom: PropTypes.number,
-        left: PropTypes.number,
-        right: PropTypes.number,
-      }),
-    ]),
-    flyoutStyle: PropTypes.object,
-    flyoutWidth: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func,
-    ]),
-    groupComponent: PropTypes.element,
-    height: PropTypes.number,
-    horizontal: PropTypes.bool,
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    labelComponent: PropTypes.element,
-    orientation: PropTypes.oneOfType([
-      PropTypes.oneOf(["top", "bottom", "left", "right"]),
-      PropTypes.func,
-    ]),
-    pointerLength: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func,
-    ]),
-    pointerOrientation: PropTypes.oneOfType([
-      PropTypes.oneOf(["top", "bottom", "left", "right"]),
-      PropTypes.func,
-    ]),
-    pointerWidth: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func,
-    ]),
-    polar: PropTypes.bool,
-    renderInPortal: PropTypes.bool,
-    scale: PropTypes.shape({
-      x: CustomPropTypes.scale,
-      y: CustomPropTypes.scale,
-    }),
-    style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    text: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.func,
-      PropTypes.array,
-    ]),
-    theme: PropTypes.object,
-    width: PropTypes.number,
-    x: PropTypes.number,
-    y: PropTypes.number,
-  };
 
   static defaultProps = {
     active: false,
@@ -113,7 +99,7 @@ export default class VictoryTooltip extends React.Component {
     groupComponent: <g />,
   };
 
-  static defaultEvents = (props) => {
+  static defaultEvents = (props: VictoryTooltipProps) => {
     const activate = props.activateData
       ? [
           { target: "labels", mutation: () => ({ active: true }) },
@@ -141,25 +127,27 @@ export default class VictoryTooltip extends React.Component {
     ];
   };
 
-  constructor(props) {
+  id: string | number;
+
+  constructor(props: VictoryTooltipProps) {
     super(props);
     this.id = props.id === undefined ? uniqueId("tooltip-") : props.id;
   }
 
-  getDefaultOrientation(props) {
+  getDefaultOrientation(props: VictoryTooltipProps): OrientationTypes {
     const { datum, horizontal, polar } = props;
     if (!polar) {
       const positive = horizontal ? "right" : "top";
       const negative = horizontal ? "left" : "bottom";
       return datum && datum.y < 0 ? negative : positive;
     }
-    return this.getPolarOrientation(props, datum);
+    return this.getPolarOrientation(props);
   }
 
-  getPolarOrientation(props, datum) {
-    const degrees = LabelHelpers.getDegrees(props, datum);
+  getPolarOrientation(props: VictoryTooltipProps): OrientationTypes {
+    const degrees = LabelHelpers.getDegrees(props, props.datum);
     const placement = props.labelPlacement || "vertical";
-    if (placement === " vertical") {
+    if (placement === "vertical") {
       return this.getVerticalOrientations(degrees);
     } else if (placement === "parallel") {
       return degrees < 90 || degrees > 270 ? "right" : "left";
@@ -167,7 +155,7 @@ export default class VictoryTooltip extends React.Component {
     return degrees > 180 ? "bottom" : "top";
   }
 
-  getVerticalOrientations(degrees) {
+  getVerticalOrientations(degrees: number): OrientationTypes {
     // eslint-disable-next-line no-magic-numbers
     if (degrees < 45 || degrees > 315) {
       return "right";
@@ -205,14 +193,19 @@ export default class VictoryTooltip extends React.Component {
     return { style, flyoutStyle };
   }
 
-  getEvaluatedProps(props) {
+  getEvaluatedProps(props: VictoryTooltipProps): InternalEvaluatedProps {
     const { cornerRadius, centerOffset, dx, dy } = props;
 
     const active = Helpers.evaluateProp(props.active, props);
-    const text = Helpers.evaluateProp(
-      props.text,
-      assign({}, props, { active }),
-    );
+
+    let text = Helpers.evaluateProp(props.text, assign({}, props, { active }));
+    if (text === undefined || text === null) {
+      text = "";
+    }
+    if (typeof text === "number") {
+      text = text.toString();
+    }
+
     const { style, flyoutStyle } = this.getStyles(
       assign({}, props, { active, text }),
     );
@@ -269,24 +262,32 @@ export default class VictoryTooltip extends React.Component {
     });
 
     const offsetX =
-      isPlainObject(centerOffset) && centerOffset.x !== undefined
+      isPlainObject(centerOffset) && centerOffset?.x !== undefined
         ? Helpers.evaluateProp(centerOffset.x, evaluatedProps)
         : 0;
 
     const offsetY =
-      isPlainObject(centerOffset) && centerOffset.y !== undefined
+      isPlainObject(centerOffset) && centerOffset?.y !== undefined
         ? Helpers.evaluateProp(centerOffset.y, evaluatedProps)
         : 0;
 
-    return assign({}, evaluatedProps, {
+    return {
+      ...evaluatedProps,
       centerOffset: { x: offsetX, y: offsetY },
       dx: dx !== undefined ? Helpers.evaluateProp(dx, evaluatedProps) : 0,
       dy: dy !== undefined ? Helpers.evaluateProp(dy, evaluatedProps) : 0,
       cornerRadius: Helpers.evaluateProp(cornerRadius, evaluatedProps),
-    });
+    };
   }
 
-  getCalculatedValues(props) {
+  getCalculatedValues(props: InternalEvaluatedProps): {
+    style: any;
+    flyoutStyle?: VictoryStyleObject;
+    labelSize: { width: number; height: number };
+    flyoutDimensions: { height: number; width: number };
+    flyoutCenter: { x: number; y: number };
+    transform?: string;
+  } {
     const { style, text, flyoutStyle, flyoutHeight, flyoutWidth } = props;
     const labelSize = TextSize.approximateTextSize(text, style);
     const flyoutDimensions = { height: flyoutHeight, width: flyoutWidth };
@@ -302,7 +303,7 @@ export default class VictoryTooltip extends React.Component {
     };
   }
 
-  getTransform(props) {
+  getTransform(props): string | undefined {
     const { x, y, style } = props;
     const labelStyle = style || {};
     const angle =
@@ -310,8 +311,7 @@ export default class VictoryTooltip extends React.Component {
     return angle ? `rotate(${angle} ${x} ${y})` : undefined;
   }
 
-  // eslint-disable-next-line complexity
-  getDefaultAngle(props) {
+  getDefaultAngle(props): number {
     const { polar, labelPlacement, orientation, datum } = props;
     if (!polar || !labelPlacement || labelPlacement === "vertical") {
       return 0;
@@ -319,7 +319,8 @@ export default class VictoryTooltip extends React.Component {
     const degrees = LabelHelpers.getDegrees(props, datum);
     const sign = (degrees > 90 && degrees < 180) || degrees > 270 ? 1 : -1;
     const labelRotation = labelPlacement === "perpendicular" ? 0 : 90;
-    let angle;
+
+    let angle = 0;
     if (degrees === 0 || degrees === 180) {
       angle = orientation === "top" && degrees === 180 ? 270 : 90;
     } else if (degrees > 0 && degrees < 180) {
@@ -424,6 +425,7 @@ export default class VictoryTooltip extends React.Component {
       flyoutPadding,
     } = props;
     const cornerRadius = Helpers.evaluateProp(props.cornerRadius, props);
+
     const getHeight = () => {
       const calculatedHeight =
         labelSize.height + flyoutPadding.top + flyoutPadding.bottom;
@@ -434,6 +436,7 @@ export default class VictoryTooltip extends React.Component {
           : 2 * cornerRadius + pointerWidth;
       return Math.max(minHeight, calculatedHeight);
     };
+
     const getWidth = () => {
       const calculatedWidth =
         labelSize.width + flyoutPadding.left + flyoutPadding.right;
@@ -444,17 +447,18 @@ export default class VictoryTooltip extends React.Component {
           : 2 * cornerRadius;
       return Math.max(minWidth, calculatedWidth);
     };
+
     return {
       flyoutHeight: flyoutHeight
         ? Helpers.evaluateProp(flyoutHeight, props)
-        : getHeight(props, labelSize, orientation),
+        : getHeight(),
       flyoutWidth: flyoutWidth
         ? Helpers.evaluateProp(flyoutWidth, props)
-        : getWidth(props, labelSize, orientation),
+        : getWidth(),
     };
   }
 
-  getLabelProps(props, calculatedValues) {
+  getLabelProps(props: InternalEvaluatedProps, calculatedValues) {
     const { flyoutCenter, style, labelSize, dy = 0, dx = 0 } = calculatedValues;
     const { text, datum, activePoints, labelComponent, index, flyoutPadding } =
       props;
@@ -469,7 +473,7 @@ export default class VictoryTooltip extends React.Component {
       const sign = textAnchor === "end" ? -1 : 1;
       return flyoutCenter.x - sign * (labelSize.width / 2);
     };
-    return defaults({}, labelComponent.props, {
+    return defaults({}, labelComponent!.props, {
       key: `${this.id}-label-${index}`,
       text,
       datum,
@@ -485,7 +489,11 @@ export default class VictoryTooltip extends React.Component {
     });
   }
 
-  getPointerOrientation(point, center, flyoutDimensions) {
+  getPointerOrientation(
+    point: { x: number; y: number },
+    center: { x: number; y: number },
+    flyoutDimensions: { height: number; width: number },
+  ): string {
     const edges = {
       bottom: center.y + flyoutDimensions.height / 2,
       top: center.y - flyoutDimensions.height / 2,
@@ -509,7 +517,7 @@ export default class VictoryTooltip extends React.Component {
     return orderBy(gaps, "val", "desc")[0].side;
   }
 
-  getFlyoutProps(props, calculatedValues) {
+  getFlyoutProps(props: InternalEvaluatedProps, calculatedValues) {
     const { flyoutDimensions, flyoutStyle, flyoutCenter } = calculatedValues;
     const {
       x,
@@ -529,7 +537,7 @@ export default class VictoryTooltip extends React.Component {
       props.pointerOrientation,
       props,
     );
-    return defaults({}, flyoutComponent.props, {
+    return defaults({}, flyoutComponent!.props, {
       x,
       y,
       dx,
@@ -543,7 +551,11 @@ export default class VictoryTooltip extends React.Component {
       events,
       orientation:
         pointerOrientation ||
-        this.getPointerOrientation({ x, y }, flyoutCenter, flyoutDimensions),
+        this.getPointerOrientation(
+          { x: x!, y: y! },
+          flyoutCenter,
+          flyoutDimensions,
+        ),
       key: `${this.id}-tooltip-${index}`,
       width: flyoutDimensions.width,
       height: flyoutDimensions.height,
@@ -553,34 +565,34 @@ export default class VictoryTooltip extends React.Component {
   }
 
   // Overridden in victory-core-native
-  renderTooltip(props) {
+  renderTooltip(props: VictoryTooltipProps): React.ReactElement | null {
     const active = Helpers.evaluateProp(props.active, props);
     const { renderInPortal } = props;
     if (!active) {
-      return renderInPortal ? <VictoryPortal>{null}</VictoryPortal> : null;
+      return renderInPortal ? <VictoryPortal /> : null;
     }
     const evaluatedProps = this.getEvaluatedProps(props);
     const { flyoutComponent, labelComponent, groupComponent } = evaluatedProps;
     const calculatedValues = this.getCalculatedValues(evaluatedProps);
     const children = [
       React.cloneElement(
-        flyoutComponent,
+        flyoutComponent!,
         this.getFlyoutProps(evaluatedProps, calculatedValues),
       ),
       React.cloneElement(
-        labelComponent,
+        labelComponent!,
         this.getLabelProps(evaluatedProps, calculatedValues),
       ),
     ];
     const tooltip = React.cloneElement(
-      groupComponent,
+      groupComponent!,
       { role: "presentation", transform: calculatedValues.transform },
       children,
     );
     return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
   }
 
-  render() {
+  render(): React.ReactElement | null {
     const props = Helpers.modifyProps(this.props, fallbackProps, "tooltip");
     return this.renderTooltip(props);
   }

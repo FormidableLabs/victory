@@ -1,7 +1,9 @@
 import React from "react";
-import { Flyout, VictoryTooltip } from "victory-tooltip";
 import { VictoryContainer, VictoryLabel } from "victory-core";
 import { fireEvent, screen, render } from "@testing-library/react";
+
+import { Flyout } from "./flyout";
+import { VictoryTooltip } from "./victory-tooltip";
 
 describe("components/victory-tooltip", () => {
   const flyoutId = "flyout-1";

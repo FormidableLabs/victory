@@ -1,4 +1,4 @@
-import { D3Scale, Datum, ID } from "./prop-types";
+import { D3Scale, Datum, ID, ScalePropType } from "./prop-types";
 import { BlockProps, OrientationTypes } from "../victory-theme/types";
 
 /**
@@ -16,10 +16,13 @@ export interface CallbackArgs {
   index?: ID;
   x?: number;
   y?: number;
-  scale?: {
-    x?: D3Scale;
-    y?: D3Scale;
-  };
+  scale?:
+    | ScalePropType
+    | D3Scale
+    | {
+        x?: ScalePropType | D3Scale;
+        y?: ScalePropType | D3Scale;
+      };
   tick?: any;
   ticks?: any;
   text?: any;

@@ -56,6 +56,20 @@ const testIfSafeProp = (key: string): key is SafeAttribute => {
 };
 
 /**
+ * Asserts that value is not null or undefined, throwing an error if it is.
+ * @param value The value to assert
+ * @param message The error message to throw
+ */
+export function assert<T>(
+  value: T,
+  message?: string,
+): asserts value is NonNullable<T> {
+  if (value === undefined || value === null) {
+    throw new Error(message);
+  }
+}
+
+/**
  * getSafeUserProps - function that takes in a props object and removes any
  * key-value entries that do not match filter strings in the USER_PROPS_SAFELIST
  * object.

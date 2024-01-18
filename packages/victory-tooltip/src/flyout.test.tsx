@@ -1,6 +1,8 @@
 import React from "react";
-import { Flyout } from "victory-tooltip";
 import { render } from "@testing-library/react";
+
+import { SVGWrapper } from "../../../test/helpers";
+import { Flyout } from "./flyout";
 
 describe("victory-primitives/flyout", () => {
   const baseProps = {
@@ -17,7 +19,7 @@ describe("victory-primitives/flyout", () => {
   describe("rendering", () => {
     it("renders a flyout path", () => {
       const { container } = render(<Flyout {...baseProps} />, {
-        wrapper: "svg",
+        wrapper: SVGWrapper,
       });
       const path = container.querySelector("path");
 
