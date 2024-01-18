@@ -240,6 +240,8 @@ export function formatData(
   }
 
   const defaultKeys = ["x", "y", "y0"];
+  // TODO: We shouldn’t mutate the expectedKeys param here,
+  // but we need to figure out why changing it causes regressions in tests.
   // eslint-disable-next-line no-param-reassign
   expectedKeys = Array.isArray(expectedKeys) ? expectedKeys : defaultKeys;
 

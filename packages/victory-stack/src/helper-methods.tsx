@@ -26,22 +26,22 @@ function fillData(props, datasets) {
     let indexOffset = 0;
     const isDate = dataset[0] && dataset[0]._x instanceof Date;
     const filledInData = xArr.map((x: number | Date, index) => {
-      let xAsNumberOrDate: number | Date = Number(x);
+      let parsedX: number | Date = Number(x);
       const datum = dataset[index - indexOffset];
 
       if (datum) {
         const x1 = isDate ? datum._x.getTime() : datum._x;
-        if (x1 === xAsNumberOrDate) {
+        if (x1 === parsedX) {
           return datum;
         }
         indexOffset++;
         const y = fillInMissingData ? 0 : null;
-        xAsNumberOrDate = isDate ? new Date(xAsNumberOrDate) : xAsNumberOrDate;
-        return { x: xAsNumberOrDate, y, _x: xAsNumberOrDate, _y: y };
+        parsedX = isDate ? new Date(parsedX) : parsedX;
+        return { x: parsedX, y, _x: parsedX, _y: y };
       }
       const y = fillInMissingData ? 0 : null;
-      xAsNumberOrDate = isDate ? new Date(xAsNumberOrDate) : xAsNumberOrDate;
-      return { x, y, _x: xAsNumberOrDate, _y: y };
+      parsedX = isDate ? new Date(parsedX) : parsedX;
+      return { x, y, _x: parsedX, _y: y };
     });
 
     return filledInData;
