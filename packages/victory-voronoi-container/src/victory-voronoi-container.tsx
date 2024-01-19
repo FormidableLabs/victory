@@ -1,44 +1,41 @@
 /* eslint-disable react/no-multi-comp */
-import PropTypes from "prop-types";
 import React from "react";
 import { defaults, isFunction, pick } from "lodash";
 import { VictoryTooltip } from "victory-tooltip";
 import {
   VictoryContainer,
   Helpers,
-  PropTypes as CustomPropTypes,
+  VictoryContainerProps,
+  PaddingProps,
 } from "victory-core";
-import VoronoiHelpers from "./voronoi-helpers";
+import { VoronoiHelpers } from "./voronoi-helpers";
 
-export const voronoiContainerMixin = (base) =>
-  class VictoryVoronoiContainer extends base {
+type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
+
+export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
+  activateData?: boolean;
+  activateLabels?: boolean;
+  disable?: boolean;
+  labels?: (point: any, index: number, points: any[]) => string;
+  labelComponent?: React.ReactElement;
+  mouseFollowTooltips?: boolean;
+  onActivated?: (points: any[], props: VictoryVoronoiContainerProps) => void;
+  onDeactivated?: (points: any[], props: VictoryVoronoiContainerProps) => void;
+  radius?: number;
+  voronoiBlacklist?: (string | RegExp)[];
+  voronoiDimension?: "x" | "y";
+  voronoiPadding?: PaddingProps;
+}
+
+export function voronoiContainerMixin<
+  TBase extends ComponentClass<TProps>,
+  TProps extends VictoryVoronoiContainerProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryVoronoiContainer extends Base {
     static displayName = "VictoryVoronoiContainer";
-    static propTypes = {
-      ...VictoryContainer.propTypes,
-      activateData: PropTypes.bool,
-      activateLabels: PropTypes.bool,
-      disable: PropTypes.bool,
-      labelComponent: PropTypes.element,
-      labels: PropTypes.func,
-      mouseFollowTooltips: PropTypes.bool,
-      onActivated: PropTypes.func,
-      onDeactivated: PropTypes.func,
-      radius: PropTypes.number,
-      voronoiBlacklist: PropTypes.arrayOf(
-        PropTypes.oneOfType([PropTypes.string, CustomPropTypes.regExp]),
-      ),
-      voronoiDimension: PropTypes.oneOf(["x", "y"]),
-      voronoiPadding: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.shape({
-          top: PropTypes.number,
-          bottom: PropTypes.number,
-          left: PropTypes.number,
-          right: PropTypes.number,
-        }),
-      ]),
-    };
-    static defaultProps = {
+
+    static defaultProps: VictoryVoronoiContainerProps = {
       ...VictoryContainer.defaultProps,
       activateData: true,
       activateLabels: true,
@@ -46,7 +43,7 @@ export const voronoiContainerMixin = (base) =>
       voronoiPadding: 5,
     };
 
-    static defaultEvents = (props) => {
+    static defaultEvents = (props: VictoryVoronoiContainerProps) => {
       return [
         {
           target: "parent",
@@ -233,15 +230,14 @@ export const voronoiContainerMixin = (base) =>
     }
 
     // Overrides method in VictoryContainer
-    getChildren(props) {
+    getChildren(props: VictoryVoronoiContainerProps) {
       return [
         ...React.Children.toArray(props.children),
         this.getTooltip(props),
       ];
     }
   };
+}
 
-export default voronoiContainerMixin(VictoryContainer);
-// @ts-expect-error IMPORTANT: when converting this file to TypeScript, you must export the type as well:
-// export const VictoryVoronoiContainer = voronoiContainerMixin(VictoryContainer);
-// export type VictoryVoronoiContainer = typeof VictoryVoronoiContainer;
+export const VictoryVoronoiContainer = voronoiContainerMixin(VictoryContainer);
+export type VictoryVoronoiContainer = typeof VictoryVoronoiContainer;
