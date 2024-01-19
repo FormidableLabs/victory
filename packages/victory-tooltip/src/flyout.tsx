@@ -147,19 +147,19 @@ export const Flyout: React.FC<FlyoutProps> = (initialProps) => {
 
   // check for required props for this subcomponent
   // they should be passed in from the wrapper
-  UserProps.assert(props.center, "Flyout props[center] is undefined");
+  // UserProps.assert(props.center, "Flyout props[center] is undefined");
   UserProps.assert(props.height, "Flyout props[height] is undefined");
   UserProps.assert(props.width, "Flyout props[width] is undefined");
   UserProps.assert(props.x, "Flyout props[x] is undefined");
   UserProps.assert(props.y, "Flyout props[y] is undefined");
 
-  const { x: centerX, y: centerY } = props.center;
+  // const { x: centerX, y: centerY } = props.center;
 
-  UserProps.assert(centerX, "Flyout props[center.x] is undefined");
-  UserProps.assert(centerY, "Flyout props[center.y] is undefined");
+  // UserProps.assert(centerX, "Flyout props[center.x] is undefined");
+  // UserProps.assert(centerY, "Flyout props[center.y] is undefined");
 
   const flyoutPathProps: FlyoutPathProps = {
-    center: { x: centerX, y: centerY },
+    center: props.center,
     cornerRadius: props.cornerRadius || 0,
     dx: props.dx,
     dy: props.dy,
