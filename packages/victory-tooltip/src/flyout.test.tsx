@@ -15,7 +15,6 @@ describe("victory-primitives/flyout", () => {
     cornerRadius: 5,
     pointerLength: 10,
     pointerWidth: 10,
-    // center: { x: 100, y: 100 },
   };
   describe("rendering", () => {
     it("renders a flyout path", () => {
