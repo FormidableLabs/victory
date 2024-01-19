@@ -1,15 +1,14 @@
 import React from "react";
-import { VictoryContainer, VictoryLabel } from "victory-core";
 import { fireEvent, screen, render } from "@testing-library/react";
+import { VictoryContainer, VictoryLabel } from "victory-core";
+import { VictoryTooltip } from "victory-tooltip";
 
 import { Flyout } from "./flyout";
-import { VictoryTooltip } from "./victory-tooltip";
 
 describe("components/victory-tooltip", () => {
   const flyoutId = "flyout-1";
   const labelId = "label-1";
 
-  /** @type {VictoryTooltipProps} */
   const baseProps = {
     x: 0,
     y: 0,
