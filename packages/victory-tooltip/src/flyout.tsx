@@ -1,17 +1,67 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
-import PropTypes from "prop-types";
-import { Helpers, CommonProps, Path, UserProps } from "victory-core";
-import { isPlainObject, assign } from "lodash";
+import {
+  Helpers,
+  Path,
+  UserProps,
+  VictoryCommonProps,
+  OrientationTypes,
+  VictoryStyleObject,
+  StringOrNumberOrCallback,
+} from "victory-core";
 
-const getVerticalPath = (props) => {
+export interface FlyoutProps extends VictoryCommonProps {
+  active?: boolean;
+  center?: {
+    x: number;
+    y: number;
+  };
+  className?: string;
+  clipPath?: string;
+  cornerRadius?: number;
+  data?: any[];
+  datum?: object;
+  dx?: number;
+  dy?: number;
+  events?: object;
+  id?: StringOrNumberOrCallback;
+  index?: number;
+  orientation?: OrientationTypes;
+  pathComponent?: React.ReactElement;
+  pointerLength?: number;
+  pointerWidth?: number;
+  role?: string;
+  shapeRendering?: string;
+  style?: VictoryStyleObject;
+  transform?: string;
+  x?: number;
+  y?: number;
+}
+
+interface FlyoutPathProps {
+  center: {
+    x: number;
+    y: number;
+  };
+  cornerRadius: number;
+  dx?: number;
+  dy?: number;
+  height: number;
+  orientation: OrientationTypes;
+  pointerLength: number;
+  pointerWidth: number;
+  width: number;
+  x: number;
+  y: number;
+}
+
+const getVerticalPath = (props: FlyoutPathProps) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } =
     props;
   const sign = orientation === "bottom" ? 1 : -1;
   const x = props.x + (props.dx || 0);
   const y = props.y + (props.dy || 0);
-  const centerX = isPlainObject(center) && center.x;
-  const centerY = isPlainObject(center) && center.y;
+  const centerX = center.x;
+  const centerY = center.y;
   const pointerEdge = centerY + sign * (height / 2);
   const oppositeEdge = centerY - sign * (height / 2);
   const rightEdge = centerX + width / 2;
@@ -35,14 +85,14 @@ const getVerticalPath = (props) => {
     z`;
 };
 
-const getHorizontalPath = (props) => {
+const getHorizontalPath = (props: FlyoutPathProps) => {
   const { pointerWidth, cornerRadius, orientation, width, height, center } =
     props;
   const sign = orientation === "left" ? 1 : -1;
   const x = props.x + (props.dx || 0);
   const y = props.y + (props.dy || 0);
-  const centerX = isPlainObject(center) && center.x;
-  const centerY = isPlainObject(center) && center.y;
+  const centerX = center.x;
+  const centerY = center.y;
   const pointerEdge = centerX - sign * (width / 2);
   const oppositeEdge = centerX + sign * (width / 2);
   const bottomEdge = centerY + height / 2;
@@ -66,14 +116,14 @@ const getHorizontalPath = (props) => {
     z`;
 };
 
-const getFlyoutPath = (props) => {
+const getFlyoutPath = (props: FlyoutPathProps) => {
   const orientation = props.orientation || "top";
   return orientation === "left" || orientation === "right"
     ? getHorizontalPath(props)
     : getVerticalPath(props);
 };
 
-const evaluateProps = (props) => {
+const evaluateProps = (props: FlyoutProps) => {
   /**
    * Potential evaluated props are:
    * `id`
@@ -82,7 +132,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(props.style, props);
 
-  return assign({}, props, { id, style });
+  return { ...props, id, style };
 };
 
 const defaultProps = {
@@ -91,15 +141,36 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-const Flyout = (initialProps) => {
+export const Flyout: React.FC<FlyoutProps> = (initialProps) => {
   const props = evaluateProps({ ...defaultProps, ...initialProps });
   const userProps = UserProps.getSafeUserProps(props);
 
-  return React.cloneElement(props.pathComponent, {
+  // check for required props for this subcomponent
+  // they should be passed in from the wrapper
+  UserProps.assert(props.height, "Flyout props[height] is undefined");
+  UserProps.assert(props.width, "Flyout props[width] is undefined");
+  UserProps.assert(props.x, "Flyout props[x] is undefined");
+  UserProps.assert(props.y, "Flyout props[y] is undefined");
+
+  const flyoutPathProps: FlyoutPathProps = {
+    center: props.center || { x: 0, y: 0 },
+    cornerRadius: props.cornerRadius || 0,
+    dx: props.dx,
+    dy: props.dy,
+    height: props.height,
+    orientation: props.orientation || "top",
+    pointerLength: props.pointerLength || 0,
+    pointerWidth: props.pointerWidth || 0,
+    width: props.width,
+    x: props.x,
+    y: props.y,
+  };
+
+  return React.cloneElement(props.pathComponent!, {
     ...props.events,
     ...userProps,
     style: props.style,
-    d: getFlyoutPath(props),
+    d: getFlyoutPath(flyoutPathProps),
     className: props.className,
     shapeRendering: props.shapeRendering,
     role: props.role,
@@ -107,22 +178,3 @@ const Flyout = (initialProps) => {
     clipPath: props.clipPath,
   });
 };
-
-Flyout.propTypes = {
-  ...CommonProps.primitiveProps,
-  center: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-  cornerRadius: PropTypes.number,
-  datum: PropTypes.object,
-  dx: PropTypes.number,
-  dy: PropTypes.number,
-  height: PropTypes.number,
-  orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-  pathComponent: PropTypes.element,
-  pointerLength: PropTypes.number,
-  pointerWidth: PropTypes.number,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
-};
-
-export default Flyout;

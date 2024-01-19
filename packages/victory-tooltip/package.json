@@ -24,6 +24,9 @@
     "prop-types": "^15.8.1",
     "victory-core": "^36.8.2"
   },
+  "devDependencies": {
+    "victory-tooltip": "*"
+  },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
