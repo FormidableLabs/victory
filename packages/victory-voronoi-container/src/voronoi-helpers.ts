@@ -1,18 +1,20 @@
 import { Collection, Selection, Data, Helpers } from "victory-core";
 import {
   assign,
-  throttle,
   isFunction,
   isEmpty,
   includes,
   isString,
   isRegExp,
+  throttle,
 } from "lodash";
 import isEqual from "react-fast-compare";
 import Delaunay from "delaunay-find/lib/index.js";
 import React from "react";
 
-const VoronoiHelpers = {
+const ON_MOUSE_MOVE_THROTTLE_MS = 32;
+
+class VoronoiHelpersClass {
   withinBounds(props, point) {
     const { width, height, polar, origin, scale } = props;
     const padding = Helpers.getPadding(props, "voronoiPadding");
@@ -29,7 +31,7 @@ const VoronoiHelpers = {
       y >= padding.top &&
       y <= height - padding.bottom
     );
-  },
+  }
 
   getDatasets(props) {
     const minDomain = {
@@ -37,7 +39,7 @@ const VoronoiHelpers = {
       y: Collection.getMinValue(props.domain.y),
     };
     const children = React.Children.toArray(props.children);
-    const addMeta = (data, name, child) => {
+    const addMeta = (data, name?, child?) => {
       const continuous = child && child.type && child.type.continuous;
       const style = child ? child.props && child.props.style : props.style;
       return data.map((datum, index) => {
@@ -91,13 +93,13 @@ const VoronoiHelpers = {
     };
 
     return Helpers.reduceChildren(children, iteratee, props);
-  },
+  }
 
   findPoints(datasets, point) {
     return datasets.filter((d) => {
       return point._voronoiX === d._voronoiX && point._voronoiY === d._voronoiY;
     });
-  },
+  }
 
   withinRadius(point, mousePosition, radius) {
     if (!point) {
@@ -110,7 +112,7 @@ const VoronoiHelpers = {
     const distanceSquared =
       Math.pow(x - point[0], 2) + Math.pow(y - point[1], 2);
     return distanceSquared < Math.pow(radius, 2);
-  },
+  }
 
   getVoronoiPoints(props, mousePosition) {
     const datasets = this.getDatasets(props);
@@ -129,7 +131,7 @@ const VoronoiHelpers = {
       ? this.findPoints(datasets, datasets[index])
       : [];
     return { points, index };
-  },
+  }
 
   getActiveMutations(props, point) {
     const { childName, continuous } = point;
@@ -155,7 +157,7 @@ const VoronoiHelpers = {
         mutation: () => ({ active: true }),
       };
     });
-  },
+  }
 
   getInactiveMutations(props, point) {
     const { childName, continuous } = point;
@@ -180,10 +182,10 @@ const VoronoiHelpers = {
         mutation: () => null,
       };
     });
-  },
+  }
 
   // eslint-disable-next-line max-params
-  getParentMutation(activePoints, mousePosition, parentSVG, vIndex) {
+  getParentMutation(activePoints, mousePosition?, parentSVG?, vIndex?) {
     return [
       {
         target: "parent",
@@ -191,21 +193,21 @@ const VoronoiHelpers = {
         mutation: () => ({ activePoints, mousePosition, parentSVG, vIndex }),
       },
     ];
-  },
+  }
 
   onActivated(props, points) {
     if (isFunction(props.onActivated)) {
       props.onActivated(points, props);
     }
-  },
+  }
 
   onDeactivated(props, points) {
     if (isFunction(props.onDeactivated)) {
       props.onDeactivated(points, props);
     }
-  },
+  }
 
-  onMouseLeave(evt, targetProps) {
+  onMouseLeave = (evt, targetProps) => {
     const activePoints = targetProps.activePoints || [];
     this.onDeactivated(targetProps, activePoints);
     const inactiveMutations = activePoints.length
@@ -214,9 +216,9 @@ const VoronoiHelpers = {
         )
       : [];
     return this.getParentMutation([]).concat(...inactiveMutations);
-  },
+  };
 
-  onMouseMove(evt, targetProps) {
+  private handleMouseMove = (evt, targetProps) => {
     // eslint-disable-line max-statements
     const activePoints = targetProps.activePoints || [];
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
@@ -256,14 +258,12 @@ const VoronoiHelpers = {
         )
       : [];
     return parentMutations.concat(...inactiveMutations, ...activeMutations);
-  },
-};
+  };
 
-export default {
-  onMouseLeave: VoronoiHelpers.onMouseLeave.bind(VoronoiHelpers),
-  onMouseMove: throttle(
-    VoronoiHelpers.onMouseMove.bind(VoronoiHelpers),
-    32, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false },
-  ),
-};
+  onMouseMove = throttle(this.handleMouseMove, ON_MOUSE_MOVE_THROTTLE_MS, {
+    leading: true,
+    trailing: false,
+  });
+}
+
+export const VoronoiHelpers = new VoronoiHelpersClass();
