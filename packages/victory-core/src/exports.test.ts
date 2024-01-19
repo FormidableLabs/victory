@@ -408,6 +408,7 @@ describe("victory-core", () => {
             "getTransitionPropsFactory": [Function],
           },
           "UserProps": Object {
+            "assert": [Function],
             "getSafeUserProps": [Function],
             "withSafeUserProps": [Function],
           },
