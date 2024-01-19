@@ -1,7 +1,7 @@
 import React from "react";
 import { random, range } from "lodash";
 import { calculateD3Path } from "../../../test/helpers";
-import { VictoryVoronoi, Voronoi } from "victory-voronoi";
+import { VictoryVoronoi, VictoryVoronoiProps, Voronoi } from "victory-voronoi";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("components/victory-voronoi", () => {
@@ -19,8 +19,8 @@ describe("components/victory-voronoi", () => {
     it("renders an svg with the correct width and height", () => {
       const { container } = render(<VictoryVoronoi />);
       const svg = container.querySelector("svg");
-      expect(svg.style.width).toEqual("100%");
-      expect(svg.style.height).toEqual("100%");
+      expect(svg?.style.width).toEqual("100%");
+      expect(svg?.style.height).toEqual("100%");
     });
 
     it("renders an svg with the correct viewbox", () => {
@@ -33,7 +33,7 @@ describe("components/victory-voronoi", () => {
 
   describe("component rendering with data", () => {
     it("renders the correct d3 path", () => {
-      const props = {
+      const props: VictoryVoronoiProps = {
         width: 400,
         height: 300,
         padding: 50,
@@ -68,7 +68,7 @@ describe("components/victory-voronoi", () => {
 
       const renderedDataProps = screen
         .getAllByTestId("voronoi-1")
-        .map((node) => JSON.parse(node.getAttribute("data-props-json")));
+        .map((node) => JSON.parse(node.getAttribute("data-props-json") || ""));
       expect(renderedDataProps.map((props) => props.datum._x)).toEqual([
         0, 1, 2, 3, 4,
       ]);
@@ -91,7 +91,7 @@ describe("components/victory-voronoi", () => {
 
       const renderedDataProps = screen
         .getAllByTestId("voronoi-1")
-        .map((node) => JSON.parse(node.getAttribute("data-props-json")));
+        .map((node) => JSON.parse(node.getAttribute("data-props-json") || ""));
 
       expect(renderedDataProps.map((props) => props.datum._x)).toEqual([
         4, 3, 2, 1, 0,
@@ -125,7 +125,7 @@ describe("components/victory-voronoi", () => {
         />,
       );
       const svg = container.querySelector("svg");
-      fireEvent.click(svg);
+      fireEvent.click(svg!);
       expect(clickHandler).toBeCalled();
       // the first argument is the standard evt object
       expect(Object.keys(clickHandler.mock.calls[0][1])).toEqual(
@@ -164,7 +164,7 @@ describe("components/victory-voronoi", () => {
       const clickHandler = jest.fn();
       const { container } = render(
         <VictoryVoronoi
-          label="okay"
+          labels={["okay"]}
           events={[
             {
               target: "labels",
@@ -176,8 +176,7 @@ describe("components/victory-voronoi", () => {
 
       const labels = container.querySelectorAll("text");
 
-      // TODO: figure out why there's no labels rendering?
-      expect(labels).toHaveLength(0);
+      expect(labels).toHaveLength(1);
 
       labels.forEach((node, index) => {
         clickHandler.mockClear();
@@ -211,7 +210,7 @@ describe("components/victory-voronoi", () => {
           dataComponent={
             <Voronoi
               ariaLabel={({ datum }) => `${datum.x}`}
-              tabIndex={({ index }) => index + 6}
+              tabIndex={({ index }) => Number(index) + 6}
             />
           }
         />,

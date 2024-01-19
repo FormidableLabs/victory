@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  PropTypes as CustomPropTypes,
   Helpers,
   VictoryLabel,
   addEvents,
@@ -9,11 +8,34 @@ import {
   DefaultTransitions,
   Data,
   Domain,
-  CommonProps,
   UserProps,
+  EventPropTypeInterface,
+  EventsMixinClass,
+  VictoryCommonProps,
+  VictoryDatableProps,
+  VictoryLabelableProps,
+  VictoryMultiLabelableProps,
+  VictoryStyleInterface,
 } from "victory-core";
-import Voronoi from "./voronoi";
+import { Voronoi } from "./voronoi";
 import { getBaseProps } from "./helper-methods";
+
+export type VictoryVoronoiSortOrderType = "ascending" | "descending";
+
+export interface VictoryVoronoiProps
+  extends Omit<VictoryCommonProps, "polar">,
+    VictoryDatableProps,
+    VictoryLabelableProps,
+    VictoryMultiLabelableProps {
+  events?: EventPropTypeInterface<
+    string,
+    string | number | (string | number)[]
+  >[];
+  type?: number;
+  sortOrder?: VictoryVoronoiSortOrderType;
+  size?: number | { (data: any): number };
+  style?: VictoryStyleInterface;
+}
 
 const fallbackProps = {
   width: 450,
@@ -21,8 +43,11 @@ const fallbackProps = {
   padding: 50,
 };
 
-class VictoryVoronoi extends React.Component {
-  static animationWhitelist = [
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface VictoryVoronoiBase extends EventsMixinClass<VictoryVoronoiProps> {}
+
+class VictoryVoronoiBase extends React.Component<VictoryVoronoiProps> {
+  static animationWhitelist: (keyof VictoryVoronoiProps)[] = [
     "data",
     "domain",
     "height",
@@ -37,13 +62,7 @@ class VictoryVoronoi extends React.Component {
   static role = "voronoi";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    size: CustomPropTypes.nonNegative,
-  };
-
-  static defaultProps = {
+  static defaultProps: VictoryVoronoiProps = {
     containerComponent: <VictoryContainer />,
     dataComponent: <Voronoi />,
     labelComponent: <VictoryLabel />,
@@ -56,8 +75,9 @@ class VictoryVoronoi extends React.Component {
 
   static getDomain = Domain.getDomain;
   static getData = Data.getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
-  static expectedComponents = [
+  static getBaseProps = (props: VictoryVoronoiProps) =>
+    getBaseProps(props, fallbackProps);
+  static expectedComponents: (keyof VictoryVoronoiProps)[] = [
     "dataComponent",
     "labelComponent",
     "groupComponent",
@@ -69,7 +89,7 @@ class VictoryVoronoi extends React.Component {
     return !!this.props.animate;
   }
 
-  render() {
+  render(): React.ReactElement {
     const { animationWhitelist, role } = VictoryVoronoi;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
 
@@ -87,4 +107,4 @@ class VictoryVoronoi extends React.Component {
   }
 }
 
-export default addEvents(VictoryVoronoi);
+export const VictoryVoronoi = addEvents(VictoryVoronoiBase);

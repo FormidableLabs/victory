@@ -1,24 +1,35 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
 import React from "react";
-import PropTypes from "prop-types";
 import { assign } from "lodash";
 import {
   Helpers,
-  CommonProps,
   ClipPath,
   Path,
   Circle,
   UserProps,
+  VictoryCommonPrimitiveProps,
 } from "victory-core";
 
-const getVoronoiPath = (props) => {
+export interface VoronoiProps extends VictoryCommonPrimitiveProps {
+  circleComponent?: React.ReactElement;
+  clipId?: number | string;
+  clipPathComponent?: React.ReactElement;
+  datum?: any;
+  groupComponent?: React.ReactElement;
+  pathComponent?: React.ReactElement;
+  polygon?: [];
+  size?: number;
+  x?: number;
+  y?: number;
+}
+
+const getVoronoiPath = (props: VoronoiProps) => {
   const { polygon } = props;
   return Array.isArray(polygon) && polygon.length
-    ? `M ${props.polygon.join("L")} Z`
+    ? `M ${props.polygon?.join("L")} Z`
     : "";
 };
 
-const evaluateProps = (props) => {
+function evaluateProps<T extends VoronoiProps>(props: T) {
   /**
    * Potential evaluated props are:
    * `aria-label`
@@ -33,7 +44,7 @@ const evaluateProps = (props) => {
   const style = Helpers.evaluateStyle(props.style, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
   return assign({}, props, { ariaLabel, id, size, style, tabIndex });
-};
+}
 
 const defaultProps = {
   pathComponent: <Path />,
@@ -44,9 +55,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-const Voronoi = (initialProps) => {
+export const Voronoi = (initialProps: VoronoiProps) => {
   const props = evaluateProps({ ...defaultProps, ...initialProps });
-
   const {
     ariaLabel,
     role,
@@ -58,6 +68,7 @@ const Voronoi = (initialProps) => {
     size,
     tabIndex,
   } = props;
+
   const voronoiPath = getVoronoiPath(props);
   const sharedProps = {
     "aria-label": ariaLabel,
@@ -99,19 +110,3 @@ const Voronoi = (initialProps) => {
     d: voronoiPath,
   });
 };
-
-Voronoi.propTypes = {
-  ...CommonProps.primitiveProps,
-  circleComponent: PropTypes.element,
-  clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  clipPathComponent: PropTypes.element,
-  datum: PropTypes.object,
-  groupComponent: PropTypes.element,
-  pathComponent: PropTypes.element,
-  polygon: PropTypes.array,
-  size: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
-};
-
-export default Voronoi;
