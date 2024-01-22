@@ -75,7 +75,7 @@ const combineDefaultEvents = (defaultEvents: any[]) => {
   return events.filter(Boolean);
 };
 
-const combineContainerMixins = (
+export const combineContainerMixins = (
   mixins: MixinFunction[],
   Container: React.ComponentType<any>,
 ) => {
@@ -138,7 +138,7 @@ const checkBehaviorName = (
   }
 };
 
-const makeCreateContainerFunction =
+export const makeCreateContainerFunction =
   (
     mixinMap: Record<ContainerType, MixinFunction[]>,
     Container: React.ComponentType<any>,
@@ -169,7 +169,7 @@ const makeCreateContainerFunction =
     return combineContainerMixins([...firstMixins, ...secondMixins], Container);
   };
 
-const createContainer = makeCreateContainerFunction(
+export const createContainer = makeCreateContainerFunction(
   {
     zoom: [zoomContainerMixin],
     voronoi: [voronoiContainerMixin],
@@ -179,5 +179,3 @@ const createContainer = makeCreateContainerFunction(
   },
   VictoryContainer,
 );
-
-export { createContainer, makeCreateContainerFunction, combineContainerMixins };
