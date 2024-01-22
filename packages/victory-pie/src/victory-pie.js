@@ -39,7 +39,9 @@ const fallbackProps = {
     "#000000",
   ],
   labelPosition: "centroid",
-  labelIndicatorType: "single"
+  labelIndicatorType: "single",
+  labelIndicatorInnerOffset: 25,
+  labelIndicatorOuterOffset: 15
 };
 
 const datumHasXandY = (datum) => {
@@ -154,6 +156,8 @@ class VictoryPie extends React.Component {
       PropTypes.element,
       PropTypes.bool
     ]),
+    labelIndicatorInnerOffset :PropTypes.number,
+    labelIndicatorOuterOffset :PropTypes.number, 
     labelIndicatorType: PropTypes.oneOf(["single", "multiple"]),
     labelPlacement: PropTypes.oneOfType([
       PropTypes.func,
@@ -269,14 +273,10 @@ class VictoryPie extends React.Component {
         groupComponent,
         labelIndicator,
         labelIndicatorType,
-        labelRadius,
-        radius, 
         labelPosition
-      } = props;
-
+      } = props;    
       const showIndicator = 
           labelIndicator && 
-          labelRadius > radius && 
           labelPosition === "centroid" ;
 
       let labelIndicatorComponents=null;
@@ -313,7 +313,7 @@ class VictoryPie extends React.Component {
         .filter(Boolean);
 
         if(showIndicator){
-          let labelIndicatorComponent= <LineSegment/>;
+          let labelIndicatorComponent= <LineSegment />;
           if(labelIndicatorType === "multiple" && labelIndicator === true){
             labelIndicatorComponent= <PolylineSegment/> 
           }
@@ -321,6 +321,7 @@ class VictoryPie extends React.Component {
             // pass user provided react component
             labelIndicatorComponent = labelIndicator;
           }
+
            labelIndicatorComponents =  this.dataKeys
               .map((_dataKey, index) => {
                   const labelIndicatorProps = this.getComponentProps(labelIndicatorComponent, 

@@ -590,28 +590,61 @@ export const DisableInlineStyles = () => {
 export const LabelIndicator = () => {
   return (
     <div style={containerStyle}>
-      <VictoryPie labelIndicator innerRadius={0} radius={50} labelRadius={80} padAngle={0.5}/>
-      <VictoryPie
-        labelRadius={100}
-        innerRadius={50} radius={75}
-        labelIndicator={<LineSegment style = {{stroke:"red",strokeDasharray:1,
-        fill: "none",}}/>}
+       {/* <VictoryPie 
+        style={parentStyle}
+        labelIndicator 
+      />
+
+      <VictoryPie 
+        style={parentStyle}
+        labelIndicator 
+        radius={90} 
+        labelRadius={100} 
+        labelIndicatorInnerOffset={45}
+        labelIndicatorOuterOffset={30}
+      />
+       <VictoryPie
+        style={parentStyle}
+        innerRadius={50} 
+        labelIndicator
       />
       <VictoryPie
-        labelRadius={100}
+        style={parentStyle}
+        innerRadius={50} 
+        labelIndicator
+        labelIndicatorInnerOffset = {10}
+        labelIndicatorOuterOffset = {15}
+      />
+      <VictoryPie
+        style={parentStyle}
+        innerRadius={50} 
+        labelIndicator={<LineSegment />}
+      />
+       <VictoryPie
+        style={parentStyle}
+        labelRadius={90}
         innerRadius={50} 
         radius={75}
+        labelIndicator={<LineSegment style = {{stroke:"red",strokeDasharray:1,
+        fill: "none",}}/>}
+      /> */}
+      <VictoryPie
+        style={parentStyle}
+        // labelRadius={100}
+        // innerRadius={50} 
+        // radius={75}
         labelIndicator
         labelIndicatorType={"multiple"}
       />
-       <VictoryPie
-        labelRadius={100}
+       {/* <VictoryPie
+        style={parentStyle}
+        labelRadius={90}
         innerRadius={50} 
         radius={75}
         labelIndicatorType={"multiple"}
         labelIndicator={<PolylineSegment style = {{stroke:"red",strokeDasharray:1,
         fill: "none",}}/>}
-      />
+      /> */}
     </div>
   );
 };
