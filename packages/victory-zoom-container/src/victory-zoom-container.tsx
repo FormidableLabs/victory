@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { defaults, isFunction } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
@@ -6,33 +5,38 @@ import {
   VictoryContainer,
   VictoryClipContainer,
   Data,
-  PropTypes as CustomPropTypes,
+  VictoryContainerProps,
+  DomainTuple,
 } from "victory-core";
 
 const DEFAULT_DOWNSAMPLE = 150;
 
-export const zoomContainerMixin = (base) =>
-  class VictoryZoomContainer extends base {
-    static displayName = "VictoryZoomContainer";
+export type ZoomDimensionType = "x" | "y";
 
-    static propTypes = {
-      ...VictoryContainer.propTypes,
-      allowPan: PropTypes.bool,
-      allowZoom: PropTypes.bool,
-      clipContainerComponent: PropTypes.element.isRequired,
-      disable: PropTypes.bool,
-      downsample: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-      minimumZoom: PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number,
-      }),
-      onZoomDomainChange: PropTypes.func,
-      zoomDimension: PropTypes.oneOf(["x", "y"]),
-      zoomDomain: PropTypes.shape({
-        x: CustomPropTypes.domain,
-        y: CustomPropTypes.domain,
-      }),
-    };
+export interface VictoryZoomContainerProps extends VictoryContainerProps {
+  allowPan?: boolean;
+  allowZoom?: boolean;
+  clipContainerComponent?: React.ReactElement;
+  disable?: boolean;
+  downsample?: number | boolean;
+  minimumZoom?: { x?: number; y?: number };
+  onZoomDomainChange?: (
+    domain: { x: DomainTuple; y: DomainTuple },
+    props: VictoryZoomContainerProps,
+  ) => void;
+  zoomDimension?: ZoomDimensionType;
+  zoomDomain?: { x?: DomainTuple; y?: DomainTuple };
+}
+
+type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
+
+export function zoomContainerMixin<
+  TBase extends ComponentClass<TProps>,
+  TProps extends VictoryZoomContainerProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryZoomContainer extends Base {
+    static displayName = "VictoryZoomContainer";
 
     static defaultProps = {
       ...VictoryContainer.defaultProps,
@@ -42,7 +46,7 @@ export const zoomContainerMixin = (base) =>
       zoomActive: false,
     };
 
-    static defaultEvents = (props) => {
+    static defaultEvents = (props: TProps) => {
       return [
         {
           target: "parent",
@@ -100,7 +104,7 @@ export const zoomContainerMixin = (base) =>
       ];
     };
 
-    clipDataComponents(children, props) {
+    clipDataComponents(children: React.ReactElement[], props) {
       const { scale, clipContainerComponent, polar, origin, horizontal } =
         props;
       const rangeX = horizontal ? scale.y.range() : scale.x.range();
@@ -122,7 +126,9 @@ export const zoomContainerMixin = (base) =>
         if (!Data.isDataComponent(child)) {
           return child;
         }
-        return React.cloneElement(child, { groupComponent });
+        return React.cloneElement(child as React.ReactElement, {
+          groupComponent,
+        });
       });
     }
 
@@ -179,10 +185,12 @@ export const zoomContainerMixin = (base) =>
     }
 
     modifyChildren(props) {
-      const childComponents = React.Children.toArray(props.children);
-      // eslint-disable-next-line max-statements
+      const childComponents = React.Children.toArray(
+        props.children,
+      ) as React.ReactElement[];
+
       return childComponents.map((child) => {
-        const role = child.type && child.type.role;
+        const role = child.type && (child.type as any).role;
         const isDataComponent = Data.isDataComponent(child);
         const { currentDomain, zoomActive, allowZoom } = props;
         const originalDomain = defaults({}, props.originalDomain, props.domain);
@@ -227,13 +235,12 @@ export const zoomContainerMixin = (base) =>
     }
 
     // Overrides method in VictoryContainer
-    getChildren(props) {
+    getChildren(props: TProps) {
       const children = this.modifyChildren(props);
       return this.clipDataComponents(children, props);
     }
   };
+}
 
-export default zoomContainerMixin(VictoryContainer);
-// @ts-expect-error IMPORTANT: when converting this file to TypeScript, you must export the type as well:
-// export const VictoryZoomContainer = zoomContainerMixin(VictoryContainer);
-// export type VictoryZoomContainer = typeof VictoryZoomContainer;
+export const VictoryZoomContainer = zoomContainerMixin(VictoryContainer);
+export type VictoryZoomContainer = typeof VictoryZoomContainer;
