@@ -3,7 +3,7 @@ import { Children } from "react";
 import { Selection, Collection, Wrapper } from "victory-core";
 import { throttle, isFunction, defaults, delay } from "lodash";
 
-const RawZoomHelpers = {
+export const RawZoomHelpers = {
   checkDomainEquality(a, b) {
     const checkDimension = (dim) => {
       const val1 = a && a[dim];
@@ -361,9 +361,7 @@ const RawZoomHelpers = {
   },
 };
 
-export { RawZoomHelpers }; // allow victory-native to extend these helpers
-
-export default {
+export const ZoomHelpers = {
   checkDomainEquality: RawZoomHelpers.checkDomainEquality.bind(RawZoomHelpers),
   onMouseDown: RawZoomHelpers.onMouseDown.bind(RawZoomHelpers),
   onMouseUp: RawZoomHelpers.onMouseUp.bind(RawZoomHelpers),
