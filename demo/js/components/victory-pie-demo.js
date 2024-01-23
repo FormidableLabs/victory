@@ -323,13 +323,13 @@ export default class App extends React.Component {
           />
            <VictoryPie
             style={{ parent: parentStyle }}
-            labelIndicator={<LineSegment style={{opacity:"0.3",strokeWidth:"1px",strokeDasharray: "1"}}/>}
+            labelIndicator={<LineSegment style={{opacity:"1",strokeWidth:"1px",stroke: "red"}}/>}
           />
           <VictoryPie
             style={{ parent: parentStyle }}
-            labelIndicator={<LineSegment style={{opacity:"0.3",strokeWidth:"1px",strokeDasharray: "1"}}/>}
+            labelIndicator={<LineSegment style={{opacity:"1",strokeWidth:"1px",strokeDasharray: "1",stroke: "red"}}/>}
             labelIndicatorInnerOffset={45}
-            labelIndicatorOuterOffset={30}
+            labelIndicatorOuterOffset={15}
           />
         </div>
       </div>
