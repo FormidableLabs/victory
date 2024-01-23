@@ -41,7 +41,8 @@ const fallbackProps = {
   labelPosition: "centroid",
   labelIndicatorType: "single",
   labelIndicatorInnerOffset: 25,
-  labelIndicatorOuterOffset: 15
+  labelIndicatorOuterOffset: 15,
+  labelIndicatorMiddleOffset: 10
 };
 
 const datumHasXandY = (datum) => {
@@ -157,6 +158,7 @@ class VictoryPie extends React.Component {
       PropTypes.bool
     ]),
     labelIndicatorInnerOffset :PropTypes.number,
+    labelIndicatorMiddleOffset :PropTypes.number,
     labelIndicatorOuterOffset :PropTypes.number, 
     labelIndicatorType: PropTypes.oneOf(["single", "multiple"]),
     labelPlacement: PropTypes.oneOfType([

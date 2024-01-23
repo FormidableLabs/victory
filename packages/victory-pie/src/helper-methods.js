@@ -288,24 +288,47 @@ export const getLabelIndicatorPropsForPolylineSegment =(props,calculatedValues,l
     innerRadius,
     radius,
     slice:{startAngle,endAngle},
-    index
+    index,
+    labelIndicatorInnerOffset,
+    labelIndicatorMiddleOffset,
+    labelIndicatorOuterOffset,
   } = props;
   const {height,width}=calculatedValues;
-  const {calculatedLabelRadius} = labelProps;
+  const {calculatedLabelRadius,textAnchor} = labelProps;
   // calculation
-
+  
   const middleRadius = getAverage([innerRadius, radius]);
   const midAngle = getAverage([endAngle, startAngle]);
   const centerX = width / 2;
   const centerY = height / 2;
-  const x1 = centerX + getXOffset(middleRadius, midAngle);
-  const y1 = centerY + getYOffset(middleRadius, midAngle);
+  const innerOffset =  middleRadius + labelIndicatorInnerOffset; 
+  let middleOffset;
+  let outerOffset;
 
-  const offSetMiddle = 2 * radius - middleRadius;
-  const xMiddle = centerX + getXOffset(offSetMiddle, midAngle);
-  const yMiddle = centerY + getYOffset(offSetMiddle, midAngle);
+  if(innerRadius > 0 ){ 
+    middleOffset = middleRadius + labelIndicatorMiddleOffset;
+    outerOffset = middleRadius + labelIndicatorOuterOffset;
+  } else {
+    middleOffset = calculatedLabelRadius - middleRadius + labelIndicatorMiddleOffset;
+    outerOffset = calculatedLabelRadius - labelIndicatorOuterOffset;
+  }
 
-  const offSetEnd = 2.5 * radius - middleRadius;
+  const x1 = centerX + getXOffset(innerOffset, midAngle);
+  const y1 = centerY + getYOffset(innerOffset, midAngle);
+
+  const offSetMiddle = 2 * radius - middleOffset;
+  const additionalOffset = 5 * Math.PI/180;
+  let xMiddle
+  let yMiddle
+ if(textAnchor === "start" ){
+  xMiddle = centerX + getXOffset(offSetMiddle, midAngle+additionalOffset);
+   yMiddle = centerY + getYOffset(offSetMiddle, midAngle+additionalOffset);
+ } else {
+   xMiddle = centerX + getXOffset(offSetMiddle, midAngle-additionalOffset);
+   yMiddle = centerY + getYOffset(offSetMiddle, midAngle-additionalOffset);
+ }
+
+  const offSetEnd = 2.5 * radius - outerOffset;
   const xEnd = centerX + getXOffset(offSetEnd, midAngle);
   const points =`${x1},${y1} ${xMiddle},${yMiddle} ${xEnd},${yMiddle}`;
   const labelIndicatorProps = {

@@ -590,7 +590,7 @@ export const DisableInlineStyles = () => {
 export const LabelIndicator = () => {
   return (
     <div style={containerStyle}>
-       {/* <VictoryPie 
+       <VictoryPie 
         style={parentStyle}
         labelIndicator 
       />
@@ -627,16 +627,16 @@ export const LabelIndicator = () => {
         radius={75}
         labelIndicator={<LineSegment style = {{stroke:"red",strokeDasharray:1,
         fill: "none",}}/>}
-      /> */}
+      />
       <VictoryPie
         style={parentStyle}
-        // labelRadius={100}
-        // innerRadius={50} 
-        // radius={75}
         labelIndicator
         labelIndicatorType={"multiple"}
+        labelIndicatorInnerOffset = {25}
+        labelIndicatorMiddleOffset = {15}
+        labelIndicatorOuterOffset = {10}
       />
-       {/* <VictoryPie
+       <VictoryPie
         style={parentStyle}
         labelRadius={90}
         innerRadius={50} 
@@ -644,7 +644,7 @@ export const LabelIndicator = () => {
         labelIndicatorType={"multiple"}
         labelIndicator={<PolylineSegment style = {{stroke:"red",strokeDasharray:1,
         fill: "none",}}/>}
-      /> */}
+      />
     </div>
   );
 };
