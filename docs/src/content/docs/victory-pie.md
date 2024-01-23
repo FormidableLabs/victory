@@ -519,6 +519,61 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 y={(d) => d.value + d.error}
 ```
 
+## labelIndicator
+
+`type: boolean || element`
+
+The `labelIndicator` prop defines the label indicator line between labels and the pie chart. If this prop is used as a boolean,then the default indicator will be displayed. To customize or pass your own styling `<LineSegment/>` can be passed to labelIndicator. LabelIndicator is functional only when labelPosition = "centroid". To adjust the labelIndicator length, `labelIndicatorInnerOffset` and `labelIndicatorOuterOffset` props can be used alongside labelIndicator. 
+
+```playground
+<VictoryPie
+  data={sampleData}
+  labelIndicator 
+  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
+/>
+<VictoryPie
+  data={sampleData}
+  labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
+  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
+/>
+<VictoryPie
+  data={sampleData}
+  labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
+  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
+  labelIndicatorInnerOffset = {10}
+  labelIndicatorOuterOffset = {15}
+/>
+```
+## labelIndicatorInnerOffset
+
+`type: number`
+
+The `labelIndicatorInnerOffset` prop defines the offset by which the indicator length inside pie chart is being drawn. Higher the number shorter the length.
+
+```playground
+<VictoryPie
+  data={sampleData}
+  labelIndicator
+  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
+  labelIndicatorInnerOffset = {10}
+/>
+```
+
+## labelIndicatorOuterOffset
+
+`type: number`
+
+The `labelIndicatorOuterOffset` prop defines the offset by which the indicator length outside the pie chart is being drawn. Higher the number shorter the length.
+
+```playground
+<VictoryPie
+  data={sampleData}
+  labelIndicator
+  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
+  labelIndicatorOuterOffset = {10}
+/>
+```
+
 [animations guide]: /guides/animations
 [data accessors guide]: /guides/data-accessors
 [custom components guide]: /guides/custom-components
