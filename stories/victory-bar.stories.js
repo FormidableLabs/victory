@@ -330,7 +330,7 @@ export const Data = () => {
             { animal: "Bird", pet: 15, wild: 40 },
           ]}
           x={"animal"}
-          y={(data) => - data.wild + data.pet}
+          y={(data) => data.pet + data.wild}
         />
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>

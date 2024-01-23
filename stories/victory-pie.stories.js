@@ -590,45 +590,40 @@ export const DisableInlineStyles = () => {
 export const LabelIndicator = () => {
   return (
     <div style={containerStyle}>
-       <VictoryPie 
-        style={parentStyle}
-        labelIndicator 
-      />
+      <VictoryPie style={parentStyle} labelIndicator />
 
-      <VictoryPie 
+      <VictoryPie
         style={parentStyle}
-        labelIndicator 
-        radius={90} 
-        labelRadius={100} 
+        labelIndicator
+        radius={90}
+        labelRadius={100}
         labelIndicatorInnerOffset={45}
         labelIndicatorOuterOffset={30}
       />
-       <VictoryPie
+      <VictoryPie style={parentStyle} innerRadius={50} labelIndicator />
+      <VictoryPie
         style={parentStyle}
-        innerRadius={50} 
+        innerRadius={50}
         labelIndicator
+        labelIndicatorInnerOffset={10}
+        labelIndicatorOuterOffset={15}
       />
       <VictoryPie
         style={parentStyle}
-        innerRadius={50} 
-        labelIndicator
-        labelIndicatorInnerOffset = {10}
-        labelIndicatorOuterOffset = {15}
-      />
-      <VictoryPie
-        style={parentStyle}
-        innerRadius={50} 
+        innerRadius={50}
         labelIndicator={<LineSegment />}
       />
-       <VictoryPie
+      <VictoryPie
         style={parentStyle}
         labelRadius={90}
-        innerRadius={50} 
+        innerRadius={50}
         radius={75}
-        labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,
-        fill: "none",}}/>}
+        labelIndicator={
+          <LineSegment
+            style={{ stroke: "red", strokeDasharray: 1, fill: "none" }}
+          />
+        }
       />
     </div>
   );
 };
-

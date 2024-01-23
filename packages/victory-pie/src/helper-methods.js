@@ -100,7 +100,7 @@ const getLabelText = (props, datum, index) => {
   return checkForValidText(text);
 };
 
-const getLabelArc = ( labelRadius) => {
+const getLabelArc = (labelRadius) => {
   return d3Shape.arc().outerRadius(labelRadius).innerRadius(labelRadius);
 };
 
@@ -198,7 +198,11 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     labelStyle,
     assign({ labelRadius, text }, dataProps),
   );
-  const calculatedLabelRadius = getCalculatedLabelRadius(defaultRadius, labelRadius, evaluatedStyle)
+  const calculatedLabelRadius = getCalculatedLabelRadius(
+    defaultRadius,
+    labelRadius,
+    evaluatedStyle,
+  );
   const labelArc = getLabelArc(calculatedLabelRadius);
   const position = getLabelPosition(labelArc, slice, labelPosition);
   const baseAngle = getBaseLabelAngle(slice, labelPosition, labelStyle);
@@ -223,7 +227,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     textAnchor,
     verticalAnchor,
     angle: labelAngle,
-    calculatedLabelRadius
+    calculatedLabelRadius,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -234,54 +238,64 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
 };
 
 export const radian = Math.PI / 180;
-export const getXOffsetMultiplayerByAngle = angle => Math.cos(angle - 90 * radian);
-export const getYOffsetMultiplayerByAngle = angle => Math.sin(angle - 90 * radian);
-export const getXOffset = (offset, angle) => offset * getXOffsetMultiplayerByAngle(angle);
-export const getYOffset = (offset, angle) => offset * getYOffsetMultiplayerByAngle(angle);
-export const getAverage = array => array.reduce((acc, cur) => acc + cur, 0) / array.length;
+export const getXOffsetMultiplayerByAngle = (angle) =>
+  Math.cos(angle - 90 * radian);
+export const getYOffsetMultiplayerByAngle = (angle) =>
+  Math.sin(angle - 90 * radian);
+export const getXOffset = (offset, angle) =>
+  offset * getXOffsetMultiplayerByAngle(angle);
+export const getYOffset = (offset, angle) =>
+  offset * getYOffsetMultiplayerByAngle(angle);
+export const getAverage = (array) =>
+  array.reduce((acc, cur) => acc + cur, 0) / array.length;
 
-export const getLabelIndicatorPropsForLineSegment =(props,calculatedValues,labelProps)=>{
+export const getLabelIndicatorPropsForLineSegment = (
+  props,
+  calculatedValues,
+  labelProps,
+) => {
   const {
     innerRadius,
     radius,
-    slice:{startAngle,endAngle},
+    slice: { startAngle, endAngle },
     labelIndicatorInnerOffset,
     labelIndicatorOuterOffset,
-    index
+    index,
   } = props;
 
-  const {height,width}=calculatedValues;
-  const {calculatedLabelRadius} = labelProps;
+  const { height, width } = calculatedValues;
+  const { calculatedLabelRadius } = labelProps;
   // calculation
   const middleRadius = getAverage([innerRadius, radius]);
   const midAngle = getAverage([endAngle, startAngle]);
   const centerX = width / 2;
   const centerY = height / 2;
-  const innerOffset =  middleRadius + labelIndicatorInnerOffset; 
+  const innerOffset = middleRadius + labelIndicatorInnerOffset;
   let outerOffset;
 
-  if(innerRadius > 0 ){
-    outerOffset = middleRadius + labelIndicatorOuterOffset
+  if (innerRadius > 0) {
+    outerOffset = middleRadius + labelIndicatorOuterOffset;
   } else {
-    outerOffset = calculatedLabelRadius - middleRadius + labelIndicatorOuterOffset
+    outerOffset =
+      calculatedLabelRadius - middleRadius + labelIndicatorOuterOffset;
   }
 
   const x1 = centerX + getXOffset(innerOffset, midAngle);
   const y1 = centerY + getYOffset(innerOffset, midAngle);
 
-  const offSetEnd = 2 * radius - outerOffset ;
+  const offSetEnd = 2 * radius - outerOffset;
   const x2 = centerX + getXOffset(offSetEnd, midAngle);
   const y2 = centerY + getYOffset(offSetEnd, midAngle);
 
-  const labelIndicatorProps ={
-     x1,
-     y1,
-     x2,
-     y2,
-    index
-  }
+  const labelIndicatorProps = {
+    x1,
+    y1,
+    x2,
+    y2,
+    index,
+  };
   return defaults({}, labelIndicatorProps);
-}
+};
 
 export const getBaseProps = (props, fallbackProps) => {
   props = Helpers.modifyProps(props, fallbackProps, "pie");
@@ -344,14 +358,15 @@ export const getBaseProps = (props, fallbackProps) => {
         assign({}, props, dataProps),
         calculatedValues,
       );
-      if(labelIndicator ){
-        const labelProps = childProps[eventKey].labels
-        if(labelProps.calculatedLabelRadius > radius){
-          childProps[eventKey].labelIndicators = getLabelIndicatorPropsForLineSegment(
-            assign({}, props, dataProps),
-            calculatedValues,
-            labelProps
-          )
+      if (labelIndicator) {
+        const labelProps = childProps[eventKey].labels;
+        if (labelProps.calculatedLabelRadius > radius) {
+          childProps[eventKey].labelIndicators =
+            getLabelIndicatorPropsForLineSegment(
+              assign({}, props, dataProps),
+              calculatedValues,
+              labelProps,
+            );
         }
       }
     }

@@ -150,13 +150,10 @@ class VictoryPie extends React.Component {
       PropTypes.func,
     ]),
     labelComponent: PropTypes.element,
-    labelIndicator: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.bool
-    ]),
-    labelIndicatorInnerOffset :PropTypes.number,
-    labelIndicatorMiddleOffset :PropTypes.number,
-    labelIndicatorOuterOffset :PropTypes.number, 
+    labelIndicator: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
+    labelIndicatorInnerOffset: PropTypes.number,
+    labelIndicatorMiddleOffset: PropTypes.number,
+    labelIndicatorOuterOffset: PropTypes.number,
     labelPlacement: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
@@ -256,7 +253,7 @@ class VictoryPie extends React.Component {
     "labelComponent",
     "groupComponent",
     "containerComponent",
-    "labelIndicatorComponent"
+    "labelIndicatorComponent",
   ];
 
   // Overridden in victory-native
@@ -264,77 +261,66 @@ class VictoryPie extends React.Component {
     return Boolean(this.props.animate);
   }
 
-  renderComponents(props, shouldRenderDatum = datumHasXandY){
-      const { 
-        dataComponent, 
-        labelComponent,
-        groupComponent,
-        labelIndicator,
-        labelPosition
-      } = props;    
-      const showIndicator = 
-          labelIndicator && 
-          labelPosition === "centroid" ;
+  renderComponents(props, shouldRenderDatum = datumHasXandY) {
+    const {
+      dataComponent,
+      labelComponent,
+      groupComponent,
+      labelIndicator,
+      labelPosition,
+    } = props;
+    const showIndicator = labelIndicator && labelPosition === "centroid";
 
-      let labelIndicatorComponents=null;
+    let labelIndicatorComponents = null;
 
-      const dataComponents = this.dataKeys.reduce(
-        (validDataComponents, _dataKey, index) => {
-          const dataProps = this.getComponentProps(
-            dataComponent,
-            "data",
-            index,
+    const dataComponents = this.dataKeys.reduce(
+      (validDataComponents, _dataKey, index) => {
+        const dataProps = this.getComponentProps(dataComponent, "data", index);
+        if (shouldRenderDatum(dataProps.datum)) {
+          validDataComponents.push(
+            React.cloneElement(dataComponent, dataProps),
           );
-          if (shouldRenderDatum(dataProps.datum)) {
-            validDataComponents.push(
-              React.cloneElement(dataComponent, dataProps),
-            );
-          }
-          return validDataComponents;
-        },
-        [],
-      );
-
-      const labelComponents = this.dataKeys
-        .map((_dataKey, index) => {
-          const labelProps = this.getComponentProps(
-            labelComponent,
-            "labels",
-            index,
-          );
-          if (labelProps.text !== undefined && labelProps.text !== null) {
-            return React.cloneElement(labelComponent, labelProps);
-          }
-          return undefined;
-        })
-        .filter(Boolean);
-
-        if(showIndicator){
-          let labelIndicatorComponent= <LineSegment />;
-          if( typeof labelIndicator === "object"){
-            // pass user provided react component
-            labelIndicatorComponent = labelIndicator;
-          }
-
-           labelIndicatorComponents =  this.dataKeys
-              .map((_dataKey, index) => {
-                  const labelIndicatorProps = this.getComponentProps(labelIndicatorComponent, 
-                    "labelIndicators",
-                    index);
-                  return React.cloneElement(labelIndicatorComponent, labelIndicatorProps);
-              })
         }
-        const children = showIndicator ? [
-          ...dataComponents,
-          ...labelComponents,
-          ...labelIndicatorComponents,
-        ]:[
-          ...dataComponents,
-          ...labelComponents]
-        return this.renderContainer(groupComponent, children);
-        
+        return validDataComponents;
+      },
+      [],
+    );
+
+    const labelComponents = this.dataKeys
+      .map((_dataKey, index) => {
+        const labelProps = this.getComponentProps(
+          labelComponent,
+          "labels",
+          index,
+        );
+        if (labelProps.text !== undefined && labelProps.text !== null) {
+          return React.cloneElement(labelComponent, labelProps);
+        }
+        return undefined;
+      })
+      .filter(Boolean);
+
+    if (showIndicator) {
+      let labelIndicatorComponent = <LineSegment />;
+      if (typeof labelIndicator === "object") {
+        // pass user provided react component
+        labelIndicatorComponent = labelIndicator;
+      }
+
+      labelIndicatorComponents = this.dataKeys.map((_dataKey, index) => {
+        const labelIndicatorProps = this.getComponentProps(
+          labelIndicatorComponent,
+          "labelIndicators",
+          index,
+        );
+        return React.cloneElement(labelIndicatorComponent, labelIndicatorProps);
+      });
+    }
+    const children = showIndicator
+      ? [...dataComponents, ...labelComponents, ...labelIndicatorComponents]
+      : [...dataComponents, ...labelComponents];
+    return this.renderContainer(groupComponent, children);
   }
-  
 
   render() {
     const { animationWhitelist, role } = VictoryPie;
