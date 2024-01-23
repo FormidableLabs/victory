@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { evaluateProp } from "../victory-util/helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 
 export interface TextProps extends VictoryCommonPrimitiveProps {
@@ -9,19 +9,22 @@ export interface TextProps extends VictoryCommonPrimitiveProps {
 }
 
 export const Text = (props: TextProps) => {
-  const { children, title, desc, ...rest } = props;
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars --
+   * origin conflicts with the SVG element's origin attribute
+   */
+  const { children, desc, id, origin, tabIndex, title, ...rest } = props;
+
+  const svgProps: React.SVGProps<SVGTextElement> = {
+    id: evaluateProp(id, props)?.toString(),
+    tabIndex: evaluateProp(tabIndex, props),
+    ...rest,
+  };
+
   return (
-    // @ts-expect-error FIXME: "id cannot be a number"
-    <text {...rest}>
+    <text {...svgProps}>
       {title && <title>{title}</title>}
       {desc && <desc>{desc}</desc>}
       {children}
     </text>
   );
-};
-
-Text.propTypes = {
-  children: PropTypes.node,
-  desc: PropTypes.string,
-  title: PropTypes.string,
 };

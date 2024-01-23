@@ -297,8 +297,8 @@ export const getLabelIndicatorPropsForLineSegment = (
   return defaults({}, labelIndicatorProps);
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  props = Helpers.modifyProps(props, fallbackProps, "pie");
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const props = Helpers.modifyProps(initialProps, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
   const {
     slices,

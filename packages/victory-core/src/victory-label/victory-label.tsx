@@ -38,7 +38,7 @@ export interface VictoryLabelProps {
   capHeight?: StringOrNumberOrCallback;
   children?: StringOrNumberOrCallback;
   className?: string;
-  datum?: object;
+  datum?: Record<string, any>;
   data?: any[];
   desc?: string;
   direction?: string;
@@ -121,8 +121,10 @@ const getStyles = (style, props) => {
     };
   }
   const getSingleStyle = (s) => {
-    s = s ? defaults({}, s, defaultStyles) : defaultStyles;
-    const baseStyles = Helpers.evaluateStyle(s, props);
+    const baseStyles = Helpers.evaluateStyle(
+      s ? defaults({}, s, defaultStyles) : defaultStyles,
+      props,
+    );
     return assign({}, baseStyles, { fontSize: getFontSize(baseStyles) });
   };
 
@@ -320,21 +322,20 @@ const getInlineXOffset = (calculatedProps, textElements, index) => {
   const centerOffset = -totalWidth / 2;
   switch (textAnchor) {
     case "start":
-      return widths.reduce((memo, width, i) => {
-        memo = i < index ? memo + width : memo;
-        return memo;
-      }, 0);
+      return widths.reduce(
+        (memo, width, i) => (i < index ? memo + width : memo),
+        0,
+      );
     case "end":
-      return widths.reduce((memo, width, i) => {
-        memo = i > index ? memo - width : memo;
-        return memo;
-      }, 0);
+      return widths.reduce(
+        (memo, width, i) => (i > index ? memo - width : memo),
+        0,
+      );
     default:
       // middle
       return widths.reduce((memo, width, i) => {
         const offsetWidth = i < index ? width : 0;
-        memo = i === index ? memo + width / 2 : memo + offsetWidth;
-        return memo;
+        return i === index ? memo + width / 2 : memo + offsetWidth;
       }, centerOffset);
   }
 };
@@ -508,7 +509,7 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
     verticalAnchor,
     dx,
     dy,
-    originalDy: props.dy,
+    originalDy: Helpers.evaluateProp(props.dy, props),
     transform,
     x,
     y,
@@ -584,8 +585,8 @@ const defaultProps = {
 export const VictoryLabel: {
   role: string;
   defaultStyles: typeof defaultStyles;
-} & React.FC<VictoryLabelProps> = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+} & React.FC<VictoryLabelProps> = (initialProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   if (props.text === null || props.text === undefined) {
     return null;
@@ -596,7 +597,7 @@ export const VictoryLabel: {
     calculatedProps;
 
   const tspanValues = (text as string[]).map((line, i) => {
-    const currentStyle = getSingleValue(style!, i);
+    const currentStyle = getSingleValue(style, i);
     const capHeightPx = TextSize.convertLengthToPixels(
       `${capHeight}em`,
       currentStyle.fontSize as number,
@@ -607,7 +608,7 @@ export const VictoryLabel: {
       fontSize: currentStyle.fontSize || defaultStyles.fontSize,
       capHeight: capHeightPx,
       text: line,
-      // @ts-expect-error TODO: This looks like a bug:
+      // TODO: This looks like a bug:
       textSize: TextSize.approximateTextSize(line, currentStyle),
       lineHeight: currentLineHeight,
       backgroundPadding: getSingleValue(backgroundPadding, i),

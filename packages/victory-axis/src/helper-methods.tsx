@@ -1,5 +1,6 @@
 import { assign, defaults } from "lodash";
 import { Helpers, Scale, Axis } from "victory-core";
+import { VictoryAxisProps } from "./victory-axis";
 
 const orientationSign = {
   top: -1,
@@ -61,9 +62,11 @@ const getStyleObject = (props) => {
     : specificAxisStyle || generalAxisStyle;
 };
 
-export const getStyles = (props, styleObject?) => {
+export const getStyles = (
+  props,
+  styleObject: VictoryAxisProps["style"] = {},
+) => {
   const style = props.style || {};
-  styleObject = styleObject || {};
   const parentStyleProps = { height: "100%", width: "100%" };
   return {
     parent: defaults(style.parent, styleObject.parent, parentStyleProps),
@@ -543,8 +546,8 @@ const getCalculatedValues = (props) => {
   };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  props = Axis.modifyProps(props, fallbackProps);
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const props = Axis.modifyProps(initialProps, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const {
     axis,

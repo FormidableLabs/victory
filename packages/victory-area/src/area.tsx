@@ -102,8 +102,8 @@ const defaultProps = {
 /**
  * The area primitive used by VictoryArea
  */
-export const Area: React.FC<AreaProps> = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Area: React.FC<AreaProps> = (initialProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const {
     ariaLabel,
     role,

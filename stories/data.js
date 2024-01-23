@@ -13,8 +13,7 @@ import seedrandom from "seedrandom";
 //   { x: 360, y: 7 }
 // ];
 
-const getTimeData = (num, seed) => {
-  seed = seed || "getData";
+const getTimeData = (num, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
   const current = 1523389495000;
@@ -26,15 +25,13 @@ const getTimeData = (num, seed) => {
   });
 };
 
-const getData = (num, seed, max = 10) => {
-  seed = seed || "getData";
+const getData = (num, seed = "getData", max = 10) => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * max;
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
-const getDataWithBaseline = (num, seed, max = 10) => {
-  seed = seed || "getData";
+const getDataWithBaseline = (num, seed = "getData", max = 10) => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * max;
   return range(num).map((v) => ({ x: v + 1, y: rand(), y0: rand() }));
@@ -55,37 +52,32 @@ const getDescendingSmallData = () => {
   ];
 };
 
-const getStringData = (num, seed) => {
-  seed = seed || "getData";
+const getStringData = (num, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
   return range(num).map((v) => ({ x: `#${v + 1}`, y: rand() }));
 };
 
-const getLogData = (num, seed) => {
-  seed = seed || "getData";
+const getLogData = (num, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 100000;
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
-const getMixedData = (num, seed) => {
-  seed = seed || "getMixedData";
+const getMixedData = (num, seed = "getMixedData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10 - 5;
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
-const getFourQuadrantData = (num, seed) => {
-  seed = seed || "getMixedData";
+const getFourQuadrantData = (num, seed = "getMixedData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10 - 5;
   return range(num).map((v) => ({ x: v - Math.round(num / 2), y: rand() }));
 };
 
-const getArrayData = (num, samples) => {
+const getArrayData = (num, samples = 10) => {
   const seed = "getData";
-  samples = samples || 10;
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
   return range(num).map((v) => {

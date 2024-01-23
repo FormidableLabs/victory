@@ -16,8 +16,7 @@ const sampleData = [
   { x: 3, open: 50, close: 80, high: 90, low: 20 },
   { x: 4, open: 70, close: 22, high: 70, low: 5 },
 ];
-const getTimeData = (num, seed) => {
-  seed = seed || "getTimeData";
+const getTimeData = (num, seed = "getTimeData") => {
   const baseSeed = seedrandom(seed);
   const current = 1523389495000;
   return range(num).map((v) => {
@@ -35,8 +34,7 @@ const getTimeData = (num, seed) => {
   });
 };
 
-const getData = (num, seed) => {
-  seed = seed || "getData";
+const getData = (num, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   return range(num).map((v) => {
     const low = 2 + baseSeed.quick() * 5;
@@ -114,7 +112,6 @@ export const WickStrokeWidth = () => {
       </VictoryChart>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
-          data={getData(7)}
           data={getData(7)}
           style={{
             data: { stroke: "tomato", strokeWidth: 5 },

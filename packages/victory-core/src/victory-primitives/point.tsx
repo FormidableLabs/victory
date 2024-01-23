@@ -72,8 +72,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Point = (props: PointProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Point = (initialProps: PointProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent!, {

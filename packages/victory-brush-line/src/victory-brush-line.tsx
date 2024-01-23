@@ -517,8 +517,10 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
   getRectDimensions(props, brushWidth, domain?) {
     const { brushDomain } = props;
     const dimension = getDimension(props);
-    domain = domain || getBrushDomain(brushDomain, getFullDomain(props));
-    const range = toRange(props, domain);
+    const range = toRange(
+      props,
+      domain || getBrushDomain(brushDomain, getFullDomain(props)),
+    );
     const coordinates =
       dimension === "x"
         ? {

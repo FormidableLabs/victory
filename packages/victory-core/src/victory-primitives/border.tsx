@@ -43,8 +43,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Border = (props: BorderProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Border = (initialProps: BorderProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   return React.cloneElement(props.rectComponent!, {
     ...props.events,

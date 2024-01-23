@@ -116,8 +116,10 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const ErrorBar = (props: ErrorBarProps & typeof ErrorBar.default) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const ErrorBar = (
+  initialProps: ErrorBarProps & typeof ErrorBar.default,
+) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const { groupComponent } = props;
   const userProps = UserProps.getSafeUserProps(props);
   const { tabIndex, ariaLabel } = props;

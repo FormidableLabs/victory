@@ -1,5 +1,33 @@
 # victory-core
 
+## 36.8.2
+
+### Patch Changes
+
+- Fix the label background position when using dy fns ([#2720](https://github.com/FormidableLabs/victory/pull/2720))
+
+* Migrate victory-legend to TypeScript ([#2712](https://github.com/FormidableLabs/victory/pull/2712))
+
+## 36.8.1
+
+### Patch Changes
+
+- Correctly type props in Victory Primitives ([#2695](https://github.com/FormidableLabs/victory/pull/2695))
+
+## 36.8.0
+
+### Minor Changes
+
+- Remove v37 experimental code ([#2697](https://github.com/FormidableLabs/victory/pull/2697))
+
+### Patch Changes
+
+- Remove usage of defaultProps from components ([#2679](https://github.com/FormidableLabs/victory/pull/2679))
+
+* Fixed issue where VictoryChart would throw an unhandled exception when passed non-element children (fixes [#2391](https://github.com/FormidableLabs/victory/issues/2391)) ([#2536](https://github.com/FormidableLabs/victory/pull/2536))
+
+- Fix text label measurements after SSR hydration mismatch ([#2626](https://github.com/FormidableLabs/victory/pull/2626))
+
 ## 36.7.0
 
 ### Minor Changes

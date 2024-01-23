@@ -44,8 +44,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const LineSegment = (props: LineSegmentProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const LineSegment = (initialProps: LineSegmentProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   return React.cloneElement(props.lineComponent!, {
     ...props.events,

@@ -166,12 +166,8 @@ export default class VictorySharedEvents extends React.Component {
   applyExternalMutations(props, externalMutations) {
     if (!isEmpty(externalMutations)) {
       const callbacks = props.externalEventMutations.reduce(
-        (memo, mutation) => {
-          memo = isFunction(mutation.callback)
-            ? memo.concat(mutation.callback)
-            : memo;
-          return memo;
-        },
+        (memo, mutation) =>
+          isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo,
         [],
       );
       const compiledCallbacks = callbacks.length

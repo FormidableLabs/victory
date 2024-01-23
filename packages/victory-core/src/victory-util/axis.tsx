@@ -36,10 +36,14 @@ export function getAxis(props) {
  * @returns {Array} all axis components that pass the given predicate or []
  */
 export function findAxisComponents(childComponents, predicate?) {
-  predicate = predicate || identity;
+  const predicateFunction = predicate || identity;
   const findAxes = (children) => {
     return children.reduce((memo, child) => {
-      if (child.type && child.type.role === "axis" && predicate(child)) {
+      if (
+        child.type &&
+        child.type.role === "axis" &&
+        predicateFunction(child)
+      ) {
         return memo.concat(child);
       } else if (child.props && child.props.children) {
         return memo.concat(

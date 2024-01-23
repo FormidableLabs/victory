@@ -12,9 +12,9 @@ const fallbackProps = {
 };
 
 // eslint-disable-next-line max-statements
-export function getCalculatedProps(props, childComponents) {
+export function getCalculatedProps(initialProps, childComponents) {
   const role = "group";
-  props = Helpers.modifyProps(props, fallbackProps, role);
+  const props = Helpers.modifyProps(initialProps, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
   const { offset, colorScale, color, polar, horizontal } = props;
   const categories =
@@ -188,24 +188,24 @@ function getDataWithOffset(props, defaultDataset = [], offset) {
   });
 }
 
-export function getChildren(props, childComponents?, calculatedProps?) {
-  props = Helpers.modifyProps(props, fallbackProps, "stack");
-  childComponents = childComponents || React.Children.toArray(props.children);
-  calculatedProps =
-    calculatedProps || getCalculatedProps(props, childComponents);
-  const { datasets } = calculatedProps;
+export function getChildren(initialProps, childComponents?, calculatedProps?) {
+  const props = Helpers.modifyProps(initialProps, fallbackProps, "stack");
+  const children = childComponents || React.Children.toArray(props.children);
+  const newCalculatedProps =
+    calculatedProps || getCalculatedProps(props, children);
+  const { datasets } = newCalculatedProps;
   const { labelComponent, polar } = props;
-  const childProps = getChildProps(props, calculatedProps);
+  const childProps = getChildProps(props, newCalculatedProps);
   const parentName = props.name || "group";
-  return childComponents.map((child, index) => {
+  return children.map((child, index) => {
     const role = child.type && child.type.role;
     const xOffset = polar
-      ? getPolarX0(props, calculatedProps, index, role)
-      : getX0(props, calculatedProps, index, role);
+      ? getPolarX0(props, newCalculatedProps, index, role)
+      : getX0(props, newCalculatedProps, index, role);
     const style =
       role === "voronoi" || role === "tooltip" || role === "label"
         ? child.props.style
-        : Wrapper.getChildStyle(child, index, calculatedProps);
+        : Wrapper.getChildStyle(child, index, newCalculatedProps);
     const labels = props.labels
       ? getLabels(props, datasets, index)
       : child.props.labels;

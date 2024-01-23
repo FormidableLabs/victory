@@ -14,6 +14,7 @@ import {
   max as d3Max,
   quantile as d3Quantile,
 } from "victory-vendor/d3-array";
+import { VictoryBoxPlotProps } from "./victory-box-plot";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
 
@@ -162,12 +163,11 @@ const getLabelStyle = (props, styleObject, namespace?) => {
   return defaults({}, tooltipTheme.style, baseStyle);
 };
 
-const getStyles = (props, styleObject) => {
+const getStyles = (props, styleObject: VictoryBoxPlotProps["style"] = {}) => {
   if (props.disableInlineStyles) {
     return {};
   }
   const style = props.style || {};
-  styleObject = styleObject || {};
   const parentStyles = { height: "100%", width: "100%" };
   const labelStyles = defaults(
     {},
@@ -457,9 +457,13 @@ const isDatumOutOfBounds = (datum, domain) => {
   return yOutOfBounds || xOutOfBounds;
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "boxplot",
+  );
+  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
   const {
     groupComponent,
     width,

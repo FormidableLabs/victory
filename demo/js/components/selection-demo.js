@@ -19,10 +19,10 @@ class App extends React.Component {
   }
 
   handleSelection(datasets) {
-    const points = datasets.reduce((memo, dataset) => {
-      memo = memo.concat(dataset.data);
-      return memo;
-    }, []);
+    const points = datasets.reduce(
+      (memo, dataset) => memo.concat(dataset.data),
+      [],
+    );
     this.setState({ points });
   }
 

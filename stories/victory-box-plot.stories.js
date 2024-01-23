@@ -10,9 +10,8 @@ import seedrandom from "seedrandom";
 import { getArrayData } from "./data";
 import styled from "styled-components";
 
-const getRepeatData = (num, samples) => {
+const getRepeatData = (num, samples = 10) => {
   const seed = "getRepeatData";
-  samples = samples || 10;
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
   return range(num).reduce((memo, curr) => {
@@ -24,8 +23,7 @@ const getRepeatData = (num, samples) => {
   }, []);
 };
 
-const getData = (num, seed) => {
-  seed = seed || "getData";
+const getData = (num, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => Math.round(1 + baseSeed.quick() * 5);
   return range(num).map((v) => {
