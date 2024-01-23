@@ -10,6 +10,7 @@ import {
 import React from "react";
 import {
   EventCallbackInterface,
+  EventMixinCalculatedValues,
   EventPropTypeInterface,
   Events,
   Helpers,
@@ -35,6 +36,9 @@ export type VictorySharedEventsProps = {
 // This file is not currently tested, and it is first on the list of files
 // to refactor in our current refactoring effort. Please do not make changes
 // to this file without manual testing and/or refactoring and adding tests.
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface VictorySharedEvents extends EventMixinCalculatedValues {}
 
 export class VictorySharedEvents extends React.Component<VictorySharedEventsProps> {
   static displayName = "VictorySharedEvents";

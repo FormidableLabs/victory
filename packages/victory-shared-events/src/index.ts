@@ -1,1 +1,1 @@
-export { VictorySharedEvents } from "./victory-shared-events";
+export * from "./victory-shared-events";
