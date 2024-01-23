@@ -1,6 +1,6 @@
 import React from "react";
 import { defaults, isFunction } from "lodash";
-import ZoomHelpers from "./zoom-helpers";
+import { ZoomHelpers } from "./zoom-helpers";
 import {
   VictoryContainer,
   VictoryClipContainer,
