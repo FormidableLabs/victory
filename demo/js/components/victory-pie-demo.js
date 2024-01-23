@@ -325,6 +325,12 @@ export default class App extends React.Component {
             style={{ parent: parentStyle }}
             labelIndicator={<LineSegment style={{opacity:"0.3",strokeWidth:"1px",strokeDasharray: "1"}}/>}
           />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator={<LineSegment style={{opacity:"0.3",strokeWidth:"1px",strokeDasharray: "1"}}/>}
+            labelIndicatorInnerOffset={45}
+            labelIndicatorOuterOffset={30}
+          />
         </div>
       </div>
     );

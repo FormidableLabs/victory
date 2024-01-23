@@ -4,7 +4,7 @@
 import React from "react";
 import { VictoryPie, Slice } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { LineSegment, PolylineSegment, VictoryTheme, Helpers } from "victory-core";
+import { LineSegment, VictoryTheme, Helpers } from "victory-core";
 import { fromJS } from "immutable";
 import styled from "styled-components";
 
@@ -625,24 +625,7 @@ export const LabelIndicator = () => {
         labelRadius={90}
         innerRadius={50} 
         radius={75}
-        labelIndicator={<LineSegment style = {{stroke:"red",strokeDasharray:1,
-        fill: "none",}}/>}
-      />
-      <VictoryPie
-        style={parentStyle}
-        labelIndicator
-        labelIndicatorType={"multiple"}
-        labelIndicatorInnerOffset = {25}
-        labelIndicatorMiddleOffset = {15}
-        labelIndicatorOuterOffset = {10}
-      />
-       <VictoryPie
-        style={parentStyle}
-        labelRadius={90}
-        innerRadius={50} 
-        radius={75}
-        labelIndicatorType={"multiple"}
-        labelIndicator={<PolylineSegment style = {{stroke:"red",strokeDasharray:1,
+        labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,
         fill: "none",}}/>}
       />
     </div>

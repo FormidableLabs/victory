@@ -6,7 +6,6 @@ import {
   Helpers,
   Data,
   LineSegment,
-  PolylineSegment,
   PropTypes as CustomPropTypes,
   VictoryContainer,
   VictoryLabel,
@@ -39,10 +38,8 @@ const fallbackProps = {
     "#000000",
   ],
   labelPosition: "centroid",
-  labelIndicatorType: "single",
   labelIndicatorInnerOffset: 25,
   labelIndicatorOuterOffset: 15,
-  labelIndicatorMiddleOffset: 10
 };
 
 const datumHasXandY = (datum) => {
@@ -160,7 +157,6 @@ class VictoryPie extends React.Component {
     labelIndicatorInnerOffset :PropTypes.number,
     labelIndicatorMiddleOffset :PropTypes.number,
     labelIndicatorOuterOffset :PropTypes.number, 
-    labelIndicatorType: PropTypes.oneOf(["single", "multiple"]),
     labelPlacement: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
@@ -274,7 +270,6 @@ class VictoryPie extends React.Component {
         labelComponent,
         groupComponent,
         labelIndicator,
-        labelIndicatorType,
         labelPosition
       } = props;    
       const showIndicator = 
@@ -316,9 +311,6 @@ class VictoryPie extends React.Component {
 
         if(showIndicator){
           let labelIndicatorComponent= <LineSegment />;
-          if(labelIndicatorType === "multiple" && labelIndicator === true){
-            labelIndicatorComponent= <PolylineSegment/> 
-          }
           if( typeof labelIndicator === "object"){
             // pass user provided react component
             labelIndicatorComponent = labelIndicator;
