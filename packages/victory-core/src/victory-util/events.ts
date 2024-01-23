@@ -48,10 +48,10 @@ interface ComponentWithEvents extends EventMixinCalculatedValues {
 export function getEvents(
   this: ComponentWithEvents,
   props,
-  target,
-  eventKey,
+  target?,
+  eventKey?,
   // eslint-disable-next-line no-shadow
-  getScopedEvents,
+  getScopedEvents?,
 ) {
   // Returns all events that apply to a particular target element
   const getEventsByTarget = (events: Array<ComponentEvent>) => {
