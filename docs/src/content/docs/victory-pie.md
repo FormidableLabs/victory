@@ -292,7 +292,7 @@ The `labelPosition` prop specifies the position of each label relative to its co
 
 `type: number || function`
 
-The `labelRadius` prop defines the radius of the arc that will be used for positioning each slice label. If this prop is not set, the label radius will default to the radius of the pie + label padding. If this prop is given as a function, it will be evaluated for each label `VictoryPie` renders, and will be evaluated with the props that correspond to that label, as well as the radius and innerRadius of the corresponding slice.
+The `labelRadius` prop defines the radius of the arc that will be used for positioning each slice label. If this prop is not set, the label radius will default to the radius of the pie + label padding. If this prop is given as a function, it will be evaluated for each label `VictoryPie` renders, and will be evaluated with the props that correspond to that label, as well as the radius and innerRadius of the corresponding slice. If `labelIndicator` prop is being used, passed `labelRadius`(> radius) is used to calculate the co-ordinates of the outer indicator line. If no specific value for labelRadius is passed , default values will be considered. The outer indicator line length is the difference between `labelRadius` and `labelIndicatorOuterOffset`.
 
 ```playground
 <VictoryPie
@@ -540,8 +540,8 @@ The `labelIndicator` prop defines the label indicator line between labels and th
   data={sampleData}
   labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
   style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
-  labelIndicatorInnerOffset = {10}
-  labelIndicatorOuterOffset = {15}
+  labelIndicatorInnerOffset={10}
+  labelIndicatorOuterOffset={15}
 />
 ```
 ## labelIndicatorInnerOffset
@@ -555,7 +555,7 @@ The `labelIndicatorInnerOffset` prop defines the offset by which the indicator l
   data={sampleData}
   labelIndicator
   style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
-  labelIndicatorInnerOffset = {10}
+  labelIndicatorInnerOffset={10}
 />
 ```
 
@@ -570,7 +570,7 @@ The `labelIndicatorOuterOffset` prop defines the offset by which the indicator l
   data={sampleData}
   labelIndicator
   style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
-  labelIndicatorOuterOffset = {10}
+  labelIndicatorOuterOffset={10}
 />
 ```
 

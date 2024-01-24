@@ -237,11 +237,10 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
-export const radian = Math.PI / 180;
 export const getXOffsetMultiplayerByAngle = (angle) =>
-  Math.cos(angle - 90 * radian);
+  Math.cos(angle - Helpers.degreesToRadians(90));
 export const getYOffsetMultiplayerByAngle = (angle) =>
-  Math.sin(angle - 90 * radian);
+  Math.sin(angle - Helpers.degreesToRadians(90));
 export const getXOffset = (offset, angle) =>
   offset * getXOffsetMultiplayerByAngle(angle);
 export const getYOffset = (offset, angle) =>
@@ -271,21 +270,13 @@ export const getLabelIndicatorPropsForLineSegment = (
   const centerX = width / 2;
   const centerY = height / 2;
   const innerOffset = middleRadius + labelIndicatorInnerOffset;
-  let outerOffset;
-
-  if (innerRadius > 0) {
-    outerOffset = middleRadius + labelIndicatorOuterOffset;
-  } else {
-    outerOffset =
-      calculatedLabelRadius - middleRadius + labelIndicatorOuterOffset;
-  }
+  const outerOffset = calculatedLabelRadius - labelIndicatorOuterOffset;
 
   const x1 = centerX + getXOffset(innerOffset, midAngle);
   const y1 = centerY + getYOffset(innerOffset, midAngle);
 
-  const offSetEnd = 2 * radius - outerOffset;
-  const x2 = centerX + getXOffset(offSetEnd, midAngle);
-  const y2 = centerY + getYOffset(offSetEnd, midAngle);
+  const x2 = centerX + getXOffset(outerOffset, midAngle);
+  const y2 = centerY + getYOffset(outerOffset, midAngle);
 
   const labelIndicatorProps = {
     x1,

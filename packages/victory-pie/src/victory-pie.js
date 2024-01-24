@@ -38,8 +38,8 @@ const fallbackProps = {
     "#000000",
   ],
   labelPosition: "centroid",
-  labelIndicatorInnerOffset: 25,
-  labelIndicatorOuterOffset: 15,
+  labelIndicatorInnerOffset: 15,
+  labelIndicatorOuterOffset: 5,
 };
 
 const datumHasXandY = (datum) => {

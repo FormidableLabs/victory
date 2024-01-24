@@ -228,7 +228,7 @@ export default class App extends React.Component {
           <VictoryPie
             style={{ ...this.state.style, labels: { fontSize: 0 } }}
             data={this.state.data}
-            innerRadius={100}
+            innerRadius={90}
             animate={{ duration: 2000 }}
             colorScale={this.state.colorScale}
           />
@@ -328,8 +328,8 @@ export default class App extends React.Component {
           <VictoryPie
             style={{ parent: parentStyle }}
             labelIndicator={<LineSegment style={{opacity:"1",strokeWidth:"1px",strokeDasharray: "1",stroke: "red"}}/>}
-            labelIndicatorInnerOffset={45}
-            labelIndicatorOuterOffset={15}
+            labelIndicatorInnerOffset={35}
+            labelIndicatorOuterOffset={4}
           />
         </div>
       </div>

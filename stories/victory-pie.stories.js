@@ -597,16 +597,16 @@ export const LabelIndicator = () => {
         labelIndicator
         radius={90}
         labelRadius={100}
-        labelIndicatorInnerOffset={45}
-        labelIndicatorOuterOffset={30}
+        labelIndicatorInnerOffset={25}
+        labelIndicatorOuterOffset={4}
       />
       <VictoryPie style={parentStyle} innerRadius={50} labelIndicator />
       <VictoryPie
         style={parentStyle}
         innerRadius={50}
         labelIndicator
-        labelIndicatorInnerOffset={10}
-        labelIndicatorOuterOffset={15}
+        labelIndicatorInnerOffset={25}
+        labelIndicatorOuterOffset={10}
       />
       <VictoryPie
         style={parentStyle}
@@ -620,7 +620,7 @@ export const LabelIndicator = () => {
         radius={75}
         labelIndicator={
           <LineSegment
-            style={{ stroke: "red", strokeDasharray: 1, fill: "none" }}
+            style={{ stroke: "red", strokeDasharray: 1, strokeWidth: 2, fill: "none" }}
           />
         }
       />
