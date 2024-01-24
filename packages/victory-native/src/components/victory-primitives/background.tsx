@@ -1,9 +1,9 @@
 import React from "react";
 import Rect from "./rect";
 import Circle from "./circle";
-import { Background } from "victory-core/es";
+import { Background, BackgroundProps } from "victory-core/es";
 
-const NativeBackground = (props) => (
+const NativeBackground = (props: BackgroundProps) => (
   <Background
     circleComponent={<Circle />}
     rectComponent={<Rect />}

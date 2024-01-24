@@ -1,13 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Path } from "react-native-svg";
+import { Rect, RectProps } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
+import { VictoryNativePrimitiveShapeProps } from "./types";
 
-const VPath = (props) => {
+export type VictoryNativeRectProps = RectProps &
+  VictoryNativePrimitiveShapeProps;
+
+const NativeRect = (props: VictoryNativeRectProps) => {
   const { "aria-label": accessibilityLabel, desc, style, ...rest } = props;
   const nativeStyle = useGetNativeStyle(style);
   return (
-    <Path
+    <Rect
+      vectorEffect="non-scaling-stroke"
       accessible={accessibilityLabel || undefined}
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityLabel && desc ? desc : undefined}
@@ -17,17 +21,4 @@ const VPath = (props) => {
   );
 };
 
-export default VPath;
-
-VPath.propTypes = {
-  "aria-label": PropTypes.string,
-  className: PropTypes.string,
-  clipPath: PropTypes.string,
-  d: PropTypes.string,
-  desc: PropTypes.string,
-  events: PropTypes.object,
-  role: PropTypes.string,
-  shapeRendering: PropTypes.string,
-  style: PropTypes.object,
-  transform: PropTypes.string,
-};
+export default NativeRect;

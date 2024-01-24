@@ -1,9 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Circle } from "react-native-svg";
+import { Circle, CircleProps } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
+import { VictoryNativePrimitiveShapeProps } from "./types";
 
-const VCircle = (props) => {
+export type VictoryNativeCircleProps = CircleProps &
+  VictoryNativePrimitiveShapeProps;
+
+const NativeCircle = (props: VictoryNativeCircleProps) => {
   const { "aria-label": accessibilityLabel, desc, style, ...rest } = props;
   const nativeStyle = useGetNativeStyle(style);
   return (
@@ -18,19 +21,4 @@ const VCircle = (props) => {
   );
 };
 
-export default VCircle;
-
-VCircle.propTypes = {
-  "aria-label": PropTypes.string,
-  className: PropTypes.string,
-  clipPath: PropTypes.string,
-  cx: PropTypes.number,
-  cy: PropTypes.number,
-  desc: PropTypes.string,
-  events: PropTypes.object,
-  r: PropTypes.number,
-  role: PropTypes.string,
-  shapeRendering: PropTypes.string,
-  style: PropTypes.object,
-  transform: PropTypes.string,
-};
+export default NativeCircle;

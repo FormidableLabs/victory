@@ -1,8 +1,8 @@
 import React from "react";
 import Line from "./line";
-import { LineSegment } from "victory-core/es";
+import { LineSegment, LineSegmentProps } from "victory-core/es";
 
-const NativeLineSegment = (props) => (
+const NativeLineSegment = (props: LineSegmentProps) => (
   <LineSegment lineComponent={<Line />} {...props} />
 );
 

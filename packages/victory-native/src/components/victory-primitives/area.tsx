@@ -1,9 +1,9 @@
 import React from "react";
 import Path from "./path";
 import { G } from "react-native-svg";
-import { Area } from "victory-area/es";
+import { Area, AreaProps } from "victory-area/es";
 
-const NativeArea = (props) => (
+const NativeArea = (props: AreaProps) => (
   <Area pathComponent={<Path />} groupComponent={<G />} {...props} />
 );
 

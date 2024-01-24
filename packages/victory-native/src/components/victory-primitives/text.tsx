@@ -1,9 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Text } from "react-native-svg";
+import { Text, TextProps } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
+import { VictoryNativePrimitiveShapeProps } from "./types";
 
-const VText = (props) => {
+export interface VictoryNativeTextProps
+  extends TextProps,
+    VictoryNativePrimitiveShapeProps {
+  direction?: "inherit" | "rtl" | "ltr";
+}
+
+const NativeText = (props: VictoryNativeTextProps) => {
   const {
     "aria-label": accessibilityLabel,
     children,
@@ -25,19 +31,4 @@ const VText = (props) => {
   );
 };
 
-VText.propTypes = {
-  "aria-label": PropTypes.string,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  desc: PropTypes.string,
-  direction: PropTypes.oneOf(["ltr", "rtl", "inherit"]),
-  dx: PropTypes.number,
-  dy: PropTypes.number,
-  events: PropTypes.object,
-  style: PropTypes.object,
-  transform: PropTypes.string,
-  x: PropTypes.number,
-  y: PropTypes.number,
-};
-
-export default VText;
+export default NativeText;
