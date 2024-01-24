@@ -11,7 +11,8 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryBoxPlot = wrapCoreComponent({
   Component: VictoryBoxPlot,
-  defaultProps: Object.assign({}, VictoryBoxPlot.defaultProps, {
+  defaultProps: {
+    ...VictoryBoxPlot.defaultProps,
     maxComponent: <Whisker />,
     maxLabelComponent: <VictoryLabel />,
     medianComponent: <LineSegment />,
@@ -25,7 +26,7 @@ const NativeVictoryBoxPlot = wrapCoreComponent({
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryBoxPlot;

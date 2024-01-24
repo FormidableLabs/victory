@@ -9,13 +9,14 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryBar = wrapCoreComponent({
   Component: VictoryBar,
-  defaultProps: Object.assign({}, VictoryBar.defaultProps, {
+  defaultProps: {
+    ...VictoryBar.defaultProps,
     dataComponent: <Bar />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryBar;

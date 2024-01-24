@@ -7,12 +7,13 @@ import { VictoryClipContainer } from "victory-core/es";
 import { uniqueId } from "lodash";
 
 export default class extends VictoryClipContainer {
-  static defaultProps = Object.assign({}, VictoryClipContainer.defaultProps, {
+  static defaultProps = {
+    ...VictoryClipContainer.defaultProps,
     groupComponent: <G />,
     rectComponent: <Rect />,
     clipPathComponent: <ClipPath />,
     circleComponent: <Circle />,
-  });
+  };
 
   // There seems to be a caching issue with clip paths.
   // This is required to make clip paths update when animating

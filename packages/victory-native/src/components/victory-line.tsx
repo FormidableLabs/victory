@@ -9,13 +9,14 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryLine = wrapCoreComponent({
   Component: VictoryLine,
-  defaultProps: Object.assign({}, VictoryLine.defaultProps, {
+  defaultProps: {
+    ...VictoryLine.defaultProps,
     dataComponent: <Curve />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <VictoryClipContainer />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryLine;

@@ -9,13 +9,14 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryCandlestick = wrapCoreComponent({
   Component: VictoryCandlestick,
-  defaultProps: Object.assign({}, VictoryCandlestick.defaultProps, {
+  defaultProps: {
+    ...VictoryCandlestick.defaultProps,
     dataComponent: <Candle />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryCandlestick;

@@ -9,14 +9,15 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryPie = wrapCoreComponent({
   Component: VictoryPie,
-  defaultProps: Object.assign({}, VictoryPie.defaultProps, {
+  defaultProps: {
+    ...VictoryPie.defaultProps,
     dataComponent: <Slice />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     height: Dimensions.get("window").width,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryPie;

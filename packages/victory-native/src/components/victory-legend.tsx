@@ -10,7 +10,8 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryLegend = wrapCoreComponent({
   Component: VictoryLegend,
-  defaultProps: Object.assign({}, VictoryLegend.defaultProps, {
+  defaultProps: {
+    ...VictoryLegend.defaultProps,
     borderComponent: <Border />,
     containerComponent: <VictoryContainer />,
     dataComponent: <Point />,
@@ -18,7 +19,7 @@ const NativeVictoryLegend = wrapCoreComponent({
     labelComponent: <VictoryLabel />,
     titleComponent: <VictoryLabel />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryLegend;

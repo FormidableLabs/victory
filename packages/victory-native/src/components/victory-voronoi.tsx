@@ -9,13 +9,14 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryVoronoi = wrapCoreComponent({
   Component: VictoryVoronoi,
-  defaultProps: Object.assign({}, VictoryVoronoi.defaultProps, {
+  defaultProps: {
+    ...VictoryVoronoi.defaultProps,
     dataComponent: <Voronoi />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryVoronoi;

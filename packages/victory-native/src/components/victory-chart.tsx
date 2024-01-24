@@ -10,7 +10,7 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryChart = wrapCoreComponent({
   Component: VictoryChart,
-  defaultProps: Object.assign({}, VictoryChart.defaultProps, {
+  defaultProps: {
     backgroundComponent: <Background />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
@@ -24,7 +24,7 @@ const NativeVictoryChart = wrapCoreComponent({
     },
     prependDefaultAxes: true,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryChart;

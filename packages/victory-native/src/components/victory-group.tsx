@@ -7,11 +7,11 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryGroup = wrapCoreComponent({
   Component: VictoryGroup,
-  defaultProps: Object.assign({}, VictoryGroup.defaultProps, {
+  defaultProps: {
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryGroup;

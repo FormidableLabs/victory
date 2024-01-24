@@ -10,18 +10,19 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryPolarAxis = wrapCoreComponent({
   Component: VictoryPolarAxis,
-  defaultProps: Object.assign({}, VictoryPolarAxis.defaultProps, {
+  defaultProps: {
+    ...VictoryPolarAxis.defaultProps,
     axisComponent: <LineSegment />,
     axisLabelComponent: <VictoryLabel />,
-    circularAxisComponent: <Arc type={"axis"} />,
-    circularGridComponent: <Arc type={"grid"} />,
+    circularAxisComponent: <Arc type="axis" />,
+    circularGridComponent: <Arc type="grid" />,
     tickLabelComponent: <VictoryLabel />,
     tickComponent: <LineSegment />,
     gridComponent: <LineSegment />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryPolarAxis;

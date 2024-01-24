@@ -7,11 +7,11 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryStack = wrapCoreComponent({
   Component: VictoryStack,
-  defaultProps: Object.assign({}, VictoryStack.defaultProps, {
+  defaultProps: {
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryStack;

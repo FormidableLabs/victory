@@ -10,13 +10,14 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryArea = wrapCoreComponent({
   Component: VictoryArea,
-  defaultProps: Object.assign({}, VictoryArea.defaultProps, {
+  defaultProps: {
+    ...VictoryArea.defaultProps,
     dataComponent: <Area />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <VictoryClipContainer />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryArea;

@@ -553,6 +553,7 @@ importers:
       victory-histogram: ^36.8.2
       victory-legend: ^36.8.2
       victory-line: ^36.8.2
+      victory-native: '*'
       victory-pie: ^36.8.2
       victory-polar-axis: ^36.8.2
       victory-scatter: ^36.8.2
@@ -599,6 +600,7 @@ importers:
       react-native: 0.65.2_@babel+core@7.18.9
       react-native-gesture-handler: 1.10.3
       react-native-svg: 12.4.3_react-native@0.65.2
+      victory-native: 'link:'
 
   packages/victory-pie:
     specifiers:

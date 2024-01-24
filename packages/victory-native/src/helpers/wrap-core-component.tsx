@@ -2,12 +2,15 @@ import React from "react";
 
 /**
  * Wrap a core component, pass props through.
- * @param {any} Component Core Component
- * @param {object} defaultProps Default props for component
- * @returns {React.FC} WrappedComponent Wrapped component (passes props through)
  */
-export const wrapCoreComponent = ({ Component, defaultProps }) => {
-  const WrappedComponent = (props) => {
+export function wrapCoreComponent<TProps extends object>({
+  Component,
+  defaultProps,
+}: {
+  Component: React.JSXElementConstructor<TProps>;
+  defaultProps: TProps;
+}) {
+  const WrappedComponent = (props: TProps) => {
     const propsWithDefaults = { ...defaultProps, ...props };
     return <Component {...propsWithDefaults} />;
   };
@@ -23,4 +26,4 @@ export const wrapCoreComponent = ({ Component, defaultProps }) => {
   }
 
   return WrappedComponent;
-};
+}

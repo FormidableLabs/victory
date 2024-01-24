@@ -9,7 +9,8 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryAxis = wrapCoreComponent({
   Component: VictoryAxis,
-  defaultProps: Object.assign({}, VictoryAxis.defaultProps, {
+  defaultProps: {
+    ...VictoryAxis.defaultProps,
     axisComponent: <LineSegment />,
     axisLabelComponent: <VictoryLabel />,
     tickLabelComponent: <VictoryLabel />,
@@ -18,7 +19,7 @@ const NativeVictoryAxis = wrapCoreComponent({
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryAxis;

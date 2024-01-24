@@ -8,12 +8,13 @@ import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 const NativeVictoryErrorBar = wrapCoreComponent({
   Component: VictoryErrorBar,
-  defaultProps: Object.assign({}, VictoryErrorBar.defaultProps, {
+  defaultProps: {
+    ...VictoryErrorBar.defaultProps,
     dataComponent: <ErrorBar />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
 export default NativeVictoryErrorBar;

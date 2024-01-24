@@ -1,21 +1,22 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { G } from "react-native-svg";
+import { VictoryScatter } from "victory-scatter/es";
 import VictoryLabel from "./victory-label";
 import VictoryContainer from "./victory-container";
-import Bar from "./victory-primitives/bar";
-import { VictoryHistogram } from "victory-histogram/es";
+import Point from "./victory-primitives/point";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryHistogram = wrapCoreComponent({
-  Component: VictoryHistogram,
-  defaultProps: Object.assign({}, VictoryHistogram.defaultProps, {
-    dataComponent: <Bar />,
+const NativeVictoryScatter = wrapCoreComponent({
+  Component: VictoryScatter,
+  defaultProps: {
+    ...VictoryScatter.defaultProps,
+    dataComponent: <Point />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
-  }),
+  },
 });
 
-export default NativeVictoryHistogram;
+export default NativeVictoryScatter;
