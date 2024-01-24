@@ -8,92 +8,62 @@ import {
   difference,
 } from "lodash";
 import React from "react";
-import PropTypes from "prop-types";
 import {
-  PropTypes as CustomPropTypes,
+  EventCallbackInterface,
+  EventMixinCalculatedValues,
+  EventPropTypeInterface,
   Events,
   Helpers,
+  StringOrNumberOrCallback,
   TimerContext,
 } from "victory-core";
 import isEqual from "react-fast-compare";
 import stringify from "json-stringify-safe";
+
+export type VictorySharedEventsProps = {
+  children?: React.ReactElement | React.ReactElement[];
+  container?: React.ReactElement;
+  groupComponent?: React.ReactElement;
+  events?: EventPropTypeInterface<string, StringOrNumberOrCallback>[];
+  eventKey?: StringOrNumberOrCallback;
+  externalEventMutations?: EventCallbackInterface<
+    string | string[],
+    string | number | (string | number)[]
+  >[];
+};
 
 // DISCLAIMER:
 // This file is not currently tested, and it is first on the list of files
 // to refactor in our current refactoring effort. Please do not make changes
 // to this file without manual testing and/or refactoring and adding tests.
 
-export default class VictorySharedEvents extends React.Component {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface VictorySharedEvents extends EventMixinCalculatedValues {}
+
+export class VictorySharedEvents extends React.Component<VictorySharedEventsProps> {
   static displayName = "VictorySharedEvents";
-
   static role = "shared-event-wrapper";
-
-  static propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    container: PropTypes.node,
-    eventKey: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.func,
-      CustomPropTypes.allOfType([
-        CustomPropTypes.integer,
-        CustomPropTypes.nonNegative,
-      ]),
-      PropTypes.string,
-    ]),
-    events: PropTypes.arrayOf(
-      PropTypes.shape({
-        childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-        eventHandlers: PropTypes.object,
-        eventKey: PropTypes.oneOfType([
-          PropTypes.array,
-          PropTypes.func,
-          CustomPropTypes.allOfType([
-            CustomPropTypes.integer,
-            CustomPropTypes.nonNegative,
-          ]),
-          PropTypes.string,
-        ]),
-        target: PropTypes.string,
-      }),
-    ),
-    externalEventMutations: PropTypes.arrayOf(
-      PropTypes.shape({
-        callback: PropTypes.func,
-        childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-        eventKey: PropTypes.oneOfType([
-          PropTypes.array,
-          CustomPropTypes.allOfType([
-            CustomPropTypes.integer,
-            CustomPropTypes.nonNegative,
-          ]),
-          PropTypes.string,
-        ]),
-        mutation: PropTypes.func,
-        target: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-      }),
-    ),
-    groupComponent: PropTypes.node,
-  };
-
-  static defaultProps = {
-    groupComponent: <g />,
-  };
-
   static contextType = TimerContext;
 
-  constructor(props) {
+  getScopedEvents;
+  getEventState;
+  baseProps;
+  sharedEventsCache;
+  globalEvents;
+  prevGlobalEventKeys;
+  boundGlobalEvents;
+
+  constructor(props: VictorySharedEventsProps) {
     super(props);
-    this.state = this.state || {};
+
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
-    this.baseProps = this.getBaseProps(props);
+    this.state = this.state || {};
     this.sharedEventsCache = {};
     this.globalEvents = {};
     this.prevGlobalEventKeys = [];
     this.boundGlobalEvents = {};
+    this.baseProps = this.getBaseProps(props);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -298,9 +268,9 @@ export default class VictorySharedEvents extends React.Component {
 
   getContainer(props, baseProps, events) {
     const children = this.getNewChildren(props, baseProps);
-    const parents =
-      Array.isArray(events) &&
-      events.filter((event) => event.target === "parent");
+    const parents = Array.isArray(events)
+      ? events.filter((event) => event.target === "parent")
+      : [];
 
     const sharedEvents =
       parents.length > 0
@@ -340,12 +310,12 @@ export default class VictorySharedEvents extends React.Component {
       : React.cloneElement(container, localEvents, children);
   }
 
-  render() {
+  render(): React.ReactElement {
     const events = this.getAllEvents(this.props);
     if (events) {
       return this.getContainer(this.props, this.baseProps, events);
     }
-    return React.cloneElement(this.props.container, {
+    return React.cloneElement(this.props.container as React.ReactElement, {
       children: this.props.children,
     });
   }
