@@ -5,6 +5,7 @@ import {
   addEvents,
   Helpers,
   Data,
+  LineSegment,
   PropTypes as CustomPropTypes,
   VictoryContainer,
   VictoryLabel,
@@ -12,11 +13,13 @@ import {
   UserProps,
 } from "victory-core";
 import Slice from "./slice";
+import { isNil } from "lodash";
 import { getBaseProps } from "./helper-methods";
 
 const fallbackProps = {
   endAngle: 360,
   height: 400,
+  radius: 100,
   innerRadius: 0,
   cornerRadius: 0,
   padAngle: 0,
@@ -35,6 +38,12 @@ const fallbackProps = {
     "#000000",
   ],
   labelPosition: "centroid",
+  labelIndicatorInnerOffset: 15,
+  labelIndicatorOuterOffset: 5,
+};
+
+const datumHasXandY = (datum) => {
+  return !isNil(datum._x) && !isNil(datum._y);
 };
 
 class VictoryPie extends React.Component {
@@ -141,6 +150,10 @@ class VictoryPie extends React.Component {
       PropTypes.func,
     ]),
     labelComponent: PropTypes.element,
+    labelIndicator: PropTypes.oneOfType([PropTypes.element, PropTypes.bool]),
+    labelIndicatorInnerOffset: PropTypes.number,
+    labelIndicatorMiddleOffset: PropTypes.number,
+    labelIndicatorOuterOffset: PropTypes.number,
     labelPlacement: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
@@ -240,11 +253,73 @@ class VictoryPie extends React.Component {
     "labelComponent",
     "groupComponent",
     "containerComponent",
+    "labelIndicatorComponent",
   ];
 
   // Overridden in victory-native
   shouldAnimate() {
     return Boolean(this.props.animate);
+  }
+
+  renderComponents(props, shouldRenderDatum = datumHasXandY) {
+    const {
+      dataComponent,
+      labelComponent,
+      groupComponent,
+      labelIndicator,
+      labelPosition,
+    } = props;
+    const showIndicator = labelIndicator && labelPosition === "centroid";
+
+    let labelIndicatorComponents = null;
+
+    const dataComponents = this.dataKeys.reduce(
+      (validDataComponents, _dataKey, index) => {
+        const dataProps = this.getComponentProps(dataComponent, "data", index);
+        if (shouldRenderDatum(dataProps.datum)) {
+          validDataComponents.push(
+            React.cloneElement(dataComponent, dataProps),
+          );
+        }
+        return validDataComponents;
+      },
+      [],
+    );
+
+    const labelComponents = this.dataKeys
+      .map((_dataKey, index) => {
+        const labelProps = this.getComponentProps(
+          labelComponent,
+          "labels",
+          index,
+        );
+        if (labelProps.text !== undefined && labelProps.text !== null) {
+          return React.cloneElement(labelComponent, labelProps);
+        }
+        return undefined;
+      })
+      .filter(Boolean);
+
+    if (showIndicator) {
+      let labelIndicatorComponent = <LineSegment />;
+      if (typeof labelIndicator === "object") {
+        // pass user provided react component
+        labelIndicatorComponent = labelIndicator;
+      }
+
+      labelIndicatorComponents = this.dataKeys.map((_dataKey, index) => {
+        const labelIndicatorProps = this.getComponentProps(
+          labelIndicatorComponent,
+          "labelIndicators",
+          index,
+        );
+        return React.cloneElement(labelIndicatorComponent, labelIndicatorProps);
+      });
+    }
+    const children = showIndicator
+      ? [...dataComponents, ...labelComponents, ...labelIndicatorComponents]
+      : [...dataComponents, ...labelComponents];
+    return this.renderContainer(groupComponent, children);
   }
 
   render() {
@@ -255,7 +330,7 @@ class VictoryPie extends React.Component {
       return this.animateComponent(props, animationWhitelist);
     }
 
-    const children = this.renderData(props);
+    const children = this.renderComponents(props);
 
     const component = props.standalone
       ? this.renderContainer(props.containerComponent, children)

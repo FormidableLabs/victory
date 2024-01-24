@@ -4,7 +4,7 @@
 import React from "react";
 import { VictoryPie, Slice } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, Helpers } from "victory-core";
+import { LineSegment, VictoryTheme, Helpers } from "victory-core";
 import { fromJS } from "immutable";
 import styled from "styled-components";
 
@@ -582,6 +582,52 @@ export const DisableInlineStyles = () => {
       <VictoryPie
         style={parentStyle}
         dataComponent={<StyledSlice disableInlineStyles />}
+      />
+    </div>
+  );
+};
+
+export const LabelIndicator = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryPie style={parentStyle} labelIndicator />
+
+      <VictoryPie
+        style={parentStyle}
+        labelIndicator
+        radius={90}
+        labelRadius={100}
+        labelIndicatorInnerOffset={25}
+        labelIndicatorOuterOffset={4}
+      />
+      <VictoryPie style={parentStyle} innerRadius={50} labelIndicator />
+      <VictoryPie
+        style={parentStyle}
+        innerRadius={50}
+        labelIndicator
+        labelIndicatorInnerOffset={25}
+        labelIndicatorOuterOffset={10}
+      />
+      <VictoryPie
+        style={parentStyle}
+        innerRadius={50}
+        labelIndicator={<LineSegment />}
+      />
+      <VictoryPie
+        style={parentStyle}
+        labelRadius={90}
+        innerRadius={50}
+        radius={75}
+        labelIndicator={
+          <LineSegment
+            style={{
+              stroke: "red",
+              strokeDasharray: 1,
+              strokeWidth: 2,
+              fill: "none",
+            }}
+          />
+        }
       />
     </div>
   );

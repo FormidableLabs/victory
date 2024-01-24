@@ -3,7 +3,7 @@ import { random, range } from "lodash";
 import React from "react";
 import { VictoryPie } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme } from "victory-core";
+import { VictoryTheme, LineSegment } from "victory-core";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -228,7 +228,7 @@ export default class App extends React.Component {
           <VictoryPie
             style={{ ...this.state.style, labels: { fontSize: 0 } }}
             data={this.state.data}
-            innerRadius={100}
+            innerRadius={90}
             animate={{ duration: 2000 }}
             colorScale={this.state.colorScale}
           />
@@ -316,6 +316,20 @@ export default class App extends React.Component {
               { x: 7, y: 1, l: 270 },
               { x: 8, y: 1, l: 315 },
             ]}
+          />
+           <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator
+          />
+           <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator={<LineSegment style={{opacity:"1",strokeWidth:"1px",stroke: "red"}}/>}
+          />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator={<LineSegment style={{opacity:"1",strokeWidth:"1px",strokeDasharray: "1",stroke: "red"}}/>}
+            labelIndicatorInnerOffset={35}
+            labelIndicatorOuterOffset={4}
           />
         </div>
       </div>

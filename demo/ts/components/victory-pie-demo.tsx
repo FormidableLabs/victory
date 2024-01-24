@@ -2,7 +2,7 @@ import React from "react";
 import { random, range } from "lodash";
 import { VictoryPie } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme } from "victory-core";
+import { VictoryTheme, LineSegment } from "victory-core";
 
 interface VictoryPieDemoState {
   data: {
@@ -305,6 +305,20 @@ export default class VictoryPieDemo extends React.Component<
             startAngle={-6}
             animate={{ duration: 2000 }}
             innerRadius={140}
+          />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator
+          />
+           <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator={<LineSegment style={{opacity:"1",strokeWidth:"1px",stroke: "red"}}/>}
+          />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator={<LineSegment style={{opacity:"1",strokeWidth:"1px",strokeDasharray: "1",stroke: "red"}}/>}
+            labelIndicatorInnerOffset={45}
+            labelIndicatorOuterOffset={15}
           />
         </div>
       </div>

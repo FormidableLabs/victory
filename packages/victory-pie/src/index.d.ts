@@ -64,6 +64,9 @@ export interface VictoryPieProps
   >[];
   eventKey?: StringOrNumberOrCallback;
   innerRadius?: NumberOrCallback;
+  labelIndicator?: boolean | React.ReactElement;
+  labelIndicatorInnerOffset: number;
+  labelIndicatorOuterOffset: number;
   labelPlacement?:
     | VictorySliceLabelPlacementType
     | ((props: SliceProps) => VictorySliceLabelPlacementType);
