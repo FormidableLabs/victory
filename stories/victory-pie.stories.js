@@ -620,7 +620,12 @@ export const LabelIndicator = () => {
         radius={75}
         labelIndicator={
           <LineSegment
-            style={{ stroke: "red", strokeDasharray: 1, strokeWidth: 2, fill: "none" }}
+            style={{
+              stroke: "red",
+              strokeDasharray: 1,
+              strokeWidth: 2,
+              fill: "none",
+            }}
           />
         }
       />
