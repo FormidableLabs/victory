@@ -540,8 +540,8 @@ The `labelIndicator` prop defines the label indicator line between labels and th
   data={sampleData}
   labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
   style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
-  labelIndicatorInnerOffset = {10}
-  labelIndicatorOuterOffset = {15}
+  labelIndicatorInnerOffset={10}
+  labelIndicatorOuterOffset={15}
 />
 ```
 ## labelIndicatorInnerOffset
