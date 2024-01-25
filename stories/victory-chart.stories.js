@@ -4,6 +4,8 @@ import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
 import { VictoryBar } from "victory-bar";
+import { VictoryBrushContainer } from "victory-brush-container";
+import { VictoryCursorContainer } from "victory-cursor-container";
 import { VictoryGroup } from "victory-group";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryLine } from "victory-line";
@@ -11,6 +13,8 @@ import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryPolarAxis } from "victory-polar-axis";
 import { VictoryStack } from "victory-stack";
 import { VictoryTheme } from "victory-core";
+import { VictoryZoomContainer } from "victory-zoom-container";
+
 import { getData, getFourQuadrantData, getArrayData } from "./data";
 
 const dependentAxisTheme = {
@@ -494,6 +498,125 @@ export const Orientations = () => {
             { x: 3, y: 4 },
             { x: 4, y: 5 },
             { x: 5, y: 2 },
+          ]}
+        />
+      </VictoryChart>
+    </div>
+  );
+};
+
+export const VictoryBrushContainerDefault = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart
+        style={parentStyle}
+        containerComponent={<VictoryBrushContainer />}
+      />
+    </div>
+  );
+};
+
+export const VictoryBrushContainerWithDomain = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart
+        style={parentStyle}
+        containerComponent={
+          <VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }} />
+        }
+      />
+    </div>
+  );
+};
+
+export const VictoryBrushContainerWithDomainHorizontal = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart
+        horizontal
+        style={parentStyle}
+        containerComponent={
+          <VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }} />
+        }
+      />
+    </div>
+  );
+};
+
+export const VictoryBrushContainerWithBrushStyle = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart
+        style={parentStyle}
+        containerComponent={
+          <VictoryBrushContainer
+            brushStyle={{ fill: "teal", stroke: "teal", fillOpacity: 0.2 }}
+          />
+        }
+      />
+    </div>
+  );
+};
+
+export const VictoryCursorContainerDefault = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart
+        style={parentStyle}
+        containerComponent={
+          <VictoryCursorContainer
+            cursorLabel={({ datum }) => datum.x}
+            defaultCursorValue={{ x: 0.25, y: 0.75 }}
+          />
+        }
+      />
+    </div>
+  );
+};
+
+export const VictoryCursorContainerHorizontal = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart
+        style={parentStyle}
+        horizontal
+        containerComponent={
+          <VictoryCursorContainer
+            cursorLabel={({ datum }) => datum.x}
+            defaultCursorValue={{ x: 0.25, y: 0.75 }}
+          />
+        }
+      />
+    </div>
+  );
+};
+
+export const VictoryZoomContainerDefault = () => {
+  return (
+    <div style={containerStyle}>
+      <VictoryChart
+        style={parentStyle}
+        scale={{ x: "time" }}
+        containerComponent={
+          <VictoryZoomContainer
+            zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
+            dimension="x"
+          />
+        }
+      >
+        <VictoryLine
+          style={{
+            data: { stroke: "red", strokeWidth: 5 },
+          }}
+          data={[
+            { x: new Date(1982, 1, 1), y: 125 },
+            { x: new Date(1987, 1, 1), y: 257 },
+            { x: new Date(1993, 1, 1), y: 345 },
+            { x: new Date(1997, 1, 1), y: 515 },
+            { x: new Date(2001, 1, 1), y: 132 },
+            { x: new Date(2005, 1, 1), y: 305 },
+            { x: new Date(2011, 1, 1), y: 270 },
+            { x: new Date(2015, 1, 1), y: 470 },
           ]}
         />
       </VictoryChart>
