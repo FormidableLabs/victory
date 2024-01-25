@@ -162,8 +162,6 @@
     "build-storybook": "storybook build",
     "storybook:build": "wireit",
     "storybook:server": "concurrently --raw \"pnpm:build:lib:esm --watch\" \"pnpx storybook dev -p 6006\"",
-    "chromatic": "wireit",
-    "chromatic:ci": "wireit",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
     "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* .",
