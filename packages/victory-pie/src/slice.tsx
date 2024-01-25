@@ -1,8 +1,50 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Helpers, CommonProps, Path } from "victory-core";
+import {
+  Helpers,
+  CommonProps,
+  Path,
+  NumberOrCallback,
+  SliceNumberOrCallback,
+  StringOrCallback,
+  VictoryCommonProps,
+  VictoryStyleInterface,
+} from "victory-core";
 import { defaults, isFunction, assign } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
+
+export type VictorySliceLabelPositionType =
+  | "startAngle"
+  | "centroid"
+  | "endAngle";
+export type VictorySliceLabelPlacementType =
+  | "vertical"
+  | "parallel"
+  | "perpendicular";
+export type VictorySliceTTargetType = "data" | "labels" | "parent";
+
+export interface SliceProps extends VictoryCommonProps {
+  ariaLabel?: StringOrCallback;
+  cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
+  datum?: any;
+  innerRadius?: NumberOrCallback;
+  padAngle?: SliceNumberOrCallback<SliceProps, "padAngle">;
+  pathComponent?: React.ReactElement;
+  pathFunction?: (props: SliceProps) => string;
+  radius?: SliceNumberOrCallback<SliceProps, "radius">;
+  slice?: {
+    startAngle?: number;
+    endAngle?: number;
+    padAngle?: number;
+    data?: any[];
+  };
+  sliceEndAngle?: SliceNumberOrCallback<SliceProps, "sliceEndAngle">;
+  sliceStartAngle?: SliceNumberOrCallback<SliceProps, "sliceStartAngle">;
+  style?: VictoryStyleInterface;
+  tabIndex?: NumberOrCallback;
+  role?: string;
+  shapeRendering?: string;
+}
 
 const getPath = (props) => {
   const { slice, radius, innerRadius, cornerRadius } = props;
@@ -68,13 +110,13 @@ const evaluateProps = (props) => {
   });
 };
 
-const defaultProps = {
+const defaultProps: SliceProps = {
   pathComponent: <Path />,
   role: "presentation",
   shapeRendering: "auto",
 };
 
-const Slice = (initialProps) => {
+export const Slice = (initialProps: SliceProps) => {
   const props = evaluateProps({ ...defaultProps, ...initialProps });
   const defaultTransform = props.origin
     ? `translate(${props.origin.x}, ${props.origin.y})`
@@ -107,5 +149,3 @@ Slice.propTypes = {
   sliceEndAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   sliceStartAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
 };
-
-export default Slice;

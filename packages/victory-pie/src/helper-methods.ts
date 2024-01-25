@@ -53,7 +53,7 @@ const getSlices = (props, data) => {
     .startAngle(Helpers.degreesToRadians(props.startAngle))
     .endAngle(Helpers.degreesToRadians(props.endAngle))
     .padAngle(Helpers.degreesToRadians(padAngle))
-    .value((datum) => {
+    .value((datum: any) => {
       return datum._y;
     });
   return layoutFunction(data);
@@ -62,7 +62,7 @@ const getSlices = (props, data) => {
 const getCalculatedValues = (props) => {
   const { colorScale } = props;
   const styleObject = Helpers.getDefaultStyles(props, "pie");
-  const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
+  const style = Helpers.getStyles(props.style, styleObject);
   const colors = Array.isArray(colorScale)
     ? colorScale
     : Style.getColorScale(colorScale);
