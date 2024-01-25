@@ -526,23 +526,22 @@ y={(d) => d.value + d.error}
 The `labelIndicator` prop defines the label indicator line between labels and the pie chart. If this prop is used as a boolean,then the default indicator will be displayed. To customize or pass your own styling `<LineSegment/>` can be passed to labelIndicator. LabelIndicator is functional only when labelPosition = "centroid". To adjust the labelIndicator length, `labelIndicatorInnerOffset` and `labelIndicatorOuterOffset` props can be used alongside labelIndicator. 
 
 ```playground
-<VictoryPie
-  data={sampleData}
-  labelIndicator 
-  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
-/>
-<VictoryPie
-  data={sampleData}
-  labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
-  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
-/>
-<VictoryPie
-  data={sampleData}
-  labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
-  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
-  labelIndicatorInnerOffset={10}
-  labelIndicatorOuterOffset={15}
-/>
+<div>
+    <VictoryPie
+      data={sampleData}
+      labelIndicator 
+    />
+    <VictoryPie
+      data={sampleData}
+      labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
+    />
+    <VictoryPie
+      data={sampleData}
+      labelIndicator={<LineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
+      labelIndicatorInnerOffset={10}
+      labelIndicatorOuterOffset={5}
+    />
+</div>
 ```
 ## labelIndicatorInnerOffset
 
@@ -554,7 +553,6 @@ The `labelIndicatorInnerOffset` prop defines the offset by which the indicator l
 <VictoryPie
   data={sampleData}
   labelIndicator
-  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
   labelIndicatorInnerOffset={10}
 />
 ```
@@ -569,8 +567,7 @@ The `labelIndicatorOuterOffset` prop defines the offset by which the indicator l
 <VictoryPie
   data={sampleData}
   labelIndicator
-  style={{ labels: { fill: "white", fontSize: 20, fontWeight: "bold" } }}
-  labelIndicatorOuterOffset={10}
+  labelIndicatorOuterOffset={5}
 />
 ```
 
