@@ -67,7 +67,6 @@ export interface VictoryPieProps
 const fallbackProps = {
   endAngle: 360,
   height: 400,
-  radius: 100,
   innerRadius: 0,
   cornerRadius: 0,
   padAngle: 0,
