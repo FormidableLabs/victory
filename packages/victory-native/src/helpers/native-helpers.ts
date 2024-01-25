@@ -6,7 +6,7 @@ import * as React from "react";
  * @param {Array<String>} keys: an array of keys to omit from the new object
  * @returns {Object} new object with same properties as originalObject
  */
-export const omit = (originalObject, keys = []) => {
+export const omit = (originalObject, keys: string[] = []) => {
   // code based on babel's _objectWithoutProperties
   const newObject = {};
   for (const key in originalObject) {
@@ -33,7 +33,10 @@ const unsupportedAndStrokeProps = [
   ...unsupportedProps,
 ];
 
-const getStyle = (style, extraOmitProperties) => {
+const getStyle = (
+  style: Record<string, any>,
+  extraOmitProperties?: string[],
+) => {
   if (!style) {
     return undefined;
   }

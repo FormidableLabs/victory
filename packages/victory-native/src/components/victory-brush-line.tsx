@@ -1,47 +1,65 @@
 import React from "react";
 import { PanResponder } from "react-native";
 import { G, Rect } from "react-native-svg";
-import PropTypes from "prop-types";
 import { get } from "lodash";
-import { VictoryBrushLine } from "victory-brush-line/es";
+import { VictoryBrushLine, VictoryBrushLineProps } from "victory-brush-line/es";
 
 import LineSegment from "./victory-primitives/line-segment";
 import NativeHelpers from "../helpers/native-helpers"; // ensure the selection component get native styles
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const RectWithStyle = ({ style, ...otherProps }) => (
-  <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />
-);
+export interface VictoryNativeBrushLineProps extends VictoryBrushLineProps {
+  onTouchStart?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+  onTouchEnd?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+}
 
-RectWithStyle.propTypes = {
-  style: PropTypes.object,
-};
+const RectWithStyle = ({
+  style = {},
+  ...otherProps
+}: {
+  style?: Record<string, any>;
+}) => <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />;
 
 const yes = () => true;
 const no = () => false;
 
 const vblDefaultEvents = VictoryBrushLine.defaultEvents;
 
-class VictoryNativeBrushLine extends VictoryBrushLine {
+class VictoryNativeBrushLine<
+  TProps extends VictoryNativeBrushLineProps,
+> extends VictoryBrushLine<TProps> {
   static displayName = "VictoryNativeBrushLine";
-  static defaultEvents = function (props) {
+
+  defaultEvents = function (props) {
     if (props.disable) return undefined;
     // refer to web victory brush line to see the events we're aliasing here
     // we're just remapping the existing default events to their mobile equivalent handlers
-    const existingEventHandlers = vblDefaultEvents(props)[0].eventHandlers;
+    const existingEventHandlers = vblDefaultEvents(props)?.[0].eventHandlers;
     return [
       {
         target: props.type,
         eventHandlers: {
-          onTouchStart: existingEventHandlers.onMouseDown,
-          onTouchMove: existingEventHandlers.onMouseMove,
-          onTouchEnd: existingEventHandlers.onMouseUp,
+          onTouchStart: existingEventHandlers?.onMouseDown,
+          onTouchMove: existingEventHandlers?.onMouseMove,
+          onTouchEnd: existingEventHandlers?.onMouseUp,
         },
       },
     ];
   };
 
-  constructor(props) {
+  panResponder: any;
+
+  constructor(props: TProps) {
     super(props);
     this.panResponder = this.getResponder();
   }
@@ -101,7 +119,7 @@ class VictoryNativeBrushLine extends VictoryBrushLine {
     this.callOptionalEventCallback("onTouchEnd", evt);
   }
 
-  render() {
+  render(): React.ReactElement {
     return (
       <G {...this.props.events} {...this.panResponder.panHandlers}>
         {this.renderLine(this.props)}
@@ -115,13 +133,14 @@ class VictoryNativeBrushLine extends VictoryBrushLine {
 
 const NativeVictoryBrushLine = wrapCoreComponent({
   Component: VictoryNativeBrushLine,
-  defaultProps: Object.assign({}, VictoryNativeBrushLine.defaultProps, {
+  defaultProps: {
+    ...VictoryNativeBrushLine.defaultProps,
     brushComponent: <RectWithStyle />,
     brushAreaComponent: <RectWithStyle />,
     handleComponent: <RectWithStyle />,
     groupComponent: <G />,
     lineComponent: <LineSegment />,
-  }),
+  },
 });
 
 export default NativeVictoryBrushLine;

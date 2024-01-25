@@ -1,15 +1,37 @@
-import React from "react";
+import React, { ComponentClass } from "react";
 import { flow } from "lodash";
 import VictoryContainer from "./victory-container";
 import VictoryClipContainer from "./victory-clip-container";
 import {
   VictoryZoomContainer,
+  VictoryZoomContainerProps,
   zoomContainerMixin as originalZoomMixin,
 } from "victory-zoom-container";
 import NativeZoomHelpers from "../helpers/native-zoom-helpers";
 
-const nativeZoomMixin = (base) =>
-  class VictoryNativeZoomContainer extends base {
+export interface VictoryZoomContainerNativeProps
+  extends VictoryZoomContainerProps {
+  disableContainerEvents?: boolean;
+  onTouchStart?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+  onTouchEnd?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+}
+
+function nativeZoomMixin<
+  TBase extends ComponentClass<TProps>,
+  TProps extends VictoryZoomContainerNativeProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryNativeZoomContainer extends Base {
     // assign native specific defaultProps over web `VictoryZoomContainer` defaultProps
     static defaultProps = {
       ...VictoryZoomContainer.defaultProps,
@@ -17,22 +39,17 @@ const nativeZoomMixin = (base) =>
     };
 
     // overrides all web events with native specific events
-    static defaultEvents = (props) => {
+    static defaultEvents = (props: TProps) => {
       const { disable } = props;
       return [
         {
           target: "parent",
           eventHandlers: {
             // eslint-disable-next-line max-params
-            onTouchStart: (evt, targetProps, eventKey, ctx) => {
+            onTouchStart: (evt, targetProps) => {
               return disable
                 ? {}
-                : NativeZoomHelpers.onTouchStart(
-                    evt,
-                    targetProps,
-                    eventKey,
-                    ctx,
-                  );
+                : NativeZoomHelpers.onTouchStart(evt, targetProps);
             },
             // eslint-disable-next-line max-params
             onTouchMove: (evt, targetProps, eventKey, ctx) => {
@@ -46,10 +63,8 @@ const nativeZoomMixin = (base) =>
                   );
             },
             // eslint-disable-next-line max-params
-            onTouchEnd: (evt, targetProps, eventKey, ctx) => {
-              return disable
-                ? {}
-                : NativeZoomHelpers.onTouchEnd(evt, targetProps, eventKey, ctx);
+            onTouchEnd: () => {
+              return disable ? {} : NativeZoomHelpers.onTouchEnd();
             },
             // eslint-disable-next-line max-params
             onTouchPinch: (evt, targetProps, eventKey, ctx) => {
@@ -67,9 +82,11 @@ const nativeZoomMixin = (base) =>
       ];
     };
   };
+}
 
 const combinedMixin = flow(originalZoomMixin, nativeZoomMixin);
 
-export const zoomContainerMixin = (base) => combinedMixin(base);
+export const zoomContainerMixin = (base): VictoryZoomContainer =>
+  combinedMixin(base);
 
 export default zoomContainerMixin(VictoryContainer);

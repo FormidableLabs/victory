@@ -6,11 +6,12 @@ import VictoryPortal from "./victory-portal/victory-portal";
 import Flyout from "./victory-primitives/flyout";
 
 export default class extends VictoryTooltip {
-  static defaultProps = Object.assign({}, VictoryTooltip.defaultProps, {
+  static defaultProps = {
+    ...VictoryTooltip.defaultProps,
     labelComponent: <VictoryLabel />,
     flyoutComponent: <Flyout />,
     groupComponent: <G />,
-  });
+  };
 
   static defaultEvents = [
     {

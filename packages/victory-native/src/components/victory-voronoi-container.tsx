@@ -3,14 +3,36 @@ import React from "react";
 import { flow } from "lodash";
 import {
   VictoryVoronoiContainer,
+  VictoryVoronoiContainerProps,
   VoronoiHelpers,
   voronoiContainerMixin as originalVoronoiMixin,
 } from "victory-voronoi-container";
 import VictoryContainer from "./victory-container";
 import VictoryTooltip from "./victory-tooltip";
 
-const nativeVoronoiMixin = (base) =>
-  class VictoryNativeVoronoiContainer extends base {
+export interface VictoryVoronoiContainerNativeProps
+  extends VictoryVoronoiContainerProps {
+  disableContainerEvents?: boolean;
+  onTouchStart?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+  onTouchEnd?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+}
+
+function nativeVoronoiMixin<
+  TBase extends React.ComponentClass<TProps>,
+  TProps extends VictoryVoronoiContainerNativeProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryNativeVoronoiContainer extends Base {
     // assign native specific defaultProps over web `VictoryVoronoiContainer` defaultProps
     static defaultProps = {
       ...VictoryVoronoiContainer.defaultProps,
@@ -21,7 +43,7 @@ const nativeVoronoiMixin = (base) =>
     };
 
     // overrides all web events with native specific events
-    static defaultEvents = (props) => {
+    static defaultEvents = (props: TProps) => {
       return [
         {
           target: "parent",
@@ -56,9 +78,11 @@ const nativeVoronoiMixin = (base) =>
       ];
     };
   };
+}
 
 const combinedMixin = flow(originalVoronoiMixin, nativeVoronoiMixin);
 
-export const voronoiContainerMixin = (base) => combinedMixin(base);
+export const voronoiContainerMixin = (base): VictoryVoronoiContainer =>
+  combinedMixin(base);
 
 export default voronoiContainerMixin(VictoryContainer);

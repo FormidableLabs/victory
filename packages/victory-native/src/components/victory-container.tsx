@@ -3,19 +3,37 @@ import PropTypes from "prop-types";
 import Svg, { Rect } from "react-native-svg";
 import { assign, get } from "lodash";
 import { View, PanResponder } from "react-native";
-import { VictoryContainer } from "victory-core/es";
+import { VictoryContainer, VictoryContainerProps } from "victory-core/es";
 import NativeHelpers from "../helpers/native-helpers";
 import Portal from "./victory-portal/portal";
 
 const yes = () => true;
 const no = () => false;
 
-export default class extends VictoryContainer {
+export interface VictoryContainerNativeProps extends VictoryContainerProps {
+  disableContainerEvents?: boolean;
+  onTouchStart?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+  onTouchEnd?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+}
+
+export default class extends VictoryContainer<VictoryContainerNativeProps> {
   static propTypes = assign({}, VictoryContainer.propTypes, {
     disableContainerEvents: PropTypes.bool,
     onTouchEnd: PropTypes.func,
     onTouchStart: PropTypes.func,
   });
+
+  panResponder: any;
 
   constructor(props) {
     super(props);
@@ -26,12 +44,12 @@ export default class extends VictoryContainer {
     let shouldBlockNativeResponder = no;
     if (
       this.props &&
-      (this.props.allowDrag ||
-        this.props.allowDraw ||
-        this.props.allowResize ||
-        this.props.allowSelection ||
-        this.props.allowPan ||
-        this.props.allowZoom)
+      ((this.props as any).allowDrag ||
+        (this.props as any).allowDraw ||
+        (this.props as any).allowResize ||
+        (this.props as any).allowSelection ||
+        (this.props as any).allowPan ||
+        (this.props as any).allowZoom)
     ) {
       shouldBlockNativeResponder = yes;
     }

@@ -1,26 +1,46 @@
 import React from "react";
 import { flow } from "lodash";
-import PropTypes from "prop-types";
 import { Rect } from "react-native-svg";
 import {
   VictorySelectionContainer,
   SelectionHelpers,
   selectionContainerMixin as originalSelectionMixin,
+  VictorySelectionContainerProps,
 } from "victory-selection-container";
 import VictoryContainer from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
 
+export interface VictorySelectionContainerNativeProps
+  extends VictorySelectionContainerProps {
+  disableContainerEvents?: boolean;
+  onTouchStart?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+  onTouchEnd?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+}
+
 // ensure the selection component get native styles
-const DefaultSelectionComponent = ({ style, ...otherProps }) => (
-  <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />
-);
+const DefaultSelectionComponent = ({
+  style = {},
+  ...otherProps
+}: {
+  style?: Record<string, any>;
+}) => <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />;
 
-DefaultSelectionComponent.propTypes = {
-  style: PropTypes.object,
-};
-
-const nativeSelectionMixin = (base) =>
-  class VictoryNativeSelectionContainer extends base {
+function nativeSelectionMixin<
+  TBase extends React.ComponentClass<TProps>,
+  TProps extends VictorySelectionContainerNativeProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryNativeSelectionContainer extends Base {
     // eslint-disable-line max-len
     // assign native specific defaultProps over web `VictorySelectionContainer` defaultProps
     static defaultProps = {
@@ -30,7 +50,7 @@ const nativeSelectionMixin = (base) =>
     };
 
     // overrides all web events with native specific events
-    static defaultEvents = (props) => {
+    static defaultEvents = (props: TProps) => {
       return [
         {
           target: "parent",
@@ -59,9 +79,11 @@ const nativeSelectionMixin = (base) =>
       ];
     };
   };
+}
 
 const combinedMixin = flow(originalSelectionMixin, nativeSelectionMixin);
 
-export const selectionContainerMixin = (base) => combinedMixin(base);
+export const selectionContainerMixin = (base): VictorySelectionContainer =>
+  combinedMixin(base);
 
 export default selectionContainerMixin(VictoryContainer);

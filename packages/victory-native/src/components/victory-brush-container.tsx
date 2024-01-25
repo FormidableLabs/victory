@@ -1,26 +1,46 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Rect } from "react-native-svg";
 import { flow } from "lodash";
 import {
   VictoryBrushContainer,
   BrushHelpers,
   brushContainerMixin as originalBrushMixin,
+  VictoryBrushContainerProps,
 } from "victory-brush-container";
 import VictoryContainer from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
 
+export interface VictoryBrushContainerNativeProps
+  extends VictoryBrushContainerProps {
+  disableContainerEvents?: boolean;
+  onTouchStart?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+  onTouchEnd?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+}
+
 // ensure the selection component get native styles
-const RectWithStyle = ({ style, ...otherProps }) => (
-  <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />
-);
+const RectWithStyle = ({
+  style = {},
+  ...otherProps
+}: {
+  style?: Record<string, any>;
+}) => <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />;
 
-RectWithStyle.propTypes = {
-  style: PropTypes.object,
-};
-
-const nativeBrushMixin = (base) =>
-  class VictoryNativeBrushContainer extends base {
+function nativeBrushMixin<
+  TBase extends React.ComponentClass<TProps>,
+  TProps extends VictoryBrushContainerNativeProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryNativeBrushContainer extends Base {
     // eslint-disable-line max-len
     // assign native specific defaultProps over web `VictoryBrushContainer` defaultProps
     static defaultProps = {
@@ -30,7 +50,7 @@ const nativeBrushMixin = (base) =>
     };
 
     // overrides all web events with native specific events
-    static defaultEvents = (props) => {
+    static defaultEvents = (props: TProps) => {
       return [
         {
           target: "parent",
@@ -59,9 +79,11 @@ const nativeBrushMixin = (base) =>
       ];
     };
   };
+}
 
 const combinedMixin = flow(originalBrushMixin, nativeBrushMixin);
 
-export const brushContainerMixin = (base) => combinedMixin(base);
+export const brushContainerMixin = (base): VictoryBrushContainer =>
+  combinedMixin(base);
 
 export default brushContainerMixin(VictoryContainer);

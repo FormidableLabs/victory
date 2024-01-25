@@ -4,13 +4,35 @@ import {
   VictoryCursorContainer,
   CursorHelpers,
   cursorContainerMixin as originalCursorMixin,
+  VictoryCursorContainerProps,
 } from "victory-cursor-container";
 import VictoryLabel from "./victory-label";
 import VictoryContainer from "./victory-container";
 import LineSegment from "./victory-primitives/line-segment";
 
-const nativeCursorMixin = (base) =>
-  class VictoryNativeCursorContainer extends base {
+export interface VictoryCursorContainerNativeProps
+  extends VictoryCursorContainerProps {
+  disableContainerEvents?: boolean;
+  onTouchStart?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+  onTouchEnd?: (
+    evt?: any,
+    targetProps?: any,
+    eventKey?: any,
+    ctx?: any,
+  ) => void;
+}
+
+function nativeCursorMixin<
+  TBase extends React.ComponentClass<TProps>,
+  TProps extends VictoryCursorContainerNativeProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryNativeCursorContainer extends Base {
     static displayName = "VictoryCursorContainer";
     // assign native specific defaultProps over web `VictoryCursorContainer` defaultProps
     static defaultProps = {
@@ -20,7 +42,7 @@ const nativeCursorMixin = (base) =>
     };
 
     // overrides all web events with native specific events
-    static defaultEvents = (props) => {
+    static defaultEvents = (props: TProps) => {
       return [
         {
           target: "parent",
@@ -45,9 +67,11 @@ const nativeCursorMixin = (base) =>
       ];
     };
   };
+}
 
 const combinedMixin = flow(originalCursorMixin, nativeCursorMixin);
 
-export const cursorContainerMixin = (base) => combinedMixin(base);
+export const cursorContainerMixin = (base): VictoryCursorContainer =>
+  combinedMixin(base);
 
 export default cursorContainerMixin(VictoryContainer);
