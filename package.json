@@ -159,8 +159,8 @@
     "jest:pkgs": "wireit",
     "types:check": "wireit",
     "types:create": "wireit",
+    "build-storybook": "storybook build",
     "storybook:build": "wireit",
-    "build-storybook": "pnpm run storybook:build",
     "storybook:server": "concurrently --raw \"pnpm:build:lib:esm --watch\" \"pnpx storybook dev -p 6006\"",
     "chromatic": "wireit",
     "chromatic:ci": "wireit",
@@ -490,24 +490,6 @@
       ],
       "dependencies": [
         "build:lib:esm"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "chromatic": {
-      "command": "chromatic",
-      "dependencies": [
-        "storybook:build"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "chromatic:ci": {
-      "command": "chromatic --ci --exit-zero-on-changes",
-      "dependencies": [
-        "storybook:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
