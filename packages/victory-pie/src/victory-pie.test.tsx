@@ -13,8 +13,8 @@ import {
 } from "../../../test/helpers";
 
 const pizzaSliceInnerText = "Pizza Slice";
-const PizzaSlice = ({ datum: { x } }) => (
-  <p data-testid={`pizza-slice-${x}`} xvalue={x}>
+const PizzaSlice = ({ datum }: { datum?: { x: number } }) => (
+  <p data-testid={`pizza-slice-${datum?.x}`} data-xvalue={datum?.x}>
     {pizzaSliceInnerText}
   </p>
 );
@@ -39,13 +39,13 @@ describe("components/victory-pie", () => {
       const { container } = render(<VictoryPie />);
       const svg = container.querySelector("svg");
 
-      expect(svg.getAttribute("style")).toContain("width: 100%; height: 100%");
+      expect(svg?.getAttribute("style")).toContain("width: 100%; height: 100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryPie />);
       const svg = container.querySelector("svg");
-      expect(svg.getAttribute("viewBox")).toEqual("0 0 400 400");
+      expect(svg?.getAttribute("viewBox")).toEqual("0 0 400 400");
     });
 
     it("renders 5 slices", () => {
@@ -81,6 +81,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders 0 slice labels for label function returning undefined", () => {
+      // @ts-expect-error "undefined" is not assignable to "string"
       const { container } = render(<VictoryPie labels={() => undefined} />);
 
       const labels = container.querySelectorAll("text");
@@ -125,6 +126,7 @@ describe("components/victory-pie", () => {
     it("renders data values with null accessor", () => {
       const data = range(8);
       const { container } = render(
+        // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryPie data={data} x={null} y={null} />,
       );
       const slices = container.querySelectorAll("path");
@@ -138,7 +140,7 @@ describe("components/victory-pie", () => {
       render(<VictoryPie data={data} dataComponent={<PizzaSlice />} />);
       const xValues = Array.from(screen.getAllByText(pizzaSliceInnerText)).map(
         (slice) => {
-          return parseInt(slice.getAttribute("xvalue"));
+          return parseInt(slice.getAttribute("data-xvalue") || "");
         },
       );
 
@@ -153,11 +155,11 @@ describe("components/victory-pie", () => {
         .reverse();
 
       render(
-        <VictoryPie data={data} sortKey={"x"} dataComponent={<PizzaSlice />} />,
+        <VictoryPie data={data} sortKey="x" dataComponent={<PizzaSlice />} />,
       );
       const xValues = Array.from(screen.getAllByText(pizzaSliceInnerText)).map(
         (slice) => {
-          return parseInt(slice.getAttribute("xvalue"));
+          return parseInt(slice.getAttribute("data-xvalue") || "");
         },
       );
 
@@ -174,14 +176,14 @@ describe("components/victory-pie", () => {
       render(
         <VictoryPie
           data={data}
-          sortKey={"x"}
+          sortKey="x"
           sortOrder={"descending"}
           dataComponent={<PizzaSlice />}
         />,
       );
       const xValues = Array.from(screen.getAllByText(pizzaSliceInnerText)).map(
         (slice) => {
-          return parseInt(slice.getAttribute("xvalue"));
+          return parseInt(slice.getAttribute("data-xvalue") || "");
         },
       );
 
@@ -286,7 +288,7 @@ describe("components/victory-pie", () => {
       const width = 200;
       const { container } = render(<VictoryPie width={width} />);
       const svg = container.querySelector("svg");
-      expect(svg.getAttribute("viewBox")).toEqual(`0 0 ${width} 400`);
+      expect(svg?.getAttribute("viewBox")).toEqual(`0 0 ${width} 400`);
     });
   });
 
@@ -295,7 +297,7 @@ describe("components/victory-pie", () => {
       const height = 200;
       const { container } = render(<VictoryPie height={height} />);
       const svg = container.querySelector("svg");
-      expect(svg.getAttribute("viewBox")).toEqual(`0 0 400 ${height}`);
+      expect(svg?.getAttribute("viewBox")).toEqual(`0 0 400 ${height}`);
     });
   });
 
@@ -373,7 +375,7 @@ describe("components/victory-pie", () => {
         />,
       );
       const svg = container.querySelector("svg");
-      fireEvent.click(svg);
+      fireEvent.click(svg!);
       expect(clickHandler).toBeCalled();
 
       const contextualArg = clickHandler.mock.calls[0][1];
@@ -433,7 +435,7 @@ describe("components/victory-pie", () => {
           dataComponent={
             <Slice
               ariaLabel={({ datum }) => `${datum.x}`}
-              tabIndex={({ index }) => index + 5}
+              tabIndex={({ index }) => Number(index) + 5}
             />
           }
         />,

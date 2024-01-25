@@ -36,15 +36,15 @@ describe("components/victory-errorbar", () => {
     it("renders an svg with the correct width and height", () => {
       const { container } = render(<VictoryErrorBar />);
       const svg = container.querySelector("svg");
-      expect(svg.style.width).toEqual("100%");
-      expect(svg.style.height).toEqual("100%");
+      expect(svg!.style.width).toEqual("100%");
+      expect(svg!.style.height).toEqual("100%");
     });
 
     it("renders an svg with the correct viewBox", () => {
       const { container } = render(<VictoryErrorBar />);
       const svg = container.querySelector("svg");
       const viewBoxValue = `0 0 ${450} ${300}`;
-      expect(svg.getAttribute("viewBox")).toEqual(viewBoxValue);
+      expect(svg!.getAttribute("viewBox")).toEqual(viewBoxValue);
     });
 
     it("renders 4 errors", () => {
@@ -104,7 +104,7 @@ describe("components/victory-errorbar", () => {
           render(<VictoryErrorBar data={data} sortKey="x" {...defaultProps} />);
           const xValues = screen
             .getAllByTestId("error-bar")
-            .map((node) => parseInt(node.getAttribute("data-x")));
+            .map((node) => parseInt(node.getAttribute("data-x")!));
           expect(xValues).toEqual([0, 1, 2, 3, 4]);
         });
 
@@ -124,7 +124,7 @@ describe("components/victory-errorbar", () => {
           );
           const yValues = screen
             .getAllByTestId("error-bar")
-            .map((node) => parseInt(node.getAttribute("data-y")));
+            .map((node) => parseInt(node.getAttribute("data-y")!));
           expect(yValues).toEqual([4, 3, 2, 1, 0]);
         });
 
@@ -1017,7 +1017,7 @@ describe("components/victory-errorbar", () => {
         />,
       );
       const svg = container.querySelector("svg");
-      fireEvent.click(svg);
+      fireEvent.click(svg!);
       expect(clickHandler).toBeCalled();
     });
 
@@ -1091,7 +1091,7 @@ describe("components/victory-errorbar", () => {
           expect(g.getAttribute("aria-label")).toEqual(
             `error bar chart, x ${data[i].x}`,
           );
-          expect(parseInt(g.getAttribute("tabindex"), 10)).toEqual(i + 2);
+          expect(parseInt(g.getAttribute("tabindex")!, 10)).toEqual(i + 2);
         });
       });
     });
