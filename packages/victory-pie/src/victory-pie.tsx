@@ -21,15 +21,15 @@ import {
   EventsMixinClass,
   VictoryDatableProps,
 } from "victory-core";
-import { Slice } from "./slice";
 import { isNil } from "lodash";
 import { getBaseProps } from "./helper-methods";
 import {
+  Slice,
   SliceProps,
   VictorySliceTTargetType,
   VictorySliceLabelPlacementType,
   VictorySliceLabelPositionType,
-} from "../lib";
+} from "./slice";
 
 export interface VictoryPieProps
   extends Omit<VictoryCommonProps, "polar">,
