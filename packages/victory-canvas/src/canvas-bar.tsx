@@ -20,7 +20,7 @@ export interface CanvasBarProps extends VictoryCommonPrimitiveProps {
   barWidth?: NumberOrCallback;
   cornerRadius?: NumberOrCallback | VictoryBarCornerRadiusObject;
   datum?: any;
-  getPath?: (x: number, y: number, size: number) => string;
+  getPath?: (props: CanvasBarProps) => string;
   horizontal?: boolean;
   width?: number;
   x?: number;

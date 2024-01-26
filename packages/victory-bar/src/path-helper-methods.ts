@@ -1,4 +1,5 @@
 import * as d3Shape from "victory-vendor/d3-shape";
+import { BarProps } from "./bar";
 
 import { circle, point } from "./geometry-helper-methods";
 
@@ -42,10 +43,18 @@ const transformAngle = (angle: number) => {
   return -1 * angle + Math.PI / 2;
 };
 
-export const getCustomBarPath = (props, width) => {
+export const getCustomBarPath = (
+  props: BarProps,
+  width: number,
+): string | undefined => {
   const { getPath } = props;
-  const propsWithCalculatedValues = { ...props, ...getPosition(props, width) };
-  return getPath(propsWithCalculatedValues);
+  if (typeof getPath === "function") {
+    const propsWithCalculatedValues = {
+      ...props,
+      ...getPosition(props, width),
+    };
+    return getPath(propsWithCalculatedValues);
+  }
 };
 
 const getStartAngle = (props, index: number) => {
@@ -251,7 +260,7 @@ export const getHorizontalBarPath = (props, width, cornerRadius) => {
   return mapPointsToPath(points, cr, direction);
 };
 
-export const getVerticalPolarBarPath = (props, cornerRadius) => {
+export const getVerticalPolarBarPath = (props: BarProps, cornerRadius) => {
   const { datum, scale, index, alignment, style } = props;
   const r1 = scale.y(datum._y0 || 0);
   const r2 = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
@@ -264,8 +273,8 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
     start = alignment === "start" ? currentAngle : currentAngle - size;
     end = alignment === "end" ? currentAngle : currentAngle + size;
   } else {
-    start = getStartAngle(props, index);
-    end = getEndAngle(props, index);
+    start = getStartAngle(props, Number(index));
+    end = getEndAngle(props, Number(index));
   }
 
   const getPath = (edge): string => {
@@ -409,7 +418,7 @@ export const getVerticalPolarBarPath = (props, cornerRadius) => {
   return `${path} z`;
 };
 
-export const getBarPath = (props, width, cornerRadius) => {
+export const getBarPath = (props: BarProps, width: number, cornerRadius) => {
   if (props.getPath) {
     return getCustomBarPath(props, width);
   }
@@ -419,7 +428,7 @@ export const getBarPath = (props, width, cornerRadius) => {
     : getVerticalBarPath(props, width, cornerRadius);
 };
 
-export const getPolarBarPath = (props, cornerRadius) => {
+export const getPolarBarPath = (props: BarProps, cornerRadius) => {
   // TODO Radial bars
   return getVerticalPolarBarPath(props, cornerRadius);
 };
