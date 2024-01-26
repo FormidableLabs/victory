@@ -353,11 +353,10 @@
       ]
     },
     "lint:root": {
-      "command": "nps \"lint:base *.js .storybook scripts config demo stories test\"",
+      "command": "nps \"lint:base *.js scripts config demo stories test\"",
       "files": [
         ".eslintrc.js",
         "*.js",
-        ".storybook",
         "scripts",
         "config",
         "demo",
@@ -371,11 +370,10 @@
       ]
     },
     "lint:root:fix": {
-      "command": "pnpm run lint:root || nps \"lint:base --fix *.js .storybook scripts config demo stories test\"",
+      "command": "pnpm run lint:root || nps \"lint:base --fix *.js scripts config demo stories test\"",
       "files": [
         ".eslintrc.js",
         "*.js",
-        ".storybook",
         "scripts",
         "config",
         "demo",

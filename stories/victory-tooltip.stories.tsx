@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryBar } from "../packages/victory-bar";
 import { VictoryTooltip, Flyout } from "../packages/victory-tooltip";
-import { NumberOrCallback, VictoryLabel } from "../packages/victory-core";
+import { VictoryLabel } from "../packages/victory-core";
 import { getData, getMixedData } from "./data";
 import styled from "styled-components";
 import { storyContainer } from "./decorators";
