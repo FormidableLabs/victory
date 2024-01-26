@@ -468,7 +468,7 @@ export class VictoryBrushLine<
                 }
                 return [];
               },
-              onMouseUp(evt, targetProps) {
+              onMouseUp: (evt, targetProps) => {
                 const {
                   onBrushDomainChange,
                   brushDomain,
@@ -496,7 +496,7 @@ export class VictoryBrushLine<
                   },
                 ];
               },
-              onMouseLeave(evt, targetProps) {
+              onMouseLeave: (evt, targetProps) => {
                 const { brushDomain } = targetProps;
                 return [
                   {
