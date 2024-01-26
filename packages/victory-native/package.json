@@ -16,7 +16,6 @@
   "source": "src/index.js",
   "sideEffects": false,
   "main": "src/index.js",
-  "types": "src/index.d.ts",
   "files": [
     "src",
     "index.js"
