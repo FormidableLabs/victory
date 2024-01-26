@@ -58,7 +58,7 @@ describe("Default render", () => {
 
   components.forEach((C) => {
     it(`should work for ${C.name}`, () => {
-      const { container } = render(React.createElement(C.component));
+      const { container } = render(React.createElement(C.component as any));
       expect(container).toBeDefined();
     });
   });

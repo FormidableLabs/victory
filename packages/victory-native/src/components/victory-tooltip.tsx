@@ -13,7 +13,7 @@ export class VictoryTooltip extends VictoryTooltipBase {
     groupComponent: <G />,
   };
 
-  static defaultEvents = [
+  static defaultEvents = () => [
     {
       target: "data",
       eventHandlers: {
@@ -66,19 +66,20 @@ export class VictoryTooltip extends VictoryTooltipBase {
         <G />
       );
     }
+
     const calculatedValues = this.getCalculatedValues(evaluatedProps);
     const children = [
       React.cloneElement(
-        flyoutComponent,
+        flyoutComponent!,
         this.getFlyoutProps(evaluatedProps, calculatedValues),
       ),
       React.cloneElement(
-        labelComponent,
+        labelComponent!,
         this.getLabelProps(evaluatedProps, calculatedValues),
       ),
     ];
     const tooltip = React.cloneElement(
-      groupComponent,
+      groupComponent!,
       { role: "presentation" },
       children,
     );

@@ -95,7 +95,7 @@ class VictoryNativeBrushLine<
     const callback = get(this.props.events, eventName);
     if (callback) {
       evt.persist(); // RN nativeEvent is reused. see https://fb.me/react-event-pooling
-      callback(evt, this.props, "__unknownEventKey__", eventName);
+      (callback as any)(evt, this.props, "__unknownEventKey__", eventName);
     }
   }
 

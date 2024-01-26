@@ -34,7 +34,7 @@ const unsupportedAndStrokeProps = [
 ];
 
 const getStyle = (
-  style: Record<string, any>,
+  style?: Record<string, any>,
   extraOmitProperties?: string[],
 ) => {
   if (!style) {

@@ -87,6 +87,14 @@ type InternalEvaluatedProps = VictoryTooltipProps & {
   text: string | string[];
 };
 
+type EventHandlers = Record<
+  string,
+  (props?: any) => {
+    target: string;
+    mutation: () => { active?: boolean | undefined };
+  }[]
+>;
+
 export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
   static displayName = "VictoryTooltip";
   static role = "tooltip";
@@ -99,7 +107,12 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
     groupComponent: <g />,
   };
 
-  static defaultEvents = (props: VictoryTooltipProps) => {
+  static defaultEvents = (
+    props: VictoryTooltipProps,
+  ): {
+    target: string;
+    eventHandlers: EventHandlers;
+  }[] => {
     const activate = props.activateData
       ? [
           { target: "labels", mutation: () => ({ active: true }) },
