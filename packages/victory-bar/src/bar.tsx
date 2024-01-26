@@ -21,7 +21,7 @@ export interface BarProps extends VictoryCommonPrimitiveProps {
   barWidth?: NumberOrCallback;
   cornerRadius?: NumberOrCallback | VictoryBarCornerRadiusObject;
   datum?: any;
-  getPath?: (x: number, y: number, props: any) => string;
+  getPath?: (props: BarProps) => string;
   horizontal?: boolean;
   pathComponent?: React.ReactElement;
   width?: number;
