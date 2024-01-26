@@ -1,15 +1,19 @@
-import { Meta } from '@storybook/react';
+import { Meta } from "@storybook/react";
 import { fromJS } from "immutable";
 import React from "react";
 
 import { CanvasGroup, CanvasPoint } from "../packages/victory-canvas";
 import { VictoryChart } from "../packages/victory-chart";
-import { ScatterSymbolType, VictoryLabelStyleObject, VictoryTheme } from "../packages/victory-core";
+import {
+  ScatterSymbolType,
+  VictoryLabelStyleObject,
+  VictoryTheme,
+} from "../packages/victory-core";
 import { VictoryScatter } from "../packages/victory-scatter";
 import { VictoryStack } from "../packages/victory-stack";
 import { VictoryTooltip } from "../packages/victory-tooltip";
 import { getData, getMixedData } from "./data";
-import { storyContainer } from './decorators';
+import { storyContainer } from "./decorators";
 
 const meta: Meta = {
   title: "Victory Charts/Canvas Container/Scatter",

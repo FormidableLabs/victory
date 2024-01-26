@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta } from "@storybook/react";
 import React from "react";
 import { fromJS } from "immutable";
 import styled from "styled-components";
@@ -6,7 +6,11 @@ import styled from "styled-components";
 import { VictoryStack } from "../packages/victory-stack";
 import { VictoryArea, Area } from "../packages/victory-area";
 import { VictoryTooltip } from "../packages/victory-tooltip";
-import { VictoryTheme, VictoryLabel, VictoryLabelStyleObject } from "../packages/victory-core";
+import {
+  VictoryTheme,
+  VictoryLabel,
+  VictoryLabelStyleObject,
+} from "../packages/victory-core";
 import { VictoryChart } from "../packages/victory-chart";
 import {
   getData,
@@ -15,7 +19,7 @@ import {
   getLogData,
   getDataWithBaseline,
 } from "./data";
-import { storyContainer } from './decorators';
+import { storyContainer } from "./decorators";
 
 const meta: Meta = {
   title: "Victory Charts/SVG Container/VictoryArea",

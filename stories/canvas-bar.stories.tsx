@@ -15,7 +15,7 @@ import { VictoryPolarAxis } from "../packages/victory-polar-axis";
 import { VictoryStack } from "../packages/victory-stack";
 import { VictoryTooltip } from "../packages/victory-tooltip";
 import { getData, getDataWithBaseline, getMixedData } from "./data";
-import { storyContainer } from './decorators';
+import { storyContainer } from "./decorators";
 
 const meta: Meta<typeof VictoryBar> = {
   title: "Victory Charts/Canvas Container/Bar",

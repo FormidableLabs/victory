@@ -1,3 +1,4 @@
+import { Meta } from "@storybook/react";
 import React from "react";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
@@ -8,8 +9,7 @@ import { VictoryBrushLine } from "../packages/victory-brush-line";
 import { VictoryScatter } from "../packages/victory-scatter";
 import { VictoryTheme } from "../packages/victory-core";
 import { VictoryChart } from "../packages/victory-chart";
-import { storyContainer } from './decorators';
-import { Meta } from '@storybook/react';
+import { storyContainer } from "./decorators";
 
 const meta: Meta = {
   title: "Victory Charts/SVG Container/VictoryAxis",

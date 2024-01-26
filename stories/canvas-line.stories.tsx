@@ -7,7 +7,7 @@ import { VictoryTheme, VictoryLabel } from "../packages/victory-core";
 import { VictoryLine } from "../packages/victory-line";
 import { VictoryStack } from "../packages/victory-stack";
 import { getData, getMixedData } from "./data";
-import { storyContainer } from './decorators';
+import { storyContainer } from "./decorators";
 
 const meta: Meta<typeof VictoryLine> = {
   title: "Victory Charts/Canvas Container/VictoryLine",
