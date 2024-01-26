@@ -1,14 +1,29 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
+import styled from "styled-components";
+import { Meta } from "@storybook/react";
 import React from "react";
-import { VictoryBoxPlot } from "victory-box-plot";
-import { VictoryChart } from "victory-chart";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, Box, Whisker, LineSegment } from "victory-core";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
+
+import { VictoryBoxPlot } from "../packages/victory-box-plot";
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryTooltip } from "../packages/victory-tooltip";
+import {
+  VictoryTheme,
+  Box,
+  Whisker,
+  LineSegment,
+} from "../packages/victory-core";
 import { getArrayData } from "./data";
-import styled from "styled-components";
+import { storyContainer } from "./decorators";
+
+const meta: Meta = {
+  title: "Victory Charts/SVG Container/VictoryBoxPlot",
+  component: VictoryBoxPlot,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
+};
+
+export default meta;
 
 const getRepeatData = (num, samples = 10) => {
   const seed = "getRepeatData";
@@ -20,7 +35,7 @@ const getRepeatData = (num, samples = 10) => {
       y: rand(),
     }));
     return memo.concat(sampleData);
-  }, []);
+  }, [] as any);
 };
 
 const getData = (num, seed = "getData") => {
@@ -36,14 +51,6 @@ const getData = (num, seed = "getData") => {
   });
 };
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
@@ -53,14 +60,9 @@ const defaultChartProps = {
   domainPadding: 25,
 };
 
-export default {
-  title: "VictoryBoxPlot",
-  component: VictoryBoxPlot,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBoxPlot style={parentStyle} />
       <VictoryChart style={parentStyle}>
         <VictoryBoxPlot data={getData(8)} />
@@ -69,13 +71,13 @@ export const DefaultRendering = () => {
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
         <VictoryBoxPlot data={getData(8)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const BoxWidth = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBoxPlot data={getData(5)} boxWidth={5} />
       </VictoryChart>
@@ -94,13 +96,13 @@ export const BoxWidth = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryBoxPlot data={getData(5)} boxWidth={0} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const WhiskerWidth = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBoxPlot data={getData(5)} whiskerWidth={0} />
       </VictoryChart>
@@ -113,13 +115,13 @@ export const WhiskerWidth = () => {
       <VictoryChart {...defaultChartProps} horizontal>
         <VictoryBoxPlot data={getData(5)} whiskerWidth={45} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Data = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBoxPlot
           data={[
@@ -162,13 +164,13 @@ export const Data = () => {
       <VictoryChart {...defaultChartProps} horizontal>
         <VictoryBoxPlot data={getRepeatData(5, 10)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Labels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBoxPlot data={getData(3)} labels />
       </VictoryChart>
@@ -222,13 +224,13 @@ export const Labels = () => {
           }}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Tooltips = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBoxPlot
           data={getData(3)}
@@ -259,13 +261,13 @@ export const Tooltips = () => {
           }}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Style = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBoxPlot
           data={getData(4)}
@@ -302,13 +304,13 @@ export const Style = () => {
           }}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Domain = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBoxPlot
         style={parentStyle}
         data={getArrayData(5, 10)}
@@ -323,7 +325,7 @@ export const Domain = () => {
       <VictoryChart {...defaultChartProps} maxDomain={{ x: 4 }}>
         <VictoryBoxPlot data={getArrayData(5, 10)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -341,7 +343,7 @@ const StyledLineSegment = styled(LineSegment)`
 
 export const DisableInlineStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryBoxPlot disableInlineStyles data={getData(8)} />
       </VictoryChart>
@@ -355,6 +357,6 @@ export const DisableInlineStyles = () => {
           medianComponent={<StyledLineSegment disableInlineStyles />}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };

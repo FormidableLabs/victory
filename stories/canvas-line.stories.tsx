@@ -1,19 +1,22 @@
-/* eslint-disable react/no-multi-comp */
 import React from "react";
-import { CanvasGroup, CanvasCurve } from "victory-canvas";
-import { VictoryChart } from "victory-chart";
-import { VictoryTheme, VictoryLabel } from "victory-core";
-import { VictoryLine } from "victory-line";
-import { VictoryStack } from "victory-stack";
-import { getData, getMixedData } from "./data";
+import { Meta } from "@storybook/react";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+import { CanvasGroup, CanvasCurve } from "../packages/victory-canvas";
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryTheme, VictoryLabel } from "../packages/victory-core";
+import { VictoryLine } from "../packages/victory-line";
+import { VictoryStack } from "../packages/victory-stack";
+import { getData, getMixedData } from "./data";
+import { storyContainer } from './decorators';
+
+const meta: Meta<typeof VictoryLine> = {
+  title: "Victory Charts/Canvas Container/VictoryLine",
+  component: VictoryLine,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
@@ -26,7 +29,7 @@ const defaultChartProps = {
 
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryLine
         dataComponent={<CanvasCurve />}
         groupComponent={<CanvasGroup />}
@@ -50,13 +53,13 @@ export const DefaultRendering = () => {
           groupComponent={<CanvasGroup />}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Theme = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryLine
           data={getMixedData(8)}
@@ -131,7 +134,7 @@ export const Theme = () => {
           />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -154,7 +157,7 @@ export const Interpolation = () => {
   );
 
   return (
-    <div style={containerStyle}>
+    <>
       {[
         "basis",
         "cardinal",
@@ -167,11 +170,6 @@ export const Interpolation = () => {
         "stepAfter",
         "stepBefore",
       ].map((interpolation) => makeInterpolationChart(interpolation))}
-    </div>
+    </>
   );
-};
-
-export default {
-  title: "Victory Canvas/Line",
-  component: VictoryLine,
 };

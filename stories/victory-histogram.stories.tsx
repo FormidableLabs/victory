@@ -1,42 +1,42 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
+import { Meta } from "@storybook/react";
 import React from "react";
-import { VictoryHistogram } from "victory-histogram";
-import { VictoryChart } from "victory-chart";
-import { VictoryLine } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryStack } from "victory-stack";
-import { VictoryTheme } from "victory-core";
-import { getData } from "./data";
-import { data, timeData } from "./victory-histogram-data";
-import { Bar } from "victory-bar";
-
-import * as d3Array from "victory-vendor/d3-array";
-import * as d3Scale from "victory-vendor/d3-scale";
-import * as d3Time from "victory-vendor/d3-time";
 import styled from "styled-components";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+import { VictoryHistogram } from "../packages/victory-histogram";
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryLine } from "../packages/victory-line";
+import { VictoryScatter } from "../packages/victory-scatter";
+import { VictoryTooltip } from "../packages/victory-tooltip";
+import { VictoryStack } from "../packages/victory-stack";
+import {
+  VictoryLabelStyleObject,
+  VictoryTheme,
+} from "../packages/victory-core";
+import { data, timeData } from "./victory-histogram-data";
+import { Bar } from "../packages/victory-bar";
+import * as d3Array from "../packages/victory-vendor/d3-array";
+import * as d3Scale from "../packages/victory-vendor/d3-scale";
+import * as d3Time from "../packages/victory-vendor/d3-time";
+
+import { getData } from "./data";
+import { storyContainer } from "./decorators";
+
+const meta: Meta<typeof VictoryHistogram> = {
+  title: "Victory Charts/SVG Container/VictoryHistogram",
+  component: VictoryHistogram,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
-export default {
-  title: "VictoryHistogram",
-  component: VictoryHistogram,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryHistogram style={parentStyle} data={data} />
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={data} />
@@ -49,13 +49,13 @@ export const DefaultRendering = () => {
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
         <VictoryHistogram data={data} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const BinSpacing = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={data} binSpacing={10} />
       </VictoryChart>
@@ -68,7 +68,7 @@ export const BinSpacing = () => {
       <VictoryChart style={parentStyle} horizontal>
         <VictoryHistogram data={data} binSpacing={5} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -94,7 +94,7 @@ export const Data = () => {
   });
 
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle} horizontal>
         <VictoryHistogram data={timeData} />
       </VictoryChart>
@@ -120,13 +120,13 @@ export const Data = () => {
           x={({ value }) => value}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const EmptyData = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={[]} bins={2} />
       </VictoryChart>
@@ -155,7 +155,7 @@ export const EmptyData = () => {
           ]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -166,7 +166,7 @@ export const DateBins = () => {
     .nice();
 
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram
           data={timeData}
@@ -217,13 +217,13 @@ export const DateBins = () => {
           bins={niceTimeScale.ticks(d3Time.utcYear)}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const NumericBins = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={data} bins={2} />
       </VictoryChart>
@@ -260,13 +260,18 @@ export const NumericBins = () => {
       <VictoryChart style={parentStyle} horizontal>
         <VictoryHistogram data={data} bins={[0, 10, 30, 70, 150]} />
       </VictoryChart>
-    </div>
+    </>
   );
+};
+
+const labelStyle: VictoryLabelStyleObject = {
+  fill: ({ datum }) =>
+    datum.binnedData.some(({ x }) => x === 22) ? "palevioletred" : "black",
 };
 
 export const Styles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram
           data={data}
@@ -279,12 +284,7 @@ export const Styles = () => {
         <VictoryHistogram
           data={data}
           style={{
-            labels: {
-              fill: ({ datum }) =>
-                datum.binnedData.some(({ x }) => x === 22)
-                  ? "palevioletred"
-                  : "black",
-            },
+            labels: labelStyle,
             data: {
               stroke: ({ datum }) => (datum.y > 3 ? "red" : "transparent"),
               strokeWidth: 3,
@@ -294,13 +294,13 @@ export const Styles = () => {
           labels={["one", "two", "three", "four", "five"]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const CornerRadius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={data} cornerRadius={1} />
       </VictoryChart>
@@ -325,7 +325,7 @@ export const CornerRadius = () => {
           cornerRadius={{ topLeft: 15, bottomRight: 22 }}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -349,20 +349,20 @@ export const GetPath = () => {
   };
 
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={data} getPath={verticalPathFn} />
       </VictoryChart>
       <VictoryChart style={parentStyle} horizontal>
         <VictoryHistogram data={data} getPath={horizontalPathFn} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Labels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram
           data={data}
@@ -381,14 +381,14 @@ export const Labels = () => {
         <VictoryHistogram
           data={data}
           bins={5}
-          labels={["", "", "three", "four", 5, "six"]}
+          labels={["", "", "three", "four", "5", "six"]}
         />
       </VictoryChart>
       <VictoryChart style={parentStyle} horizontal>
         <VictoryHistogram
           data={data}
           bins={5}
-          labels={["", "", "three", "four", 5, "six"]}
+          labels={["", "", "three", "four", "5", "six"]}
         />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
@@ -403,17 +403,17 @@ export const Labels = () => {
         <VictoryHistogram
           data={data}
           bins={5}
-          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labels={["one", "two", "3", "wow, four tooltips", "five"]}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Scale = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle} domainPadding={{ y: 25 }}>
         <VictoryHistogram
           binSpacing={10}
@@ -449,13 +449,13 @@ export const Scale = () => {
       >
         <VictoryHistogram data={data} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const MixedCharts = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={data} />
         <VictoryLine
@@ -486,7 +486,7 @@ export const MixedCharts = () => {
           ]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -499,7 +499,7 @@ export const Stacked = () => {
   ];
 
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryStack colorScale="qualitative" bins={[0, 20, 65, 90, 100]}>
           {stackedData.map((d, index) => (
@@ -554,13 +554,13 @@ export const Stacked = () => {
           ))}
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Domain = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryHistogram
         style={parentStyle}
         data={data}
@@ -575,7 +575,7 @@ export const Domain = () => {
       <VictoryChart style={parentStyle} maxDomain={{ y: 4 }}>
         <VictoryHistogram data={data} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -586,7 +586,7 @@ const StyledBar = styled(Bar)`
 
 export const DisableInlineStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryHistogram data={data} disableInlineStyles />
       </VictoryChart>
@@ -596,6 +596,6 @@ export const DisableInlineStyles = () => {
           dataComponent={<StyledBar disableInlineStyles />}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };

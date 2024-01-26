@@ -1,42 +1,37 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
-
 import React from "react";
-import { VictoryPie, Slice } from "victory-pie";
-import { VictoryTooltip } from "victory-tooltip";
-import { LineSegment, VictoryTheme, Helpers } from "victory-core";
+import { VictoryPie, Slice } from "../packages/victory-pie";
+import { VictoryTooltip } from "../packages/victory-tooltip";
+import { LineSegment, VictoryTheme, Helpers } from "../packages/victory-core";
 import { fromJS } from "immutable";
 import styled from "styled-components";
+import { Meta } from "@storybook/react";
+import { storyContainer } from "./decorators";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+const meta: Meta<typeof VictoryPie> = {
+  title: "Victory Charts/SVG Container/VictoryPie",
+  component: VictoryPie,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
-export default {
-  title: "VictoryPie",
-  component: VictoryPie,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie style={parentStyle} />
       <VictoryPie style={parentStyle} theme={VictoryTheme.material} />
-    </div>
+    </>
   );
 };
 
 export const Data = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie
         style={parentStyle}
         data={[
@@ -66,13 +61,13 @@ export const Data = () => {
           { x: "Bird", y: 55 },
         ])}
       />
-    </div>
+    </>
   );
 };
 
 export const Radius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie style={parentStyle} radius={100} />
       <VictoryPie
         style={parentStyle}
@@ -114,13 +109,13 @@ export const Radius = () => {
           { x: "Bird", y: 25 },
         ]}
       />
-    </div>
+    </>
   );
 };
 
 export const InnerRadius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie style={parentStyle} innerRadius={100} />
       <VictoryPie
         style={parentStyle}
@@ -156,13 +151,13 @@ export const InnerRadius = () => {
           { x: 5, y: 3 },
         ]}
       />
-    </div>
+    </>
   );
 };
 
 export const CornerRadius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie style={parentStyle} cornerRadius={10} />
       <VictoryPie style={parentStyle} cornerRadius={10} innerRadius={100} />
       <VictoryPie
@@ -189,13 +184,13 @@ export const CornerRadius = () => {
           { x: 5, y: 3 },
         ]}
       />
-    </div>
+    </>
   );
 };
 
 export const PadAngle = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie style={parentStyle} padAngle={6} />
       <VictoryPie style={parentStyle} padAngle={6} innerRadius={100} />
       <VictoryPie
@@ -222,13 +217,13 @@ export const PadAngle = () => {
           { x: 5, y: 3 },
         ]}
       />
-    </div>
+    </>
   );
 };
 
 export const Labels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie
         style={parentStyle}
         labels={["one", "two", "three", "four"]}
@@ -249,13 +244,13 @@ export const Labels = () => {
         labels={({ index }) => `#${index}`}
         labelPosition={({ index }) => (index ? undefined : "startAngle")}
       />
-    </div>
+    </>
   );
 };
 
 export const Tooltips = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie
         style={parentStyle}
         radius={100}
@@ -292,13 +287,13 @@ export const Tooltips = () => {
         labelPosition={({ index }) => (index ? undefined : "startAngle")}
         labelComponent={<VictoryTooltip active />}
       />
-    </div>
+    </>
   );
 };
 
 export const LabelRadius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         labelRadius={100}
@@ -341,13 +336,13 @@ export const LabelRadius = () => {
           { x: 5, y: 130 },
         ]}
       />
-    </div>
+    </>
   );
 };
 
 export const Styles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie
         style={{
           ...parentStyle,
@@ -411,13 +406,13 @@ export const Styles = () => {
           "#F6A57F",
         ]}
       />
-    </div>
+    </>
   );
 };
 
 export const StartAndEndAngles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie style={parentStyle} endAngle={90} startAngle={-90} />
       <VictoryPie
         style={parentStyle}
@@ -466,13 +461,13 @@ export const StartAndEndAngles = () => {
           { x: "Bird", y: 55, innerRadius: 105, radius: 135 },
         ]}
       />
-    </div>
+    </>
   );
 };
 
 export const Origin = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         origin={{ x: 150, y: 150 }}
@@ -492,13 +487,13 @@ export const Origin = () => {
         startAngle={-270}
         endAngle={-90}
       />
-    </div>
+    </>
   );
 };
 
 export const LabelPlacement = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         labelPosition="startAngle"
@@ -567,7 +562,7 @@ export const LabelPlacement = () => {
           { x: 8, y: 1, l: 315 },
         ]}
       />
-    </div>
+    </>
   );
 };
 
@@ -577,19 +572,19 @@ const StyledSlice = styled(Slice)`
 
 export const DisableInlineStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie disableInlineStyles style={parentStyle} />
       <VictoryPie
         style={parentStyle}
         dataComponent={<StyledSlice disableInlineStyles />}
       />
-    </div>
+    </>
   );
 };
 
 export const LabelIndicator = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPie style={parentStyle} labelIndicator />
 
       <VictoryPie
@@ -629,6 +624,6 @@ export const LabelIndicator = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
