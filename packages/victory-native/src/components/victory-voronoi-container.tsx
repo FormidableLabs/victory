@@ -2,13 +2,13 @@
 import React from "react";
 import { flow } from "lodash";
 import {
-  VictoryVoronoiContainer,
+  VictoryVoronoiContainer as VictoryVoronoiContainerBase,
   VictoryVoronoiContainerProps,
   VoronoiHelpers,
   voronoiContainerMixin as originalVoronoiMixin,
 } from "victory-voronoi-container";
-import VictoryContainer from "./victory-container";
-import VictoryTooltip from "./victory-tooltip";
+import { VictoryContainer } from "./victory-container";
+import { VictoryTooltip } from "./victory-tooltip";
 
 export interface VictoryVoronoiContainerNativeProps
   extends VictoryVoronoiContainerProps {
@@ -35,7 +35,7 @@ function nativeVoronoiMixin<
   return class VictoryNativeVoronoiContainer extends Base {
     // assign native specific defaultProps over web `VictoryVoronoiContainer` defaultProps
     static defaultProps = {
-      ...VictoryVoronoiContainer.defaultProps,
+      ...VictoryVoronoiContainerBase.defaultProps,
       activateData: true,
       activateLabels: true,
       labelComponent: <VictoryTooltip />,
@@ -82,7 +82,7 @@ function nativeVoronoiMixin<
 
 const combinedMixin = flow(originalVoronoiMixin, nativeVoronoiMixin);
 
-export const voronoiContainerMixin = (base): VictoryVoronoiContainer =>
+export const voronoiContainerMixin = (base): VictoryVoronoiContainerBase =>
   combinedMixin(base);
 
-export default voronoiContainerMixin(VictoryContainer);
+export const VictoryVoronoiContainer = voronoiContainerMixin(VictoryContainer);

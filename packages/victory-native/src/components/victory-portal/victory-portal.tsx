@@ -1,8 +1,8 @@
 import React from "react";
 import { G } from "react-native-svg";
-import { VictoryPortal } from "victory-core/es";
+import { VictoryPortal as VictoryPortalBase } from "victory-core/es";
 
-export default class extends VictoryPortal {
+export class VictoryPortal extends VictoryPortalBase {
   renderPortal(child) {
     if (this.renderInPlace) {
       return child || <G />;

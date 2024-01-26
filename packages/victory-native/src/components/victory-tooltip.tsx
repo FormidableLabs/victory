@@ -1,13 +1,13 @@
 import React from "react";
 import { G } from "react-native-svg";
-import { VictoryTooltip } from "victory-tooltip/es";
-import VictoryLabel from "./victory-label";
-import VictoryPortal from "./victory-portal/victory-portal";
-import Flyout from "./victory-primitives/flyout";
+import { VictoryTooltip as VictoryTooltipBase } from "victory-tooltip/es";
+import { VictoryLabel } from "./victory-label";
+import { VictoryPortal } from "./victory-portal/victory-portal";
+import { Flyout } from "./victory-primitives/flyout";
 
-export default class extends VictoryTooltip {
+export class VictoryTooltip extends VictoryTooltipBase {
   static defaultProps = {
-    ...VictoryTooltip.defaultProps,
+    ...VictoryTooltipBase.defaultProps,
     labelComponent: <VictoryLabel />,
     flyoutComponent: <Flyout />,
     groupComponent: <G />,

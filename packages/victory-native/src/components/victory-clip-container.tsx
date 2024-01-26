@@ -1,14 +1,14 @@
 import React from "react";
 import { G } from "react-native-svg";
-import Circle from "./victory-primitives/circle";
-import Rect from "./victory-primitives/rect";
-import ClipPath from "./victory-primitives/clip-path";
-import { VictoryClipContainer } from "victory-core/es";
+import { Circle } from "./victory-primitives/circle";
+import { Rect } from "./victory-primitives/rect";
+import { ClipPath } from "./victory-primitives/clip-path";
+import { VictoryClipContainer as VictoryClipContainerBase } from "victory-core/es";
 import { uniqueId } from "lodash";
 
-export default class extends VictoryClipContainer {
+export class VictoryClipContainer extends VictoryClipContainerBase {
   static defaultProps = {
-    ...VictoryClipContainer.defaultProps,
+    ...VictoryClipContainerBase.defaultProps,
     groupComponent: <G />,
     rectComponent: <Rect />,
     clipPathComponent: <ClipPath />,

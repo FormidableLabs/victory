@@ -1,18 +1,18 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { G } from "react-native-svg";
-import { VictoryBoxPlot } from "victory-box-plot/es";
-import VictoryLabel from "./victory-label";
-import VictoryContainer from "./victory-container";
-import Border from "./victory-primitives/border";
-import Whisker from "./victory-primitives/whisker";
-import LineSegment from "./victory-primitives/line-segment";
+import { VictoryBoxPlot as VictoryBoxPlotBase } from "victory-box-plot/es";
+import { VictoryLabel } from "./victory-label";
+import { VictoryContainer } from "./victory-container";
+import { Border } from "./victory-primitives/border";
+import { Whisker } from "./victory-primitives/whisker";
+import { LineSegment } from "./victory-primitives/line-segment";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryBoxPlot = wrapCoreComponent({
-  Component: VictoryBoxPlot,
+export const VictoryBoxPlot = wrapCoreComponent({
+  Component: VictoryBoxPlotBase,
   defaultProps: {
-    ...VictoryBoxPlot.defaultProps,
+    ...VictoryBoxPlotBase.defaultProps,
     maxComponent: <Whisker />,
     maxLabelComponent: <VictoryLabel />,
     medianComponent: <LineSegment />,
@@ -28,5 +28,3 @@ const NativeVictoryBoxPlot = wrapCoreComponent({
     width: Dimensions.get("window").width,
   },
 });
-
-export default NativeVictoryBoxPlot;

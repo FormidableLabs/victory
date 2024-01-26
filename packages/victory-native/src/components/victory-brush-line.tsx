@@ -2,9 +2,12 @@ import React from "react";
 import { PanResponder } from "react-native";
 import { G, Rect } from "react-native-svg";
 import { get } from "lodash";
-import { VictoryBrushLine, VictoryBrushLineProps } from "victory-brush-line/es";
+import {
+  VictoryBrushLine as VictoryBrushLineBase,
+  VictoryBrushLineProps,
+} from "victory-brush-line/es";
 
-import LineSegment from "./victory-primitives/line-segment";
+import { LineSegment } from "./victory-primitives/line-segment";
 import NativeHelpers from "../helpers/native-helpers"; // ensure the selection component get native styles
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
@@ -33,11 +36,11 @@ const RectWithStyle = ({
 const yes = () => true;
 const no = () => false;
 
-const vblDefaultEvents = VictoryBrushLine.defaultEvents;
+const vblDefaultEvents = VictoryBrushLineBase.defaultEvents;
 
 class VictoryNativeBrushLine<
   TProps extends VictoryNativeBrushLineProps,
-> extends VictoryBrushLine<TProps> {
+> extends VictoryBrushLineBase<TProps> {
   static displayName = "VictoryNativeBrushLine";
 
   defaultEvents = function (props) {
@@ -131,7 +134,7 @@ class VictoryNativeBrushLine<
   }
 }
 
-const NativeVictoryBrushLine = wrapCoreComponent({
+export const VictoryBrushLine = wrapCoreComponent({
   Component: VictoryNativeBrushLine,
   defaultProps: {
     ...VictoryNativeBrushLine.defaultProps,
@@ -142,5 +145,3 @@ const NativeVictoryBrushLine = wrapCoreComponent({
     lineComponent: <LineSegment />,
   },
 });
-
-export default NativeVictoryBrushLine;

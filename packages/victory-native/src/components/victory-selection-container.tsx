@@ -2,12 +2,12 @@ import React from "react";
 import { flow } from "lodash";
 import { Rect } from "react-native-svg";
 import {
-  VictorySelectionContainer,
+  VictorySelectionContainer as VictorySelectionContainerBase,
   SelectionHelpers,
   selectionContainerMixin as originalSelectionMixin,
   VictorySelectionContainerProps,
 } from "victory-selection-container";
-import VictoryContainer from "./victory-container";
+import { VictoryContainer } from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
 
 export interface VictorySelectionContainerNativeProps
@@ -44,7 +44,7 @@ function nativeSelectionMixin<
     // eslint-disable-line max-len
     // assign native specific defaultProps over web `VictorySelectionContainer` defaultProps
     static defaultProps = {
-      ...VictorySelectionContainer.defaultProps,
+      ...VictorySelectionContainerBase.defaultProps,
       standalone: true,
       selectionComponent: <DefaultSelectionComponent />,
     };
@@ -83,7 +83,8 @@ function nativeSelectionMixin<
 
 const combinedMixin = flow(originalSelectionMixin, nativeSelectionMixin);
 
-export const selectionContainerMixin = (base): VictorySelectionContainer =>
+export const selectionContainerMixin = (base): VictorySelectionContainerBase =>
   combinedMixin(base);
 
-export default selectionContainerMixin(VictoryContainer);
+export const VictorySelectionContainer =
+  selectionContainerMixin(VictoryContainer);

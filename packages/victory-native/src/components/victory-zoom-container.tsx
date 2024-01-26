@@ -1,9 +1,9 @@
 import React, { ComponentClass } from "react";
 import { flow } from "lodash";
-import VictoryContainer from "./victory-container";
-import VictoryClipContainer from "./victory-clip-container";
+import { VictoryContainer } from "./victory-container";
+import { VictoryClipContainer } from "./victory-clip-container";
 import {
-  VictoryZoomContainer,
+  VictoryZoomContainer as VictoryZoomContainerBase,
   VictoryZoomContainerProps,
   zoomContainerMixin as originalZoomMixin,
 } from "victory-zoom-container";
@@ -34,7 +34,7 @@ function nativeZoomMixin<
   return class VictoryNativeZoomContainer extends Base {
     // assign native specific defaultProps over web `VictoryZoomContainer` defaultProps
     static defaultProps = {
-      ...VictoryZoomContainer.defaultProps,
+      ...VictoryZoomContainerBase.defaultProps,
       clipContainerComponent: <VictoryClipContainer />,
     };
 
@@ -86,7 +86,7 @@ function nativeZoomMixin<
 
 const combinedMixin = flow(originalZoomMixin, nativeZoomMixin);
 
-export const zoomContainerMixin = (base): VictoryZoomContainer =>
+export const zoomContainerMixin = (base): VictoryZoomContainerBase =>
   combinedMixin(base);
 
-export default zoomContainerMixin(VictoryContainer);
+export const VictoryZoomContainer = zoomContainerMixin(VictoryContainer);

@@ -1,16 +1,16 @@
 import React from "react";
-import { Circle, CircleProps } from "react-native-svg";
+import { Circle as CircleBase, CircleProps } from "react-native-svg";
 import { useGetNativeStyle } from "../../helpers/native-helpers";
 import { VictoryNativePrimitiveShapeProps } from "./types";
 
 export type VictoryNativeCircleProps = CircleProps &
   VictoryNativePrimitiveShapeProps;
 
-const NativeCircle = (props: VictoryNativeCircleProps) => {
+export const Circle = (props: VictoryNativeCircleProps) => {
   const { "aria-label": accessibilityLabel, desc, style, ...rest } = props;
   const nativeStyle = useGetNativeStyle(style);
   return (
-    <Circle
+    <CircleBase
       vectorEffect="non-scaling-stroke"
       accessible={accessibilityLabel || undefined}
       accessibilityLabel={accessibilityLabel}
@@ -20,5 +20,3 @@ const NativeCircle = (props: VictoryNativeCircleProps) => {
     />
   );
 };
-
-export default NativeCircle;

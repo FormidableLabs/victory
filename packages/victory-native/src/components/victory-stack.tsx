@@ -1,17 +1,15 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { G } from "react-native-svg";
-import { VictoryStack } from "victory-stack/es";
-import VictoryContainer from "./victory-container";
+import { VictoryStack as VictoryStackBase } from "victory-stack/es";
+import { VictoryContainer } from "./victory-container";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryStack = wrapCoreComponent({
-  Component: VictoryStack,
+export const VictoryStack = wrapCoreComponent({
+  Component: VictoryStackBase,
   defaultProps: {
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
   },
 });
-
-export default NativeVictoryStack;

@@ -3,9 +3,12 @@ import PropTypes from "prop-types";
 import Svg, { Rect } from "react-native-svg";
 import { assign, get } from "lodash";
 import { View, PanResponder } from "react-native";
-import { VictoryContainer, VictoryContainerProps } from "victory-core/es";
+import {
+  VictoryContainer as VictoryContainerBase,
+  VictoryContainerProps,
+} from "victory-core/es";
 import NativeHelpers from "../helpers/native-helpers";
-import Portal from "./victory-portal/portal";
+import { Portal } from "./victory-portal/portal";
 
 const yes = () => true;
 const no = () => false;
@@ -26,8 +29,8 @@ export interface VictoryContainerNativeProps extends VictoryContainerProps {
   ) => void;
 }
 
-export default class extends VictoryContainer<VictoryContainerNativeProps> {
-  static propTypes = assign({}, VictoryContainer.propTypes, {
+export class VictoryContainer extends VictoryContainerBase<VictoryContainerNativeProps> {
+  static propTypes = assign({}, VictoryContainerBase.propTypes, {
     disableContainerEvents: PropTypes.bool,
     onTouchEnd: PropTypes.func,
     onTouchStart: PropTypes.func,

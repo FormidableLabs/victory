@@ -1,20 +1,18 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { G } from "react-native-svg";
-import { VictoryErrorBar } from "victory-errorbar/es";
-import VictoryContainer from "./victory-container";
-import ErrorBar from "./victory-primitives/error-bar";
+import { VictoryErrorBar as VictoryErrorBarBase } from "victory-errorbar/es";
+import { VictoryContainer } from "./victory-container";
+import { ErrorBar } from "./victory-primitives/error-bar";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryErrorBar = wrapCoreComponent({
-  Component: VictoryErrorBar,
+export const VictoryErrorBar = wrapCoreComponent({
+  Component: VictoryErrorBarBase,
   defaultProps: {
-    ...VictoryErrorBar.defaultProps,
+    ...VictoryErrorBarBase.defaultProps,
     dataComponent: <ErrorBar />,
     containerComponent: <VictoryContainer />,
     groupComponent: <G />,
     width: Dimensions.get("window").width,
   },
 });
-
-export default NativeVictoryErrorBar;

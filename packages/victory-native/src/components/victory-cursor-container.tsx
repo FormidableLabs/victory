@@ -1,14 +1,14 @@
 import React from "react";
 import { flow } from "lodash";
 import {
-  VictoryCursorContainer,
+  VictoryCursorContainer as VictoryCursorContainerBase,
   CursorHelpers,
   cursorContainerMixin as originalCursorMixin,
   VictoryCursorContainerProps,
 } from "victory-cursor-container";
-import VictoryLabel from "./victory-label";
-import VictoryContainer from "./victory-container";
-import LineSegment from "./victory-primitives/line-segment";
+import { VictoryLabel } from "./victory-label";
+import { VictoryContainer } from "./victory-container";
+import { LineSegment } from "./victory-primitives/line-segment";
 
 export interface VictoryCursorContainerNativeProps
   extends VictoryCursorContainerProps {
@@ -36,7 +36,7 @@ function nativeCursorMixin<
     static displayName = "VictoryCursorContainer";
     // assign native specific defaultProps over web `VictoryCursorContainer` defaultProps
     static defaultProps = {
-      ...VictoryCursorContainer.defaultProps,
+      ...VictoryCursorContainerBase.defaultProps,
       cursorLabelComponent: <VictoryLabel />,
       cursorComponent: <LineSegment />,
     };
@@ -71,7 +71,7 @@ function nativeCursorMixin<
 
 const combinedMixin = flow(originalCursorMixin, nativeCursorMixin);
 
-export const cursorContainerMixin = (base): VictoryCursorContainer =>
+export const cursorContainerMixin = (base): VictoryCursorContainerBase =>
   combinedMixin(base);
 
-export default cursorContainerMixin(VictoryContainer);
+export const VictoryCursorContainer = cursorContainerMixin(VictoryContainer);

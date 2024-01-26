@@ -1,16 +1,16 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { G } from "react-native-svg";
-import { VictoryPie } from "victory-pie/es";
-import VictoryLabel from "./victory-label";
-import VictoryContainer from "./victory-container";
-import Slice from "./victory-primitives/slice";
+import { VictoryPie as VictoryPieBase } from "victory-pie/es";
+import { VictoryLabel } from "./victory-label";
+import { VictoryContainer } from "./victory-container";
+import { Slice } from "./victory-primitives/slice";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryPie = wrapCoreComponent({
-  Component: VictoryPie,
+export const VictoryPie = wrapCoreComponent({
+  Component: VictoryPieBase,
   defaultProps: {
-    ...VictoryPie.defaultProps,
+    ...VictoryPieBase.defaultProps,
     dataComponent: <Slice />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
@@ -19,5 +19,3 @@ const NativeVictoryPie = wrapCoreComponent({
     width: Dimensions.get("window").width,
   },
 });
-
-export default NativeVictoryPie;

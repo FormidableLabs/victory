@@ -1,17 +1,17 @@
 import React from "react";
 import { G } from "react-native-svg";
-import { VictoryLegend } from "victory-legend/es";
+import { VictoryLegend as VictoryLegendBase } from "victory-legend/es";
 import { Dimensions } from "react-native";
-import VictoryLabel from "./victory-label";
-import VictoryContainer from "./victory-container";
-import Point from "./victory-primitives/point";
-import Border from "./victory-primitives/border";
+import { VictoryLabel } from "./victory-label";
+import { VictoryContainer } from "./victory-container";
+import { Point } from "./victory-primitives/point";
+import { Border } from "./victory-primitives/border";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryLegend = wrapCoreComponent({
-  Component: VictoryLegend,
+export const VictoryLegend = wrapCoreComponent({
+  Component: VictoryLegendBase,
   defaultProps: {
-    ...VictoryLegend.defaultProps,
+    ...VictoryLegendBase.defaultProps,
     borderComponent: <Border />,
     containerComponent: <VictoryContainer />,
     dataComponent: <Point />,
@@ -21,5 +21,3 @@ const NativeVictoryLegend = wrapCoreComponent({
     width: Dimensions.get("window").width,
   },
 });
-
-export default NativeVictoryLegend;

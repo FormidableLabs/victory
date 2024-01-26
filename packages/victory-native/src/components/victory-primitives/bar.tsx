@@ -1,9 +1,7 @@
 import React from "react";
-import Path from "./path";
-import { Bar, BarProps } from "victory-bar/es";
+import { Path } from "./path";
+import { Bar as BarBase, BarProps } from "victory-bar/es";
 
-const NativeBar = (props: BarProps) => (
-  <Bar pathComponent={<Path />} {...props} />
+export const Bar = (props: BarProps) => (
+  <BarBase pathComponent={<Path />} {...props} />
 );
-
-export default NativeBar;

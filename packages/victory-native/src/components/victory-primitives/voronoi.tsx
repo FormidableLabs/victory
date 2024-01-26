@@ -1,12 +1,12 @@
 import React from "react";
-import Path from "./path";
-import ClipPath from "./clip-path";
-import Circle from "./circle";
+import { Path } from "./path";
+import { ClipPath } from "./clip-path";
+import { Circle } from "./circle";
 import { G } from "react-native-svg";
-import { Voronoi, VoronoiProps } from "victory-voronoi/es";
+import { Voronoi as VoronoiBase, VoronoiProps } from "victory-voronoi/es";
 
-const NativeVoronoi = (props: VoronoiProps) => (
-  <Voronoi
+export const Voronoi = (props: VoronoiProps) => (
+  <VoronoiBase
     pathComponent={<Path />}
     groupComponent={<G />}
     clipPathComponent={<ClipPath />}
@@ -14,5 +14,3 @@ const NativeVoronoi = (props: VoronoiProps) => (
     {...props}
   />
 );
-
-export default NativeVoronoi;

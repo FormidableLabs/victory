@@ -1,9 +1,7 @@
 import React from "react";
-import Path from "./path";
-import { Slice, SliceProps } from "victory-pie/es";
+import { Path } from "./path";
+import { Slice as SliceBase, SliceProps } from "victory-pie/es";
 
-const NativeSlice = (props: SliceProps) => (
-  <Slice pathComponent={<Path />} {...props} />
+export const Slice = (props: SliceProps) => (
+  <SliceBase pathComponent={<Path />} {...props} />
 );
-
-export default NativeSlice;

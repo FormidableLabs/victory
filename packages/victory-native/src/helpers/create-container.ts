@@ -1,5 +1,5 @@
 import { makeCreateContainerFunction } from "victory-create-container";
-import VictoryContainer from "../components/victory-container";
+import { VictoryContainer } from "../components/victory-container";
 import { zoomContainerMixin } from "../components/victory-zoom-container";
 import { voronoiContainerMixin } from "../components/victory-voronoi-container";
 import { selectionContainerMixin } from "../components/victory-selection-container";

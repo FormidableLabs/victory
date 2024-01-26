@@ -1,17 +1,17 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { G } from "react-native-svg";
-import { VictoryPolarAxis } from "victory-polar-axis/es";
-import VictoryLabel from "./victory-label";
-import VictoryContainer from "./victory-container";
-import Arc from "./victory-primitives/arc";
-import LineSegment from "./victory-primitives/line-segment";
+import { VictoryPolarAxis as VictoryPolarAxisBase } from "victory-polar-axis/es";
+import { VictoryLabel } from "./victory-label";
+import { VictoryContainer } from "./victory-container";
+import { Arc } from "./victory-primitives/arc";
+import { LineSegment } from "./victory-primitives/line-segment";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryPolarAxis = wrapCoreComponent({
-  Component: VictoryPolarAxis,
+export const VictoryPolarAxis = wrapCoreComponent({
+  Component: VictoryPolarAxisBase,
   defaultProps: {
-    ...VictoryPolarAxis.defaultProps,
+    ...VictoryPolarAxisBase.defaultProps,
     axisComponent: <LineSegment />,
     axisLabelComponent: <VictoryLabel />,
     circularAxisComponent: <Arc type="axis" />,
@@ -24,5 +24,3 @@ const NativeVictoryPolarAxis = wrapCoreComponent({
     width: Dimensions.get("window").width,
   },
 });
-
-export default NativeVictoryPolarAxis;

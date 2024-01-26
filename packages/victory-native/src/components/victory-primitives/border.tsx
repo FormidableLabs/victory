@@ -1,9 +1,9 @@
 import React from "react";
-import Rect from "./rect";
-import { Border, BorderProps } from "victory-core/es";
+import { Rect } from "./rect";
+import { Border as BorderBase, BorderProps } from "victory-core/es";
 
-const NativeBorder = (props: BorderProps) => (
-  <Border rectComponent={<Rect />} {...props} />
+export const Border = (props: BorderProps) => (
+  <BorderBase rectComponent={<Rect />} {...props} />
 );
 
-export default NativeBorder;
+export const Box = Border;

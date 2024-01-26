@@ -1,17 +1,17 @@
 import React from "react";
 import { Dimensions } from "react-native";
-import { VictoryArea } from "victory-area/es";
+import { VictoryArea as VictoryAreaBase } from "victory-area/es";
 
-import VictoryLabel from "./victory-label";
-import VictoryContainer from "./victory-container";
-import VictoryClipContainer from "./victory-clip-container";
-import Area from "./victory-primitives/area";
+import { VictoryLabel } from "./victory-label";
+import { VictoryContainer } from "./victory-container";
+import { VictoryClipContainer } from "./victory-clip-container";
+import { Area } from "./victory-primitives/area";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryArea = wrapCoreComponent({
-  Component: VictoryArea,
+export const VictoryArea = wrapCoreComponent({
+  Component: VictoryAreaBase,
   defaultProps: {
-    ...VictoryArea.defaultProps,
+    ...VictoryAreaBase.defaultProps,
     dataComponent: <Area />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
@@ -19,5 +19,3 @@ const NativeVictoryArea = wrapCoreComponent({
     width: Dimensions.get("window").width,
   },
 });
-
-export default NativeVictoryArea;

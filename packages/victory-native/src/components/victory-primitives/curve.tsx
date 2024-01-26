@@ -1,9 +1,7 @@
 import React from "react";
-import Path from "./path";
-import { Curve, CurveProps } from "victory-line/es";
+import { Path } from "./path";
+import { Curve as CurveBase, CurveProps } from "victory-line/es";
 
-const NativeCurve = (props: CurveProps) => (
-  <Curve pathComponent={<Path />} {...props} />
+export const Curve = (props: CurveProps) => (
+  <CurveBase pathComponent={<Path />} {...props} />
 );
-
-export default NativeCurve;

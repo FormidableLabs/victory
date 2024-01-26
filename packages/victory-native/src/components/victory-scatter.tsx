@@ -1,16 +1,16 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { G } from "react-native-svg";
-import { VictoryScatter } from "victory-scatter/es";
-import VictoryLabel from "./victory-label";
-import VictoryContainer from "./victory-container";
-import Point from "./victory-primitives/point";
+import { VictoryScatter as VictoryScatterBase } from "victory-scatter/es";
+import { VictoryLabel } from "./victory-label";
+import { VictoryContainer } from "./victory-container";
+import { Point } from "./victory-primitives/point";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-const NativeVictoryScatter = wrapCoreComponent({
-  Component: VictoryScatter,
+export const VictoryScatter = wrapCoreComponent({
+  Component: VictoryScatterBase,
   defaultProps: {
-    ...VictoryScatter.defaultProps,
+    ...VictoryScatterBase.defaultProps,
     dataComponent: <Point />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
@@ -18,5 +18,3 @@ const NativeVictoryScatter = wrapCoreComponent({
     width: Dimensions.get("window").width,
   },
 });
-
-export default NativeVictoryScatter;

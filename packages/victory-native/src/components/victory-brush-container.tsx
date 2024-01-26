@@ -2,12 +2,12 @@ import React from "react";
 import { Rect } from "react-native-svg";
 import { flow } from "lodash";
 import {
-  VictoryBrushContainer,
+  VictoryBrushContainer as VictoryBrushContainerBase,
   BrushHelpers,
   brushContainerMixin as originalBrushMixin,
   VictoryBrushContainerProps,
 } from "victory-brush-container";
-import VictoryContainer from "./victory-container";
+import { VictoryContainer } from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
 
 export interface VictoryBrushContainerNativeProps
@@ -44,7 +44,7 @@ function nativeBrushMixin<
     // eslint-disable-line max-len
     // assign native specific defaultProps over web `VictoryBrushContainer` defaultProps
     static defaultProps = {
-      ...VictoryBrushContainer.defaultProps,
+      ...VictoryBrushContainerBase.defaultProps,
       brushComponent: <RectWithStyle />,
       handleComponent: <RectWithStyle />,
     };
@@ -83,7 +83,7 @@ function nativeBrushMixin<
 
 const combinedMixin = flow(originalBrushMixin, nativeBrushMixin);
 
-export const brushContainerMixin = (base): VictoryBrushContainer =>
+export const brushContainerMixin = (base): VictoryBrushContainerBase =>
   combinedMixin(base);
 
-export default brushContainerMixin(VictoryContainer);
+export const VictoryBrushContainer = brushContainerMixin(VictoryContainer);
