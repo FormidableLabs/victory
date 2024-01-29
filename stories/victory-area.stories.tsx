@@ -536,7 +536,6 @@ export const events = () => {
                     target: "data",
                     mutation: (props) => {
                       const fill = props.style && props.style.fill;
-                      console.log(fill)
                       return fill === "black" ? null : { style: { fill: "black" } };
                     }
                   }
