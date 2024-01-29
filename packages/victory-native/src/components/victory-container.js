@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Svg, { Rect } from "react-native-svg";
-import { assign, get } from "lodash";
+import { get } from "lodash";
 import { View, PanResponder } from "react-native";
 import { VictoryContainer } from "victory-core/es";
 import NativeHelpers from "../helpers/native-helpers";
@@ -11,7 +11,7 @@ const yes = () => true;
 const no = () => false;
 
 export default class extends VictoryContainer {
-  static propTypes = assign({}, VictoryContainer.propTypes, {
+  static propTypes = Object.assign({}, VictoryContainer.propTypes, {
     disableContainerEvents: PropTypes.bool,
     onTouchEnd: PropTypes.func,
     onTouchStart: PropTypes.func,
@@ -107,14 +107,14 @@ export default class extends VictoryContainer {
       ? { width: "100%", height: "100%" }
       : { width, height };
     const baseStyle = NativeHelpers.getStyle(style, ["width", "height"]);
-    const divStyle = assign({}, baseStyle, { position: "relative" });
+    const divStyle = Object.assign({}, baseStyle, { position: "relative" });
     const portalDivStyle = {
       zIndex: portalZIndex,
       position: "absolute",
       top: 0,
       left: 0,
     };
-    const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
+    const portalSvgStyle = Object.assign({ overflow: "visible" }, dimensions);
     const portalProps = {
       width,
       height,

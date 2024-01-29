@@ -1,6 +1,5 @@
 import React from "react";
 import { Area } from "victory-area";
-import { merge } from "lodash";
 import { render } from "@testing-library/react";
 import { VictoryContainer } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
@@ -25,7 +24,7 @@ describe("victory-primitives/area", () => {
   };
 
   it("should render a single area and no line when no line style is given", () => {
-    const props = merge({}, baseProps, {
+    const props = Object.assign({}, baseProps, {
       style: {
         stroke: "none",
       },

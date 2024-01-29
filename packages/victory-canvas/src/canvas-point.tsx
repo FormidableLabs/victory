@@ -1,5 +1,4 @@
 import React from "react";
-import { assign } from "lodash";
 import {
   Helpers,
   PointPathHelpers,
@@ -53,7 +52,7 @@ const evaluateProps = (props: CanvasPointProps) => {
   const style = Helpers.evaluateStyle(props.style, props);
   const symbol = Helpers.evaluateProp(props.symbol, props);
 
-  return assign({}, props, {
+  return Object.assign({}, props, {
     size,
     style,
     symbol,

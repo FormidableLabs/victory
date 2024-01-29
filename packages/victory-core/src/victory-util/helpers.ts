@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React, { isValidElement } from "react";
-import { defaults, isFunction, property, pick, assign, keys } from "lodash";
+import { defaults, isFunction, property, pick, keys } from "lodash";
 import { CallbackArgs } from "../types/callbacks";
 import { ValueOrAccessor } from "../types/prop-types";
 
@@ -262,7 +262,7 @@ export function reduceChildren<
       const childRole = child.type && child.type.role;
       const childName = child.props.name || `${childRole}-${names[index]}`;
       if (child.props && child.props.children) {
-        const childProps = assign(
+        const childProps = Object.assign(
           {},
           child.props,
           pick(parentProps, sharedProps),
@@ -278,7 +278,7 @@ export function reduceChildren<
                   child.props.children,
                 ) as Array<React.ReactElement>
               ).map((c) => {
-                const nestedChildProps = assign(
+                const nestedChildProps = Object.assign(
                   {},
                   c.props,
                   pick(childProps, sharedProps),

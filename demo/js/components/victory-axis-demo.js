@@ -6,7 +6,7 @@ import {
   VictoryContainer,
   VictoryTheme,
 } from "victory-core";
-import { merge, random, range } from "lodash";
+import { random, range } from "lodash";
 import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
 export default class App extends React.Component {
@@ -122,7 +122,7 @@ export default class App extends React.Component {
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "orange" }),
+                            style: Object.assign({}, props.style, { stroke: "orange" }),
                           };
                         },
                       },

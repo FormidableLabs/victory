@@ -1,5 +1,5 @@
 import React from "react";
-import { merge, random, range } from "lodash";
+import { random, range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryHistogram } from "victory-histogram";
 import { VictoryLine } from "victory-line";
@@ -239,7 +239,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
                   {
                     mutation: (props) => {
                       return {
-                        style: merge({}, props.style, { fill: "pink" }),
+                        style: Object.assign({}, props.style, { fill: "pink" }),
                       };
                     },
                   },
@@ -248,7 +248,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
                   {
                     mutation: (props) => {
                       return {
-                        style: merge({}, props.style, { fill: "yellow" }),
+                        style: Object.assign({}, props.style, { fill: "yellow" }),
                       };
                     },
                   },
@@ -348,7 +348,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "pink" }),
+                          style: Object.assign({}, props.style, { fill: "pink" }),
                         };
                       },
                     },

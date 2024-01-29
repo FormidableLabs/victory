@@ -1,4 +1,4 @@
-import { assign, uniqBy, defaults } from "lodash";
+import { uniqBy, defaults } from "lodash";
 import { Helpers, LabelHelpers, Scale, Axis } from "victory-core";
 import { VictoryPolarAxisProps } from "./types";
 
@@ -268,7 +268,7 @@ const getTickLabelProps = (
   const textAngle =
     labelStyle.angle === undefined
       ? LabelHelpers.getPolarAngle(
-          assign({}, props, { labelPlacement }),
+          Object.assign({}, props, { labelPlacement }),
           labelAngle,
         )
       : labelStyle.angle;
@@ -277,7 +277,7 @@ const getTickLabelProps = (
   const textAnchor =
     labelStyle.textAnchor ||
     LabelHelpers.getPolarTextAnchor(
-      assign({}, props, { labelPlacement }),
+      Object.assign({}, props, { labelPlacement }),
       labelAngle,
     );
   return {
@@ -377,7 +377,7 @@ const getAxisLabelProps = (
   const textAngle =
     labelStyle.angle === undefined
       ? LabelHelpers.getPolarAngle(
-          assign({}, props, { labelPlacement }),
+          Object.assign({}, props, { labelPlacement }),
           axisAngle,
         )
       : labelStyle.angle;
@@ -385,13 +385,13 @@ const getAxisLabelProps = (
   const textAnchor =
     labelStyle.textAnchor ||
     LabelHelpers.getPolarTextAnchor(
-      assign({}, props, { labelPlacement }),
+      Object.assign({}, props, { labelPlacement }),
       axisAngle,
     );
   const verticalAnchor =
     labelStyle.verticalAnchor ||
     LabelHelpers.getPolarVerticalAnchor(
-      assign({}, props, { labelPlacement }),
+      Object.assign({}, props, { labelPlacement }),
       axisAngle,
     );
   return {
@@ -435,7 +435,7 @@ const getAxisProps = (modifiedProps, calculatedValues) => {
 };
 
 const getCalculatedValues = (initialProps: VictoryPolarAxisProps) => {
-  const props = assign({ polar: true }, initialProps);
+  const props = Object.assign({ polar: true }, initialProps);
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
   const padding = Helpers.getPadding(props);

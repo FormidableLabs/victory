@@ -9,7 +9,6 @@ import {
   VictoryCommonPrimitiveProps,
   EventsMixinClass,
 } from "victory-core";
-import { assign } from "lodash";
 
 const renderBorder = (props, error, type) => {
   const vertical = type === "right" || type === "left";
@@ -79,12 +78,12 @@ const evaluateProps = (props) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ stroke: "black" }, props.style),
+    Object.assign({ stroke: "black" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
 export interface ErrorBarProps extends VictoryCommonPrimitiveProps {

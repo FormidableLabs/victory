@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  assign,
   defaults,
   identity,
   isFunction,
@@ -393,9 +392,9 @@ export function modifyProps(props, fallbackProps) {
     return Helpers.modifyProps(props, fallbackProps, "axis");
   }
   const axisTheme = defaults({}, props.theme[role], props.theme.axis);
-  const theme = assign({}, props.theme, { axis: axisTheme });
+  const theme = Object.assign({}, props.theme, { axis: axisTheme });
   return Helpers.modifyProps(
-    assign({}, props, { theme }),
+    Object.assign({}, props, { theme }),
     fallbackProps,
     "axis",
   );

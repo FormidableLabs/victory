@@ -1,5 +1,5 @@
 import React from "react";
-import { merge, random, range } from "lodash";
+import { random, range } from "lodash";
 import { DomainPropType } from "victory-core";
 import { VictoryAxis, VictoryAxisProps } from "victory-axis";
 import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
@@ -128,7 +128,7 @@ export default class VictoryAxisDemo extends React.Component<
                       {
                         mutation: (props: any) => {
                           return {
-                            style: merge({}, props.style, { stroke: "orange" }),
+                            style: Object.assign({}, props.style, { stroke: "orange" }),
                           };
                         },
                       },

@@ -1,5 +1,4 @@
 import {
-  assign,
   isFunction,
   defaults,
   isEmpty,
@@ -182,7 +181,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
     const children = React.Children.toArray(this.props.children);
     const childBaseProps = this.getBasePropsFromChildren(children);
     const parentBaseProps = container ? container.props : {};
-    return assign({}, childBaseProps, { parent: parentBaseProps });
+    return Object.assign({}, childBaseProps, { parent: parentBaseProps });
   }
 
   getBasePropsFromChildren(childComponents) {
@@ -254,7 +253,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
           return memo.concat(
             React.cloneElement(
               child,
-              assign(
+              Object.assign(
                 { key: `events-${name}`, sharedEvents, eventKey, name },
                 child.props,
               ),
@@ -308,7 +307,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
     return role === "container"
       ? React.cloneElement(
           container,
-          assign({}, parentProps, { events: localEvents }),
+          Object.assign({}, parentProps, { events: localEvents }),
         )
       : React.cloneElement(container, localEvents, children);
   }

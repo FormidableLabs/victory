@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers */
 import React from "react";
-import { random, range, merge } from "lodash";
+import { random, range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryCandlestick } from "victory-candlestick";
 import { VictoryTheme } from "victory-core";
@@ -111,7 +111,7 @@ export default class VictoryCandlestickDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style.labels, {
+                            style: Object.assign({}, props.style.labels, {
                               fill: "orange",
                             }),
                           };
@@ -129,7 +129,7 @@ export default class VictoryCandlestickDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "blue" }),
+                            style: Object.assign({}, props.style, { fill: "blue" }),
                           };
                         },
                       },
@@ -162,7 +162,7 @@ export default class VictoryCandlestickDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style.labels, {
+                          style: Object.assign({}, props.style.labels, {
                             fill: "orange",
                           }),
                         };
@@ -180,7 +180,7 @@ export default class VictoryCandlestickDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "blue" }),
+                          style: Object.assign({}, props.style, { fill: "blue" }),
                         };
                       },
                     },

@@ -1,4 +1,3 @@
-import { assign } from "lodash";
 import React from "react";
 import { VictoryBar } from "victory-bar";
 import { SelectionHelpers } from "victory-selection-container";
