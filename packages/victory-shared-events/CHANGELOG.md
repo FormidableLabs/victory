@@ -1,5 +1,13 @@
 # victory-shared-events
 
+## 36.8.3
+
+### Patch Changes
+
+- Refactor param reassignments ([#2724](https://github.com/FormidableLabs/victory/pull/2724))
+
+* Migrate victory-shared-events to TypeScript ([#2733](https://github.com/FormidableLabs/victory/pull/2733))
+
 ## 36.8.2
 
 ## 36.8.1

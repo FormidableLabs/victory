@@ -1,5 +1,11 @@
 # victory-voronoi
 
+## 36.8.3
+
+### Patch Changes
+
+- Migrate victory-voronoi to TypeScript ([#2726](https://github.com/FormidableLabs/victory/pull/2726))
+
 ## 36.8.2
 
 ## 36.8.1
