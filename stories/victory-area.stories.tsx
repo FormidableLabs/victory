@@ -517,7 +517,7 @@ export const DisableInlineStyles = () => {
   );
 };
 
-export const events = () => {
+export const Events = () => {
   return (
     <div style={{ margin: 50 }}>
       <h3>Click Me</h3>
