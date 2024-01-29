@@ -44,6 +44,9 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
   static displayName = "VictorySharedEvents";
   static role = "shared-event-wrapper";
   static contextType = TimerContext;
+  static defaultProps = {
+    groupComponent: <g />,
+  };
 
   getScopedEvents;
   getEventState;
