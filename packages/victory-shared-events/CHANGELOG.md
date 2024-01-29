@@ -1,5 +1,11 @@
 # victory-shared-events
 
+## 36.8.4
+
+### Patch Changes
+
+- Fix VictorySharedEvents defaultProps ([#2752](https://github.com/FormidableLabs/victory/pull/2752))
+
 ## 36.8.3
 
 ### Patch Changes
