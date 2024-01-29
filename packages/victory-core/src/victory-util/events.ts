@@ -165,13 +165,13 @@ export function getScopedEvents(
         return "parent";
       }
       if (eventReturn.eventKey === "all") {
-        return baseProps[childName]
-          ? without(keys(baseProps[childName]), "parent")
-          : without(keys(baseProps), "parent");
+        return newBaseProps[childName]
+          ? without(keys(newBaseProps[childName]), "parent")
+          : without(keys(newBaseProps), "parent");
       } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
-        return baseProps[childName]
-          ? keys(baseProps[childName])
-          : keys(baseProps);
+        return newBaseProps[childName]
+          ? keys(newBaseProps[childName])
+          : keys(newBaseProps);
       }
       return eventReturn.eventKey !== undefined
         ? eventReturn.eventKey
@@ -195,7 +195,7 @@ export function getScopedEvents(
       );
       const mutatedProps = eventReturn.mutation(
         assign({}, mutationTargetProps, mutationTargetState),
-        baseProps,
+        newBaseProps,
       );
       const childState = baseState[childName] || {};
 
@@ -238,7 +238,7 @@ export function getScopedEvents(
 
     // returns an entire mutated state for all children
     const allChildNames =
-      childNames === "all" ? without(keys(baseProps), "parent") : childNames;
+      childNames === "all" ? without(keys(newBaseProps), "parent") : childNames;
     return Array.isArray(allChildNames)
       ? allChildNames.reduce((memo, childName) => {
           return assign(memo, getReturnByChild(childName));

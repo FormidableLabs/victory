@@ -508,3 +508,36 @@ export const DisableInlineStyles = () => {
     </>
   );
 };
+
+export const Events = () => {
+  return (
+    <VictoryChart {...defaultChartProps}>
+      <VictoryLine
+        style={{
+          data: { stroke: "#c43a31" },
+        }}
+        events={[
+          {
+            target: "parent",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    target: "data",
+                    eventKey: "all",
+                    mutation: ({ style }) => {
+                      return style.stroke === "black"
+                        ? null
+                        : { style: { stroke: "black", strokeWidth: 5 } };
+                    },
+                  },
+                ];
+              },
+            },
+          },
+        ]}
+        data={getData(5, "seed-1")}
+      />
+    </VictoryChart>
+  );
+};

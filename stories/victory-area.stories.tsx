@@ -516,3 +516,40 @@ export const DisableInlineStyles = () => {
     </>
   );
 };
+
+export const Events = () => {
+  return (
+    <div style={{ margin: 50 }}>
+      <h3>Click Me</h3>
+      <VictoryChart>
+        <VictoryArea
+          style={{
+            data: { fill: "#c43a31" },
+          }}
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      eventKey: "all",
+                      target: "data",
+                      mutation: (props) => {
+                        const fill = props.style && props.style.fill;
+                        return fill === "black"
+                          ? null
+                          : { style: { fill: "black" } };
+                      },
+                    },
+                  ];
+                },
+              },
+            },
+          ]}
+          data={getData(5)}
+        />
+      </VictoryChart>
+    </div>
+  );
+};
