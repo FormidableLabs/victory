@@ -1,24 +1,30 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
 import { fromJS } from "immutable";
 import React from "react";
-import { VictoryBar } from "victory-bar";
-import { CanvasBar, CanvasGroup } from "victory-canvas";
-import { VictoryChart } from "victory-chart";
-import { VictoryLabel, VictoryTheme } from "victory-core";
-import { VictoryGroup } from "victory-group";
-import { VictoryPolarAxis } from "victory-polar-axis";
-import { VictoryStack } from "victory-stack";
-import { VictoryTooltip } from "victory-tooltip";
-import { getData, getDataWithBaseline, getMixedData } from "./data";
+import { Meta } from "@storybook/react";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+import { VictoryBar } from "../packages/victory-bar";
+import { CanvasBar, CanvasGroup } from "../packages/victory-canvas";
+import { VictoryChart } from "../packages/victory-chart";
+import {
+  VictoryLabel,
+  VictoryLabelStyleObject,
+  VictoryTheme,
+} from "../packages/victory-core";
+import { VictoryGroup } from "../packages/victory-group";
+import { VictoryPolarAxis } from "../packages/victory-polar-axis";
+import { VictoryStack } from "../packages/victory-stack";
+import { VictoryTooltip } from "../packages/victory-tooltip";
+import { getData, getDataWithBaseline, getMixedData } from "./data";
+import { storyContainer } from "./decorators";
+
+const meta: Meta<typeof VictoryBar> = {
+  title: "Victory Charts/Canvas Container/Bar",
+  component: VictoryBar,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
@@ -29,14 +35,9 @@ const defaultChartProps = {
   theme: VictoryTheme.material,
 };
 
-export default {
-  title: "Victory Canvas/Bar",
-  component: VictoryBar,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         groupComponent={<CanvasGroup />}
         dataComponent={<CanvasBar />}
@@ -47,13 +48,13 @@ export const DefaultRendering = () => {
         dataComponent={<CanvasBar />}
         style={parentStyle}
       />
-    </div>
+    </>
   );
 };
 
 export const Theme = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -126,13 +127,13 @@ export const Theme = () => {
           />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Alignment = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -213,13 +214,13 @@ export const Alignment = () => {
           alignment="end"
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const BarRatio = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -348,13 +349,13 @@ export const BarRatio = () => {
           barRatio={1.5}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const BarWidth = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -387,13 +388,13 @@ export const BarWidth = () => {
           barWidth={({ datum }) => datum.x * 4}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const CornerRadius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -522,13 +523,13 @@ export const CornerRadius = () => {
           tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Data = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -585,13 +586,13 @@ export const Data = () => {
           ])}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Labels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -605,7 +606,7 @@ export const Labels = () => {
           groupComponent={<CanvasGroup />}
           dataComponent={<CanvasBar />}
           data={getData(7)}
-          labels={["", "", "three", "four", 5, "six"]}
+          labels={["", "", "three", "four", "5", "six"]}
         />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
@@ -635,13 +636,13 @@ export const Labels = () => {
         />
         <VictoryPolarAxis />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Tooltips = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -683,7 +684,7 @@ export const Tooltips = () => {
           groupComponent={<CanvasGroup />}
           dataComponent={<CanvasBar />}
           data={getData(5)}
-          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labels={["one", "two", "3", "wow, four tooltips", "five"]}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
@@ -693,18 +694,22 @@ export const Tooltips = () => {
           dataComponent={<CanvasBar />}
           data={getData(5)}
           style={{ data: { width: 20 } }}
-          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labels={["one", "two", "3", "wow, four tooltips", "five"]}
           labelComponent={<VictoryTooltip active />}
         />
         <VictoryPolarAxis />
       </VictoryChart>
-    </div>
+    </>
   );
+};
+
+const labelStyle: VictoryLabelStyleObject = {
+  fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black"),
 };
 
 export const Style = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -726,9 +731,7 @@ export const Style = () => {
           groupComponent={<CanvasGroup />}
           dataComponent={<CanvasBar />}
           style={{
-            labels: {
-              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black"),
-            },
+            labels: labelStyle,
             data: {
               stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
               strokeWidth: 3,
@@ -744,13 +747,13 @@ export const Style = () => {
           ]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const StackedBars = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
           <VictoryBar
@@ -959,13 +962,13 @@ export const StackedBars = () => {
           />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const GroupedBars = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
           <VictoryBar
@@ -1206,12 +1209,12 @@ export const GroupedBars = () => {
           </VictoryStack>
         </VictoryGroup>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 export const PolarBars = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} polar>
         <VictoryBar
           groupComponent={<CanvasGroup />}
@@ -1363,6 +1366,6 @@ export const PolarBars = () => {
         </VictoryStack>
         <VictoryPolarAxis />
       </VictoryChart>
-    </div>
+    </>
   );
 };

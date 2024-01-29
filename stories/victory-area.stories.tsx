@@ -1,11 +1,17 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
+import { Meta } from "@storybook/react";
 import React from "react";
-import { VictoryStack } from "victory-stack";
-import { VictoryArea, Area } from "victory-area";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, VictoryLabel } from "victory-core";
-import { VictoryChart } from "victory-chart";
+import { fromJS } from "immutable";
+import styled from "styled-components";
+
+import { VictoryStack } from "../packages/victory-stack";
+import { VictoryArea, Area } from "../packages/victory-area";
+import { VictoryTooltip } from "../packages/victory-tooltip";
+import {
+  VictoryTheme,
+  VictoryLabel,
+  VictoryLabelStyleObject,
+} from "../packages/victory-core";
+import { VictoryChart } from "../packages/victory-chart";
 import {
   getData,
   getMixedData,
@@ -13,16 +19,16 @@ import {
   getLogData,
   getDataWithBaseline,
 } from "./data";
-import { fromJS } from "immutable";
-import styled from "styled-components";
+import { storyContainer } from "./decorators";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+const meta: Meta = {
+  title: "Victory Charts/SVG Container/VictoryArea",
+  component: VictoryArea,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
@@ -33,21 +39,17 @@ const defaultChartProps = {
   theme: VictoryTheme.material,
 };
 
-export default {
-  title: "VictoryArea",
-  component: VictoryArea,
-};
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryArea {...defaultChartProps} />
       <VictoryArea style={parentStyle} />
-    </div>
+    </>
   );
 };
 export const Theme = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryArea data={getData(8)} />
       </VictoryChart>
@@ -72,7 +74,7 @@ export const Theme = () => {
           <VictoryArea data={getData(8, "seed-4")} />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 export const Interpolation = () => {
@@ -89,7 +91,7 @@ export const Interpolation = () => {
   );
 
   return (
-    <div style={containerStyle}>
+    <>
       {[
         "basis",
         "cardinal",
@@ -102,7 +104,7 @@ export const Interpolation = () => {
         "stepAfter",
         "stepBefore",
       ].map((interpolation) => makeInterpolationChart(interpolation))}
-    </div>
+    </>
   );
 };
 export const PolarInterpolation = () => {
@@ -119,17 +121,17 @@ export const PolarInterpolation = () => {
   );
 
   return (
-    <div style={containerStyle}>
+    <>
       {["basis", "cardinal", "catmullRom", "linear"].map((interpolation) =>
         makeInterpolationChart(interpolation),
       )}
-    </div>
+    </>
   );
 };
 
 export const DataAccessors = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryArea
           data={[
@@ -196,13 +198,13 @@ export const DataAccessors = () => {
           ])}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const PlottingFunctions = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryArea y={(d) => Math.sin(2 * Math.PI * d.x)} />
       </VictoryChart>
@@ -231,13 +233,13 @@ export const PlottingFunctions = () => {
           y0={(d) => Math.sin(Math.PI * d.x) - 0.5}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Labels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryArea
           data={getData(7)}
@@ -247,7 +249,7 @@ export const Labels = () => {
       <VictoryChart style={parentStyle}>
         <VictoryArea
           data={getData(7)}
-          labels={["", "", "three", "four", 5, "six"]}
+          labels={["", "", "three", "four", "5", "six"]}
         />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
@@ -261,13 +263,13 @@ export const Labels = () => {
           ]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Tooltips = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryArea
           data={getData(5)}
@@ -292,17 +294,21 @@ export const Tooltips = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryArea
           data={getData(5)}
-          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labels={["one", "two", "3", "wow, four tooltips", "five"]}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
-    </div>
+    </>
   );
+};
+
+const labelStyle: VictoryLabelStyleObject = {
+  fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black"),
 };
 
 export const Styles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryArea
           data={getData(7)}
@@ -321,9 +327,7 @@ export const Styles = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryArea
           style={{
-            labels: {
-              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black"),
-            },
+            labels: labelStyle,
           }}
           labels={({ datum }) => datum.x}
           data={[
@@ -334,13 +338,13 @@ export const Styles = () => {
           ]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Stacked = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryStack colorScale="qualitative" labels={({ datum }) => datum.x}>
           <VictoryArea data={getData(7)} />
@@ -390,12 +394,12 @@ export const Stacked = () => {
           <VictoryArea data={getData(5, "seed-2")} />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 export const TimeScale = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryArea
           data={getTimeData(5)}
@@ -422,13 +426,13 @@ export const TimeScale = () => {
           <VictoryArea data={getTimeData(5, "seed-2")} />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const LogScale = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} scale={{ y: "log" }}>
         <VictoryArea
           data={getLogData(7)}
@@ -444,13 +448,13 @@ export const LogScale = () => {
       <VictoryChart polar {...defaultChartProps} scale={{ y: "log" }}>
         <VictoryArea data={getLogData(7)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Polar = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart polar {...defaultChartProps}>
         <VictoryArea data={getData(7)} />
       </VictoryChart>
@@ -493,7 +497,7 @@ export const Polar = () => {
           <VictoryArea data={getData(5, "seed-2")} />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -503,12 +507,12 @@ const StyledArea = styled(Area)`
 
 export const DisableInlineStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryArea {...defaultChartProps} disableInlineStyles />
       <VictoryArea
         {...defaultChartProps}
         dataComponent={<StyledArea disableInlineStyles />}
       />
-    </div>
+    </>
   );
 };

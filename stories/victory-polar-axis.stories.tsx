@@ -1,31 +1,27 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
-
+import { Meta } from "@storybook/react";
 import React from "react";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
-import { VictoryPolarAxis } from "victory-polar-axis";
-import { VictoryChart } from "victory-chart";
-import { VictoryTheme } from "victory-core";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+import { VictoryPolarAxis } from "../packages/victory-polar-axis";
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryTheme } from "../packages/victory-core";
+import { storyContainer } from "./decorators";
+
+const meta: Meta = {
+  title: "Victory Charts/SVG Container/VictoryPolarAxis",
+  component: VictoryPolarAxis,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
 const defaultAxisProps = { style: parentStyle, theme: VictoryTheme.material };
-
-export default {
-  title: "VictoryPolarAxis",
-  component: VictoryPolarAxis,
-};
 
 const getTimeValues = (num) => {
   const current = 1523389495000;
@@ -47,18 +43,18 @@ const getRandomValues = (num, seed = "random") => {
 
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart polar style={parentStyle} theme={VictoryTheme.material} />
       <VictoryPolarAxis style={parentStyle} theme={VictoryTheme.material} />
       <VictoryChart polar style={parentStyle} />
       <VictoryPolarAxis style={parentStyle} />
-    </div>
+    </>
   );
 };
 
 export const TickValues = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPolarAxis {...defaultAxisProps} tickValues={getValues(5)} />
       <VictoryPolarAxis
         {...defaultAxisProps}
@@ -83,13 +79,13 @@ export const TickValues = () => {
         axisAngle={45}
         tickValues={["one", "two", "three", "four", "five"]}
       />
-    </div>
+    </>
   );
 };
 
 export const TickFormat = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPolarAxis
         {...defaultAxisProps}
         tickValues={getValues(5)}
@@ -114,13 +110,13 @@ export const TickFormat = () => {
         tickValues={getValues(5)}
         tickFormat={(t) => `#${t}`}
       />
-    </div>
+    </>
   );
 };
 
 export const Domain = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPolarAxis {...defaultAxisProps} domain={[-10, 10]} />
       <VictoryPolarAxis
         {...defaultAxisProps}
@@ -160,13 +156,13 @@ export const Domain = () => {
         tickValues={["cat", "dog", "bird"]}
         domain={[-2, 2]}
       />
-    </div>
+    </>
   );
 };
 
 export const AxisAngle = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPolarAxis
         {...defaultAxisProps}
         dependentAxis
@@ -193,13 +189,13 @@ export const AxisAngle = () => {
         endAngle={180}
         tickFormat={["one", "two", "three", "four", "five"]}
       />
-    </div>
+    </>
   );
 };
 
 export const AxisValue = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart polar {...defaultAxisProps}>
         <VictoryPolarAxis
           dependentAxis
@@ -218,13 +214,13 @@ export const AxisValue = () => {
           tickValues={["one", "two", "three", "four", "five"]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const StartAndEndAngle = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPolarAxis {...defaultAxisProps} startAngle={45} />
       <VictoryPolarAxis {...defaultAxisProps} dependentAxis startAngle={45} />
       <VictoryPolarAxis {...defaultAxisProps} endAngle={90} />
@@ -240,13 +236,13 @@ export const StartAndEndAngle = () => {
         startAngle={45}
         endAngle={360 + 45}
       />
-    </div>
+    </>
   );
 };
 
-export const innerRadius = () => {
+export const InnerRadius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart polar {...defaultAxisProps} innerRadius={50}>
         <VictoryPolarAxis dependentAxis tickValues={getValues(5)} />
         <VictoryPolarAxis tickValues={getValues(5)} />
@@ -255,13 +251,13 @@ export const innerRadius = () => {
         <VictoryPolarAxis dependentAxis tickValues={getValues(5)} />
         <VictoryPolarAxis tickValues={getValues(5)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
-export const labelPlacement = () => {
+export const LabelPlacement = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPolarAxis {...defaultAxisProps} labelPlacement="parallel" />
       <VictoryPolarAxis
         {...defaultAxisProps}
@@ -283,13 +279,13 @@ export const labelPlacement = () => {
         axisAngle={45}
         labelPlacement="vertical"
       />
-    </div>
+    </>
   );
 };
 
 export const Style = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPolarAxis
         theme={VictoryTheme.material}
         style={{
@@ -313,13 +309,13 @@ export const Style = () => {
           tickLabels: { fontSize: 15, padding: 5 },
         }}
       />
-    </div>
+    </>
   );
 };
 
 export const Scale = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryPolarAxis
         {...defaultAxisProps}
         tickValues={getTimeValues(5)}
@@ -342,6 +338,6 @@ export const Scale = () => {
         tickValues={[1, 5, 10, 50, 500, 10000]}
         scale="log"
       />
-    </div>
+    </>
   );
 };

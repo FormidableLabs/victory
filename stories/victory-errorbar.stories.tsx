@@ -1,16 +1,29 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryErrorBar, ErrorBar } from "victory-errorbar";
-import { VictoryChart } from "victory-chart";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme } from "victory-core";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { fromJS } from "immutable";
 import styled from "styled-components";
 
-const getData = (num, symmetric, seed = "getData") => {
+import { VictoryErrorBar, ErrorBar } from "../packages/victory-errorbar";
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryTooltip } from "../packages/victory-tooltip";
+import {
+  VictoryLabelStyleObject,
+  VictoryTheme,
+} from "../packages/victory-core";
+import { Meta } from "@storybook/react";
+import { storyContainer } from "./decorators";
+
+const meta: Meta = {
+  title: "Victory Charts/SVG Container/VictoryErrorBar",
+  component: VictoryErrorBar,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
+};
+
+export default meta;
+
+const getData = (num: number, symmetric = false, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 3;
   return range(num).map((v) => {
@@ -23,26 +36,13 @@ const getData = (num, symmetric, seed = "getData") => {
   });
 };
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
-export default {
-  title: "VictoryErrorBar",
-  component: VictoryErrorBar,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryErrorBar style={parentStyle} />
       <VictoryChart style={parentStyle}>
         <VictoryErrorBar data={getData(4)} />
@@ -51,26 +51,26 @@ export const DefaultRendering = () => {
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
         <VictoryErrorBar data={getData(4)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const BorderWidth = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryErrorBar data={getData(5)} borderWidth={0} />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryErrorBar data={getData(5)} borderWidth={10} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Data = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryErrorBar
           data={[
@@ -122,13 +122,13 @@ export const Data = () => {
           errorY={(d) => [d.error, d.error + 2]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Labels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle} horizontal>
         <VictoryErrorBar
           data={getData(5)}
@@ -177,13 +177,17 @@ export const Labels = () => {
           errorY={(d) => [d.error, d.error + 2]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
+};
+
+const labelStyle: VictoryLabelStyleObject = {
+  fill: ({ datum }) => (datum.errorX > datum.errorY ? "red" : "black"),
 };
 
 export const Style = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryErrorBar
           data={getData(4)}
@@ -202,26 +206,23 @@ export const Style = () => {
       <VictoryChart style={parentStyle}>
         <VictoryErrorBar
           style={{
-            labels: {
-              fill: ({ datum }) =>
-                datum.errorX > datum.errorY ? "red" : "black",
-            },
+            labels: labelStyle,
             data: {
               stroke: ({ datum }) =>
                 datum.errorX > datum.errorY ? "red" : "black",
             },
           }}
           labels={({ datum }) => datum.x}
-          data={getData(4, "symmetric")}
+          data={getData(4, true)}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Domain = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryErrorBar
         style={parentStyle}
         domain={{ x: [2, 5], y: [25, 100] }}
@@ -266,7 +267,7 @@ export const Domain = () => {
           ]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -276,7 +277,7 @@ const StyledErrorBar = styled(ErrorBar)`
 
 export const DisableInlineStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryErrorBar data={getData(4)} disableInlineStyles />
       </VictoryChart>
@@ -286,6 +287,6 @@ export const DisableInlineStyles = () => {
           dataComponent={<StyledErrorBar disableInlineStyles />}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };

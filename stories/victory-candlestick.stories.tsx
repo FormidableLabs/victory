@@ -1,14 +1,27 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
+import { Meta } from "@storybook/react";
 import React from "react";
-import { VictoryCandlestick, Candle } from "victory-candlestick";
-import { VictoryChart } from "victory-chart";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme } from "victory-core";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 import { fromJS } from "immutable";
 import styled from "styled-components";
+
+import { VictoryCandlestick, Candle } from "../packages/victory-candlestick";
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryTooltip } from "../packages/victory-tooltip";
+import {
+  VictoryLabelStyleObject,
+  VictoryTheme,
+} from "../packages/victory-core";
+import { storyContainer } from "./decorators";
+
+const meta: Meta<typeof VictoryCandlestick> = {
+  title: "Victory Charts/SVG Container/VictoryCandlestick",
+  component: VictoryCandlestick,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
+};
+
+export default meta;
 
 const sampleData = [
   { x: 1, open: 9, close: 30, high: 56, low: 7 },
@@ -45,14 +58,6 @@ const getData = (num, seed = "getData") => {
   });
 };
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
@@ -62,14 +67,9 @@ const defaultChartProps = {
   domainPadding: 25,
 };
 
-export default {
-  title: "VictoryCandlestick",
-  component: VictoryCandlestick,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryCandlestick style={parentStyle} />
       <VictoryChart style={parentStyle}>
         <VictoryCandlestick data={getData(8)} />
@@ -78,13 +78,13 @@ export const DefaultRendering = () => {
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
         <VictoryCandlestick data={getData(8)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const CandleColors = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
           data={getData(7)}
@@ -100,13 +100,13 @@ export const CandleColors = () => {
           candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const WickStrokeWidth = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick data={getData(7)} wickStrokeWidth={5} />
       </VictoryChart>
@@ -119,13 +119,13 @@ export const WickStrokeWidth = () => {
           wickStrokeWidth={2}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Data = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
           data={[
@@ -165,13 +165,13 @@ export const Data = () => {
           ])}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Labels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
           data={getData(5)}
@@ -214,13 +214,13 @@ export const Labels = () => {
           labelOrientation={{ low: "left", high: "right" }}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Tooltips = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
           data={getData(5)}
@@ -273,13 +273,17 @@ export const Tooltips = () => {
           labelOrientation={{ low: "left", high: "right" }}
         />
       </VictoryChart>
-    </div>
+    </>
   );
+};
+
+const labelStyle: VictoryLabelStyleObject = {
+  fill: ({ datum }) => (datum.x === 3 ? "red" : "black"),
 };
 
 export const Style = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
           data={getData(7)}
@@ -298,9 +302,7 @@ export const Style = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
           style={{
-            labels: {
-              fill: ({ datum }) => (datum.x === 3 ? "red" : "black"),
-            },
+            labels: labelStyle,
             data: {
               stroke: ({ datum }) =>
                 datum.open > datum.close ? "red" : "black",
@@ -310,13 +312,13 @@ export const Style = () => {
           data={getData(7)}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Scale = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryCandlestick
           data={getTimeData(5)}
@@ -330,13 +332,13 @@ export const Scale = () => {
           labels={({ datum }) => datum.x.getFullYear()}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Domain = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryCandlestick
         {...defaultChartProps}
         domain={{ x: [2, 5], y: [50, 150] }}
@@ -381,7 +383,7 @@ export const Domain = () => {
           ])}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -392,7 +394,7 @@ const StyledCandle = styled(Candle)`
 
 export const DisableInlineStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryCandlestick disableInlineStyles data={getData(8)} />
       </VictoryChart>
@@ -402,6 +404,6 @@ export const DisableInlineStyles = () => {
           dataComponent={<StyledCandle disableInlineStyles />}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
