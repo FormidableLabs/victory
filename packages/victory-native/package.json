@@ -24,7 +24,6 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21",
-    "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
     "victory": "^36.8.2",
     "victory-area": "^36.8.2",

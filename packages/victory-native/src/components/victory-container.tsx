@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Svg, { Rect } from "react-native-svg";
 import { assign, get } from "lodash";
 import { View, PanResponder } from "react-native";
@@ -30,12 +29,6 @@ export interface VictoryContainerNativeProps extends VictoryContainerProps {
 }
 
 export class VictoryContainer extends VictoryContainerBase<VictoryContainerNativeProps> {
-  static propTypes = assign({}, VictoryContainerBase.propTypes, {
-    disableContainerEvents: PropTypes.bool,
-    onTouchEnd: PropTypes.func,
-    onTouchStart: PropTypes.func,
-  });
-
   panResponder: any;
 
   constructor(props) {
