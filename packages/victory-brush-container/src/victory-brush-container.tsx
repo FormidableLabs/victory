@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {
   VictoryContainer,
@@ -10,6 +9,7 @@ import {
 import { BrushHelpers } from "./brush-helpers";
 import { assign, defaults } from "lodash";
 import isEqual from "react-fast-compare";
+
 export interface VictoryBrushContainerProps extends VictoryContainerProps {
   allowDrag?: boolean;
   allowDraw?: boolean;
@@ -42,27 +42,6 @@ type Constructor = new (...args: any[]) => React.Component;
 export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
   class VictoryBrushContainer extends base {
     static displayName = "VictoryBrushContainer";
-    static propTypes = {
-      ...VictoryContainer.propTypes,
-      allowDrag: PropTypes.bool,
-      allowDraw: PropTypes.bool,
-      allowResize: PropTypes.bool,
-      brushComponent: PropTypes.element,
-      brushDimension: PropTypes.oneOf(["x", "y"]),
-      brushDomain: PropTypes.shape({
-        x: PropTypes.array,
-        y: PropTypes.array,
-      }),
-      brushStyle: PropTypes.object,
-      defaultBrushArea: PropTypes.oneOf(["all", "disable", "none", "move"]),
-      disable: PropTypes.bool,
-      handleComponent: PropTypes.element,
-      handleStyle: PropTypes.object,
-      handleWidth: PropTypes.number,
-      onBrushCleared: PropTypes.func,
-      onBrushDomainChange: PropTypes.func,
-      onBrushDomainChangeEnd: PropTypes.func,
-    };
     static defaultProps = {
       ...VictoryContainer.defaultProps,
       allowDrag: true,

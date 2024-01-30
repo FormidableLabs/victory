@@ -1,18 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { flatten, isNil } from "lodash";
 import {
   Helpers,
   VictoryLabel,
   addEvents,
   LineSegment,
-  PropTypes as CustomPropTypes,
   VictoryContainer,
   VictoryTheme,
   Box,
   Whisker,
   DefaultTransitions,
-  CommonProps,
   UserProps,
   EventPropTypeInterface,
   DomainPropType,
@@ -142,146 +139,6 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
   static displayName = "VictoryBoxPlot";
   static role = "boxplot";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    boxWidth: PropTypes.number,
-    events: PropTypes.arrayOf(
-      PropTypes.shape({
-        target: PropTypes.oneOf([
-          "max",
-          "maxLabels",
-          "median",
-          "medianLabels",
-          "min",
-          "minLabels",
-          "q1",
-          "q1Labels",
-          "q3",
-          "q3Labels",
-          "parent",
-        ]),
-        eventKey: PropTypes.oneOfType([
-          PropTypes.array,
-          CustomPropTypes.allOfType([
-            CustomPropTypes.integer,
-            CustomPropTypes.nonNegative,
-          ]),
-          PropTypes.string,
-        ]),
-        eventHandlers: PropTypes.object,
-      }),
-    ),
-    horizontal: PropTypes.bool,
-    labelOrientation: PropTypes.oneOfType([
-      PropTypes.oneOf(["top", "bottom", "left", "right"]),
-      PropTypes.shape({
-        q1: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-        q3: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-        min: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-        max: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-        median: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-      }),
-    ]),
-    labels: PropTypes.bool,
-    max: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([
-        CustomPropTypes.integer,
-        CustomPropTypes.nonNegative,
-      ]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    maxComponent: PropTypes.element,
-    maxLabelComponent: PropTypes.element,
-    maxLabels: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.array,
-      PropTypes.bool,
-    ]),
-    median: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([
-        CustomPropTypes.integer,
-        CustomPropTypes.nonNegative,
-      ]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    medianComponent: PropTypes.element,
-    medianLabelComponent: PropTypes.element,
-    medianLabels: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.array,
-      PropTypes.bool,
-    ]),
-    min: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([
-        CustomPropTypes.integer,
-        CustomPropTypes.nonNegative,
-      ]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    minComponent: PropTypes.element,
-    minLabelComponent: PropTypes.element,
-    minLabels: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.array,
-      PropTypes.bool,
-    ]),
-    q1: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([
-        CustomPropTypes.integer,
-        CustomPropTypes.nonNegative,
-      ]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    q1Component: PropTypes.element,
-    q1LabelComponent: PropTypes.element,
-    q1Labels: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.array,
-      PropTypes.bool,
-    ]),
-    q3: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([
-        CustomPropTypes.integer,
-        CustomPropTypes.nonNegative,
-      ]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    q3Component: PropTypes.element,
-    q3LabelComponent: PropTypes.element,
-    q3Labels: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.array,
-      PropTypes.bool,
-    ]),
-    style: PropTypes.shape({
-      boxes: PropTypes.object,
-      labels: PropTypes.object,
-      parent: PropTypes.object,
-      max: PropTypes.object,
-      maxLabels: PropTypes.object,
-      median: PropTypes.object,
-      medianLabels: PropTypes.object,
-      min: PropTypes.object,
-      minLabels: PropTypes.object,
-      q1: PropTypes.object,
-      q1Labels: PropTypes.object,
-      q3: PropTypes.object,
-      q3Labels: PropTypes.object,
-      whiskers: PropTypes.object,
-    }),
-    whiskerWidth: PropTypes.number,
-  };
 
   static defaultProps = {
     containerComponent: <VictoryContainer />,

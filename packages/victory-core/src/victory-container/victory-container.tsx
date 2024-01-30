@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import * as CustomPropTypes from "../victory-util/prop-types";
 import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
 import { Portal } from "../victory-portal/portal";
 import { PortalContext } from "../victory-portal/portal-context";
@@ -46,39 +44,6 @@ export interface VictoryContainerProps {
 export class VictoryContainer extends React.Component<VictoryContainerProps> {
   static displayName = "VictoryContainer";
   static role = "container";
-  static propTypes = {
-    "aria-describedby": PropTypes.string,
-    "aria-labelledby": PropTypes.string,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    className: PropTypes.string,
-    containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    containerRef: PropTypes.func,
-    desc: PropTypes.string,
-    events: PropTypes.object,
-    height: CustomPropTypes.nonNegative,
-    name: PropTypes.string,
-    origin: PropTypes.shape({
-      x: CustomPropTypes.nonNegative,
-      y: CustomPropTypes.nonNegative,
-    }),
-    ouiaId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    ouiaSafe: PropTypes.bool,
-    ouiaType: PropTypes.string,
-    polar: PropTypes.bool,
-    portalComponent: PropTypes.element,
-    portalZIndex: CustomPropTypes.integer,
-    preserveAspectRatio: PropTypes.string,
-    responsive: PropTypes.bool,
-    role: PropTypes.string,
-    style: PropTypes.object,
-    tabIndex: PropTypes.number,
-    theme: PropTypes.object,
-    title: PropTypes.string,
-    width: CustomPropTypes.nonNegative,
-  };
 
   static defaultProps = {
     className: "VictoryContainer",

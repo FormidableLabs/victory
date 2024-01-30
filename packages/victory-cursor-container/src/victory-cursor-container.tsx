@@ -1,9 +1,6 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {
   VictoryContainer,
-  VictoryLabel,
-  LineSegment,
   Helpers,
   VictoryContainerProps,
   CoordinatesPropType,
@@ -38,37 +35,6 @@ export function cursorContainerMixin<
   // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
   return class VictoryCursorContainer extends Base {
     static displayName = "VictoryCursorContainer";
-    static propTypes = {
-      ...VictoryContainer.propTypes,
-      cursorDimension: PropTypes.oneOf(["x", "y"]),
-      cursorLabel: PropTypes.func,
-      cursorLabelComponent: PropTypes.element,
-      cursorLabelOffset: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.shape({
-          x: PropTypes.number,
-          y: PropTypes.number,
-        }),
-      ]),
-      defaultCursorValue: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.shape({
-          x: PropTypes.number,
-          y: PropTypes.number,
-        }),
-      ]),
-      disable: PropTypes.bool,
-      onCursorChange: PropTypes.func,
-    };
-    static defaultProps = {
-      ...VictoryContainer.defaultProps,
-      cursorLabelComponent: <VictoryLabel />,
-      cursorLabelOffset: {
-        x: 5,
-        y: -10,
-      },
-      cursorComponent: <LineSegment />,
-    };
 
     static defaultEvents = (props) => {
       return [

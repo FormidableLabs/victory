@@ -1,12 +1,8 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
 import React from "react";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Path } from "./path";
 
 export interface ArcProps extends VictoryCommonPrimitiveProps {
@@ -84,16 +80,4 @@ export const Arc = (initialProps: ArcProps) => {
     transform: props.transform,
     clipPath: props.clipPath,
   });
-};
-
-Arc.propTypes = {
-  ...CommonProps.primitiveProps,
-  closedPath: PropTypes.bool,
-  cx: PropTypes.number,
-  cy: PropTypes.number,
-  datum: PropTypes.any,
-  endAngle: PropTypes.number,
-  pathComponent: PropTypes.element,
-  r: PropTypes.number,
-  startAngle: PropTypes.number,
 };

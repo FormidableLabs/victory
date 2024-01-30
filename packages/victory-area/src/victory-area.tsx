@@ -1,13 +1,10 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
 import { Area } from "./area";
 import {
-  PropTypes as CustomPropTypes,
   Helpers,
   VictoryLabel,
   VictoryContainer,
-  CommonProps,
   DefaultTransitions,
   VictoryClipContainer,
   addEvents,
@@ -70,30 +67,6 @@ class VictoryAreaBase extends React.Component<VictoryAreaProps> {
     "style",
     "width",
   ];
-
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    interpolation: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        "basis",
-        "cardinal",
-        "catmullRom",
-        "linear",
-        "monotoneX",
-        "monotoneY",
-        "natural",
-        "step",
-        "stepAfter",
-        "stepBefore",
-      ]),
-      PropTypes.func,
-    ]),
-    label: CustomPropTypes.deprecated(
-      PropTypes.string,
-      "Use `labels` instead for individual data labels",
-    ),
-  };
 
   static defaultProps = {
     containerComponent: <VictoryContainer />,

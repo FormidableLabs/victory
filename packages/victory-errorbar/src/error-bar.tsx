@@ -1,9 +1,7 @@
 /* eslint-disable max-statements */
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Helpers,
-  CommonProps,
   Line,
   UserProps,
   VictoryCommonPrimitiveProps,
@@ -139,24 +137,4 @@ export const ErrorBar = (
     { tabIndex, "aria-label": ariaLabel, ...userProps },
     children,
   );
-};
-
-ErrorBar.propTypes = {
-  ...CommonProps.primitiveProps,
-  borderWidth: PropTypes.number,
-  datum: PropTypes.object,
-  errorX: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.array,
-    PropTypes.bool,
-  ]),
-  errorY: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.array,
-    PropTypes.bool,
-  ]),
-  groupComponent: PropTypes.element,
-  lineComponent: PropTypes.element,
-  x: PropTypes.number,
-  y: PropTypes.number,
 };

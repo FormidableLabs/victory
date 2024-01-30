@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Helpers from "../victory-util/helpers";
 import * as UserProps from "../victory-util/user-props";
 import { assign, defaults, isObject, uniqueId } from "lodash";
@@ -34,38 +32,6 @@ export interface VictoryClipContainerProps {
 export class VictoryClipContainer extends React.Component<VictoryClipContainerProps> {
   static displayName = "VictoryClipContainer";
   static role = "container";
-  static propTypes = {
-    "aria-label": PropTypes.string,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    circleComponent: PropTypes.element,
-    className: PropTypes.string,
-    clipHeight: CustomPropTypes.nonNegative,
-    clipId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    clipPadding: PropTypes.shape({
-      top: PropTypes.number,
-      bottom: PropTypes.number,
-      left: PropTypes.number,
-      right: PropTypes.number,
-    }),
-    clipPathComponent: PropTypes.element,
-    clipWidth: CustomPropTypes.nonNegative,
-    events: PropTypes.object,
-    groupComponent: PropTypes.element,
-    origin: PropTypes.shape({
-      x: CustomPropTypes.nonNegative,
-      y: CustomPropTypes.nonNegative,
-    }),
-    polar: PropTypes.bool,
-    radius: CustomPropTypes.nonNegative,
-    style: PropTypes.object,
-    tabIndex: PropTypes.number,
-    transform: PropTypes.string,
-    translateX: PropTypes.number,
-    translateY: PropTypes.number,
-  };
 
   static defaultProps = {
     circleComponent: <Circle />,

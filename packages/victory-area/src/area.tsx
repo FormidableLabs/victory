@@ -1,11 +1,9 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
-import PropTypes from "prop-types";
 import { assign } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 import {
   Helpers,
-  CommonProps,
   Path,
   UserProps,
   VictoryCommonPrimitiveProps,
@@ -175,13 +173,6 @@ export const Area: React.FC<AreaProps> = (initialProps) => {
   return renderLine
     ? React.cloneElement(groupComponent!, userProps, [area, line])
     : area;
-};
-
-Area.propTypes = {
-  ...CommonProps.primitiveProps,
-  groupComponent: PropTypes.element,
-  interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  pathComponent: PropTypes.element,
 };
 
 export interface AreaProps extends VictoryCommonPrimitiveProps {

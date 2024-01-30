@@ -1,9 +1,7 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { getBaseProps } from "./helper-methods";
 import { Curve } from "./curve";
 import {
-  PropTypes as CustomPropTypes,
   Helpers,
   VictoryLabel,
   addEvents,
@@ -13,7 +11,6 @@ import {
   VictoryClipContainer,
   Data,
   Domain,
-  CommonProps,
   UserProps,
   EventPropTypeInterface,
   InterpolationPropType,
@@ -65,31 +62,6 @@ class VictoryLineBase extends React.Component<VictoryLineProps> {
   static defaultPolarTransitions =
     DefaultTransitions.continuousPolarTransitions();
   static continuous = true;
-
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    interpolation: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        "basis",
-        "bundle",
-        "cardinal",
-        "catmullRom",
-        "linear",
-        "monotoneX",
-        "monotoneY",
-        "natural",
-        "step",
-        "stepAfter",
-        "stepBefore",
-      ]),
-      PropTypes.func,
-    ]),
-    label: CustomPropTypes.deprecated(
-      PropTypes.string,
-      "Use `labels` instead for individual data labels",
-    ),
-  };
 
   static defaultProps = {
     containerComponent: <VictoryContainer />,

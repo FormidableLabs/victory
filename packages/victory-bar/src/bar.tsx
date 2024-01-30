@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { assign } from "lodash";
 import React, { forwardRef } from "react";
 import {

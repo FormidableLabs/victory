@@ -1,10 +1,8 @@
 import { assign, defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
 import {
   CategoryPropType,
   ColorScalePropType,
-  CommonProps,
   DomainPaddingPropType,
   DomainPropType,
   EventPropTypeInterface,
@@ -187,17 +185,6 @@ const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
     );
   }
   return React.cloneElement(container, container.props, newChildren);
-};
-
-VictoryGroupBase.propTypes = {
-  ...CommonProps.baseProps,
-  ...CommonProps.dataProps,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  horizontal: PropTypes.bool,
-  offset: PropTypes.number,
 };
 
 const componentConfig: VictoryComponentConfiguration<VictoryGroupProps> = {

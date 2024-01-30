@@ -310,7 +310,6 @@ describe("victory", () => {
         "Circle",
         "ClipPath",
         "Collection",
-        "CommonProps",
         "CursorHelpers",
         "Curve",
         "Data",
