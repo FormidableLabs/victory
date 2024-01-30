@@ -1,4 +1,4 @@
-import { assign, isNil } from "lodash";
+import { isNil } from "lodash";
 import {
   Helpers,
   LabelHelpers,
@@ -33,7 +33,7 @@ export const getDataWithBaseline = (props, scale) => {
     const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
     const _x1 = datum._x1 !== undefined ? datum._x1 : datum._x;
     const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
-    return assign({}, datum, { _y0, _y1, _x0, _x1 });
+    return Object.assign({}, datum, { _y0, _y1, _x0, _x1 });
   });
 };
 
@@ -70,7 +70,11 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     fallbackProps,
     "area",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     domain,

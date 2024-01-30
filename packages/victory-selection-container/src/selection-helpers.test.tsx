@@ -1,4 +1,3 @@
-import { assign } from "lodash";
 import React from "react";
 import { VictoryBar } from "victory-bar";
 import { SelectionHelpers } from "victory-selection-container";
@@ -61,7 +60,7 @@ describe("helpers/selection", () => {
       const props = { scale, x1: 0, y1: 0, x2: 0.5, y2: 0.5 };
       const filteredData = SelectionHelpers.filterDatasets(props, datasets);
       const expected = { eventKey: [0], data: [data[0]] };
-      expect(filteredData).toEqual([assign({ childName }, expected)]);
+      expect(filteredData).toEqual([Object.assign({ childName }, expected)]);
     });
   });
 });

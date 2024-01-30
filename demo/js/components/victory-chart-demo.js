@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, merge, random, range, omit } from "lodash";
+import { random, range, omit } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
@@ -30,7 +30,7 @@ class Wrapper extends React.Component {
     const props = omit(this.props, ["children"]);
     const children = React.Children.toArray(this.props.children);
     return children.map((child) => {
-      return React.cloneElement(child, assign({}, child.props, props));
+      return React.cloneElement(child, Object.assign({}, child.props, props));
     });
   }
 
@@ -222,7 +222,7 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart
-            style={assign({}, chartStyle, bgStyle)}
+            style={Object.assign({}, chartStyle, bgStyle)}
             title="Victory Scatter Chart"
             desc="Graph with scattered data points"
           >
@@ -615,7 +615,7 @@ class App extends React.Component {
                         eventKey: "all",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "lime" }),
+                            style: Object.assign({}, props.style, { stroke: "lime" }),
                           };
                         },
                       },
@@ -625,7 +625,7 @@ class App extends React.Component {
                         eventKey: "all",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "green" }),
+                            style: Object.assign({}, props.style, { fill: "green" }),
                             text: "waddup",
                           };
                         },
@@ -701,7 +701,7 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "gold" }),
+                            style: Object.assign({}, props.style, { fill: "gold" }),
                           };
                         },
                       },
@@ -710,7 +710,7 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "orange" }),
+                            style: Object.assign({}, props.style, { fill: "orange" }),
                           };
                         },
                       },
@@ -719,7 +719,7 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "red" }),
+                            style: Object.assign({}, props.style, { fill: "red" }),
                           };
                         },
                       },

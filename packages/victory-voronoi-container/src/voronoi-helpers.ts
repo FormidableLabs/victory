@@ -1,6 +1,5 @@
 import { Collection, Selection, Data, Helpers } from "victory-core";
 import {
-  assign,
   isFunction,
   isEmpty,
   includes,
@@ -47,7 +46,7 @@ class VoronoiHelpersClass {
         const voronoiX = (Number(x) + Number(x0)) / 2;
         const voronoiY = (Number(y) + Number(y0)) / 2;
 
-        return assign(
+        return Object.assign(
           {
             _voronoiX: props.voronoiDimension === "y" ? minDomain.x : voronoiX,
             _voronoiY: props.voronoiDimension === "x" ? minDomain.y : voronoiY,

@@ -55,7 +55,7 @@ const baseLabelStyles = {
   strokeWidth: 0
 };
 
-const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
+const centeredLabelStyles = Object.assign({ textAnchor: "middle" }, baseLabelStyles);
 
 // Strokes
 const strokeDasharray = "10, 5";
@@ -64,7 +64,7 @@ const strokeLinejoin = "round";
 
 // Put it all together...
 const theme = {
-  area: assign(
+  area: Object.assign(
     {
       style: {
         data: {
@@ -75,7 +75,7 @@ const theme = {
     },
     baseProps
   ),
-  axis: assign(
+  axis: Object.assign(
     {
       style: {
         axis: {
@@ -85,7 +85,7 @@ const theme = {
           strokeLinecap,
           strokeLinejoin
         },
-        axisLabel: assign({}, centeredLabelStyles, {
+        axisLabel: Object.assign({}, centeredLabelStyles, {
           padding,
           stroke: "transparent"
         }),
@@ -105,14 +105,14 @@ const theme = {
           strokeLinecap,
           strokeLinejoin
         },
-        tickLabels: assign({}, baseLabelStyles, {
+        tickLabels: Object.assign({}, baseLabelStyles, {
           fill: blueGrey700
         })
       }
     },
     baseProps
   ),
-  polarDependentAxis: assign({
+  polarDependentAxis: Object.assign({
     style: {
       ticks: {
         fill: "transparent",
@@ -121,7 +121,7 @@ const theme = {
       }
     }
   }),
-  bar: assign(
+  bar: Object.assign(
     {
       style: {
         data: {
@@ -134,31 +134,31 @@ const theme = {
     },
     baseProps
   ),
-  boxplot: assign(
+  boxplot: Object.assign(
     {
       style: {
         max: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        maxLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        maxLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         median: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        medianLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        medianLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         min: { padding, stroke: blueGrey700, strokeWidth: 1 },
-        minLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        minLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         q1: { padding, fill: blueGrey700 },
-        q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
+        q1Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         q3: { padding, fill: blueGrey700 },
-        q3Labels: assign({}, baseLabelStyles, { padding: 3 })
+        q3Labels: Object.assign({}, baseLabelStyles, { padding: 3 })
       },
       boxWidth: 20
     },
     baseProps
   ),
-  candlestick: assign(
+  candlestick: Object.assign(
     {
       style: {
         data: {
           stroke: blueGrey700
         },
-        labels: assign({}, baseLabelStyles, { padding: 5 })
+        labels: Object.assign({}, baseLabelStyles, { padding: 5 })
       },
       candleColors: {
         positive: "#ffffff",
@@ -168,7 +168,7 @@ const theme = {
     baseProps
   ),
   chart: baseProps,
-  errorbar: assign(
+  errorbar: Object.assign(
     {
       borderWidth: 8,
       style: {
@@ -183,13 +183,13 @@ const theme = {
     },
     baseProps
   ),
-  group: assign(
+  group: Object.assign(
     {
       colorScale: colors
     },
     baseProps
   ),
-  histogram: assign(
+  histogram: Object.assign(
     {
       style: {
         data: {
@@ -212,10 +212,10 @@ const theme = {
         type: "circle"
       },
       labels: baseLabelStyles,
-      title: assign({}, baseLabelStyles, { padding: 5 })
+      title: Object.assign({}, baseLabelStyles, { padding: 5 })
     }
   },
-  line: assign(
+  line: Object.assign(
     {
       style: {
         data: {
@@ -229,7 +229,7 @@ const theme = {
     },
     baseProps
   ),
-  pie: assign(
+  pie: Object.assign(
     {
       colorScale: colors,
       style: {
@@ -238,12 +238,12 @@ const theme = {
           stroke: blueGrey50,
           strokeWidth: 1
         },
-        labels: assign({}, baseLabelStyles, { padding: 20 })
+        labels: Object.assign({}, baseLabelStyles, { padding: 20 })
       }
     },
     baseProps
   ),
-  scatter: assign(
+  scatter: Object.assign(
     {
       style: {
         data: {
@@ -257,14 +257,14 @@ const theme = {
     },
     baseProps
   ),
-  stack: assign(
+  stack: Object.assign(
     {
       colorScale: colors
     },
     baseProps
   ),
   tooltip: {
-    style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
+    style: Object.assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: grey900,
       strokeWidth: 1,
@@ -275,7 +275,7 @@ const theme = {
     cornerRadius: 5,
     pointerLength: 10
   },
-  voronoi: assign(
+  voronoi: Object.assign(
     {
       style: {
         data: {
@@ -283,7 +283,7 @@ const theme = {
           stroke: "transparent",
           strokeWidth: 0
         },
-        labels: assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
+        labels: Object.assign({}, baseLabelStyles, { padding: 5, pointerEvents: "none" }),
         flyout: {
           stroke: grey900,
           strokeWidth: 1,

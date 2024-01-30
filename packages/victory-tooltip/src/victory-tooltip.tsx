@@ -16,7 +16,7 @@ import {
   OrientationTypes,
   VictoryThemeDefinition,
 } from "victory-core";
-import { assign, defaults, uniqueId, isPlainObject, orderBy } from "lodash";
+import { defaults, uniqueId, isPlainObject, orderBy } from "lodash";
 
 import { Flyout } from "./flyout";
 
@@ -188,7 +188,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
       : Helpers.evaluateStyle(baseLabelStyle, props);
     const flyoutStyle = Helpers.evaluateStyle(
       baseFlyoutStyle,
-      assign({}, props, { style }),
+      Object.assign({}, props, { style }),
     );
     return { style, flyoutStyle };
   }
@@ -198,7 +198,10 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
 
     const active = Helpers.evaluateProp(props.active, props);
 
-    let text = Helpers.evaluateProp(props.text, assign({}, props, { active }));
+    let text = Helpers.evaluateProp(
+      props.text,
+      Object.assign({}, props, { active }),
+    );
     if (text === undefined || text === null) {
       text = "";
     }
@@ -207,35 +210,53 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
     }
 
     const { style, flyoutStyle } = this.getStyles(
-      assign({}, props, { active, text }),
+      Object.assign({}, props, { active, text }),
     );
     const orientation =
       Helpers.evaluateProp(
         props.orientation,
-        assign({}, props, { active, text, style, flyoutStyle }),
+        Object.assign({}, props, { active, text, style, flyoutStyle }),
       ) || this.getDefaultOrientation(props);
 
     const padding =
       Helpers.evaluateProp(
         props.flyoutPadding,
-        assign({}, props, { active, text, style, flyoutStyle, orientation }),
+        Object.assign({}, props, {
+          active,
+          text,
+          style,
+          flyoutStyle,
+          orientation,
+        }),
       ) || this.getLabelPadding(style);
 
     const flyoutPadding = Helpers.getPadding({ padding });
 
     const pointerWidth = Helpers.evaluateProp(
       props.pointerWidth,
-      assign({}, props, { active, text, style, flyoutStyle, orientation }),
+      Object.assign({}, props, {
+        active,
+        text,
+        style,
+        flyoutStyle,
+        orientation,
+      }),
     );
 
     const pointerLength = Helpers.evaluateProp(
       props.pointerLength,
-      assign({}, props, { active, text, style, flyoutStyle, orientation }),
+      Object.assign({}, props, {
+        active,
+        text,
+        style,
+        flyoutStyle,
+        orientation,
+      }),
     );
     const labelSize = TextSize.approximateTextSize(text, style);
 
     const { flyoutHeight, flyoutWidth } = this.getDimensions(
-      assign({}, props, {
+      Object.assign({}, props, {
         style,
         flyoutStyle,
         active,
@@ -248,7 +269,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
       labelSize,
     );
 
-    const evaluatedProps = assign({}, props, {
+    const evaluatedProps = Object.assign({}, props, {
       active,
       text,
       style,

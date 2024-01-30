@@ -1,4 +1,4 @@
-import { assign, isNil, isPlainObject } from "lodash";
+import { isNil, isPlainObject } from "lodash";
 import { Helpers, VictoryStyleObject } from "victory-core";
 import { BarProps } from "./bar";
 import {
@@ -93,5 +93,5 @@ export const getStyle = (style: VictoryStyleObject = {}, props: BarProps) => {
   }
   const stroke = style.fill || "black";
   const baseStyle = { fill: "black", stroke };
-  return Helpers.evaluateStyle(assign(baseStyle, style), props);
+  return Helpers.evaluateStyle(Object.assign(baseStyle, style), props);
 };

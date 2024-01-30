@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { assign, keys, orderBy } from "lodash";
+import { keys, orderBy } from "lodash";
 import React from "react";
 import { Helpers, Scale, Wrapper } from "victory-core";
 import isEqual from "react-fast-compare";
@@ -85,7 +85,7 @@ function addLayoutData(props, datasets, index) {
   const xOffset = props.xOffset || 0;
   return datasets[index].map((datum) => {
     const yOffset = getY0(datum, index, datasets) || 0;
-    return assign({}, datum, {
+    return Object.assign({}, datum, {
       _y0: !(datum._y instanceof Date)
         ? yOffset
         : yOffset
@@ -130,12 +130,12 @@ export function getCalculatedProps(initialProps, childComponents) {
   });
   const domain = {
     x: Wrapper.getDomain(
-      assign({}, props, { categories }),
+      Object.assign({}, props, { categories }),
       "x",
       clonedChildren,
     ),
     y: Wrapper.getDomain(
-      assign({}, props, { categories }),
+      Object.assign({}, props, { categories }),
       "y",
       clonedChildren,
     ),
@@ -250,7 +250,7 @@ export function getChildren(initialProps, childComponents, calculatedProps) {
     const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(
       child,
-      assign(
+      Object.assign(
         {
           key: `${name}-key-${index}`,
           labels,

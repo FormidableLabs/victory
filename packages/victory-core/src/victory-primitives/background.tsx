@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { assign } from "lodash";
 import * as Helpers from "../victory-util/helpers";
 import {
   CommonProps,
@@ -27,7 +26,7 @@ const evaluateProps = (props) => {
    */
   const id = Helpers.evaluateProp(props.id, props);
 
-  return assign({}, props, { id });
+  return Object.assign({}, props, { id });
 };
 
 const defaultProps = {

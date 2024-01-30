@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
-import { assign, merge, keys, random, range, round } from "lodash";
+import { keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
 import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
@@ -37,7 +37,7 @@ class Wrapper extends React.Component<WrapperProps> {
   renderChildren(props: WrapperProps) {
     const children = React.Children.toArray(props.children);
     return children.map((child: any) => {
-      return React.cloneElement(child, assign({}, child.props, props));
+      return React.cloneElement(child, Object.assign({}, child.props, props));
     });
   }
 
@@ -250,7 +250,7 @@ export default class ImmutableDemo extends React.Component<
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "gold" }),
+                            style: Object.assign({}, props.style, { fill: "gold" }),
                           };
                         },
                       },
@@ -259,7 +259,7 @@ export default class ImmutableDemo extends React.Component<
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "orange" }),
+                            style: Object.assign({}, props.style, { fill: "orange" }),
                           };
                         },
                       },
@@ -268,7 +268,7 @@ export default class ImmutableDemo extends React.Component<
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "red" }),
+                            style: Object.assign({}, props.style, { fill: "red" }),
                           };
                         },
                       },
@@ -380,7 +380,7 @@ export default class ImmutableDemo extends React.Component<
 
           <svg height={500} width={500}>
             <VictoryCandlestick
-              style={merge({}, chartStyle, { data: { width: 10 } })}
+              style={Object.assign({}, chartStyle, { data: { width: 10 } })}
               data={fromJS([
                 {
                   x: new Date(2016, 6, 1),
@@ -450,7 +450,7 @@ export default class ImmutableDemo extends React.Component<
                         {
                           mutation: (props) => {
                             return {
-                              style: merge({}, props.style.labels, {
+                              style: Object.assign({}, props.style.labels, {
                                 fill: "orange",
                               }),
                             };
@@ -468,7 +468,7 @@ export default class ImmutableDemo extends React.Component<
                         {
                           mutation: (props) => {
                             return {
-                              style: merge({}, props.style, { fill: "blue" }),
+                              style: Object.assign({}, props.style, { fill: "blue" }),
                             };
                           },
                         },
@@ -504,7 +504,7 @@ export default class ImmutableDemo extends React.Component<
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "lime" }),
+                            style: Object.assign({}, props.style, { stroke: "lime" }),
                           };
                         },
                       },
@@ -513,7 +513,7 @@ export default class ImmutableDemo extends React.Component<
                         target: "labels",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "green" }),
+                            style: Object.assign({}, props.style, { fill: "green" }),
                             text: "waddup",
                           };
                         },
@@ -608,7 +608,7 @@ export default class ImmutableDemo extends React.Component<
           </VictoryChart>
 
           <VictoryVoronoi
-            style={merge({}, chartStyle, {
+            style={Object.assign({}, chartStyle, {
               data: {
                 fill: "gray",
                 opacity: 0.1,
@@ -667,7 +667,7 @@ export default class ImmutableDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "gold" }),
+                          style: Object.assign({}, props.style, { fill: "gold" }),
                         };
                       },
                     },
@@ -676,7 +676,7 @@ export default class ImmutableDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, { fill: "orange" }),
                         };
                       },
                     },
@@ -685,7 +685,7 @@ export default class ImmutableDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "red" }),
+                          style: Object.assign({}, props.style, { fill: "red" }),
                         };
                       },
                     },

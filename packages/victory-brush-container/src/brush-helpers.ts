@@ -1,5 +1,5 @@
 import { Selection } from "victory-core";
-import { assign, throttle, isFunction, defaults, mapValues } from "lodash";
+import { throttle, isFunction, defaults, mapValues } from "lodash";
 import isEqual from "react-fast-compare";
 
 const Helpers = {
@@ -110,7 +110,7 @@ const Helpers = {
       bottom: { y1: Math.min(y1, y2), y2: Math.max(y1, y2), x1, x2 },
     };
     return handles.reduce((memo, current) => {
-      return assign(memo, mutations[current]);
+      return Object.assign(memo, mutations[current]);
     }, {});
   },
 

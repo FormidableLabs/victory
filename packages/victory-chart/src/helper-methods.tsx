@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Helpers, Scale, Axis, Wrapper } from "victory-core";
-import { defaults, assign } from "lodash";
+import { defaults } from "lodash";
 
 const fallbackProps = {
   width: 450,
@@ -90,8 +90,16 @@ export function getCalculatedProps(initialProps, childComponents) {
   const categories = Wrapper.getCategories(props, childComponents, allStrings);
   const stringMap = createStringMap(props, childComponents, allStrings);
   const domain = {
-    x: getDomain(assign({}, props, { categories }), "x", childComponents),
-    y: getDomain(assign({}, props, { categories }), "y", childComponents),
+    x: getDomain(
+      Object.assign({}, props, { categories }),
+      "x",
+      childComponents,
+    ),
+    y: getDomain(
+      Object.assign({}, props, { categories }),
+      "y",
+      childComponents,
+    ),
   };
 
   const range = {

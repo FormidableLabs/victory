@@ -1,13 +1,4 @@
-import {
-  orderBy,
-  defaults,
-  assign,
-  uniq,
-  groupBy,
-  keys,
-  isNaN,
-  isNil,
-} from "lodash";
+import { orderBy, defaults, uniq, groupBy, keys, isNaN, isNil } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import {
   min as d3Min,
@@ -51,7 +42,7 @@ const getSummaryStatistics = (data) => {
     _max: nanToNull(d3Max(dependentVars)),
   };
 
-  return assign({}, data[0], quartiles, { _y: data[0]._y });
+  return Object.assign({}, data[0], quartiles, { _y: data[0]._y });
 };
 
 const processData = (data) => {
@@ -73,7 +64,7 @@ const processData = (data) => {
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
         const dataArray = datum[sortKey].map((d) =>
-          assign({}, datum, { [sortKey]: d }),
+          Object.assign({}, datum, { [sortKey]: d }),
         );
         const sortedData = orderBy(dataArray, sortKey);
         return getSummaryStatistics(sortedData);
@@ -463,7 +454,11 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     fallbackProps,
     "boxplot",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     groupComponent,
     width,
@@ -511,7 +506,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       q1: boxScale(datum._q1),
       q3: boxScale(datum._q3),
     };
-    const dataProps = assign({ index, datum, positions }, props);
+    const dataProps = Object.assign({ index, datum, positions }, props);
     const dataObj = TYPES.reduce((memo, type) => {
       memo[type] = getDataProps(dataProps, type);
       return memo;
@@ -528,7 +523,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       ) {
         const target = `${type}Labels`;
         acc[eventKey][target] = getLabelProps(
-          assign({}, props, dataProps),
+          Object.assign({}, props, dataProps),
           labelText,
           type,
         );
