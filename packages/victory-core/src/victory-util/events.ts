@@ -211,10 +211,10 @@ export function getScopedEvents(
       const extendState = (state) => {
         return target === "parent"
           ? Object.assign(state, {
-              [key]: Object.assign(state[key], mutatedProps),
+              [key]: Object.assign(state[key] || {}, mutatedProps),
             })
           : Object.assign(state, {
-              [key]: Object.assign(state[key], { [target]: mutatedProps }),
+              [key]: Object.assign(state[key] || {}, { [target]: mutatedProps }),
             });
       };
 
