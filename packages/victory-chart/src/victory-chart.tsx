@@ -1,4 +1,4 @@
-import { defaults, assign, isEmpty } from "lodash";
+import { defaults, isEmpty } from "lodash";
 import React from "react";
 import {
   Background,
@@ -94,7 +94,7 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
     const children = getChildren(props, childComponents, calculatedProps);
 
     const mappedChildren = children.map((child, index) => {
-      const childProps = assign(
+      const childProps = Object.assign(
         { animate: getAnimationProps(props, child, index) },
         child.props,
       );

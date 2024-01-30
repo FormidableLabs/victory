@@ -1,4 +1,4 @@
-import { assign, isNil } from "lodash";
+import { isNil } from "lodash";
 import {
   Collection,
   Data,
@@ -30,7 +30,7 @@ export const getBarPosition = (props, datum) => {
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
   const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
-  return Helpers.scalePoint(props, assign({}, datum, { _y0, _x0 }));
+  return Helpers.scalePoint(props, Object.assign({}, datum, { _y0, _x0 }));
 };
 
 const getCalculatedValues = (props) => {
@@ -67,7 +67,11 @@ const getCalculatedValues = (props) => {
 
 export const getBaseProps = (initialProps, fallbackProps) => {
   const modifiedProps = Helpers.modifyProps(initialProps, fallbackProps, "bar");
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     alignment,
     barRatio,

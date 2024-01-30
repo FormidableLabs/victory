@@ -1,5 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
-import { assign, defaults, isEmpty } from "lodash";
+import { defaults, isEmpty } from "lodash";
 import React from "react";
 import { VictoryPortal } from "../victory-portal/victory-portal";
 import { Rect } from "../victory-primitives/rect";
@@ -123,7 +123,7 @@ const getStyles = (style, props) => {
       s ? defaults({}, s, defaultStyles) : defaultStyles,
       props,
     );
-    return assign({}, baseStyles, { fontSize: getFontSize(baseStyles) });
+    return Object.assign({}, baseStyles, { fontSize: getFontSize(baseStyles) });
   };
 
   return Array.isArray(style) && !isEmpty(style)
@@ -462,16 +462,16 @@ const evaluateProps = (props) => {
     3) everything else
   */
   const text = getContent(props.text, props);
-  const style = getStyles(props.style, assign({}, props, { text }));
+  const style = getStyles(props.style, Object.assign({}, props, { text }));
   const backgroundStyle = getBackgroundStyles(
     props.backgroundStyle,
-    assign({}, props, { text, style }),
+    Object.assign({}, props, { text, style }),
   );
   const backgroundPadding = getBackgroundPadding(
-    assign({}, props, { text, style, backgroundStyle }),
+    Object.assign({}, props, { text, style, backgroundStyle }),
   );
   const id = Helpers.evaluateProp(props.id, props);
-  return assign({}, props, {
+  return Object.assign({}, props, {
     backgroundStyle,
     backgroundPadding,
     style,
@@ -499,7 +499,7 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
   const transform = getTransform(props, x, y);
 
-  return assign({}, props, {
+  return Object.assign({}, props, {
     ariaLabel,
     lineHeight,
     direction,

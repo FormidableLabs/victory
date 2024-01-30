@@ -1,6 +1,5 @@
 import React from "react";
 import * as Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Rect } from "./rect";
 
@@ -25,12 +24,12 @@ const evaluateProps = (props) => {
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ fill: "none" }, props.style),
+    Object.assign({ fill: "none" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const defaultProps = {

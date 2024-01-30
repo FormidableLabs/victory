@@ -1,4 +1,3 @@
-import { assign } from "lodash";
 import React from "react";
 import * as Helpers from "../victory-util/helpers";
 import * as pathHelpers from "../victory-util/point-path-helpers";
@@ -51,7 +50,7 @@ const evaluateProps = (props) => {
   const symbol = Helpers.evaluateProp(props.symbol, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, {
+  return Object.assign({}, props, {
     ariaLabel,
     desc,
     id,

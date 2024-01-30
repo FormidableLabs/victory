@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers, Datum } from "victory-core";
-import { assign, defaults, throttle, isFunction, includes } from "lodash";
+import { defaults, throttle, isFunction, includes } from "lodash";
 import React from "react";
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 16;
@@ -209,7 +209,7 @@ class SelectionHelpersClass {
               eventKey: d.eventKey,
               target: "data",
               mutation: () => {
-                return assign({ active: true }, callbackMutation);
+                return Object.assign({ active: true }, callbackMutation);
               },
             };
           })

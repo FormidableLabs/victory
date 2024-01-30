@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { merge, random, range } from "lodash";
+import { random, range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryLine, Curve } from "victory-line";
 import { VictoryContainer, VictoryTheme, Point } from "victory-core";
@@ -142,7 +142,7 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { stroke: "orange" }),
+                          style: Object.assign({}, props.style, { stroke: "orange" }),
                         };
                       },
                     },

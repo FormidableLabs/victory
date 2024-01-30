@@ -12,7 +12,7 @@ import {
   VictoryTheme,
   VictoryLabel,
 } from "victory-core";
-import { assign, random, range, merge } from "lodash";
+import { random, range } from "lodash";
 
 class Wrapper extends React.Component {
   static propTypes = {
@@ -25,7 +25,7 @@ class Wrapper extends React.Component {
   renderChildren(props) {
     const children = React.Children.toArray(props.children);
     return children.map((child) => {
-      return React.cloneElement(child, assign({}, child.props, props));
+      return React.cloneElement(child, Object.assign({}, child.props, props));
     });
   }
 
@@ -262,7 +262,7 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, { fill: "orange" }),
                         };
                       },
                     },
@@ -399,7 +399,7 @@ export default class App extends React.Component {
                         {
                           mutation: (props) => {
                             return {
-                              style: merge({}, props.style, { fill: "orange" }),
+                              style: Object.assign({}, props.style, { fill: "orange" }),
                             };
                           },
                         },
@@ -425,7 +425,7 @@ export default class App extends React.Component {
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "blue" }),
+                            style: Object.assign({}, props.style, { fill: "blue" }),
                           };
                         },
                       },
@@ -449,7 +449,7 @@ export default class App extends React.Component {
                       childName: "secondBar",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "blue" }),
+                          style: Object.assign({}, props.style, { fill: "blue" }),
                         };
                       },
                     };
@@ -469,14 +469,14 @@ export default class App extends React.Component {
                           return props.style.fill === "cyan"
                             ? null
                             : {
-                                style: merge({}, props.style, { fill: "cyan" }),
+                                style: Object.assign({}, props.style, { fill: "cyan" }),
                               };
                         },
                       },
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "orange" }),
+                            style: Object.assign({}, props.style, { fill: "orange" }),
                           };
                         },
                       },

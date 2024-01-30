@@ -1,7 +1,6 @@
 /* eslint-disable no-magic-numbers,react/no-multi-comp */
 
 import React from "react";
-import { merge } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
 import { VictoryBar } from "victory-bar";
@@ -63,14 +62,14 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
         onMouseOver: (evt: any, targetProps: TargetPropsInterface) => {
           return [
             {
-              mutation: () => merge(targetProps, { active: true }),
+              mutation: () => Object.assign(targetProps, { active: true }),
             },
           ];
         },
         onMouseDown: (evt: any, targetProps: TargetPropsInterface) => {
           return [
             {
-              mutation: () => merge(targetProps, { dragging: true }),
+              mutation: () => Object.assign(targetProps, { dragging: true }),
             },
           ];
         },
@@ -86,7 +85,7 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
 
             return [
               {
-                mutation: () => merge(targetProps, { x }),
+                mutation: () => Object.assign(targetProps, { x }),
               },
             ];
           }
@@ -96,7 +95,7 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
           return [
             {
               mutation: () =>
-                merge(targetProps, { dragging: false, active: false }),
+                Object.assign(targetProps, { dragging: false, active: false }),
             },
           ];
         },
@@ -104,7 +103,7 @@ class DraggablePoint extends React.Component<TargetPropsInterface, any> {
           return [
             {
               mutation: () =>
-                merge(targetProps, { dragging: false, active: false }),
+                Object.assign(targetProps, { dragging: false, active: false }),
             },
           ];
         },

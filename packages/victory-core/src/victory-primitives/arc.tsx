@@ -1,7 +1,6 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
 import React from "react";
 import * as Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Path } from "./path";
 
@@ -50,12 +49,12 @@ const evaluateProps = (props) => {
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ stroke: "black", fill: "none" }, props.style),
+    Object.assign({ stroke: "black", fill: "none" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const defaultProps = {

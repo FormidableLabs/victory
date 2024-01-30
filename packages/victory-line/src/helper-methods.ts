@@ -1,4 +1,4 @@
-import { assign, isNil } from "lodash";
+import { isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getCalculatedValues = (props) => {
@@ -39,7 +39,11 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     fallbackProps,
     "line",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     domain,

@@ -7,7 +7,7 @@ import {
   VictoryContainerProps,
 } from "victory-core";
 import { BrushHelpers } from "./brush-helpers";
-import { assign, defaults } from "lodash";
+import { defaults } from "lodash";
 import isEqual from "react-fast-compare";
 
 export interface VictoryBrushContainerProps extends VictoryContainerProps {
@@ -172,10 +172,10 @@ export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
       };
 
       const handleProps = {
-        top: top && assign({ x: top.x1, y: top.y1 }, yProps),
-        bottom: bottom && assign({ x: bottom.x1, y: bottom.y1 }, yProps),
-        left: left && assign({ y: left.y1, x: left.x1 }, xProps),
-        right: right && assign({ y: right.y1, x: right.x1 }, xProps),
+        top: top && Object.assign({ x: top.x1, y: top.y1 }, yProps),
+        bottom: bottom && Object.assign({ x: bottom.x1, y: bottom.y1 }, yProps),
+        left: left && Object.assign({ y: left.y1, x: left.x1 }, xProps),
+        right: right && Object.assign({ y: right.y1, x: right.x1 }, xProps),
       };
       const handles = ["top", "bottom", "left", "right"].reduce(
         (memo, curr) =>
@@ -183,7 +183,10 @@ export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
             ? memo.concat(
                 React.cloneElement(
                   handleComponent,
-                  assign({ key: `${name}-handle-${curr}` }, handleProps[curr]),
+                  Object.assign(
+                    { key: `${name}-handle-${curr}` },
+                    handleProps[curr],
+                  ),
                 ),
               )
             : memo,

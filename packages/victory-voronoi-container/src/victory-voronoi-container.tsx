@@ -182,7 +182,7 @@ export function voronoiContainerMixin<
       }, []);
 
       // remove properties from first point to make datum
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { childName, eventKey, style, continuous, ...datum } = points[0];
       const name =
         props.name === childName ? childName : `${props.name}-${childName}`;

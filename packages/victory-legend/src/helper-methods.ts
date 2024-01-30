@@ -1,4 +1,4 @@
-import { defaults, assign, groupBy, keys, sum, range, isNil } from "lodash";
+import { defaults, groupBy, keys, sum, range, isNil } from "lodash";
 import { Helpers, Style, TextSize } from "victory-core";
 import { VictoryLegendProps } from "./victory-legend";
 
@@ -37,7 +37,12 @@ const getCalculatedValues = (props) => {
   const colorScale = getColorScale(props);
   const isHorizontal = orientation === "horizontal";
   const borderPadding = Helpers.getPadding({ padding: props.borderPadding });
-  return assign({}, props, { style, isHorizontal, colorScale, borderPadding });
+  return Object.assign({}, props, {
+    style,
+    isHorizontal,
+    colorScale,
+    borderPadding,
+  });
 };
 
 const getColumn = (props, index) => {
@@ -196,7 +201,13 @@ const getBorderProps = (props, contentHeight, contentWidth) => {
   const height =
     (contentHeight || 0) + borderPadding.top + borderPadding.bottom;
   const width = (contentWidth || 0) + borderPadding.left + borderPadding.right;
-  return { x, y, height, width, style: assign({ fill: "none" }, style.border) };
+  return {
+    x,
+    y,
+    height,
+    width,
+    style: Object.assign({ fill: "none" }, style.border),
+  };
 };
 
 export const getDimensions = (initialProps, fallbackProps) => {
@@ -205,7 +216,11 @@ export const getDimensions = (initialProps, fallbackProps) => {
     fallbackProps,
     "legend",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const { title, titleOrientation } = props;
   const groupedData = groupData(props);
   const columnWidths = getColumnWidths(props, groupedData);
@@ -232,7 +247,11 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     fallbackProps,
     "legend",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     standalone,

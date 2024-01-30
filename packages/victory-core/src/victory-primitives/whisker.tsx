@@ -1,5 +1,4 @@
 import React from "react";
-import { assign } from "lodash";
 import * as Helpers from "../victory-util/helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Line } from "./line";
@@ -33,7 +32,7 @@ const evaluateProps = (props) => {
   const style = Helpers.evaluateStyle(props.style, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const defaultProps = {
@@ -76,7 +75,7 @@ export const Whisker = (initialProps: WhiskerProps) => {
   return React.cloneElement(groupComponent, {}, [
     React.cloneElement(
       lineComponent,
-      assign(
+      Object.assign(
         { key: "major-whisker", "aria-label": ariaLabel },
         baseProps,
         majorWhisker,
@@ -84,7 +83,7 @@ export const Whisker = (initialProps: WhiskerProps) => {
     ),
     React.cloneElement(
       lineComponent,
-      assign(
+      Object.assign(
         { key: "minor-whisker", "aria-label": ariaLabel },
         baseProps,
         minorWhisker,

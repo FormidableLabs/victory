@@ -1,6 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
-import { assign } from "lodash";
 import {
   Helpers,
   Path,
@@ -22,7 +21,7 @@ const evaluateProps = (props) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign(
+    Object.assign(
       { fill: "none", stroke: "black", pointerEvents: "stroke" },
       props.style,
     ),
@@ -30,7 +29,7 @@ const evaluateProps = (props) => {
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
 const defaultProps = {

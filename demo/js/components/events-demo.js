@@ -6,7 +6,6 @@ import { VictoryArea } from "victory-area";
 import { VictoryBar } from "victory-bar";
 import { VictoryLine } from "victory-line";
 import { VictoryTheme, VictoryLabel } from "victory-core";
-import { merge } from "lodash";
 
 class App extends React.Component {
   render() {
@@ -104,7 +103,7 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "lime" }),
+                            style: Object.assign({}, props.style, { stroke: "lime" }),
                           };
                         },
                       },
@@ -113,7 +112,7 @@ class App extends React.Component {
                         target: "labels",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "green" }),
+                            style: Object.assign({}, props.style, { fill: "green" }),
                             text: "waddup",
                           };
                         },

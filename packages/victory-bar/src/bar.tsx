@@ -1,4 +1,3 @@
-import { assign } from "lodash";
 import React, { forwardRef } from "react";
 import {
   Helpers,
@@ -43,10 +42,13 @@ const evaluateProps = (props: BarProps) => {
    * `tabIndex`
    */
   const style = getStyle(props.style, props);
-  const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
+  const barWidth = getBarWidth(
+    props.barWidth,
+    Object.assign({}, props, { style }),
+  );
   const cornerRadius = getCornerRadius(
     props.cornerRadius,
-    assign({}, props, { style, barWidth }),
+    Object.assign({}, props, { style, barWidth }),
   );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
@@ -54,7 +56,7 @@ const evaluateProps = (props: BarProps) => {
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, {
+  return Object.assign({}, props, {
     ariaLabel,
     style,
     barWidth,

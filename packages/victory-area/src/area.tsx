@@ -1,6 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
-import { assign } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 import {
   Helpers,
@@ -82,12 +81,12 @@ const evaluateProps = (props: AreaProps) => {
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ fill: "black" }, props.style),
+    Object.assign({ fill: "black" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const defaultProps = {
@@ -143,10 +142,10 @@ export const Area: React.FC<AreaProps> = (initialProps) => {
 
   const area = React.cloneElement(
     pathComponent!,
-    assign(
+    Object.assign(
       {
         key: `${id}-area`,
-        style: assign({}, style, { stroke: areaStroke }),
+        style: Object.assign({}, style, { stroke: areaStroke }),
         d: areaFunction(data),
         desc,
         tabIndex,
@@ -159,10 +158,10 @@ export const Area: React.FC<AreaProps> = (initialProps) => {
   const line = renderLine
     ? React.cloneElement(
         pathComponent!,
-        assign(
+        Object.assign(
           {
             key: `${id}-area-stroke`,
-            style: assign({}, style, { fill: "none" }),
+            style: Object.assign({}, style, { fill: "none" }),
             d: lineFunction(data),
           },
           sharedProps,

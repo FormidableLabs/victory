@@ -12,7 +12,7 @@ import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryVoronoiContainer } from "victory-voronoi-container";
 import { VictorySelectionContainer } from "victory-selection-container";
 import { VictoryTooltip } from "victory-tooltip";
-import { random, range, merge, keys } from "lodash";
+import { random, range, keys } from "lodash";
 import { VictoryTheme, VictoryLabel } from "victory-core";
 
 const multiAxisData = [
@@ -312,7 +312,7 @@ class App extends React.Component {
                         childName: "bar-2",
                         mutation: () => {
                           return {
-                            style: merge({}, props.style, { fill: "cyan" }),
+                            style: Object.assign({}, props.style, { fill: "cyan" }),
                           };
                         },
                       },
@@ -320,7 +320,7 @@ class App extends React.Component {
                         childName: "bar-3",
                         mutation: () => {
                           return {
-                            style: merge({}, props.style, { fill: "blue" }),
+                            style: Object.assign({}, props.style, { fill: "blue" }),
                           };
                         },
                       },
@@ -406,7 +406,7 @@ class App extends React.Component {
                       {
                         mutation: () => {
                           return {
-                            style: merge({}, props.style, {
+                            style: Object.assign({}, props.style, {
                               fill: "cyan",
                               stroke: "cyan",
                             }),

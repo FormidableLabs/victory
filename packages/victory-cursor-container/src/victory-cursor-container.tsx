@@ -9,7 +9,7 @@ import {
   VictoryLabel,
   LineSegment,
 } from "victory-core";
-import { defaults, assign, isObject } from "lodash";
+import { defaults, isObject } from "lodash";
 import { CursorHelpers } from "./cursor-helpers";
 
 export type CursorCoordinatesPropType = CoordinatesPropType | number;
@@ -168,7 +168,7 @@ export function cursorContainerMixin<
         );
       }
 
-      const cursorStyle = assign(
+      const cursorStyle = Object.assign(
         { stroke: "black" },
         cursorComponent.props.style,
       );
