@@ -10,7 +10,7 @@ import {
   VictoryCommonProps,
   VictoryStyleInterface,
 } from "victory-core";
-import { defaults, isFunction, assign } from "lodash";
+import { defaults, isFunction } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 export type VictorySliceLabelPositionType =
@@ -82,11 +82,11 @@ const evaluateProps = (props) => {
   const style = Helpers.evaluateStyle(props.style, props);
   const radius = Helpers.evaluateProp(
     props.radius,
-    assign({}, props, { style }),
+    Object.assign({}, props, { style }),
   );
   const innerRadius = Helpers.evaluateProp(
     props.innerRadius,
-    assign({}, props, { style, radius }),
+    Object.assign({}, props, { style, radius }),
   );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
@@ -97,7 +97,7 @@ const evaluateProps = (props) => {
   const sliceEndAngle = Helpers.evaluateProp(props.sliceEndAngle, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, {
+  return Object.assign({}, props, {
     ariaLabel,
     style,
     radius,

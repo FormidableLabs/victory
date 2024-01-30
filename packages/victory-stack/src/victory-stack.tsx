@@ -1,4 +1,4 @@
-import { assign, defaults, isEmpty } from "lodash";
+import { defaults, isEmpty } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import {
@@ -93,7 +93,7 @@ const VictoryStackBase = (initialProps: VictoryStackProps) => {
   const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
     const orderedChildren = children.map((child, index) => {
-      const childProps = assign(
+      const childProps = Object.assign(
         { animate: getAnimationProps(props, child, index) },
         child.props,
       );

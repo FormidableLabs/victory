@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { assign, isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 import {
   PropTypes as CustomPropTypes,
   VictoryLabel,
@@ -255,7 +255,7 @@ class VictoryAxisBase extends React.Component<VictoryAxisProps> {
       .map((child) => child.props);
     const paddingToObject = (padding) =>
       typeof padding === "object"
-        ? assign({}, { top: 0, right: 0, bottom: 0, left: 0 }, padding)
+        ? Object.assign({}, { top: 0, right: 0, bottom: 0, left: 0 }, padding)
         : { top: padding, right: padding, bottom: padding, left: padding };
     const labelsSumSize = labels.reduce((sum, label) => {
       const padding = paddingToObject(label.style.padding);

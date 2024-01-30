@@ -1,4 +1,4 @@
-import { assign, defaults, isNil, isFunction, isPlainObject } from "lodash";
+import { defaults, isNil, isFunction, isPlainObject } from "lodash";
 import {
   Helpers,
   Scale,
@@ -205,7 +205,7 @@ const getDataStyles = (
   const fill = style.fill || candleColor;
   const strokeColor = style.stroke;
   const stroke = isTransparent(strokeColor) ? fill : strokeColor || "black";
-  return assign({}, style, { stroke, fill });
+  return Object.assign({}, style, { stroke, fill });
 };
 
 const getText = (props, type) => {

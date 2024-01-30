@@ -1,4 +1,4 @@
-import { assign, defaults, identity, keys } from "lodash";
+import { defaults, identity, keys } from "lodash";
 import React from "react";
 import { AnimatePropTypeInterface } from "../types/prop-types";
 
@@ -131,13 +131,15 @@ function getInitialChildProps(animate, data): TransitionProps {
   const after =
     animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
   return {
-    data: data.map((datum, idx) => assign({}, datum, after(datum, idx, data))),
+    data: data.map((datum, idx) =>
+      Object.assign({}, datum, after(datum, idx, data)),
+    ),
   };
 }
 
 // eslint-disable-next-line max-params
 function getChildBeforeLoad(animate, child, data, cb): TransitionProps {
-  const newAnimate = assign({}, animate, { onEnd: cb });
+  const newAnimate = Object.assign({}, animate, { onEnd: cb });
 
   if (newAnimate && newAnimate.onLoad && !newAnimate.onLoad.duration) {
     return { animate: newAnimate, data };
@@ -148,7 +150,7 @@ function getChildBeforeLoad(animate, child, data, cb): TransitionProps {
       : identity;
   // If nodes need to exit, transform them with the provided onLoad.before function.
   const newData = data.map((datum, idx) => {
-    return assign({}, datum, before(datum, idx, data));
+    return Object.assign({}, datum, before(datum, idx, data));
   });
 
   return { animate: newAnimate, data: newData, clipWidth: 0 };
@@ -156,7 +158,7 @@ function getChildBeforeLoad(animate, child, data, cb): TransitionProps {
 
 // eslint-disable-next-line max-params
 function getChildOnLoad(animate, data, cb): TransitionProps {
-  const newAnimate = assign({}, animate, { onEnd: cb });
+  const newAnimate = Object.assign({}, animate, { onEnd: cb });
   let newData = data;
 
   if (newAnimate && newAnimate.onLoad && !newAnimate.onLoad.duration) {
@@ -166,7 +168,7 @@ function getChildOnLoad(animate, data, cb): TransitionProps {
     animate.onLoad && animate.onLoad.after ? animate.onLoad.after : identity;
   // If nodes need to exit, transform them with the provided onLoad.after function.
   newData = data.map((datum, idx) => {
-    return assign({}, datum, after(datum, idx, data));
+    return Object.assign({}, datum, after(datum, idx, data));
   });
 
   return { animate: newAnimate, data: newData };
@@ -183,7 +185,7 @@ function getChildPropsOnExit(
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
   const onExit = animate && animate.onExit;
-  const newAnimate = assign({}, animate, onExit);
+  const newAnimate = Object.assign({}, animate, onExit);
   let newData = data;
 
   if (exitingNodes) {
@@ -198,7 +200,7 @@ function getChildPropsOnExit(
     newData = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
       return exitingNodes[key]
-        ? assign({}, datum, before(datum, idx, data))
+        ? Object.assign({}, datum, before(datum, idx, data))
         : datum;
     });
   }
@@ -219,7 +221,7 @@ function getChildPropsBeforeEnter(
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
-    newAnimate = assign({}, animate, { onEnd: cb });
+    newAnimate = Object.assign({}, animate, { onEnd: cb });
     const before =
       animate.onEnter && animate.onEnter.before
         ? animate.onEnter.before
@@ -230,7 +232,7 @@ function getChildPropsBeforeEnter(
     newData = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
       return enteringNodes[key]
-        ? assign({}, datum, before(datum, idx, data))
+        ? Object.assign({}, datum, before(datum, idx, data))
         : datum;
     });
   }
@@ -248,7 +250,7 @@ function getChildPropsOnEnter(
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
   const onEnter = animate && animate.onEnter;
-  const newAnimate = assign({}, animate, onEnter);
+  const newAnimate = Object.assign({}, animate, onEnter);
   let newData = data;
 
   if (enteringNodes) {
@@ -263,7 +265,7 @@ function getChildPropsOnEnter(
     newData = data.map((datum, idx) => {
       const key = getDatumKey(datum, idx);
       return enteringNodes[key]
-        ? assign({}, datum, after(datum, idx, data))
+        ? Object.assign({}, datum, after(datum, idx, data))
         : datum;
     });
   }
@@ -392,7 +394,7 @@ export function getTransitionPropsFactory(props, state, setState) {
           ? transitionDurations.load
           : getChildTransitionDuration(child, "onLoad");
       const animation = { duration: load };
-      return onLoad(child, data, assign({}, animate, animation));
+      return onLoad(child, data, Object.assign({}, animate, animation));
     } else if (nodesWillExit) {
       const exitingNodes = childTransitions && childTransitions.exiting;
       const exit =
@@ -401,7 +403,12 @@ export function getTransitionPropsFactory(props, state, setState) {
           : getChildTransitionDuration(child, "onExit");
       // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
       const animation = exitingNodes ? { duration: exit } : { delay: exit };
-      return onExit(exitingNodes, child, data, assign({}, animate, animation));
+      return onExit(
+        exitingNodes,
+        child,
+        data,
+        Object.assign({}, animate, animation),
+      );
     } else if (nodesWillEnter) {
       const enteringNodes = childTransitions && childTransitions.entering;
       const enter =
@@ -419,7 +426,7 @@ export function getTransitionPropsFactory(props, state, setState) {
         enteringNodes,
         child,
         data,
-        assign({}, animate, animation),
+        Object.assign({}, animate, animation),
       );
     } else if (!state && animate && animate.onExit) {
       // This is the initial render, and nodes may enter when props change. Because

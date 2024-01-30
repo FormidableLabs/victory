@@ -7,7 +7,7 @@ import {
   VictoryCommonPrimitiveProps,
   VictoryStyleObject,
 } from "victory-core";
-import { assign, defaults, isFunction } from "lodash";
+import { defaults, isFunction } from "lodash";
 
 export interface CandleProps extends VictoryCommonPrimitiveProps {
   candleRatio?: number;
@@ -90,12 +90,12 @@ const evaluateProps = (props) => {
    * `tabIndex`
    */
   const style = Helpers.evaluateStyle(
-    assign({ stroke: "black" }, props.style),
+    Object.assign({ stroke: "black" }, props.style),
     props,
   );
   const candleWidth = getCandleWidth(
     props.candleWidth,
-    assign({}, props, { style }),
+    Object.assign({}, props, { style }),
   );
 
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
@@ -103,7 +103,7 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, {
+  return Object.assign({}, props, {
     ariaLabel,
     style,
     candleWidth,
@@ -151,12 +151,15 @@ export const Candle = (props: CandleProps) => {
     desc,
     tabIndex,
   };
-  const candleProps = assign(getCandleProps(modifiedProps, style), sharedProps);
-  const highWickProps = assign(
+  const candleProps = Object.assign(
+    getCandleProps(modifiedProps, style),
+    sharedProps,
+  );
+  const highWickProps = Object.assign(
     getHighWickProps(modifiedProps, wickStyle),
     sharedProps,
   );
-  const lowWickProps = assign(
+  const lowWickProps = Object.assign(
     getLowWickProps(modifiedProps, wickStyle),
     sharedProps,
   );

@@ -1,4 +1,4 @@
-import { assign, isNil } from "lodash";
+import { isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 import { getBarPosition } from "victory-bar";
 import isEqual from "react-fast-compare";
@@ -187,7 +187,11 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     fallbackProps,
     "histogram",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
 
   const {
     binSpacing,

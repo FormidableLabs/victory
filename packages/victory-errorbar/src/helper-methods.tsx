@@ -171,7 +171,11 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     fallbackProps,
     "errorbar",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     borderWidth,
     data,
@@ -242,7 +246,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       (labels && (events || sharedEvents))
     ) {
       childProps[eventKey].labels = getLabelProps(
-        assign({}, props, dataProps),
+        Object.assign({}, props, dataProps),
         text,
         style,
       );

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  assign,
   defaults,
   difference,
   isEmpty,
@@ -389,7 +388,7 @@ export function addEvents<
           componentProps.events,
         );
 
-        return assign({}, componentProps, { events });
+        return Object.assign({}, componentProps, { events });
       }
 
       return defaults({ index, key: id }, currentProps, baseProps, { id });

@@ -1,4 +1,4 @@
-import { assign, values, isNil } from "lodash";
+import { values, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export const getSymbol = (data, props) => {
@@ -80,7 +80,11 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     fallbackProps,
     "scatter",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     domain,

@@ -1,5 +1,4 @@
 import {
-  assign,
   defaults,
   flatten,
   isFunction,
@@ -100,7 +99,7 @@ export function getDataFromChildren(props, childComponents) {
   });
 
   const iteratee = (child, childName, parent) => {
-    const childProps = assign({}, child.props, parentProps);
+    const childProps = Object.assign({}, child.props, parentProps);
     let childData;
     let childElement = child;
     if (!Data.isDataComponent(child)) {
@@ -113,7 +112,7 @@ export function getDataFromChildren(props, childComponents) {
     }
     stack += 1;
     return childData.map((datum, index) =>
-      assign({ _stack: stack, _group: index }, datum),
+      Object.assign({ _stack: stack, _group: index }, datum),
     );
   };
 
@@ -222,11 +221,11 @@ export function getDomainFromChildren(props, axis, childComponents) {
     categories,
   };
   const parentProps = parentData
-    ? assign(baseParentProps, { data: parentData })
+    ? Object.assign(baseParentProps, { data: parentData })
     : baseParentProps;
 
   const iteratee = (child) => {
-    const sharedProps = assign({}, child.props, parentProps);
+    const sharedProps = Object.assign({}, child.props, parentProps);
     if (!Domain.isDomainComponent(child)) {
       return null;
     } else if (child.type && isFunction(child.type.getDomain)) {
@@ -266,7 +265,11 @@ export function getDomain(props, axis, childComponents) {
       maxDomain || Collection.getMaxValue([...dataDomain, ...childDomain]);
     domain = Domain.getDomainFromMinMax(min, max);
   }
-  return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
+  return Domain.formatDomain(
+    domain,
+    Object.assign({ domainPadding }, props),
+    axis,
+  );
 }
 
 export function getScale(props, axis, childComponents?) {
@@ -277,7 +280,7 @@ export function getScale(props, axis, childComponents?) {
     ? childComponents.slice(0)
     : React.Children.toArray(props.children);
   const iteratee = (child) => {
-    const sharedProps = assign({}, child.props, {
+    const sharedProps = Object.assign({}, child.props, {
       horizontal: props.horizontal,
     });
     return Scale.getScaleType(sharedProps, axis);
@@ -347,7 +350,7 @@ export function getChildStyle(child, index, calculatedProps) {
   const dataStyle = defaults(
     {},
     childStyle.data,
-    assign({}, dataWidth, style.data, defaultColor),
+    Object.assign({}, dataWidth, style.data, defaultColor),
   );
   const labelsStyle = defaults({}, childStyle.labels, style.labels);
   return {
