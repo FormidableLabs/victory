@@ -225,7 +225,7 @@ export function getCurrentAxis(axis, horizontal) {
  */
 export function range(start: number, end?: number, increment?: number) {
   if (end === undefined) {
-    return Array.from({length: start}, (_, i) => i);
+    return Array.from({ length: start }, (_, i) => i);
   }
 
   const inc = increment || 1;

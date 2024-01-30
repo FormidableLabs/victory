@@ -218,11 +218,11 @@ describe("victory-util/helpers", () => {
       expect(Helpers.range(5)).toEqual([0, 1, 2, 3, 4]);
     });
 
-    it('returns an array of integers from start to end exclusive', () => {
+    it("returns an array of integers from start to end exclusive", () => {
       expect(Helpers.range(2, 5)).toEqual([2, 3, 4]);
     });
 
-    it('returns an array of integers using an increment', () => {
+    it("returns an array of integers using an increment", () => {
       expect(Helpers.range(0, 20, 5)).toEqual([0, 5, 10, 15]);
       expect(Helpers.range(-10, 20, 5)).toEqual([-10, -5, 0, 5, 10, 15]);
     });

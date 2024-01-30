@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { VictoryHistogram } from "victory-histogram";
-import { Helpers } from 'victory-core';
+import { Helpers } from "victory-core";
 
 import { isBar, getBarHeight } from "../../../test/helpers";
 

@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { random } from "lodash";
 import React from "react";
 import { VictoryChart } from "victory-chart";
-import { Helpers } from 'victory-core';
+import { Helpers } from "victory-core";
 import { Curve, VictoryLine } from "victory-line";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
 
@@ -300,7 +300,10 @@ describe("components/victory-line", () => {
     });
 
     it("adds aria-label and tabIndex to Curve primitive", () => {
-      const ariaTestData = Helpers.range(4).map((x) => ({ x, y: random(1, 7) }));
+      const ariaTestData = Helpers.range(4).map((x) => ({
+        x,
+        y: random(1, 7),
+      }));
       const { container } = render(
         <VictoryLine
           data={ariaTestData}
