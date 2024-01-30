@@ -179,6 +179,7 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 const getLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice, labelComponent, theme } = dataProps;
   const { style, defaultRadius, origin, width, height } = calculatedValues;
+  let href='';
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
     assign({ text }, dataProps),
@@ -228,6 +229,8 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     verticalAnchor,
     angle: labelAngle,
     calculatedLabelRadius,
+    href
+
   };
 
   if (!Helpers.isTooltip(labelComponent)) {

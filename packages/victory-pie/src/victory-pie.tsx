@@ -170,6 +170,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       groupComponent,
       labelIndicator,
       labelPosition,
+      labelPlacement,
     } = props;
 
     if (!groupComponent) {
@@ -179,6 +180,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     const showIndicator = labelIndicator && labelPosition === "centroid";
 
     const children: React.ReactElement[] = [];
+    let textPathData ={};
 
     if (dataComponent) {
       const dataComponents = this.dataKeys.reduce<React.ReactElement[]>(
@@ -188,6 +190,10 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             "data",
             index,
           );
+
+          if(labelPlacement==="curved"){
+            textPathData[index] = dataProps.id
+          }
           if (shouldRenderDatum((dataProps as any).datum)) {
             validDataComponents.push(
               React.cloneElement(dataComponent, dataProps),
@@ -209,6 +215,10 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             "labels",
             index,
           );
+          if(labelPlacement==="curved"){
+            labelProps.href = `#${textPathData[index]}`
+          }
+          
           if (
             (labelProps as any).text !== undefined &&
             (labelProps as any).text !== null

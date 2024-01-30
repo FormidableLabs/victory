@@ -547,10 +547,10 @@ export const LabelPlacement = () => {
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         radius={120}
-        labelPosition="startAngle"
-        labelPlacement="perpendicular"
-        labelComponent={<VictoryTooltip active />}
-        labels={({ datum }) => `${datum.l}\ndegrees`}
+        //labelPosition="startAngle"
+        labelPlacement="curved"
+        // labelComponent={<VictoryTooltip active />}
+        labels={({ datum }) => `${datum.l}degrees`}
         data={[
           { x: 1, y: 1, l: 0 },
           { x: 2, y: 1, l: 45 },

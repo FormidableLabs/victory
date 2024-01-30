@@ -9,6 +9,7 @@ export * from "./path";
 export * from "./point";
 export * from "./rect";
 export * from "./text";
+export * from "./textPath";
 export * from "./tspan";
 export * from "./types";
 export * from "./whisker";

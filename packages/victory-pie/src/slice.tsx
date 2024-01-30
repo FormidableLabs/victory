@@ -20,6 +20,7 @@ export type VictorySliceLabelPositionType =
 export type VictorySliceLabelPlacementType =
   | "vertical"
   | "parallel"
+  | "curved"
   | "perpendicular";
 export type VictorySliceTTargetType = "data" | "labels" | "parent";
 
@@ -125,6 +126,7 @@ export const Slice = (initialProps: SliceProps) => {
   return React.cloneElement(props.pathComponent, {
     ...props.events,
     "aria-label": props.ariaLabel,
+    id: props.id,
     d: getPath(props),
     style: props.style,
     transform: props.transform || defaultTransform,
