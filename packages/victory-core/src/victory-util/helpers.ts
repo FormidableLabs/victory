@@ -225,14 +225,16 @@ export function getCurrentAxis(axis, horizontal) {
  */
 export function range(start: number, end?: number, increment?: number) {
   const startIndex = end ? start : 0;
-  const endIndex = end ? end : start;
+  let endIndex = end ? end : start;
+  if (!endIndex) endIndex = 0;
 
   const k = endIndex - startIndex;
   const length = Math.abs(k);
-  const sign = k / length;
+  const sign = k / length || 1;
   const inc = increment || 1;
+  const arrayLength = Math.max(Math.ceil(length / inc), 0);
 
-  return Array.from(Array(length / inc), (_, i) => startIndex + i * sign * inc);
+  return Array.from(Array(arrayLength), (_, i) => startIndex + i * sign * inc);
 }
 
 /**

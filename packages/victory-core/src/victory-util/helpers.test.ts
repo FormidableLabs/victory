@@ -231,5 +231,21 @@ describe("victory-util/helpers", () => {
     it("returns an array of integers using an increment and negative start", () => {
       expect(Helpers.range(-10, 20, 5)).toEqual([-10, -5, 0, 5, 10, 15]);
     });
+
+    it("returns an array of numbers from a floating point increment", () => {
+      expect(Helpers.range(0, 1, 0.2)).toEqual([0, 0.2, 0.4, 0.6, 0.8]);
+    });
+
+    it("should parse non-integer values", () => {
+      expect(Helpers.range(4.7)).toEqual([0, 1, 2, 3, 4]);
+    });
+
+    it("should not throw on undefined start value", () => {
+      expect(Helpers.range(undefined as any)).toEqual([]);
+    });
+
+    it("should not throw on NaN start value", () => {
+      expect(Helpers.range(NaN as any)).toEqual([]);
+    });
   });
 });
