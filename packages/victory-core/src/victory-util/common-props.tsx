@@ -1,4 +1,3 @@
-import * as CustomPropTypes from "./prop-types";
 import * as React from "react";
 import { OriginType } from "../victory-label/victory-label";
 import { PaddingProps, VictoryThemeDefinition } from "../victory-theme/types";

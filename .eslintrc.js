@@ -67,7 +67,6 @@ module.exports = {
         "no-undef": "off",
         "max-nested-callbacks": "off",
         "@typescript-eslint/no-empty-function": "off",
-        "react/prop-types": "off",
       },
     },
     {
@@ -86,6 +85,7 @@ module.exports = {
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
       ],
       rules: {
+        "react/prop-types": "off",
         "no-use-before-define": "off",
         "valid-jsdoc": "off",
         "@typescript-eslint/no-use-before-define": [
