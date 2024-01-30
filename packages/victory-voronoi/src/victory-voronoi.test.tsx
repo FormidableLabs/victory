@@ -1,8 +1,9 @@
 import React from "react";
-import { random, range } from "lodash";
+import { random } from "lodash";
 import { calculateD3Path } from "../../../test/helpers";
 import { VictoryVoronoi, VictoryVoronoiProps, Voronoi } from "victory-voronoi";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { Helpers } from "victory-core";
 
 describe("components/victory-voronoi", () => {
   describe("default component rendering", () => {
@@ -53,7 +54,7 @@ describe("components/victory-voronoi", () => {
     });
 
     it("sorts data by sortKey prop", () => {
-      const data = range(5)
+      const data = Helpers.range(5)
         .map((i) => ({ x: i, y: i }))
         .reverse();
       render(
@@ -75,7 +76,7 @@ describe("components/victory-voronoi", () => {
     });
 
     it("reverses sorted data with the sortOrder prop", () => {
-      const data = range(5)
+      const data = Helpers.range(5)
         .map((i) => ({ x: i, y: i }))
         .reverse();
       render(
@@ -203,7 +204,7 @@ describe("components/victory-voronoi", () => {
     });
 
     it("adds an aria-label and tabindex to Voronoi primitive", () => {
-      const data = range(3, 6).map((x) => ({ x, y: random(5) }));
+      const data = Helpers.range(3, 6).map((x) => ({ x, y: random(5) }));
       const { container } = render(
         <VictoryVoronoi
           data={data}

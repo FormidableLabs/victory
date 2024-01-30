@@ -1,7 +1,6 @@
 import React from "react";
-import { range } from "lodash";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Style } from "victory-core";
+import { Helpers, Style } from "victory-core";
 import { Slice, VictoryPie } from "victory-pie";
 import {
   isCircularSector,
@@ -92,21 +91,21 @@ describe("components/victory-pie", () => {
 
   describe("rendering data", () => {
     it("renders dataComponents for {x, y} shaped data (default)", () => {
-      const data = range(5).map((i) => ({ x: i, y: i }));
+      const data = Helpers.range(5).map((i) => ({ x: i, y: i }));
       render(<VictoryPie data={data} dataComponent={<PizzaSlice />} />);
       const pizzaSlices = screen.getAllByText(pizzaSliceInnerText);
       expect(pizzaSlices).toHaveLength(5);
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
-      const data = range(5).map((i) => ({ x: i, y: i }));
+      const data = Helpers.range(5).map((i) => ({ x: i, y: i }));
       const { container } = render(<VictoryPie data={data} />);
       const slices = container.querySelectorAll("path");
       expect(slices).toHaveLength(5);
     });
 
     it("renders points for array-shaped data", () => {
-      const data = range(6).map((i) => [i, i]);
+      const data = Helpers.range(6).map((i) => [i, i]);
       const { container } = render(<VictoryPie data={data} x={0} y={1} />);
       const slices = container.querySelectorAll("path");
 
@@ -114,7 +113,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders points for deeply-nested data", () => {
-      const data = range(7).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
+      const data = Helpers.range(7).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
       const { container } = render(
         <VictoryPie data={data} x="a.b[0].x" y="a.b[0].y" />,
       );
@@ -124,7 +123,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders data values with null accessor", () => {
-      const data = range(8);
+      const data = Helpers.range(8);
       const { container } = render(
         // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryPie data={data} x={null} y={null} />,
@@ -135,7 +134,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders data values in their given order", () => {
-      const data = range(9).map((i) => ({ x: i, y: i }));
+      const data = Helpers.range(9).map((i) => ({ x: i, y: i }));
 
       render(<VictoryPie data={data} dataComponent={<PizzaSlice />} />);
       const xValues = Array.from(screen.getAllByText(pizzaSliceInnerText)).map(
@@ -150,7 +149,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders data values sorted by sortKey prop", () => {
-      const data = range(9)
+      const data = Helpers.range(9)
         .map((i) => ({ x: i, y: i }))
         .reverse();
 
@@ -171,7 +170,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders data values sorted by sortKey prop and sortOrder", () => {
-      const data = range(9).map((i) => ({ x: i, y: i }));
+      const data = Helpers.range(9).map((i) => ({ x: i, y: i }));
 
       render(
         <VictoryPie
@@ -304,7 +303,7 @@ describe("components/victory-pie", () => {
   describe("the `colorScale` prop", () => {
     describe("if provided an array of CSS colors", () => {
       it("renders each slice with the next color in the array, reiterating through colors as necessary", () => {
-        const data = range(5);
+        const data = Helpers.range(5);
         const colorScale = ["#fffff", "#eeeee", "#ddddd"];
         const { container } = render(
           <VictoryPie data={data} colorScale={colorScale} />,
@@ -336,7 +335,7 @@ describe("components/victory-pie", () => {
 
           VALID_VICTORY_COLOR_SCALE_NAMES.map((colorScaleName) => {
             const colorScale = Style.getColorScale(colorScaleName);
-            const data = range(colorScale.length + 1);
+            const data = Helpers.range(colorScale.length + 1);
             const { container } = render(
               <VictoryPie colorScale={colorScale} data={data} />,
             );

@@ -1,7 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { range } from "lodash";
 import { VictoryHistogram } from "victory-histogram";
+import { Helpers } from 'victory-core';
+
 import { isBar, getBarHeight } from "../../../test/helpers";
 
 describe("components/victory-histogram", () => {
@@ -59,14 +60,14 @@ describe("components/victory-histogram", () => {
 
   describe("rendering data", () => {
     it("renders bars for {x} shaped data (default)", () => {
-      const data = range(5).map((i) => ({ x: i }));
+      const data = Helpers.range(5).map((i) => ({ x: i }));
       const { container } = render(<VictoryHistogram data={data} />);
       const bars = container.querySelectorAll("path");
       expect(bars.length).toEqual(4);
     });
 
     it("renders bars for deeply-nested data", () => {
-      const data = range(5).map((i) => ({ a: { b: [{ x: i }] } }));
+      const data = Helpers.range(5).map((i) => ({ a: { b: [{ x: i }] } }));
       const { container } = render(
         <VictoryHistogram data={data} x="a.b[0].x" />,
       );
@@ -90,7 +91,7 @@ describe("components/victory-histogram", () => {
     });
 
     it("renders bars values with null accessor", () => {
-      const data = range(10);
+      const data = Helpers.range(10);
       render(
         <VictoryHistogram
           data={data}
@@ -201,7 +202,7 @@ describe("components/victory-histogram", () => {
 
   describe("accessibility", () => {
     it("adds an aria role to each bar in the series", () => {
-      const data = range(5).map((x) => ({ x }));
+      const data = Helpers.range(5).map((x) => ({ x }));
       const { container } = render(<VictoryHistogram data={data} />);
 
       container.querySelectorAll("path").forEach((bar) => {

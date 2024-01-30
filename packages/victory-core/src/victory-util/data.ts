@@ -2,7 +2,6 @@
 import React from "react";
 import {
   uniq,
-  range,
   last,
   isFunction,
   isPlainObject,
@@ -46,7 +45,7 @@ function generateDataArray(props, axis) {
   const domainMax = Math.max(...domain);
   const domainMin = Math.min(...domain);
   const step = (domainMax - domainMin) / samples;
-  const values = range(domainMin, domainMax, step);
+  const values = Helpers.range(domainMin, domainMax, step);
   return last(values) === domainMax ? values : values.concat(domainMax);
 }
 

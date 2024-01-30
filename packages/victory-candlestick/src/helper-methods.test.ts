@@ -1,6 +1,6 @@
-import { range } from "lodash";
 import { fromJS } from "immutable";
 import { getData, getDomain } from "victory-candlestick/lib/helper-methods";
+import { Helpers } from "victory-core";
 
 const immutableGetDataTest = {
   createData: (x) => fromJS(x),
@@ -16,7 +16,7 @@ const getDataTest = {
     describe("getData", () => {
       it("sorts data by sortKey", () => {
         const data = createData(
-          range(5)
+          Helpers.range(5)
             .map((i) => ({ x: i, open: i, close: i, high: i, low: i }))
             .reverse(),
         );

@@ -218,6 +218,26 @@ export function getCurrentAxis(axis, horizontal) {
 }
 
 /**
+ * Creates an array of numbers
+ * @param start The length of the array to create, or the start value
+ * @param end [The end value] If this is defined, start is the start value
+ * @returns An array of the given length
+ */
+export function range(start: number, end?: number, increment?: number) {
+  if (end === undefined) {
+    return Array.from({length: start}, (_, i) => i);
+  }
+
+  const inc = increment || 1;
+  const ordinal = (end - start) / Math.abs(end - start);
+
+  return Array.from(
+    Array(Math.abs(end - start) + 1),
+    (_, i) => start + i * ordinal * inc,
+  );
+}
+
+/**
  * @param {Array} children: an array of child components
  * @param {Function} iteratee: a function with arguments "child", "childName", and "parent"
  * @param {Object} parentProps: props from the parent that are applied to children
