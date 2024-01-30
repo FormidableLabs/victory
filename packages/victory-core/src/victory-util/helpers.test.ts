@@ -204,26 +204,31 @@ describe("victory-util/helpers", () => {
   });
 
   describe("range", () => {
-    it("returns an array of length n", () => {
-      expect(Helpers.range(5)).toHaveLength(5);
+    it("returns an array of integers", () => {
+      expect(Helpers.range(4)).toEqual([0, 1, 2, 3]);
     });
 
-    it("returns an array of length for non-positive n", () => {
-      expect(Helpers.range(0)).toHaveLength(0);
-      expect(Helpers.range(-1)).toHaveLength(1);
-      expect(Helpers.range(-4)).toHaveLength(4);
+    it("returns an array of integers for negative n", () => {
+      expect(Helpers.range(-4)).toEqual([0, -1, -2, -3]);
     });
 
-    it("returns an array of integers from 0 to n - 1", () => {
-      expect(Helpers.range(5)).toEqual([0, 1, 2, 3, 4]);
+    it("returns an array of integers from start to end", () => {
+      expect(Helpers.range(1, 5)).toEqual([1, 2, 3, 4]);
     });
 
-    it("returns an array of integers from start to end exclusive", () => {
-      expect(Helpers.range(2, 5)).toEqual([2, 3, 4]);
+    it("returns an array of integers from negative start to end", () => {
+      expect(Helpers.range(-5, 5)).toEqual([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]);
+    });
+
+    it("returns an array of integers from start to negative end", () => {
+      expect(Helpers.range(5, -5)).toEqual([5, 4, 3, 2, 1, 0, -1, -2, -3, -4]);
     });
 
     it("returns an array of integers using an increment", () => {
       expect(Helpers.range(0, 20, 5)).toEqual([0, 5, 10, 15]);
+    });
+
+    it("returns an array of integers using an increment and negative start", () => {
       expect(Helpers.range(-10, 20, 5)).toEqual([-10, -5, 0, 5, 10, 15]);
     });
   });

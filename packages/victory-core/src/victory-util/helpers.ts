@@ -218,23 +218,21 @@ export function getCurrentAxis(axis, horizontal) {
 }
 
 /**
- * Creates an array of numbers
+ * Creates an array of numbers from the start to the exclusive end value
  * @param start The length of the array to create, or the start value
  * @param end [The end value] If this is defined, start is the start value
  * @returns An array of the given length
  */
 export function range(start: number, end?: number, increment?: number) {
-  if (end === undefined) {
-    return Array.from({ length: start }, (_, i) => i);
-  }
+  const startIndex = end ? start : 0;
+  const endIndex = end ? end : start;
 
+  const k = endIndex - startIndex;
+  const length = Math.abs(k);
+  const sign = k / length;
   const inc = increment || 1;
-  const ordinal = (end - start) / Math.abs(end - start);
 
-  return Array.from(
-    Array(Math.abs(end - start) + 1),
-    (_, i) => start + i * ordinal * inc,
-  );
+  return Array.from(Array(length / inc), (_, i) => startIndex + i * sign * inc);
 }
 
 /**
