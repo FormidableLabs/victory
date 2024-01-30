@@ -6,6 +6,8 @@ import {
   CoordinatesPropType,
   VictoryLabelProps,
   ValueOrAccessor,
+  VictoryLabel,
+  LineSegment,
 } from "victory-core";
 import { defaults, assign, isObject } from "lodash";
 import { CursorHelpers } from "./cursor-helpers";
@@ -35,7 +37,15 @@ export function cursorContainerMixin<
   // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
   return class VictoryCursorContainer extends Base {
     static displayName = "VictoryCursorContainer";
-
+    static defaultProps = {
+      ...VictoryContainer.defaultProps,
+      cursorLabelComponent: <VictoryLabel />,
+      cursorLabelOffset: {
+        x: 5,
+        y: -10,
+      },
+      cursorComponent: <LineSegment />,
+    };
     static defaultEvents = (props) => {
       return [
         {
