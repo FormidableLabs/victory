@@ -99,7 +99,7 @@ class VictoryScatterBase extends React.Component<VictoryScatterProps> {
     ]),
   };
 
-  static defaultProps = {
+  static defaultProps: VictoryScatterProps = {
     containerComponent: <VictoryContainer />,
     dataComponent: <Point />,
     labelComponent: <VictoryLabel />,

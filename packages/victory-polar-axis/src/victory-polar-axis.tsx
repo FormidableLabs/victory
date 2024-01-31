@@ -48,7 +48,7 @@ class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
     },
   };
 
-  static defaultProps = {
+  static defaultProps: VictoryPolarAxisProps = {
     axisComponent: <LineSegment />,
     axisLabelComponent: <VictoryLabel />,
     circularAxisComponent: <Arc />,

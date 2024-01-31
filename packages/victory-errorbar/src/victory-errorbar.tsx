@@ -102,7 +102,7 @@ class VictoryErrorBarBase extends React.Component<VictoryErrorBarProps> {
     horizontal: PropTypes.bool,
   };
 
-  static defaultProps = {
+  static defaultProps: VictoryErrorBarProps = {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <ErrorBar />,

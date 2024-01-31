@@ -283,7 +283,7 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
     whiskerWidth: PropTypes.number,
   };
 
-  static defaultProps = {
+  static defaultProps: VictoryBoxPlotProps = {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <Box />,

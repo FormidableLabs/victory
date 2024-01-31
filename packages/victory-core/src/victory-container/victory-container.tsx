@@ -43,7 +43,9 @@ export interface VictoryContainerProps {
   width?: number;
 }
 
-export class VictoryContainer extends React.Component<VictoryContainerProps> {
+export class VictoryContainer<
+  TProps extends VictoryContainerProps,
+> extends React.Component<TProps> {
   static displayName = "VictoryContainer";
   static role = "container";
   static propTypes = {
@@ -96,7 +98,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
   private containerRef: HTMLElement;
   private shouldHandleWheel: boolean;
 
-  constructor(props: VictoryContainerProps) {
+  constructor(props: TProps) {
     super(props);
     this.containerId =
       !isObject(props) || props.containerId === undefined
