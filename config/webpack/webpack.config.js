@@ -28,16 +28,15 @@ module.exports = {
   cache: true,
   context: SRC,
   entry: "./index",
-  externals: [
-    {
-      react: {
-        root: "React",
-        commonjs2: "react",
-        commonjs: "react",
-        amd: "react",
-      },
+  externals: {
+    react: {
+      root: "React",
+      commonjs2: "react",
+      commonjs: "react",
+      amd: "react",
     },
-  ],
+    "react-native": "react-native",
+  },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },

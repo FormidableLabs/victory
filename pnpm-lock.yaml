@@ -535,7 +535,6 @@ importers:
     specifiers:
       '@babel/core': ^7.18.9
       lodash: ^4.17.21
-      prop-types: ^15.8.1
       react-fast-compare: ^3.2.0
       react-native: ^0.65.1
       react-native-gesture-handler: ^1.10.3
@@ -557,6 +556,7 @@ importers:
       victory-histogram: ^36.8.4
       victory-legend: ^36.8.4
       victory-line: ^36.8.4
+      victory-native: '*'
       victory-pie: ^36.8.4
       victory-polar-axis: ^36.8.4
       victory-scatter: ^36.8.4
@@ -569,7 +569,6 @@ importers:
       victory-zoom-container: ^36.8.4
     dependencies:
       lodash: 4.17.21
-      prop-types: 15.8.1
       react-fast-compare: 3.2.0
       victory: link:../victory
       victory-area: link:../victory-area
