@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { range } from "lodash";
 import React from "react";
-import { Point, VictoryLabel } from "victory-core";
+import { Helpers, Point, VictoryLabel } from "victory-core";
 import { VictoryScatter } from "victory-scatter";
 import {
   convertSvgCoordinatesToCartesian,
@@ -58,7 +57,7 @@ describe("components/victory-scatter", () => {
 
   describe("rendering data", () => {
     it("renders injected points for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({ x: i, y: i }));
+      const data = Helpers.range(10).map((i) => ({ x: i, y: i }));
       render(
         <VictoryScatter
           data={data}
@@ -71,21 +70,23 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({ x: i, y: i }));
+      const data = Helpers.range(10).map((i) => ({ x: i, y: i }));
       const { container } = render(<VictoryScatter data={data} />);
       const points = container.querySelectorAll("path");
       expect(points).toHaveLength(10);
     });
 
     it("renders points for array-shaped data", () => {
-      const data = range(4).map((i) => [i, i]);
+      const data = Helpers.range(4).map((i) => [i, i]);
       const { container } = render(<VictoryScatter data={data} x={0} y={1} />);
       const points = container.querySelectorAll("path");
       expect(points).toHaveLength(4);
     });
 
     it("renders points for deeply-nested data", () => {
-      const data = range(4).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
+      const data = Helpers.range(4).map((i) => ({
+        a: { b: [{ x: i, y: i }] },
+      }));
       const { container } = render(
         <VictoryScatter data={data} x="a.b[0].x" y="a.b[0].y" />,
       );
@@ -94,7 +95,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders data values with null accessor", () => {
-      const data = range(30);
+      const data = Helpers.range(30);
       const { container } = render(
         // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryScatter data={data} x={null} y={null} />,
@@ -223,14 +224,14 @@ describe("components/victory-scatter", () => {
 
   describe("accessibility", () => {
     it("adds an aria role to each point in the series", () => {
-      const data = range(5).map((y, x) => ({ x, y }));
+      const data = Helpers.range(5).map((y, x) => ({ x, y }));
       render(<VictoryScatter data={data} />);
 
       expect(screen.getAllByRole("presentation")).toHaveLength(5);
     });
 
     it("adds an aria-label and tabIndex to Point primitive", () => {
-      const data = range(2, 7).map((x) => ({ x, y: x + 2 }));
+      const data = Helpers.range(2, 7).map((x) => ({ x, y: x + 2 }));
       render(
         <VictoryScatter
           data={data}

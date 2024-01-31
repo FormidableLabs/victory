@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { range } from "lodash";
 import React from "react";
 import { Candle, VictoryCandlestick } from "victory-candlestick";
 import { VictoryChart } from "victory-chart";
+import { Helpers } from "victory-core";
 
 const MyCandle = () => <div data-testid="my-candle" />;
 
@@ -66,7 +66,7 @@ describe("components/victory-candlestick", () => {
 
   describe("rendering data", () => {
     it("renders injected points for {x, y} shaped data (default)", () => {
-      const data = range(5).map((i) => ({
+      const data = Helpers.range(5).map((i) => ({
         x: i,
         open: i,
         close: i,
@@ -80,7 +80,7 @@ describe("components/victory-candlestick", () => {
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
-      const data = range(5).map((i) => ({
+      const data = Helpers.range(5).map((i) => ({
         x: i,
         open: i,
         close: i,
@@ -93,7 +93,7 @@ describe("components/victory-candlestick", () => {
     });
 
     it("renders ordered bars when sortKey is passed", () => {
-      const data = range(5)
+      const data = Helpers.range(5)
         .map((i) => ({ x: i, open: i, close: i, high: i, low: i }))
         .reverse();
       const { container } = render(
@@ -108,7 +108,7 @@ describe("components/victory-candlestick", () => {
     });
 
     it("renders reverse ordered bars when sortOrder is descending", () => {
-      const data = range(5)
+      const data = Helpers.range(5)
         .map((i) => ({ x: i, open: i, close: i, high: i, low: i }))
         .reverse();
       const { container } = render(
@@ -123,7 +123,7 @@ describe("components/victory-candlestick", () => {
     });
 
     it("renders points for array-shaped data", () => {
-      const data = range(10).map((i) => [i, i, i, i, i]);
+      const data = Helpers.range(10).map((i) => [i, i, i, i, i]);
       const { container } = render(
         <VictoryCandlestick
           data={data}
@@ -139,7 +139,7 @@ describe("components/victory-candlestick", () => {
     });
 
     it("renders points for deeply-nested data", () => {
-      const data = range(20).map((i) => ({
+      const data = Helpers.range(20).map((i) => ({
         a: { b: [{ x: i, open: i, close: i, high: i, low: i }] },
       }));
       const { container } = render(
@@ -157,7 +157,7 @@ describe("components/victory-candlestick", () => {
     });
 
     it("renders data values with null accessor", () => {
-      const data = range(10);
+      const data = Helpers.range(10);
       const { container } = render(
         // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryCandlestick
