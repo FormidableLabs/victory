@@ -219,10 +219,10 @@ export function getCurrentAxis(axis, horizontal) {
 
 /**
  * Creates an array of numbers (positive and/or negative) progressing
- * from start up to, but not including, end. 
+ * from start up to, but not including, end.
  * A step of -1 is used if a negative start is specified without an end or step.
  * If end is not specified, it's set to start with start then set to 0.
- * 
+ *
  * @param start The length of the array to create, or the start value
  * @param end [The end value] If this is defined, start is the start value
  * @returns An array of the given length
@@ -237,10 +237,10 @@ export function range(start: number, end?: number, increment?: number) {
   // ensure endIndex is not a falsy value
   if (!endIndex) endIndex = 0;
 
-  const k = endIndex - startIndex;  // the value range
-  const length = Math.abs(k);       // the length of the range
-  const sign = k / length || 1;     // the sign of the range (negative or positive)
-  const inc = increment || 1;       // the step size of each increment
+  const k = endIndex - startIndex; // the value range
+  const length = Math.abs(k); //      the length of the range
+  const sign = k / length || 1; //    the sign of the range (negative or positive)
+  const inc = increment || 1; //      the step size of each increment
 
   // normalize the array length when dealing with floating point values
   const arrayLength = Math.max(Math.ceil(length / inc), 0);
