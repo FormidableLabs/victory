@@ -65,7 +65,8 @@
     "react": ">=16.6.0"
   },
   "publishConfig": {
-    "provenance": true
+    "provenance": true,
+    "tag": "legacy"
   },
   "scripts": {
     "build": "wireit",
