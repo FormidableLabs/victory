@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import { assign } from "lodash";
 import React from "react";
 import { PointPathHelpers as pathHelpers, Point } from "victory-core";
 import { SVGWrapper } from "../../../../test/helpers";
@@ -29,7 +28,7 @@ describe("victory-primitives/point", () => {
         .spyOn(pathHelpers, symbol)
         // eslint-disable-next-line max-nested-callbacks
         .mockImplementation(() => `${symbol} symbol`);
-      const props = assign({}, baseProps, { symbol });
+      const props = Object.assign({}, baseProps, { symbol });
       const { container } = render(<Point {...props} />, {
         wrapper: SVGWrapper,
       });

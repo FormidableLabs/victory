@@ -1,4 +1,3 @@
-import { assign } from "lodash";
 import React from "react";
 import {
   BarProps,
@@ -20,7 +19,7 @@ export interface CanvasBarProps extends VictoryCommonPrimitiveProps {
   barWidth?: NumberOrCallback;
   cornerRadius?: NumberOrCallback | VictoryBarCornerRadiusObject;
   datum?: any;
-  getPath?: (x: number, y: number, size: number) => string;
+  getPath?: (props: CanvasBarProps) => string;
   horizontal?: boolean;
   width?: number;
   x?: number;
@@ -36,12 +35,19 @@ const evaluateProps = (props: CanvasBarProps) => {
    * 3) `cornerRadius`
    */
   const style = getStyle(props.style, props as BarProps);
-  const barWidth = getBarWidth(props.barWidth, assign({}, props, { style }));
+  const barWidth = getBarWidth(
+    props.barWidth,
+    Object.assign({}, props, { style }),
+  );
   const cornerRadius = getCornerRadius(
     props.cornerRadius,
-    assign({}, props, { style, barWidth }),
+    Object.assign({}, props, { style, barWidth }),
   );
-  const modifiedProps = assign({}, props, { style, barWidth, cornerRadius });
+  const modifiedProps = Object.assign({}, props, {
+    style,
+    barWidth,
+    cornerRadius,
+  });
   return modifiedProps;
 };
 

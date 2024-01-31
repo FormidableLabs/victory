@@ -1,48 +1,45 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryAxis } from "victory-axis";
-import { VictoryChart } from "victory-chart";
-import { VictoryLegend } from "victory-legend";
-import { range, isFunction } from "lodash";
+import { VictoryStyleInterface } from "../packages/victory-core";
+import { VictoryAxis } from "../packages/victory-axis";
+import { VictoryChart, VictoryChartProps } from "../packages/victory-chart";
+import { VictoryLegend } from "../packages/victory-legend";
+import { range } from "lodash";
+import { Meta } from "@storybook/react";
+import { storyContainer } from "./decorators";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+const meta: Meta<typeof VictoryLegend> = {
+  title: "Victory Charts/SVG Container/VictoryLegend",
+  component: VictoryLegend,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
   data: { fill: "gold", width: 20 },
 };
 
-const defaultChartProps = {
+const defaultChartProps: VictoryChartProps = {
   style,
   width: 300,
   height: 300,
   domain: [0, 10],
 };
 
-export default {
-  title: "VictoryLegend",
-  component: VictoryLegend,
-};
-
-const legendStyle = {
+const legendStyle: VictoryStyleInterface = {
   labels: { fontSize: 14, fontFamily: "Arial" },
   border: { fill: "pink", opacity: 0.4 },
 };
 
-const getData = (num, { getName, getSize, getSymbol, getFill } = {}) => {
+const getData = (num) => {
   return range(num).map((v) => ({
-    name: isFunction(getName) ? getName(v) : `Series ${v + 1}`,
+    name: `Series ${v + 1}`,
     symbol: {
-      size: isFunction(getSize) ? getSize(v) : 5,
-      type: isFunction(getSymbol) ? getSymbol(v) : "circle",
-      fill: isFunction(getFill) ? getFill(v) : undefined,
+      size: 5,
+      type: "circle",
+      fill: undefined,
     },
   }));
 };
@@ -59,20 +56,20 @@ const Wrapper = ({ children }) => {
 
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <Wrapper>
         <VictoryLegend />
       </Wrapper>
       <Wrapper>
         <VictoryLegend orientation="horizontal" />
       </Wrapper>
-    </div>
+    </>
   );
 };
 
 export const LineHeight = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <Wrapper>
         <VictoryLegend
           orientation="vertical"
@@ -93,13 +90,13 @@ export const LineHeight = () => {
           data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
         />
       </Wrapper>
-    </div>
+    </>
   );
 };
 
 export const Title = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <Wrapper>
         <VictoryLegend
           data={getData(5)}
@@ -159,11 +156,10 @@ export const Title = () => {
           data={getData(5)}
           title={`TITLE\nmultiline`}
           itemsPerRow={3}
-          style={legendStyle}
           titleOrientation="right"
           style={{ ...legendStyle, title: { padding: 20 } }}
         />
       </Wrapper>
-    </div>
+    </>
   );
 };

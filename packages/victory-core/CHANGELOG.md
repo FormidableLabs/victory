@@ -1,5 +1,19 @@
 # victory-core
 
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Fix incorrect typescript props ([#2745](https://github.com/FormidableLabs/victory/pull/2745))
+
+* Refactor param reassignments ([#2724](https://github.com/FormidableLabs/victory/pull/2724))
+
+- Migrate victory-shared-events to TypeScript ([#2733](https://github.com/FormidableLabs/victory/pull/2733))
+
+* Migrate victory-tooltip to typescript ([#2725](https://github.com/FormidableLabs/victory/pull/2725))
+
 ## 36.8.2
 
 ### Patch Changes

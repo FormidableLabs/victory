@@ -1,8 +1,12 @@
 name: Chromatic
 
 # Runs chromatic on:
-#   every pull request where there are changes in stories/ or packages/ and the PR is not in draft mode
+# - every push to main (to create a chromatic baseline)
+# - every pull request where there are changes in stories/ or packages/ and the PR is not in draft mode
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -21,13 +25,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      # requires node16, see https://github.com/FormidableLabs/victory/issues/2668
       - uses: ./.github/actions/setup
         with:
-          node-version: 16.x
+          node-version: 18.x
 
-      - name: Build Storybook
-        run: pnpm run storybook:build
+      - name: Build Victory
+        run: pnpm run build:lib:esm
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1

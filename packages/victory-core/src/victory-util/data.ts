@@ -1,7 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
 import {
-  assign,
   uniq,
   range,
   last,
@@ -84,7 +83,7 @@ function cleanData(dataset, props) {
     const _x = rules(datum, "x") ? datum._x : smallNumber;
     const _y = rules(datum, "y") ? datum._y : smallNumber;
     const _y0 = rules(datum, "y0") ? datum._y0 : smallNumber;
-    return assign({}, datum, { _x, _y, _y0 });
+    return Object.assign({}, datum, { _x, _y, _y0 });
   };
 
   return dataset.map((datum) => {
@@ -117,7 +116,9 @@ function addEventKeys(props, data) {
       return datum;
     } else if (hasEventKeyAccessor) {
       const eventKey = eventKeyAccessor(datum, index);
-      return eventKey !== undefined ? assign({ eventKey }, datum) : datum;
+      return eventKey !== undefined
+        ? Object.assign({ eventKey }, datum)
+        : datum;
     }
     return datum;
   });
@@ -170,7 +171,7 @@ export function formatDataFromDomain(dataset, domain, defaultBaseline?) {
     // baseline and value with only baseline above max, set baseline to maxDomainY
     if (isOverMaxY(baseline) && !isOverMaxY(value)) _y0 = maxDomainY;
 
-    return assign({}, datum, omitBy({ _x, _y, _y0, _y1 }, isUndefined));
+    return Object.assign({}, datum, omitBy({ _x, _y, _y0, _y1 }, isUndefined));
   });
 }
 
@@ -304,7 +305,7 @@ export function formatData(
           return memo;
         }, {});
 
-        const formattedDatum = assign({}, processedValues, parsedDatum);
+        const formattedDatum = Object.assign({}, processedValues, parsedDatum);
         if (!isEmpty(formattedDatum)) {
           dataArr.push(formattedDatum);
         }

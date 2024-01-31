@@ -1,43 +1,44 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryChart } from "victory-chart";
-import { VictoryAxis } from "victory-axis";
-import { VictoryBar } from "victory-bar";
-import { VictoryGroup } from "victory-group";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryLine } from "victory-line";
-import { VictoryBoxPlot } from "victory-box-plot";
-import { VictoryPolarAxis } from "victory-polar-axis";
-import { VictoryStack } from "victory-stack";
-import { VictoryTheme } from "victory-core";
+
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryAxis } from "../packages/victory-axis";
+import { VictoryBar } from "../packages/victory-bar";
+import { VictoryBrushContainer } from "../packages/victory-brush-container";
+import { VictoryCursorContainer } from "../packages/victory-cursor-container";
+import { VictoryGroup } from "../packages/victory-group";
+import { VictoryScatter } from "../packages/victory-scatter";
+import { VictoryLine } from "../packages/victory-line";
+import { VictoryBoxPlot } from "../packages/victory-box-plot";
+import { VictoryPolarAxis } from "../packages/victory-polar-axis";
+import { VictoryStack } from "../packages/victory-stack";
+import { VictoryTheme } from "../packages/victory-core";
+import { VictoryZoomContainer } from "../packages/victory-zoom-container";
+
 import { getData, getFourQuadrantData, getArrayData } from "./data";
+import { Meta } from "@storybook/react";
+import { storyContainer } from "./decorators";
+
+const meta: Meta<typeof VictoryChart> = {
+  title: "Victory Charts/SVG Container/VictoryChart",
+  component: VictoryChart,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
+};
+
+export default meta;
 
 const dependentAxisTheme = {
   ...VictoryTheme.material,
   ...{ dependentAxis: { orientation: "right" } },
 };
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
-export default {
-  title: "VictoryChart",
-  component: VictoryChart,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle} />
       <VictoryChart style={parentStyle}>
         <VictoryLine data={getFourQuadrantData(8)} />
@@ -46,13 +47,13 @@ export const DefaultRendering = () => {
       <VictoryChart style={parentStyle} theme={VictoryTheme.material}>
         <VictoryLine data={getFourQuadrantData(8)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Axes = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryAxis />
       </VictoryChart>
@@ -68,13 +69,13 @@ export const Axes = () => {
       <VictoryChart style={parentStyle} theme={dependentAxisTheme}>
         <VictoryAxis dependentAxis />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const DomainPadding = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle} domainPadding={25}>
         <VictoryBar data={getData(5)} />
       </VictoryChart>
@@ -106,13 +107,13 @@ export const DomainPadding = () => {
       >
         <VictoryBar data={getData(5)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Domain = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle} domain={[0, 10]}>
         <VictoryBar data={getData(5)} />
       </VictoryChart>
@@ -150,13 +151,13 @@ export const Domain = () => {
       >
         <VictoryLine data={getData(100)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const DomainFromData = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryScatter size={5} symbol="plus" data={getData(10)} />
         <VictoryScatter
@@ -247,13 +248,13 @@ export const DomainFromData = () => {
         <VictoryBoxPlot data={getArrayData(5)} />
         <VictoryLine samples={100} y={(d) => 5 + 3 * Math.sin(Math.PI * d.x)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Style = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart
         style={{
           parent: {
@@ -464,13 +465,13 @@ export const Style = () => {
         </VictoryStack>
         <VictoryPolarAxis />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Orientations = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart
         style={parentStyle}
         padding={{ left: 20, right: 30, top: 15, bottom: 40 }}
@@ -497,6 +498,125 @@ export const Orientations = () => {
           ]}
         />
       </VictoryChart>
-    </div>
+    </>
+  );
+};
+
+export const VictoryBrushContainerDefault = () => {
+  return (
+    <>
+      <VictoryChart
+        style={parentStyle}
+        containerComponent={<VictoryBrushContainer />}
+      />
+    </>
+  );
+};
+
+export const VictoryBrushContainerWithDomain = () => {
+  return (
+    <>
+      <VictoryChart
+        style={parentStyle}
+        containerComponent={
+          <VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }} />
+        }
+      />
+    </>
+  );
+};
+
+export const VictoryBrushContainerWithDomainHorizontal = () => {
+  return (
+    <>
+      <VictoryChart
+        horizontal
+        style={parentStyle}
+        containerComponent={
+          <VictoryBrushContainer brushDomain={{ x: [0, 0.5], y: [0.5, 1] }} />
+        }
+      />
+    </>
+  );
+};
+
+export const VictoryBrushContainerWithBrushStyle = () => {
+  return (
+    <>
+      <VictoryChart
+        style={parentStyle}
+        containerComponent={
+          <VictoryBrushContainer
+            brushStyle={{ fill: "teal", stroke: "teal", fillOpacity: 0.2 }}
+          />
+        }
+      />
+    </>
+  );
+};
+
+export const VictoryCursorContainerDefault = () => {
+  return (
+    <>
+      <VictoryChart
+        style={parentStyle}
+        containerComponent={
+          <VictoryCursorContainer
+            cursorLabel={({ datum }) => datum.x}
+            defaultCursorValue={{ x: 0.25, y: 0.75 }}
+          />
+        }
+      />
+    </>
+  );
+};
+
+export const VictoryCursorContainerHorizontal = () => {
+  return (
+    <>
+      <VictoryChart
+        style={parentStyle}
+        horizontal
+        containerComponent={
+          <VictoryCursorContainer
+            cursorLabel={({ datum }) => datum.x}
+            defaultCursorValue={{ x: 0.25, y: 0.75 }}
+          />
+        }
+      />
+    </>
+  );
+};
+
+export const VictoryZoomContainerDefault = () => {
+  return (
+    <>
+      <VictoryChart
+        style={parentStyle}
+        scale={{ x: "time" }}
+        containerComponent={
+          <VictoryZoomContainer
+            zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
+            dimension="x"
+          />
+        }
+      >
+        <VictoryLine
+          style={{
+            data: { stroke: "red", strokeWidth: 5 },
+          }}
+          data={[
+            { x: new Date(1982, 1, 1), y: 125 },
+            { x: new Date(1987, 1, 1), y: 257 },
+            { x: new Date(1993, 1, 1), y: 345 },
+            { x: new Date(1997, 1, 1), y: 515 },
+            { x: new Date(2001, 1, 1), y: 132 },
+            { x: new Date(2005, 1, 1), y: 305 },
+            { x: new Date(2011, 1, 1), y: 270 },
+            { x: new Date(2015, 1, 1), y: 470 },
+          ]}
+        />
+      </VictoryChart>
+    </>
   );
 };

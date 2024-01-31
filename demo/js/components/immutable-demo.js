@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers, react/no-multi-comp */
 import React from "react";
 import PropTypes from "prop-types";
-import { assign, merge, keys, random, range, round } from "lodash";
+import { keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
 import { VictoryClipContainer, VictoryLabel, VictoryTheme } from "victory-core";
 
@@ -36,7 +36,7 @@ class Wrapper extends React.Component {
   renderChildren(props) {
     const children = React.Children.toArray(props.children);
     return children.map((child) => {
-      return React.cloneElement(child, assign({}, child.props, props));
+      return React.cloneElement(child, Object.assign({}, child.props, props));
     });
   }
 
@@ -214,7 +214,7 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "gold" }),
+                            style: Object.assign({}, props.style, { fill: "gold" }),
                           };
                         },
                       },
@@ -223,7 +223,7 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "orange" }),
+                            style: Object.assign({}, props.style, { fill: "orange" }),
                           };
                         },
                       },
@@ -232,7 +232,7 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "red" }),
+                            style: Object.assign({}, props.style, { fill: "red" }),
                           };
                         },
                       },
@@ -344,7 +344,7 @@ class App extends React.Component {
 
           <svg height={500} width={500}>
             <VictoryCandlestick
-              style={merge({}, chartStyle, { data: { width: 10 } })}
+              style={Object.assign({}, chartStyle, { data: { width: 10 } })}
               data={fromJS([
                 {
                   x: new Date(2016, 6, 1),
@@ -414,7 +414,7 @@ class App extends React.Component {
                         {
                           mutation: (props) => {
                             return {
-                              style: merge({}, props.style.labels, {
+                              style: Object.assign({}, props.style.labels, {
                                 fill: "orange",
                               }),
                             };
@@ -432,7 +432,7 @@ class App extends React.Component {
                         {
                           mutation: (props) => {
                             return {
-                              style: merge({}, props.style, { fill: "blue" }),
+                              style: Object.assign({}, props.style, { fill: "blue" }),
                             };
                           },
                         },
@@ -468,7 +468,7 @@ class App extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "lime" }),
+                            style: Object.assign({}, props.style, { stroke: "lime" }),
                           };
                         },
                       },
@@ -477,7 +477,7 @@ class App extends React.Component {
                         target: "labels",
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "green" }),
+                            style: Object.assign({}, props.style, { fill: "green" }),
                             text: "waddup",
                           };
                         },
@@ -572,7 +572,7 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryVoronoi
-            style={merge({}, chartStyle, {
+            style={Object.assign({}, chartStyle, {
               data: {
                 fill: "gray",
                 opacity: 0.1,
@@ -631,7 +631,7 @@ class App extends React.Component {
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "gold" }),
+                          style: Object.assign({}, props.style, { fill: "gold" }),
                         };
                       },
                     },
@@ -640,7 +640,7 @@ class App extends React.Component {
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, { fill: "orange" }),
                         };
                       },
                     },
@@ -649,7 +649,7 @@ class App extends React.Component {
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "red" }),
+                          style: Object.assign({}, props.style, { fill: "red" }),
                         };
                       },
                     },

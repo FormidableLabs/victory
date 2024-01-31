@@ -1,5 +1,5 @@
 import React from "react";
-import { assign, isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 import {
   VictoryLabel,
   VictoryContainer,
@@ -118,7 +118,7 @@ class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
       axisType === "radial" ? props.circularGridComponent : props.gridComponent;
     const tickComponents = this.dataKeys
       .map((key, index) => {
-        const tickProps = assign(
+        const tickProps = Object.assign(
           { key: `${name}-tick-${key}` },
           this.getComponentProps(tickComponent, "ticks", index),
         );
@@ -129,7 +129,7 @@ class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
 
     const gridComponents = this.dataKeys
       .map((key, index) => {
-        const gridProps = assign(
+        const gridProps = Object.assign(
           { key: `${name}-grid-${key}` },
           this.getComponentProps(gridComponent, "grid", index),
         );
@@ -139,7 +139,7 @@ class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
       .filter(Boolean);
 
     const tickLabelComponents = this.dataKeys.map((key, index) => {
-      const tickLabelProps = assign(
+      const tickLabelProps = Object.assign(
         { key: `${name}-tick-${key}` },
         this.getComponentProps(tickLabelComponent, "tickLabels", index),
       );

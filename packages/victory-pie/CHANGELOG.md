@@ -1,5 +1,13 @@
 # victory-pie
 
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Migrate victory-pie to TypeScript ([#2740](https://github.com/FormidableLabs/victory/pull/2740))
+
 ## 36.8.2
 
 ## 36.8.1

@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-import { assign } from "lodash";
 import React from "react";
 import { Data, Helpers, Scale, Wrapper } from "victory-core";
 import isEqual from "react-fast-compare";
@@ -22,12 +21,12 @@ export function getCalculatedProps(initialProps, childComponents) {
   const datasets = props.datasets || Wrapper.getDataFromChildren(props, null);
   const domain = {
     x: Wrapper.getDomain(
-      assign({}, props, { categories }),
+      Object.assign({}, props, { categories }),
       "x",
       childComponents,
     ),
     y: Wrapper.getDomain(
-      assign({}, props, { categories }),
+      Object.assign({}, props, { categories }),
       "y",
       childComponents,
     ),
@@ -184,7 +183,7 @@ function getDataWithOffset(props, defaultDataset = [], offset) {
         ? new Date(datum._x.getTime() + xOffset)
         : datum._x + xOffset;
 
-    return assign({}, datum, { _x1 });
+    return Object.assign({}, datum, { _x1 });
   });
 }
 
@@ -212,7 +211,7 @@ export function getChildren(initialProps, childComponents?, calculatedProps?) {
     const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(
       child,
-      assign(
+      Object.assign(
         {
           labels,
           style,

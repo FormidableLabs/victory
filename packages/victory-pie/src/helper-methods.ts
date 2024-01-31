@@ -1,5 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
-import { assign, defaults, isFunction, isPlainObject, isNil } from "lodash";
+import { defaults, isFunction, isPlainObject, isNil } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
@@ -71,7 +71,7 @@ const getCalculatedValues = (props) => {
   const origin = getOrigin(props, padding);
   const data = Data.getData(props);
   const slices = getSlices(props, data);
-  return assign({}, props, {
+  return Object.assign({}, props, {
     style,
     colors,
     padding,
@@ -85,7 +85,7 @@ const getCalculatedValues = (props) => {
 const getSliceStyle = (index, calculatedValues) => {
   const { style, colors } = calculatedValues;
   const fill = getColor(style, colors, index);
-  return assign({ fill }, style.data);
+  return Object.assign({ fill }, style.data);
 };
 
 const getLabelText = (props, datum, index) => {
@@ -114,7 +114,7 @@ const getLabelPosition = (arc, slice, position) => {
     startAngle: position === "startAngle" ? slice.startAngle : slice.endAngle,
     endAngle: position === "endAngle" ? slice.endAngle : slice.startAngle,
   };
-  const clonedArc = assign({}, slice, construct);
+  const clonedArc = Object.assign({}, slice, construct);
   return arc.centroid(clonedArc);
 };
 
@@ -181,22 +181,22 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   const { style, defaultRadius, origin, width, height } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
-    assign({ text }, dataProps),
+    Object.assign({ text }, dataProps),
   );
   const labelPosition =
     Helpers.evaluateProp(
       calculatedValues.labelPosition,
-      assign({ text }, dataProps),
+      Object.assign({ text }, dataProps),
     ) || "centroid";
   const labelPlacement =
     Helpers.evaluateProp(
       calculatedValues.labelPlacement,
-      assign({ text }, dataProps),
+      Object.assign({ text }, dataProps),
     ) || "vertical";
-  const labelStyle = assign({ padding: 0 }, style.labels);
+  const labelStyle = Object.assign({ padding: 0 }, style.labels);
   const evaluatedStyle = Helpers.evaluateStyle(
     labelStyle,
-    assign({ labelRadius, text }, dataProps),
+    Object.assign({ labelRadius, text }, dataProps),
   );
   const calculatedLabelRadius = getCalculatedLabelRadius(
     defaultRadius,
@@ -346,7 +346,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       const evaluatedText = Helpers.evaluateProp(text, dataProps);
       childProps[eventKey].labels = getLabelProps(
         evaluatedText,
-        assign({}, props, dataProps),
+        Object.assign({}, props, dataProps),
         calculatedValues,
       );
       if (labelIndicator) {
@@ -354,7 +354,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
         if (labelProps.calculatedLabelRadius > radius) {
           childProps[eventKey].labelIndicators =
             getLabelIndicatorPropsForLineSegment(
-              assign({}, props, dataProps),
+              Object.assign({}, props, dataProps),
               calculatedValues,
               labelProps,
             );

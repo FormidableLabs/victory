@@ -1,6 +1,6 @@
 import React from "react";
 import Svg, { Rect } from "react-native-svg";
-import { assign, get } from "lodash";
+import { get } from "lodash";
 import { View, PanResponder } from "react-native";
 import {
   VictoryContainer as VictoryContainerBase,
@@ -121,14 +121,14 @@ export class VictoryContainer extends VictoryContainerBase<VictoryContainerNativ
       ? { width: "100%", height: "100%" }
       : { width, height };
     const baseStyle = NativeHelpers.getStyle(style, ["width", "height"]);
-    const divStyle = assign({}, baseStyle, { position: "relative" });
+    const divStyle = Object.assign({}, baseStyle, { position: "relative" });
     const portalDivStyle = {
       zIndex: portalZIndex,
       position: "absolute",
       top: 0,
       left: 0,
     };
-    const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
+    const portalSvgStyle = Object.assign({ overflow: "visible" }, dimensions);
     const portalProps = {
       width,
       height,

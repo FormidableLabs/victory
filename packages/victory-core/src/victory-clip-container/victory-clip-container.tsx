@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Helpers from "../victory-util/helpers";
 import * as UserProps from "../victory-util/user-props";
-import { assign, defaults, isObject, uniqueId } from "lodash";
+import { defaults, isObject, uniqueId } from "lodash";
 import { ClipPath } from "../victory-primitives/clip-path";
 import { Circle } from "../victory-primitives/circle";
 import { Rect } from "../victory-primitives/rect";
@@ -120,7 +120,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       tabIndex,
     } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
-    const groupProps = assign(
+    const groupProps = Object.assign(
       {
         className,
         style,
@@ -149,7 +149,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
     } = props;
     return React.cloneElement(
       groupComponent,
-      assign(
+      Object.assign(
         {
           className,
           style,
@@ -199,7 +199,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
 
     return React.cloneElement(
       clipPathComponent,
-      assign({ key: `clip-path-${clipId}` }, props, { clipId }),
+      Object.assign({ key: `clip-path-${clipId}` }, props, { clipId }),
       child,
     );
   }

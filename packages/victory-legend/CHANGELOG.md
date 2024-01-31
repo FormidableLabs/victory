@@ -1,5 +1,13 @@
 # victory-legend
 
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Refactor param reassignments ([#2724](https://github.com/FormidableLabs/victory/pull/2724))
+
 ## 36.8.2
 
 ### Patch Changes

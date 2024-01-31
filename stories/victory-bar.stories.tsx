@@ -1,13 +1,19 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
+import { Meta } from "@storybook/react";
 import React, { useRef, useEffect, useCallback } from "react";
-import { VictoryBar, Bar } from "victory-bar";
-import { VictoryChart } from "victory-chart";
-import { VictoryGroup } from "victory-group";
-import { VictoryStack } from "victory-stack";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, VictoryLabel } from "victory-core";
-import { VictoryPolarAxis } from "victory-polar-axis";
+import { fromJS } from "immutable";
+import styled from "styled-components";
+
+import { VictoryBar, Bar } from "../packages/victory-bar";
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryGroup } from "../packages/victory-group";
+import { VictoryStack } from "../packages/victory-stack";
+import { VictoryTooltip } from "../packages/victory-tooltip";
+import {
+  VictoryTheme,
+  VictoryLabel,
+  VictoryLabelStyleObject,
+} from "../packages/victory-core";
+import { VictoryPolarAxis } from "../packages/victory-polar-axis";
 import {
   getData,
   getStackedData,
@@ -16,16 +22,16 @@ import {
   getLogData,
   getDataWithBaseline,
 } from "./data";
-import { fromJS } from "immutable";
-import styled from "styled-components";
+import { storyContainer } from "./decorators";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+const meta: Meta<typeof VictoryBar> = {
+  title: "Victory Charts/SVG Container/VictoryBar",
+  component: VictoryBar,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
@@ -36,23 +42,18 @@ const defaultChartProps = {
   theme: VictoryTheme.material,
 };
 
-export default {
-  title: "VictoryBar",
-  component: VictoryBar,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar {...defaultChartProps} />
       <VictoryBar style={parentStyle} />
-    </div>
+    </>
   );
 };
 
 export const Theme = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar data={getData(8)} />
       </VictoryChart>
@@ -77,13 +78,13 @@ export const Theme = () => {
           <VictoryBar data={getData(8, "seed-4")} />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Alignment = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar data={getData(7)} alignment="start" />
       </VictoryChart>
@@ -114,13 +115,13 @@ export const Alignment = () => {
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar data={getMixedData(5)} alignment="end" />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const BarRatio = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar data={getData(2)} barRatio={0.01} />
       </VictoryChart>
@@ -169,13 +170,13 @@ export const BarRatio = () => {
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar data={getData(7)} barRatio={1.5} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const BarWidth = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar data={getData(7)} barWidth={5} />
       </VictoryChart>
@@ -188,13 +189,13 @@ export const BarWidth = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryBar data={getData(7)} barWidth={({ datum }) => datum.x * 4} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const CornerRadius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar data={getData(7)} cornerRadius={1} />
       </VictoryChart>
@@ -283,13 +284,12 @@ export const CornerRadius = () => {
           tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const GetPath = () => {
   const verticalPathFn = (props) => {
-    // eslint-disable-next-line react/prop-types
     const { x0, x1, y0, y1 } = props;
     return `M ${x0}, ${y0}
       L ${(x1 + x0) / 2}, ${y1}
@@ -298,7 +298,6 @@ export const GetPath = () => {
   };
 
   const horizontalPathFn = (props) => {
-    // eslint-disable-next-line react/prop-types
     const { x0, x1, y0, y1 } = props;
     return `M ${x0}, ${y1}
       L ${x1}, ${(y0 + y1) / 2}
@@ -307,20 +306,20 @@ export const GetPath = () => {
   };
 
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar data={getData(7)} getPath={verticalPathFn} />
       </VictoryChart>
       <VictoryChart horizontal {...defaultChartProps}>
         <VictoryBar data={getData(7)} getPath={horizontalPathFn} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Data = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           data={[
@@ -364,20 +363,20 @@ export const Data = () => {
           ])}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Labels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryBar data={getData(7)} labels={({ datum }) => `x: ${datum.x}`} />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryBar
           data={getData(7)}
-          labels={["", "", "three", "four", 5, "six"]}
+          labels={["", "", "three", "four", "5", "six"]}
         />
       </VictoryChart>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
@@ -403,13 +402,13 @@ export const Labels = () => {
         />
         <VictoryPolarAxis />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Tooltips = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={getData(5)}
@@ -441,7 +440,7 @@ export const Tooltips = () => {
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={getData(5)}
-          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labels={["one", "two", "3", "wow, four tooltips", "five"]}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
@@ -449,18 +448,22 @@ export const Tooltips = () => {
         <VictoryBar
           data={getData(5)}
           style={{ data: { width: 20 } }}
-          labels={["one", "two", 3, "wow, four tooltips", "five"]}
+          labels={["one", "two", "3", "wow, four tooltips", "five"]}
           labelComponent={<VictoryTooltip active />}
         />
         <VictoryPolarAxis />
       </VictoryChart>
-    </div>
+    </>
   );
+};
+
+const labelStyle: VictoryLabelStyleObject = {
+  fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black"),
 };
 
 export const Style = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           labels={({ datum }) => datum.y}
@@ -478,9 +481,7 @@ export const Style = () => {
       <VictoryChart {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           style={{
-            labels: {
-              fill: ({ datum }) => (datum.x === "Dog" ? "red" : "black"),
-            },
+            labels: labelStyle,
             data: {
               stroke: ({ datum }) => (datum.y > 75 ? "red" : "transparent"),
               strokeWidth: 3,
@@ -496,13 +497,13 @@ export const Style = () => {
           ]}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Scale = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} scale={{ y: "log" }} minDomain={1}>
         <VictoryBar
           data={getLogData(7)}
@@ -560,13 +561,13 @@ export const Scale = () => {
           <VictoryBar data={getTimeData(5, "seed-2")} />
         </VictoryGroup>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const StackedBars = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} domainPadding={8}>
         <VictoryStack labels={({ datum }) => datum._y1.toPrecision(2)}>
           <VictoryBar data={getData(7)} />
@@ -653,13 +654,13 @@ export const StackedBars = () => {
           <VictoryBar data={getData(7, "seed-2")} />
         </VictoryStack>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const GroupedBars = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryGroup offset={20} labels={({ datum }) => datum.x}>
           <VictoryBar data={getData(3)} />
@@ -802,13 +803,13 @@ export const GroupedBars = () => {
           </VictoryStack>
         </VictoryGroup>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const PolarBars = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} polar>
         <VictoryBar style={{ data: { width: 20 } }} data={getData(7)} />
       </VictoryChart>
@@ -891,13 +892,13 @@ export const PolarBars = () => {
         </VictoryStack>
         <VictoryPolarAxis />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Sorting = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryBar
           data={[
@@ -938,13 +939,13 @@ export const Sorting = () => {
           sortKey={"sort"}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Regressions = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryGroup offset={20} style={{ data: { width: 10 } }}>
           <VictoryStack colorScale={"red"}>
@@ -987,13 +988,13 @@ export const Regressions = () => {
           </VictoryStack>
         </VictoryGroup>
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Domain = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         style={parentStyle}
         data={getData(7)}
@@ -1008,7 +1009,7 @@ export const Domain = () => {
       <VictoryChart style={parentStyle} maxDomain={{ x: 4 }}>
         <VictoryBar data={getData(7)} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
@@ -1018,30 +1019,22 @@ const StyledBar = styled(Bar)`
 
 export const DisableInlineStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart style={parentStyle}>
         <VictoryBar disableInlineStyles />
       </VictoryChart>
       <VictoryChart style={parentStyle}>
         <VictoryBar dataComponent={<StyledBar disableInlineStyles />} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const FocusWithRefs = () => {
-  const barsRef = useRef(null);
-
-  const getMap = () => {
-    if (!barsRef.current) {
-      // Initialize the Map on first usage.
-      barsRef.current = new Map();
-    }
-    return barsRef.current;
-  };
+  const barsRef = useRef(new Map());
 
   const focusOnBar = (id) => {
-    const map = getMap();
+    const map = barsRef.current;
     const node = map.get(id);
     node.focus();
   };
@@ -1054,14 +1047,14 @@ export const FocusWithRefs = () => {
   }, []);
 
   const setRef = useCallback((node) => {
-    const map = getMap();
+    const map = barsRef.current;
     if (node) {
       map.set(node.attributes.index.value, node);
     }
   }, []);
 
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart horizontal {...defaultChartProps} domainPadding={10}>
         <VictoryBar
           data={getData(5)}
@@ -1070,6 +1063,6 @@ export const FocusWithRefs = () => {
           dataComponent={<Bar tabIndex={0} ref={setRef} />}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };

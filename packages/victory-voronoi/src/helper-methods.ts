@@ -1,4 +1,4 @@
-import { assign, without, isNil } from "lodash";
+import { without, isNil } from "lodash";
 // victory-vendor note: This module is still CommonJS, so not part of victory-vendor.
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
@@ -81,7 +81,11 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     fallbackProps,
     "scatter",
   );
-  const props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     domain,

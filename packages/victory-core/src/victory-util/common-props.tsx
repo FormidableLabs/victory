@@ -95,6 +95,7 @@ export interface VictoryCommonThemeProps {
   animate?: boolean | AnimatePropTypeInterface;
   colorScale?: ColorScalePropType;
   containerComponent?: React.ReactElement;
+  disableInlineStyles?: boolean;
   domainPadding?: DomainPaddingPropType;
   externalEventMutations?: EventCallbackInterface<
     string | string[],

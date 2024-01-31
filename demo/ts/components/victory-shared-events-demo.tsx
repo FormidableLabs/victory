@@ -1,7 +1,6 @@
 import React from "react";
 import { VictoryBar } from "victory-bar";
 import { VictorySharedEvents } from "victory-shared-events";
-import { merge } from "lodash";
 
 export default class VictorySharedEventsDemo extends React.Component<any, {}> {
   render() {
@@ -28,7 +27,7 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
                       childName: "secondBar",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "blue" }),
+                          style: Object.assign({}, props.style, { fill: "blue" }),
                         };
                       },
                     };
@@ -48,14 +47,14 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
                           return props.style.fill === "cyan"
                             ? null
                             : {
-                                style: merge({}, props.style, { fill: "cyan" }),
+                                style: Object.assign({}, props.style, { fill: "cyan" }),
                               };
                         },
                       },
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "orange" }),
+                            style: Object.assign({}, props.style, { fill: "orange" }),
                           };
                         },
                       },

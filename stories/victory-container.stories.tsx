@@ -1,17 +1,18 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryChart } from "victory-chart";
-import { VictoryLine } from "victory-line";
-import { VictoryLabel, VictoryContainer } from "victory-core";
+import { VictoryChart } from "../packages/victory-chart";
+import { VictoryLine } from "../packages/victory-line";
+import { VictoryLabel, VictoryContainer } from "../packages/victory-core";
+import { Meta } from "@storybook/react";
+import { storyContainer } from "./decorators";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+const meta: Meta = {
+  title: "Victory Charts/SVG Container/VictoryContainer",
+  component: VictoryContainer,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "45%" },
@@ -21,14 +22,9 @@ const responsiveStyle = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "30%" },
 };
 
-export default {
-  title: "VictoryContainer",
-  component: VictoryContainer,
-};
-
 export const PreserveAspectRatio = () => {
   return (
-    <div style={{ ...containerStyle, height: "400px" }}>
+    <div style={{ height: "400px" }}>
       <VictoryChart style={style}>
         <VictoryLine />
         <VictoryLabel x={50} y={20} text="default (undefined)" />
@@ -72,7 +68,7 @@ export const PreserveAspectRatio = () => {
 
 export const Responsive = () => {
   return (
-    <div style={{ ...containerStyle }}>
+    <>
       <VictoryChart style={responsiveStyle}>
         <VictoryLine />
         <VictoryLabel x={50} y={20} text="default responsive={true}" />
@@ -84,6 +80,6 @@ export const Responsive = () => {
         <VictoryLine />
         <VictoryLabel x={50} y={20} text={`responsive={false}`} />
       </VictoryChart>
-    </div>
+    </>
   );
 };

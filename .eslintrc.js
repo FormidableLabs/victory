@@ -17,6 +17,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:eslint-comments/recommended",
     "prettier",
+    "plugin:storybook/recommended",
   ],
   rules: {
     "eslint-comments/disable-enable-pair": "off",

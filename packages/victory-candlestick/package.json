@@ -1,6 +1,6 @@
 {
   "name": "victory-candlestick",
-  "version": "36.8.2",
+  "version": "36.8.4",
   "description": "Candlestick Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,14 +22,14 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
-    "victory-core": "^36.8.2"
+    "victory-core": "^36.8.4"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-vendor": "^36.8.2",
-    "victory-chart": "^36.8.2",
+    "victory-vendor": "^36.8.4",
+    "victory-chart": "^36.8.4",
     "victory-candlestick": "*"
   },
   "publishConfig": {

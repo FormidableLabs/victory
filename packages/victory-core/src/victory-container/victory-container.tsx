@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import * as CustomPropTypes from "../victory-util/prop-types";
-import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
+import { defaults, uniqueId, isObject, isFunction } from "lodash";
 import { Portal } from "../victory-portal/portal";
 import { PortalContext } from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
@@ -172,7 +172,7 @@ export class VictoryContainer<
     const dimensions = responsive
       ? { width: "100%", height: "100%" }
       : { width, height };
-    const divStyle = assign(
+    const divStyle = Object.assign(
       {
         pointerEvents: "none",
         touchAction: "none",
@@ -180,12 +180,12 @@ export class VictoryContainer<
       } as const,
       dimensions,
     );
-    const portalDivStyle = assign(
+    const portalDivStyle = Object.assign(
       { zIndex: portalZIndex, position: "absolute", top: 0, left: 0 } as const,
       dimensions,
     );
-    const svgStyle = assign({ pointerEvents: "all" }, dimensions);
-    const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
+    const svgStyle = Object.assign({ pointerEvents: "all" }, dimensions);
+    const portalSvgStyle = Object.assign({ overflow: "visible" }, dimensions);
     const portalProps = {
       width,
       height,
@@ -246,7 +246,7 @@ export class VictoryContainer<
 
     const userProps = UserProps.getSafeUserProps(this.props);
 
-    const svgProps = assign(
+    const svgProps = Object.assign(
       {
         width,
         height,

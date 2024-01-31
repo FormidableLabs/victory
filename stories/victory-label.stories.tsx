@@ -1,16 +1,21 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
+import { Meta } from "@storybook/react";
 import React from "react";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryLabel } from "victory-core";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+import {
+  VictoryScatter,
+  VictoryScatterProps,
+} from "../packages/victory-scatter";
+import { VictoryLabel } from "../packages/victory-core";
+import { storyContainer } from "./decorators";
+
+const meta: Meta<typeof VictoryLabel> = {
+  title: "Victory Charts/SVG Container/VictoryLabel",
+  component: VictoryLabel,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
@@ -18,7 +23,7 @@ const style = {
   data: { fill: "gold" },
 };
 
-const defaultScatterProps = {
+const defaultScatterProps: VictoryScatterProps = {
   style,
   width: 300,
   height: 300,
@@ -28,25 +33,20 @@ const defaultScatterProps = {
   size: 5,
 };
 
-export default {
-  title: "VictoryLabel",
-  component: VictoryLabel,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={<VictoryLabel />}
       />
-    </div>
+    </>
   );
 };
 
 export const Positioning = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={<VictoryLabel x={100} text="x = 100" />}
@@ -75,13 +75,13 @@ export const Positioning = () => {
           <VictoryLabel dy={({ datum }) => datum.x - 20} text="dy function" />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const Anchors = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
@@ -181,13 +181,13 @@ export const Anchors = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const Styles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
@@ -348,13 +348,13 @@ export const Styles = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const LineHeight = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
@@ -439,13 +439,13 @@ export const LineHeight = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const Angles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
@@ -514,13 +514,13 @@ export const Angles = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const BackgroundStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
@@ -613,12 +613,12 @@ export const BackgroundStyles = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 export const Inline = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
@@ -672,13 +672,13 @@ export const Inline = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const BackgroundPadding = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
@@ -812,6 +812,6 @@ export const BackgroundPadding = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };

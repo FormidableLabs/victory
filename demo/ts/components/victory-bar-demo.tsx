@@ -6,7 +6,7 @@ import { VictoryGroup } from "victory-group";
 import { VictoryBar } from "victory-bar";
 
 import { VictoryContainer, VictoryTheme, VictoryLabel } from "victory-core";
-import { assign, random, range, merge } from "lodash";
+import { random, range } from "lodash";
 
 interface WrapperProps {
   children?: React.ReactElement | React.ReactElement[];
@@ -23,7 +23,7 @@ class Wrapper extends React.Component<WrapperProps> {
   renderChildren(props: WrapperProps) {
     const children = React.Children.toArray(props.children);
     return children.map((child: any) => {
-      return React.cloneElement(child, assign({}, child.props, props));
+      return React.cloneElement(child, Object.assign({}, child.props, props));
     });
   }
 
@@ -279,7 +279,7 @@ export default class VictoryBarDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, { fill: "orange" }),
                         };
                       },
                     },
@@ -416,7 +416,7 @@ export default class VictoryBarDemo extends React.Component<
                         {
                           mutation: (props) => {
                             return {
-                              style: merge({}, props.style, { fill: "orange" }),
+                              style: Object.assign({}, props.style, { fill: "orange" }),
                             };
                           },
                         },
@@ -442,7 +442,7 @@ export default class VictoryBarDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { fill: "blue" }),
+                            style: Object.assign({}, props.style, { fill: "blue" }),
                           };
                         },
                       },

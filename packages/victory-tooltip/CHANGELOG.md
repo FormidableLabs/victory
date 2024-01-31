@@ -1,5 +1,13 @@
 # victory-tooltip
 
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Migrate victory-tooltip to typescript ([#2725](https://github.com/FormidableLabs/victory/pull/2725))
+
 ## 36.8.2
 
 ## 36.8.1

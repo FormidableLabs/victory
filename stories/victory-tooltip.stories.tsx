@@ -1,19 +1,23 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
 import React from "react";
-import { VictoryBar } from "victory-bar";
-import { VictoryTooltip, Flyout } from "victory-tooltip";
-import { VictoryLabel } from "victory-core";
+import { VictoryBar } from "../packages/victory-bar";
+import { VictoryTooltip, Flyout } from "../packages/victory-tooltip";
+import { VictoryLabel } from "../packages/victory-core";
 import { getData, getMixedData } from "./data";
 import styled from "styled-components";
+import { storyContainer } from "./decorators";
+import { Meta } from "@storybook/react";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+const meta: Meta<typeof VictoryTooltip> = {
+  title: "Victory Charts/SVG Container/VictoryTooltip",
+  component: VictoryTooltip,
+  parameters: {
+    chromatic: { viewports: [1200] },
+  },
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
@@ -42,17 +46,9 @@ const polarBarProps = {
   size: 5,
 };
 
-export default {
-  title: "VictoryTooltip",
-  component: VictoryTooltip,
-  parameters: {
-    chromatic: { viewports: [1200] },
-  },
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={<VictoryTooltip active />}
@@ -66,13 +62,13 @@ export const DefaultRendering = () => {
         {...polarBarProps}
         labelComponent={<VictoryTooltip active />}
       />
-    </div>
+    </>
   );
 };
 
 export const CenterOffset = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
@@ -171,18 +167,18 @@ export const CenterOffset = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ y: ({ index }) => (index < 3 ? -10 : 10), x: 10 }}
+            centerOffset={{ y: ({ index }) => (index! < 3 ? -10 : 10), x: 10 }}
             text={`function\noffset`}
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const PointerOrientation = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
@@ -219,7 +215,7 @@ export const PointerOrientation = () => {
             active
             pointerOrientation={({ index }) => (index < 3 ? "bottom" : "top")}
             text={({ index }) =>
-              index < 3 ? `orientation\nbottom` : `orientation\ntop`
+              index! < 3 ? `orientation\nbottom` : `orientation\ntop`
             }
           />
         }
@@ -270,13 +266,13 @@ export const PointerOrientation = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const ConstrainToVisibleArea = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
@@ -339,13 +335,13 @@ export const ConstrainToVisibleArea = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const FlyoutHeight = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
@@ -392,17 +388,17 @@ export const FlyoutHeight = () => {
           <VictoryTooltip
             active
             flyoutHeight={({ text }) => (text === "short" ? 20 : 50)}
-            text={({ index }) => (index > 2 ? "short" : "tall")}
+            text={({ index }) => (index! > 2 ? "short" : "tall")}
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const FlyoutWidth = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
@@ -449,24 +445,24 @@ export const FlyoutWidth = () => {
           <VictoryTooltip
             active
             flyoutWidth={({ text }) => (text === "short" ? 35 : 100)}
-            text={({ index }) => (index > 2 ? "short" : "long")}
+            text={({ index }) => (index! > 2 ? "short" : "long")}
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const PointerWidth = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
           <VictoryTooltip
             active
             pointerWidth={20}
-            centerOffset={{ x: ({ index }) => (index === 0 ? -20 : null) }}
+            centerOffset={{ x: ({ index }) => (index === 0 ? -20 : 0) }}
             text={`pointerWidth\n20`}
           />
         }
@@ -478,7 +474,7 @@ export const PointerWidth = () => {
           <VictoryTooltip
             active
             pointerWidth={20}
-            centerOffset={{ y: ({ index }) => (index === 0 ? 20 : null) }}
+            centerOffset={{ y: ({ index }) => (index === 0 ? 20 : 0) }}
             text={`pointerWidth\n20`}
           />
         }
@@ -489,7 +485,7 @@ export const PointerWidth = () => {
           <VictoryTooltip
             active
             pointerWidth={20}
-            centerOffset={{ x: ({ index }) => (index === 0 ? 20 : null) }}
+            centerOffset={{ x: ({ index }) => (index === 0 ? 20 : 0) }}
             text={`pointerWidth\n20`}
           />
         }
@@ -499,7 +495,7 @@ export const PointerWidth = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ x: ({ index }) => (index < 2 ? -20 : null) }}
+            centerOffset={{ x: ({ index }) => (index! < 2 ? -20 : 0) }}
             pointerWidth={({ text }) => (text === "skinny" ? 0 : 20)}
             text={({ datum }) => (datum.y < 0 ? "skinny" : "wide ")}
           />
@@ -511,7 +507,7 @@ export const PointerWidth = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ y: ({ index }) => (index < 2 ? 20 : null) }}
+            centerOffset={{ y: ({ index }) => (index! < 2 ? 20 : 0) }}
             pointerWidth={({ text }) => (text === "skinny" ? 0 : 20)}
             text={({ datum }) => (datum.y < 0 ? "skinny" : "wide ")}
           />
@@ -523,26 +519,26 @@ export const PointerWidth = () => {
           <VictoryTooltip
             active
             centerOffset={{
-              x: ({ index }) => (index === 0 || index === 4 ? 20 : null),
+              x: ({ index }) => (index === 0 || index === 4 ? 20 : 0),
             }}
             pointerWidth={({ text }) => (text === "skinny" ? 0 : 20)}
-            text={({ index }) => (index > 2 ? "skinny" : "wide ")}
+            text={({ index }) => (index! > 2 ? "skinny" : "wide ")}
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const PointerLength = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ x: ({ index }) => (index === 0 ? -20 : null) }}
+            centerOffset={{ x: ({ index }) => (index === 0 ? -20 : 0) }}
             pointerLength={30}
             text={`pointerLength\n30`}
           />
@@ -555,7 +551,7 @@ export const PointerLength = () => {
           <VictoryTooltip
             active
             pointerLength={30}
-            centerOffset={{ y: ({ index }) => (index === 0 ? 20 : null) }}
+            centerOffset={{ y: ({ index }) => (index === 0 ? 20 : 0) }}
             text={`pointerLength\n30`}
           />
         }
@@ -566,7 +562,7 @@ export const PointerLength = () => {
           <VictoryTooltip
             active
             pointerLength={30}
-            centerOffset={{ x: ({ index }) => (index === 0 ? 20 : null) }}
+            centerOffset={{ x: ({ index }) => (index === 0 ? 20 : 0) }}
             text={`pointerLength\n30`}
           />
         }
@@ -576,7 +572,7 @@ export const PointerLength = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ x: ({ index }) => (index < 2 ? 20 : null) }}
+            centerOffset={{ x: ({ index }) => (index! < 2 ? 20 : 0) }}
             pointerLength={({ text }) => (text === "short" ? 1 : 30)}
             text={({ datum }) => (datum.y < 0 ? "short" : "long ")}
           />
@@ -588,7 +584,7 @@ export const PointerLength = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ y: ({ index }) => (index < 2 ? 20 : null) }}
+            centerOffset={{ y: ({ index }) => (index! < 2 ? 20 : 0) }}
             pointerLength={({ text }) => (text === "short" ? 1 : 30)}
             text={({ datum }) => (datum.y < 0 ? "short" : "long ")}
           />
@@ -600,20 +596,20 @@ export const PointerLength = () => {
           <VictoryTooltip
             active
             centerOffset={{
-              x: ({ index }) => (index === 0 || index === 4 ? 20 : null),
+              x: ({ index }) => (index === 0 || index === 4 ? 20 : 0),
             }}
             pointerLength={({ text }) => (text === "short" ? 1 : 30)}
-            text={({ index }) => (index > 2 ? "short" : "long ")}
+            text={({ index }) => (index! > 2 ? "short" : "long ")}
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const CornerRadius = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
@@ -660,17 +656,17 @@ export const CornerRadius = () => {
           <VictoryTooltip
             active
             cornerRadius={({ text }) => (text === "square" ? 0 : 5)}
-            text={({ index }) => (index > 2 ? "square" : "rounded ")}
+            text={({ index }) => (index! > 2 ? "square" : "rounded ")}
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const FlyoutStyle = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
@@ -714,13 +710,13 @@ export const FlyoutStyle = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
 export const FlyoutPadding = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={
@@ -764,7 +760,7 @@ export const FlyoutPadding = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };
 
@@ -778,7 +774,7 @@ const StyledLabel = styled(VictoryLabel)`
 
 export const DisableInlineStyles = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryBar
         {...defaultBarProps}
         labelComponent={<VictoryTooltip active disableInlineStyles />}
@@ -793,6 +789,6 @@ export const DisableInlineStyles = () => {
           />
         }
       />
-    </div>
+    </>
   );
 };

@@ -1,6 +1,6 @@
 {
   "name": "victory-voronoi",
-  "version": "36.8.2",
+  "version": "36.8.4",
   "description": "Voronoi Component for Victory",
   "keywords": [
     "data visualization",
@@ -23,7 +23,7 @@
     "d3-voronoi": "^1.1.4",
     "lodash": "^4.17.19",
     "prop-types": "^15.8.1",
-    "victory-core": "^36.8.2"
+    "victory-core": "^36.8.4"
   },
   "peerDependencies": {
     "react": ">=16.6.0"

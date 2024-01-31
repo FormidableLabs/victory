@@ -1,5 +1,13 @@
 # victory-zoom-container
 
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Migrate victory-zoom-container to TypeScript ([#2730](https://github.com/FormidableLabs/victory/pull/2730))
+
 ## 36.8.2
 
 ## 36.8.1

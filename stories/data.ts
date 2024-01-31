@@ -1,19 +1,7 @@
-/* eslint-disable no-magic-numbers*/
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 
-// const polarData = [
-//   { x: 45, y: 2 },
-//   { x: 90, y: 3 },
-//   { x: 135, y: 5 },
-//   { x: 180, y: 4 },
-//   { x: 225, y: 7 },
-//   { x: 270, y: 2 },
-//   { x: 315, y: 4 },
-//   { x: 360, y: 7 }
-// ];
-
-const getTimeData = (num, seed = "getData") => {
+const getTimeData = (num: number, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
   const current = 1523389495000;
@@ -25,13 +13,13 @@ const getTimeData = (num, seed = "getData") => {
   });
 };
 
-const getData = (num, seed = "getData", max = 10) => {
+const getData = (num: number, seed = "getData", max = 10) => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * max;
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
-const getDataWithBaseline = (num, seed = "getData", max = 10) => {
+const getDataWithBaseline = (num: number, seed = "getData", max = 10) => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * max;
   return range(num).map((v) => ({ x: v + 1, y: rand(), y0: rand() }));
@@ -52,31 +40,31 @@ const getDescendingSmallData = () => {
   ];
 };
 
-const getStringData = (num, seed = "getData") => {
+const getStringData = (num: number, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
   return range(num).map((v) => ({ x: `#${v + 1}`, y: rand() }));
 };
 
-const getLogData = (num, seed = "getData") => {
+const getLogData = (num: number, seed = "getData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 100000;
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
-const getMixedData = (num, seed = "getMixedData") => {
+const getMixedData = (num: number, seed = "getMixedData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10 - 5;
   return range(num).map((v) => ({ x: v + 1, y: rand() }));
 };
 
-const getFourQuadrantData = (num, seed = "getMixedData") => {
+const getFourQuadrantData = (num: number, seed = "getMixedData") => {
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10 - 5;
   return range(num).map((v) => ({ x: v - Math.round(num / 2), y: rand() }));
 };
 
-const getArrayData = (num, samples = 10) => {
+const getArrayData = (num: number, samples = 10) => {
   const seed = "getData";
   const baseSeed = seedrandom(seed);
   const rand = () => baseSeed.quick() * 10;
@@ -88,7 +76,7 @@ const getArrayData = (num, samples = 10) => {
   });
 };
 
-const getStackedData = (num, samples, useStrings) => {
+const getStackedData = (num: number, samples, useStrings) => {
   return range(num).map(() => {
     return useStrings ? getStringData(samples) : getData(samples);
   });

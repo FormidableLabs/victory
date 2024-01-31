@@ -1,5 +1,15 @@
 # victory-create-container
 
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Migrate victory-create-container to TypeScript ([#2731](https://github.com/FormidableLabs/victory/pull/2731))
+
+* Refactor param reassignments ([#2724](https://github.com/FormidableLabs/victory/pull/2724))
+
 ## 36.8.2
 
 ## 36.8.1

@@ -1,5 +1,15 @@
 # victory-voronoi-container
 
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Migrate victory-voronoi-container to TypeScript ([#2727](https://github.com/FormidableLabs/victory/pull/2727))
+
+* Refactor param reassignments ([#2724](https://github.com/FormidableLabs/victory/pull/2724))
+
 ## 36.8.2
 
 ## 36.8.1

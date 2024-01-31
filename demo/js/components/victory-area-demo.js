@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers */
 import React from "react";
-import { merge, random, range } from "lodash";
+import { random, range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
@@ -278,7 +278,7 @@ export default class App extends React.Component {
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, { fill: "orange" }),
                         };
                       },
                     },

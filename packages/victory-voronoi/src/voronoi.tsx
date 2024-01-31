@@ -1,5 +1,4 @@
 import React from "react";
-import { assign } from "lodash";
 import {
   Helpers,
   ClipPath,
@@ -43,7 +42,7 @@ function evaluateProps<T extends VoronoiProps>(props: T) {
   const size = Helpers.evaluateProp(props.size, props);
   const style = Helpers.evaluateStyle(props.style, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
-  return assign({}, props, { ariaLabel, id, size, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, id, size, style, tabIndex });
 }
 
 const defaultProps = {

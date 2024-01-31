@@ -1,21 +1,24 @@
-/* eslint-disable no-magic-numbers*/
-/* eslint-disable react/no-multi-comp*/
+import { Meta } from "@storybook/react";
 import React from "react";
-import { VictoryAxis } from "victory-axis";
-import { VictoryBar } from "victory-bar";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryTheme } from "victory-core";
-import { VictoryChart } from "victory-chart";
 import { range } from "lodash";
 import seedrandom from "seedrandom";
 
-const containerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "center",
-  justifyContent: "center",
+import { VictoryAxis } from "../packages/victory-axis";
+import { VictoryBar } from "../packages/victory-bar";
+import { VictoryBrushLine } from "../packages/victory-brush-line";
+import { VictoryScatter } from "../packages/victory-scatter";
+import { VictoryTheme } from "../packages/victory-core";
+import { VictoryChart } from "../packages/victory-chart";
+import { storyContainer } from "./decorators";
+
+const meta: Meta = {
+  title: "Victory Charts/SVG Container/VictoryAxis",
+  component: VictoryAxis,
+  tags: ["autodocs"],
+  decorators: [storyContainer],
 };
+
+export default meta;
 
 const parentStyle = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
@@ -44,25 +47,20 @@ const getRandomValues = (num, seed = "random") => {
   return result.sort((a, b) => a - b);
 };
 
-export default {
-  title: "VictoryAxis",
-  component: VictoryAxis,
-};
-
 export const DefaultRendering = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps} />
       <VictoryChart {...defaultChartProps} domain={[-1, 1]} />
       <VictoryChart style={parentStyle} />
       <VictoryChart style={parentStyle} domain={[-1, 1]} />
-    </div>
+    </>
   );
 };
 
 export const AxisValue = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis tickValues={[1, 2, 3, 4, 5]} />
         <VictoryAxis dependentAxis axisValue={3} />
@@ -71,7 +69,7 @@ export const AxisValue = () => {
         <VictoryAxis axisValue={"zero"} />
         <VictoryAxis dependentAxis tickValues={["-", "zero", "+"]} />
       </VictoryChart>
-      <VictoryChart {...defaultChartProps} scale={{ x: "time " }}>
+      <VictoryChart {...defaultChartProps} scale={{ x: "time" }}>
         <VictoryAxis
           tickValues={[
             new Date(1985, 1, 1),
@@ -94,13 +92,13 @@ export const AxisValue = () => {
         <VictoryAxis dependentAxis axisValue="b" />
         <VictoryAxis />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const TickValues = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis tickValues={getValues(5)} />
       </VictoryChart>
@@ -137,13 +135,13 @@ export const TickValues = () => {
           orientation="right"
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const TickFormat = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis
           tickValues={getValues(5)}
@@ -153,13 +151,13 @@ export const TickFormat = () => {
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis tickValues={getValues(5)} tickFormat={(t) => `#${t}`} />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const WithDomain = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryAxis {...defaultChartProps} domain={[-10, 10]} />
       <VictoryAxis
         {...defaultChartProps}
@@ -202,13 +200,13 @@ export const WithDomain = () => {
         <VictoryAxis dependentAxis invertAxis />
         <VictoryAxis />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const FixLabelOverlap = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryAxis
         {...defaultChartProps}
         fixLabelOverlap
@@ -244,22 +242,22 @@ export const FixLabelOverlap = () => {
         scale="time"
         tickValues={getTimeValues(30)}
       />
-    </div>
+    </>
   );
 };
 
 export const Offsets = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryAxis {...defaultChartProps} dependentAxis offsetX={250} />
       <VictoryAxis {...defaultChartProps} offsetY={250} />
-    </div>
+    </>
   );
 };
 
 export const Orientation = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryAxis
         {...defaultChartProps}
         tickValues={getValues(5)}
@@ -292,13 +290,13 @@ export const Orientation = () => {
         <VictoryAxis orientation="top" />
         <VictoryAxis dependentAxis orientation="right" />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const Style = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis
           label="Label"
@@ -311,13 +309,13 @@ export const Style = () => {
           }}
         />
       </VictoryChart>
-    </div>
+    </>
   );
 };
 
 export const WithMultilineLabels = () => {
   return (
-    <div style={containerStyle}>
+    <>
       <VictoryChart {...defaultChartProps}>
         <VictoryAxis
           tickValues={getValues(5, -2)}
@@ -331,6 +329,91 @@ export const WithMultilineLabels = () => {
           orientation="top"
         />
       </VictoryChart>
-    </div>
+    </>
+  );
+};
+
+export const BrushAxis = () => {
+  return (
+    <>
+      <VictoryAxis label="Label" axisComponent={<VictoryBrushLine />} />
+    </>
+  );
+};
+
+export const BrushAxisWithDomain = () => {
+  return (
+    <>
+      <VictoryAxis
+        label="Label"
+        axisComponent={<VictoryBrushLine brushDomain={[0.25, 0.5]} />}
+      />
+    </>
+  );
+};
+
+export const BrushAxisGridLine = () => {
+  return (
+    <>
+      <VictoryAxis label="Label" gridComponent={<VictoryBrushLine />} />
+    </>
+  );
+};
+
+export const BrushAxisGridLineWithDomain = () => {
+  return (
+    <>
+      <VictoryAxis
+        label="Label"
+        gridComponent={<VictoryBrushLine brushDomain={[0.25, 0.5]} />}
+      />
+    </>
+  );
+};
+
+export const BrushAxisGridLineStyles = () => {
+  return (
+    <>
+      <VictoryAxis
+        label="Label"
+        gridComponent={
+          <VictoryBrushLine
+            brushDomain={[0.25, 0.5]}
+            brushAreaStyle={{
+              fill: "orange",
+              stroke: "tomato",
+              strokeWidth: 2,
+            }}
+            brushStyle={{ fill: "teal", stroke: "navy", strokeWidth: 2 }}
+            handleStyle={{ strokeWidth: 1, stroke: "grey" }}
+          />
+        }
+      />
+    </>
+  );
+};
+
+export const BrushAxisGridLineWidth = () => {
+  return (
+    <>
+      <VictoryAxis
+        label="Label"
+        gridComponent={
+          <VictoryBrushLine
+            brushDomain={[0.25, 0.5]}
+            brushWidth={40}
+            brushAreaWidth={20}
+            handleWidth={4}
+            brushAreaStyle={{
+              fill: "orange",
+              stroke: "tomato",
+              strokeWidth: 2,
+            }}
+            brushStyle={{ fill: "teal", stroke: "navy", strokeWidth: 2 }}
+            handleStyle={{ strokeWidth: 1, stroke: "grey" }}
+          />
+        }
+      />
+    </>
   );
 };

@@ -49,6 +49,7 @@ export interface VictoryBarProps
     number | string | number[] | string[]
   >[];
   eventKey?: StringOrNumberOrCallback;
+  getPath?: (props: VictoryBarProps) => string;
   horizontal?: boolean;
   style?: VictoryStyleInterface;
 }
