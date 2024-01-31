@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { fromJS } from "immutable";
-import { range } from "lodash";
 import React from "react";
+import { Helpers } from "victory-core";
 import { ErrorBar, VictoryErrorBar } from "victory-errorbar";
 import * as d3Scale from "victory-vendor/d3-scale";
 
@@ -78,7 +78,12 @@ describe("components/victory-errorbar", () => {
       describe(`symmetric error, rendering data ${testLabel}`, () => {
         it("renders injected errors for {x, y}", () => {
           const data = createData(
-            range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })),
+            Helpers.range(10).map((i) => ({
+              x: i,
+              y: i,
+              errorX: 0.1,
+              errorY: 0.2,
+            })),
           );
           render(<VictoryErrorBar data={data} {...defaultProps} />);
 
@@ -88,7 +93,12 @@ describe("components/victory-errorbar", () => {
 
         it("renders errors for {x, y}", () => {
           const data = createData(
-            range(10).map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 })),
+            Helpers.range(10).map((i) => ({
+              x: i,
+              y: i,
+              errorX: 0.1,
+              errorY: 0.2,
+            })),
           );
           render(<VictoryErrorBar data={data} {...defaultProps} />);
           const errors = screen.getAllByTestId("error-bar");
@@ -97,7 +107,7 @@ describe("components/victory-errorbar", () => {
 
         it("sorts data by sortKey getAttribute", () => {
           const data = createData(
-            range(5)
+            Helpers.range(5)
               .map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
               .reverse(),
           );
@@ -110,7 +120,7 @@ describe("components/victory-errorbar", () => {
 
         it("reversed sorted data with the sortOrder getAttribute", () => {
           const data = createData(
-            range(5)
+            Helpers.range(5)
               .map((i) => ({ x: i, y: i, errorX: 0.1, errorY: 0.2 }))
               .reverse(),
           );
@@ -550,7 +560,7 @@ describe("components/victory-errorbar", () => {
       describe(`asymmetric error, rendering data ${testLabel}`, () => {
         it("renders injected errors for {x, y}", () => {
           const data = createData(
-            range(10).map((i) => ({
+            Helpers.range(10).map((i) => ({
               x: i,
               y: i,
               errorX: [0.1, 0.2],
@@ -565,7 +575,7 @@ describe("components/victory-errorbar", () => {
 
         it("renders errors for {x, y}", () => {
           const data = createData(
-            range(10).map((i) => ({
+            Helpers.range(10).map((i) => ({
               x: i,
               y: i,
               errorX: [0.1, 0.2],

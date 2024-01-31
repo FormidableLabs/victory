@@ -1,8 +1,9 @@
 import * as React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
-import { range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { Bar, VictoryBar } from "victory-bar";
+import { Helpers } from "victory-core";
+
 import { isBar, getBarHeight } from "../../../test/helpers";
 
 describe("components/victory-bar", () => {
@@ -70,14 +71,14 @@ describe("components/victory-bar", () => {
 
   describe("rendering data", () => {
     it("renders bars for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({ x: i, y: i }));
+      const data = Helpers.range(10).map((i) => ({ x: i, y: i }));
       const { container } = render(<VictoryBar data={data} />);
       const bars = container.querySelectorAll("path");
       expect(bars.length).toEqual(10);
     });
 
     it("renders ordered bars when sortKey is passed", () => {
-      const data = range(5)
+      const data = Helpers.range(5)
         .map((i) => ({ x: i, y: i }))
         .reverse();
       const { container } = render(<VictoryBar data={data} sortKey="x" />);
@@ -94,7 +95,7 @@ describe("components/victory-bar", () => {
     });
 
     it("renders reverse ordered bars when sortOrder is descending", () => {
-      const data = range(5)
+      const data = Helpers.range(5)
         .map((i) => ({ x: i, y: i }))
         .reverse();
       const { container } = render(
@@ -112,14 +113,16 @@ describe("components/victory-bar", () => {
     });
 
     it("renders bars for array-shaped data", () => {
-      const data = range(20).map((i) => [i, i]);
+      const data = Helpers.range(20).map((i) => [i, i]);
       const { container } = render(<VictoryBar data={data} x={0} y={1} />);
       const bars = container.querySelectorAll("path");
       expect(bars).toHaveLength(20);
     });
 
     it("renders bars for deeply-nested data", () => {
-      const data = range(8).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
+      const data = Helpers.range(8).map((i) => ({
+        a: { b: [{ x: i, y: i }] },
+      }));
       const { container } = render(
         <VictoryBar data={data} x="a.b[0].x" y="a.b[0].y" />,
       );
@@ -128,7 +131,7 @@ describe("components/victory-bar", () => {
     });
 
     it("renders bars values with null accessor", () => {
-      const data = range(8);
+      const data = Helpers.range(8);
       const { container } = render(
         // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryBar data={data} x={null} y={null} />,
@@ -249,14 +252,14 @@ describe("components/victory-bar", () => {
 
   describe("accessibility", () => {
     it("adds an aria role to each bar in the series", () => {
-      const data = range(10).map((y, x) => ({ x, y }));
+      const data = Helpers.range(10).map((y, x) => ({ x, y }));
       render(<VictoryBar data={data} />);
       const presentationElements = screen.getAllByRole("presentation");
       expect(presentationElements).toHaveLength(11); // bars plus container
     });
 
     it("applies aria-label and tabIndex to the Bar primitive", () => {
-      const data = range(5, 11).map((y, x) => ({ y, x }));
+      const data = Helpers.range(5, 11).map((y, x) => ({ y, x }));
       const { container } = render(
         <VictoryBar
           data={data}
