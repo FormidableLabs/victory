@@ -13,11 +13,14 @@
     "url": "https://github.com/FormidableLabs/victory"
   },
   "homepage": "https://formidable.com/open-source/victory",
+  "source": "src/index.js",
   "sideEffects": false,
-  "source": "src/index.ts",
   "main": "lib/index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
+  "files": [
+    "src",
+    "lib",
+    "index.js"
+  ],
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
@@ -65,15 +68,9 @@
     "provenance": true
   },
   "scripts": {
-    "###            THESE SCRIPTS ARE GENERATED           ###": "true",
-    "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
     "build": "wireit",
     "build:lib": "wireit",
-    "build:lib:esm": "wireit",
     "build:lib:cjs": "wireit",
-    "build:dist": "wireit",
-    "build:dist:dev": "wireit",
-    "build:dist:min": "wireit",
     "check": "wireit",
     "types:check": "wireit",
     "types:create": "wireit",
@@ -84,65 +81,15 @@
     "jest": "wireit"
   },
   "wireit": {
-    "###            THESE WIREIT CONFIGS ARE GENERATED        ####": {},
-    "###            DO NOT MODIFY THESE MANUALLY              ####": {},
     "build": {
       "dependencies": [
         "build:lib",
-        "build:dist",
         "types:create"
       ]
     },
     "build:lib": {
       "dependencies": [
-        "build:lib:esm",
         "build:lib:cjs"
-      ]
-    },
-    "build:lib:esm": {
-      "command": "nps build:lib:esm",
-      "files": [
-        "src/**",
-        "!src/**/*.test.*",
-        "../../.babelrc.build.js",
-        "../../.babelrc.js",
-        "../../package-scripts.js"
-      ],
-      "output": [
-        "es/**/*.js",
-        "es/**/*.js.map"
-      ],
-      "dependencies": [
-        "../victory:build:lib:esm",
-        "../victory-area:build:lib:esm",
-        "../victory-axis:build:lib:esm",
-        "../victory-bar:build:lib:esm",
-        "../victory-box-plot:build:lib:esm",
-        "../victory-brush-container:build:lib:esm",
-        "../victory-brush-line:build:lib:esm",
-        "../victory-candlestick:build:lib:esm",
-        "../victory-chart:build:lib:esm",
-        "../victory-core:build:lib:esm",
-        "../victory-create-container:build:lib:esm",
-        "../victory-cursor-container:build:lib:esm",
-        "../victory-errorbar:build:lib:esm",
-        "../victory-group:build:lib:esm",
-        "../victory-histogram:build:lib:esm",
-        "../victory-legend:build:lib:esm",
-        "../victory-line:build:lib:esm",
-        "../victory-pie:build:lib:esm",
-        "../victory-polar-axis:build:lib:esm",
-        "../victory-scatter:build:lib:esm",
-        "../victory-selection-container:build:lib:esm",
-        "../victory-shared-events:build:lib:esm",
-        "../victory-stack:build:lib:esm",
-        "../victory-tooltip:build:lib:esm",
-        "../victory-voronoi:build:lib:esm",
-        "../victory-voronoi-container:build:lib:esm",
-        "../victory-zoom-container:build:lib:esm"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
       ]
     },
     "build:lib:cjs": {
@@ -186,106 +133,6 @@
         "../victory-voronoi:build:lib:cjs",
         "../victory-voronoi-container:build:lib:cjs",
         "../victory-zoom-container:build:lib:cjs"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "build:dist": {
-      "dependencies": [
-        "build:dist:dev",
-        "build:dist:min"
-      ]
-    },
-    "build:dist:dev": {
-      "command": "nps build:dist:dev",
-      "files": [
-        "src/**",
-        "!src/**/*.test.*",
-        "../../.babelrc.build.js",
-        "../../.babelrc.js",
-        "../../package-scripts.js",
-        "../../config/webpack.config.js",
-        "../../config/webpack.config.dev.js"
-      ],
-      "output": [
-        "dist/victory*.js",
-        "!dist/victory*.min.js*"
-      ],
-      "dependencies": [
-        "../victory:build:lib:esm",
-        "../victory-area:build:lib:esm",
-        "../victory-axis:build:lib:esm",
-        "../victory-bar:build:lib:esm",
-        "../victory-box-plot:build:lib:esm",
-        "../victory-brush-container:build:lib:esm",
-        "../victory-brush-line:build:lib:esm",
-        "../victory-candlestick:build:lib:esm",
-        "../victory-chart:build:lib:esm",
-        "../victory-core:build:lib:esm",
-        "../victory-create-container:build:lib:esm",
-        "../victory-cursor-container:build:lib:esm",
-        "../victory-errorbar:build:lib:esm",
-        "../victory-group:build:lib:esm",
-        "../victory-histogram:build:lib:esm",
-        "../victory-legend:build:lib:esm",
-        "../victory-line:build:lib:esm",
-        "../victory-pie:build:lib:esm",
-        "../victory-polar-axis:build:lib:esm",
-        "../victory-scatter:build:lib:esm",
-        "../victory-selection-container:build:lib:esm",
-        "../victory-shared-events:build:lib:esm",
-        "../victory-stack:build:lib:esm",
-        "../victory-tooltip:build:lib:esm",
-        "../victory-voronoi:build:lib:esm",
-        "../victory-voronoi-container:build:lib:esm",
-        "../victory-zoom-container:build:lib:esm"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "build:dist:min": {
-      "command": "nps build:dist:min",
-      "files": [
-        "src/**",
-        "!src/**/*.test.*",
-        "../../.babelrc.build.js",
-        "../../.babelrc.js",
-        "../../package-scripts.js",
-        "../../config/webpack.config.js"
-      ],
-      "output": [
-        "dist/victory*.min.js*"
-      ],
-      "dependencies": [
-        "../victory:build:lib:esm",
-        "../victory-area:build:lib:esm",
-        "../victory-axis:build:lib:esm",
-        "../victory-bar:build:lib:esm",
-        "../victory-box-plot:build:lib:esm",
-        "../victory-brush-container:build:lib:esm",
-        "../victory-brush-line:build:lib:esm",
-        "../victory-candlestick:build:lib:esm",
-        "../victory-chart:build:lib:esm",
-        "../victory-core:build:lib:esm",
-        "../victory-create-container:build:lib:esm",
-        "../victory-cursor-container:build:lib:esm",
-        "../victory-errorbar:build:lib:esm",
-        "../victory-group:build:lib:esm",
-        "../victory-histogram:build:lib:esm",
-        "../victory-legend:build:lib:esm",
-        "../victory-line:build:lib:esm",
-        "../victory-pie:build:lib:esm",
-        "../victory-polar-axis:build:lib:esm",
-        "../victory-scatter:build:lib:esm",
-        "../victory-selection-container:build:lib:esm",
-        "../victory-shared-events:build:lib:esm",
-        "../victory-stack:build:lib:esm",
-        "../victory-tooltip:build:lib:esm",
-        "../victory-voronoi:build:lib:esm",
-        "../victory-voronoi-container:build:lib:esm",
-        "../victory-zoom-container:build:lib:esm"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

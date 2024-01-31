@@ -10,6 +10,7 @@
  *
  * Note that this script does _not_ mutate:
  * - victory-vendor
+ * - victory-native
  *
  * If you are editing `victory-vendor` or `victory-native`, directly edit them.
  * For **all other packages**, make your changes in
@@ -29,9 +30,10 @@ const PKGS_ROOT = path.join(ROOT, "packages");
 
 // Special packages
 const PKGS = {
+  NATIVE: "victory-native",
   VENDOR: "victory-vendor",
 };
-const SPECIAL_PKGS = new Set([PKGS.VENDOR]);
+const SPECIAL_PKGS = new Set([PKGS.NATIVE, PKGS.VENDOR]);
 
 // ============================================================================
 // Helpers
