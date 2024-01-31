@@ -13,7 +13,7 @@
     "url": "https://github.com/FormidableLabs/victory"
   },
   "homepage": "https://formidable.com/open-source/victory",
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "sideEffects": false,
   "main": "lib/index.js",
   "files": [
