@@ -70,6 +70,7 @@
   "scripts": {
     "build": "wireit",
     "build:lib": "wireit",
+    "build:lib:esm": "wireit",
     "build:lib:cjs": "wireit",
     "check": "wireit",
     "types:check": "wireit",
@@ -137,6 +138,11 @@
       "packageLocks": [
         "pnpm-lock.yaml"
       ]
+    },
+    "build:lib:esm": {
+      "command": "echo victory-native has no esm build",
+      "files": [],
+      "output": []
     },
     "check": {
       "dependencies": [

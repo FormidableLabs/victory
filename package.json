@@ -184,6 +184,7 @@
     },
     "build": {
       "dependencies": [
+        "./packages/victory-native:build",
         "./packages/victory-vendor:build",
         "./packages/victory:build",
         "./packages/victory-area:build",
@@ -203,7 +204,6 @@
         "./packages/victory-histogram:build",
         "./packages/victory-legend:build",
         "./packages/victory-line:build",
-        "./packages/victory-native:build",
         "./packages/victory-pie:build",
         "./packages/victory-polar-axis:build",
         "./packages/victory-scatter:build",
@@ -218,6 +218,7 @@
     },
     "build:lib:esm": {
       "dependencies": [
+        "./packages/victory-native:build:lib:esm",
         "./packages/victory-vendor:build:lib:esm",
         "./packages/victory:build:lib:esm",
         "./packages/victory-area:build:lib:esm",
@@ -237,7 +238,6 @@
         "./packages/victory-histogram:build:lib:esm",
         "./packages/victory-legend:build:lib:esm",
         "./packages/victory-line:build:lib:esm",
-        "./packages/victory-native:build:lib:esm",
         "./packages/victory-pie:build:lib:esm",
         "./packages/victory-polar-axis:build:lib:esm",
         "./packages/victory-scatter:build:lib:esm",
@@ -308,6 +308,7 @@
     },
     "format:pkgs": {
       "dependencies": [
+        "./packages/victory-native:format",
         "./packages/victory-vendor:format",
         "./packages/victory:format",
         "./packages/victory-area:format",
@@ -327,7 +328,6 @@
         "./packages/victory-histogram:format",
         "./packages/victory-legend:format",
         "./packages/victory-line:format",
-        "./packages/victory-native:format",
         "./packages/victory-pie:format",
         "./packages/victory-polar-axis:format",
         "./packages/victory-scatter:format",
@@ -388,6 +388,7 @@
     },
     "lint:pkgs": {
       "dependencies": [
+        "./packages/victory-native:lint",
         "./packages/victory-vendor:lint",
         "./packages/victory:lint",
         "./packages/victory-area:lint",
@@ -407,7 +408,6 @@
         "./packages/victory-histogram:lint",
         "./packages/victory-legend:lint",
         "./packages/victory-line:lint",
-        "./packages/victory-native:lint",
         "./packages/victory-pie:lint",
         "./packages/victory-polar-axis:lint",
         "./packages/victory-scatter:lint",
@@ -441,6 +441,7 @@
     },
     "jest:pkgs": {
       "dependencies": [
+        "./packages/victory-native:jest",
         "./packages/victory-vendor:jest",
         "./packages/victory:jest",
         "./packages/victory-area:jest",
@@ -460,7 +461,6 @@
         "./packages/victory-histogram:jest",
         "./packages/victory-legend:jest",
         "./packages/victory-line:jest",
-        "./packages/victory-native:jest",
         "./packages/victory-pie:jest",
         "./packages/victory-polar-axis:jest",
         "./packages/victory-scatter:jest",
@@ -498,6 +498,7 @@
     },
     "types:check": {
       "dependencies": [
+        "./packages/victory-native:types:check",
         "./packages/victory-vendor:types:check",
         "./packages/victory:types:check",
         "./packages/victory-area:types:check",
@@ -517,7 +518,6 @@
         "./packages/victory-histogram:types:check",
         "./packages/victory-legend:types:check",
         "./packages/victory-line:types:check",
-        "./packages/victory-native:types:check",
         "./packages/victory-pie:types:check",
         "./packages/victory-polar-axis:types:check",
         "./packages/victory-scatter:types:check",
@@ -532,6 +532,7 @@
     },
     "types:create": {
       "dependencies": [
+        "./packages/victory-native:types:create",
         "./packages/victory-vendor:types:create",
         "./packages/victory:types:create",
         "./packages/victory-area:types:create",
@@ -551,7 +552,6 @@
         "./packages/victory-histogram:types:create",
         "./packages/victory-legend:types:create",
         "./packages/victory-line:types:create",
-        "./packages/victory-native:types:create",
         "./packages/victory-pie:types:create",
         "./packages/victory-polar-axis:types:create",
         "./packages/victory-scatter:types:create",
@@ -566,6 +566,7 @@
     },
     "lint:pkgs:fix": {
       "dependencies": [
+        "./packages/victory-native:lint:fix",
         "./packages/victory-vendor:lint:fix",
         "./packages/victory:lint:fix",
         "./packages/victory-area:lint:fix",
@@ -585,7 +586,6 @@
         "./packages/victory-histogram:lint:fix",
         "./packages/victory-legend:lint:fix",
         "./packages/victory-line:lint:fix",
-        "./packages/victory-native:lint:fix",
         "./packages/victory-pie:lint:fix",
         "./packages/victory-polar-axis:lint:fix",
         "./packages/victory-scatter:lint:fix",
@@ -600,6 +600,7 @@
     },
     "format:pkgs:fix": {
       "dependencies": [
+        "./packages/victory-native:format:fix",
         "./packages/victory-vendor:format:fix",
         "./packages/victory:format:fix",
         "./packages/victory-area:format:fix",
@@ -619,7 +620,6 @@
         "./packages/victory-histogram:format:fix",
         "./packages/victory-legend:format:fix",
         "./packages/victory-line:format:fix",
-        "./packages/victory-native:format:fix",
         "./packages/victory-pie:format:fix",
         "./packages/victory-polar-axis:format:fix",
         "./packages/victory-scatter:format:fix",
