@@ -8,8 +8,8 @@ scope: null
 
 # Getting Started with Victory Native
 
-> These docs are for the legacy versions of Victory Native. If you're looking for Victory Native XL docs, please [see here]
-(https://formidable.com/open-source/victory-native/).
+> These docs are for the legacy versions of Victory Native. Victory Native XL is our rewrite of Victory Native designed specifically for React Native. Please [see here for more information]
+(https://formidable.com/open-source/victory-native/). If you would like to continue to use this version of Victory with React Native, follow the legacy guide below.
 
 In this guide, we’ll show you how to get started with Victory Native and the React Native SVG dependency running in your React Native app for iOS and Android.
 
@@ -22,7 +22,7 @@ Victory Native is compatible with React Native 0.50 or higher.
 To add Victory Native to your React Native app install `victory-native`.
 
 ```bash
-$ yarn add victory-native # or npm install --save victory-native
+$ yarn add victory-native@legacy # or npm install --save victory-native@legacy
 ```
 
 #### 2. Add React Native SVG to your app

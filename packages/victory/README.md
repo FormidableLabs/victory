@@ -38,8 +38,9 @@ Projects using Victory should also depend on [React][] and [prop-types][].
 
 ## Victory Native
 
-Want to use `Victory` with React Native? Check out [victory-native](https://github.com/FormidableLabs/victory-native)
-Victory Native shares most of its code with Victory, and has a nearly identical api!
+Want to use `Victory` with React Native? Check out [victory-native-xl](https://github.com/FormidableLabs/victory-native-xl)
+
+If you would like to use this version of `Victory` with React Native, you can install the legacy version using the `legacy` npm tag. See the [available versions in npm](https://www.npmjs.com/package/victory-native?activeTab=versions).
 
 ## [Contributing](CONTRIBUTING.md)
 

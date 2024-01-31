@@ -6,7 +6,7 @@
 
 Install victory-native:
 ```sh
-$ npm install victory-native --save
+$ npm install victory-native@legacy --save
 ```
 
 Install react-native-svg:
@@ -96,4 +96,3 @@ Please review our [Code of Conduct][code] before contributing.
 [victory-native-demo]:https://github.com/FormidableLabs/victory-native-demo
 [react-native-svg-readme]: https://github.com/react-native-community/react-native-svg#notice
 [maintenance-image]: https://img.shields.io/badge/maintenance-active-green.svg
-
