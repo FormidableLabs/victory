@@ -12,6 +12,7 @@ import {
   EventPropTypeInterface,
   NumberOrCallback,
   OriginType,
+  Path,
   SliceNumberOrCallback,
   StringOrNumberOrCallback,
   VictoryCommonProps,
@@ -172,7 +173,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       labelPosition,
       labelPlacement,
     } = props;
-
+    console.log(props)
     if (!groupComponent) {
       throw new Error("VictoryPie expects a groupComponent prop");
     }
@@ -180,7 +181,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     const showIndicator = labelIndicator && labelPosition === "centroid";
 
     const children: React.ReactElement[] = [];
-    let textPathData ={};
 
     if (dataComponent) {
       const dataComponents = this.dataKeys.reduce<React.ReactElement[]>(
@@ -191,9 +191,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             index,
           );
 
-          if(labelPlacement==="curved"){
-            textPathData[index] = dataProps.id
-          }
           if (shouldRenderDatum((dataProps as any).datum)) {
             validDataComponents.push(
               React.cloneElement(dataComponent, dataProps),
@@ -207,6 +204,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       children.push(...dataComponents);
     }
 
+    const pathComponents:React.ReactElement[]=[];
     if (labelComponent) {
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
@@ -216,7 +214,13 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             index,
           );
           if(labelPlacement==="curved"){
-            labelProps.href = `#${textPathData[index]}`
+            console.log(labelProps)
+            let labelPathComponent = React.cloneElement(<Path transform={`rotate(${labelProps.x} ${labelProps.y})`}/>, {
+              d: labelProps.path,
+              id: `label-path-${index}`
+            })
+            pathComponents.push(labelPathComponent)
+            labelProps.href = `#label-path-${index}`
           }
           
           if (
@@ -231,8 +235,11 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
           (comp: React.ReactElement | undefined): comp is React.ReactElement =>
             comp !== undefined,
         );
-
-      children.push(...labelComponents);
+          if(pathComponents.length){
+            children.push(...pathComponents,...labelComponents);
+          } else {
+            children.push(...labelComponents);
+          }
     }
 
     if (showIndicator && labelIndicator) {

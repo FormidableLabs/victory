@@ -1,7 +1,6 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
 import { defaults, isFunction, isPlainObject, isNil } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
-
 import { Helpers, Data, Style } from "victory-core";
 
 const checkForValidText = (text) => {
@@ -104,6 +103,12 @@ const getLabelArc = (labelRadius) => {
   return d3Shape.arc().outerRadius(labelRadius).innerRadius(labelRadius);
 };
 
+const getLabelPath = (pathFunction,slice)=>{
+  const startAngle = Helpers.degreesToRadians(slice.sliceStartAngle);
+  const endAngle = Helpers.degreesToRadians(slice.sliceEndAngle);
+  return pathFunction(defaults({startAngle, endAngle}, slice));
+}
+
 const getCalculatedLabelRadius = (radius, labelRadius, style) => {
   const padding = (style && style.padding) || 0;
   return labelRadius || radius + padding;
@@ -205,6 +210,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     evaluatedStyle,
   );
   const labelArc = getLabelArc(calculatedLabelRadius);
+  const path = getLabelPath(labelArc,slice);
   const position = getLabelPosition(labelArc, slice, labelPosition);
   const baseAngle = getBaseLabelAngle(slice, labelPosition, labelStyle);
   const labelAngle = getLabelAngle(baseAngle, labelPlacement);
@@ -223,14 +229,14 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     orientation,
     text,
     style: labelStyle,
-    x: Math.round(position[0]) + origin.x,
-    y: Math.round(position[1]) + origin.y,
+    x: Math.round(position[0]) ,
+    y: Math.round(position[1]),
     textAnchor,
     verticalAnchor,
     angle: labelAngle,
     calculatedLabelRadius,
-    href
-
+    href,
+    path,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {

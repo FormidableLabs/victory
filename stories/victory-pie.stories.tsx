@@ -494,7 +494,7 @@ export const Origin = () => {
 export const LabelPlacement = () => {
   return (
     <>
-      <VictoryPie
+      {/* <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         labelPosition="startAngle"
         labelPlacement="parallel"
@@ -526,8 +526,8 @@ export const LabelPlacement = () => {
           { x: 7, y: 1, l: 270 },
           { x: 8, y: 1, l: 315 },
         ]}
-      />
-      <VictoryPie
+      /> */}
+      {/* <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         radius={120}
         labelPosition="startAngle"
@@ -543,7 +543,7 @@ export const LabelPlacement = () => {
           { x: 7, y: 1, l: 270 },
           { x: 8, y: 1, l: 315 },
         ]}
-      />
+      /> */}
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         radius={120}
