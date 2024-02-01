@@ -24,9 +24,9 @@ export class VictoryPortal extends React.Component<VictoryPortalProps> {
 
   static contextType = PortalContext;
   private checkedContext!: boolean;
-  private renderInPlace!: boolean;
-  private element!: React.ReactElement;
   private portalKey!: number;
+  public renderInPlace!: boolean;
+  public element!: React.ReactElement;
 
   componentDidMount() {
     if (!this.checkedContext) {

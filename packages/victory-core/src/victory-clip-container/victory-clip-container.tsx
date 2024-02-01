@@ -39,7 +39,7 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
     clipPathComponent: <ClipPath />,
     groupComponent: <g />,
   };
-  private clipId: VictoryClipContainerProps["clipId"];
+  public clipId: VictoryClipContainerProps["clipId"];
 
   constructor(props: VictoryClipContainerProps) {
     super(props);

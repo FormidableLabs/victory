@@ -13,6 +13,7 @@ export interface ArcProps extends VictoryCommonPrimitiveProps {
   pathComponent?: React.ReactElement;
   r?: number;
   startAngle?: number;
+  type?: string;
 }
 
 const getArcPath = (props) => {

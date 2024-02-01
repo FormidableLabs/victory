@@ -73,7 +73,7 @@ class VictoryScatterBase extends React.Component<VictoryScatterProps> {
   static role = "scatter";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
-  static defaultProps = {
+  static defaultProps: VictoryScatterProps = {
     containerComponent: <VictoryContainer />,
     dataComponent: <Point />,
     labelComponent: <VictoryLabel />,

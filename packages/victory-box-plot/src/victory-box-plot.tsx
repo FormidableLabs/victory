@@ -140,7 +140,7 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
   static role = "boxplot";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
-  static defaultProps = {
+  static defaultProps: VictoryBoxPlotProps = {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <Box />,

@@ -74,7 +74,7 @@ class VictoryErrorBarBase extends React.Component<VictoryErrorBarProps> {
   static role = "errorbar";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
-  static defaultProps = {
+  static defaultProps: VictoryErrorBarProps = {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <ErrorBar />,

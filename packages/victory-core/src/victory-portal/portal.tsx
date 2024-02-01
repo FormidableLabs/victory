@@ -39,7 +39,7 @@ export class Portal
     this.forceUpdate();
   };
 
-  private getChildren() {
+  public getChildren() {
     return keys(this.map).map((key) => {
       const el = this.map[key];
       return el ? React.cloneElement(el, { key }) : el;

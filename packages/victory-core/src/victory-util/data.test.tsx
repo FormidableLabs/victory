@@ -336,6 +336,16 @@ describe("victory-util/data", () => {
       expect(returnData).toEqual(generatedReturn);
     });
 
+    it("generates a dataset from negative domain", () => {
+      const generatedReturn = [
+        { x: -10, y: 0 },
+        { x: 10, y: 10 },
+      ];
+      const props = { x: "x", y: "y", domain: { x: [-10, 10], y: [0, 10] } };
+      const returnData = Data.generateData(props);
+      expect(returnData).toEqual(generatedReturn);
+    });
+
     it("generates a dataset from domain and samples", () => {
       const generatedReturn = [
         { x: 0, y: 0 },

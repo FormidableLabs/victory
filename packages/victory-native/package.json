@@ -1,6 +1,6 @@
 {
   "name": "victory-native",
-  "version": "36.8.4",
+  "version": "36.8.5",
   "description": "Native Port for Victory",
   "keywords": [
     "data visualization",
@@ -13,68 +13,66 @@
     "url": "https://github.com/FormidableLabs/victory"
   },
   "homepage": "https://formidable.com/open-source/victory",
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "sideEffects": false,
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "lib/index.js",
   "files": [
     "src",
+    "lib",
     "index.js"
   ],
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.21",
-    "prop-types": "^15.8.1",
     "react-fast-compare": "^3.2.0",
-    "victory": "^36.8.4",
-    "victory-area": "^36.8.4",
-    "victory-axis": "^36.8.4",
-    "victory-bar": "^36.8.4",
-    "victory-box-plot": "^36.8.4",
-    "victory-brush-container": "^36.8.4",
-    "victory-brush-line": "^36.8.4",
-    "victory-candlestick": "^36.8.4",
-    "victory-chart": "^36.8.4",
-    "victory-core": "^36.8.4",
-    "victory-create-container": "^36.8.4",
-    "victory-cursor-container": "^36.8.4",
-    "victory-errorbar": "^36.8.4",
-    "victory-group": "^36.8.4",
-    "victory-histogram": "^36.8.4",
-    "victory-legend": "^36.8.4",
-    "victory-line": "^36.8.4",
-    "victory-pie": "^36.8.4",
-    "victory-polar-axis": "^36.8.4",
-    "victory-scatter": "^36.8.4",
-    "victory-selection-container": "^36.8.4",
-    "victory-shared-events": "^36.8.4",
-    "victory-stack": "^36.8.4",
-    "victory-tooltip": "^36.8.4",
-    "victory-voronoi": "^36.8.4",
-    "victory-voronoi-container": "^36.8.4",
-    "victory-zoom-container": "^36.8.4"
+    "victory": "^36.8.5",
+    "victory-area": "^36.8.5",
+    "victory-axis": "^36.8.5",
+    "victory-bar": "^36.8.5",
+    "victory-box-plot": "^36.8.5",
+    "victory-brush-container": "^36.8.5",
+    "victory-brush-line": "^36.8.5",
+    "victory-candlestick": "^36.8.5",
+    "victory-chart": "^36.8.5",
+    "victory-core": "^36.8.5",
+    "victory-create-container": "^36.8.5",
+    "victory-cursor-container": "^36.8.5",
+    "victory-errorbar": "^36.8.5",
+    "victory-group": "^36.8.5",
+    "victory-histogram": "^36.8.5",
+    "victory-legend": "^36.8.5",
+    "victory-line": "^36.8.5",
+    "victory-pie": "^36.8.5",
+    "victory-polar-axis": "^36.8.5",
+    "victory-scatter": "^36.8.5",
+    "victory-selection-container": "^36.8.5",
+    "victory-shared-events": "^36.8.5",
+    "victory-stack": "^36.8.5",
+    "victory-tooltip": "^36.8.5",
+    "victory-voronoi": "^36.8.5",
+    "victory-voronoi-container": "^36.8.5",
+    "victory-zoom-container": "^36.8.5"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "react-native": "^0.65.1",
     "react-native-gesture-handler": "^1.10.3",
-    "react-native-svg": "^12.4.3"
+    "react-native-svg": "^12.4.3",
+    "victory-native": "*"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
   "publishConfig": {
-    "provenance": true
+    "provenance": true,
+    "tag": "legacy"
   },
   "scripts": {
     "build": "wireit",
     "build:lib": "wireit",
     "build:lib:esm": "wireit",
     "build:lib:cjs": "wireit",
-    "build:dist": "wireit",
-    "build:dist:dev": "wireit",
-    "build:dist:min": "wireit",
     "check": "wireit",
     "types:check": "wireit",
     "types:create": "wireit",
@@ -86,32 +84,64 @@
   },
   "wireit": {
     "build": {
-      "command": "echo \"No build required\"",
-      "files": [],
-      "output": []
+      "dependencies": [
+        "build:lib",
+        "types:create"
+      ]
     },
-    "build:lib:esm": {
-      "command": "echo \"No build required\"",
-      "files": [],
-      "output": []
+    "build:lib": {
+      "dependencies": [
+        "build:lib:cjs"
+      ]
     },
     "build:lib:cjs": {
-      "command": "echo \"No build required\"",
-      "files": [],
-      "output": []
+      "command": "nps build:lib:cjs",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../.babelrc.build.js",
+        "../../.babelrc.js",
+        "../../package-scripts.js"
+      ],
+      "output": [
+        "lib/**/*.js",
+        "lib/**/*.js.map"
+      ],
+      "dependencies": [
+        "../victory:build:lib:cjs",
+        "../victory-area:build:lib:cjs",
+        "../victory-axis:build:lib:cjs",
+        "../victory-bar:build:lib:cjs",
+        "../victory-box-plot:build:lib:cjs",
+        "../victory-brush-container:build:lib:cjs",
+        "../victory-brush-line:build:lib:cjs",
+        "../victory-candlestick:build:lib:cjs",
+        "../victory-chart:build:lib:cjs",
+        "../victory-core:build:lib:cjs",
+        "../victory-create-container:build:lib:cjs",
+        "../victory-cursor-container:build:lib:cjs",
+        "../victory-errorbar:build:lib:cjs",
+        "../victory-group:build:lib:cjs",
+        "../victory-histogram:build:lib:cjs",
+        "../victory-legend:build:lib:cjs",
+        "../victory-line:build:lib:cjs",
+        "../victory-pie:build:lib:cjs",
+        "../victory-polar-axis:build:lib:cjs",
+        "../victory-scatter:build:lib:cjs",
+        "../victory-selection-container:build:lib:cjs",
+        "../victory-shared-events:build:lib:cjs",
+        "../victory-stack:build:lib:cjs",
+        "../victory-tooltip:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs",
+        "../victory-voronoi-container:build:lib:cjs",
+        "../victory-zoom-container:build:lib:cjs"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
-    "build:dist": {
-      "command": "echo \"No build required\"",
-      "files": [],
-      "output": []
-    },
-    "build:dist:dev": {
-      "command": "echo \"No build required\"",
-      "files": [],
-      "output": []
-    },
-    "build:dist:min": {
-      "command": "echo \"No build required\"",
+    "build:lib:esm": {
+      "command": "echo victory-native has no esm build",
       "files": [],
       "output": []
     },
@@ -124,14 +154,94 @@
       ]
     },
     "types:check": {
-      "command": "echo \"No types to check here\"",
-      "files": [],
-      "output": []
+      "command": "nps types:pkg:check",
+      "files": [
+        "src/**/*.{ts,tsx}",
+        "../../tsconfig.base.json",
+        "tsconfig.json"
+      ],
+      "dependencies": [
+        "types:create",
+        "../victory:types:create",
+        "../victory-area:types:create",
+        "../victory-axis:types:create",
+        "../victory-bar:types:create",
+        "../victory-box-plot:types:create",
+        "../victory-brush-container:types:create",
+        "../victory-brush-line:types:create",
+        "../victory-candlestick:types:create",
+        "../victory-chart:types:create",
+        "../victory-core:types:create",
+        "../victory-create-container:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-errorbar:types:create",
+        "../victory-group:types:create",
+        "../victory-histogram:types:create",
+        "../victory-legend:types:create",
+        "../victory-line:types:create",
+        "../victory-pie:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-scatter:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-shared-events:types:create",
+        "../victory-stack:types:create",
+        "../victory-tooltip:types:create",
+        "../victory-voronoi:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create",
+        "../victory-vendor:types:create"
+      ],
+      "output": [],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "types:create": {
-      "command": "echo \"No types to create here\"",
-      "files": [],
-      "output": []
+      "command": "nps types:pkg:create",
+      "files": [
+        "src/**",
+        "!src/**/*.test.*",
+        "../../tsconfig.base.json",
+        "tsconfig.build.json"
+      ],
+      "output": [
+        "es/**/*.d.ts",
+        "es/**/*.d.ts.map",
+        "lib/**/*.d.ts",
+        "lib/**/*.d.ts.map"
+      ],
+      "dependencies": [
+        "../victory:types:create",
+        "../victory-area:types:create",
+        "../victory-axis:types:create",
+        "../victory-bar:types:create",
+        "../victory-box-plot:types:create",
+        "../victory-brush-container:types:create",
+        "../victory-brush-line:types:create",
+        "../victory-candlestick:types:create",
+        "../victory-chart:types:create",
+        "../victory-core:types:create",
+        "../victory-create-container:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-errorbar:types:create",
+        "../victory-group:types:create",
+        "../victory-histogram:types:create",
+        "../victory-legend:types:create",
+        "../victory-line:types:create",
+        "../victory-pie:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-scatter:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-shared-events:types:create",
+        "../victory-stack:types:create",
+        "../victory-tooltip:types:create",
+        "../victory-voronoi:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create"
+      ],
+      "packageLocks": [
+        "pnpm-lock.yaml"
+      ]
     },
     "format": {
       "command": "nps format:pkg",
@@ -167,33 +277,95 @@
         "../../.eslintrc.js"
       ],
       "output": [],
+      "dependencies": [
+        "../victory:types:create",
+        "../victory-area:types:create",
+        "../victory-axis:types:create",
+        "../victory-bar:types:create",
+        "../victory-box-plot:types:create",
+        "../victory-brush-container:types:create",
+        "../victory-brush-line:types:create",
+        "../victory-candlestick:types:create",
+        "../victory-chart:types:create",
+        "../victory-core:types:create",
+        "../victory-create-container:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-errorbar:types:create",
+        "../victory-group:types:create",
+        "../victory-histogram:types:create",
+        "../victory-legend:types:create",
+        "../victory-line:types:create",
+        "../victory-pie:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-scatter:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-shared-events:types:create",
+        "../victory-stack:types:create",
+        "../victory-tooltip:types:create",
+        "../victory-voronoi:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create",
+        "../victory-vendor:types:create"
+      ],
       "packageLocks": [
         "pnpm-lock.yaml"
       ]
     },
     "lint:fix": {
-      "command": "pnpm run lint || nps lint:pkg",
+      "command": "pnpm run lint || nps lint:pkg:fix",
       "files": [
         "src/**",
         "../../.eslintignore",
         "../../.eslintrc.js"
       ],
       "output": [],
+      "dependencies": [
+        "../victory:types:create",
+        "../victory-area:types:create",
+        "../victory-axis:types:create",
+        "../victory-bar:types:create",
+        "../victory-box-plot:types:create",
+        "../victory-brush-container:types:create",
+        "../victory-brush-line:types:create",
+        "../victory-candlestick:types:create",
+        "../victory-chart:types:create",
+        "../victory-core:types:create",
+        "../victory-create-container:types:create",
+        "../victory-cursor-container:types:create",
+        "../victory-errorbar:types:create",
+        "../victory-group:types:create",
+        "../victory-histogram:types:create",
+        "../victory-legend:types:create",
+        "../victory-line:types:create",
+        "../victory-pie:types:create",
+        "../victory-polar-axis:types:create",
+        "../victory-scatter:types:create",
+        "../victory-selection-container:types:create",
+        "../victory-shared-events:types:create",
+        "../victory-stack:types:create",
+        "../victory-tooltip:types:create",
+        "../victory-voronoi:types:create",
+        "../victory-voronoi-container:types:create",
+        "../victory-zoom-container:types:create",
+        "../victory-vendor:types:create"
+      ],
       "packageLocks": [
         "pnpm-lock.yaml"
       ]
     },
     "jest": {
-      "command": "nps jest:native",
+      "command": "nps jest:pkg",
       "files": [
-        "src/**",
-        "../../.babelrc.native.js",
-        "../../test/jest-native-config.js",
-        "../../test/jest-native-setup.js"
+        "src/**/*.test.*",
+        "../../.babelrc.js",
+        "../../test/jest-config.js",
+        "../../test/jest-setup.ts"
       ],
       "output": [],
       "dependencies": [
-        "../victory:build:lib"
+        "build:lib:cjs",
+        "../victory-vendor:build:lib:cjs",
+        "../victory-voronoi:build:lib:cjs"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

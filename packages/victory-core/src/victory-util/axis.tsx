@@ -6,7 +6,6 @@ import {
   isObject,
   invert,
   uniq,
-  range,
   orderBy,
   values,
   includes,
@@ -207,7 +206,7 @@ function getTickArray(props) {
   if (tickValues && Collection.containsStrings(tickValues)) {
     ticks = stringMap
       ? tickValues.map((tick) => stringMap[tick])
-      : range(1, tickValues.length + 1);
+      : Helpers.range(1, tickValues.length + 1);
   }
   const tickArray = ticks ? uniq(ticks) : getTicksFromFormat();
   const buildTickArray = (arr: number[]) => {

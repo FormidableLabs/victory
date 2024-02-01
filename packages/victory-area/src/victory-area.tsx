@@ -68,7 +68,7 @@ class VictoryAreaBase extends React.Component<VictoryAreaProps> {
     "width",
   ];
 
-  static defaultProps = {
+  static defaultProps: VictoryAreaProps = {
     containerComponent: <VictoryContainer />,
     dataComponent: <Area />,
     groupComponent: <VictoryClipContainer />,
