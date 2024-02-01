@@ -153,6 +153,8 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 ```
 
+While the axes defaults are great, you can see there's some overlap with the y-axis and first bar. Let's fix that in the next section.
+
 #### 6. Customize the axes
 
 Next, let's modify the tick labels on the axes to be a little more descriptive. We can do this by adding and configuring `VictoryAxis` components to our chart, so let's import `VictoryAxis`. Import statements should now look like this:
