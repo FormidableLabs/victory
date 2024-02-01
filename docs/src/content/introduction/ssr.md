@@ -1,13 +1,39 @@
 ---
-id: 3
+id: 1
 title: Server Side Rendering
 category: introduction
 type: docs
 scope: null
 ---
-# Using Victory in Server Side Rendering Applications
+
+#### Using Victory in Server Side Rendering Applications
 
 In frameworks such as Next.js 13+, context is fully supported within Client Components, but it cannot be created or consumed directly within Server Components. This is because Server Components have no React state (since they're not interactive), and context is primarily used for rerendering interactive components deep in the tree after some React state has been updated.
-Victory uses `createContext` to perform
+Victory uses `createContext` to perform its operations and it must be rendered client side by adding the following directive in your components when used in a framework with Server Side Component support.
+```use client```; 
 
-```use client```;
+
+```jsx
+"use client";
+import React from 'react';
+import { VictoryBar, VictoryChart, VictoryTheme } from "victory";
+
+const data = [
+  { quarter: 1, earnings: 13000 },
+  { quarter: 2, earnings: 16500 },
+  { quarter: 3, earnings: 14250 },
+  { quarter: 4, earnings: 19000 }
+];
+
+const App = ()=>{
+  return (
+    <div style={styles.container}>
+      <VictoryChart width={350} theme={VictoryTheme.material}>
+        <VictoryBar data={data} x="quarter" y="earnings" />
+      </VictoryChart>
+    </div>
+  );
+}
+
+export default App;
+```
