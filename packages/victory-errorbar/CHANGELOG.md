@@ -1,5 +1,11 @@
 # victory-errorbar
 
+## 36.8.6
+
+### Patch Changes
+
+- Migrate victory-native to TypeScript ([#2739](https://github.com/FormidableLabs/victory/pull/2739))
+
 ## 36.8.5
 
 ### Patch Changes

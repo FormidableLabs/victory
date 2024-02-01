@@ -1,5 +1,7 @@
 # victory-canvas
 
+## 36.8.6
+
 ## 36.8.5
 
 ### Patch Changes
