@@ -220,7 +220,8 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
        
             let labelPathComponent = React.cloneElement(<Path/>, {
               d: curvedLabelProps.path,
-              id: `label-path-${index}`
+              id: `label-path-${index}`,
+              key: `label-path-${index}`
             })
             pathComponents.push(labelPathComponent)
             curvedLabelProps.href = `#label-path-${index}`
