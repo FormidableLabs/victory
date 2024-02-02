@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   VictoryPortal,
-  Rect,
   Text,
   TSpan,
   Log,
@@ -12,41 +11,27 @@ import {
   TextSize,
   UserProps,
   Helpers,
-  Path,
   NumberOrCallback,
   StringOrCallback,
-  PaddingProps,
   VictoryLabelStyleObject,
   StringOrNumberOrCallback,
-  //TextPath,
 } from "victory-core";
 
 import { TextPath } from "../../victory-core/lib";
 
-
-export type TextOffsetType = "start" | "middle" | "end";
-
 export interface CurvedLabelProps {
   ariaLabel?: StringOrCallback;
-  backgroundComponent?: React.ReactElement;
-  backgroundStyle?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
-  backgroundPadding?: PaddingProps | PaddingProps[];
   capHeight?: StringOrNumberOrCallback;
   children?: StringOrNumberOrCallback;
   className?: string;
   datum?: Record<string, any>;
   data?: any[];
   desc?: string;
-  direction?: string;
   disableInlineStyles?: boolean;
   events?: React.DOMAttributes<any>;
-  groupComponent?: React.ReactElement;
   id?: StringOrNumberOrCallback;
-  inline?: boolean;
   href?: string;
   lineHeight?: StringOrNumberOrCallback | (string | number)[];
-  polar?: boolean;
-  renderInPortal?: boolean;
   style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
@@ -85,7 +70,6 @@ const getSingleValue = <T,>(prop: T | T[], index = 0): T => {
   return Array.isArray(prop) ? prop[index] || prop[0] : prop;
 };
 
-
 const getStyles = (style, props) => {
   if (props.disableInlineStyles) {
     const baseStyles = Helpers.evaluateStyle(style, props);
@@ -105,26 +89,6 @@ const getStyles = (style, props) => {
   return Array.isArray(style) && !isEmpty(style)
     ? style.map((s) => getSingleStyle(s))
     : getSingleStyle(style);
-};
-
-const getBackgroundStyles = (style, props) => {
-  if (!style) {
-    return undefined;
-  }
-  return Array.isArray(style) && !isEmpty(style)
-    ? style.map((s) => Helpers.evaluateStyle(s, props))
-    : Helpers.evaluateStyle(style, props);
-};
-
-const getBackgroundPadding = (props) => {
-  if (props.backgroundPadding && Array.isArray(props.backgroundPadding)) {
-    return props.backgroundPadding.map((backgroundPadding) => {
-      const padding = Helpers.evaluateProp(backgroundPadding, props);
-      return Helpers.getPadding({ padding });
-    });
-  }
-  const padding = Helpers.evaluateProp(props.backgroundPadding, props);
-  return Helpers.getPadding({ padding });
 };
 
 const getLineHeight = (props) => {
@@ -157,17 +121,8 @@ const evaluateProps = (props) => {
   */
   const text = getContent(props.text, props);
   const style = getStyles(props.style, Object.assign({}, props, { text }));
-  const backgroundStyle = getBackgroundStyles(
-    props.backgroundStyle,
-    Object.assign({}, props, { text, style }),
-  );
-  const backgroundPadding = getBackgroundPadding(
-    Object.assign({}, props, { text, style, backgroundStyle }),
-  );
   const id = Helpers.evaluateProp(props.id, props);
   return Object.assign({}, props, {
-    backgroundStyle,
-    backgroundPadding,
     style,
     text,
     id,
@@ -177,26 +132,19 @@ const evaluateProps = (props) => {
 const getCalculatedProps = <T extends CurvedLabelProps>(props: T) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const lineHeight = getLineHeight(props);
-  const direction = props.direction
-    ? Helpers.evaluateProp(props.direction, props)
-    : "inherit";
-
   return Object.assign({}, props, {
     ariaLabel,
     lineHeight,
-    direction,
   });
 };
 
 const renderLabel = (calculatedProps, tspanValues) => {
   const {
     ariaLabel,
-    inline,
     className,
     title,
     events,
     text,
-    transform,
     desc,
     id,
     tabIndex,
@@ -211,7 +159,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     "aria-label": ariaLabel,
     key: "text",
     ...events,
-    transform,
     className,
     title,
     desc: Helpers.evaluateProp(desc, calculatedProps),
@@ -238,9 +185,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
 };
 
 const defaultProps = {
-  backgroundComponent: <Rect />,
-  groupComponent: <g />,
-  direction: "inherit",
   textComponent: <Text />,
   textPathComponent: <TextPath />,
   tspanComponent: <TSpan />,
@@ -258,7 +202,7 @@ export const CurvedLabel: {
   }
   const calculatedProps = getCalculatedProps(props);
 
-  const { text, style, capHeight, backgroundPadding, lineHeight } =
+  const { text, style, capHeight, lineHeight } =
     calculatedProps;
 
   const tspanValues = (text as string[]).map((line, i) => {
@@ -276,33 +220,17 @@ export const CurvedLabel: {
       // TODO: This looks like a bug:
       textSize: TextSize.approximateTextSize(line, currentStyle),
       lineHeight: currentLineHeight,
-      backgroundPadding: getSingleValue(backgroundPadding, i),
     };
   });
 
-  const label = renderLabel(calculatedProps, tspanValues);
-
-  return props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
+  return renderLabel(calculatedProps, tspanValues);
 };
 
 CurvedLabel.displayName = "CurvedLabel";
 CurvedLabel.role = "label";
 CurvedLabel.defaultStyles = defaultStyles;
 CurvedLabel.propTypes = {
-  active: PropTypes.bool,
-  angle: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-  ]),
   ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  backgroundComponent: PropTypes.element,
-  backgroundPadding: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.object,
-    PropTypes.array,
-  ]),
-  backgroundStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   capHeight: PropTypes.oneOfType([
     PropTypes.string,
     CustomPropTypes.nonNegative,
@@ -313,12 +241,9 @@ CurvedLabel.propTypes = {
   datum: PropTypes.any,
   // @ts-expect-error "Function is not assignable to string"
   desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  direction: PropTypes.oneOf(["rtl", "ltr", "inherit"]),
   events: PropTypes.object,
-  groupComponent: PropTypes.element,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  inline: PropTypes.bool,
   href:PropTypes.string,
   lineHeight: PropTypes.oneOfType([
     PropTypes.string,
@@ -326,12 +251,6 @@ CurvedLabel.propTypes = {
     PropTypes.func,
     PropTypes.array,
   ]),
-  polar: PropTypes.bool,
-  renderInPortal: PropTypes.bool,
-  scale: PropTypes.shape({
-    x: CustomPropTypes.scale,
-    y: CustomPropTypes.scale,
-  }),
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
   text: PropTypes.oneOfType([
@@ -343,11 +262,5 @@ CurvedLabel.propTypes = {
   textComponent: PropTypes.element,
   textPathComponent: PropTypes.element,
   title: PropTypes.string,
-  transform: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.func,
-  ]),
   tspanComponent: PropTypes.element,
-
 };

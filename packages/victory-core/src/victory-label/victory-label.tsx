@@ -5,7 +5,6 @@ import React from "react";
 import { VictoryPortal } from "../victory-portal/victory-portal";
 import { Rect } from "../victory-primitives/rect";
 import { Text } from "../victory-primitives/text";
-import { TextPath } from "../victory-primitives/textPath";
 import { TSpan } from "../victory-primitives/tspan";
 import * as Helpers from "../victory-util/helpers";
 import * as LabelHelpers from "../victory-util/label-helpers";
@@ -58,7 +57,6 @@ export interface VictoryLabelProps {
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
   textComponent?: React.ReactElement;
-  textPathComponent?: React.ReactElement;
   textAnchor?: ValueOrAccessor<TextAnchorType>;
   title?: string;
   transform?: ValueOrAccessor<string | object>;
@@ -539,8 +537,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     tabIndex,
     tspanComponent,
     textComponent,
-    textPathComponent,
-    href,
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
@@ -575,10 +571,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     return React.cloneElement(tspanComponent, tspanProps);
   });
 
-  if(href && href.length){
-    const textPathElement = React.cloneElement(textPathComponent,{href},tspans);
-    return React.cloneElement(textComponent, textProps, textPathElement);
-  } 
   return React.cloneElement(textComponent, textProps, tspans);
 };
 
@@ -587,7 +579,6 @@ const defaultProps = {
   groupComponent: <g />,
   direction: "inherit",
   textComponent: <Text />,
-  textPathComponent: <TextPath />,
   tspanComponent: <TSpan />,
   capHeight: 0.71, // Magic number from d3.
   lineHeight: 1,
@@ -685,7 +676,6 @@ VictoryLabel.propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
   index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   inline: PropTypes.bool,
-  href:PropTypes.string,
   labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
   lineHeight: PropTypes.oneOfType([
     PropTypes.string,
@@ -717,7 +707,6 @@ VictoryLabel.propTypes = {
     PropTypes.func,
   ]),
   textComponent: PropTypes.element,
-  textPathComponent: PropTypes.element,
   title: PropTypes.string,
   transform: PropTypes.oneOfType([
     PropTypes.string,

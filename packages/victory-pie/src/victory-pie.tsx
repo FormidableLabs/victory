@@ -210,23 +210,23 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
         const curvedLabelComponent:React.ReactElement = <CurvedLabel/>
         const curvedLabelComponents = this.dataKeys
         .map((_dataKey, index) => {
-          const labelProps = this.getComponentProps(
+          const curvedLabelProps = this.getComponentProps(
             curvedLabelComponent,
-            "labels",
+            "curvedLabels",
             index,
           );
        
             let labelPathComponent = React.cloneElement(<Path/>, {
-              d: labelProps.path,
+              d: curvedLabelProps.path,
               id: `label-path-${index}`
             })
             pathComponents.push(labelPathComponent)
-            labelProps.href = `#label-path-${index}`
+            curvedLabelProps.href = `#label-path-${index}`
           if (
-            (labelProps as any).text !== undefined &&
-            (labelProps as any).text !== null
+            (curvedLabelProps as any).text !== undefined &&
+            (curvedLabelProps as any).text !== null
           ) {
-            return React.cloneElement(curvedLabelComponent, labelProps);
+            return React.cloneElement(curvedLabelComponent, curvedLabelProps);
           }
           return undefined;
         })
@@ -237,8 +237,8 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
           if(pathComponents.length){
             children.push(...pathComponents,...curvedLabelComponents);
           } 
-        } else {
-    if (labelComponent) {
+        } else if (labelComponent) {
+    
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
           const labelProps = this.getComponentProps(
@@ -261,7 +261,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
         );
         children.push(...labelComponents);
     }
-  }
+  
 
     if (showIndicator && labelIndicator) {
       let labelIndicatorComponent: React.ReactElement = <LineSegment />;
