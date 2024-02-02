@@ -173,7 +173,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       labelPosition,
       labelPlacement,
     } = props;
-    console.log(props)
+
     if (!groupComponent) {
       throw new Error("VictoryPie expects a groupComponent prop");
     }
@@ -190,7 +190,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             "data",
             index,
           );
-
           if (shouldRenderDatum((dataProps as any).datum)) {
             validDataComponents.push(
               React.cloneElement(dataComponent, dataProps),
@@ -214,8 +213,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             index,
           );
           if(labelPlacement==="curved"){
-            console.log(labelProps)
-            let labelPathComponent = React.cloneElement(<Path transform={`rotate(${labelProps.x} ${labelProps.y})`}/>, {
+            let labelPathComponent = React.cloneElement(<Path startOffset={"25%"}/>, {
               d: labelProps.path,
               id: `label-path-${index}`
             })

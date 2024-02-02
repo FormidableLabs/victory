@@ -103,11 +103,11 @@ const getLabelArc = (labelRadius) => {
   return d3Shape.arc().outerRadius(labelRadius).innerRadius(labelRadius);
 };
 
-const getLabelPath = (pathFunction,slice)=>{
-  const startAngle = Helpers.degreesToRadians(slice.sliceStartAngle);
-  const endAngle = Helpers.degreesToRadians(slice.sliceEndAngle);
-  return pathFunction(defaults({startAngle, endAngle}, slice));
-}
+// const getLabelPath = (pathFunction,slice)=>{
+//   const startAngle = Helpers.degreesToRadians(slice.sliceStartAngle);
+//   const endAngle = Helpers.degreesToRadians(slice.sliceEndAngle);
+//   return pathFunction(defaults({startAngle, endAngle}, slice));
+// }
 
 const getCalculatedLabelRadius = (radius, labelRadius, style) => {
   const padding = (style && style.padding) || 0;
@@ -210,7 +210,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     evaluatedStyle,
   );
   const labelArc = getLabelArc(calculatedLabelRadius);
-  const path = getLabelPath(labelArc,slice);
+  const path = labelArc(slice);
   const position = getLabelPosition(labelArc, slice, labelPosition);
   const baseAngle = getBaseLabelAngle(slice, labelPosition, labelStyle);
   const labelAngle = getLabelAngle(baseAngle, labelPlacement);
@@ -229,8 +229,8 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     orientation,
     text,
     style: labelStyle,
-    x: Math.round(position[0]) ,
-    y: Math.round(position[1]),
+    x: Math.round(position[0]) + origin.x,
+    y: Math.round(position[1]) + origin.y,
     textAnchor,
     verticalAnchor,
     angle: labelAngle,

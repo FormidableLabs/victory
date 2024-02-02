@@ -576,8 +576,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
   });
 
   if(href && href.length){
-    console.log(textProps,calculatedProps)
-    const textPathElement = React.cloneElement(textPathComponent,{href,transform:textProps.transform},tspans);
+    const textPathElement = React.cloneElement(textPathComponent,{href},tspans);
     return React.cloneElement(textComponent, textProps, textPathElement);
   } 
   return React.cloneElement(textComponent, textProps, tspans);
