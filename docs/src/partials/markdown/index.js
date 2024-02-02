@@ -145,7 +145,6 @@ renderHeading.propTypes = {
  * @param {Object} meta - meta
  * @returns {Object} link element
  */
-// eslint-disable-next-line react/no-multi-comp
 export const renderLink = ({ href, children }) => {
   if (/^\w+:/.test(href)) {
     return (
@@ -162,7 +161,7 @@ renderLink.propTypes = {
   href: PropTypes.string,
 };
 
-/* eslint-enable react/prop-types, no-magic-numbers */
+/* eslint-enable no-magic-numbers */
 const Markdown = (props) => {
   const { className, source, scope, theme } = props;
   /* eslint-disable react/prop-types, no-magic-numbers */
