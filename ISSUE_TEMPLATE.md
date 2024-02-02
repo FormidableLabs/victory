@@ -1,6 +1,5 @@
 # Questions
 
-
 **For discussions about features or questions about how to use Victory, please [start a new discussion](https://github.com/FormidableLabs/victory/discussions/new) rather than opening an issue.**
 
 # Bug Reports
@@ -19,7 +18,7 @@ Describe the issue you're seeing, and what you expect the behavior to be.
 
 ### Reproduction
 
-Please try to reproduce the issue you're seeing in a sandbox. You can [fork this sandbox](https://codesandbox.io/s/m3xo745x2x) to get started.
+Please try to reproduce the issue you're seeing in a sandbox. You can [fork this sandbox](https://codesandbox.io/s/dj4f7t) to get started.
 
 If you can't reproduce your issue in a sandbox, please create a minimal git repo that demonstrates the problem you're seeing. Include instructions for installing and reproducing your error.
 

@@ -1,5 +1,17 @@
 # victory
 
+## 36.8.6
+
+### Patch Changes
+
+- Update victory package.json source to the correct index file ([#2765](https://github.com/FormidableLabs/victory/pull/2765))
+
+## 36.8.5
+
+### Patch Changes
+
+- Replace instances of lodash.assign with Object.assign ([#2757](https://github.com/FormidableLabs/victory/pull/2757))
+
 ## 36.8.4
 
 ## 36.8.3

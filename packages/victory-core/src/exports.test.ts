@@ -319,6 +319,7 @@ describe("victory-core", () => {
             "modifyProps": [Function],
             "omit": [Function],
             "radiansToDegrees": [Function],
+            "range": [Function],
             "reduceChildren": [Function],
             "scalePoint": [Function],
           },

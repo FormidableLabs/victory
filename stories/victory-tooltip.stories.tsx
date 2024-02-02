@@ -167,7 +167,10 @@ export const CenterOffset = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ y: ({ index }) => (index! < 3 ? -10 : 10), x: 10 }}
+            centerOffset={{
+              y: ({ index }) => (Number(index) < 3 ? -10 : 10),
+              x: 10,
+            }}
             text={`function\noffset`}
           />
         }
@@ -215,7 +218,7 @@ export const PointerOrientation = () => {
             active
             pointerOrientation={({ index }) => (index < 3 ? "bottom" : "top")}
             text={({ index }) =>
-              index! < 3 ? `orientation\nbottom` : `orientation\ntop`
+              Number(index) < 3 ? `orientation\nbottom` : `orientation\ntop`
             }
           />
         }
@@ -388,7 +391,7 @@ export const FlyoutHeight = () => {
           <VictoryTooltip
             active
             flyoutHeight={({ text }) => (text === "short" ? 20 : 50)}
-            text={({ index }) => (index! > 2 ? "short" : "tall")}
+            text={({ index }) => (Number(index) > 2 ? "short" : "tall")}
           />
         }
       />
@@ -445,7 +448,7 @@ export const FlyoutWidth = () => {
           <VictoryTooltip
             active
             flyoutWidth={({ text }) => (text === "short" ? 35 : 100)}
-            text={({ index }) => (index! > 2 ? "short" : "long")}
+            text={({ index }) => (Number(index) > 2 ? "short" : "long")}
           />
         }
       />
@@ -495,7 +498,7 @@ export const PointerWidth = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ x: ({ index }) => (index! < 2 ? -20 : 0) }}
+            centerOffset={{ x: ({ index }) => (Number(index) < 2 ? -20 : 0) }}
             pointerWidth={({ text }) => (text === "skinny" ? 0 : 20)}
             text={({ datum }) => (datum.y < 0 ? "skinny" : "wide ")}
           />
@@ -507,7 +510,7 @@ export const PointerWidth = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ y: ({ index }) => (index! < 2 ? 20 : 0) }}
+            centerOffset={{ y: ({ index }) => (Number(index) < 2 ? 20 : 0) }}
             pointerWidth={({ text }) => (text === "skinny" ? 0 : 20)}
             text={({ datum }) => (datum.y < 0 ? "skinny" : "wide ")}
           />
@@ -522,7 +525,7 @@ export const PointerWidth = () => {
               x: ({ index }) => (index === 0 || index === 4 ? 20 : 0),
             }}
             pointerWidth={({ text }) => (text === "skinny" ? 0 : 20)}
-            text={({ index }) => (index! > 2 ? "skinny" : "wide ")}
+            text={({ index }) => (Number(index) > 2 ? "skinny" : "wide ")}
           />
         }
       />
@@ -572,7 +575,7 @@ export const PointerLength = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ x: ({ index }) => (index! < 2 ? 20 : 0) }}
+            centerOffset={{ x: ({ index }) => (Number(index) < 2 ? 20 : 0) }}
             pointerLength={({ text }) => (text === "short" ? 1 : 30)}
             text={({ datum }) => (datum.y < 0 ? "short" : "long ")}
           />
@@ -584,7 +587,7 @@ export const PointerLength = () => {
         labelComponent={
           <VictoryTooltip
             active
-            centerOffset={{ y: ({ index }) => (index! < 2 ? 20 : 0) }}
+            centerOffset={{ y: ({ index }) => (Number(index) < 2 ? 20 : 0) }}
             pointerLength={({ text }) => (text === "short" ? 1 : 30)}
             text={({ datum }) => (datum.y < 0 ? "short" : "long ")}
           />
@@ -599,7 +602,7 @@ export const PointerLength = () => {
               x: ({ index }) => (index === 0 || index === 4 ? 20 : 0),
             }}
             pointerLength={({ text }) => (text === "short" ? 1 : 30)}
-            text={({ index }) => (index! > 2 ? "short" : "long ")}
+            text={({ index }) => (Number(index) > 2 ? "short" : "long ")}
           />
         }
       />
@@ -656,7 +659,7 @@ export const CornerRadius = () => {
           <VictoryTooltip
             active
             cornerRadius={({ text }) => (text === "square" ? 0 : 5)}
-            text={({ index }) => (index! > 2 ? "square" : "rounded ")}
+            text={({ index }) => (Number(index) > 2 ? "square" : "rounded ")}
           />
         }
       />

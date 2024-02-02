@@ -174,7 +174,9 @@ const fallbackProps = {
   },
 };
 
-export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
+export class VictoryBrushLine<
+  T extends VictoryBrushLineProps,
+> extends React.Component<T> {
   static propTypes = {
     allowDrag: PropTypes.bool,
     allowDraw: PropTypes.bool,
@@ -466,7 +468,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
                 }
                 return [];
               },
-              onMouseUp(evt, targetProps) {
+              onMouseUp: (evt, targetProps) => {
                 const {
                   onBrushDomainChange,
                   brushDomain,
@@ -494,7 +496,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
                   },
                 ];
               },
-              onMouseLeave(evt, targetProps) {
+              onMouseLeave: (evt, targetProps) => {
                 const { brushDomain } = targetProps;
                 return [
                   {

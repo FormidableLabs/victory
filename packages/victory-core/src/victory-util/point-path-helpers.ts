@@ -1,5 +1,6 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 2.5, 3] }]*/
-import { range } from "lodash";
+
+import * as Helpers from "./helpers";
 
 export function circle(x: number, y: number, size: number) {
   return `M ${x}, ${y}
@@ -110,7 +111,7 @@ export function star(x: number, y: number, size: number) {
   const baseSize = 1.35 * size; // eslint-disable-line no-magic-numbers
   const angle = Math.PI / 5; // eslint-disable-line no-magic-numbers
   // eslint-disable-next-line no-magic-numbers
-  const starCoords = range(10).map((index) => {
+  const starCoords = Helpers.range(10).map((index) => {
     const length = index % 2 === 0 ? baseSize : baseSize / 2;
     return `${length * Math.sin(angle * (index + 1)) + x},
         ${length * Math.cos(angle * (index + 1)) + y}`;

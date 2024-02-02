@@ -1,5 +1,19 @@
 # victory-scatter
 
+## 36.8.6
+
+### Patch Changes
+
+- Migrate victory-native to TypeScript ([#2739](https://github.com/FormidableLabs/victory/pull/2739))
+
+## 36.8.5
+
+### Patch Changes
+
+- Replace instances of lodash.assign with Object.assign ([#2757](https://github.com/FormidableLabs/victory/pull/2757))
+
+* Replace instances of lodash.range with equivalent native code ([#2760](https://github.com/FormidableLabs/victory/pull/2760))
+
 ## 36.8.4
 
 ## 36.8.3

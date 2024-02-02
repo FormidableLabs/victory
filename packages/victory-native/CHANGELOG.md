@@ -1,5 +1,19 @@
 # victory-native
 
+## 36.8.6
+
+### Patch Changes
+
+- Migrate victory-native to TypeScript ([#2739](https://github.com/FormidableLabs/victory/pull/2739))
+
+## 36.8.5
+
+### Patch Changes
+
+- Replace instances of lodash.assign with Object.assign ([#2757](https://github.com/FormidableLabs/victory/pull/2757))
+
+* Use legacy npm dist-tag to avoid conflicts with victory-native-xl ([#2764](https://github.com/FormidableLabs/victory/pull/2764))
+
 ## 36.8.4
 
 ## 36.8.3
