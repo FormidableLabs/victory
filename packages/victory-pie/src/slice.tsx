@@ -129,7 +129,7 @@ export const Slice = (initialProps: SliceProps) => {
     id: props.id,
     d: getPath(props),
     style: props.style,
-    transform: props.transform || defaultTransform,
+    //transform: props.transform || defaultTransform,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,

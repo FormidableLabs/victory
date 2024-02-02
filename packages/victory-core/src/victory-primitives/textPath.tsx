@@ -17,7 +17,7 @@ export const TextPath = (props: TextPathProps) => {
 
   const svgProps: React.SVGProps<SVGTextPathElement> = {
     href: evaluateProp(href, props),
-    startOffset: evaluateProp(startOffset,props)
+    startOffset: evaluateProp(startOffset,props),
     ...rest,
   };
 

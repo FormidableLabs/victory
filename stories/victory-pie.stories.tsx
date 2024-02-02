@@ -550,7 +550,8 @@ export const LabelPlacement = () => {
         //labelPosition="startAngle"
         labelPlacement="curved"
         // labelComponent={<VictoryTooltip active />}
-        labels={({ datum }) => `${datum.l}degrees`}
+        labels={({ datum }) => `${datum.l} deg`}
+        labelRadius={100}
         data={[
           { x: 1, y: 1, l: 0 },
           { x: 2, y: 1, l: 45 },
