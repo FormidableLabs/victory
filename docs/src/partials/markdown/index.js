@@ -113,6 +113,7 @@ export function renderHeading(props) {
   const slug = text
     .trim()
     .toLowerCase()
+    .replace(/^\d+\.\s*/, "") // remove leading numbers and periods
     .replace(/[^\w\- ]/g, "") // Remove punctuation
     .replace(/\s+/g, "-"); // Replace spaces with a dash
 
