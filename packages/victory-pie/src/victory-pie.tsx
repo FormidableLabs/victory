@@ -186,11 +186,13 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     if (dataComponent) {
       const dataComponents = this.dataKeys.reduce<React.ReactElement[]>(
         (validDataComponents, _dataKey, index) => {
+          
           const dataProps = this.getComponentProps(
             dataComponent,
             "data",
             index,
           );
+          console.log(dataProps)
           if (shouldRenderDatum((dataProps as any).datum)) {
             validDataComponents.push(
               React.cloneElement(dataComponent, dataProps),
@@ -246,7 +248,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             "labels",
             index,
           );
-          
           if (
             (labelProps as any).text !== undefined &&
             (labelProps as any).text !== null
@@ -259,7 +260,8 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
           (comp: React.ReactElement | undefined): comp is React.ReactElement =>
             comp !== undefined,
         );
-        children.push(...labelComponents);
+
+      children.push(...labelComponents);
     }
   
 

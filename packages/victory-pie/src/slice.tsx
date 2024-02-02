@@ -119,9 +119,6 @@ const defaultProps: SliceProps = {
 
 export const Slice = (initialProps: SliceProps) => {
   const props = evaluateProps({ ...defaultProps, ...initialProps });
-  const defaultTransform = props.origin
-    ? `translate(${props.origin.x}, ${props.origin.y})`
-    : undefined;
 
   return React.cloneElement(props.pathComponent, {
     ...props.events,
@@ -129,7 +126,6 @@ export const Slice = (initialProps: SliceProps) => {
     id: props.id,
     d: getPath(props),
     style: props.style,
-    //transform: props.transform || defaultTransform,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,

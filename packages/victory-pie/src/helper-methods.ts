@@ -1,6 +1,7 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
 import { defaults, isFunction, isPlainObject, isNil } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
+
 import { Helpers, Data, Style } from "victory-core";
 
 const checkForValidText = (text) => {
@@ -103,12 +104,6 @@ const getLabelArc = (labelRadius) => {
   return d3Shape.arc().outerRadius(labelRadius).innerRadius(labelRadius);
 };
 
-// const getLabelPath = (pathFunction,slice)=>{
-//   const startAngle = Helpers.degreesToRadians(slice.sliceStartAngle);
-//   const endAngle = Helpers.degreesToRadians(slice.sliceEndAngle);
-//   return pathFunction(defaults({startAngle, endAngle}, slice));
-// }
-
 const getCalculatedLabelRadius = (radius, labelRadius, style) => {
   const padding = (style && style.padding) || 0;
   return labelRadius || radius + padding;
@@ -184,7 +179,6 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 const getLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice, labelComponent, theme } = dataProps;
   const { style, defaultRadius, origin, width, height } = calculatedValues;
-  let href='';
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
     Object.assign({ text }, dataProps),
@@ -210,7 +204,6 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     evaluatedStyle,
   );
   const labelArc = getLabelArc(calculatedLabelRadius);
-  const path = labelArc(slice);
   const position = getLabelPosition(labelArc, slice, labelPosition);
   const baseAngle = getBaseLabelAngle(slice, labelPosition, labelStyle);
   const labelAngle = getLabelAngle(baseAngle, labelPlacement);
@@ -235,8 +228,6 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     verticalAnchor,
     angle: labelAngle,
     calculatedLabelRadius,
-    href,
-    path,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -247,7 +238,6 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
 };
 
 const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
-  console.log("hellooo")
   const { index, datum, data, slice, curvedLabelComponent, theme } = dataProps;
   const { style, defaultRadius} = calculatedValues;
   let href='';
@@ -373,6 +363,9 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       padAngle: Helpers.radiansToDegrees(slice.padAngle),
     });
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const defaultTransform = origin
+      ? `translate(${origin.x}, ${origin.y})`
+      : undefined;
     const dataProps = {
       index,
       slice,
@@ -385,6 +378,8 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       padAngle,
       style: disableInlineStyles ? {} : getSliceStyle(index, calculatedValues),
       disableInlineStyles,
+      transform : labelPlacement !== 'curved' ?  props.transform || defaultTransform
+      : undefined,
     };
     childProps[eventKey] = {
       data: dataProps,

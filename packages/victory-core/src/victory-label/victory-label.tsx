@@ -47,7 +47,6 @@ export interface VictoryLabelProps {
   groupComponent?: React.ReactElement;
   id?: StringOrNumberOrCallback;
   inline?: boolean;
-  href?: string;
   labelPlacement?: LabelOrientationType;
   lineHeight?: StringOrNumberOrCallback | (string | number)[];
   origin?: OriginType;
