@@ -23,7 +23,7 @@ In this guide, we’ll show you how to get started with Victory and walk you thr
 
 You can do this on your own if you'd like, or you can...
 
-* Clone down [this project we've started for you](https://github.com/FormidableLabs/victory-tutorial) using ```git clone git@github.com:FormidableLabs/victory-tutorial.git```
+* Clone down [this project we've started for you](https://github.com/FormidableLabs/victory-tutorial) using `git clone git@github.com:FormidableLabs/victory-tutorial.git`
 * `cd victory-tutorial`
 * Replace the existing code in the `client.js` file with:
 
