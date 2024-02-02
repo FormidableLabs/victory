@@ -126,6 +126,7 @@ export const Slice = (initialProps: SliceProps) => {
     id: props.id,
     d: getPath(props),
     style: props.style,
+    transform: props.transform,
     className: props.className,
     role: props.role,
     shapeRendering: props.shapeRendering,

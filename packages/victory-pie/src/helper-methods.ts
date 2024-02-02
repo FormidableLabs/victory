@@ -71,6 +71,9 @@ const getCalculatedValues = (props) => {
   const origin = getOrigin(props, padding);
   const data = Data.getData(props);
   const slices = getSlices(props, data);
+  const defaultTransform = origin
+      ? `translate(${origin.x}, ${origin.y})`
+      : undefined;
   return Object.assign({}, props, {
     style,
     colors,
@@ -79,6 +82,7 @@ const getCalculatedValues = (props) => {
     data,
     slices,
     origin,
+    defaultTransform
   });
 };
 
@@ -239,7 +243,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
 
 const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice, curvedLabelComponent, theme } = dataProps;
-  const { style, defaultRadius} = calculatedValues;
+  const { style, defaultRadius, defaultTransform} = calculatedValues;
   let href='';
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
@@ -267,6 +271,7 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     style: labelStyle,
     href,
     path,
+    transform:defaultTransform
   };
 
   if (!Helpers.isTooltip(curvedLabelComponent)) {
@@ -363,6 +368,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       padAngle: Helpers.radiansToDegrees(slice.padAngle),
     });
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+   
     const defaultTransform = origin
       ? `translate(${origin.x}, ${origin.y})`
       : undefined;
@@ -378,7 +384,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       padAngle,
       style: disableInlineStyles ? {} : getSliceStyle(index, calculatedValues),
       disableInlineStyles,
-      transform : labelPlacement !== 'curved' ?  props.transform || defaultTransform
+      transform : labelPlacement !== 'curved' ?  (props.transform || defaultTransform)
       : undefined,
     };
     childProps[eventKey] = {

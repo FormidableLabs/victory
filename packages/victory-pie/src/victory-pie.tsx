@@ -144,7 +144,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     dataComponent: <Slice />,
     labelComponent: <VictoryLabel />,
     containerComponent: <VictoryContainer />,
-    groupComponent: <g transform={"translate(200,200)"}/>,
+    groupComponent: <g />,
     sortOrder: "ascending",
     theme: VictoryTheme.grayscale,
   };
@@ -179,20 +179,20 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       throw new Error("VictoryPie expects a groupComponent prop");
     }
 
-    const showIndicator = labelIndicator && labelPosition === "centroid";
+    const showIndicator = labelIndicator && labelPosition === "centroid" && 
+                          labelPlacement!=="curved";
+    let groupComponentTransform;
 
     const children: React.ReactElement[] = [];
 
     if (dataComponent) {
       const dataComponents = this.dataKeys.reduce<React.ReactElement[]>(
         (validDataComponents, _dataKey, index) => {
-          
           const dataProps = this.getComponentProps(
             dataComponent,
             "data",
             index,
           );
-          console.log(dataProps)
           if (shouldRenderDatum((dataProps as any).datum)) {
             validDataComponents.push(
               React.cloneElement(dataComponent, dataProps),
@@ -224,6 +224,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             })
             pathComponents.push(labelPathComponent)
             curvedLabelProps.href = `#label-path-${index}`
+            groupComponentTransform = curvedLabelProps.transform
           if (
             (curvedLabelProps as any).text !== undefined &&
             (curvedLabelProps as any).text !== null
@@ -284,7 +285,10 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
 
       children.push(...labelIndicatorComponents);
     }
-
+    if( labelPlacement === "curved"){
+      const groupCloneElement = React.cloneElement(groupComponent, {transform:groupComponentTransform}); 
+      return this.renderContainer(groupCloneElement, children); 
+    }
     return this.renderContainer(groupComponent, children);
   }
 
