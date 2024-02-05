@@ -642,6 +642,7 @@ export const VictoryLabel: {
 VictoryLabel.displayName = "VictoryLabel";
 VictoryLabel.role = "label";
 VictoryLabel.defaultStyles = defaultStyles;
+VictoryLabel.defaultProps = defaultProps;
 VictoryLabel.propTypes = {
   active: PropTypes.bool,
   angle: PropTypes.oneOfType([

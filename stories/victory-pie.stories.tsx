@@ -550,6 +550,7 @@ export const LabelPlacement = () => {
         labelPlacement="curved"
         labels={({ datum }) => `${datum.l} deg`}
         labelRadius={100}
+        startOffset={10}
         data={[
           { x: 1, y: 1, l: 0 },
           { x: 2, y: 1, l: 45 },

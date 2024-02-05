@@ -4,50 +4,28 @@ import PropTypes from "prop-types";
 import React from "react";
 import {
   VictoryPortal,
-  Text,
-  TSpan,
   Log,
-  PropTypes as CustomPropTypes,
   TextSize,
   UserProps,
   Helpers,
-  NumberOrCallback,
-  StringOrCallback,
-  VictoryLabelStyleObject,
-  StringOrNumberOrCallback,
+  VictoryLabelProps,
+  VictoryLabel
 } from "victory-core";
 
 import { TextPath } from "../../victory-core/lib";
 
-export interface CurvedLabelProps {
-  ariaLabel?: StringOrCallback;
-  capHeight?: StringOrNumberOrCallback;
-  children?: StringOrNumberOrCallback;
-  className?: string;
-  datum?: Record<string, any>;
-  data?: any[];
-  desc?: string;
-  disableInlineStyles?: boolean;
-  events?: React.DOMAttributes<any>;
-  id?: StringOrNumberOrCallback;
+interface CurvedLabelProps extends Omit<VictoryLabelProps, "angle" | 
+"backgroundComponent" | "backgroundStyle" | "backgroundPadding" |
+"direction" |"origin" | "labelPlacement" | "polar"|
+"textAnchor" | "verticalAnchor" | "transform" |
+ "verticalAnchor" | "x" | "y" | "dx" | "dy">
+{
   href?: string;
-  lineHeight?: StringOrNumberOrCallback | (string | number)[];
-  style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
-  tabIndex?: NumberOrCallback;
-  text?: string[] | StringOrNumberOrCallback;
-  textComponent?: React.ReactElement;
+  startOffset?: string | number;
   textPathComponent?: React.ReactElement;
-  title?: string;
-  tspanComponent?: React.ReactElement;
 }
 
-const defaultStyles = {
-  fill: "#252525",
-  fontSize: 14,
-  fontFamily:
-    "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-  stroke: "transparent",
-};
+const defaultStyles = VictoryLabel.defaultStyles;
 
 const getFontSize = (style) => {
   const baseSize = style && style.fontSize;
@@ -152,6 +130,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     textComponent,
     textPathComponent,
     href,
+    startOffset,
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
@@ -177,20 +156,23 @@ const renderLabel = (calculatedProps, tspanValues) => {
     return React.cloneElement(tspanComponent, tspanProps);
   });
 
+  const textPathProps = {
+    href,
+    startOffset
+  }
+
   if(href && href.length){
-    const textPathElement = React.cloneElement(textPathComponent,{href},tspans);
+    const textPathElement = React.cloneElement(textPathComponent,textPathProps,tspans);
     return React.cloneElement(textComponent, textProps, textPathElement);
   } 
   return React.cloneElement(textComponent, textProps, tspans);
 };
 
 const defaultProps = {
-  textComponent: <Text />,
+  ...VictoryLabel.defaultProps,
   textPathComponent: <TextPath />,
-  tspanComponent: <TSpan />,
-  capHeight: 0.71, // Magic number from d3.
-  lineHeight: 1,
 };
+
 export const CurvedLabel: {
   role: string;
   defaultStyles: typeof defaultStyles;
@@ -223,44 +205,16 @@ export const CurvedLabel: {
     };
   });
 
-  return renderLabel(calculatedProps, tspanValues);
+  const label = renderLabel(calculatedProps, tspanValues);
+  return props.renderInPortal ? <VictoryPortal>{label}</VictoryPortal> : label;
 };
 
 CurvedLabel.displayName = "CurvedLabel";
-CurvedLabel.role = "label";
-CurvedLabel.defaultStyles = defaultStyles;
+CurvedLabel.role = "curvedLabel";
+CurvedLabel.defaultStyles = VictoryLabel.defaultStyles;
 CurvedLabel.propTypes = {
-  ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  capHeight: PropTypes.oneOfType([
-    PropTypes.string,
-    CustomPropTypes.nonNegative,
-    PropTypes.func,
-  ]),
-  className: PropTypes.string,
-  data: PropTypes.array,
-  datum: PropTypes.any,
-  // @ts-expect-error "Function is not assignable to string"
-  desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  events: PropTypes.object,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  ...VictoryLabel.propTypes,
   href:PropTypes.string,
-  lineHeight: PropTypes.oneOfType([
-    PropTypes.string,
-    CustomPropTypes.nonNegative,
-    PropTypes.func,
-    PropTypes.array,
-  ]),
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  text: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-    PropTypes.array,
-  ]),
-  textComponent: PropTypes.element,
+  startOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   textPathComponent: PropTypes.element,
-  title: PropTypes.string,
-  tspanComponent: PropTypes.element,
 };

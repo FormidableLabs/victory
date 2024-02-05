@@ -63,6 +63,7 @@ export interface VictoryPieProps
   padAngle?: NumberOrCallback;
   radius?: NumberOrCallback;
   startAngle?: number;
+  startOffset?: string | number;
   style?: VictoryStyleInterface;
 }
 
@@ -217,7 +218,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             "curvedLabels",
             index,
           );
-       
+          
             let labelPathComponent = React.cloneElement(<Path/>, {
               d: curvedLabelProps.path,
               id: `label-path-${index}`,

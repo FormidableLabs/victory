@@ -242,7 +242,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
 };
 
 const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
-  const { index, datum, data, slice, curvedLabelComponent, theme } = dataProps;
+  const { index, datum, data, slice, curvedLabelComponent, theme, startOffset } = dataProps;
   const { style, defaultRadius, defaultTransform} = calculatedValues;
   let href='';
   const labelRadius = Helpers.evaluateProp(
@@ -271,6 +271,7 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     style: labelStyle,
     href,
     path,
+    startOffset,
     transform:defaultTransform
   };
 
