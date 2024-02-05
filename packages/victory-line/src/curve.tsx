@@ -1,9 +1,7 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Helpers,
-  CommonProps,
   Path,
   LineHelpers,
   UserProps,
@@ -62,18 +60,6 @@ export const Curve: React.FC<CurveProps> = (initialProps) => {
     clipPath: props.clipPath,
     tabIndex: props.tabIndex,
   });
-};
-
-Curve.propTypes = {
-  ...CommonProps.primitiveProps,
-  interpolation: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  openCurve: PropTypes.bool,
-  origin: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
-  pathComponent: PropTypes.element,
-  polar: PropTypes.bool,
 };
 
 export interface CurveProps extends VictoryCommonPrimitiveProps {

@@ -1,10 +1,7 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { isEmpty } from "lodash";
 import {
-  PropTypes as CustomPropTypes,
   VictoryLabel,
-  CommonProps,
   VictoryContainer,
   VictoryTheme,
   LineSegment,
@@ -88,75 +85,6 @@ class VictoryAxisBase extends React.Component<VictoryAxisProps> {
     onEnter: {
       duration: 500,
     },
-  };
-
-  static propTypes = {
-    ...CommonProps.baseProps,
-    axisComponent: PropTypes.element,
-    axisLabelComponent: PropTypes.element,
-    axisValue: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    categories: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.shape({
-        x: PropTypes.arrayOf(PropTypes.string),
-        y: PropTypes.arrayOf(PropTypes.string),
-      }),
-    ]),
-    crossAxis: PropTypes.bool,
-    dependentAxis: PropTypes.bool,
-    events: PropTypes.arrayOf(
-      PropTypes.shape({
-        target: PropTypes.oneOf([
-          "axis",
-          "axisLabel",
-          "grid",
-          "ticks",
-          "tickLabels",
-        ]),
-        eventKey: PropTypes.oneOfType([
-          PropTypes.array,
-          CustomPropTypes.allOfType([
-            CustomPropTypes.integer,
-            CustomPropTypes.nonNegative,
-          ]),
-          PropTypes.string,
-        ]),
-        eventHandlers: PropTypes.object,
-      }),
-    ),
-    fixLabelOverlap: PropTypes.bool,
-    gridComponent: PropTypes.element,
-    groupComponent: PropTypes.element,
-    invertAxis: PropTypes.bool,
-    label: PropTypes.any,
-    offsetX: PropTypes.number,
-    offsetY: PropTypes.number,
-    orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-    origin: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
-    stringMap: PropTypes.object,
-    style: PropTypes.shape({
-      parent: PropTypes.object,
-      axis: PropTypes.object,
-      axisLabel: PropTypes.object,
-      grid: PropTypes.object,
-      ticks: PropTypes.object,
-      tickLabels: PropTypes.object,
-    }),
-    tickComponent: PropTypes.element,
-    tickCount: CustomPropTypes.allOfType([
-      CustomPropTypes.integer,
-      CustomPropTypes.greaterThanZero,
-    ]),
-    tickFormat: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.homogeneousArray,
-    ]),
-    tickLabelComponent: PropTypes.element,
-    tickValues: CustomPropTypes.homogeneousArray,
   };
 
   static defaultProps = {

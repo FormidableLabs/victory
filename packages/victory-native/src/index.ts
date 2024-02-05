@@ -10,7 +10,6 @@ export {
   Events,
   Helpers,
   Log,
-  PropTypes,
   Scale,
   Style,
   TextSize,

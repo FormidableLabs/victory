@@ -1,6 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
 import { defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
 import { VictoryPortal } from "../victory-portal/victory-portal";
 import { Rect } from "../victory-primitives/rect";
@@ -9,7 +8,6 @@ import { TSpan } from "../victory-primitives/tspan";
 import * as Helpers from "../victory-util/helpers";
 import * as LabelHelpers from "../victory-util/label-helpers";
 import * as Log from "../victory-util/log";
-import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Style from "../victory-util/style";
 import * as TextSize from "../victory-util/textsize";
 import * as UserProps from "../victory-util/user-props";
@@ -642,84 +640,3 @@ export const VictoryLabel: {
 VictoryLabel.displayName = "VictoryLabel";
 VictoryLabel.role = "label";
 VictoryLabel.defaultStyles = defaultStyles;
-VictoryLabel.propTypes = {
-  active: PropTypes.bool,
-  angle: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-  ]),
-  ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  backgroundComponent: PropTypes.element,
-  backgroundPadding: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.object,
-    PropTypes.array,
-  ]),
-  backgroundStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  capHeight: PropTypes.oneOfType([
-    PropTypes.string,
-    CustomPropTypes.nonNegative,
-    PropTypes.func,
-  ]),
-  className: PropTypes.string,
-  data: PropTypes.array,
-  datum: PropTypes.any,
-  // @ts-expect-error "Function is not assignable to string"
-  desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  direction: PropTypes.oneOf(["rtl", "ltr", "inherit"]),
-  dx: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  dy: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  events: PropTypes.object,
-  groupComponent: PropTypes.element,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  inline: PropTypes.bool,
-  labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
-  lineHeight: PropTypes.oneOfType([
-    PropTypes.string,
-    CustomPropTypes.nonNegative,
-    PropTypes.func,
-    PropTypes.array,
-  ]),
-  origin: PropTypes.shape({
-    x: CustomPropTypes.nonNegative.isRequired,
-    y: CustomPropTypes.nonNegative.isRequired,
-  }),
-  polar: PropTypes.bool,
-  renderInPortal: PropTypes.bool,
-  scale: PropTypes.shape({
-    x: CustomPropTypes.scale,
-    y: CustomPropTypes.scale,
-  }),
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  text: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-    PropTypes.array,
-  ]),
-  // @ts-expect-error Function is not assignable to string"
-  textAnchor: PropTypes.oneOfType([
-    PropTypes.oneOf(["start", "middle", "end", "inherit"]),
-    PropTypes.func,
-  ]),
-  textComponent: PropTypes.element,
-  title: PropTypes.string,
-  transform: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.func,
-  ]),
-  tspanComponent: PropTypes.element,
-  // @ts-expect-error Function is not assignable to string"
-  verticalAnchor: PropTypes.oneOfType([
-    PropTypes.oneOf(["start", "middle", "end"]),
-    PropTypes.func,
-  ]),
-  // @ts-expect-error Number is not assignable to string
-  x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  // @ts-expect-error Number is not assignable to string
-  y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-};

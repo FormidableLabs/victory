@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Selection,
   Helpers,
@@ -177,36 +176,6 @@ const fallbackProps = {
 export class VictoryBrushLine<
   T extends VictoryBrushLineProps,
 > extends React.Component<T> {
-  static propTypes = {
-    allowDrag: PropTypes.bool,
-    allowDraw: PropTypes.bool,
-    allowResize: PropTypes.bool,
-    brushAreaComponent: PropTypes.element,
-    brushAreaStyle: PropTypes.object,
-    brushAreaWidth: PropTypes.number,
-    brushComponent: PropTypes.element,
-    brushDimension: PropTypes.oneOf(["x", "y"]),
-    brushDomain: PropTypes.array,
-    brushStyle: PropTypes.object,
-    brushWidth: PropTypes.number,
-    className: PropTypes.string,
-    dimension: PropTypes.oneOf(["x", "y"]),
-    disable: PropTypes.bool,
-    events: PropTypes.object,
-    groupComponent: PropTypes.element,
-    handleComponent: PropTypes.element,
-    handleStyle: PropTypes.object,
-    handleWidth: PropTypes.number,
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    lineComponent: PropTypes.element,
-    name: PropTypes.string,
-    onBrushDomainChange: PropTypes.func,
-    scale: PropTypes.object,
-    style: PropTypes.object,
-    type: PropTypes.string,
-    width: PropTypes.number,
-  };
-
   static defaultProps = {
     allowDrag: true,
     allowDraw: true,

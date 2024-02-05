@@ -1,10 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Rect } from "./rect";
 
 export interface BorderProps extends VictoryCommonPrimitiveProps {
@@ -61,13 +57,4 @@ export const Border = (initialProps: BorderProps) => {
     height: props.height,
     clipPath: props.clipPath,
   });
-};
-
-Border.propTypes = {
-  ...CommonProps.primitiveProps,
-  height: PropTypes.number,
-  rectComponent: PropTypes.element,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
 };

@@ -1,8 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Helpers,
-  CommonProps,
   Path,
   NumberOrCallback,
   SliceNumberOrCallback,
@@ -134,18 +132,4 @@ export const Slice = (initialProps: SliceProps) => {
     clipPath: props.clipPath,
     tabIndex: props.tabIndex,
   });
-};
-
-Slice.propTypes = {
-  ...CommonProps.primitiveProps,
-  cornerRadius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  datum: PropTypes.object,
-  innerRadius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  padAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  pathComponent: PropTypes.element,
-  pathFunction: PropTypes.func,
-  radius: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  slice: PropTypes.object,
-  sliceEndAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  sliceStartAngle: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
 };
