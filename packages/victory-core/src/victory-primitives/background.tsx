@@ -1,10 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Rect } from "./rect";
 import { Circle } from "./circle";
 
@@ -63,16 +59,4 @@ export const Background = (initialProps: BackgroundProps) => {
         height: props.height,
         className: props.className,
       });
-};
-
-Background.propTypes = {
-  ...CommonProps.primitiveProps,
-  circleComponent: PropTypes.element,
-  height: PropTypes.number,
-  rectComponent: PropTypes.element,
-  rx: PropTypes.number,
-  ry: PropTypes.number,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
 };

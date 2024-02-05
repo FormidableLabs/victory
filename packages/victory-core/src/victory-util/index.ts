@@ -13,7 +13,6 @@ export * as LabelHelpers from "./label-helpers";
 export * as LineHelpers from "./line-helpers";
 export * as Log from "./log";
 export * as PointPathHelpers from "./point-path-helpers";
-export * as PropTypes from "./prop-types";
 export * as Scale from "./scale";
 export * as Selection from "./selection";
 export type { SVGCoordinateType, SVGCoordinateBounds } from "./selection";

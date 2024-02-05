@@ -1,6 +1,6 @@
 {
   "name": "victory-selection-container",
-  "version": "36.8.6",
+  "version": "36.9.0",
   "description": "Interactive Selection Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,14 +21,13 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.19",
-    "prop-types": "^15.8.1",
-    "victory-core": "^36.8.6"
+    "victory-core": "^36.9.0"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-bar": "^36.8.6",
+    "victory-bar": "^36.9.0",
     "victory-selection-container": "*"
   },
   "publishConfig": {

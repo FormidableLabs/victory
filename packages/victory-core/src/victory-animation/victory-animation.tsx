@@ -1,6 +1,5 @@
 /* global setTimeout:false */
 import React from "react";
-import PropTypes from "prop-types";
 import * as d3Ease from "victory-vendor/d3-ease";
 import { victoryInterpolator } from "./util";
 import TimerContext from "../victory-util/timer-context";
@@ -85,56 +84,6 @@ export class VictoryAnimation extends React.Component<
   VictoryAnimationState
 > {
   static displayName = "VictoryAnimation";
-
-  static propTypes = {
-    children: PropTypes.func,
-    data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    delay: PropTypes.number,
-    duration: PropTypes.number,
-    easing: PropTypes.oneOf([
-      "back",
-      "backIn",
-      "backOut",
-      "backInOut",
-      "bounce",
-      "bounceIn",
-      "bounceOut",
-      "bounceInOut",
-      "circle",
-      "circleIn",
-      "circleOut",
-      "circleInOut",
-      "linear",
-      "linearIn",
-      "linearOut",
-      "linearInOut",
-      "cubic",
-      "cubicIn",
-      "cubicOut",
-      "cubicInOut",
-      "elastic",
-      "elasticIn",
-      "elasticOut",
-      "elasticInOut",
-      "exp",
-      "expIn",
-      "expOut",
-      "expInOut",
-      "poly",
-      "polyIn",
-      "polyOut",
-      "polyInOut",
-      "quad",
-      "quadIn",
-      "quadOut",
-      "quadInOut",
-      "sin",
-      "sinIn",
-      "sinOut",
-      "sinInOut",
-    ]),
-    onEnd: PropTypes.func,
-  };
 
   static defaultProps = {
     data: {},

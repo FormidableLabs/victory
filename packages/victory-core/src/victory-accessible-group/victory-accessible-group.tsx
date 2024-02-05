@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 export interface VictoryAccessibleGroupProps {
   desc?: string;
@@ -12,17 +11,6 @@ export interface VictoryAccessibleGroupProps {
 
 export class VictoryAccessibleGroup extends React.Component<VictoryAccessibleGroupProps> {
   static displayName = "VictoryAccessibleGroup";
-  static propTypes = {
-    "aria-describedby": PropTypes.string,
-    "aria-label": PropTypes.string,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    className: PropTypes.string,
-    desc: PropTypes.string,
-    tabIndex: PropTypes.number,
-  };
 
   static defaultProps = {
     className: "VictoryAccessibleGroup",
