@@ -14,21 +14,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Check all package.json's and tsconfig.json's are in sync.
         run: |
           pnpm sync
           git diff --no-ext-diff --quiet --exit-code
 
-      - name: Build libraries and distributions ${{ matrix.node-version }}
+      - name: Build libraries and distributions
         run: pnpm build
 
   format:
@@ -37,8 +32,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-        with:
-          node-version: 18.x
 
       - name: Format
         run: pnpm format
@@ -49,8 +42,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-        with:
-          node-version: 18.x
 
       - name: Lint
         run: pnpm lint
@@ -58,29 +49,19 @@ jobs:
   types:
     needs: [build]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-        with:
-          node-version: ${{ matrix.node-version }}
 
-      - name: Types Check ${{ matrix.node-version }}
+      - name: Types Check
         run: pnpm types:check
 
   test:
     needs: [build]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-        with:
-          node-version: ${{ matrix.node-version }}
 
-      - name: Test ${{ matrix.node-version }}
+      - name: Test
         run: pnpm jest
