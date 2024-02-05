@@ -9,17 +9,31 @@ import {
   UserProps,
   Helpers,
   VictoryLabelProps,
-  VictoryLabel
+  VictoryLabel,
 } from "victory-core";
 
 import { TextPath } from "../../victory-core/lib";
 
-interface CurvedLabelProps extends Omit<VictoryLabelProps, "angle" | 
-"backgroundComponent" | "backgroundStyle" | "backgroundPadding" |
-"direction" |"origin" | "labelPlacement" | "polar"|
-"textAnchor" | "verticalAnchor" | "transform" |
- "verticalAnchor" | "x" | "y" | "dx" | "dy">
-{
+interface CurvedLabelProps
+  extends Omit<
+    VictoryLabelProps,
+    | "angle"
+    | "backgroundComponent"
+    | "backgroundStyle"
+    | "backgroundPadding"
+    | "direction"
+    | "origin"
+    | "labelPlacement"
+    | "polar"
+    | "textAnchor"
+    | "verticalAnchor"
+    | "transform"
+    | "verticalAnchor"
+    | "x"
+    | "y"
+    | "dx"
+    | "dy"
+  > {
   href?: string;
   startOffset?: string | number;
   textPathComponent?: React.ReactElement;
@@ -158,13 +172,17 @@ const renderLabel = (calculatedProps, tspanValues) => {
 
   const textPathProps = {
     href,
-    startOffset
-  }
+    startOffset,
+  };
 
-  if(href && href.length){
-    const textPathElement = React.cloneElement(textPathComponent,textPathProps,tspans);
+  if (href && href.length) {
+    const textPathElement = React.cloneElement(
+      textPathComponent,
+      textPathProps,
+      tspans,
+    );
     return React.cloneElement(textComponent, textProps, textPathElement);
-  } 
+  }
   return React.cloneElement(textComponent, textProps, tspans);
 };
 
@@ -184,8 +202,7 @@ export const CurvedLabel: {
   }
   const calculatedProps = getCalculatedProps(props);
 
-  const { text, style, capHeight, lineHeight } =
-    calculatedProps;
+  const { text, style, capHeight, lineHeight } = calculatedProps;
 
   const tspanValues = (text as string[]).map((line, i) => {
     const currentStyle = getSingleValue(style, i);
@@ -214,7 +231,7 @@ CurvedLabel.role = "curvedLabel";
 CurvedLabel.defaultStyles = VictoryLabel.defaultStyles;
 CurvedLabel.propTypes = {
   ...VictoryLabel.propTypes,
-  href:PropTypes.string,
+  href: PropTypes.string,
   startOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   textPathComponent: PropTypes.element,
 };

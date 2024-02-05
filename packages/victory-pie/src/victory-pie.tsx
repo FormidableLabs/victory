@@ -180,8 +180,10 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       throw new Error("VictoryPie expects a groupComponent prop");
     }
 
-    const showIndicator = labelIndicator && labelPosition === "centroid" && 
-                          labelPlacement!=="curved";
+    const showIndicator =
+      labelIndicator &&
+      labelPosition === "centroid" &&
+      labelPlacement !== "curved";
     let groupComponentTransform;
 
     const children: React.ReactElement[] = [];
@@ -207,26 +209,25 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       children.push(...dataComponents);
     }
 
-    const pathComponents:React.ReactElement[]=[];
-    if(labelPlacement==="curved")
-      {
-        const curvedLabelComponent:React.ReactElement = <CurvedLabel/>
-        const curvedLabelComponents = this.dataKeys
+    const pathComponents: React.ReactElement[] = [];
+    if (labelPlacement === "curved") {
+      const curvedLabelComponent: React.ReactElement = <CurvedLabel />;
+      const curvedLabelComponents = this.dataKeys
         .map((_dataKey, index) => {
           const curvedLabelProps = this.getComponentProps(
             curvedLabelComponent,
             "curvedLabels",
             index,
           );
-          
-            let labelPathComponent = React.cloneElement(<Path/>, {
-              d: curvedLabelProps.path,
-              id: `label-path-${index}`,
-              key: `label-path-${index}`
-            })
-            pathComponents.push(labelPathComponent)
-            curvedLabelProps.href = `#label-path-${index}`
-            groupComponentTransform = curvedLabelProps.transform
+
+          const labelPathComponent = React.cloneElement(<Path />, {
+            d: curvedLabelProps.path,
+            id: `label-path-${index}`,
+            key: `label-path-${index}`,
+          });
+          pathComponents.push(labelPathComponent);
+          curvedLabelProps.href = `#label-path-${index}`;
+          groupComponentTransform = curvedLabelProps.transform;
           if (
             (curvedLabelProps as any).text !== undefined &&
             (curvedLabelProps as any).text !== null
@@ -239,11 +240,10 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
           (comp: React.ReactElement | undefined): comp is React.ReactElement =>
             comp !== undefined,
         );
-          if(pathComponents.length){
-            children.push(...pathComponents,...curvedLabelComponents);
-          } 
-        } else if (labelComponent) {
-    
+      if (pathComponents.length) {
+        children.push(...pathComponents, ...curvedLabelComponents);
+      }
+    } else if (labelComponent) {
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
           const labelProps = this.getComponentProps(
@@ -266,7 +266,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
 
       children.push(...labelComponents);
     }
-  
 
     if (showIndicator && labelIndicator) {
       let labelIndicatorComponent: React.ReactElement = <LineSegment />;
@@ -287,9 +286,11 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
 
       children.push(...labelIndicatorComponents);
     }
-    if( labelPlacement === "curved"){
-      const groupCloneElement = React.cloneElement(groupComponent, {transform:groupComponentTransform}); 
-      return this.renderContainer(groupCloneElement, children); 
+    if (labelPlacement === "curved") {
+      const groupCloneElement = React.cloneElement(groupComponent, {
+        transform: groupComponentTransform,
+      });
+      return this.renderContainer(groupCloneElement, children);
     }
     return this.renderContainer(groupComponent, children);
   }

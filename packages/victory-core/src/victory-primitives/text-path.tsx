@@ -2,7 +2,6 @@ import React from "react";
 import { evaluateProp } from "../victory-util/helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 
-
 export interface TextPathProps extends VictoryCommonPrimitiveProps {
   children?: React.ReactNode;
   href?: string;
@@ -17,11 +16,9 @@ export const TextPath = (props: TextPathProps) => {
 
   const svgProps: React.SVGProps<SVGTextPathElement> = {
     href: evaluateProp(href, props),
-    startOffset: evaluateProp(startOffset,props),
+    startOffset: evaluateProp(startOffset, props),
     ...rest,
   };
 
-  return <textPath {...svgProps}>
-    {children}
-  </textPath>;
+  return <textPath {...svgProps}>{children}</textPath>;
 };
