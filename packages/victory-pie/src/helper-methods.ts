@@ -3,6 +3,7 @@ import { defaults, isFunction, isPlainObject, isNil } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
+import { uniqueId } from "lodash";
 
 const checkForValidText = (text) => {
   if (text === undefined || text === null || isFunction(text)) {
@@ -252,7 +253,6 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     startOffset,
   } = dataProps;
   const { style, defaultRadius, defaultTransform } = calculatedValues;
-  const href = "";
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
     Object.assign({ text }, dataProps),
@@ -269,6 +269,7 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
   );
   const labelArc = getLabelArc(calculatedLabelRadius);
   const path = labelArc(slice);
+  const pathId = uniqueId('label-path-');
 
   const curvedLabelProps = {
     index,
@@ -277,7 +278,8 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     slice,
     text,
     style: labelStyle,
-    href,
+    href:`#${pathId}`,
+    id:pathId,
     path,
     startOffset,
     transform: defaultTransform,

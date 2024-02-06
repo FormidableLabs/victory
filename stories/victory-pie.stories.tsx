@@ -562,6 +562,42 @@ export const LabelPlacement = () => {
           { x: 8, y: 1, l: 315 },
         ]}
       />
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        radius={100}
+        labelPlacement="curved"
+        labels={({ datum }) => `${datum.l} deg`}
+        labelRadius={120}
+        startOffset={10}
+        data={[
+          { x: 1, y: 1, l: 0 },
+          { x: 2, y: 1, l: 45 },
+          { x: 3, y: 1, l: 90 },
+          { x: 4, y: 1, l: 135 },
+          { x: 5, y: 1, l: 180 },
+          { x: 6, y: 1, l: 225 },
+          { x: 7, y: 1, l: 270 },
+          { x: 8, y: 1, l: 315 },
+        ]}
+      />
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        radius={100}
+        labelPlacement="curved"
+        labels={({ datum }) => `${datum.l}`}
+        labelRadius={85}
+        startOffset={"30%"}
+        data={[
+          { x: 1, y: 1, l: 0 },
+          { x: 2, y: 1, l: 45 },
+          { x: 3, y: 1, l: 90 },
+          { x: 4, y: 1, l: 135 },
+          { x: 5, y: 1, l: 180 },
+          { x: 6, y: 1, l: 225 },
+          { x: 7, y: 1, l: 270 },
+          { x: 8, y: 1, l: 315 },
+        ]}
+      />
     </>
   );
 };

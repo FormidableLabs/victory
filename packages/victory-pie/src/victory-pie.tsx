@@ -224,8 +224,8 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
           const pathComponent:React.ReactElement = <Path/>   
           return  React.cloneElement(pathComponent, {
             d: curvedLabelProps.path,
-            id: `label-path-${index}`,
-            key: `label-path-${index}`,
+            id: curvedLabelProps.id,
+            key: index,
           });
         })
         children.push( ...labelPathComponents);
@@ -238,7 +238,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             "curvedLabels",
             index,
           );
-          curvedLabelProps.href = `#label-path-${index}`;
           groupComponentTransform = curvedLabelProps.transform;
           if (
             (curvedLabelProps as any).text !== undefined &&
