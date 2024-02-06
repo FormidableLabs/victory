@@ -120,4 +120,3 @@ export function selectionContainerMixin<
 
 export const VictorySelectionContainer =
   selectionContainerMixin(VictoryContainer);
-export type VictorySelectionContainer = typeof VictorySelectionContainer;
