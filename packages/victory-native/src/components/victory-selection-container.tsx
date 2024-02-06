@@ -81,9 +81,14 @@ function nativeSelectionMixin<
   };
 }
 
-const combinedMixin = flow(originalSelectionMixin, nativeSelectionMixin);
+const combinedMixin: (
+  base: React.ComponentClass,
+) => React.ComponentClass<VictorySelectionContainerNativeProps> = flow(
+  originalSelectionMixin,
+  nativeSelectionMixin,
+);
 
-export const selectionContainerMixin = (base): VictorySelectionContainerBase =>
+export const selectionContainerMixin = (base: React.ComponentClass) =>
   combinedMixin(base);
 
 export const VictorySelectionContainer =

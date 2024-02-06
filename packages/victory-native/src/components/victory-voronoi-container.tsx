@@ -80,9 +80,14 @@ function nativeVoronoiMixin<
   };
 }
 
-const combinedMixin = flow(originalVoronoiMixin, nativeVoronoiMixin);
+const combinedMixin: (
+  base: React.ComponentClass,
+) => React.ComponentClass<VictoryVoronoiContainerNativeProps> = flow(
+  originalVoronoiMixin,
+  nativeVoronoiMixin,
+);
 
-export const voronoiContainerMixin = (base): VictoryVoronoiContainerBase =>
+export const voronoiContainerMixin = (base: React.ComponentClass) =>
   combinedMixin(base);
 
 export const VictoryVoronoiContainer = voronoiContainerMixin(VictoryContainer);

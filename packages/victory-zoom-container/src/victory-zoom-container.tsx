@@ -243,4 +243,3 @@ export function zoomContainerMixin<
 }
 
 export const VictoryZoomContainer = zoomContainerMixin(VictoryContainer);
-export type VictoryZoomContainer = typeof VictoryZoomContainer;
