@@ -134,7 +134,7 @@ class VictoryNativeBrushLine<
   }
 }
 
-export const VictoryBrushLine = wrapCoreComponent({
+export const VictoryBrushLine = wrapCoreComponent<VictoryNativeBrushLineProps>({
   Component: VictoryNativeBrushLine,
   defaultProps: {
     ...VictoryNativeBrushLine.defaultProps,

@@ -69,9 +69,14 @@ function nativeCursorMixin<
   };
 }
 
-const combinedMixin = flow(originalCursorMixin, nativeCursorMixin);
+const combinedMixin: (
+  base: React.ComponentClass,
+) => React.ComponentClass<VictoryCursorContainerNativeProps> = flow(
+  originalCursorMixin,
+  nativeCursorMixin,
+);
 
-export const cursorContainerMixin = (base): VictoryCursorContainerBase =>
+export const cursorContainerMixin = (base: React.ComponentClass) =>
   combinedMixin(base);
 
 export const VictoryCursorContainer = cursorContainerMixin(VictoryContainer);

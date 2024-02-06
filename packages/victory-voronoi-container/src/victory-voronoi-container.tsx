@@ -240,4 +240,3 @@ export function voronoiContainerMixin<
 }
 
 export const VictoryVoronoiContainer = voronoiContainerMixin(VictoryContainer);
-export type VictoryVoronoiContainer = typeof VictoryVoronoiContainer;

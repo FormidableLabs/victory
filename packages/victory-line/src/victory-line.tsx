@@ -63,7 +63,7 @@ class VictoryLineBase extends React.Component<VictoryLineProps> {
     DefaultTransitions.continuousPolarTransitions();
   static continuous = true;
 
-  static defaultProps = {
+  static defaultProps: VictoryLineProps = {
     containerComponent: <VictoryContainer />,
     dataComponent: <Curve />,
     labelComponent: <VictoryLabel renderInPortal />,

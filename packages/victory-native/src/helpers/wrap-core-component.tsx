@@ -7,7 +7,7 @@ export function wrapCoreComponent<TProps extends object>({
   Component,
   defaultProps,
 }: {
-  Component: React.JSXElementConstructor<TProps>;
+  Component: React.ComponentType<TProps>;
   defaultProps: TProps;
 }) {
   const WrappedComponent = (props: TProps) => {

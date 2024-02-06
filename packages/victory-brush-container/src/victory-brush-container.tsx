@@ -216,4 +216,3 @@ export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
   };
 
 export const VictoryBrushContainer = brushContainerMixin(VictoryContainer);
-export type VictoryBrushContainer = typeof VictoryBrushContainer;
