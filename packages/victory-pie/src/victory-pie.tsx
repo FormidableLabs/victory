@@ -209,8 +209,27 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       children.push(...dataComponents);
     }
 
-    const pathComponents: React.ReactElement[] = [];
+    // For curved labels, we need to create a path component with id and path value of 
+    // label arc. We need to pass this id to the href of textPath component which will 
+    // have label value(tspan) as child component.
     if (labelPlacement === "curved") {
+      const labelPathComponents= this.dataKeys.map((_dataKey, index) => {
+          const curvedLabelProps = this.getComponentProps(
+            curvedLabelComponent,
+            "curvedLabels",
+            index,
+          );
+
+          //create labelPath 
+          const pathComponent:React.ReactElement = <Path/>   
+          return  React.cloneElement(pathComponent, {
+            d: curvedLabelProps.path,
+            id: `label-path-${index}`,
+            key: `label-path-${index}`,
+          });
+        })
+        children.push( ...labelPathComponents);
+        
       const curvedLabelComponent: React.ReactElement = <CurvedLabel />;
       const curvedLabelComponents = this.dataKeys
         .map((_dataKey, index) => {
@@ -219,13 +238,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
             "curvedLabels",
             index,
           );
-
-          const labelPathComponent = React.cloneElement(<Path />, {
-            d: curvedLabelProps.path,
-            id: `label-path-${index}`,
-            key: `label-path-${index}`,
-          });
-          pathComponents.push(labelPathComponent);
           curvedLabelProps.href = `#label-path-${index}`;
           groupComponentTransform = curvedLabelProps.transform;
           if (
@@ -240,9 +252,8 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
           (comp: React.ReactElement | undefined): comp is React.ReactElement =>
             comp !== undefined,
         );
-      if (pathComponents.length) {
-        children.push(...pathComponents, ...curvedLabelComponents);
-      }
+        children.push( ...curvedLabelComponents);
+
     } else if (labelComponent) {
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
