@@ -1,5 +1,11 @@
 # victory-brush-container
 
+## 36.9.1
+
+### Patch Changes
+
+- Fix victory-native component prop types ([#2785](https://github.com/FormidableLabs/victory/pull/2785))
+
 ## 36.9.0
 
 ### Minor Changes

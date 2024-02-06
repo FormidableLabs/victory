@@ -1,5 +1,7 @@
 # victory-candlestick
 
+## 36.9.1
+
 ## 36.9.0
 
 ### Minor Changes
