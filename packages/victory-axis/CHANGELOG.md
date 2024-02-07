@@ -1,5 +1,13 @@
 # victory-axis
 
+## 36.9.1
+
+## 36.9.0
+
+### Minor Changes
+
+- Remove prop-types definitions and dependency ([#2758](https://github.com/FormidableLabs/victory/pull/2758))
+
 ## 36.8.6
 
 ## 36.8.5

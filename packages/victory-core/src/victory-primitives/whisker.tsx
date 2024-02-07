@@ -1,10 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Line } from "./line";
 
 export type WhiskerAxes = {
@@ -94,22 +90,4 @@ export const Whisker = (initialProps: WhiskerProps) => {
       ),
     ),
   ]);
-};
-
-Whisker.propTypes = {
-  ...CommonProps.primitiveProps,
-  groupComponent: PropTypes.element,
-  lineComponent: PropTypes.element,
-  majorWhisker: PropTypes.shape({
-    x1: PropTypes.number,
-    x2: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number,
-  }),
-  minorWhisker: PropTypes.shape({
-    x1: PropTypes.number,
-    x2: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number,
-  }),
 };

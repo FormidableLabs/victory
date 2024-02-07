@@ -1,6 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
 import { defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
 import {
   VictoryPortal,
@@ -234,9 +233,3 @@ export const CurvedLabel: {
 CurvedLabel.displayName = "CurvedLabel";
 CurvedLabel.role = "curvedLabel";
 CurvedLabel.defaultStyles = VictoryLabel.defaultStyles;
-CurvedLabel.propTypes = {
-  ...VictoryLabel.propTypes,
-  href: PropTypes.string,
-  startOffset: PropTypes.number,
-  textPathComponent: PropTypes.element,
-};

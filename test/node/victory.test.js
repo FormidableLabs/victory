@@ -213,9 +213,6 @@ describe("victory", () => {
     it("exports Portal", () => {
       expect(Victory.Portal).toBeDefined();
     });
-    it("exports PropTypes", () => {
-      expect(Victory.PropTypes).toBeDefined();
-    });
     it("exports RawZoomHelpers", () => {
       expect(Victory.RawZoomHelpers).toBeDefined();
     });
