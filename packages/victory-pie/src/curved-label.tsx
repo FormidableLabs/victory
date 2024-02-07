@@ -9,9 +9,8 @@ import {
   Helpers,
   VictoryLabelProps,
   VictoryLabel,
+  TextPath
 } from "victory-core";
-
-import { TextPath } from "../../victory-core/lib";
 
 interface CurvedLabelProps
   extends Omit<
