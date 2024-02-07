@@ -62,7 +62,6 @@ export interface VictoryPieProps
   origin?: OriginType;
   padAngle?: NumberOrCallback;
   radius?: NumberOrCallback;
-  reverseCurvedLabel?: Boolean;
   startAngle?: number;
   startOffset?: number;
   style?: VictoryStyleInterface;
@@ -149,7 +148,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     groupComponent: <g />,
     sortOrder: "ascending",
     theme: VictoryTheme.grayscale,
-    reverseCurvedLabel: false,
   };
 
   static getBaseProps = (props: VictoryPieProps) =>

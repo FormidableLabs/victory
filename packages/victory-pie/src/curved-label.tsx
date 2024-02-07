@@ -145,7 +145,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     textPathComponent,
     href,
     startOffset,
-    dy
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
@@ -158,7 +157,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     desc: Helpers.evaluateProp(desc, calculatedProps),
     tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
     id,
-    dy,
     ...userProps,
   };
 

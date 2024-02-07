@@ -250,8 +250,7 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     slice,
     curvedLabelComponent,
     theme,
-    startOffset,
-    reverseCurvedLabel
+    startOffset
   } = dataProps;
   let curvedLabelProps={};
   let dy;
@@ -271,20 +270,10 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     labelRadius,
     evaluatedStyle,
   );
-  let path;
-  if (Helpers.radiansToDegrees(slice.endAngle) > 90 &&
-    Helpers.radiansToDegrees(slice.startAngle) < 270 && reverseCurvedLabel) {
-      const labelArcReverse = getLabelArc(calculatedLabelRadius)
-      .startAngle(slice.endAngle)
-      .endAngle(slice.startAngle);   
-      dy=startOffset
-    path = labelArcReverse(slice);
-  } else {
-    const labelArc = getLabelArc(calculatedLabelRadius)
+  const labelArc = getLabelArc(calculatedLabelRadius)
                   .startAngle(slice.startAngle)
                   .endAngle(slice.endAngle);
-    path = labelArc(slice);
-  }
+  const path = labelArc(slice);
   const pathId = uniqueId('label-path-');
 
   curvedLabelProps = {
