@@ -29,7 +29,6 @@ interface CurvedLabelProps
     | "polar"
     | "textAnchor"
     | "verticalAnchor"
-    | "transform"
     | "verticalAnchor"
     | "x"
     | "y"
@@ -37,6 +36,8 @@ interface CurvedLabelProps
     | "dy"
   > {
   href?: string;
+  id?: string;
+  path?: string;
   startOffset?: number;
   textPathComponent?: React.ReactElement;
 }
