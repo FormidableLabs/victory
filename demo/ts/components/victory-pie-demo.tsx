@@ -1,6 +1,6 @@
 import React from "react";
 import { random, range } from "lodash";
-import { VictoryPie,CurvedLabel } from "victory-pie";
+import { VictoryPie, CurvedLabel } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryTheme, LineSegment } from "victory-core";
 

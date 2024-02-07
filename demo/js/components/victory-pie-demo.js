@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers,react/no-multi-comp*/
 import { random, range } from "lodash";
 import React from "react";
-import { VictoryPie,CurvedLabel } from "victory-pie";
+import { VictoryPie, CurvedLabel } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryTheme, LineSegment } from "victory-core";
 
