@@ -147,6 +147,9 @@ describe("victory", () => {
     it("exports Text", () => {
       expect(Victory.Text).toBeDefined();
     });
+    it("exports TextPath", () => {
+      expect(Victory.TextPath).toBeDefined();
+    });
     it("exports TSpan", () => {
       expect(Victory.TSpan).toBeDefined();
     });
