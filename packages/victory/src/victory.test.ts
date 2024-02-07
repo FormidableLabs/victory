@@ -312,6 +312,7 @@ describe("victory", () => {
         "Collection",
         "CursorHelpers",
         "Curve",
+        "CurvedLabel",
         "Data",
         "DefaultTransitions",
         "Domain",

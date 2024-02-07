@@ -9,7 +9,7 @@ import {
   Helpers,
   VictoryLabelProps,
   VictoryLabel,
-  TextPath
+  TextPath,
 } from "victory-core";
 
 interface CurvedLabelProps
