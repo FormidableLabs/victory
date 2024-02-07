@@ -31,14 +31,13 @@ import {
   VictorySliceLabelPlacementType,
   VictorySliceLabelPositionType,
 } from "./slice";
-import { CurvedLabel } from "./curved-label";
+import { CurvedLabel, CurvedLabelProps } from "./curved-label";
 
 export interface VictoryPieProps
   extends Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
-  curvedLabelComponent?: React.ReactElement;
   colorScale?: ColorScalePropType;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   endAngle?: number;
@@ -217,7 +216,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     // have label value(tspan) as child component.
     if (labelPlacement === "curved") {
       const labelPathComponents = this.dataKeys.map((_dataKey, index) => {
-        const curvedLabelProps = this.getComponentProps(
+        const curvedLabelProps: CurvedLabelProps = this.getComponentProps(
           curvedLabelComponent,
           "curvedLabels",
           index,
@@ -236,7 +235,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
 
       const curvedLabelComponents = this.dataKeys
         .map((_dataKey, index) => {
-          const curvedLabelProps = this.getComponentProps(
+          const curvedLabelProps: CurvedLabelProps = this.getComponentProps(
             curvedLabelComponent,
             "curvedLabels",
             index,
