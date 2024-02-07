@@ -22,6 +22,8 @@ interface CurvedLabelProps
     | "backgroundStyle"
     | "backgroundPadding"
     | "direction"
+    | "groupComponent"
+    | "inline"
     | "origin"
     | "labelPlacement"
     | "polar"

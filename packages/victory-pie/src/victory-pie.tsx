@@ -38,6 +38,7 @@ export interface VictoryPieProps
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
+  curvedLabelComponent?: React.ReactElement;
   colorScale?: ColorScalePropType;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   endAngle?: number;
@@ -62,7 +63,6 @@ export interface VictoryPieProps
   origin?: OriginType;
   padAngle?: NumberOrCallback;
   radius?: NumberOrCallback;
-  reverseCurvedLabel?: Boolean;
   startAngle?: number;
   startOffset?: number;
   style?: VictoryStyleInterface;
@@ -145,11 +145,11 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     standalone: true,
     dataComponent: <Slice />,
     labelComponent: <VictoryLabel />,
+    curvedLabelComponent: <CurvedLabel/>,
     containerComponent: <VictoryContainer />,
     groupComponent: <g />,
     sortOrder: "ascending",
     theme: VictoryTheme.grayscale,
-    reverseCurvedLabel: false,
   };
 
   static getBaseProps = (props: VictoryPieProps) =>
@@ -176,6 +176,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       labelIndicator,
       labelPosition,
       labelPlacement,
+      curvedLabelComponent
     } = props;
 
     if (!groupComponent) {
@@ -233,7 +234,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
         })
         children.push( ...labelPathComponents);
         
-      const curvedLabelComponent: React.ReactElement = <CurvedLabel />;
       const curvedLabelComponents = this.dataKeys
         .map((_dataKey, index) => {
           const curvedLabelProps = this.getComponentProps(

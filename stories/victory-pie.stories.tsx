@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryPie, Slice } from "../packages/victory-pie";
+import { VictoryPie, Slice, CurvedLabel } from "../packages/victory-pie";
 import { VictoryTooltip } from "../packages/victory-tooltip";
 import { LineSegment, VictoryTheme, Helpers } from "../packages/victory-core";
 import { fromJS } from "immutable";
@@ -494,7 +494,7 @@ export const Origin = () => {
 export const LabelPlacement = () => {
   return (
     <>
-      {/* <VictoryPie
+      <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         labelPosition="startAngle"
         labelPlacement="parallel"
@@ -543,12 +543,11 @@ export const LabelPlacement = () => {
           { x: 7, y: 1, l: 270 },
           { x: 8, y: 1, l: 315 },
         ]}
-      /> */}
+      />
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         radius={120}
         labelPlacement={"curved"}
-        reverseCurvedLabel
         labels={({ datum }) => `${datum.l} deg`}
         labelRadius={100}
         startOffset={20}
@@ -563,7 +562,7 @@ export const LabelPlacement = () => {
           { x: 8, y: 1, l: 315 },
         ]}
       />
-      {/* <VictoryPie
+      <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         radius={100}
         labelPlacement="curved"
@@ -598,7 +597,26 @@ export const LabelPlacement = () => {
           { x: 7, y: 1, l: 270 },
           { x: 8, y: 1, l: 315 },
         ]}
-      /> */}
+      />
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "magenta" } }}
+        radius={100}
+        labelPlacement="curved"
+        labels={({ datum }) => `${datum.l}`}
+        labelRadius={85}
+        startOffset={30}
+        curvedLabelComponent={<CurvedLabel style={{ fill: "red" }}/>}
+        data={[
+          { x: 1, y: 1, l: 0 },
+          { x: 2, y: 1, l: 45 },
+          { x: 3, y: 1, l: 90 },
+          { x: 4, y: 1, l: 135 },
+          { x: 5, y: 1, l: 180 },
+          { x: 6, y: 1, l: 225 },
+          { x: 7, y: 1, l: 270 },
+          { x: 8, y: 1, l: 315 },
+        ]}
+      />
     </>
   );
 };
