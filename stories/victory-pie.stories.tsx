@@ -605,7 +605,7 @@ export const LabelPlacement = () => {
         labels={({ datum }) => `${datum.l}`}
         labelRadius={85}
         startOffset={30}
-        curvedLabelComponent={<CurvedLabel style={{ fill: "red" }}/>}
+        curvedLabelComponent={<CurvedLabel style={{ fill: "red" }} />}
         data={[
           { x: 1, y: 1, l: 0 },
           { x: 2, y: 1, l: 45 },

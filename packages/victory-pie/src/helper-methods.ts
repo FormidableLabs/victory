@@ -268,21 +268,21 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     labelRadius,
     evaluatedStyle,
   );
-    const labelArc = getLabelArc(calculatedLabelRadius)
-                  .startAngle(slice.startAngle)
-                  .endAngle(slice.endAngle);
-    const path = labelArc(slice);
-  const pathId = uniqueId('label-path-');
+  const labelArc = getLabelArc(calculatedLabelRadius)
+    .startAngle(slice.startAngle)
+    .endAngle(slice.endAngle);
+  const path = labelArc(slice);
+  const pathId = uniqueId("label-path-");
 
-const curvedLabelProps = {
+  const curvedLabelProps = {
     index,
     datum,
     data,
     slice,
     text,
     style: labelStyle,
-    href:`#${pathId}`,
-    id:pathId,
+    href: `#${pathId}`,
+    id: pathId,
     path,
     startOffset,
     transform: defaultTransform,

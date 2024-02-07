@@ -147,7 +147,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     textPathComponent,
     href,
     startOffset,
-    dy
+    dy,
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 

@@ -145,7 +145,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     standalone: true,
     dataComponent: <Slice />,
     labelComponent: <VictoryLabel />,
-    curvedLabelComponent: <CurvedLabel/>,
+    curvedLabelComponent: <CurvedLabel />,
     containerComponent: <VictoryContainer />,
     groupComponent: <g />,
     sortOrder: "ascending",
@@ -176,7 +176,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       labelIndicator,
       labelPosition,
       labelPlacement,
-      curvedLabelComponent
+      curvedLabelComponent,
     } = props;
 
     if (!groupComponent) {
@@ -212,28 +212,28 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       children.push(...dataComponents);
     }
 
-    // For curved labels, we need to create a path component with id and path value of 
-    // label arc. We need to pass this id to the href of textPath component which will 
+    // For curved labels, we need to create a path component with id and path value of
+    // label arc. We need to pass this id to the href of textPath component which will
     // have label value(tspan) as child component.
     if (labelPlacement === "curved") {
-      const labelPathComponents= this.dataKeys.map((_dataKey, index) => {
-          const curvedLabelProps = this.getComponentProps(
-            curvedLabelComponent,
-            "curvedLabels",
-            index,
-          );
+      const labelPathComponents = this.dataKeys.map((_dataKey, index) => {
+        const curvedLabelProps = this.getComponentProps(
+          curvedLabelComponent,
+          "curvedLabels",
+          index,
+        );
 
-          //create labelPath 
-          const pathComponent:React.ReactElement = <Path/>   
-          return  React.cloneElement(pathComponent, {
-            d: curvedLabelProps.path,
-            id: curvedLabelProps.id,
-            key: index,
-            textAnchor:"middle"
-          });
-        })
-        children.push( ...labelPathComponents);
-        
+        // create labelPath
+        const pathComponent: React.ReactElement = <Path />;
+        return React.cloneElement(pathComponent, {
+          d: curvedLabelProps.path,
+          id: curvedLabelProps.id,
+          key: index,
+          textAnchor: "middle",
+        });
+      });
+      children.push(...labelPathComponents);
+
       const curvedLabelComponents = this.dataKeys
         .map((_dataKey, index) => {
           const curvedLabelProps = this.getComponentProps(
@@ -254,8 +254,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
           (comp: React.ReactElement | undefined): comp is React.ReactElement =>
             comp !== undefined,
         );
-        children.push( ...curvedLabelComponents);
-
+      children.push(...curvedLabelComponents);
     } else if (labelComponent) {
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
