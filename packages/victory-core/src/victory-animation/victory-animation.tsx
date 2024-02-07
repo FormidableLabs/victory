@@ -1,10 +1,7 @@
-/* global setTimeout:false */
 import React from "react";
 import * as d3Ease from "victory-vendor/d3-ease";
 import { victoryInterpolator } from "./util";
 import TimerContext from "../victory-util/timer-context";
-import isEqual from "react-fast-compare";
-import type Timer from "../victory-util/timer";
 
 /**
  * Single animation object to interpolate
@@ -58,14 +55,14 @@ export type AnimationEasing =
   | "sinInOut";
 
 export interface VictoryAnimationProps {
-  children: (style: AnimationStyle, info: AnimationInfo) => React.ReactNode;
+  children: (style: AnimationStyle, info: AnimationInfo) => React.ReactElement;
   duration?: number;
   easing?: AnimationEasing;
   delay?: number;
   onEnd?: () => void;
   data: AnimationData;
 }
-export interface VictoryAnimationState {
+export interface VictoryState {
   data: AnimationStyle;
   animationInfo: AnimationInfo;
 }
@@ -79,161 +76,132 @@ export interface VictoryAnimation {
   context: React.ContextType<typeof TimerContext>;
 }
 
-export class VictoryAnimation extends React.Component<
-  VictoryAnimationProps,
-  VictoryAnimationState
-> {
-  static displayName = "VictoryAnimation";
+/** d3-ease changed the naming scheme for ease from "linear" -> "easeLinear" etc. */
+const formatAnimationName = (name: AnimationEasing) => {
+  const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+  return `ease${capitalizedName}`;
+};
 
-  static defaultProps = {
-    data: {},
-    delay: 0,
-    duration: 1000,
-    easing: "quadInOut",
-  };
+const DEFAULT_DURATION = 1000;
 
-  static contextType = TimerContext;
-  private interpolator: null | ((value: number) => AnimationStyle);
-  private queue: AnimationStyle[];
-  private ease: any;
-  private timer: Timer;
-  private loopID?: number;
+export const VictoryAnimation = ({
+  duration = DEFAULT_DURATION,
+  easing = "quadInOut",
+  delay = 0,
+  data,
+  children,
+  onEnd,
+}: VictoryAnimationProps) => {
+  const [state, setState] = React.useState<VictoryState>({
+    data: Array.isArray(data) ? data[0] : data,
+    animationInfo: {
+      progress: 0,
+      animating: false,
+    },
+  });
 
-  constructor(props, context) {
-    super(props, context);
-    /* defaults */
-    this.state = {
-      data: Array.isArray(this.props.data)
-        ? this.props.data[0]
-        : this.props.data,
-      animationInfo: {
-        progress: 0,
-        animating: false,
-      },
-    };
-    this.interpolator = null;
-    this.queue = Array.isArray(this.props.data) ? this.props.data.slice(1) : [];
-    /* build easing function */
-    this.ease = d3Ease[this.toNewName(this.props.easing)];
-    this.timer = this.context.animationTimer;
-  }
+  const timer = React.useContext(TimerContext).animationTimer;
+  const queue = React.useRef<AnimationStyle[]>(
+    Array.isArray(data) ? data.slice(1) : [],
+  );
+  const interpolator = React.useRef<null | ((value: number) => AnimationStyle)>(
+    null,
+  );
+  const loopID = React.useRef<number | undefined>(undefined);
+  const ease = d3Ease[formatAnimationName(easing)];
 
-  componentDidMount() {
+  React.useEffect(() => {
     // Length check prevents us from triggering `onEnd` in `traverseQueue`.
-    if (this.queue.length) {
-      this.traverseQueue();
+    if (queue.current.length) {
+      traverseQueue();
     }
-  }
 
-  componentDidUpdate(prevProps) {
-    const equalProps = isEqual(this.props, prevProps);
-    if (!equalProps) {
-      /* If the previous animation didn't finish, force it to complete before starting a new one */
-      if (
-        this.interpolator &&
-        this.state.animationInfo &&
-        this.state.animationInfo.progress < 1
-      ) {
-        // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({
-          data: this.interpolator(1),
-          animationInfo: {
-            progress: 1,
-            animating: false,
-            terminating: true,
-          },
-        });
+    // Clean up the animation loop
+    return () => {
+      if (loopID.current) {
+        timer.unsubscribe(loopID.current);
       } else {
-        /* cancel existing loop if it exists */
-        this.timer.unsubscribe(this.loopID);
-        /* If an object was supplied */
-        if (!Array.isArray(this.props.data)) {
-          // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
-          // but let's reuse the same array.
-          this.queue.length = 0;
-          this.queue.push(this.props.data);
-          /* If an array was supplied */
-        } else {
-          /* Extend the tween queue */
-          this.queue.push(...this.props.data);
-        }
-        /* Start traversing the tween queue */
-        this.traverseQueue();
+        timer.stop();
       }
-    }
-  }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  componentWillUnmount() {
-    if (this.loopID) {
-      this.timer.unsubscribe(this.loopID);
-    } else {
-      this.timer.stop();
-    }
-  }
-
-  toNewName(ease) {
-    // d3-ease changed the naming scheme for ease from "linear" -> "easeLinear" etc.
-    const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
-    return `ease${capitalize(ease)}`;
-  }
-
-  /* Traverse the tween queue */
-  traverseQueue() {
-    if (this.queue.length) {
-      /* Get the next index */
-      const data = this.queue[0];
-      /* compare cached version to next props */
-      this.interpolator = victoryInterpolator(this.state.data, data);
-      /* reset step to zero */
-      if (this.props.delay) {
-        setTimeout(() => {
-          this.loopID = this.timer.subscribe(
-            this.functionToBeRunEachFrame,
-            this.props.duration!,
-          );
-        }, this.props.delay);
-      } else {
-        this.loopID = this.timer.subscribe(
-          this.functionToBeRunEachFrame,
-          this.props.duration!,
-        );
-      }
-    } else if (this.props.onEnd) {
-      this.props.onEnd();
-    }
-  }
-  /* every frame we... */
-  functionToBeRunEachFrame = (elapsed, duration) => {
-    /*
-      step can generate imprecise values, sometimes greater than 1
-      if this happens set the state to 1 and return, cancelling the timer
-    */
-    const animationDuration =
-      duration !== undefined ? duration : this.props.duration;
-    const step = animationDuration ? elapsed / animationDuration : 1;
-    if (step >= 1) {
-      this.setState({
-        data: this.interpolator!(1),
+  React.useEffect(() => {
+    // If the previous animation didn't finish, force it to complete before starting a new one
+    if (
+      interpolator.current &&
+      state.animationInfo &&
+      state.animationInfo.progress < 1
+    ) {
+      setState({
+        data: interpolator.current(1),
         animationInfo: {
           progress: 1,
           animating: false,
           terminating: true,
         },
       });
-      if (this.loopID) {
-        this.timer.unsubscribe(this.loopID);
+    } else {
+      // Cancel existing loop if it exists
+      timer.unsubscribe(loopID.current);
+      // Set the tween queue to the new data
+      queue.current = Array.isArray(data) ? data : [data];
+      // Start traversing the tween queue
+      traverseQueue();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  const traverseQueue = () => {
+    if (queue.current.length) {
+      const nextData = queue.current[0];
+
+      // Compare cached version to next props
+      interpolator.current = victoryInterpolator(state.data, nextData);
+
+      // Reset step to zero
+      if (delay) {
+        setTimeout(() => {
+          loopID.current = timer.subscribe(functionToBeRunEachFrame, duration);
+        }, delay);
+      } else {
+        loopID.current = timer.subscribe(functionToBeRunEachFrame, duration);
       }
-      this.queue.shift();
-      this.traverseQueue();
+    } else if (onEnd) {
+      onEnd();
+    }
+  };
+
+  const functionToBeRunEachFrame = (elapsed: number) => {
+    if (!interpolator.current) return;
+
+    // Step can generate imprecise values, sometimes greater than 1
+    // if this happens set the state to 1 and return, cancelling the timer
+    const step = duration ? elapsed / duration : 1;
+
+    if (step >= 1) {
+      setState({
+        data: interpolator.current(1),
+        animationInfo: {
+          progress: 1,
+          animating: false,
+          terminating: true,
+        },
+      });
+      if (loopID.current) {
+        timer.unsubscribe(loopID.current);
+      }
+      queue.current.shift();
+      traverseQueue();
       return;
     }
-    /*
-      if we're not at the end of the timer, set the state by passing
-      current step value that's transformed by the ease function to the
-      interpolator, which is cached for performance whenever props are received
-    */
-    this.setState({
-      data: this.interpolator!(this.ease(step)),
+
+    // If we're not at the end of the timer, set the state by passing
+    // current step value that's transformed by the ease function to the
+    // interpolator, which is cached for performance whenever props are received
+    setState({
+      data: interpolator.current(ease(step)),
       animationInfo: {
         progress: step,
         animating: step < 1,
@@ -241,7 +209,5 @@ export class VictoryAnimation extends React.Component<
     });
   };
 
-  render() {
-    return this.props.children(this.state.data, this.state.animationInfo);
-  }
-}
+  return children(state.data, state.animationInfo);
+};
