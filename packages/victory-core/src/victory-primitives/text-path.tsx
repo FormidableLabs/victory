@@ -5,7 +5,7 @@ import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 export interface TextPathProps extends VictoryCommonPrimitiveProps {
   children?: React.ReactNode;
   href?: string;
-  startOffset?: string | number;
+  startOffset?: number;
 }
 
 export const TextPath = (props: TextPathProps) => {

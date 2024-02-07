@@ -494,7 +494,7 @@ export const Origin = () => {
 export const LabelPlacement = () => {
   return (
     <>
-      <VictoryPie
+      {/* <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         labelPosition="startAngle"
         labelPlacement="parallel"
@@ -543,14 +543,15 @@ export const LabelPlacement = () => {
           { x: 7, y: 1, l: 270 },
           { x: 8, y: 1, l: 315 },
         ]}
-      />
+      /> */}
       <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         radius={120}
-        labelPlacement="curved"
+        labelPlacement={"curved"}
+        reverseCurvedLabel
         labels={({ datum }) => `${datum.l} deg`}
         labelRadius={100}
-        startOffset={10}
+        startOffset={20}
         data={[
           { x: 1, y: 1, l: 0 },
           { x: 2, y: 1, l: 45 },
@@ -562,7 +563,7 @@ export const LabelPlacement = () => {
           { x: 8, y: 1, l: 315 },
         ]}
       />
-      <VictoryPie
+      {/* <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         radius={100}
         labelPlacement="curved"
@@ -586,7 +587,7 @@ export const LabelPlacement = () => {
         labelPlacement="curved"
         labels={({ datum }) => `${datum.l}`}
         labelRadius={85}
-        startOffset={"30%"}
+        startOffset={30}
         data={[
           { x: 1, y: 1, l: 0 },
           { x: 2, y: 1, l: 45 },
@@ -597,7 +598,7 @@ export const LabelPlacement = () => {
           { x: 7, y: 1, l: 270 },
           { x: 8, y: 1, l: 315 },
         ]}
-      />
+      /> */}
     </>
   );
 };

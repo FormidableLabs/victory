@@ -35,7 +35,7 @@ interface CurvedLabelProps
     | "dy"
   > {
   href?: string;
-  startOffset?: string | number;
+  startOffset?: number;
   textPathComponent?: React.ReactElement;
 }
 
@@ -145,6 +145,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     textPathComponent,
     href,
     startOffset,
+    dy
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
@@ -157,6 +158,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     desc: Helpers.evaluateProp(desc, calculatedProps),
     tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
     id,
+    dy,
     ...userProps,
   };
 
@@ -232,6 +234,6 @@ CurvedLabel.defaultStyles = VictoryLabel.defaultStyles;
 CurvedLabel.propTypes = {
   ...VictoryLabel.propTypes,
   href: PropTypes.string,
-  startOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  startOffset: PropTypes.number,
   textPathComponent: PropTypes.element,
 };
