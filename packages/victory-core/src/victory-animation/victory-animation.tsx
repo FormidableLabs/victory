@@ -12,6 +12,7 @@ export type AnimationStyle = { [key: string]: string | number };
  */
 
 export type AnimationData = AnimationStyle | AnimationStyle[];
+
 export type AnimationEasing =
   | "back"
   | "backIn"
@@ -62,10 +63,12 @@ export interface VictoryAnimationProps {
   onEnd?: () => void;
   data: AnimationData;
 }
-export interface VictoryState {
+
+export interface VictoryAnimationState {
   data: AnimationStyle;
   animationInfo: AnimationInfo;
 }
+
 export interface AnimationInfo {
   progress: number;
   animating: boolean;
@@ -92,7 +95,7 @@ export const VictoryAnimation = ({
   children,
   onEnd,
 }: VictoryAnimationProps) => {
-  const [state, setState] = React.useState<VictoryState>({
+  const [state, setState] = React.useState<VictoryAnimationState>({
     data: Array.isArray(data) ? data[0] : data,
     animationInfo: {
       progress: 0,
