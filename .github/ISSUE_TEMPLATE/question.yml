@@ -21,8 +21,8 @@ body:
           required: true
 
   - type: textarea
-    render: markdown
     attributes:
+      render: markdown
       label: Question
       description: |
         Any background information that might help us answer your questions.
