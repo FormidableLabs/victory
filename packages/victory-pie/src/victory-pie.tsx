@@ -38,6 +38,7 @@ export interface VictoryPieProps
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
+  curvedLabelComponent?: React.ReactElement;    
   colorScale?: ColorScalePropType;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   endAngle?: number;
@@ -160,6 +161,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     "groupComponent",
     "containerComponent",
     "labelIndicatorComponent",
+    "curvedLabelComponent"
   ];
 
   // Overridden in victory-native
@@ -214,7 +216,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     // For curved labels, we need to create a path component with id and path value of
     // label arc. We need to pass this id to the href of textPath component which will
     // have label value(tspan) as child component.
-    if (labelPlacement === "curved") {
+    if (labelPlacement === "curved" && curvedLabelComponent) {
       const labelPathComponents = this.dataKeys.map((_dataKey, index) => {
         const curvedLabelProps: CurvedLabelProps = this.getComponentProps(
           curvedLabelComponent,
@@ -228,7 +230,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
           d: curvedLabelProps.path,
           id: curvedLabelProps.id,
           key: index,
-          textAnchor: "middle",
         });
       });
       children.push(...labelPathComponents);
