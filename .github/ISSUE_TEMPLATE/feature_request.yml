@@ -21,8 +21,8 @@ body:
           required: true
 
   - type: textarea
-    render: markdown
     attributes:
+      render: markdown
       label: Feature Request
       description: |
         **Is your feature request related to a problem? Please describe.**
