@@ -126,7 +126,7 @@ class App extends React.Component<any, AppState> {
 
   render() {
     const Child = this.getDemo();
-    const routes = keys(MAP);
+    const routes = keys(MAP).sort();
     return (
       <div>
         <h1>Demos (Typescript)</h1>
