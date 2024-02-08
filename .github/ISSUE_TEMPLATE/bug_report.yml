@@ -49,6 +49,7 @@ body:
       required: true
 
   - type: textarea
+    render: markdown
     attributes:
       label: Steps to reproduce
       placeholder: |
@@ -59,11 +60,13 @@ body:
         4. See error
 
   - type: textarea
+    render: markdown
     attributes:
       label: Expected behavior
       description: A clear and concise description of what you expected to happen.
 
   - type: textarea
+    render: markdown
     attributes:
       label: Actual behavior
       description: A clear and concise description of what actually happened.
