@@ -37,10 +37,14 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   ) => void;
 }
 
-type Constructor = new (...args: any[]) => React.Component;
+type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
 
-export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
-  class VictoryBrushContainer extends base {
+export function brushContainerMixin<
+  TBase extends ComponentClass<TProps>,
+  TProps extends VictoryBrushContainerProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryBrushContainer extends Base {
     static displayName = "VictoryBrushContainer";
     static defaultProps = {
       ...VictoryContainer.defaultProps,
@@ -214,5 +218,5 @@ export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
       ];
     }
   };
-
+}
 export const VictoryBrushContainer = brushContainerMixin(VictoryContainer);
