@@ -128,7 +128,9 @@ export default class VictoryAxisDemo extends React.Component<
                       {
                         mutation: (props: any) => {
                           return {
-                            style: Object.assign({}, props.style, { stroke: "orange" }),
+                            style: Object.assign({}, props.style, {
+                              stroke: "orange",
+                            }),
                           };
                         },
                       },
@@ -155,7 +157,7 @@ export default class VictoryAxisDemo extends React.Component<
             tickFormat={(x) => x.getFullYear()}
           />
 
-          <svg style={style.parent} width={500} height={400}>
+          <svg width={500} height={400}>
             <VictoryAxis
               crossAxis
               width={500}
@@ -177,7 +179,7 @@ export default class VictoryAxisDemo extends React.Component<
             />
           </svg>
 
-          <svg style={style.parent} width={500} height={400}>
+          <svg width={500} height={400}>
             <VictoryAxis
               crossAxis
               domain={this.state.domain}
