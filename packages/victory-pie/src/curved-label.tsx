@@ -9,10 +9,12 @@ import {
   Helpers,
   VictoryLabelProps,
   VictoryLabel,
-  TextPath,
+  TSpan,
+  Text,
+  TextPath
 } from "victory-core";
 
-interface CurvedLabelProps
+export interface CurvedLabelProps
   extends Omit<
     VictoryLabelProps,
     | "angle"
@@ -190,7 +192,10 @@ const renderLabel = (calculatedProps, tspanValues) => {
 };
 
 const defaultProps = {
-  ...VictoryLabel.defaultProps,
+  tspanComponent: <TSpan />,
+  capHeight: 0.71, // Magic number from d3.
+  lineHeight: 1,
+  textComponent: <Text />,
   textPathComponent: <TextPath />,
 };
 
