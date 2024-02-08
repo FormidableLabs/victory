@@ -31,14 +31,14 @@ import {
   VictorySliceLabelPlacementType,
   VictorySliceLabelPositionType,
 } from "./slice";
-import { CurvedLabel, CurvedLabelProps } from "./curved-label";
+import { CurvedLabel } from "./curved-label";
 
 export interface VictoryPieProps
   extends Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {
-  curvedLabelComponent?: React.ReactElement;    
+  curvedLabelComponent?: React.ReactElement;
   colorScale?: ColorScalePropType;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   endAngle?: number;
@@ -161,7 +161,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     "groupComponent",
     "containerComponent",
     "labelIndicatorComponent",
-    "curvedLabelComponent"
+    "curvedLabelComponent",
   ];
 
   // Overridden in victory-native
@@ -188,7 +188,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       labelIndicator &&
       labelPosition === "centroid" &&
       labelPlacement !== "curved";
-    let groupComponentTransform;
 
     const children: React.ReactElement[] = [];
 
@@ -217,31 +216,25 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     // label arc. We need to pass this id to the href of textPath component which will
     // have label value(tspan) as child component.
     if (labelPlacement === "curved" && curvedLabelComponent) {
+      // create labelPath
+      const pathComponent: React.ReactElement = <Path />;
       const labelPathComponents = this.dataKeys.map((_dataKey, index) => {
-        const curvedLabelProps: CurvedLabelProps = this.getComponentProps(
-          curvedLabelComponent,
-          "curvedLabels",
+        const curvedLabelPathProps = this.getComponentProps(
+          pathComponent,
+          "curvedLabelPaths",
           index,
         );
-
-        // create labelPath
-        const pathComponent: React.ReactElement = <Path />;
-        return React.cloneElement(pathComponent, {
-          d: curvedLabelProps.path,
-          id: curvedLabelProps.id,
-          key: index,
-        });
+        return React.cloneElement(pathComponent, curvedLabelPathProps);
       });
       children.push(...labelPathComponents);
 
       const curvedLabelComponents = this.dataKeys
         .map((_dataKey, index) => {
-          const curvedLabelProps: CurvedLabelProps = this.getComponentProps(
+          const curvedLabelProps = this.getComponentProps(
             curvedLabelComponent,
             "curvedLabels",
             index,
           );
-          groupComponentTransform = curvedLabelProps.transform;
           if (
             (curvedLabelProps as any).text !== undefined &&
             (curvedLabelProps as any).text !== null
@@ -299,9 +292,16 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       children.push(...labelIndicatorComponents);
     }
     if (labelPlacement === "curved") {
-      const groupCloneElement = React.cloneElement(groupComponent, {
-        transform: groupComponentTransform,
-      });
+      const groupComponentProps = this.getComponentProps(
+        groupComponent,
+        "groupComponentProps",
+        0,
+      );
+
+      const groupCloneElement = React.cloneElement(
+        groupComponent,
+        groupComponentProps,
+      );
       return this.renderContainer(groupCloneElement, children);
     }
     return this.renderContainer(groupComponent, children);

@@ -251,7 +251,7 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     theme,
     startOffset,
   } = dataProps;
-  const { style, defaultRadius, defaultTransform } = calculatedValues;
+  const { style, defaultRadius } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
     Object.assign({ text }, dataProps),
@@ -284,7 +284,6 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     id: pathId,
     path,
     startOffset,
-    transform: defaultTransform,
   };
 
   if (!Helpers.isTooltip(curvedLabelComponent)) {
@@ -292,6 +291,13 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
   }
   const tooltipTheme = (theme && theme.tooltip) || {};
   return defaults({}, curvedLabelProps, Helpers.omit(tooltipTheme, ["style"]));
+};
+
+const getCurvedLabelPathProps = (curvedLabelProps) => {
+  return {
+    id: curvedLabelProps.id,
+    d: curvedLabelProps.path,
+  };
 };
 
 export const getXOffsetMultiplayerByAngle = (angle) =>
@@ -416,6 +422,12 @@ export const getBaseProps = (initialProps, fallbackProps) => {
           Object.assign({}, props, dataProps),
           calculatedValues,
         );
+        const curvedLabelProps = childProps[eventKey].curvedLabels;
+        childProps[eventKey].curvedLabelPaths =
+          getCurvedLabelPathProps(curvedLabelProps);
+        childProps[eventKey].groupComponentProps = {
+          transform: defaultTransform,
+        };
       } else {
         childProps[eventKey].labels = getLabelProps(
           evaluatedText,

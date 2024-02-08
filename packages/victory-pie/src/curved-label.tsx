@@ -11,7 +11,7 @@ import {
   VictoryLabel,
   TSpan,
   Text,
-  TextPath
+  TextPath,
 } from "victory-core";
 
 export interface CurvedLabelProps
