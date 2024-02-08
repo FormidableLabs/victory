@@ -160,7 +160,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     title,
     desc: Helpers.evaluateProp(desc, calculatedProps),
     tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
-    id,
     dy,
     ...userProps,
   };
