@@ -37,6 +37,7 @@ body:
       description: |
         Please include a code sandbox link or a similar reproduction if possible.
         Issues with sandbox links are typically resolved faster.
+        You can use our preset [here](https://codesandbox.io/s/dj4f7t).
 
   - type: textarea
     render: markdown
