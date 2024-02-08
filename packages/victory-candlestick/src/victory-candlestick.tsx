@@ -40,7 +40,7 @@ export interface VictoryCandlestickStyleInterface {
 export type VictoryCandlestickLabelsType =
   | (string | number)[]
   | boolean
-  | ((datum: any) => number);
+  | ((datum: any) => number | string);
 
 export interface VictoryCandlestickProps
   extends Omit<VictoryCommonProps, "polar">,
