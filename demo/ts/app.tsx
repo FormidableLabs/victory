@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import { keys } from "lodash";
 
 import AccessibilityDemo from "./components/accessibility-demo";
+import AnimationDemo from "./components/animation-demo";
 import AreaDemo from "./components/victory-area-demo";
 import AxisDemo from "./components/victory-axis-demo";
 import BarDemo from "./components/victory-bar-demo";
@@ -41,6 +42,7 @@ import OuiaDemo from "./components/ouia-demo";
 
 const MAP = {
   "/accessibility": { component: AccessibilityDemo, name: "AccessibilityDemo" },
+  "/animation": { component: AnimationDemo, name: "AnimationDemo" },
   "/area": { component: AreaDemo, name: "AreaDemo" },
   "/axis": { component: AxisDemo, name: "AxisDemo" },
   "/bar": { component: BarDemo, name: "BarDemo" },
