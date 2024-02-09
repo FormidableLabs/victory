@@ -11,6 +11,7 @@ import BoxPlotDemo from "./components/victory-box-plot-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import BrushLineDemo from "./components/victory-brush-line-demo";
 import CandlestickDemo from "./components/victory-candlestick-demo";
+import CanvasDemo from "./components/canvas-demo";
 import ChartDemo from "./components/victory-chart-demo";
 import CreateContainerDemo from "./components/create-container-demo";
 import CursorContainerDemo from "./components/victory-cursor-container-demo";
@@ -56,6 +57,7 @@ const MAP = {
   "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
   "/histogram": { component: HistogramDemo, name: "HistogramDemo" },
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
+  "/canvas": { component: CanvasDemo, name: "CanvasDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/create-container": {
     component: CreateContainerDemo,
