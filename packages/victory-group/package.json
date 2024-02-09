@@ -26,8 +26,7 @@
     "victory-shared-events": "^36.9.1"
   },
   "devDependencies": {
-    "victory-bar": "*",
-    "victory-group": "*"
+    "victory-bar": "*"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
@@ -277,7 +276,7 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest --passWithNoTests",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
@@ -286,10 +285,11 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs",
-        "../victory-bar:build:lib:cjs",
-        "../victory-vendor:build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs"
+        "../victory-core:build",
+        "../victory-shared-events:build",
+        "../victory-bar:build",
+        "../victory-vendor:build",
+        "../victory-voronoi:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

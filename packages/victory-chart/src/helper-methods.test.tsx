@@ -1,6 +1,7 @@
-import { getChildComponents } from "victory-chart/lib/helper-methods";
 import React from "react";
 import { VictoryAxis } from "victory-axis";
+
+import { getChildComponents } from "./helper-methods";
 
 const MockVictoryLine = () => <div data-testid="victory-line" />;
 

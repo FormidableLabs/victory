@@ -1,8 +1,9 @@
 import React from "react";
-import { Area } from "victory-area";
 import { render } from "@testing-library/react";
 import { VictoryContainer } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
+
+import { Area } from "./area";
 
 describe("victory-primitives/area", () => {
   const baseProps = {

@@ -80,7 +80,6 @@ const updateRootPkg = async ({ allPkgs }) => {
     { rootTask: "format:pkgs:fix", pkgTask: "format:fix" },
     { rootTask: "lint:pkgs", pkgTask: "lint" },
     { rootTask: "lint:pkgs:fix", pkgTask: "lint:fix" },
-    { rootTask: "jest:pkgs", pkgTask: "jest" },
     { rootTask: "types:check", pkgTask: "types:check" },
     { rootTask: "types:create", pkgTask: "types:create" },
   ].forEach(({ rootTask, pkgTask }) => {

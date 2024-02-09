@@ -1,9 +1,11 @@
+import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { fromJS } from "immutable";
-import React from "react";
 import { Helpers } from "victory-core";
-import { ErrorBar, VictoryErrorBar } from "victory-errorbar";
 import * as d3Scale from "victory-vendor/d3-scale";
+
+import { ErrorBar } from "./error-bar";
+import { VictoryErrorBar } from "./victory-errorbar";
 
 const defaultProps = {
   dataComponent: (
@@ -1027,7 +1029,7 @@ describe("components/victory-errorbar", () => {
         />,
       );
       const svg = container.querySelector("svg");
-      fireEvent.click(svg!);
+      if (svg) fireEvent.click(svg);
       expect(clickHandler).toBeCalled();
     });
 

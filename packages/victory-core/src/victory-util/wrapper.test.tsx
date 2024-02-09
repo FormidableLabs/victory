@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react";
-import { Wrapper } from "victory-core";
+
+import * as Wrapper from "./wrapper";
 
 const MockVictoryAxis = (props) => <div {...props} />;
 MockVictoryAxis.role = "axis";

@@ -1,4 +1,4 @@
-import { BrushHelpers } from "victory-brush-container";
+import { BrushHelpers } from "./brush-helpers";
 
 describe("containers/brush-helpers", () => {
   // eslint-disable-next-line @typescript-eslint/unbound-method

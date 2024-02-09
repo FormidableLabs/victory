@@ -1,6 +1,8 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react";
-import { Axis, Scale } from "victory-core";
+
+import * as Axis from "./axis";
+import * as Scale from "./scale";
 
 describe("helpers/axis", () => {
   describe("isVertical", () => {

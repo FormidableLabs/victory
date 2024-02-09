@@ -27,9 +27,6 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
-  "devDependencies": {
-    "victory-core": "*"
-  },
   "publishConfig": {
     "provenance": true
   },
@@ -263,7 +260,7 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest --passWithNoTests",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
@@ -272,9 +269,8 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs",
-        "../victory-vendor:build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs"
+        "../victory-vendor:build",
+        "../victory-voronoi:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

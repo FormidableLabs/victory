@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-expressions */
-import { victoryInterpolator } from "victory-core/lib/victory-animation/util";
+import { victoryInterpolator } from "./util";
 
 describe("victoryInterpolator", () => {
   it("does not attempt to interpolate identical values", () => {

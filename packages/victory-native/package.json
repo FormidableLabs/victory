@@ -58,8 +58,7 @@
     "@babel/core": "^7.18.9",
     "react-native": "^0.65.1",
     "react-native-gesture-handler": "^1.10.3",
-    "react-native-svg": "^12.4.3",
-    "victory-native": "^36.9.1"
+    "react-native-svg": "^12.4.3"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
@@ -354,12 +353,12 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
-        "../../test/jest-config.js",
-        "../../test/jest-setup.ts"
+        "./jest.config.ts",
+        "./jest-native-setup.tsx"
       ],
       "output": [],
       "dependencies": [
