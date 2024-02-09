@@ -3,10 +3,10 @@ import React from "react";
 import { Wrapper } from "victory-core";
 
 const MockVictoryAxis = (props) => <div {...props} />;
-MockVictoryAxis.role = 'axis';
+MockVictoryAxis.role = "axis";
 
 const MockVictoryLine = (props) => <div {...props} />;
-MockVictoryLine.role = 'line';
+MockVictoryLine.role = "line";
 
 describe("helpers/wrapper", () => {
   describe("getDomain", () => {

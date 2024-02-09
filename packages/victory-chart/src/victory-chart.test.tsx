@@ -102,7 +102,7 @@ describe("components/victory-chart", () => {
   describe("animation", () => {
     it("handles basic animation parameters without crashing", () => {
       const { container } = render(
-        <VictoryChart animate={{ duration: 2000, easing: "bounce" }} />
+        <VictoryChart animate={{ duration: 2000, easing: "bounce" }} />,
       );
 
       expect(container.querySelector("svg")).toBeInTheDocument();
