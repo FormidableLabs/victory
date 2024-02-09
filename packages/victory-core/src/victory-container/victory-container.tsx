@@ -41,6 +41,8 @@ export interface VictoryContainerProps {
   width?: number;
 }
 
+export { VictoryContainerFn } from "./victory-container-fn";
+
 export class VictoryContainer<
   TProps extends VictoryContainerProps,
 > extends React.Component<TProps> {

@@ -135,6 +135,7 @@ import {
   WhiskerProps,
   Wrapper,
   addEvents,
+  mergeRefs,
 } from "victory-core";
 import { pick } from "lodash";
 
@@ -193,6 +194,7 @@ describe("victory-core", () => {
         "Whisker",
         "Wrapper",
         "addEvents",
+        "mergeRefs",
       ]
     `);
   });
