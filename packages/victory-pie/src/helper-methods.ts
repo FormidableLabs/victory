@@ -1,5 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
-import { defaults, isFunction, isPlainObject, isNil } from "lodash";
+import { defaults, isFunction, isPlainObject, isNil, uniqueId } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
@@ -71,6 +71,9 @@ const getCalculatedValues = (props) => {
   const origin = getOrigin(props, padding);
   const data = Data.getData(props);
   const slices = getSlices(props, data);
+  const defaultTransform = origin
+    ? `translate(${origin.x}, ${origin.y})`
+    : undefined;
   return Object.assign({}, props, {
     style,
     colors,
@@ -79,6 +82,7 @@ const getCalculatedValues = (props) => {
     data,
     slices,
     origin,
+    defaultTransform,
   });
 };
 
@@ -237,6 +241,75 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
+const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
+  const {
+    index,
+    datum,
+    data,
+    slice,
+    curvedLabelComponent,
+    theme,
+    startOffset,
+  } = dataProps;
+  const { style, defaultRadius } = calculatedValues;
+  const labelRadius = Helpers.evaluateProp(
+    calculatedValues.labelRadius,
+    Object.assign({ text }, dataProps),
+  );
+
+  const labelStyle = Object.assign({ padding: 0 }, style.labels);
+  const evaluatedStyle = Helpers.evaluateStyle(
+    labelStyle,
+    Object.assign({ labelRadius, text }, dataProps),
+  );
+  const calculatedLabelRadius = getCalculatedLabelRadius(
+    defaultRadius,
+    labelRadius,
+    evaluatedStyle,
+  );
+  let labelArc;
+  if(Helpers.radiansToDegrees (slice.endAngle) > 90 && 
+    Helpers.radiansToDegrees (slice.startAngle) < 270){
+    // reverse lower label
+    labelArc = getLabelArc(calculatedLabelRadius)
+    .startAngle(slice.endAngle)
+    .endAngle(slice.startAngle);
+  } else {
+    labelArc = getLabelArc(calculatedLabelRadius)
+    .startAngle(slice.startAngle)
+    .endAngle(slice.endAngle);
+
+  }    
+  const path = labelArc(slice);
+  const pathId = uniqueId("label-path-");
+
+  const curvedLabelProps = {
+    index,
+    datum,
+    data,
+    slice,
+    text,
+    style: labelStyle,
+    href: `#${pathId}`,
+    id: pathId,
+    path,
+    startOffset,
+  };
+
+  if (!Helpers.isTooltip(curvedLabelComponent)) {
+    return curvedLabelProps;
+  }
+  const tooltipTheme = (theme && theme.tooltip) || {};
+  return defaults({}, curvedLabelProps, Helpers.omit(tooltipTheme, ["style"]));
+};
+
+const getCurvedLabelPathProps = (curvedLabelProps) => {
+  return {
+    id: curvedLabelProps.id,
+    d: curvedLabelProps.path,
+  };
+};
+
 export const getXOffsetMultiplayerByAngle = (angle) =>
   Math.cos(angle - Helpers.degreesToRadians(90));
 export const getYOffsetMultiplayerByAngle = (angle) =>
@@ -309,6 +382,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     padAngle,
     disableInlineStyles,
     labelIndicator,
+    labelPlacement,
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -322,6 +396,10 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       padAngle: Helpers.radiansToDegrees(slice.padAngle),
     });
     const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+
+    const defaultTransform = origin
+      ? `translate(${origin.x}, ${origin.y})`
+      : undefined;
     const dataProps = {
       index,
       slice,
@@ -334,6 +412,10 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       padAngle,
       style: disableInlineStyles ? {} : getSliceStyle(index, calculatedValues),
       disableInlineStyles,
+      transform:
+        labelPlacement !== "curved"
+          ? props.transform || defaultTransform
+          : undefined,
     };
     childProps[eventKey] = {
       data: dataProps,
@@ -344,12 +426,26 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       (labels && (events || sharedEvents))
     ) {
       const evaluatedText = Helpers.evaluateProp(text, dataProps);
-      childProps[eventKey].labels = getLabelProps(
-        evaluatedText,
-        Object.assign({}, props, dataProps),
-        calculatedValues,
-      );
-      if (labelIndicator) {
+      if (labelPlacement === "curved") {
+        childProps[eventKey].curvedLabels = getCurvedLabelProps(
+          evaluatedText,
+          Object.assign({}, props, dataProps),
+          calculatedValues,
+        );
+        const curvedLabelProps = childProps[eventKey].curvedLabels;
+        childProps[eventKey].curvedLabelPaths =
+          getCurvedLabelPathProps(curvedLabelProps);
+        childProps[eventKey].groupComponentProps = {
+          transform: defaultTransform,
+        };
+      } else {
+        childProps[eventKey].labels = getLabelProps(
+          evaluatedText,
+          Object.assign({}, props, dataProps),
+          calculatedValues,
+        );
+      }
+      if (labelIndicator && labelPlacement !== "curved") {
         const labelProps = childProps[eventKey].labels;
         if (labelProps.calculatedLabelRadius > radius) {
           childProps[eventKey].labelIndicators =
