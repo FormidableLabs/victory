@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "victory-box-plot": "*",
-    "victory-chart": "^36.9.1"
+    "victory-chart": "*"
   },
   "publishConfig": {
     "provenance": true

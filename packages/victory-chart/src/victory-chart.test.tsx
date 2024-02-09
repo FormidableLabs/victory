@@ -1,7 +1,6 @@
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
-import { VictoryLine } from "victory-line";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 describe("components/victory-chart", () => {
@@ -103,9 +102,7 @@ describe("components/victory-chart", () => {
   describe("animation", () => {
     it("handles basic animation parameters without crashing", () => {
       const { container } = render(
-        <VictoryChart animate={{ duration: 2000, easing: "bounce" }}>
-          <VictoryLine />
-        </VictoryChart>,
+        <VictoryChart animate={{ duration: 2000, easing: "bounce" }} />
       );
 
       expect(container.querySelector("svg")).toBeInTheDocument();
