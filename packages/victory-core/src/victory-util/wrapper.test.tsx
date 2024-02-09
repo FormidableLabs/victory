@@ -1,13 +1,18 @@
+/* eslint-disable react/no-multi-comp */
 import React from "react";
-import { VictoryAxis } from "victory-axis";
 import { Wrapper } from "victory-core";
-import { VictoryLine } from "victory-line";
+
+const MockVictoryAxis = (props) => <div {...props} />;
+MockVictoryAxis.role = "axis";
+
+const MockVictoryLine = (props) => <div {...props} />;
+MockVictoryLine.role = "line";
 
 describe("helpers/wrapper", () => {
   describe("getDomain", () => {
-    const victoryLine = <VictoryLine domain={[0, 3]} />;
-    const xAxis = <VictoryAxis dependentAxis={false} />;
-    const yAxis = <VictoryAxis dependentAxis />;
+    const victoryLine = <MockVictoryLine domain={[0, 3]} />;
+    const xAxis = <MockVictoryAxis dependentAxis={false} />;
+    const yAxis = <MockVictoryAxis dependentAxis />;
     const childComponents = [victoryLine, xAxis, yAxis];
 
     it("calculates a domain from props", () => {
@@ -32,7 +37,7 @@ describe("helpers/wrapper", () => {
           { x: "cat", y: 3 },
         ],
       };
-      const childComponents = [<VictoryLine key={0} {...props} />];
+      const childComponents = [<MockVictoryLine key={0} {...props} />];
       const dataStrings = Wrapper.getStringsFromData(childComponents).x;
       expect(dataStrings).toEqual(["one", "red", "cat"]);
     });
@@ -47,7 +52,7 @@ describe("helpers/wrapper", () => {
         x: 0,
         y: 1,
       };
-      const childComponents = [<VictoryLine key={0} {...props} />];
+      const childComponents = [<MockVictoryLine key={0} {...props} />];
       const dataStrings = Wrapper.getStringsFromData(childComponents).x;
       expect(dataStrings).toEqual(["one", "red", "cat"]);
     });
@@ -59,7 +64,7 @@ describe("helpers/wrapper", () => {
           { x: "three", y: 3 },
         ],
       };
-      const childComponents = [<VictoryLine key={0} {...props} />];
+      const childComponents = [<MockVictoryLine key={0} {...props} />];
       expect(Wrapper.getStringsFromData(childComponents).x).toEqual(["three"]);
     });
 
@@ -70,7 +75,7 @@ describe("helpers/wrapper", () => {
           { x: 3, y: 3 },
         ],
       };
-      const childComponents = [<VictoryLine key={0} {...props} />];
+      const childComponents = [<MockVictoryLine key={0} {...props} />];
       expect(Wrapper.getStringsFromData(childComponents).x).toEqual([]);
     });
 

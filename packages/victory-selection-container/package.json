@@ -27,7 +27,7 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
-    "victory-bar": "^36.9.1",
+    "victory-bar": "*",
     "victory-selection-container": "*"
   },
   "publishConfig": {

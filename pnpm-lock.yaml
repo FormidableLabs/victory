@@ -275,14 +275,12 @@ importers:
     specifiers:
       lodash: ^4.17.19
       victory-axis: '*'
-      victory-chart: '*'
       victory-core: ^36.9.1
     dependencies:
       lodash: 4.17.21
       victory-core: link:../victory-core
     devDependencies:
       victory-axis: 'link:'
-      victory-chart: link:../victory-chart
 
   packages/victory-bar:
     specifiers:
@@ -303,7 +301,7 @@ importers:
     specifiers:
       lodash: ^4.17.19
       victory-box-plot: '*'
-      victory-chart: ^36.9.1
+      victory-chart: '*'
       victory-core: ^36.9.1
       victory-vendor: ^36.9.1
     dependencies:
@@ -341,9 +339,9 @@ importers:
     specifiers:
       lodash: ^4.17.19
       victory-candlestick: '*'
-      victory-chart: ^36.9.1
+      victory-chart: '*'
       victory-core: ^36.9.1
-      victory-vendor: ^36.9.1
+      victory-vendor: '*'
     dependencies:
       lodash: 4.17.21
       victory-core: link:../victory-core
@@ -369,7 +367,6 @@ importers:
       victory-axis: ^36.9.1
       victory-chart: '*'
       victory-core: ^36.9.1
-      victory-line: '*'
       victory-polar-axis: ^36.9.1
       victory-shared-events: ^36.9.1
     dependencies:
@@ -381,26 +378,19 @@ importers:
       victory-shared-events: link:../victory-shared-events
     devDependencies:
       victory-chart: 'link:'
-      victory-line: link:../victory-line
 
   packages/victory-core:
     specifiers:
       lodash: ^4.17.21
       react-fast-compare: ^3.2.0
-      victory-axis: '*'
-      victory-bar: '*'
       victory-core: '*'
-      victory-line: '*'
       victory-vendor: ^36.9.1
     dependencies:
       lodash: 4.17.21
       react-fast-compare: 3.2.0
       victory-vendor: link:../victory-vendor
     devDependencies:
-      victory-axis: link:../victory-axis
-      victory-bar: link:../victory-bar
       victory-core: 'link:'
-      victory-line: link:../victory-line
 
   packages/victory-create-container:
     specifiers:
@@ -524,7 +514,7 @@ importers:
       victory-histogram: ^36.9.1
       victory-legend: ^36.9.1
       victory-line: ^36.9.1
-      victory-native: '*'
+      victory-native: ^36.9.1
       victory-pie: ^36.9.1
       victory-polar-axis: ^36.9.1
       victory-scatter: ^36.9.1
@@ -607,7 +597,7 @@ importers:
   packages/victory-selection-container:
     specifiers:
       lodash: ^4.17.19
-      victory-bar: ^36.9.1
+      victory-bar: '*'
       victory-core: ^36.9.1
       victory-selection-container: '*'
     dependencies:

@@ -59,7 +59,7 @@
     "react-native": "^0.65.1",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-svg": "^12.4.3",
-    "victory-native": "*"
+    "victory-native": "^36.9.1"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
