@@ -1,0 +1,31 @@
+name: Question
+description: Ask a question about using Victory.
+projects: FormidableLabs/38
+labels: ["Type: Question :grey_question:"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the question you have.
+      options:
+        - label: I have searched the existing issues
+          required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/FormidableLabs/victory/blob/main/CONTRIBUTING.md#contributor-covenant-code-of-conduct)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+
+  - type: textarea
+    attributes:
+      render: markdown
+      label: Question
+      description: |
+        Any background information that might help us answer your questions.
+        Please include any screenshots or code snippets that may help us understand the issue.
+    validations:
+      required: true

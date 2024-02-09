@@ -1,0 +1,40 @@
+name: Feature request
+description: Suggest a feature for this project
+projects: FormidableLabs/38
+labels: ["Type: Enhancement :pencil2:"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the feature you are requesting.
+      options:
+        - label: I have searched the existing issues
+          required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/FormidableLabs/victory/blob/main/CONTRIBUTING.md#contributor-covenant-code-of-conduct)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+
+  - type: textarea
+    attributes:
+      render: markdown
+      label: Feature Request
+      description: |
+        **Is your feature request related to a problem? Please describe.**
+        A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+
+        **Describe the solution you'd like**
+        A clear and concise description of what you want to happen.
+
+        **Describe alternatives you've considered**
+        A clear and concise description of any alternative solutions or features you've considered.
+
+        **Additional context**
+        Add any other context or screenshots about the feature request here.
+    validations:
+      required: true

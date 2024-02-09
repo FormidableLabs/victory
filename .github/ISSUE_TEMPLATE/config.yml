@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Victory Issues Board
+    url: https://github.com/FormidableLabs/victory/issues
+    about: Please ask and answer questions here.
