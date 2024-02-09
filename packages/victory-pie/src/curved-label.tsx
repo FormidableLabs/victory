@@ -42,6 +42,14 @@ export interface CurvedLabelProps
   textPathComponent?: React.ReactElement;
 }
 
+const defaultProps = {
+  tspanComponent: <TSpan />,
+  capHeight: 0.71, // Magic number from d3.
+  lineHeight: 1,
+  textComponent: <Text />,
+  textPathComponent: <TextPath />,
+};
+
 const defaultStyles = VictoryLabel.defaultStyles;
 
 const getFontSize = (style) => {
@@ -171,7 +179,9 @@ const renderLabel = (calculatedProps, tspanValues) => {
       style: currentStyle,
       children: line,
     };
-    return React.cloneElement(tspanComponent, tspanProps);
+    if(tspanComponent){
+      return React.cloneElement(tspanComponent, tspanProps)
+    }
   });
 
   const textPathProps = {
@@ -188,14 +198,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     return React.cloneElement(textComponent, textProps, textPathElement);
   }
   return React.cloneElement(textComponent, textProps, tspans);
-};
-
-const defaultProps = {
-  tspanComponent: <TSpan />,
-  capHeight: 0.71, // Magic number from d3.
-  lineHeight: 1,
-  textComponent: <Text />,
-  textPathComponent: <TextPath />,
 };
 
 export const CurvedLabel: {
