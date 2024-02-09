@@ -179,8 +179,8 @@ const renderLabel = (calculatedProps, tspanValues) => {
       style: currentStyle,
       children: line,
     };
-    if(tspanComponent){
-      return React.cloneElement(tspanComponent, tspanProps)
+    if (tspanComponent) {
+      return React.cloneElement(tspanComponent, tspanProps);
     }
   });
 
