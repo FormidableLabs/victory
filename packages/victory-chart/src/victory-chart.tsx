@@ -1,12 +1,9 @@
 import { defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
 import {
   Background,
-  CommonProps,
   Helpers,
   Hooks,
-  PropTypes as CustomPropTypes,
   UserProps,
   VictoryContainer,
   VictoryTheme,
@@ -198,27 +195,6 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
     );
   }
   return React.cloneElement(container, container.props, newChildren);
-};
-
-VictoryChartImpl.propTypes = {
-  ...CommonProps.baseProps,
-  backgroundComponent: PropTypes.element,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  defaultAxes: PropTypes.shape({
-    independent: PropTypes.element,
-    dependent: PropTypes.element,
-  }),
-  defaultPolarAxes: PropTypes.shape({
-    independent: PropTypes.element,
-    dependent: PropTypes.element,
-  }),
-  endAngle: PropTypes.number,
-  innerRadius: CustomPropTypes.nonNegative,
-  prependDefaultAxes: PropTypes.bool,
-  startAngle: PropTypes.number,
 };
 
 export const VictoryChart = React.memo(VictoryChartImpl, isEqual);

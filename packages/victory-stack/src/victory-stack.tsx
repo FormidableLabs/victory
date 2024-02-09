@@ -1,5 +1,4 @@
 import { defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
 import {
   CategoryPropType,
@@ -11,10 +10,8 @@ import {
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface,
-  CommonProps,
   Helpers,
   Hooks,
-  PropTypes as CustomPropTypes,
   UserProps,
   VictoryComponentConfiguration,
   VictoryContainer,
@@ -188,53 +185,6 @@ const VictoryStackBase = (initialProps: VictoryStackProps) => {
   }
 
   return React.cloneElement(container, container.props, newChildren);
-};
-
-VictoryStackBase.propTypes = {
-  ...CommonProps.baseProps,
-  bins: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        CustomPropTypes.nonNegative,
-        PropTypes.instanceOf(Date),
-      ]),
-    ),
-    CustomPropTypes.nonNegative,
-  ]),
-  categories: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.shape({
-      x: PropTypes.arrayOf(PropTypes.string),
-      y: PropTypes.arrayOf(PropTypes.string),
-    }),
-  ]),
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  colorScale: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.oneOf([
-      "grayscale",
-      "qualitative",
-      "heatmap",
-      "warm",
-      "cool",
-      "red",
-      "green",
-      "blue",
-    ]),
-  ]),
-  fillInMissingData: PropTypes.bool,
-  horizontal: PropTypes.bool,
-  labelComponent: PropTypes.element,
-  labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
-  style: PropTypes.shape({
-    parent: PropTypes.object,
-    data: PropTypes.object,
-    labels: PropTypes.object,
-  }),
-  xOffset: PropTypes.number,
 };
 
 const componentConfig: VictoryComponentConfiguration<VictoryStackProps> = {

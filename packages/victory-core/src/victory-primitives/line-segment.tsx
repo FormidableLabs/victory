@@ -1,10 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Line } from "./line";
 
 export interface LineSegmentProps extends VictoryCommonPrimitiveProps {
@@ -62,14 +58,4 @@ export const LineSegment = (initialProps: LineSegmentProps) => {
     transform: props.transform,
     clipPath: props.clipPath,
   });
-};
-
-LineSegment.propTypes = {
-  ...CommonProps.primitiveProps,
-  datum: PropTypes.any,
-  lineComponent: PropTypes.element,
-  x1: PropTypes.number,
-  x2: PropTypes.number,
-  y1: PropTypes.number,
-  y2: PropTypes.number,
 };

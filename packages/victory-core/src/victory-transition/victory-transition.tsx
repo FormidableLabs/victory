@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { VictoryAnimation } from "../victory-animation/victory-animation";
 import * as Collection from "../victory-util/collection";
 import * as Helpers from "../victory-util/helpers";
@@ -48,12 +47,6 @@ export class VictoryTransition extends React.Component<
   VictoryTransitionState
 > {
   static displayName = "VictoryTransition";
-
-  static propTypes = {
-    animate: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-    animationWhitelist: PropTypes.array,
-    children: PropTypes.node,
-  };
 
   static contextType = TimerContext;
   private continuous: boolean;

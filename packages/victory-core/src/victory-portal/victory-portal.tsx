@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { defaults } from "lodash";
 import * as Log from "../victory-util/log";
 import * as Helpers from "../victory-util/helpers";
@@ -18,11 +17,6 @@ export class VictoryPortal extends React.Component<VictoryPortalProps> {
   static displayName = "VictoryPortal";
 
   static role = "portal";
-
-  static propTypes = {
-    children: PropTypes.node,
-    groupComponent: PropTypes.element,
-  };
 
   static defaultProps = {
     groupComponent: <g />,

@@ -1,14 +1,17 @@
 import React from "react";
 import { Dimensions } from "react-native";
 import { G } from "react-native-svg";
-import { VictoryChart as VictoryChartBase } from "victory-chart/es";
+import {
+  VictoryChart as VictoryChartBase,
+  VictoryChartProps,
+} from "victory-chart/es";
 import { Background } from "./victory-primitives/background";
 import { VictoryAxis } from "./victory-axis";
 import { VictoryPolarAxis } from "./victory-polar-axis";
 import { VictoryContainer } from "./victory-container";
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
-export const VictoryChart = wrapCoreComponent({
+export const VictoryChart = wrapCoreComponent<VictoryChartProps>({
   Component: VictoryChartBase,
   defaultProps: {
     backgroundComponent: <Background />,

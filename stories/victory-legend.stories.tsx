@@ -44,7 +44,6 @@ const getData = (num) => {
   }));
 };
 
-// eslint-disable-next-line react/prop-types
 const Wrapper = ({ children }) => {
   return (
     <VictoryChart {...defaultChartProps}>

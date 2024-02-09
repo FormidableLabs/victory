@@ -147,6 +147,9 @@ describe("victory", () => {
     it("exports Text", () => {
       expect(Victory.Text).toBeDefined();
     });
+    it("exports TextPath", () => {
+      expect(Victory.TextPath).toBeDefined();
+    });
     it("exports TSpan", () => {
       expect(Victory.TSpan).toBeDefined();
     });
@@ -212,9 +215,6 @@ describe("victory", () => {
     });
     it("exports Portal", () => {
       expect(Victory.Portal).toBeDefined();
-    });
-    it("exports PropTypes", () => {
-      expect(Victory.PropTypes).toBeDefined();
     });
     it("exports RawZoomHelpers", () => {
       expect(Victory.RawZoomHelpers).toBeDefined();

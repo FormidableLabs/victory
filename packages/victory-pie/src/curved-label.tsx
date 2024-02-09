@@ -1,6 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
 import { defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
 import {
   VictoryPortal,
@@ -10,11 +9,12 @@ import {
   Helpers,
   VictoryLabelProps,
   VictoryLabel,
+  TSpan,
+  Text,
+  TextPath,
 } from "victory-core";
 
-import { TextPath } from "../../victory-core/lib";
-
-interface CurvedLabelProps
+export interface CurvedLabelProps
   extends Omit<
     VictoryLabelProps,
     | "angle"
@@ -22,12 +22,13 @@ interface CurvedLabelProps
     | "backgroundStyle"
     | "backgroundPadding"
     | "direction"
+    | "groupComponent"
+    | "inline"
     | "origin"
     | "labelPlacement"
     | "polar"
     | "textAnchor"
     | "verticalAnchor"
-    | "transform"
     | "verticalAnchor"
     | "x"
     | "y"
@@ -35,9 +36,19 @@ interface CurvedLabelProps
     | "dy"
   > {
   href?: string;
+  id?: string;
+  path?: string;
   startOffset?: number;
   textPathComponent?: React.ReactElement;
 }
+
+const defaultProps = {
+  tspanComponent: <TSpan />,
+  capHeight: 0.71, // Magic number from d3.
+  lineHeight: 1,
+  textComponent: <Text />,
+  textPathComponent: <TextPath />,
+};
 
 const defaultStyles = VictoryLabel.defaultStyles;
 
@@ -145,6 +156,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     textPathComponent,
     href,
     startOffset,
+    dy,
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
@@ -156,7 +168,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     title,
     desc: Helpers.evaluateProp(desc, calculatedProps),
     tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
-    id,
+    dy,
     ...userProps,
   };
 
@@ -167,7 +179,9 @@ const renderLabel = (calculatedProps, tspanValues) => {
       style: currentStyle,
       children: line,
     };
-    return React.cloneElement(tspanComponent, tspanProps);
+    if (tspanComponent) {
+      return React.cloneElement(tspanComponent, tspanProps);
+    }
   });
 
   const textPathProps = {
@@ -184,11 +198,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     return React.cloneElement(textComponent, textProps, textPathElement);
   }
   return React.cloneElement(textComponent, textProps, tspans);
-};
-
-const defaultProps = {
-  ...VictoryLabel.defaultProps,
-  textPathComponent: <TextPath />,
 };
 
 export const CurvedLabel: {
@@ -229,9 +238,3 @@ export const CurvedLabel: {
 CurvedLabel.displayName = "CurvedLabel";
 CurvedLabel.role = "curvedLabel";
 CurvedLabel.defaultStyles = VictoryLabel.defaultStyles;
-CurvedLabel.propTypes = {
-  ...VictoryLabel.propTypes,
-  href: PropTypes.string,
-  startOffset: PropTypes.number,
-  textPathComponent: PropTypes.element,
-};

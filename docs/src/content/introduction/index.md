@@ -23,7 +23,7 @@ In this guide, we’ll show you how to get started with Victory and walk you thr
 
 You can do this on your own if you'd like, or you can...
 
-* Clone down [this project we've started for you](https://github.com/FormidableLabs/victory-tutorial) using ```git clone git@github.com:FormidableLabs/victory-tutorial.git```
+* Clone down [this project we've started for you](https://github.com/FormidableLabs/victory-tutorial) using `git clone git@github.com:FormidableLabs/victory-tutorial.git`
 * `cd victory-tutorial`
 * Replace the existing code in the `client.js` file with:
 
@@ -152,6 +152,8 @@ class App extends React.Component {
 
 ReactDOM.render(<App/>, mountNode);
 ```
+
+While the axes defaults are great, you can see there's some overlap with the y-axis and first bar. Let's fix that in the next section.
 
 #### 6. Customize the axes
 

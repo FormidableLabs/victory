@@ -1,9 +1,8 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
-import { defaults, isFunction, isPlainObject, isNil } from "lodash";
+import { defaults, isFunction, isPlainObject, isNil, uniqueId } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
-import { uniqueId } from "lodash";
 
 const checkForValidText = (text) => {
   if (text === undefined || text === null || isFunction(text)) {
@@ -250,11 +249,9 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     slice,
     curvedLabelComponent,
     theme,
-    startOffset
+    startOffset,
   } = dataProps;
-  let curvedLabelProps={};
-  let dy;
-  const { style, defaultRadius, defaultTransform } = calculatedValues;
+  const { style, defaultRadius } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
     Object.assign({ text }, dataProps),
@@ -271,24 +268,22 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     evaluatedStyle,
   );
   const labelArc = getLabelArc(calculatedLabelRadius)
-                  .startAngle(slice.startAngle)
-                  .endAngle(slice.endAngle);
+    .startAngle(slice.startAngle)
+    .endAngle(slice.endAngle);
   const path = labelArc(slice);
-  const pathId = uniqueId('label-path-');
+  const pathId = uniqueId("label-path-");
 
-  curvedLabelProps = {
+  const curvedLabelProps = {
     index,
     datum,
     data,
     slice,
     text,
     style: labelStyle,
-    href:`#${pathId}`,
-    id:pathId,
+    href: `#${pathId}`,
+    id: pathId,
     path,
     startOffset,
-    transform: defaultTransform,
-    dy:dy
   };
 
   if (!Helpers.isTooltip(curvedLabelComponent)) {
@@ -296,6 +291,13 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
   }
   const tooltipTheme = (theme && theme.tooltip) || {};
   return defaults({}, curvedLabelProps, Helpers.omit(tooltipTheme, ["style"]));
+};
+
+const getCurvedLabelPathProps = (curvedLabelProps) => {
+  return {
+    id: curvedLabelProps.id,
+    d: curvedLabelProps.path,
+  };
 };
 
 export const getXOffsetMultiplayerByAngle = (angle) =>
@@ -420,6 +422,12 @@ export const getBaseProps = (initialProps, fallbackProps) => {
           Object.assign({}, props, dataProps),
           calculatedValues,
         );
+        const curvedLabelProps = childProps[eventKey].curvedLabels;
+        childProps[eventKey].curvedLabelPaths =
+          getCurvedLabelPathProps(curvedLabelProps);
+        childProps[eventKey].groupComponentProps = {
+          transform: defaultTransform,
+        };
       } else {
         childProps[eventKey].labels = getLabelProps(
           evaluatedText,

@@ -84,9 +84,14 @@ function nativeZoomMixin<
   };
 }
 
-const combinedMixin = flow(originalZoomMixin, nativeZoomMixin);
+const combinedMixin: (
+  base: React.ComponentClass,
+) => React.ComponentClass<VictoryZoomContainerNativeProps> = flow(
+  originalZoomMixin,
+  nativeZoomMixin,
+);
 
-export const zoomContainerMixin = (base): VictoryZoomContainerBase =>
+export const zoomContainerMixin = (base: React.ComponentClass) =>
   combinedMixin(base);
 
 export const VictoryZoomContainer = zoomContainerMixin(VictoryContainer);
