@@ -46,11 +46,8 @@ $ pnpm install
 We have some dev servers available for a sample development environment.
 
 ```sh
-# JavaScript demo app
-$ pnpm start
-
 # TypeScript demo app
-$ pnpm start:ts
+$ pnpm start
 ```
 
 These run appropriate file watchers, so you can just start developing source files and wait for the webpack dev server to pick up the new changes.
