@@ -11,6 +11,7 @@ import BrushContainerDemo from "./components/victory-brush-container-demo";
 import BrushLineDemo from "./components/victory-brush-line-demo";
 import CandlestickDemo from "./components/victory-candlestick-demo";
 import ChartDemo from "./components/victory-chart-demo";
+import CreateContainerDemo from "./components/create-container-demo";
 import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import DraggableDemo from "./components/draggable-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
@@ -53,6 +54,10 @@ const MAP = {
   "/histogram-demo": { component: HistogramDemo, name: "HistogramDemo" },
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
+  "/create-container": {
+    component: CreateContainerDemo,
+    name: "CreateContainerDemo",
+  },
   "/cursor-container": {
     component: CursorContainerDemo,
     name: "CursorContainerDemo",
