@@ -16,6 +16,7 @@ import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import DraggableDemo from "./components/draggable-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
 import EventsDemo from "./components/events-demo";
+import ExternalEventsDemo from "./components/external-events-demo";
 import GroupDemo from "./components/group-demo";
 import HistogramDemo from "./components/victory-histogram-demo";
 import HorizontalDemo from "./components/horizontal-demo";
@@ -49,9 +50,9 @@ const MAP = {
     name: "BrushContainerDemo",
   },
   "/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
-  "/group-demo": { component: GroupDemo, name: "GroupDemo" },
-  "/horizontal-demo": { component: HorizontalDemo, name: "HorizontalDemo" },
-  "/histogram-demo": { component: HistogramDemo, name: "HistogramDemo" },
+  "/group": { component: GroupDemo, name: "GroupDemo" },
+  "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
+  "/histogram": { component: HistogramDemo, name: "HistogramDemo" },
   "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
   "/chart": { component: ChartDemo, name: "ChartDemo" },
   "/create-container": {
@@ -62,9 +63,13 @@ const MAP = {
     component: CursorContainerDemo,
     name: "CursorContainerDemo",
   },
-  "/draggable-demo": { component: DraggableDemo, name: "DraggableDemo" },
+  "/draggable": { component: DraggableDemo, name: "DraggableDemo" },
   "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
-  "/events-demo": { component: EventsDemo, name: "EventsDemo" },
+  "/events": { component: EventsDemo, name: "EventsDemo" },
+  "/external-events": {
+    component: ExternalEventsDemo,
+    name: "ExternalEventsDemo",
+  },
   "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
   "/label": { component: LabelDemo, name: "LabelDemo" },
   "/legend": { component: LegendDemo, name: "LegendDemo" },
@@ -76,7 +81,7 @@ const MAP = {
   "/selection": { component: SelectionDemo, name: "SelectionDemo" },
   "/stack": { component: StackDemo, name: "StackDemo" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
-  "/victory-demo": { component: VictoryDemo, name: "VictoryDemo" },
+  "/victory": { component: VictoryDemo, name: "VictoryDemo" },
   "/victory-selection-container": {
     component: VictorySelectionContainerDemo,
     name: "VictorySelectionContainerDemo",
@@ -94,7 +99,7 @@ const MAP = {
     component: ZoomContainerDemo,
     name: "ZoomContainerDemo",
   },
-  "/ouia-demo": { component: OuiaDemo, name: "OuiaDemo" },
+  "/ouia": { component: OuiaDemo, name: "OuiaDemo" },
 };
 
 class Home extends React.Component {

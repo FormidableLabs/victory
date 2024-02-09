@@ -110,7 +110,6 @@ const Charts = ({ behaviors }) => {
             }}
           />
         </VictoryChart>
-
         {/* B */}
         <VictoryChart
           style={{ parent: chartStyle.parent }}
@@ -139,7 +138,6 @@ const Charts = ({ behaviors }) => {
             y={(d) => d.x * d.x}
           />
         </VictoryChart>
-
         {/* C */}
         <VictoryChart
           style={chartStyle}
@@ -198,7 +196,6 @@ const Charts = ({ behaviors }) => {
             />
           </VictoryGroup>
         </VictoryChart>
-
         {/* D */}
         <VictoryStack
           style={chartStyle}
