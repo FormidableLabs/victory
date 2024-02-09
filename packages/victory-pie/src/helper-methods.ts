@@ -267,9 +267,19 @@ const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
     labelRadius,
     evaluatedStyle,
   );
-  const labelArc = getLabelArc(calculatedLabelRadius)
+  let labelArc;
+  if(Helpers.radiansToDegrees (slice.endAngle) > 90 && 
+    Helpers.radiansToDegrees (slice.startAngle) < 270){
+    // reverse lower label
+    labelArc = getLabelArc(calculatedLabelRadius)
+    .startAngle(slice.endAngle)
+    .endAngle(slice.startAngle);
+  } else {
+    labelArc = getLabelArc(calculatedLabelRadius)
     .startAngle(slice.startAngle)
     .endAngle(slice.endAngle);
+
+  }    
   const path = labelArc(slice);
   const pathId = uniqueId("label-path-");
 
