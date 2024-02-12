@@ -129,7 +129,9 @@ export default class VictoryCandlestickDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "blue" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "blue",
+                            }),
                           };
                         },
                       },
@@ -180,7 +182,9 @@ export default class VictoryCandlestickDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "blue" }),
+                          style: Object.assign({}, props.style, {
+                            fill: "blue",
+                          }),
                         };
                       },
                     },
@@ -239,7 +243,7 @@ export default class VictoryCandlestickDemo extends React.Component<
         <VictoryCandlestick style={style} size={1} />
 
         <VictoryChart style={style}>
-          <VictoryCandlestick data={[]} />
+          <VictoryCandlestick />
         </VictoryChart>
       </div>
     );

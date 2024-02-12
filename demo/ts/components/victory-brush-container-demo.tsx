@@ -54,7 +54,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
             containerComponent={
               <VictoryZoomContainer
                 responsive={false}
-                zoomDomain={this.state.zoomDomain}
+                zoomDomain={this.state?.zoomDomain}
                 zoomDimension="x"
                 onZoomDomainChange={this.handleZoom.bind(this)}
               />
@@ -84,7 +84,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
             containerComponent={
               <VictoryBrushContainer
                 responsive={false}
-                brushDomain={this.state.zoomDomain}
+                brushDomain={this.state?.zoomDomain}
                 brushDimension="x"
                 onBrushDomainChange={this.handleZoom.bind(this)}
               />

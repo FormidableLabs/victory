@@ -8,6 +8,10 @@ import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryVoronoiContainer } from "victory-voronoi-container";
+import { VictorySelectionContainer } from "victory-selection-container";
+import { VictoryGroup } from "victory-group";
+import { VictoryTooltip } from "victory-tooltip";
+import { VictoryStack } from "victory-stack";
 import { random, range, keys } from "lodash";
 import { VictoryTheme, VictoryLabel } from "victory-core";
 
@@ -124,6 +128,412 @@ class App extends React.Component<any, VictoryPolarAxisState> {
     return (
       <div className="demo">
         <div style={containerStyle}>
+          <VictoryChart
+            polar
+            theme={VictoryTheme.material}
+            domain={{ y: [0, 1] }}
+            style={chartStyle}
+          >
+            {keys(this.state.multiAxisMaxima).map((key, i) => {
+              return (
+                <VictoryPolarAxis
+                  key={i}
+                  dependentAxis
+                  style={{
+                    axisLabel: { padding: 10 },
+                  }}
+                  tickLabelComponent={
+                    <VictoryLabel labelPlacement="vertical" />
+                  }
+                  labelPlacement="perpendicular"
+                  axisValue={i + 1}
+                  label={key}
+                  tickFormat={(t) => t * this.state.multiAxisMaxima[key]}
+                  tickValues={[0.25, 0.5, 0.75]}
+                />
+              );
+            })}
+            <VictoryPolarAxis labelPlacement="parallel" tickFormat={() => ""} />
+            <VictoryGroup colorScale="warm">
+              {this.state.multiAxisData.map((data, i) => {
+                return <VictoryLine key={i} data={data} />;
+              })}
+            </VictoryGroup>
+          </VictoryChart>
+
+          <VictoryChart
+            polar
+            theme={VictoryTheme.material}
+            style={chartStyle}
+            containerComponent={<VictorySelectionContainer />}
+          >
+            <VictoryPolarAxis labelPlacement="perpendicular" />
+            <VictoryGroup
+              data={[
+                { x: 1, y: 5 },
+                { x: 2, y: 3 },
+                { x: 3, y: 1 },
+                { x: 4, y: 2 },
+                { x: 5, y: 4 },
+              ]}
+            >
+              <VictoryLine style={{ data: { stroke: "tomato" } }} />
+              <VictoryScatter
+                style={{
+                  data: { fill: ({ active }) => (active ? "tomato" : "gray") },
+                }}
+                labels={({ datum }) => datum.y}
+                labelComponent={<VictoryTooltip />}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
+              data={[
+                { x: 1, y: 3 },
+                { x: 2, y: 5 },
+                { x: 3, y: 3 },
+                { x: 3, y: 2 },
+                { x: 4, y: 2 },
+                { x: 5, y: 1 },
+              ]}
+            >
+              <VictoryLine style={{ data: { stroke: "blue" } }} />
+              <VictoryScatter
+                style={{
+                  data: { fill: ({ active }) => (active ? "blue" : "gray") },
+                }}
+                labels={({ datum }) => `y: ${datum.y}`}
+                labelComponent={<VictoryTooltip />}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
+              data={[
+                { x: 1, y: 5 },
+                { x: 2, y: 4 },
+                { x: 3, y: 2 },
+                { x: 4, y: 4 },
+                { x: 5, y: 2 },
+              ]}
+            >
+              <VictoryLine style={{ data: { stroke: "black" } }} />
+              <VictoryScatter
+                style={{
+                  data: { fill: ({ active }) => (active ? "black" : "gray") },
+                }}
+                labels={({ datum }) => datum.y}
+                labelComponent={<VictoryTooltip />}
+              />
+            </VictoryGroup>
+          </VictoryChart>
+
+          <VictoryChart polar theme={VictoryTheme.material} style={chartStyle}>
+            <VictoryPolarAxis dependentAxis tickValues={[2, 6, 8]} />
+
+            <VictoryGroup
+              style={{ data: { width: 10 } }}
+              labels={["a", "b", "c"]}
+              offset={20}
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                data={[
+                  { x: 1, y: 1 },
+                  { x: 2, y: 2 },
+                  { x: 3, y: 5 },
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 2 },
+                  { x: 2, y: 1 },
+                  { x: 3, y: 7 },
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  { x: 1, y: 3 },
+                  { x: 2, y: 4 },
+                  { x: 3, y: 9 },
+                ]}
+              />
+            </VictoryGroup>
+          </VictoryChart>
+
+          <VictoryChart
+            polar
+            theme={VictoryTheme.material}
+            style={chartStyle}
+            containerComponent={<VictoryVoronoiContainer />}
+          >
+            <VictoryPolarAxis
+              dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              axisAngle={90}
+              tickValues={[25, 50, 75]}
+            />
+            <VictoryPolarAxis labelPlacement="perpendicular" />
+            <VictoryBar
+              style={{
+                data: {
+                  fill: ({ active }) => (active ? "blue" : "tomato"),
+                  fillOpacity: 0.6,
+                  stroke: ({ active }) => (active ? "blue" : "tomato"),
+                  strokeWidth: 2,
+                },
+              }}
+              labelComponent={<VictoryTooltip />}
+              data={[
+                { x: "strength", y: 10, label: "one" },
+                { x: "intelligence", y: 25, label: "two" },
+                { x: "stealth", y: 40, label: "three" },
+                { x: "luck", y: 50, label: "four" },
+                { x: "charisma", y: 50, label: "five" },
+              ]}
+            />
+          </VictoryChart>
+
+          <VictoryChart polar theme={VictoryTheme.material} style={chartStyle}>
+            <VictoryPolarAxis
+              dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              axisAngle={90}
+              tickValues={[25, 50, 75]}
+            />
+            <VictoryPolarAxis labelPlacement="perpendicular" />
+            <VictoryBar
+              style={{
+                data: {
+                  fill: "tomato",
+                  width: 10,
+                  fillOpacity: 0.6,
+                  stroke: "tomato",
+                  strokeWidth: 2,
+                },
+              }}
+              data={[
+                { x: "strength", y: 10 },
+                { x: "intelligence", y: 25 },
+                { x: "stealth", y: 40 },
+                { x: "luck", y: 50 },
+                { x: "charisma", y: 50 },
+              ]}
+            />
+          </VictoryChart>
+
+          <VictoryChart
+            polar
+            theme={VictoryTheme.material}
+            domain={{ x: [0, 360] }}
+            innerRadius={50}
+            style={chartStyle}
+            events={[
+              {
+                childName: "all",
+                target: "data",
+                eventHandlers: {
+                  onMouseOver: (evt, props) => {
+                    return [
+                      {
+                        childName: "bar-2",
+                        mutation: () => {
+                          return {
+                            style: Object.assign({}, props.style, {
+                              fill: "cyan",
+                            }),
+                          };
+                        },
+                      },
+                      {
+                        childName: "bar-3",
+                        mutation: () => {
+                          return {
+                            style: Object.assign({}, props.style, {
+                              fill: "blue",
+                            }),
+                          };
+                        },
+                      },
+                    ];
+                  },
+                  onMouseOut: () => {
+                    return [
+                      {
+                        childName: "all",
+                        mutation: () => {
+                          return { style: undefined };
+                        },
+                      },
+                    ];
+                  },
+                },
+              },
+            ]}
+          >
+            <VictoryPolarAxis
+              dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              tickFormat={() => ""}
+            />
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+              tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+            />
+            <VictoryStack>
+              <VictoryBar
+                name="bar-1"
+                style={{ data: { fill: "tomato", width: 20 } }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 },
+                ]}
+              />
+              <VictoryBar
+                name="bar-2"
+                style={{ data: { fill: "orange", width: 20 } }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 },
+                ]}
+              />
+              <VictoryBar
+                name="bar-3"
+                cornerRadius={{ topLeft: 5 }}
+                style={{ data: { fill: "gold", width: 20 } }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 },
+                ]}
+              />
+            </VictoryStack>
+          </VictoryChart>
+
+          <VictoryChart
+            polar
+            theme={VictoryTheme.material}
+            domain={{ x: [0, 360] }}
+            style={chartStyle}
+            events={[
+              {
+                childName: "all",
+                target: "data",
+                eventHandlers: {
+                  onMouseOver: (evt, props) => {
+                    return [
+                      {
+                        mutation: () => {
+                          return {
+                            style: Object.assign({}, props.style, {
+                              fill: "cyan",
+                              stroke: "cyan",
+                            }),
+                          };
+                        },
+                      },
+                    ];
+                  },
+                  onMouseOut: () => {
+                    return [
+                      {
+                        mutation: () => {
+                          return { style: undefined };
+                        },
+                      },
+                    ];
+                  },
+                },
+              },
+            ]}
+          >
+            <VictoryPolarAxis
+              dependentAxis
+              labelPlacement="vertical"
+              style={{ axis: { stroke: "none" } }}
+              tickFormat={() => ""}
+            />
+            <VictoryPolarAxis
+              labelPlacement="parallel"
+              tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+            />
+            <VictoryStack>
+              <VictoryArea
+                name="area-1"
+                interpolation="cardinal"
+                style={{
+                  data: {
+                    fill: "tomato",
+                    stroke: "tomato",
+                    fillOpacity: 0.5,
+                    strokeWidth: 2,
+                  },
+                }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 },
+                ]}
+              />
+              <VictoryArea
+                name="area-2"
+                interpolation="cardinal"
+                style={{
+                  data: {
+                    fill: "orange",
+                    stroke: "orange",
+                    fillOpacity: 0.5,
+                    strokeWidth: 2,
+                  },
+                }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 },
+                ]}
+              />
+              <VictoryArea
+                name="area-3"
+                interpolation="cardinal"
+                style={{
+                  data: {
+                    fill: "gold",
+                    stroke: "gold",
+                    fillOpacity: 0.5,
+                    strokeWidth: 2,
+                  },
+                }}
+                data={[
+                  { x: 45, y: 20 },
+                  { x: 90, y: 30 },
+                  { x: 135, y: 65 },
+                  { x: 180, y: 50 },
+                  { x: 270, y: 40 },
+                  { x: 315, y: 30 },
+                ]}
+              />
+            </VictoryStack>
+          </VictoryChart>
+
           <VictoryChart
             polar
             animate={{ duration: 500 }}
