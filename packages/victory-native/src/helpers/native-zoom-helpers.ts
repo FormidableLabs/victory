@@ -1,7 +1,7 @@
-import { throttle, isFunction, defaults } from "lodash";
+import { throttle, defaults } from "lodash";
 import { Dimensions } from "react-native";
 import isEqual from "react-fast-compare";
-import { Collection } from "victory-core";
+import { Collection, Helpers as CoreHelpers } from "victory-core";
 import { RawZoomHelpers } from "victory-zoom-container";
 
 const hypotenuse = (x, y) => Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
@@ -59,7 +59,7 @@ const Helpers = {
       // if zoomActive is already set AND user hasn't zoommed out all the way
       (targetProps.zoomActive && !isEqual(originalDomain, lastDomain));
 
-    if (isFunction(onZoomDomainChange)) {
+    if (CoreHelpers.isFunction(onZoomDomainChange)) {
       onZoomDomainChange(currentDomain);
     }
     return [

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react";
-import { defaults, isFunction, pick } from "lodash";
+import { defaults, pick } from "lodash";
 import { VictoryTooltip } from "victory-tooltip";
 import {
   VictoryContainer,
@@ -130,7 +130,9 @@ export function voronoiContainerMixin<
           datum,
           active: true,
         });
-        const text = isFunction(labels) ? labels(labelProps) : undefined;
+        const text = Helpers.isFunction(labels)
+          ? labels(labelProps)
+          : undefined;
         const textArray = text !== undefined ? `${text}`.split("\n") : [];
         const baseStyle = (datum.style && datum.style[type]) || {};
         const componentStyle = Array.isArray(componentStyleArray)
@@ -174,7 +176,7 @@ export function voronoiContainerMixin<
           datum,
           active: true,
         });
-        const t = isFunction(labels) ? labels(labelProps) : null;
+        const t = Helpers.isFunction(labels) ? labels(labelProps) : null;
         if (t === null || t === undefined) {
           return memo;
         }

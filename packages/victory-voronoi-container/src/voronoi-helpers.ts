@@ -1,12 +1,5 @@
 import { Collection, Selection, Data, Helpers } from "victory-core";
-import {
-  isFunction,
-  isEmpty,
-  includes,
-  isString,
-  isRegExp,
-  throttle,
-} from "lodash";
+import { isEmpty, includes, isString, isRegExp, throttle } from "lodash";
 import isEqual from "react-fast-compare";
 import Delaunay from "delaunay-find/lib/index.js";
 import React from "react";
@@ -84,7 +77,7 @@ class VoronoiHelpersClass {
         return null;
       }
       const getChildData =
-        child.type && isFunction(child.type.getData)
+        child.type && Helpers.isFunction(child.type.getData)
           ? child.type.getData
           : getData;
       const childData = getChildData(child.props);
@@ -195,13 +188,13 @@ class VoronoiHelpersClass {
   }
 
   onActivated(props, points) {
-    if (isFunction(props.onActivated)) {
+    if (Helpers.isFunction(props.onActivated)) {
       props.onActivated(points, props);
     }
   }
 
   onDeactivated(props, points) {
-    if (isFunction(props.onDeactivated)) {
+    if (Helpers.isFunction(props.onDeactivated)) {
       props.onDeactivated(points, props);
     }
   }

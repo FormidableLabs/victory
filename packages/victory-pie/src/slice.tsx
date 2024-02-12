@@ -8,7 +8,7 @@ import {
   VictoryCommonProps,
   VictoryStyleInterface,
 } from "victory-core";
-import { defaults, isFunction } from "lodash";
+import { defaults } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 export type VictorySliceLabelPositionType =
@@ -46,7 +46,7 @@ export interface SliceProps extends VictoryCommonProps {
 
 const getPath = (props) => {
   const { slice, radius, innerRadius, cornerRadius } = props;
-  if (isFunction(props.pathFunction)) {
+  if (Helpers.isFunction(props.pathFunction)) {
     return props.pathFunction(slice);
   }
   const padAngle = Helpers.degreesToRadians(props.padAngle);

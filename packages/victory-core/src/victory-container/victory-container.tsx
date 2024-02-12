@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults, uniqueId, isObject, isFunction } from "lodash";
+import { defaults, uniqueId, isObject } from "lodash";
 import { Portal } from "../victory-portal/portal";
 import { PortalContext } from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
@@ -81,7 +81,7 @@ export class VictoryContainer<
   portalDeregister = (key) => this.portalRef.portalDeregister(key);
 
   saveContainerRef = (container: HTMLElement) => {
-    if (isFunction(this.props.containerRef)) {
+    if (Helpers.isFunction(this.props.containerRef)) {
       this.props.containerRef(container);
     }
     this.containerRef = container;

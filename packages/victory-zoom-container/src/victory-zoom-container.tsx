@@ -1,12 +1,13 @@
 import React from "react";
-import { defaults, isFunction } from "lodash";
+import { defaults } from "lodash";
 import { ZoomHelpers } from "./zoom-helpers";
 import {
+  Data,
+  DomainTuple,
+  Helpers,
   VictoryContainer,
   VictoryClipContainer,
-  Data,
   VictoryContainerProps,
-  DomainTuple,
 } from "victory-core";
 
 const DEFAULT_DOWNSAMPLE = 150;
@@ -146,7 +147,7 @@ export function zoomContainerMixin<
       const getData = (childProps) => {
         const { data, x, y } = childProps;
         const defaultGetData =
-          child.type && isFunction(child.type.getData)
+          child.type && Helpers.isFunction(child.type.getData)
             ? child.type.getData
             : () => undefined;
         // skip costly data formatting if x and y accessors are not present

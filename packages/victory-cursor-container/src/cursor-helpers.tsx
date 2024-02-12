@@ -1,5 +1,5 @@
-import { Selection, SVGCoordinateType } from "victory-core";
-import { throttle, isFunction, mapValues } from "lodash";
+import { Helpers, Selection, SVGCoordinateType } from "victory-core";
+import { throttle, mapValues } from "lodash";
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 16;
 
@@ -46,7 +46,7 @@ class CursorHelpersClass {
       cursorValue = null;
     }
 
-    if (isFunction(onCursorChange)) {
+    if (Helpers.isFunction(onCursorChange)) {
       if (cursorValue) {
         const value = cursorDimension
           ? cursorValue[cursorDimension]
@@ -76,7 +76,7 @@ class CursorHelpersClass {
   onTouchEnd = (evt, targetProps) => {
     const { onCursorChange } = targetProps;
 
-    if (isFunction(targetProps.onCursorChange)) {
+    if (Helpers.isFunction(targetProps.onCursorChange)) {
       onCursorChange(null, targetProps);
     }
 
