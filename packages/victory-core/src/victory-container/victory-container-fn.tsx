@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { uniqueId } from "lodash";
 import { Portal } from "../victory-portal/portal";
 import { PortalContext } from "../victory-portal/portal-context";
-import TimerContext from "../victory-util/timer-context";
 import * as UserProps from "../victory-util/user-props";
 import { OriginType } from "../victory-label/victory-label";
 import { D3Scale } from "../types/prop-types";
@@ -182,4 +181,3 @@ export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
 };
 
 VictoryContainerFn.role = "container";
-VictoryContainerFn.contextType = TimerContext;
