@@ -1,5 +1,5 @@
 import React from "react";
-import { flatten, isNil } from "lodash";
+import { flatten } from "lodash";
 import {
   Helpers,
   VictoryLabel,
@@ -234,14 +234,14 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
   }
 
   shouldRenderDatum(datum) {
-    const hasX = !isNil(datum._x);
-    const hasY = !isNil(datum._y);
+    const hasX = !Helpers.isNil(datum._x);
+    const hasY = !Helpers.isNil(datum._y);
     const hasSummaryStatistics =
-      !isNil(datum._min) &&
-      !isNil(datum._max) &&
-      !isNil(datum._median) &&
-      !isNil(datum._q1) &&
-      !isNil(datum._q3);
+      !Helpers.isNil(datum._min) &&
+      !Helpers.isNil(datum._max) &&
+      !Helpers.isNil(datum._median) &&
+      !Helpers.isNil(datum._q1) &&
+      !Helpers.isNil(datum._q3);
 
     return hasSummaryStatistics && (this.props.horizontal ? hasY : hasX);
   }

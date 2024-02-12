@@ -185,6 +185,15 @@ export function getRange(props, axis) {
     : getCartesianRange(props, axis);
 }
 
+/**
+ * Checks if `value` is `null` or `undefined`.
+ * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
+ */
+export function isNil(value: any): boolean {
+  // eslint-disable-next-line eqeqeq
+  return value == null;
+}
+
 export function createAccessor(key) {
   // creates a data accessor function
   // given a property key, path, array index, or null for identity.

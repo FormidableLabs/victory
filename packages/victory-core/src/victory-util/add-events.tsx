@@ -4,7 +4,6 @@ import {
   difference,
   isEmpty,
   isFunction,
-  isNil,
   keys,
   pick,
   without,
@@ -15,6 +14,7 @@ import isEqual from "react-fast-compare";
 import { VictoryTransition } from "../victory-transition/victory-transition";
 import { VictoryCommonProps, VictoryDatableProps } from "./common-props";
 import { VictoryLabelableProps } from "../types/prop-types";
+import { isNil } from "./helpers";
 
 // DISCLAIMER:
 // This file is not currently tested, and it is first on the list of files
