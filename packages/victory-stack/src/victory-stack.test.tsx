@@ -5,7 +5,8 @@ import { render } from "@testing-library/react";
 import React from "react";
 import { VictoryBar } from "victory-bar";
 import { VictoryHistogram } from "victory-histogram";
-import { VictoryStack } from "victory-stack";
+
+import { VictoryStack } from "./victory-stack";
 
 describe("components/victory-stack", () => {
   describe("default component rendering", () => {

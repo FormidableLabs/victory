@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "victory-bar": "*",
-    "victory-selection-container": "*"
+    "victory-vendor": "*"
   },
   "publishConfig": {
     "provenance": true
@@ -267,7 +267,7 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest --passWithNoTests",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
@@ -276,10 +276,10 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs",
-        "../victory-bar:build:lib:cjs",
-        "../victory-vendor:build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs"
+        "../victory-core:build",
+        "../victory-bar:build",
+        "../victory-vendor:build",
+        "../victory-voronoi:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

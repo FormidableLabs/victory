@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { VictoryBar } from "victory-bar";
-import { VictoryGroup } from "victory-group";
+
+import { VictoryGroup } from "./victory-group";
 
 describe("components/victory-group", () => {
   it("has a static role", () => {

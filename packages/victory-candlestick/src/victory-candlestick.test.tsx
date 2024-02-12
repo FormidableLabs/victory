@@ -1,8 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { Candle, VictoryCandlestick } from "victory-candlestick";
 import { VictoryChart } from "victory-chart";
 import { Helpers } from "victory-core";
+import { Candle } from "./candle";
+import { VictoryCandlestick } from "./victory-candlestick";
 
 const MyCandle = () => <div data-testid="my-candle" />;
 

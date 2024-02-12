@@ -1,12 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { Helpers, Point, VictoryLabel } from "victory-core";
-import { VictoryScatter } from "victory-scatter";
 import {
   convertSvgCoordinatesToCartesian,
   getSvgPointCoordinates,
   isCircle,
 } from "../../../test/helpers";
+import { VictoryScatter } from "./victory-scatter";
 
 describe("components/victory-scatter", () => {
   describe("default component rendering", () => {

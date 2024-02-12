@@ -9,7 +9,7 @@ jest.mock("react-native", () => ({
       panHandlers: [],
     }),
   },
-  View: ({ children }) => <>{children}</>, // eslint-disable-line react/prop-types
+  View: ({ children }) => <>{children}</>,
 }));
 
 const createMockComponent = (name) => {

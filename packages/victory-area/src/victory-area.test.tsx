@@ -1,10 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { Area, VictoryArea, VictoryAreaProps } from "victory-area";
 import { VictoryChart } from "victory-chart";
 import { Helpers } from "victory-core";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
+
 import { calculateD3Path } from "../../../test/helpers/svg";
+import { Area } from "./area";
+import { VictoryArea, VictoryAreaProps } from "./victory-area";
 
 describe("components/victory-area", () => {
   describe("default component rendering", () => {

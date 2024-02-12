@@ -1,4 +1,4 @@
-import { Collection } from "victory-core";
+import * as Collection from "./collection";
 
 describe("victory-util/collection", () => {
   describe("containsStrings", () => {
