@@ -72,8 +72,6 @@ class App extends React.Component {
             horizontal
             style={{ parent: parentStyle }}
             highLabelComponent={<VictoryTooltip active dy={-3} />}
-            // @todo high labels type needs to have an OR so that it can also return a string.
-            // Currently, it only allows returning an integer which is incorrect, as a label would typically be a string.
             highLabels={({ datum }) => `hello #${datum.x}`}
             data={[
               { x: 1, open: 5, close: 10, high: 15, low: 0 },

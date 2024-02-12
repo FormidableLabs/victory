@@ -273,7 +273,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="demo">
-        hi
         <Charts behaviors={["zoom", "voronoi"]} />
         <Charts behaviors={["zoom", "cursor"]} />
         <Charts behaviors={["cursor", "voronoi"]} />
