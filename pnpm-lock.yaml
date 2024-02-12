@@ -399,9 +399,12 @@ importers:
     specifiers:
       lodash: ^4.17.19
       victory-core: ^36.9.1
+      victory-vendor: '*'
     dependencies:
       lodash: 4.17.21
       victory-core: link:../victory-core
+    devDependencies:
+      victory-vendor: link:../victory-vendor
 
   packages/victory-group:
     specifiers:
@@ -555,11 +558,13 @@ importers:
       lodash: ^4.17.19
       victory-bar: '*'
       victory-core: ^36.9.1
+      victory-vendor: '*'
     dependencies:
       lodash: 4.17.21
       victory-core: link:../victory-core
     devDependencies:
       victory-bar: link:../victory-bar
+      victory-vendor: link:../victory-vendor
 
   packages/victory-shared-events:
     specifiers:
