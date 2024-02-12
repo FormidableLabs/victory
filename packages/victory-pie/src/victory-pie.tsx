@@ -21,7 +21,6 @@ import {
   EventsMixinClass,
   VictoryDatableProps,
 } from "victory-core";
-import { isNil } from "lodash";
 import { getBaseProps } from "./helper-methods";
 import {
   Slice,
@@ -90,7 +89,7 @@ const fallbackProps = {
 };
 
 const datumHasXandY = (datum) => {
-  return !isNil(datum._x) && !isNil(datum._y);
+  return !Helpers.isNil(datum._x) && !Helpers.isNil(datum._y);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

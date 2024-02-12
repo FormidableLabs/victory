@@ -310,6 +310,7 @@ describe("victory-core", () => {
             "getRange": [Function],
             "getStyles": [Function],
             "isHorizontal": [Function],
+            "isNil": [Function],
             "isTooltip": [Function],
             "modifyProps": [Function],
             "omit": [Function],

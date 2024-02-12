@@ -1,4 +1,4 @@
-import { defaults, isNil, isFunction, isPlainObject } from "lodash";
+import { defaults, isFunction, isPlainObject } from "lodash";
 import {
   Helpers,
   Scale,
@@ -417,7 +417,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
 
   // eslint-disable-next-line complexity
   return data.reduce((childProps, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
     const formattedDatum = formatDataFromDomain(datum, domain);
     const { _low, _open, _close, _high } = formattedDatum;
