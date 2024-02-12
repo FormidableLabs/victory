@@ -141,7 +141,6 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 labels={({ datum }) => `y: ${datum.y}`}
                 labelComponent={
                   <VictoryTooltip
-                    // TODO: active points is not exported properly, so this throws a type error
                     text={({ activePoints }) => {
                       return activePoints
                         .map(({ y }) => `value: ${y}`)
