@@ -31,6 +31,13 @@ export interface VictorySelectionContainerProps extends VictoryContainerProps {
   selectionStyle?: React.CSSProperties;
 }
 
+type Handler = (
+  event: any,
+  targetProps: any,
+  eventKey?: any,
+  context?: any,
+) => void;
+
 const defaultProps = {
   activateSelectedData: true,
   allowSelection: true,
@@ -45,10 +52,10 @@ const defaultProps = {
 export const VictorySelectionContainerFn = (
   initialProps: VictorySelectionContainerProps,
 ) => {
-  const propsWithDefaults = { ...defaultProps, ...initialProps };
+  const props = { ...defaultProps, ...initialProps };
 
   const { x1, x2, y1, y2, selectionStyle, selectionComponent, children, name } =
-    propsWithDefaults;
+    props;
   const width = Math.abs(x2 - x1) || 1;
   const height = Math.abs(y2 - y1) || 1;
   const x = Math.min(x1, x2);
@@ -57,7 +64,7 @@ export const VictorySelectionContainerFn = (
   const shouldRenderRect = y1 && y2 && x1 && x2;
 
   return (
-    <VictoryContainerFn {...propsWithDefaults}>
+    <VictoryContainerFn {...props}>
       {children}
 
       {shouldRenderRect &&
@@ -76,12 +83,16 @@ export const VictorySelectionContainerFn = (
 VictorySelectionContainerFn.role = "container";
 
 VictorySelectionContainerFn.defaultEvents = (
-  props: VictorySelectionContainerProps,
+  initialProps: VictorySelectionContainerProps,
 ) => {
+  const props = { ...defaultProps, ...initialProps };
   const createEventHandler =
-    (handler: (event: any, targetProps: any) => any) =>
-    (event: any, targetProps: any) =>
-      props.disable ? {} : handler(event, { ...defaultProps, ...targetProps });
+    (handler: Handler, disabled?: boolean): Handler =>
+    // eslint-disable-next-line max-params
+    (event, targetProps, eventKey, context) =>
+      disabled || props.disable
+        ? {}
+        : handler(event, { ...props, ...targetProps }, eventKey, context);
 
   return [
     {

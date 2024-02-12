@@ -51,7 +51,7 @@ const defaultProps = {
 };
 
 export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
-  const propsWithDefaults = { ...defaultProps, ...initialProps };
+  const props = { ...defaultProps, ...initialProps };
   const {
     role,
     title,
@@ -69,7 +69,7 @@ export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
     ouiaId,
     ouiaSafe,
     ouiaType,
-  } = propsWithDefaults;
+  } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -77,11 +77,11 @@ export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
 
   // Generated ID stored in ref because it needs to persist across renders
   const generatedId = useRef(uniqueId("victory-container-"));
-  const containerId = propsWithDefaults.containerId ?? generatedId;
+  const containerId = props.containerId ?? generatedId;
 
   const getIdForElement = (elName: string) => `${containerId}-${elName}`;
 
-  const userProps = UserProps.getSafeUserProps(propsWithDefaults);
+  const userProps = UserProps.getSafeUserProps(props);
 
   const dimensions = responsive
     ? { width: "100%", height: "100%" }
@@ -90,16 +90,16 @@ export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
   const viewBox = responsive ? `0 0 ${width} ${height}` : undefined;
 
   const preserveAspectRatio = responsive
-    ? propsWithDefaults.preserveAspectRatio
+    ? props.preserveAspectRatio
     : undefined;
 
   const ariaLabelledBy =
-    [title && getIdForElement("title"), propsWithDefaults["aria-labelledby"]]
+    [title && getIdForElement("title"), props["aria-labelledby"]]
       .filter(Boolean)
       .join(" ") || undefined;
 
   const ariaDescribedBy =
-    [desc && getIdForElement("desc"), propsWithDefaults["aria-describedby"]]
+    [desc && getIdForElement("desc"), props["aria-describedby"]]
       .filter(Boolean)
       .join(" ") || undefined;
 
@@ -107,7 +107,7 @@ export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
 
   React.useEffect(() => {
     // TODO check that this works
-    if (!propsWithDefaults.events?.onWheel) return;
+    if (!props.events?.onWheel) return;
 
     const container = containerRef?.current;
     container?.addEventListener("wheel", handleWheel);
@@ -138,7 +138,7 @@ export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
         data-ouia-component-id={ouiaId}
         data-ouia-component-type={ouiaType}
         data-ouia-safe={ouiaSafe}
-        ref={mergeRefs([containerRef, propsWithDefaults.containerRef])}
+        ref={mergeRefs([containerRef, props.containerRef])}
       >
         <svg
           width={width}
