@@ -1,9 +1,11 @@
 import React from "react";
 import { random } from "lodash";
-import { calculateD3Path } from "../../../test/helpers";
-import { VictoryVoronoi, VictoryVoronoiProps, Voronoi } from "victory-voronoi";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Helpers } from "victory-core";
+
+import { calculateD3Path } from "../../../test/helpers";
+import { VictoryVoronoi, VictoryVoronoiProps } from "./victory-voronoi";
+import { Voronoi } from "./voronoi";
 
 describe("components/victory-voronoi", () => {
   describe("default component rendering", () => {

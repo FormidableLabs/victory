@@ -1,4 +1,4 @@
 {
   "extends": "../../tsconfig.base.json",
-  "exclude": ["es", "lib"]
+  "exclude": ["es", "lib", "jest.config.ts", "jest-native-setup.tsx"]
 }

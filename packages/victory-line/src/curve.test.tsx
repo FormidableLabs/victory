@@ -1,8 +1,9 @@
 import React from "react";
-import { Curve } from "victory-line";
 import * as d3Scale from "victory-vendor/d3-scale";
 import { render } from "@testing-library/react";
+
 import { SVGWrapper } from "../../../test/helpers";
+import { Curve } from "./curve";
 
 describe("victory-primitives/curve", () => {
   const baseProps = {

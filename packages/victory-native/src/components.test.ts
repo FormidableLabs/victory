@@ -1,4 +1,6 @@
 import React from "react";
+import { render } from "@testing-library/react-native";
+
 import {
   VictoryArea,
   VictoryAxis,
@@ -19,8 +21,7 @@ import {
   VictoryStack,
   VictoryTooltip,
   VictoryVoronoi,
-} from "victory-native";
-import { render } from "@testing-library/react-native";
+} from ".";
 
 const components = [
   { component: VictoryArea, name: "VictoryArea" },

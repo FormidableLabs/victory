@@ -1,5 +1,6 @@
-import { Selection } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
+
+import * as Selection from "./selection";
 
 describe("helpers/selection", () => {
   describe("getBounds", () => {

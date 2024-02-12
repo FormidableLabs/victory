@@ -258,7 +258,7 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest --passWithNoTests",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
@@ -267,8 +267,8 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs",
-        "../victory-vendor:build:lib:cjs"
+        "../victory-core:build",
+        "../victory-vendor:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

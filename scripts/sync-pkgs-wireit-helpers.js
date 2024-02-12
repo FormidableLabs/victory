@@ -223,7 +223,7 @@ function generateWireitConfig(pkg, rootPkg) {
       }, {}),
 
       "jest": {
-        "command": "nps jest:pkg",
+        "command": "jest --passWithNoTests",
         "files": [
           "src/**/*.test.*",
           "../../.babelrc.js",
@@ -236,8 +236,7 @@ function generateWireitConfig(pkg, rootPkg) {
         // 2. The CommonJS (`lib`) versions of library files (dependencies
         //    and the package at issue).
         "dependencies": [
-          "build:lib:cjs",
-          ...concat(devDeps, rootDeps).map((dep) => `../${dep}:build:lib:cjs`),
+          ...concat(deps, devDeps, rootDeps).map((dep) => `../${dep}:build`),
         ],
         "packageLocks": ["pnpm-lock.yaml"]
       },

@@ -1,5 +1,6 @@
-import { getDataWithBaseline } from "victory-area/lib/helper-methods";
 import * as d3Scale from "victory-vendor/d3-scale";
+
+import { getDataWithBaseline } from "./helper-methods";
 
 describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {

@@ -1,10 +1,13 @@
-const path = require("path");
-const ROOT = path.resolve(__dirname, "..");
-const BABEL_PATH = path.resolve(ROOT, ".babelrc.native.js"); // eslint-disable-line no-undef
-const BABEL_TRANSFORM = ["babel-jest", { configFile: BABEL_PATH }];
+const BABEL_TRANSFORM = [
+  "babel-jest",
+  { configFile: "../../.babelrc.native.js" },
+];
 
-module.exports = {
-  rootDir: ROOT,
+const jestConfig = {
+  preset: "ts-jest",
+  testEnvironment: "jsdom",
+  testMatch: ["**/src/**/?(*.)+(spec|test).[jt]s?(x)"],
+
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testPathIgnorePatterns: ["node_modules", "config", "/es/", "/lib/"],
   transform: {
@@ -13,5 +16,7 @@ module.exports = {
     "^.+\\.(js|jsx)$": BABEL_TRANSFORM,
   },
   transformIgnorePatterns: ["/node_modules/", "/lib/"],
-  setupFiles: ["<rootDir>/test/jest-native-setup.js"],
+  setupFiles: ["./jest-native-setup.tsx"],
 };
+
+export default jestConfig;

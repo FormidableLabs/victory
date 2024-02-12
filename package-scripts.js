@@ -12,9 +12,6 @@
  * `package.json:scripts`.
  */
 
-const path = require("path");
-const PKG_SRC = path.resolve("src");
-
 // For publishing, use the core package's version.
 const coreVersion = require("./packages/victory-core/package.json").version;
 if (!coreVersion) {
@@ -59,17 +56,6 @@ module.exports = {
     "lint:base": "eslint --cache --color",
     "lint:pkg": 'nps "lint:base src"',
     "lint:pkg:fix": 'nps "lint:base --fix src"',
-
-    // Tests
-    // - Jest
-    // TODO(2375): Can we cache / incremental?
-    // https://github.com/FormidableLabs/victory/issues/2375
-    "jest:native": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-native-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
-    "jest:pkg": `cross-env BABEL_ENV=commonjs jest --config=../../test/jest-config.js --passWithNoTests --testPathPattern=${PKG_SRC}`,
-    // TODO(2348): Hook coverage up to CI
-    // https://github.com/FormidableLabs/victory/issues/2348
-    // TODO(2348): Add this to `check:ci`
-    "jest:cov": "echo TODO",
 
     // - TypeScript
     // TODO(2375): Can we cache / incremental?

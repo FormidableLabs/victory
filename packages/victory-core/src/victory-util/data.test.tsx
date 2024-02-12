@@ -1,7 +1,9 @@
 /* eslint no-unused-expressions: 0, max-nested-callbacks: 0 */
 import React from "react";
-import { Data, VictoryPortal } from "victory-core";
 import { fromJS } from "immutable";
+
+import * as Data from "./data";
+import { VictoryPortal } from "../victory-portal/victory-portal";
 
 const immutableDataTest = {
   createData: (data) => fromJS(data),

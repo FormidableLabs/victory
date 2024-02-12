@@ -1,8 +1,9 @@
 import { render } from "@testing-library/react";
 import { forEach, omit } from "lodash";
 import React from "react";
-import { ErrorBar } from "victory-errorbar";
 import * as d3Scale from "victory-vendor/d3-scale";
+
+import { ErrorBar } from "./error-bar";
 
 describe("victory-primitives/error-bar", () => {
   const baseProps = {
