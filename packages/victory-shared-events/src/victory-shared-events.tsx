@@ -1,11 +1,4 @@
-import {
-  isFunction,
-  defaults,
-  isEmpty,
-  fromPairs,
-  keys,
-  difference,
-} from "lodash";
+import { defaults, isEmpty, fromPairs, keys, difference } from "lodash";
 import React from "react";
 import {
   EventCallbackInterface,
@@ -139,7 +132,9 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
     if (!isEmpty(externalMutations)) {
       const callbacks = props.externalEventMutations.reduce(
         (memo, mutation) =>
-          isFunction(mutation.callback) ? memo.concat(mutation.callback) : memo,
+          Helpers.isFunction(mutation.callback)
+            ? memo.concat(mutation.callback)
+            : memo,
         [],
       );
       const compiledCallbacks = callbacks.length
@@ -186,7 +181,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
 
   getBasePropsFromChildren(childComponents) {
     const iteratee = (child, childName) => {
-      if (child.type && isFunction(child.type.getBaseProps)) {
+      if (child.type && Helpers.isFunction(child.type.getBaseProps)) {
         const baseProps = child.props && child.type.getBaseProps(child.props);
         return baseProps ? [[childName, baseProps]] : null;
       }
@@ -214,7 +209,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
         } else if (
           childNames[index] !== "parent" &&
           child.type &&
-          isFunction(child.type.getBaseProps)
+          Helpers.isFunction(child.type.getBaseProps)
         ) {
           const name = child.props.name || childNames[index];
           const childEvents =

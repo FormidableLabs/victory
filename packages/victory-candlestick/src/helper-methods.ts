@@ -1,4 +1,4 @@
-import { defaults, isFunction, isPlainObject } from "lodash";
+import { defaults, isPlainObject } from "lodash";
 import {
   Helpers,
   Scale,
@@ -224,7 +224,7 @@ const getText = (props, type) => {
 const getCandleWidth = (props, style?: VictoryStyleObject) => {
   const { data, candleWidth, scale } = props;
   if (candleWidth) {
-    return isFunction(candleWidth)
+    return Helpers.isFunction(candleWidth)
       ? Helpers.evaluateProp(candleWidth, props)
       : candleWidth;
   } else if (style && style.width) {

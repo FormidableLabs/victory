@@ -1,15 +1,7 @@
 /* eslint-disable no-use-before-define */
-import {
-  isEmpty,
-  isFunction,
-  without,
-  pickBy,
-  omitBy,
-  uniq,
-  includes,
-  keys,
-} from "lodash";
+import { isEmpty, without, pickBy, omitBy, uniq, includes, keys } from "lodash";
 import type { EventMixinCalculatedValues } from "./add-events";
+import { isFunction } from "./helpers";
 
 const GLOBAL_EVENT_REGEX = /^onGlobal(.*)$/;
 

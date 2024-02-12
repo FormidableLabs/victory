@@ -1,7 +1,6 @@
 import {
   defaults,
   flatten,
-  isFunction,
   uniq,
   groupBy,
   uniqBy,
@@ -104,7 +103,7 @@ export function getDataFromChildren(props, childComponents) {
     let childElement = child;
     if (!Data.isDataComponent(child)) {
       return null;
-    } else if (child.type && isFunction(child.type.getData)) {
+    } else if (child.type && Helpers.isFunction(child.type.getData)) {
       childElement = parent ? React.cloneElement(child, parent.props) : child;
       childData = childElement.type.getData(childProps);
     } else {
@@ -228,7 +227,7 @@ export function getDomainFromChildren(props, axis, childComponents) {
     const sharedProps = Object.assign({}, child.props, parentProps);
     if (!Domain.isDomainComponent(child)) {
       return null;
-    } else if (child.type && isFunction(child.type.getDomain)) {
+    } else if (child.type && Helpers.isFunction(child.type.getDomain)) {
       return child.props && child.type.getDomain(sharedProps, axis);
     }
     return Domain.getDomain(sharedProps, axis);
@@ -383,7 +382,7 @@ export function getStringsFromData(childComponents) {
     let data;
     if (!Data.isDataComponent(child)) {
       return null;
-    } else if (child.type && isFunction(child.type.getData)) {
+    } else if (child.type && Helpers.isFunction(child.type.getData)) {
       data = child.type.getData(childProps);
     } else {
       data = Data.getData(childProps);

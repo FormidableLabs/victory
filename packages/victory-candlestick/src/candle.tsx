@@ -7,7 +7,7 @@ import {
   VictoryCommonPrimitiveProps,
   VictoryStyleObject,
 } from "victory-core";
-import { defaults, isFunction } from "lodash";
+import { defaults } from "lodash";
 
 export interface CandleProps extends VictoryCommonPrimitiveProps {
   candleRatio?: number;
@@ -31,7 +31,7 @@ const getCandleWidth = (
 ) => {
   const { style } = props;
   if (candleWidth) {
-    return isFunction(candleWidth)
+    return Helpers.isFunction(candleWidth)
       ? Helpers.evaluateProp(candleWidth, props)
       : candleWidth;
   } else if (style.width) {

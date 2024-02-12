@@ -1,5 +1,5 @@
-import { Selection } from "victory-core";
-import { throttle, isFunction, defaults, mapValues } from "lodash";
+import { Helpers as CoreHelpers, Selection } from "victory-core";
+import { throttle, defaults, mapValues } from "lodash";
 import isEqual from "react-fast-compare";
 
 const Helpers = {
@@ -370,7 +370,7 @@ const Helpers = {
         ...constrainedBox,
       };
 
-      if (isFunction(onBrushDomainChange)) {
+      if (CoreHelpers.isFunction(onBrushDomainChange)) {
         onBrushDomainChange(
           currentDomain,
           defaults({}, mutatedProps, targetProps),
@@ -400,7 +400,7 @@ const Helpers = {
       });
 
       const mutatedProps = { x2, y2, currentDomain, parentSVG };
-      if (isFunction(onBrushDomainChange)) {
+      if (CoreHelpers.isFunction(onBrushDomainChange)) {
         onBrushDomainChange(
           currentDomain,
           defaults({}, mutatedProps, targetProps),
@@ -458,23 +458,23 @@ const Helpers = {
         evt,
       );
       mutatedProps.currentDomain = defaultDomain;
-      if (isFunction(onBrushDomainChange)) {
+      if (CoreHelpers.isFunction(onBrushDomainChange)) {
         onBrushDomainChange(
           defaultDomain,
           defaults({}, mutatedProps, targetProps),
         );
       }
-      if (isFunction(onBrushDomainChangeEnd)) {
+      if (CoreHelpers.isFunction(onBrushDomainChangeEnd)) {
         onBrushDomainChangeEnd(
           defaultDomain,
           defaults({}, mutatedProps, targetProps),
         );
       }
-      if (isFunction(onBrushCleared)) {
+      if (CoreHelpers.isFunction(onBrushCleared)) {
         onBrushCleared(defaultDomain, defaults({}, mutatedProps, targetProps));
       }
     } else if ((allowDrag && isPanning) || (allowResize && isSelecting)) {
-      if (isFunction(onBrushDomainChangeEnd)) {
+      if (CoreHelpers.isFunction(onBrushDomainChangeEnd)) {
         onBrushDomainChangeEnd(
           currentDomain,
           defaults({}, mutatedProps, targetProps),

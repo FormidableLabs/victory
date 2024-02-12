@@ -4,7 +4,7 @@ import * as Collection from "../victory-util/collection";
 import * as Helpers from "../victory-util/helpers";
 import TimerContext from "../victory-util/timer-context";
 import * as Transitions from "../victory-util/transitions";
-import { defaults, isFunction, pick } from "lodash";
+import { defaults, pick } from "lodash";
 import isEqual from "react-fast-compare";
 import Timer from "../victory-util/timer";
 
@@ -119,7 +119,7 @@ export class VictoryTransition extends React.Component<
   ) {
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
-        if (child.type && isFunction(child.type.getDomain)) {
+        if (child.type && Helpers.isFunction(child.type.getDomain)) {
           const childDomain =
             child.props && child.type.getDomain(child.props, axis);
           return childDomain ? memo.concat(childDomain) : memo;

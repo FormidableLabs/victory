@@ -1,7 +1,7 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Children } from "react";
-import { Selection, Collection, Wrapper } from "victory-core";
-import { throttle, isFunction, defaults, delay } from "lodash";
+import { Helpers, Selection, Collection, Wrapper } from "victory-core";
+import { throttle, defaults, delay } from "lodash";
 
 export const RawZoomHelpers = {
   checkDomainEquality(a, b) {
@@ -291,7 +291,7 @@ export const RawZoomHelpers = {
         zoomActive,
       };
 
-      if (isFunction(onZoomDomainChange)) {
+      if (Helpers.isFunction(onZoomDomainChange)) {
         onZoomDomainChange(
           currentDomain,
           defaults({}, mutatedProps, targetProps),
@@ -344,7 +344,7 @@ export const RawZoomHelpers = {
       zoomActive,
     };
 
-    if (isFunction(onZoomDomainChange)) {
+    if (Helpers.isFunction(onZoomDomainChange)) {
       onZoomDomainChange(
         currentDomain,
         defaults({}, mutatedProps, targetProps),
