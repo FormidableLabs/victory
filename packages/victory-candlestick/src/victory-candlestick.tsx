@@ -19,7 +19,6 @@ import {
   NumberOrCallback,
   EventsMixinClass,
 } from "victory-core";
-import { isNil } from "lodash";
 import { Candle } from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
@@ -40,7 +39,7 @@ export interface VictoryCandlestickStyleInterface {
 export type VictoryCandlestickLabelsType =
   | (string | number)[]
   | boolean
-  | ((datum: any) => number);
+  | ((datum: any) => number | string);
 
 export interface VictoryCandlestickProps
   extends Omit<VictoryCommonProps, "polar">,
@@ -127,7 +126,7 @@ const defaultData = [
 ];
 /* eslint-enable no-magic-numbers */
 const datumHasXandY = (datum) => {
-  return !isNil(datum._x) && !isNil(datum._y);
+  return !Helpers.isNil(datum._x) && !Helpers.isNil(datum._y);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -192,11 +191,11 @@ class VictoryCandlestickBase extends React.Component<VictoryCandlestickProps> {
 
   shouldRenderDatum = (datum) => {
     return (
-      !isNil(datum._x) &&
-      !isNil(datum._high) &&
-      !isNil(datum._low) &&
-      !isNil(datum._close) &&
-      !isNil(datum._open)
+      !Helpers.isNil(datum._x) &&
+      !Helpers.isNil(datum._high) &&
+      !Helpers.isNil(datum._low) &&
+      !Helpers.isNil(datum._close) &&
+      !Helpers.isNil(datum._open)
     );
   };
 

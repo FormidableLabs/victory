@@ -1,4 +1,4 @@
-import { defaults, isNil, isFunction, isPlainObject } from "lodash";
+import { defaults, isPlainObject } from "lodash";
 import {
   Helpers,
   Scale,
@@ -224,7 +224,7 @@ const getText = (props, type) => {
 const getCandleWidth = (props, style?: VictoryStyleObject) => {
   const { data, candleWidth, scale } = props;
   if (candleWidth) {
-    return isFunction(candleWidth)
+    return Helpers.isFunction(candleWidth)
       ? Helpers.evaluateProp(candleWidth, props)
       : candleWidth;
   } else if (style && style.width) {
@@ -417,7 +417,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
 
   // eslint-disable-next-line complexity
   return data.reduce((childProps, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
     const formattedDatum = formatDataFromDomain(datum, domain);
     const { _low, _open, _close, _high } = formattedDatum;

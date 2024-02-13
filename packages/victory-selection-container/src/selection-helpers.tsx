@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers, Datum } from "victory-core";
-import { defaults, throttle, isFunction, includes } from "lodash";
+import { defaults, throttle, includes } from "lodash";
 import React from "react";
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 16;
@@ -28,7 +28,7 @@ class SelectionHelpersClass {
       let childElement;
       if (!Data.isDataComponent(child) || includes(blacklist, childName)) {
         return null;
-      } else if (child.type && isFunction(child.type.getData)) {
+      } else if (child.type && Helpers.isFunction(child.type.getData)) {
         childElement = parent ? React.cloneElement(child, parent.props) : child;
         const childData =
           childElement.props && childElement.type.getData(childElement.props);
@@ -111,7 +111,7 @@ class SelectionHelpersClass {
         : Selection.getDomainCoordinates(targetProps).y[1];
 
     const mutatedProps = { x1, y1, select: true, x2, y2, parentSVG };
-    if (selectedData && isFunction(targetProps.onSelectionCleared)) {
+    if (selectedData && Helpers.isFunction(targetProps.onSelectionCleared)) {
       targetProps.onSelectionCleared(defaults({}, mutatedProps, targetProps));
     }
     const parentMutation = [{ target: "parent", mutation: () => mutatedProps }];
@@ -187,7 +187,7 @@ class SelectionHelpersClass {
       y2: null,
     };
     const callbackMutation =
-      selectedData && isFunction(targetProps.onSelection)
+      selectedData && Helpers.isFunction(targetProps.onSelection)
         ? targetProps.onSelection(
             selectedData,
             bounds,

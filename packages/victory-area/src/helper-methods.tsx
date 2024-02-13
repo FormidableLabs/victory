@@ -1,4 +1,3 @@
-import { isNil } from "lodash";
 import {
   Helpers,
   LabelHelpers,
@@ -132,7 +131,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       (text !== undefined && text !== null) ||
       (labels && (events || sharedEvents))
     ) {
-      const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+      const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
       childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
     }
     return childProps;

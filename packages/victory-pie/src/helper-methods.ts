@@ -1,11 +1,11 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
-import { defaults, isFunction, isPlainObject, isNil } from "lodash";
+import { defaults, isPlainObject } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
 
 const checkForValidText = (text) => {
-  if (text === undefined || text === null || isFunction(text)) {
+  if (text === undefined || text === null || Helpers.isFunction(text)) {
     return text;
   }
   return `${text}`;
@@ -46,7 +46,7 @@ const getOrigin = (props, padding) => {
 };
 
 const getSlices = (props, data) => {
-  const padAngle = isFunction(props.padAngle) ? 0 : props.padAngle;
+  const padAngle = Helpers.isFunction(props.padAngle) ? 0 : props.padAngle;
   const layoutFunction = d3Shape
     .pie()
     .sort(null)
@@ -95,7 +95,9 @@ const getLabelText = (props, datum, index) => {
   } else if (Array.isArray(props.labels)) {
     text = props.labels[index];
   } else {
-    text = isFunction(props.labels) ? props.labels : datum.xName || datum._x;
+    text = Helpers.isFunction(props.labels)
+      ? props.labels
+      : datum.xName || datum._x;
   }
   return checkForValidText(text);
 };
@@ -321,7 +323,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       endAngle: Helpers.radiansToDegrees(slice.endAngle),
       padAngle: Helpers.radiansToDegrees(slice.padAngle),
     });
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const dataProps = {
       index,
       slice,

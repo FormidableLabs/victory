@@ -13,8 +13,7 @@ import { VictoryTooltip } from "victory-tooltip";
 import { VictoryLegend } from "victory-legend";
 
 const Charts = ({ behaviors }) => {
-  // eslint-disable-line react/prop-types
-  const containerStyle = {
+  const containerStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
@@ -24,7 +23,7 @@ const Charts = ({ behaviors }) => {
   const chartStyle = {
     parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
   };
-  const CustomContainer = createContainer(...behaviors);
+  const CustomContainer = createContainer(behaviors[0], behaviors[1]);
   const behaviorsList = behaviors.map((behavior) => `"${behavior}"`).join(", ");
 
   return (
@@ -111,7 +110,6 @@ const Charts = ({ behaviors }) => {
             }}
           />
         </VictoryChart>
-
         {/* B */}
         <VictoryChart
           style={{ parent: chartStyle.parent }}
@@ -140,7 +138,6 @@ const Charts = ({ behaviors }) => {
             y={(d) => d.x * d.x}
           />
         </VictoryChart>
-
         {/* C */}
         <VictoryChart
           style={chartStyle}
@@ -199,7 +196,6 @@ const Charts = ({ behaviors }) => {
             />
           </VictoryGroup>
         </VictoryChart>
-
         {/* D */}
         <VictoryStack
           style={chartStyle}

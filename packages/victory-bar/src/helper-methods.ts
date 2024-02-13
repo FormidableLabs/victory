@@ -1,4 +1,3 @@
-import { isNil } from "lodash";
 import {
   Collection,
   Data,
@@ -115,7 +114,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
   };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y, y0, x0 } = getBarPosition(props, datum);
 
     const dataProps = {
