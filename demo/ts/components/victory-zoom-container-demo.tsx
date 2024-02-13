@@ -9,8 +9,7 @@ import { VictoryArea } from "victory-area";
 import { VictoryBar } from "victory-bar";
 import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
-import { VictoryZoomContainerFn as VictoryZoomContainer } from "victory-zoom-container";
-// import { VictoryZoomContainer } from "victory-zoom-container";
+import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryLegend } from "victory-legend";
 import {
@@ -332,9 +331,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, {
-                              stroke: "orange",
-                            }),
+                            style: Object.assign({}, props.style, { stroke: "orange" }),
                           };
                         },
                       },
@@ -420,9 +417,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, {
-                            fill: "gold",
-                          }),
+                          style: Object.assign({}, props.style, { fill: "gold" }),
                         };
                       },
                     },
@@ -431,9 +426,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, {
-                            fill: "orange",
-                          }),
+                          style: Object.assign({}, props.style, { fill: "orange" }),
                         };
                       },
                     },
@@ -442,9 +435,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, {
-                            fill: "red",
-                          }),
+                          style: Object.assign({}, props.style, { fill: "red" }),
                         };
                       },
                     },

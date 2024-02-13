@@ -5,7 +5,7 @@ import { round } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
-import { createContainerFn as createContainer } from "victory-create-container";
+import { createContainer } from "victory-create-container";
 import { VictoryBar } from "victory-bar";
 import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
@@ -273,7 +273,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="demo">
-        <Charts behaviors={["zoom", "selection"]} />
+        <Charts behaviors={["zoom", "voronoi"]} />
         <Charts behaviors={["zoom", "cursor"]} />
         <Charts behaviors={["cursor", "voronoi"]} />
         <Charts behaviors={["brush", "voronoi"]} />

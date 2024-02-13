@@ -6,8 +6,7 @@ import { VictoryGroup } from "victory-group";
 import { VictoryBar } from "victory-bar";
 import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
-// import { VictorySelectionContainer } from "victory-selection-container";
-import { VictorySelectionContainerFn as VictorySelectionContainer } from "victory-selection-container";
+import { VictorySelectionContainer } from "victory-selection-container";
 import { VictoryLegend } from "victory-legend";
 import { VictoryTooltip } from "victory-tooltip";
 

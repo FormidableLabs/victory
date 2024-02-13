@@ -9,8 +9,7 @@ import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryLegend } from "victory-legend";
 import { VictoryZoomContainer } from "victory-zoom-container";
-import { VictoryBrushContainerFn as VictoryBrushContainer } from "victory-brush-container";
-// import { VictoryBrushContainer } from "victory-brush-container";
+import { VictoryBrushContainer } from "victory-brush-container";
 import { DomainTuple } from "victory-core";
 
 interface VictoryBrushContainerDemoState {
