@@ -1,24 +1,24 @@
 import {
-  VictoryZoomContainerFn,
+  VictoryZoomContainer,
   useVictoryZoomContainer,
 } from "victory-zoom-container";
 import {
-  VictorySelectionContainerFn,
+  VictorySelectionContainer,
   useVictorySelectionContainer,
 } from "victory-selection-container";
 import React from "react";
 import { VictoryContainerFn } from "victory-core";
 import { forOwn, groupBy, isEmpty, toPairs } from "lodash";
 import {
-  VictoryVoronoiContainerFn,
+  VictoryVoronoiContainer,
   useVictoryVoronoiContainer,
 } from "victory-voronoi-container";
 import {
-  VictoryCursorContainerFn,
+  VictoryCursorContainer,
   useVictoryCursorContainer,
 } from "victory-cursor-container";
 import {
-  VictoryBrushContainerFn,
+  VictoryBrushContainer,
   useVictoryBrushContainer,
 } from "victory-brush-container";
 
@@ -92,27 +92,27 @@ type Container = {
 const CONTAINERS: Record<ContainerType, Container> = {
   zoom: {
     name: "Zoom",
-    component: VictoryZoomContainerFn,
+    component: VictoryZoomContainer,
     hook: useVictoryZoomContainer,
   },
   selection: {
     name: "Selection",
-    component: VictorySelectionContainerFn,
+    component: VictorySelectionContainer,
     hook: useVictorySelectionContainer,
   },
   brush: {
     name: "Brush",
-    component: VictoryBrushContainerFn,
+    component: VictoryBrushContainer,
     hook: useVictoryBrushContainer,
   },
   cursor: {
     name: "Cursor",
-    component: VictoryCursorContainerFn,
+    component: VictoryCursorContainer,
     hook: useVictoryCursorContainer,
   },
   voronoi: {
     name: "Voronoi",
-    component: VictoryVoronoiContainerFn,
+    component: VictoryVoronoiContainer,
     hook: useVictoryVoronoiContainer,
   },
 };

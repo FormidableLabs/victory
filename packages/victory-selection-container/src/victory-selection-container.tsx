@@ -2,10 +2,17 @@ import React from "react";
 import {
   Datum,
   Rect,
-  VictoryContainer,
+  VictoryContainerFn,
   VictoryContainerProps,
 } from "victory-core";
 import { SelectionHelpers } from "./selection-helpers";
+
+type Handler = (
+  event: any,
+  targetProps: any,
+  eventKey?: any,
+  context?: any,
+) => void;
 
 export interface VictorySelectionContainerProps extends VictoryContainerProps {
   activateSelectedData?: boolean;
@@ -31,92 +38,80 @@ export interface VictorySelectionContainerProps extends VictoryContainerProps {
   selectionStyle?: React.CSSProperties;
 }
 
-type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
+const defaultProps = {
+  activateSelectedData: true,
+  allowSelection: true,
+  selectionComponent: <Rect />,
+  selectionStyle: {
+    stroke: "transparent",
+    fill: "black",
+    fillOpacity: 0.1,
+  },
+};
 
-export function selectionContainerMixin<
-  TBase extends ComponentClass<TProps>,
-  TProps extends VictorySelectionContainerProps,
->(Base: TBase) {
-  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
-  return class VictorySelectionContainer extends Base {
-    static displayName = "VictorySelectionContainer";
-    static defaultProps = {
-      ...VictoryContainer.defaultProps,
-      activateSelectedData: true,
-      allowSelection: true,
-      selectionComponent: <Rect />,
-      selectionStyle: {
-        stroke: "transparent",
-        fill: "black",
-        fillOpacity: 0.1,
-      },
-    };
+export const useVictorySelectionContainer = (
+  initialProps: VictorySelectionContainerProps,
+) => {
+  const props = { ...defaultProps, ...initialProps };
 
-    static defaultEvents = (props: TProps) => {
-      return [
-        {
-          target: "parent",
-          eventHandlers: {
-            onMouseDown: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : SelectionHelpers.onMouseDown(evt, targetProps);
-            },
-            onTouchStart: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : SelectionHelpers.onMouseDown(evt, targetProps);
-            },
-            onMouseMove: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : SelectionHelpers.onMouseMove(evt, targetProps);
-            },
-            onTouchMove: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : SelectionHelpers.onMouseMove(evt, targetProps);
-            },
-            onMouseUp: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : SelectionHelpers.onMouseUp(evt, targetProps);
-            },
-            onTouchEnd: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : SelectionHelpers.onMouseUp(evt, targetProps);
-            },
-          },
-        },
-      ];
-    };
+  const { x1, x2, y1, y2, selectionStyle, selectionComponent, children, name } =
+    props;
+  const width = Math.abs(x2 - x1) || 1;
+  const height = Math.abs(y2 - y1) || 1;
+  const x = Math.min(x1, x2);
+  const y = Math.min(y1, y2);
 
-    getRect(props) {
-      const { x1, x2, y1, y2, selectionStyle, selectionComponent, name } =
-        props;
-      const width = Math.abs(x2 - x1) || 1;
-      const height = Math.abs(y2 - y1) || 1;
-      const x = Math.min(x1, x2);
-      const y = Math.min(y1, y2);
-      return y2 && x2 && x1 && y1
-        ? React.cloneElement(selectionComponent, {
-            key: `${name}-selection`,
-            x,
-            y,
-            width,
-            height,
-            style: selectionStyle,
-          })
-        : null;
-    }
+  const shouldRenderRect = y1 && y2 && x1 && x2;
 
-    // Overrides method in VictoryContainer
-    getChildren(props: TProps) {
-      return [...React.Children.toArray(props.children), this.getRect(props)];
-    }
+  return {
+    props,
+    children: [
+      children,
+      shouldRenderRect &&
+        React.cloneElement(selectionComponent, {
+          key: `${name}-selection`,
+          x,
+          y,
+          width,
+          height,
+          style: selectionStyle,
+        }),
+    ],
   };
-}
+};
 
-export const VictorySelectionContainer =
-  selectionContainerMixin(VictoryContainer);
+export const VictorySelectionContainer = (
+  initialProps: VictorySelectionContainerProps,
+) => {
+  const { props, children } = useVictorySelectionContainer(initialProps);
+  return <VictoryContainerFn {...props}>{children}</VictoryContainerFn>;
+};
+
+VictorySelectionContainer.role = "container";
+
+VictorySelectionContainer.defaultEvents = (
+  initialProps: VictorySelectionContainerProps,
+) => {
+  const props = { ...defaultProps, ...initialProps };
+  const createEventHandler =
+    (handler: Handler, disabled?: boolean): Handler =>
+    // eslint-disable-next-line max-params
+    (event, targetProps, eventKey, context) =>
+      disabled || props.disable
+        ? {}
+        : handler(event, { ...props, ...targetProps }, eventKey, context);
+
+  return [
+    {
+      target: "parent",
+      eventHandlers: {
+        onMouseDown: createEventHandler(SelectionHelpers.onMouseDown),
+        onTouchStart: createEventHandler(SelectionHelpers.onMouseDown),
+        onMouseMove: createEventHandler(SelectionHelpers.onMouseMove),
+        onTouchMove: createEventHandler(SelectionHelpers.onMouseMove),
+        onMouseUp: createEventHandler(SelectionHelpers.onMouseUp),
+        onTouchEnd: createEventHandler(SelectionHelpers.onMouseUp),
+      },
+    },
+  ];
+};
