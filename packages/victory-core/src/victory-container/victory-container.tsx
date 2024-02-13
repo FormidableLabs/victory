@@ -50,7 +50,7 @@ const defaultProps = {
   role: "img",
 };
 
-export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
+export const VictoryContainer = (initialProps: VictoryContainerProps) => {
   const props = { ...defaultProps, ...initialProps };
   const {
     role,
@@ -180,4 +180,4 @@ export const VictoryContainerFn = (initialProps: VictoryContainerProps) => {
   );
 };
 
-VictoryContainerFn.role = "container";
+VictoryContainer.role = "container";
