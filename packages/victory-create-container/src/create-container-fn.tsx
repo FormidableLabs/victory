@@ -17,28 +17,6 @@ export type ContainerType =
   | "voronoi"
   | "zoom";
 
-const CONTAINERS: {
-  [key in ContainerType]: {
-    name: string;
-    component: React.ComponentType<any>;
-    hook: (props: any) => {
-      props: any;
-      children: React.ReactNode;
-    };
-  };
-} = {
-  zoom: {
-    name: "Zoom",
-    component: VictoryZoomContainerFn,
-    hook: useVictoryZoomContainer,
-  },
-  selection: {
-    name: "Selection",
-    component: VictorySelectionContainerFn,
-    hook: useVictorySelectionContainer,
-  },
-};
-
 function ensureArray<T>(thing: T): [] | T | T[] {
   if (!thing) {
     return [];
@@ -88,6 +66,43 @@ const combineDefaultEvents = (defaultEvents: any[]) => {
         };
   });
   return events.filter(Boolean);
+};
+
+type Container = {
+  name: string;
+  component: React.FC<any>;
+  hook: (props: any) => {
+    props: any;
+    children: React.ReactNode;
+  };
+};
+
+const CONTAINERS: Record<ContainerType, Container> = {
+  zoom: {
+    name: "Zoom",
+    component: VictoryZoomContainerFn,
+    hook: useVictoryZoomContainer,
+  },
+  selection: {
+    name: "Selection",
+    component: VictorySelectionContainerFn,
+    hook: useVictorySelectionContainer,
+  },
+  brush: {
+    name: "Brush",
+    component: VictoryZoomContainerFn,
+    hook: useVictoryZoomContainer,
+  },
+  cursor: {
+    name: "Cursor",
+    component: VictoryZoomContainerFn,
+    hook: useVictoryZoomContainer,
+  },
+  voronoi: {
+    name: "Voronoi",
+    component: VictoryZoomContainerFn,
+    hook: useVictoryZoomContainer,
+  },
 };
 
 // TODO: Type this function properly
