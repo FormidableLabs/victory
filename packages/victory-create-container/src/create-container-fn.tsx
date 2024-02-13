@@ -9,6 +9,10 @@ import {
 import React from "react";
 import { VictoryContainerFn } from "victory-core";
 import { forOwn, groupBy, isEmpty, toPairs } from "lodash";
+import {
+  VictoryVoronoiContainerFn,
+  useVictoryVoronoiContainer,
+} from "victory-voronoi-container";
 
 export type ContainerType =
   | "brush"
@@ -77,6 +81,7 @@ type Container = {
   };
 };
 
+// TODO: Add correct components & hooks when they are built
 const CONTAINERS: Record<ContainerType, Container> = {
   zoom: {
     name: "Zoom",
@@ -100,8 +105,8 @@ const CONTAINERS: Record<ContainerType, Container> = {
   },
   voronoi: {
     name: "Voronoi",
-    component: VictoryZoomContainerFn,
-    hook: useVictoryZoomContainer,
+    component: VictoryVoronoiContainerFn,
+    hook: useVictoryVoronoiContainer,
   },
 };
 
