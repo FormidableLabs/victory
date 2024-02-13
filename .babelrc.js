@@ -1,21 +1,24 @@
 module.exports = {
-  presets: ["@babel/preset-react", "@babel/preset-typescript"],
-  plugins: [
-    "lodash",
-    ["@babel/proposal-class-properties", { loose: true }],
-    "@babel/transform-arrow-functions",
-    "@babel/transform-block-scoping",
-    "@babel/transform-classes",
-    "@babel/transform-computed-properties",
-    "@babel/transform-destructuring",
-    "@babel/transform-parameters",
-    "@babel/transform-shorthand-properties",
-    "@babel/transform-spread",
-    "@babel/transform-template-literals",
-    "@babel/proposal-object-rest-spread",
-    "@babel/proposal-optional-chaining",
-    "@babel/plugin-proposal-export-namespace-from",
+  presets: [
+    [
+      "@babel/preset-env",
+      {
+        loose: true,
+        exclude: [
+          // only enabled in commonjs targets
+          // see the section on `env` below
+          "@babel/plugin-transform-modules-commonjs",
+
+          // do not use this plugin with webpack
+          // ref: https://babeljs.io/docs/babel-plugin-proposal-dynamic-import
+          "@babel/plugin-proposal-dynamic-import",
+        ],
+      },
+    ],
+    "@babel/preset-react",
+    "@babel/preset-typescript",
   ],
+  plugins: ["lodash"],
   ignore: ["**/*.d.ts"],
   env: {
     commonjs: {
