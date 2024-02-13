@@ -274,9 +274,9 @@ class App extends React.Component {
     return (
       <div className="demo">
         <Charts behaviors={["zoom", "selection"]} />
-        {/* <Charts behaviors={["zoom", "cursor"]} />
+        <Charts behaviors={["zoom", "cursor"]} />
         <Charts behaviors={["cursor", "voronoi"]} />
-        <Charts behaviors={["brush", "voronoi"]} /> */}
+        {/* <Charts behaviors={["brush", "voronoi"]} /> */}
       </div>
     );
   }

@@ -13,6 +13,10 @@ import {
   VictoryVoronoiContainerFn,
   useVictoryVoronoiContainer,
 } from "victory-voronoi-container";
+import {
+  VictoryCursorContainerFn,
+  useVictoryCursorContainer,
+} from "victory-cursor-container";
 
 export type ContainerType =
   | "brush"
@@ -100,8 +104,8 @@ const CONTAINERS: Record<ContainerType, Container> = {
   },
   cursor: {
     name: "Cursor",
-    component: VictoryZoomContainerFn,
-    hook: useVictoryZoomContainer,
+    component: VictoryCursorContainerFn,
+    hook: useVictoryCursorContainer,
   },
   voronoi: {
     name: "Voronoi",
