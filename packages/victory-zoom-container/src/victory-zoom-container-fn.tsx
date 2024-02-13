@@ -2,10 +2,10 @@ import React from "react";
 import { ZoomHelpers } from "./zoom-helpers";
 import {
   VictoryClipContainer,
-  Data,
   VictoryContainerProps,
   DomainTuple,
   VictoryContainerFn,
+  Data,
 } from "victory-core";
 import { defaults } from "lodash";
 
@@ -13,10 +13,17 @@ const DEFAULT_DOWNSAMPLE = 150;
 
 export type ZoomDimensionType = "x" | "y";
 
-type ZoomDomain = {
+export type ZoomDomain = {
   x: DomainTuple;
   y: DomainTuple;
 };
+
+type Handler = (
+  event: any,
+  targetProps: any,
+  eventKey?: any,
+  context?: any,
+) => void;
 
 export interface VictoryZoomContainerProps extends VictoryContainerProps {
   allowPan?: boolean;
@@ -33,13 +40,6 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
   zoomDomain?: Partial<ZoomDomain>;
 }
 
-type Handler = (
-  event: any,
-  targetProps: any,
-  eventKey?: any,
-  context?: any,
-) => void;
-
 const defaultProps = {
   clipContainerComponent: <VictoryClipContainer />,
   allowPan: true,
@@ -47,7 +47,7 @@ const defaultProps = {
   zoomActive: false,
 };
 
-export const VictoryZoomContainerFn = (
+export const useVictoryZoomContainer = (
   initialProps: VictoryZoomContainerProps,
 ) => {
   const props = { ...defaultProps, ...initialProps };
@@ -183,7 +183,14 @@ export const VictoryZoomContainerFn = (
     return newChild;
   });
 
-  return <VictoryContainerFn {...props}>{modifiedChildren}</VictoryContainerFn>;
+  return { props, children: modifiedChildren };
+};
+
+export const VictoryZoomContainerFn = (
+  initialProps: VictoryZoomContainerProps,
+) => {
+  const { props, children } = useVictoryZoomContainer(initialProps);
+  return <VictoryContainerFn {...props}>{children}</VictoryContainerFn>;
 };
 
 VictoryZoomContainerFn.role = "container";

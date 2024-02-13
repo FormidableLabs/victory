@@ -7,6 +7,13 @@ import {
 } from "victory-core";
 import { SelectionHelpers } from "./selection-helpers";
 
+type Handler = (
+  event: any,
+  targetProps: any,
+  eventKey?: any,
+  context?: any,
+) => void;
+
 export interface VictorySelectionContainerProps extends VictoryContainerProps {
   activateSelectedData?: boolean;
   allowSelection?: boolean;
@@ -31,13 +38,6 @@ export interface VictorySelectionContainerProps extends VictoryContainerProps {
   selectionStyle?: React.CSSProperties;
 }
 
-type Handler = (
-  event: any,
-  targetProps: any,
-  eventKey?: any,
-  context?: any,
-) => void;
-
 const defaultProps = {
   activateSelectedData: true,
   allowSelection: true,
@@ -49,7 +49,7 @@ const defaultProps = {
   },
 };
 
-export const VictorySelectionContainerFn = (
+export const useVictorySelectionContainer = (
   initialProps: VictorySelectionContainerProps,
 ) => {
   const props = { ...defaultProps, ...initialProps };
@@ -63,11 +63,11 @@ export const VictorySelectionContainerFn = (
 
   const shouldRenderRect = y1 && y2 && x1 && x2;
 
-  return (
-    <VictoryContainerFn {...props}>
-      {children}
-
-      {shouldRenderRect &&
+  return {
+    props,
+    children: [
+      children,
+      shouldRenderRect &&
         React.cloneElement(selectionComponent, {
           key: `${name}-selection`,
           x,
@@ -75,9 +75,16 @@ export const VictorySelectionContainerFn = (
           width,
           height,
           style: selectionStyle,
-        })}
-    </VictoryContainerFn>
-  );
+        }),
+    ],
+  };
+};
+
+export const VictorySelectionContainerFn = (
+  initialProps: VictorySelectionContainerProps,
+) => {
+  const { props, children } = useVictorySelectionContainer(initialProps);
+  return <VictoryContainerFn {...props}>{children}</VictoryContainerFn>;
 };
 
 VictorySelectionContainerFn.role = "container";
