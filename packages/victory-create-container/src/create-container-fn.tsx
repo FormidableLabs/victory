@@ -17,6 +17,10 @@ import {
   VictoryCursorContainerFn,
   useVictoryCursorContainer,
 } from "victory-cursor-container";
+import {
+  VictoryBrushContainerFn,
+  useVictoryBrushContainer,
+} from "victory-brush-container";
 
 export type ContainerType =
   | "brush"
@@ -85,7 +89,6 @@ type Container = {
   };
 };
 
-// TODO: Add correct components & hooks when they are built
 const CONTAINERS: Record<ContainerType, Container> = {
   zoom: {
     name: "Zoom",
@@ -99,8 +102,8 @@ const CONTAINERS: Record<ContainerType, Container> = {
   },
   brush: {
     name: "Brush",
-    component: VictoryZoomContainerFn,
-    hook: useVictoryZoomContainer,
+    component: VictoryBrushContainerFn,
+    hook: useVictoryBrushContainer,
   },
   cursor: {
     name: "Cursor",
