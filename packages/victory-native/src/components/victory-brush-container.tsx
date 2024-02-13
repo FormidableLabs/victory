@@ -9,22 +9,13 @@ import {
 } from "victory-brush-container";
 import { VictoryContainer } from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
+import { VictoryEventHandler } from "victory-core";
 
 export interface VictoryBrushContainerNativeProps
   extends VictoryBrushContainerProps {
   disableContainerEvents?: boolean;
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
 // ensure the selection component get native styles

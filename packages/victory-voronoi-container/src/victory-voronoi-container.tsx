@@ -6,16 +6,10 @@ import {
   Helpers,
   VictoryContainerProps,
   PaddingProps,
-  VictoryContainerFn,
+  VictoryContainer,
+  VictoryEventHandler,
 } from "victory-core";
 import { VoronoiHelpers } from "./voronoi-helpers";
-
-type Handler = (
-  event: any,
-  targetProps: any,
-  eventKey?: any,
-  context?: any,
-) => void;
 
 export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   activateData?: boolean;
@@ -201,7 +195,7 @@ export const VictoryVoronoiContainer = (
   initialProps: VictoryVoronoiContainerProps,
 ) => {
   const { props, children } = useVictoryVoronoiContainer(initialProps);
-  return <VictoryContainerFn {...props}>{children}</VictoryContainerFn>;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictoryVoronoiContainer.role = "container";
@@ -211,7 +205,7 @@ VictoryVoronoiContainer.defaultEvents = (
 ) => {
   const props = { ...defaultProps, ...initialProps };
   const createEventHandler =
-    (handler: Handler, disabled?: boolean): Handler =>
+    (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
     // eslint-disable-next-line max-params
     (event, targetProps, eventKey, context) =>
       disabled || props.disable

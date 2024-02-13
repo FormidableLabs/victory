@@ -2,17 +2,11 @@ import React from "react";
 import {
   Datum,
   Rect,
-  VictoryContainerFn,
+  VictoryContainer,
   VictoryContainerProps,
+  VictoryEventHandler,
 } from "victory-core";
 import { SelectionHelpers } from "./selection-helpers";
-
-type Handler = (
-  event: any,
-  targetProps: any,
-  eventKey?: any,
-  context?: any,
-) => void;
 
 export interface VictorySelectionContainerProps extends VictoryContainerProps {
   activateSelectedData?: boolean;
@@ -84,7 +78,7 @@ export const VictorySelectionContainer = (
   initialProps: VictorySelectionContainerProps,
 ) => {
   const { props, children } = useVictorySelectionContainer(initialProps);
-  return <VictoryContainerFn {...props}>{children}</VictoryContainerFn>;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictorySelectionContainer.role = "container";
@@ -94,7 +88,7 @@ VictorySelectionContainer.defaultEvents = (
 ) => {
   const props = { ...defaultProps, ...initialProps };
   const createEventHandler =
-    (handler: Handler, disabled?: boolean): Handler =>
+    (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
     // eslint-disable-next-line max-params
     (event, targetProps, eventKey, context) =>
       disabled || props.disable

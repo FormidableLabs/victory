@@ -2,6 +2,7 @@ import React, { ComponentClass } from "react";
 import { flow } from "lodash";
 import { VictoryContainer } from "./victory-container";
 import { VictoryClipContainer } from "./victory-clip-container";
+import { VictoryEventHandler } from "victory-core";
 import {
   VictoryZoomContainer as VictoryZoomContainerBase,
   VictoryZoomContainerProps,
@@ -12,18 +13,8 @@ import NativeZoomHelpers from "../helpers/native-zoom-helpers";
 export interface VictoryZoomContainerNativeProps
   extends VictoryZoomContainerProps {
   disableContainerEvents?: boolean;
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
 function nativeZoomMixin<

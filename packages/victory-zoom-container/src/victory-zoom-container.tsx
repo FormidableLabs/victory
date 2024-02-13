@@ -4,8 +4,9 @@ import {
   VictoryClipContainer,
   VictoryContainerProps,
   DomainTuple,
-  VictoryContainerFn,
+  VictoryContainer,
   Data,
+  VictoryEventHandler,
 } from "victory-core";
 import { defaults } from "lodash";
 
@@ -17,13 +18,6 @@ export type ZoomDomain = {
   x: DomainTuple;
   y: DomainTuple;
 };
-
-type Handler = (
-  event: any,
-  targetProps: any,
-  eventKey?: any,
-  context?: any,
-) => void;
 
 export interface VictoryZoomContainerProps extends VictoryContainerProps {
   allowPan?: boolean;
@@ -190,7 +184,7 @@ export const VictoryZoomContainer = (
   initialProps: VictoryZoomContainerProps,
 ) => {
   const { props, children } = useVictoryZoomContainer(initialProps);
-  return <VictoryContainerFn {...props}>{children}</VictoryContainerFn>;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictoryZoomContainer.role = "container";
@@ -200,7 +194,7 @@ VictoryZoomContainer.defaultEvents = (
 ) => {
   const props = { ...defaultProps, ...initialProps };
   const createEventHandler =
-    (handler: Handler, disabled?: boolean): Handler =>
+    (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
     // eslint-disable-next-line max-params
     (event, targetProps, eventKey, context) =>
       disabled || props.disable

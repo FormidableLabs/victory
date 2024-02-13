@@ -5,6 +5,7 @@ import { View, PanResponder } from "react-native";
 import {
   VictoryContainer as VictoryContainerBase,
   VictoryContainerProps,
+  VictoryEventHandler,
 } from "victory-core/es";
 import NativeHelpers from "../helpers/native-helpers";
 import { Portal } from "./victory-portal/portal";
@@ -14,18 +15,8 @@ const no = () => false;
 
 export interface VictoryContainerNativeProps extends VictoryContainerProps {
   disableContainerEvents?: boolean;
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
 export class VictoryContainer extends VictoryContainerBase<VictoryContainerNativeProps> {

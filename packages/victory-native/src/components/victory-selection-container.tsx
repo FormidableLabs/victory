@@ -1,6 +1,7 @@
 import React from "react";
 import { flow } from "lodash";
 import { Rect } from "react-native-svg";
+import { VictoryEventHandler } from "victory-core";
 import {
   VictorySelectionContainer as VictorySelectionContainerBase,
   SelectionHelpers,
@@ -13,18 +14,8 @@ import NativeHelpers from "../helpers/native-helpers";
 export interface VictorySelectionContainerNativeProps
   extends VictorySelectionContainerProps {
   disableContainerEvents?: boolean;
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
 // ensure the selection component get native styles

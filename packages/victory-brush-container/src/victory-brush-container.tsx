@@ -4,18 +4,12 @@ import {
   Rect,
   DomainTuple,
   VictoryContainerProps,
-  VictoryContainerFn,
+  VictoryContainer,
+  VictoryEventHandler,
 } from "victory-core";
 import { BrushHelpers } from "./brush-helpers";
 import { defaults } from "lodash";
 import isEqual from "react-fast-compare";
-
-type Handler = (
-  event: any,
-  targetProps: any,
-  eventKey?: any,
-  context?: any,
-) => void;
 
 export interface VictoryBrushContainerProps extends VictoryContainerProps {
   allowDrag?: boolean;
@@ -179,7 +173,7 @@ export const VictoryBrushContainer = (
   initialProps: VictoryBrushContainerProps,
 ) => {
   const { props, children } = useVictoryBrushContainer(initialProps);
-  return <VictoryContainerFn {...props}>{children}</VictoryContainerFn>;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictoryBrushContainer.role = "container";
@@ -189,7 +183,10 @@ VictoryBrushContainer.defaultEvents = (
 ) => {
   const props = { ...defaultProps, ...initialProps };
   const createEventHandler =
-    (handler: Handler, isDisabled?: (targetProps: any) => boolean): Handler =>
+    (
+      handler: VictoryEventHandler,
+      isDisabled?: (targetProps: any) => boolean,
+    ): VictoryEventHandler =>
     // eslint-disable-next-line max-params
     (event, targetProps, eventKey, context) =>
       props.disable || isDisabled?.(targetProps)

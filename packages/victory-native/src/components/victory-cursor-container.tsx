@@ -1,5 +1,6 @@
 import React from "react";
 import { flow } from "lodash";
+import { VictoryEventHandler } from "victory-core";
 import {
   VictoryCursorContainer as VictoryCursorContainerBase,
   CursorHelpers,
@@ -13,18 +14,8 @@ import { LineSegment } from "./victory-primitives/line-segment";
 export interface VictoryCursorContainerNativeProps
   extends VictoryCursorContainerProps {
   disableContainerEvents?: boolean;
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
 function nativeCursorMixin<

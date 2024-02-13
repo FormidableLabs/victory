@@ -7,17 +7,11 @@ import {
   ValueOrAccessor,
   VictoryLabel,
   LineSegment,
-  VictoryContainerFn,
+  VictoryContainer,
+  VictoryEventHandler,
 } from "victory-core";
 import { defaults, isObject } from "lodash";
 import { CursorHelpers } from "./cursor-helpers";
-
-type Handler = (
-  event: any,
-  targetProps: any,
-  eventKey?: any,
-  context?: any,
-) => void;
 
 export type CursorCoordinatesPropType = CoordinatesPropType | number;
 
@@ -183,7 +177,7 @@ export const VictoryCursorContainer = (
   initialProps: VictoryCursorContainerProps,
 ) => {
   const { props, children } = useVictoryCursorContainer(initialProps);
-  return <VictoryContainerFn {...props}>{children}</VictoryContainerFn>;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictoryCursorContainer.role = "container";
@@ -193,7 +187,7 @@ VictoryCursorContainer.defaultEvents = (
 ) => {
   const props = { ...defaultProps, ...initialProps };
   const createEventHandler =
-    (handler: Handler, disabled?: boolean): Handler =>
+    (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
     // eslint-disable-next-line max-params
     (event, targetProps, eventKey, context) =>
       disabled || props.disable

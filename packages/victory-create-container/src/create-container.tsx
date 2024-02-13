@@ -7,7 +7,7 @@ import {
   useVictorySelectionContainer,
 } from "victory-selection-container";
 import React from "react";
-import { VictoryContainerFn } from "victory-core";
+import { VictoryContainer } from "victory-core";
 import { forOwn, groupBy, isEmpty, toPairs } from "lodash";
 import {
   VictoryVoronoiContainer,
@@ -140,7 +140,7 @@ export function createContainerFn(
       children: childrenA,
     });
 
-    return <VictoryContainerFn {...propsB}>{childrenB}</VictoryContainerFn>;
+    return <VictoryContainer {...propsB}>{childrenB}</VictoryContainer>;
   }
 
   NewContainer.displayName = `Victory${containerAName}${containerBName}Container`;

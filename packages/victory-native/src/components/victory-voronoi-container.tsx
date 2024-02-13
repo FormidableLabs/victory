@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react";
 import { flow } from "lodash";
+import { VictoryEventHandler } from "victory-core";
 import {
   VictoryVoronoiContainer as VictoryVoronoiContainerBase,
   VictoryVoronoiContainerProps,
@@ -13,18 +14,8 @@ import { VictoryTooltip } from "./victory-tooltip";
 export interface VictoryVoronoiContainerNativeProps
   extends VictoryVoronoiContainerProps {
   disableContainerEvents?: boolean;
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
 function nativeVoronoiMixin<
