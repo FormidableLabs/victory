@@ -1,12 +1,11 @@
-import React, { ComponentClass } from "react";
-import { flow } from "lodash";
+import React from "react";
 import { VictoryContainer } from "./victory-container";
 import { VictoryClipContainer } from "./victory-clip-container";
 import { VictoryEventHandler } from "victory-core";
 import {
-  VictoryZoomContainer as VictoryZoomContainerBase,
   VictoryZoomContainerProps,
-  zoomContainerMixin as originalZoomMixin,
+  useVictoryZoomContainer,
+  VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS,
 } from "victory-zoom-container";
 import NativeZoomHelpers from "../helpers/native-zoom-helpers";
 
@@ -17,72 +16,41 @@ export interface VictoryZoomContainerNativeProps
   onTouchEnd?: VictoryEventHandler;
 }
 
-function nativeZoomMixin<
-  TBase extends ComponentClass<TProps>,
-  TProps extends VictoryZoomContainerNativeProps,
->(Base: TBase) {
-  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
-  return class VictoryNativeZoomContainer extends Base {
-    // assign native specific defaultProps over web `VictoryZoomContainer` defaultProps
-    static defaultProps = {
-      ...VictoryZoomContainerBase.defaultProps,
-      clipContainerComponent: <VictoryClipContainer />,
-    };
+export const VictoryZoomContainer = (
+  initialProps: VictoryZoomContainerNativeProps,
+) => {
+  const props = useVictoryZoomContainer({
+    ...initialProps,
+    clipContainerComponent: initialProps.clipContainerComponent ?? (
+      <VictoryClipContainer />
+    ),
+  });
+  return <VictoryContainer {...props} />;
+};
 
-    // overrides all web events with native specific events
-    static defaultEvents = (props: TProps) => {
-      const { disable } = props;
-      return [
-        {
-          target: "parent",
-          eventHandlers: {
-            // eslint-disable-next-line max-params
-            onTouchStart: (evt, targetProps) => {
-              return disable
-                ? {}
-                : NativeZoomHelpers.onTouchStart(evt, targetProps);
-            },
-            // eslint-disable-next-line max-params
-            onTouchMove: (evt, targetProps, eventKey, ctx) => {
-              return disable
-                ? {}
-                : NativeZoomHelpers.onTouchMove(
-                    evt,
-                    targetProps,
-                    eventKey,
-                    ctx,
-                  );
-            },
-            // eslint-disable-next-line max-params
-            onTouchEnd: () => {
-              return disable ? {} : NativeZoomHelpers.onTouchEnd();
-            },
-            // eslint-disable-next-line max-params
-            onTouchPinch: (evt, targetProps, eventKey, ctx) => {
-              return disable
-                ? {}
-                : NativeZoomHelpers.onTouchPinch(
-                    evt,
-                    targetProps,
-                    eventKey,
-                    ctx,
-                  );
-            },
-          },
-        },
-      ];
-    };
-  };
-}
+VictoryZoomContainer.role = "container";
 
-const combinedMixin: (
-  base: React.ComponentClass,
-) => React.ComponentClass<VictoryZoomContainerNativeProps> = flow(
-  originalZoomMixin,
-  nativeZoomMixin,
-);
+VictoryZoomContainer.defaultEvents = (
+  initialProps: VictoryZoomContainerNativeProps,
+) => {
+  const props = { ...VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS, ...initialProps };
+  const createEventHandler =
+    (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
+    // eslint-disable-next-line max-params
+    (event, targetProps, eventKey, context) =>
+      disabled || props.disable
+        ? {}
+        : handler(event, { ...props, ...targetProps }, eventKey, context);
 
-export const zoomContainerMixin = (base: React.ComponentClass) =>
-  combinedMixin(base);
-
-export const VictoryZoomContainer = zoomContainerMixin(VictoryContainer);
+  return [
+    {
+      target: "parent",
+      eventHandlers: {
+        onTouchStart: createEventHandler(NativeZoomHelpers.onTouchStart),
+        onTouchMove: createEventHandler(NativeZoomHelpers.onTouchMove),
+        onTouchEnd: createEventHandler(NativeZoomHelpers.onTouchEnd),
+        onTouchPinch: createEventHandler(NativeZoomHelpers.onTouchPinch),
+      },
+    },
+  ];
+};
