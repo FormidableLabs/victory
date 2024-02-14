@@ -181,7 +181,7 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 };
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
-  const { index, datum, data, slice, labelComponent, theme } = dataProps;
+  const { index, datum, data, slice, labelComponent, theme,startOffset } = dataProps;
   const { style, defaultRadius, origin, width, height } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
@@ -231,7 +231,11 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     textAnchor,
     verticalAnchor,
     angle: labelAngle,
-    calculatedLabelRadius,
+    labelRadius: calculatedLabelRadius,
+    labelStartAngle:slice.startAngle,
+    labelEndAngle:slice.endAngle,
+    startOffset,
+    labelPlacement
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -239,65 +243,6 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   }
   const tooltipTheme = (theme && theme.tooltip) || {};
   return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
-};
-
-const getCurvedLabelProps = (text, dataProps, calculatedValues) => {
-  const {
-    index,
-    datum,
-    data,
-    slice,
-    curvedLabelComponent,
-    theme,
-    startOffset,
-  } = dataProps;
-  const { style, defaultRadius } = calculatedValues;
-  const labelRadius = Helpers.evaluateProp(
-    calculatedValues.labelRadius,
-    Object.assign({ text }, dataProps),
-  );
-
-  const labelStyle = Object.assign({ padding: 0 }, style.labels);
-  const evaluatedStyle = Helpers.evaluateStyle(
-    labelStyle,
-    Object.assign({ labelRadius, text }, dataProps),
-  );
-  const calculatedLabelRadius = getCalculatedLabelRadius(
-    defaultRadius,
-    labelRadius,
-    evaluatedStyle,
-  );
-  const labelArc = getLabelArc(calculatedLabelRadius)
-    .startAngle(slice.startAngle)
-    .endAngle(slice.endAngle);
-  const path = labelArc(slice);
-  const pathId = uniqueId("label-path-");
-
-  const curvedLabelProps = {
-    index,
-    datum,
-    data,
-    slice,
-    text,
-    style: labelStyle,
-    href: `#${pathId}`,
-    id: pathId,
-    path,
-    startOffset,
-  };
-
-  if (!Helpers.isTooltip(curvedLabelComponent)) {
-    return curvedLabelProps;
-  }
-  const tooltipTheme = (theme && theme.tooltip) || {};
-  return defaults({}, curvedLabelProps, Helpers.omit(tooltipTheme, ["style"]));
-};
-
-const getCurvedLabelPathProps = (curvedLabelProps) => {
-  return {
-    id: curvedLabelProps.id,
-    d: curvedLabelProps.path,
-  };
 };
 
 export const getXOffsetMultiplayerByAngle = (angle) =>
@@ -326,14 +271,14 @@ export const getLabelIndicatorPropsForLineSegment = (
   } = props;
 
   const { height, width } = calculatedValues;
-  const { calculatedLabelRadius } = labelProps;
+  const { labelRadius } = labelProps;
   // calculation
   const middleRadius = getAverage([innerRadius, radius]);
   const midAngle = getAverage([endAngle, startAngle]);
   const centerX = width / 2;
   const centerY = height / 2;
   const innerOffset = middleRadius + labelIndicatorInnerOffset;
-  const outerOffset = calculatedLabelRadius - labelIndicatorOuterOffset;
+  const outerOffset = labelRadius - labelIndicatorOuterOffset;
 
   const x1 = centerX + getXOffset(innerOffset, midAngle);
   const y1 = centerY + getYOffset(innerOffset, midAngle);
@@ -416,28 +361,19 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       (labels && (events || sharedEvents))
     ) {
       const evaluatedText = Helpers.evaluateProp(text, dataProps);
-      if (labelPlacement === "curved") {
-        childProps[eventKey].curvedLabels = getCurvedLabelProps(
-          evaluatedText,
-          Object.assign({}, props, dataProps),
-          calculatedValues,
-        );
-        const curvedLabelProps = childProps[eventKey].curvedLabels;
-        childProps[eventKey].curvedLabelPaths =
-          getCurvedLabelPathProps(curvedLabelProps);
-        childProps[eventKey].groupComponentProps = {
-          transform: defaultTransform,
-        };
-      } else {
         childProps[eventKey].labels = getLabelProps(
           evaluatedText,
           Object.assign({}, props, dataProps),
           calculatedValues,
         );
+        if (labelPlacement === "curved") {
+          childProps[eventKey].group = {
+            transform: defaultTransform,
+          }
       }
       if (labelIndicator && labelPlacement !== "curved") {
         const labelProps = childProps[eventKey].labels;
-        if (labelProps.calculatedLabelRadius > radius) {
+        if (labelProps.labelRadius > radius) {
           childProps[eventKey].labelIndicators =
             getLabelIndicatorPropsForLineSegment(
               Object.assign({}, props, dataProps),
