@@ -108,9 +108,9 @@ type ContainerProps<T extends ContainerType> = React.ComponentProps<
 >;
 
 export function createContainer<
-  TContainerAType extends ContainerType,
-  TContainerBType extends ContainerType,
->(containerA: TContainerAType, containerB: TContainerBType) {
+  TContainerA extends ContainerType,
+  TContainerB extends ContainerType,
+>(containerA: TContainerA, containerB: TContainerB) {
   const {
     name: containerAName,
     component: ContainerA,
@@ -123,7 +123,7 @@ export function createContainer<
   } = CONTAINERS[containerB];
 
   const Container = (
-    props: ContainerProps<TContainerAType> & ContainerProps<TContainerBType>,
+    props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
   ) => {
     const { children: childrenA, props: propsA } = useContainerA(props);
     const { children: childrenB, props: propsB } = useContainerB({
@@ -137,7 +137,7 @@ export function createContainer<
   Container.displayName = `Victory${containerAName}${containerBName}Container`;
   Container.role = "container";
   Container.defaultEvents = (
-    props: ContainerProps<TContainerAType> & ContainerProps<TContainerBType>,
+    props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
   ) =>
     combineDefaultEvents([
       ...ContainerA.defaultEvents(props),
