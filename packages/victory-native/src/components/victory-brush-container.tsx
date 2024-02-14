@@ -1,7 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React from "react";
 import { Rect } from "react-native-svg";
-import NativeHelpers from "../helpers/native-helpers";
 import { VictoryEventHandler } from "victory-core";
 import {
   BrushHelpers,
@@ -10,6 +9,7 @@ import {
   VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS,
 } from "victory-brush-container";
 import { VictoryContainer } from "./victory-container";
+import NativeHelpers from "../helpers/native-helpers";
 
 export interface VictoryBrushContainerNativeProps
   extends VictoryBrushContainerProps {
@@ -31,8 +31,8 @@ export const VictoryNativeBrushContainer = (
 ) => {
   const props = useVictoryBrushContainer({
     ...initialProps,
-    brushComponent: <RectWithStyle />,
-    handleComponent: <RectWithStyle />,
+    brushComponent: initialProps.brushComponent ?? <RectWithStyle />,
+    handleComponent: initialProps.handleComponent ?? <RectWithStyle />,
   });
   return <VictoryContainer {...props} />;
 };
