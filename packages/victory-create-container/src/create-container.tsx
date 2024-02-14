@@ -22,13 +22,6 @@ import {
   useVictoryBrushContainer,
 } from "victory-brush-container";
 
-export type ContainerType =
-  | "brush"
-  | "cursor"
-  | "selection"
-  | "voronoi"
-  | "zoom";
-
 function ensureArray<T>(thing: T): [] | T | T[] {
   if (!thing) {
     return [];
@@ -80,16 +73,7 @@ const combineDefaultEvents = (defaultEvents: any[]) => {
   return events.filter(Boolean);
 };
 
-type Container = {
-  name: string;
-  component: React.FC<any>;
-  hook: (props: any) => {
-    props: any;
-    children: React.ReactNode;
-  };
-};
-
-const CONTAINERS: Record<ContainerType, Container> = {
+const CONTAINERS = {
   zoom: {
     name: "Zoom",
     component: VictoryZoomContainer,
@@ -117,11 +101,16 @@ const CONTAINERS: Record<ContainerType, Container> = {
   },
 };
 
-// TODO: Type this function properly
-export function createContainerFn(
-  containerA: ContainerType,
-  containerB: ContainerType,
-) {
+export type ContainerType = keyof typeof CONTAINERS;
+
+type ContainerProps<T extends ContainerType> = React.ComponentProps<
+  typeof CONTAINERS[T]["component"]
+>;
+
+export function createContainer<
+  TContainerAType extends ContainerType,
+  TContainerBType extends ContainerType,
+>(containerA: TContainerAType, containerB: TContainerBType) {
   const {
     name: containerAName,
     component: ContainerA,
@@ -133,7 +122,9 @@ export function createContainerFn(
     hook: useContainerB,
   } = CONTAINERS[containerB];
 
-  function NewContainer(props: any) {
+  const Container = (
+    props: ContainerProps<TContainerAType> & ContainerProps<TContainerBType>,
+  ) => {
     const { children: childrenA, props: propsA } = useContainerA(props);
     const { children: childrenB, props: propsB } = useContainerB({
       ...propsA,
@@ -141,15 +132,17 @@ export function createContainerFn(
     });
 
     return <VictoryContainer {...propsB}>{childrenB}</VictoryContainer>;
-  }
+  };
 
-  NewContainer.displayName = `Victory${containerAName}${containerBName}Container`;
-  NewContainer.role = "container";
-  NewContainer.defaultEvents = (props: any) =>
+  Container.displayName = `Victory${containerAName}${containerBName}Container`;
+  Container.role = "container";
+  Container.defaultEvents = (
+    props: ContainerProps<TContainerAType> & ContainerProps<TContainerBType>,
+  ) =>
     combineDefaultEvents([
       ...ContainerA.defaultEvents(props),
       ...ContainerB.defaultEvents(props),
     ]);
 
-  return NewContainer;
+  return Container;
 }
