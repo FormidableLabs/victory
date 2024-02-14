@@ -38,7 +38,7 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   ) => void;
 }
 
-const defaultProps = {
+export const VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS = {
   allowDrag: true,
   allowDraw: true,
   allowResize: true,
@@ -60,7 +60,7 @@ const defaultProps = {
 export const useVictoryBrushContainer = (
   initialProps: VictoryBrushContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = { ...VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS, ...initialProps };
   const { children } = props;
 
   const getSelectBox = (coordinates) => {
@@ -181,7 +181,7 @@ VictoryBrushContainer.role = "container";
 VictoryBrushContainer.defaultEvents = (
   initialProps: VictoryBrushContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = { ...VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS, ...initialProps };
   const createEventHandler =
     (
       handler: VictoryEventHandler,

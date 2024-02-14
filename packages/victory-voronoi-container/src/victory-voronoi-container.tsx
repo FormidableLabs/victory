@@ -26,7 +26,7 @@ export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   voronoiPadding?: PaddingProps;
 }
 
-const defaultProps = {
+export const VICTORY_VORONOI_CONTAINER_DEFAULT_PROPS = {
   activateData: true,
   activateLabels: true,
   labelComponent: <VictoryTooltip />,
@@ -41,7 +41,7 @@ const getPoint = (point) => {
 export const useVictoryVoronoiContainer = (
   initialProps: VictoryVoronoiContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = { ...VICTORY_VORONOI_CONTAINER_DEFAULT_PROPS, ...initialProps };
   const { children } = props;
 
   const getDimension = () => {
@@ -203,7 +203,7 @@ VictoryVoronoiContainer.role = "container";
 VictoryVoronoiContainer.defaultEvents = (
   initialProps: VictoryVoronoiContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = { ...VICTORY_VORONOI_CONTAINER_DEFAULT_PROPS, ...initialProps };
   const createEventHandler =
     (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
     // eslint-disable-next-line max-params

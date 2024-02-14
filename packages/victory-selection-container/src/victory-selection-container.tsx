@@ -32,7 +32,7 @@ export interface VictorySelectionContainerProps extends VictoryContainerProps {
   selectionStyle?: React.CSSProperties;
 }
 
-const defaultProps = {
+export const VICTORY_SELECTION_CONTAINER_DEFAULT_PROPS = {
   activateSelectedData: true,
   allowSelection: true,
   selectionComponent: <Rect />,
@@ -46,7 +46,10 @@ const defaultProps = {
 export const useVictorySelectionContainer = (
   initialProps: VictorySelectionContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = {
+    ...VICTORY_SELECTION_CONTAINER_DEFAULT_PROPS,
+    ...initialProps,
+  };
 
   const { x1, x2, y1, y2, selectionStyle, selectionComponent, children, name } =
     props;
@@ -86,7 +89,10 @@ VictorySelectionContainer.role = "container";
 VictorySelectionContainer.defaultEvents = (
   initialProps: VictorySelectionContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = {
+    ...VICTORY_SELECTION_CONTAINER_DEFAULT_PROPS,
+    ...initialProps,
+  };
   const createEventHandler =
     (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
     // eslint-disable-next-line max-params

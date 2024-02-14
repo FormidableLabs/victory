@@ -34,7 +34,7 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
   zoomDomain?: Partial<ZoomDomain>;
 }
 
-const defaultProps = {
+export const VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS = {
   clipContainerComponent: <VictoryClipContainer />,
   allowPan: true,
   allowZoom: true,
@@ -44,7 +44,7 @@ const defaultProps = {
 export const useVictoryZoomContainer = (
   initialProps: VictoryZoomContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = { ...VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS, ...initialProps };
   const {
     children,
     currentDomain,
@@ -192,7 +192,7 @@ VictoryZoomContainer.role = "container";
 VictoryZoomContainer.defaultEvents = (
   initialProps: VictoryZoomContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = { ...VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS, ...initialProps };
   const createEventHandler =
     (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
     // eslint-disable-next-line max-params

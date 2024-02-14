@@ -29,7 +29,7 @@ export interface VictoryCursorContainerProps extends VictoryContainerProps {
   ) => void;
 }
 
-const defaultProps = {
+export const VICTORY_CURSOR_CONTAINER_DEFAULT_PROPS = {
   cursorLabelComponent: <VictoryLabel />,
   cursorLabelOffset: {
     x: 5,
@@ -41,7 +41,7 @@ const defaultProps = {
 export const useVictoryCursorContainer = (
   initialProps: VictoryCursorContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = { ...VICTORY_CURSOR_CONTAINER_DEFAULT_PROPS, ...initialProps };
   const { children } = props;
 
   const getCursorPosition = () => {
@@ -185,7 +185,7 @@ VictoryCursorContainer.role = "container";
 VictoryCursorContainer.defaultEvents = (
   initialProps: VictoryCursorContainerProps,
 ) => {
-  const props = { ...defaultProps, ...initialProps };
+  const props = { ...VICTORY_CURSOR_CONTAINER_DEFAULT_PROPS, ...initialProps };
   const createEventHandler =
     (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
     // eslint-disable-next-line max-params
