@@ -17,7 +17,7 @@ export interface VictoryCursorContainerNativeProps
   onTouchEnd?: VictoryEventHandler;
 }
 
-export const VictoryNativeCursorContainer = (
+export const VictoryCursorContainer = (
   initialProps: VictoryCursorContainerNativeProps,
 ) => {
   const props = useVictoryCursorContainer({
@@ -28,9 +28,9 @@ export const VictoryNativeCursorContainer = (
   return <VictoryContainer {...props} />;
 };
 
-VictoryNativeCursorContainer.role = "container";
+VictoryCursorContainer.role = "container";
 
-VictoryNativeCursorContainer.defaultEvents = (
+VictoryCursorContainer.defaultEvents = (
   initialProps: VictoryCursorContainerNativeProps,
 ) => {
   const props = { ...VICTORY_CURSOR_CONTAINER_DEFAULT_PROPS, ...initialProps };

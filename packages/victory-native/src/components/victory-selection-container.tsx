@@ -26,7 +26,7 @@ const DefaultSelectionComponent = ({
   style?: Record<string, any>;
 }) => <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />;
 
-export const VictoryNativeSelectionContainer = (
+export const VictorySelectionContainer = (
   initialProps: VictorySelectionContainerNativeProps,
 ) => {
   const props = useVictorySelectionContainer({
@@ -39,9 +39,9 @@ export const VictoryNativeSelectionContainer = (
   return <VictoryContainer {...props} />;
 };
 
-VictoryNativeSelectionContainer.role = "container";
+VictorySelectionContainer.role = "container";
 
-VictoryNativeSelectionContainer.defaultEvents = (
+VictorySelectionContainer.defaultEvents = (
   initialProps: VictorySelectionContainerNativeProps,
 ) => {
   const props = {

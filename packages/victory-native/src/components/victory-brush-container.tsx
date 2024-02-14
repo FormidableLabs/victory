@@ -26,7 +26,7 @@ const RectWithStyle = ({
   style?: Record<string, any>;
 }) => <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />;
 
-export const VictoryNativeBrushContainer = (
+export const VictoryBrushContainer = (
   initialProps: VictoryBrushContainerNativeProps,
 ) => {
   const props = useVictoryBrushContainer({
@@ -37,9 +37,9 @@ export const VictoryNativeBrushContainer = (
   return <VictoryContainer {...props} />;
 };
 
-VictoryNativeBrushContainer.role = "container";
+VictoryBrushContainer.role = "container";
 
-VictoryNativeBrushContainer.defaultEvents = (
+VictoryBrushContainer.defaultEvents = (
   initialProps: VictoryBrushContainerNativeProps,
 ) => {
   const props = { ...VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS, ...initialProps };
