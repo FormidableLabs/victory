@@ -206,44 +206,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
 
       children.push(...dataComponents);
     }
-
-    // For curved labels, we need to create a path component with id and path value of
-    // label arc. We need to pass this id to the href of textPath component which will
-    // have label value(tspan) as child component.
-    if (labelPlacement === "curved" ) {
-      // create labelPath
-      const pathComponent: React.ReactElement = <Path />;
-      const labelPathComponents = this.dataKeys.map((_dataKey, index) => {
-        const curvedLabelPathProps = this.getComponentProps(
-          pathComponent,
-          "curvedLabelPaths",
-          index,
-        );
-        return React.cloneElement(pathComponent, curvedLabelPathProps);
-      });
-      children.push(...labelPathComponents);
-
-      // const curvedLabelComponents = this.dataKeys
-      //   .map((_dataKey, index) => {
-      //     const curvedLabelProps = this.getComponentProps(
-      //       curvedLabelComponent,
-      //       "curvedLabels",
-      //       index,
-      //     );
-      //     if (
-      //       (curvedLabelProps as any).text !== undefined &&
-      //       (curvedLabelProps as any).text !== null
-      //     ) {
-      //       return React.cloneElement(curvedLabelComponent, curvedLabelProps);
-      //     }
-      //     return undefined;
-      //   })
-      //   .filter(
-      //     (comp: React.ReactElement | undefined): comp is React.ReactElement =>
-      //       comp !== undefined,
-      //   );
-      // children.push(...curvedLabelComponents);
-    } 
      if (labelComponent) {
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {

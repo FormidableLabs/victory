@@ -85,7 +85,7 @@ const TSpan = (props) => <tspan {...props} />;
 
 ### TextPath
 
-Used by `curvedLabelComponent` in VictoryPie.
+Used by `VictoryLabel`.
 
 ```jsx
   const TextPath = (props) => {

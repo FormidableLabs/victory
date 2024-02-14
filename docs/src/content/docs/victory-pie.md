@@ -240,9 +240,6 @@ The `innerRadius` prop determines the number of pixels between the center of the
 
 `VictoryPie` uses the standard `labelComponent` prop for standard labels. [Read about it here](/docs/common-props#labelcomponent)
 
-For curved labels use `curvedLabelComponent` prop with `labelPlacement="curved"`.
-[Read about it here](/docs/victory-pie#curvedLabelComponent)
-
 _default:_ `<VictoryLabel/>`
 
 ```playground
@@ -258,8 +255,6 @@ _default:_ `<VictoryLabel/>`
 `type "parallel" || "perpendicular" || "vertical" || "curved" || function`
 
 The `labelPlacement` prop specifies the angular placement of each label relative to the angle of its corresponding slice. This prop should be given as "parallel", "perpendicular", "vertical", "curved" or as a function that returns one of these values. When this prop is not given, the label will be placed vertically.
-
-we need to use `curvedLabelComponent` prop.[Read about it here](/docs/victory-pie#curvedLabelComponent) to style and update accessibility related props when using `labelPlacement = "curved"`. We cannot use `VictoryLabel` for curved labels. 
 
 ```playground
 <VictoryPie
@@ -583,37 +578,6 @@ The `labelIndicatorOuterOffset` prop defines the offset by which the indicator l
   data={sampleData}
   labelIndicator
   labelIndicatorOuterOffset={5}
-/>
-```
-
-## curvedLabelComponent
-
-`type: element`
-
-The `curvedLabelComponent` prop is used to pass `<CurvedLabel/>` component to modify styles and accessibility parameters for curved labels.
-Currently it supports following props of `VictoryLabel`. 
-`active`,`capHeight`,`className`,`data`,`datum`,`desc`,`events`,`lineHeight`,`renderInPortal`,`style`,`tabIndex`,`text`,`textComponent`
-[Read about it here](/docs/docs/victory-label)
-
-```playground
-<VictoryPie
-  data={sampleData}
-  labels={({ datum }) => `${datum.l} deg`}
-  labelPlacement={"curved"}
-  startOffset={30}
-  radius={120}
-  labelRadius={100}
-  curvedLabelComponent={<CurvedLabel style={{ fill: "red" }}/>}
-  data={[
-          { x: 1, y: 1, l: 0 },
-          { x: 2, y: 1, l: 45 },
-          { x: 3, y: 1, l: 90 },
-          { x: 4, y: 1, l: 135 },
-          { x: 5, y: 1, l: 180 },
-          { x: 6, y: 1, l: 225 },
-          { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 },
-        ]}
 />
 ```
 
