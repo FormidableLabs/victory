@@ -28,7 +28,11 @@ import * as d3Shape from "victory-vendor/d3-shape";
 
 export type TextAnchorType = "start" | "middle" | "end" | "inherit";
 export type OriginType = { x: number; y: number };
-export type LabelOrientationType = "parallel" | "perpendicular" | "vertical" | "curved";
+export type LabelOrientationType =
+  | "parallel"
+  | "perpendicular"
+  | "vertical"
+  | "curved";
 
 export interface VictoryLabelProps {
   angle?: StringOrNumberOrCallback;
@@ -68,9 +72,9 @@ export interface VictoryLabelProps {
   dy?: StringOrNumberOrCallback;
   startOffset?: number;
   textPathComponent?: React.ReactElement;
-  labelRadius?:number;
-  labelStartAngle?:number;
-  labelEndAngle?:number;
+  labelRadius?: number;
+  labelStartAngle?: number;
+  labelEndAngle?: number;
 }
 
 const defaultStyles = {
@@ -488,18 +492,26 @@ const evaluateProps = (props) => {
   });
 };
 
-function getCurvedLabelProps(labelRadius, startAngle=-Math.PI/2, endAngle=Math.PI/2 ){
-  if(labelRadius){
-    const slice = {startAngle, endAngle}
-   const labelArc =  d3Shape.arc().outerRadius(labelRadius).innerRadius(labelRadius);
-   const path = labelArc(slice);
-   const id = uniqueId('label-path-');
-   const curvedLabelProps = {path,id,href:`#${id}`}
+function getCurvedLabelProps(
+  labelRadius,
+  startAngle = -Math.PI / 2,
+  endAngle = Math.PI / 2,
+) {
+  if (labelRadius) {
+    const labelArc = d3Shape.arc()
+    const path = labelArc({
+      outerRadius:labelRadius,
+      innerRadius:labelRadius,
+      startAngle,
+      endAngle
+    })
+    const id = uniqueId("label-path-");
+    const curvedLabelProps = { path, id, href: `#${id}` };
     return curvedLabelProps;
   }
   return undefined;
 }
- 
+
 const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const style = getSingleValue(props.style!);
@@ -518,10 +530,15 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
   const transform = getTransform(props, x, y);
-  const curvedLabelProps = props.labelPlacement === "curved" ?
-   getCurvedLabelProps(props.labelRadius,props.labelStartAngle,props.labelEndAngle):
-   undefined
-  
+  const curvedLabelProps =
+    props.labelPlacement === "curved"
+      ? getCurvedLabelProps(
+          props.labelRadius,
+          props.labelStartAngle,
+          props.labelEndAngle,
+        )
+      : undefined;
+
   return Object.assign({}, props, {
     ariaLabel,
     lineHeight,
@@ -533,8 +550,8 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
     originalDy: Helpers.evaluateProp(props.dy, props),
     transform,
     x,
-    y, 
-    curvedLabelProps
+    y,
+    curvedLabelProps,
   });
 };
 
@@ -562,13 +579,13 @@ const renderLabel = (calculatedProps, tspanValues) => {
     startOffset,
     labelPlacement,
     curvedLabelProps,
-    groupComponent
+    groupComponent,
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
   let textProps;
-  
-  if(labelPlacement!== "curved"){
+
+  if (labelPlacement !== "curved") {
     textProps = {
       "aria-label": ariaLabel,
       key: "text",
@@ -577,69 +594,78 @@ const renderLabel = (calculatedProps, tspanValues) => {
       dx,
       x,
       y: y + dy,
-      transform,  
+      transform,
       className,
       title,
       desc: Helpers.evaluateProp(desc, calculatedProps),
       tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
       id,
       ...userProps,
-    }
+    };
   } else {
     textProps = {
       "aria-label": ariaLabel,
       key: "text",
       ...events,
-      direction, 
+      direction,
       className,
       title,
       desc: Helpers.evaluateProp(desc, calculatedProps),
       tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
       id,
       ...userProps,
-    }
+    };
   }
 
   const textPathProps = {
-    href:curvedLabelProps && curvedLabelProps.href,
+    href: curvedLabelProps && curvedLabelProps.href,
     startOffset,
   };
-  
+
   const tspans = text.map((line, i) => {
     const currentStyle = tspanValues[i].style;
-    if(labelPlacement!== "curved"){
-        const tspanProps = {
-          key: `${id}-key-${i}`,
-          style: currentStyle,
-          children: line,
-          x: !inline ? x : undefined,
-          dx: inline ? dx + tspanValues[i].backgroundPadding.left : dx,
-          dy: getTSpanDy(tspanValues, calculatedProps, i),
-          textAnchor: currentStyle.textAnchor || textAnchor,
-          }
-        return React.cloneElement(tspanComponent, tspanProps)
-    } 
+    if (labelPlacement !== "curved") {
       const tspanProps = {
         key: `${id}-key-${i}`,
         style: currentStyle,
         children: line,
-      }
+        x: !inline ? x : undefined,
+        dx: inline ? dx + tspanValues[i].backgroundPadding.left : dx,
+        dy: getTSpanDy(tspanValues, calculatedProps, i),
+        textAnchor: currentStyle.textAnchor || textAnchor,
+      };
       return React.cloneElement(tspanComponent, tspanProps);
+    }
+    const tspanProps = {
+      key: `${id}-key-${i}`,
+      style: currentStyle,
+      children: line,
+    };
+    return React.cloneElement(tspanComponent, tspanProps);
   });
 
-  if (labelPlacement === "curved" ) {
-    const pathComponent:React.ReactElement=<Path/>
-    const pathLabelComponent =React.cloneElement(
-      pathComponent,
-     {d: curvedLabelProps.path,id:curvedLabelProps.id}
-    )
+  if (labelPlacement === "curved") {
+    const pathComponent: React.ReactElement = <Path />;
+    const pathLabelComponent = React.cloneElement(pathComponent, {
+      d: curvedLabelProps.path,
+      id: curvedLabelProps.id,
+    });
     const textPathElement = React.cloneElement(
       textPathComponent,
       textPathProps,
       tspans,
     );
-    const textLabelComponent = React.cloneElement(textComponent, textProps, textPathElement);
-    return React.cloneElement(groupComponent,{},pathLabelComponent,textLabelComponent)
+    const textLabelComponent = React.cloneElement(
+      textComponent,
+      textProps,
+      textPathElement,
+    );
+    return React.cloneElement(
+      groupComponent,
+      {},
+      pathLabelComponent,
+      textLabelComponent,
+    );
   }
   return React.cloneElement(textComponent, textProps, tspans);
 };

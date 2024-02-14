@@ -181,7 +181,8 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 };
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
-  const { index, datum, data, slice, labelComponent, theme,startOffset } = dataProps;
+  const { index, datum, data, slice, labelComponent, theme, startOffset } =
+    dataProps;
   const { style, defaultRadius, origin, width, height } = calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
@@ -232,10 +233,10 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     verticalAnchor,
     angle: labelAngle,
     labelRadius: calculatedLabelRadius,
-    labelStartAngle:slice.startAngle,
-    labelEndAngle:slice.endAngle,
+    labelStartAngle: slice.startAngle,
+    labelEndAngle: slice.endAngle,
     startOffset,
-    labelPlacement
+    labelPlacement,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -361,15 +362,15 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       (labels && (events || sharedEvents))
     ) {
       const evaluatedText = Helpers.evaluateProp(text, dataProps);
-        childProps[eventKey].labels = getLabelProps(
-          evaluatedText,
-          Object.assign({}, props, dataProps),
-          calculatedValues,
-        );
-        if (labelPlacement === "curved") {
-          childProps[eventKey].group = {
-            transform: defaultTransform,
-          }
+      childProps[eventKey].labels = getLabelProps(
+        evaluatedText,
+        Object.assign({}, props, dataProps),
+        calculatedValues,
+      );
+      if (labelPlacement === "curved") {
+        childProps[eventKey].group = {
+          transform: defaultTransform,
+        };
       }
       if (labelIndicator && labelPlacement !== "curved") {
         const labelProps = childProps[eventKey].labels;

@@ -206,7 +206,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
 
       children.push(...dataComponents);
     }
-     if (labelComponent) {
+    if (labelComponent) {
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
           const labelProps = this.getComponentProps(
