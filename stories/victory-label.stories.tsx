@@ -815,3 +815,23 @@ export const BackgroundPadding = () => {
     </>
   );
 };
+
+export const LabelPlacement = () => {
+  return (
+    <>
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            labelPlacement="curved"
+            startOffset={50}
+            labelRadius={120}
+            text={[
+              "Victory is awesome."
+            ]}
+          />
+        }
+      />
+    </>
+  );
+};

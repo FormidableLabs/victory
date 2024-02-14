@@ -238,7 +238,7 @@ The `innerRadius` prop determines the number of pixels between the center of the
 
 `type: element`
 
-`VictoryPie` uses the standard `labelComponent` prop for standard labels. [Read about it here](/docs/common-props#labelcomponent)
+`VictoryPie` uses the standard `labelComponent` prop. [Read about it here](/docs/common-props#labelcomponent)
 
 _default:_ `<VictoryLabel/>`
 
