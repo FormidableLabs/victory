@@ -1,12 +1,12 @@
+/* eslint-disable react/no-multi-comp */
 import React from "react";
-import { flow } from "lodash";
 import { Rect } from "react-native-svg";
 import { VictoryEventHandler } from "victory-core";
 import {
-  VictorySelectionContainer as VictorySelectionContainerBase,
   SelectionHelpers,
-  selectionContainerMixin as originalSelectionMixin,
   VictorySelectionContainerProps,
+  VICTORY_SELECTION_CONTAINER_DEFAULT_PROPS,
+  useVictorySelectionContainer,
 } from "victory-selection-container";
 import { VictoryContainer } from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
@@ -26,61 +26,51 @@ const DefaultSelectionComponent = ({
   style?: Record<string, any>;
 }) => <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />;
 
-function nativeSelectionMixin<
-  TBase extends React.ComponentClass<TProps>,
-  TProps extends VictorySelectionContainerNativeProps,
->(Base: TBase) {
-  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
-  return class VictoryNativeSelectionContainer extends Base {
-    // eslint-disable-line max-len
-    // assign native specific defaultProps over web `VictorySelectionContainer` defaultProps
-    static defaultProps = {
-      ...VictorySelectionContainerBase.defaultProps,
-      standalone: true,
-      selectionComponent: <DefaultSelectionComponent />,
-    };
+export const VictoryNativeSelectionContainer = (
+  initialProps: VictorySelectionContainerNativeProps,
+) => {
+  const props = useVictorySelectionContainer({
+    ...initialProps,
+    standalone: initialProps.standalone ?? true,
+    selectionComponent: initialProps.selectionComponent ?? (
+      <DefaultSelectionComponent />
+    ),
+  });
+  return <VictoryContainer {...props} />;
+};
 
-    // overrides all web events with native specific events
-    static defaultEvents = (props: TProps) => {
-      return [
-        {
-          target: "parent",
-          eventHandlers: {
-            onTouchStart: (evt, targetProps) => {
-              if (props.disable) {
-                return {};
-              }
-              SelectionHelpers.onMouseMove.cancel();
-              return SelectionHelpers.onMouseDown(evt, targetProps);
-            },
-            onTouchMove: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : SelectionHelpers.onMouseMove(evt, targetProps);
-            },
-            onTouchEnd: (evt, targetProps) => {
-              if (props.disable) {
-                return {};
-              }
-              SelectionHelpers.onMouseMove.cancel();
-              return SelectionHelpers.onMouseUp(evt, targetProps);
-            },
-          },
-        },
-      ];
-    };
+VictoryNativeSelectionContainer.role = "container";
+
+VictoryNativeSelectionContainer.defaultEvents = (
+  initialProps: VictorySelectionContainerNativeProps,
+) => {
+  const props = {
+    ...VICTORY_SELECTION_CONTAINER_DEFAULT_PROPS,
+    ...initialProps,
   };
-}
+  const createEventHandler =
+    (handler: VictoryEventHandler, cancel: boolean): VictoryEventHandler =>
+    // eslint-disable-next-line max-params
+    (event, targetProps, eventKey, context) => {
+      if (props.disable) {
+        return {};
+      }
 
-const combinedMixin: (
-  base: React.ComponentClass,
-) => React.ComponentClass<VictorySelectionContainerNativeProps> = flow(
-  originalSelectionMixin,
-  nativeSelectionMixin,
-);
+      if (cancel) {
+        SelectionHelpers.onMouseMove.cancel();
+      }
 
-export const selectionContainerMixin = (base: React.ComponentClass) =>
-  combinedMixin(base);
+      return handler(event, { ...props, ...targetProps }, eventKey, context);
+    };
 
-export const VictorySelectionContainer =
-  selectionContainerMixin(VictoryContainer);
+  return [
+    {
+      target: "parent",
+      eventHandlers: {
+        onTouchStart: createEventHandler(SelectionHelpers.onMouseMove, true),
+        onTouchMove: createEventHandler(SelectionHelpers.onMouseMove, false),
+        onTouchEnd: createEventHandler(SelectionHelpers.onMouseUp, true),
+      },
+    },
+  ];
+};
