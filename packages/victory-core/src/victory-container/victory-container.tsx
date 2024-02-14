@@ -50,28 +50,13 @@ const defaultProps = {
   role: "img",
 };
 
-export const VictoryContainer = (initialProps: VictoryContainerProps) => {
+export function useVictoryContainer<TProps extends VictoryContainerProps>(
+  initialProps: TProps,
+) {
   const props = { ...defaultProps, ...initialProps };
-  const {
-    role,
-    title,
-    desc,
-    children,
-    className,
-    portalZIndex,
-    portalComponent,
-    width,
-    height,
-    style,
-    tabIndex,
-    responsive,
-    events,
-    ouiaId,
-    ouiaSafe,
-    ouiaType,
-  } = props;
+  const { title, desc, width, height, responsive } = props;
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const localContainerRef = useRef<HTMLDivElement>(null);
 
   const portalRef = useRef<Portal>(null);
 
@@ -103,26 +88,78 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
       .filter(Boolean)
       .join(" ") || undefined;
 
-  const handleWheel = (e: WheelEvent) => e.preventDefault();
+  const titleId = getIdForElement("title");
+  const descId = getIdForElement("desc");
+
+  return {
+    ...props,
+    titleId,
+    descId,
+    dimensions,
+    viewBox,
+    preserveAspectRatio,
+    ariaLabelledBy,
+    ariaDescribedBy,
+    userProps,
+    portalRef,
+    localContainerRef,
+  };
+}
+
+export const VictoryContainer = (initialProps: VictoryContainerProps) => {
+  const {
+    role,
+    title,
+    desc,
+    children,
+    className,
+    portalZIndex,
+    portalComponent,
+    width,
+    height,
+    style,
+    tabIndex,
+    responsive,
+    events,
+    ouiaId,
+    ouiaSafe,
+    ouiaType,
+    dimensions,
+    ariaDescribedBy,
+    ariaLabelledBy,
+    viewBox,
+    preserveAspectRatio,
+    userProps,
+    titleId,
+    descId,
+    portalRef,
+    containerRef,
+    localContainerRef,
+  } = useVictoryContainer(initialProps);
 
   React.useEffect(() => {
     // TODO check that this works
-    if (!props.events?.onWheel) return;
+    if (!events?.onWheel) return;
 
-    const container = containerRef?.current;
+    const handleWheel = (e: WheelEvent) => e.preventDefault();
+
+    const container = (containerRef as React.RefObject<HTMLDivElement>)
+      ?.current;
     container?.addEventListener("wheel", handleWheel);
 
     return () => {
       container?.removeEventListener("wheel", handleWheel);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <PortalContext.Provider
       value={{
-        portalUpdate: portalRef.current?.portalUpdate as any,
-        portalRegister: portalRef.current?.portalRegister as any,
-        portalDeregister: portalRef.current?.portalDeregister as any,
+        // TODO: Fix types
+        portalUpdate: portalRef.current?.portalUpdate,
+        portalRegister: portalRef.current?.portalRegister,
+        portalDeregister: portalRef.current?.portalDeregister,
       }}
     >
       <div
@@ -138,7 +175,7 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
         data-ouia-component-id={ouiaId}
         data-ouia-component-type={ouiaType}
         data-ouia-safe={ouiaSafe}
-        ref={mergeRefs([containerRef, props.containerRef])}
+        ref={mergeRefs([localContainerRef, containerRef])}
       >
         <svg
           width={width}
@@ -153,8 +190,8 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
           {...userProps}
           {...events}
         >
-          {title ? <title id={getIdForElement("title")}>{title}</title> : null}
-          {desc ? <desc id={getIdForElement("desc")}>{desc}</desc> : null}
+          {title ? <title id={titleId}>{title}</title> : null}
+          {desc ? <desc id={descId}>{desc}</desc> : null}
           {children}
         </svg>
         <div
