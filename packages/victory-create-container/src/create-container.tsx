@@ -73,76 +73,94 @@ const combineDefaultEvents = (defaultEvents: any[]) => {
   return events.filter(Boolean);
 };
 
-const CONTAINERS = {
-  zoom: {
-    name: "Zoom",
-    component: VictoryZoomContainer,
-    hook: useVictoryZoomContainer,
-  },
-  selection: {
-    name: "Selection",
-    component: VictorySelectionContainer,
-    hook: useVictorySelectionContainer,
-  },
-  brush: {
-    name: "Brush",
-    component: VictoryBrushContainer,
-    hook: useVictoryBrushContainer,
-  },
-  cursor: {
-    name: "Cursor",
-    component: VictoryCursorContainer,
-    hook: useVictoryCursorContainer,
-  },
-  voronoi: {
-    name: "Voronoi",
-    component: VictoryVoronoiContainer,
-    hook: useVictoryVoronoiContainer,
-  },
+export type ContainerType =
+  | "zoom"
+  | "selection"
+  | "brush"
+  | "cursor"
+  | "voronoi";
+
+/**
+ * Container hooks are used to provide the container logic to the container components through props and a modified children object
+ * - These hooks contain shared logic for both web and Victory Native containers.
+ * - In this utility, we call multiple of these hooks with the props returned by the previous to combine the container logic.
+ */
+export const CONTAINER_HOOKS = {
+  zoom: useVictoryZoomContainer,
+  selection: useVictorySelectionContainer,
+  brush: useVictoryBrushContainer,
+  cursor: useVictoryCursorContainer,
+  voronoi: useVictoryVoronoiContainer,
 };
 
-export type ContainerType = keyof typeof CONTAINERS;
+/**
+ * Container hooks are wrappers that return a VictoryContainer with the props provided by their respective hooks, and the modified children.
+ * - These containers are specific to the web. Victory Native has its own container components.
+ * - For this utility, we only need the container components to extract the defaultEvents.
+ */
+const CONTAINER_COMPONENTS = {
+  zoom: VictoryZoomContainer,
+  selection: VictorySelectionContainer,
+  brush: VictoryBrushContainer,
+  cursor: VictoryCursorContainer,
+  voronoi: VictoryVoronoiContainer,
+};
 
-type ContainerProps<T extends ContainerType> = React.ComponentProps<
-  typeof CONTAINERS[T]["component"]
+type ContainerComponents = Record<
+  ContainerType,
+  React.ComponentType<any> & {
+    defaultEvents: (props: any) => any[];
+  }
 >;
 
-export function createContainer<
-  TContainerA extends ContainerType,
-  TContainerB extends ContainerType,
->(containerA: TContainerA, containerB: TContainerB) {
-  const {
-    name: containerAName,
-    component: ContainerA,
-    hook: useContainerA,
-  } = CONTAINERS[containerA];
-  const {
-    name: containerBName,
-    component: ContainerB,
-    hook: useContainerB,
-  } = CONTAINERS[containerB];
+export function makeCreateContainerFunction<
+  TContainerComponents extends ContainerComponents,
+>(
+  containerComponents: TContainerComponents,
+  VictoryContainerBase: typeof VictoryContainer,
+) {
+  type ContainerProps<T extends ContainerType> = React.ComponentProps<
+    TContainerComponents[T]
+  >;
 
-  const Container = (
-    props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
-  ) => {
-    const { children: childrenA, props: propsA } = useContainerA(props);
-    const { children: childrenB, props: propsB } = useContainerB({
-      ...propsA,
-      children: childrenA,
-    });
+  return function combineContainers<
+    TContainerA extends ContainerType,
+    TContainerB extends ContainerType,
+  >(containerA: TContainerA, containerB: TContainerB) {
+    const ContainerA = containerComponents[containerA];
+    const ContainerB = containerComponents[containerB];
+    const useContainerA = CONTAINER_HOOKS[containerA];
+    const useContainerB = CONTAINER_HOOKS[containerB];
 
-    return <VictoryContainer {...propsB}>{childrenB}</VictoryContainer>;
+    const CombinedContainer = (
+      props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
+    ) => {
+      const { children: childrenA, props: propsA } = useContainerA(props);
+      const { children: childrenB, props: propsB } = useContainerB({
+        ...propsA,
+        children: childrenA,
+      });
+
+      return (
+        <VictoryContainerBase {...propsB}>{childrenB}</VictoryContainerBase>
+      );
+    };
+
+    CombinedContainer.displayName = `Victory${containerA}${containerB}Container`;
+    CombinedContainer.role = "container";
+    CombinedContainer.defaultEvents = (
+      props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
+    ) =>
+      combineDefaultEvents([
+        ...ContainerA.defaultEvents(props),
+        ...ContainerB.defaultEvents(props),
+      ]);
+
+    return CombinedContainer;
   };
-
-  Container.displayName = `Victory${containerAName}${containerBName}Container`;
-  Container.role = "container";
-  Container.defaultEvents = (
-    props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
-  ) =>
-    combineDefaultEvents([
-      ...ContainerA.defaultEvents(props),
-      ...ContainerB.defaultEvents(props),
-    ]);
-
-  return Container;
 }
+
+export const createContainer = makeCreateContainerFunction(
+  CONTAINER_COMPONENTS,
+  VictoryContainer,
+);

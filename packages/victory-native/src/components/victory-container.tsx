@@ -174,3 +174,5 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
     </View>
   );
 };
+
+VictoryContainer.role = "container";
