@@ -6,7 +6,6 @@ import {
   invert,
   uniq,
   orderBy,
-  values,
   includes,
   without,
 } from "lodash";
@@ -157,8 +156,8 @@ function getDefaultTickFormat(props) {
       : fallbackFormat;
   }
   const invertedStringMap = stringMap && invert(stringMap);
-  const tickValueArray = orderBy(values(stringMap), (n) => n);
-  const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
+  const tickValueArray = orderBy(Object.values(stringMap), (n) => n);
+  const dataNames = tickValueArray.map((tick: any) => invertedStringMap[tick]);
   // string ticks should have one tick of padding at the beginning
   const dataTicks = ["", ...dataNames, ""];
   return (x) => dataTicks[x];
@@ -174,7 +173,7 @@ function getStringTicks(props) {
     categories && Collection.containsOnlyStrings(categories)
       ? categories.map((tick) => stringMap[tick])
       : undefined;
-  const ticksFromStringMap = stringMap && values(stringMap);
+  const ticksFromStringMap = stringMap && Object.values(stringMap);
   return ticksFromCategories && ticksFromCategories.length !== 0
     ? ticksFromCategories
     : ticksFromStringMap;

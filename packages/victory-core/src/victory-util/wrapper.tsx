@@ -4,7 +4,6 @@ import {
   uniq,
   groupBy,
   uniqBy,
-  values,
   isPlainObject,
 } from "lodash";
 import React from "react";
@@ -127,7 +126,7 @@ export function getDataFromChildren(props, childComponents) {
     combine,
   );
   const group = stacked ? "_group" : "_stack";
-  return values(groupBy(datasets, group));
+  return Object.values(groupBy(datasets, group));
 }
 
 export function getData(props, childComponents) {
