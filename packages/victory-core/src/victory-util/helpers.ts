@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React, { isValidElement } from "react";
-import { defaults, property, pick, keys } from "lodash";
+import { defaults, property, pick } from "lodash";
 import { CallbackArgs } from "../types/callbacks";
 import { ValueOrAccessor } from "../types/prop-types";
 
@@ -139,10 +139,10 @@ export function evaluateStyle(style, props) {
   if (props.disableInlineStyles) {
     return {};
   }
-  if (!style || !keys(style).some((value) => isFunction(style[value]))) {
+  if (!style || !Object.keys(style).some((value) => isFunction(style[value]))) {
     return style;
   }
-  return keys(style).reduce((prev, curr) => {
+  return Object.keys(style).reduce((prev, curr) => {
     prev[curr] = evaluateProp(style[curr], props);
     return prev;
   }, {});
