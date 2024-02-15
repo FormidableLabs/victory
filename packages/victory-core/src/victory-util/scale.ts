@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { includes, isPlainObject } from "lodash";
+import { isPlainObject } from "lodash";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
 import * as d3Scale from "victory-vendor/d3-scale";
@@ -30,7 +30,7 @@ export function validScale(
       Helpers.isFunction(scale.range)
     );
   } else if (typeof scale === "string") {
-    return includes(supportedScaleStrings, scale);
+    return (supportedScaleStrings as ReadonlyArray<string>).includes(scale);
   }
   return false;
 }

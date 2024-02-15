@@ -1,5 +1,5 @@
 import { Selection, Data, Helpers, Datum } from "victory-core";
-import { defaults, throttle, includes } from "lodash";
+import { defaults, throttle } from "lodash";
 import React from "react";
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 16;
@@ -26,7 +26,7 @@ class SelectionHelpersClass {
     const iteratee = (child, childName, parent) => {
       const blacklist = props.selectionBlacklist || [];
       let childElement;
-      if (!Data.isDataComponent(child) || includes(blacklist, childName)) {
+      if (!Data.isDataComponent(child) || blacklist.includes(childName)) {
         return null;
       } else if (child.type && Helpers.isFunction(child.type.getData)) {
         childElement = parent ? React.cloneElement(child, parent.props) : child;

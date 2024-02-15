@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults, difference, isEmpty, keys, pick, without } from "lodash";
+import { defaults, difference, isEmpty, keys, pick } from "lodash";
 import type { ComponentEvent } from "./events";
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
@@ -424,7 +424,7 @@ export function addEvents<
     // Used by `VictoryLine` and `VictoryArea`
     renderContinuousData(props: TProps) {
       const { dataComponent, labelComponent, groupComponent } = props;
-      const dataKeys = without(this.dataKeys, "all");
+      const dataKeys = this.dataKeys.filter((value) => value !== "all");
       const labelComponents = dataKeys.reduce((memo, key) => {
         let newMemo = memo;
         const labelProps = this.getComponentProps(

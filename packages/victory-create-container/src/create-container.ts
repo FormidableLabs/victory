@@ -1,5 +1,5 @@
 import React from "react";
-import { toPairs, groupBy, forOwn, includes, flow, isEmpty } from "lodash";
+import { toPairs, groupBy, forOwn, flow, isEmpty } from "lodash";
 import { Helpers, VictoryContainer, Log } from "victory-core";
 import { voronoiContainerMixin } from "victory-voronoi-container";
 import { zoomContainerMixin } from "victory-zoom-container";
@@ -121,7 +121,7 @@ const checkBehaviorName = (
   behavior: ContainerType,
   behaviors: ContainerType[],
 ) => {
-  if (behavior && !includes(behaviors, behavior)) {
+  if (behavior && !behaviors.includes(behavior)) {
     Log.warn(
       `"${behavior}" is not a valid behavior. Choose from [${behaviors.join(
         ", ",
