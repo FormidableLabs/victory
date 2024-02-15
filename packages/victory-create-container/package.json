@@ -305,7 +305,7 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest --passWithNoTests",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
@@ -314,9 +314,14 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs",
-        "../victory-vendor:build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs"
+        "../victory-brush-container:build",
+        "../victory-core:build",
+        "../victory-cursor-container:build",
+        "../victory-selection-container:build",
+        "../victory-voronoi-container:build",
+        "../victory-zoom-container:build",
+        "../victory-vendor:build",
+        "../victory-voronoi:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

@@ -1,11 +1,11 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
-import { defaults, isFunction, isPlainObject, isNil, uniqueId } from "lodash";
+import { defaults, isPlainObject } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
 
 const checkForValidText = (text) => {
-  if (text === undefined || text === null || isFunction(text)) {
+  if (text === undefined || text === null || Helpers.isFunction(text)) {
     return text;
   }
   return `${text}`;
@@ -46,7 +46,7 @@ const getOrigin = (props, padding) => {
 };
 
 const getSlices = (props, data) => {
-  const padAngle = isFunction(props.padAngle) ? 0 : props.padAngle;
+  const padAngle = Helpers.isFunction(props.padAngle) ? 0 : props.padAngle;
   const layoutFunction = d3Shape
     .pie()
     .sort(null)
@@ -99,7 +99,9 @@ const getLabelText = (props, datum, index) => {
   } else if (Array.isArray(props.labels)) {
     text = props.labels[index];
   } else {
-    text = isFunction(props.labels) ? props.labels : datum.xName || datum._x;
+    text = Helpers.isFunction(props.labels)
+      ? props.labels
+      : datum.xName || datum._x;
   }
   return checkForValidText(text);
 };
@@ -183,7 +185,8 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 const getLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice, labelComponent, theme, startOffset } =
     dataProps;
-  const { style, defaultRadius, origin, width, height, defaultTransform, reverseCurvedLabel } = calculatedValues;
+  const { style, defaultRadius, origin, width, height, defaultTransform } =
+    calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
     Object.assign({ text }, dataProps),
@@ -219,12 +222,12 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
 
   const labelStartAngle = slice.startAngle;
   const labelEndAngle = slice.endAngle;
-  // if(reverseCurvedLabel && Helpers.radiansToDegrees (slice.endAngle) > 90 && 
+  // if(reverseCurvedLabel && Helpers.radiansToDegrees (slice.endAngle) > 90 &&
   //   Helpers.radiansToDegrees ( slice.startAngle) < 270){
   //   // reverse lower label
   //   labelStartAngle= slice.endAngle;
   //   labelEndAngle = slice.startAngle
-  // } 
+  // }
   const labelProps = {
     width,
     height,
@@ -341,8 +344,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       endAngle: Helpers.radiansToDegrees(slice.endAngle),
       padAngle: Helpers.radiansToDegrees(slice.padAngle),
     });
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
-
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const dataProps = {
       index,
       slice,
@@ -355,7 +357,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       padAngle,
       style: disableInlineStyles ? {} : getSliceStyle(index, calculatedValues),
       disableInlineStyles,
-      transform:props.transform || defaultTransform
+      transform: props.transform || defaultTransform,
     };
     childProps[eventKey] = {
       data: dataProps,

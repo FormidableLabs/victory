@@ -1,7 +1,9 @@
 import React from "react";
-import { Log, VictoryLabel } from "victory-core";
 import { screen, fireEvent, render } from "@testing-library/react";
+
 import { SVGWrapper } from "../../../../test/helpers";
+import { Log } from "../victory-util";
+import { VictoryLabel } from "./victory-label";
 
 describe("components/victory-label", () => {
   it("accepts user props", () => {

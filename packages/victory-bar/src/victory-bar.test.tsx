@@ -1,10 +1,11 @@
 import * as React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { VictoryChart } from "victory-chart";
-import { Bar, VictoryBar } from "victory-bar";
 import { Helpers } from "victory-core";
 
 import { isBar, getBarHeight } from "../../../test/helpers";
+import { Bar } from "./bar";
+import { VictoryBar } from "./victory-bar";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {

@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Helpers, Style } from "victory-core";
-import { Slice, VictoryPie } from "victory-pie";
 import {
   isCircularSector,
   getSvgCoordinatesAngleFromCartesianYAxis,
@@ -10,6 +9,8 @@ import {
   getDistanceFromOrigin,
   getSliceArcEnd,
 } from "../../../test/helpers";
+import { VictoryPie } from "./victory-pie";
+import { Slice } from "./slice";
 
 const pizzaSliceInnerText = "Pizza Slice";
 const PizzaSlice = ({ datum }: { datum?: { x: number } }) => (

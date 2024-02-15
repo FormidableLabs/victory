@@ -1,7 +1,9 @@
-import { getChildComponents } from "victory-chart/lib/helper-methods";
 import React from "react";
 import { VictoryAxis } from "victory-axis";
-import { VictoryLine } from "victory-line";
+
+import { getChildComponents } from "./helper-methods";
+
+const MockVictoryLine = () => <div data-testid="victory-line" />;
 
 describe("victory-chart/helpers-methods", () => {
   describe("getChildComponents", () => {
@@ -18,7 +20,7 @@ describe("victory-chart/helpers-methods", () => {
     });
 
     it("adds default axes when none of the children are axis components", () => {
-      const line = <VictoryLine />;
+      const line = <MockVictoryLine />;
       const children = [line];
       const result = getChildComponents({ children }, defaultAxes);
       expect(result).toHaveLength(3);

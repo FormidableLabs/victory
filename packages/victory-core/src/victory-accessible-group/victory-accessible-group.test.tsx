@@ -1,7 +1,8 @@
 import { render } from "@testing-library/react";
 import React from "react";
-import { VictoryAccessibleGroup } from "victory-core";
+
 import { SVGWrapper } from "../../../../test/helpers";
+import { VictoryAccessibleGroup } from "./victory-accessible-group";
 
 describe("components/victory-accessible-group", () => {
   it("renders an g with an aria-label", () => {

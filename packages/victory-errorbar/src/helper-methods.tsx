@@ -1,4 +1,4 @@
-import { defaults, assign, isNil } from "lodash";
+import { defaults, assign } from "lodash";
 import {
   Helpers,
   LabelHelpers,
@@ -216,7 +216,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
   };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y } = Helpers.scalePoint(assign({}, props, { scale }), datum);
     const formattedDatum = formatDataFromDomain(datum, domain);
     const errorX = getErrors(props, formattedDatum, "x");

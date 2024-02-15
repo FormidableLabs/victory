@@ -3,7 +3,6 @@ import React from "react";
 import {
   uniq,
   last,
-  isFunction,
   isPlainObject,
   property,
   orderBy,
@@ -97,7 +96,7 @@ function cleanData(dataset, props) {
 function getEventKey(key) {
   // creates a data accessor function
   // given a property key, path, array index, or null for identity.
-  if (isFunction(key)) {
+  if (Helpers.isFunction(key)) {
     return key;
   } else if (key === null || key === undefined) {
     return () => undefined;

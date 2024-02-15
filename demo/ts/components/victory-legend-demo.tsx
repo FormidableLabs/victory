@@ -169,17 +169,17 @@ const LegendDemo = () => (
         style={{ border: { stroke: "black" } }}
         data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
       />
+      <VictoryLegend
+        borderComponent={<Border width={430} height={110} />}
+        centerTitle
+        title={["TITLE"]}
+        gutter={30}
+        symbolSpacer={symbolSpacer}
+        itemsPerRow={3}
+        data={data}
+        style={legendStyle}
+      />
     </svg>
-    <VictoryLegend
-      borderComponent={<Border width={430} height={110} />}
-      centerTitle
-      title={["TITLE"]}
-      gutter={30}
-      symbolSpacer={symbolSpacer}
-      itemsPerRow={3}
-      data={data}
-      style={legendStyle}
-    />
   </div>
 );
 

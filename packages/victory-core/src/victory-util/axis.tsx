@@ -2,7 +2,6 @@ import React from "react";
 import {
   defaults,
   identity,
-  isFunction,
   isObject,
   invert,
   uniq,
@@ -250,7 +249,7 @@ export function getTickFormat(props, scale) {
     // by default. This changed the default formatting for some scale types when
     // we upgraded to d3-scale@4..
     const scaleTickFormat =
-      scale.tickFormat && isFunction(scale.tickFormat)
+      scale.tickFormat && Helpers.isFunction(scale.tickFormat)
         ? scale.tickFormat()
         : (x) => x;
     return defaultTickFormat || scaleTickFormat;
@@ -261,7 +260,7 @@ export function getTickFormat(props, scale) {
       tickArrayIndices?.includes(index),
     );
     return (x, index) => filteredTickFormat[index];
-  } else if (tickFormat && isFunction(tickFormat)) {
+  } else if (tickFormat && Helpers.isFunction(tickFormat)) {
     const applyStringTicks = (tick, index, ticks) => {
       const invertedStringMap = invert(stringMap);
       const stringTickArray = ticks.map((t) => invertedStringMap[t]);
@@ -291,7 +290,7 @@ export function getTicks(props, scale: D3Scale, filterZero = false) {
   const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
   if (tickValues) {
     return downsampleTicks(tickValues, tickCount);
-  } else if (scale.ticks && isFunction(scale.ticks)) {
+  } else if (scale.ticks && Helpers.isFunction(scale.ticks)) {
     // eslint-disable-next-line no-magic-numbers
     const defaultTickCount = tickCount || 5;
     const scaleTicks = scale.ticks(defaultTickCount);
@@ -362,7 +361,7 @@ export function getAxisValue(props, axis) {
   }
   const scaleAxis = axis === "x" ? "y" : "x";
   const scale =
-    isObject(props.scale) && isFunction(props.scale[scaleAxis])
+    isObject(props.scale) && Helpers.isFunction(props.scale[scaleAxis])
       ? props.scale[scaleAxis]
       : undefined;
   if (!scale) {

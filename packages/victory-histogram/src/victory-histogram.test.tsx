@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { VictoryHistogram } from "victory-histogram";
 import { Helpers } from "victory-core";
 
 import { isBar, getBarHeight } from "../../../test/helpers";
+import { VictoryHistogram } from "./victory-histogram";
 
 describe("components/victory-histogram", () => {
   const DATA_COMPONENT_ID = "data-component-id";

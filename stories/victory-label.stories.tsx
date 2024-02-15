@@ -827,9 +827,7 @@ export const LabelPlacement = () => {
             labelPlacement="curved"
             startOffset={50}
             labelRadius={90}
-            text={[
-              "Victory is awesome."
-            ]}
+            text={["Victory is awesome."]}
           />
         }
       />
@@ -843,9 +841,7 @@ export const LabelPlacement = () => {
             labelRadius={90}
             labelStartAngle={0}
             labelEndAngle={90}
-            text={[
-              "Victory is awesome."
-            ]}
+            text={["Victory is awesome."]}
           />
         }
       />
@@ -859,9 +855,7 @@ export const LabelPlacement = () => {
             labelRadius={90}
             labelStartAngle={180}
             labelEndAngle={110}
-            text={[
-              "Victory is awesome."
-            ]}
+            text={["Victory is awesome."]}
           />
         }
       />

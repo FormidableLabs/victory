@@ -75,7 +75,7 @@ export interface VictoryLabelProps {
   labelRadius?: number;
   labelStartAngle?: number;
   labelEndAngle?: number;
-  curvedLabelTransform?:  ValueOrAccessor<string | object>;
+  curvedLabelTransform?: ValueOrAccessor<string | object>;
 }
 
 const defaultStyles = {
@@ -499,13 +499,13 @@ function getCurvedLabelProps(
   endAngle = Math.PI / 2,
 ) {
   if (labelRadius) {
-    const labelArc = d3Shape.arc()
+    const labelArc = d3Shape.arc();
     const path = labelArc({
-      outerRadius:labelRadius,
-      innerRadius:labelRadius,
+      outerRadius: labelRadius,
+      innerRadius: labelRadius,
       startAngle,
-      endAngle
-    })
+      endAngle,
+    });
     const id = uniqueId("label-path-");
     const curvedLabelProps = { path, id, href: `#${id}` };
     return curvedLabelProps;
@@ -581,7 +581,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     labelPlacement,
     curvedLabelProps,
     groupComponent,
-    curvedLabelTransform
+    curvedLabelTransform,
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
@@ -651,7 +651,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     const pathLabelComponent = React.cloneElement(pathComponent, {
       d: curvedLabelProps.path,
       id: curvedLabelProps.id,
-      fill:"transparent"
+      fill: "transparent",
     });
     const textPathElement = React.cloneElement(
       textPathComponent,
@@ -665,7 +665,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     );
     return React.cloneElement(
       groupComponent,
-      {transform:curvedLabelTransform},
+      { transform: curvedLabelTransform },
       pathLabelComponent,
       textLabelComponent,
     );

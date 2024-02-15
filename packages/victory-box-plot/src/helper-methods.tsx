@@ -1,4 +1,4 @@
-import { orderBy, defaults, uniq, groupBy, keys, isNaN, isNil } from "lodash";
+import { orderBy, defaults, uniq, groupBy, keys } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import {
   min as d3Min,
@@ -30,7 +30,7 @@ const checkProcessedData = (data) => {
   return false;
 };
 
-const nanToNull = (val) => (isNaN(val) ? null : val);
+const nanToNull = (val) => (Number.isNaN(val) ? null : val);
 
 const getSummaryStatistics = (data) => {
   const dependentVars = data.map((datum) => datum._y);
@@ -493,7 +493,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
   };
   const boxScale = scale.y;
   return data.reduce((acc, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
 
     if (isDatumOutOfBounds(datum, domain)) return acc;
 

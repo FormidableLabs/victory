@@ -1,4 +1,4 @@
-import { defaults, groupBy, keys, sum, range, isNil } from "lodash";
+import { defaults, groupBy, keys, sum, range } from "lodash";
 import { Helpers, Style, TextSize } from "victory-core";
 import { VictoryLegendProps } from "./victory-legend";
 
@@ -302,7 +302,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
   return groupedData.reduce((childProps, datum, i) => {
     const color = colorScale[i % colorScale.length];
     const dataStyle = defaults({}, datum.symbol, style.data, { fill: color });
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : i;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : i;
     const offset = getOffset(datum, rowHeights, columnWidths);
     const originY = y + borderPadding.top + datum.symbolSpacer;
     const originX = x + borderPadding.left + datum.symbolSpacer;

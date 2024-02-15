@@ -616,7 +616,7 @@ export const LabelPlacement = () => {
           { x: 8, y: 1, l: 315 },
         ]}
       />
-       {/* <VictoryPie
+      {/* <VictoryPie
         style={{ ...parentStyle, labels: { fill: "magenta" } }}
         radius={100}
         labelPlacement="curved"

@@ -1,4 +1,3 @@
-import { isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 import { getBarPosition } from "victory-bar";
 import isEqual from "react-fast-compare";
@@ -122,7 +121,7 @@ export const getFormattedData = cacheLastValue(
 
 export const getData = (props: VictoryHistogramProps) => {
   const { bins, data, x } = props;
-  const dataIsPreformatted = data?.some(({ _y }) => !isNil(_y));
+  const dataIsPreformatted = data?.some(({ _y }) => !Helpers.isNil(_y));
 
   const formattedData = dataIsPreformatted
     ? data
@@ -244,7 +243,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
   };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
 
     const { x, y, y0, x0 } = getBarPosition(props, datum);
     const barWidth = getBarWidth(datum);

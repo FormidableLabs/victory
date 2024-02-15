@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { includes, isFunction, isPlainObject } from "lodash";
+import { includes, isPlainObject } from "lodash";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
 import * as d3Scale from "victory-vendor/d3-scale";
@@ -25,9 +25,9 @@ export function validScale(
 ): scale is ScaleName | D3Scale {
   if (typeof scale === "function") {
     return (
-      isFunction(scale.copy) &&
-      isFunction(scale.domain) &&
-      isFunction(scale.range)
+      Helpers.isFunction(scale.copy) &&
+      Helpers.isFunction(scale.domain) &&
+      Helpers.isFunction(scale.range)
     );
   } else if (typeof scale === "string") {
     return includes(supportedScaleStrings, scale);
@@ -110,7 +110,7 @@ export function getScaleFromProps(props, axis): D3Scale | undefined {
   }
   const scale = props.scale[axis] || props.scale;
   if (validScale(scale)) {
-    return isFunction(scale) ? scale : getScaleFromName(scale);
+    return Helpers.isFunction(scale) ? scale : getScaleFromName(scale);
   }
   return undefined;
 }

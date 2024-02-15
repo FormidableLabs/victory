@@ -1,7 +1,9 @@
 /* eslint max-nested-callbacks: 0 */
 import React from "react";
-import { LabelHelpers, VictoryLabel } from "victory-core";
 import * as d3Scale from "victory-vendor/d3-scale";
+
+import * as LabelHelpers from "./label-helpers";
+import { VictoryLabel } from "../victory-label/victory-label";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
 const data = [

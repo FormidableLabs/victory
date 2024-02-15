@@ -1,14 +1,6 @@
 import React from "react";
-import {
-  toPairs,
-  groupBy,
-  forOwn,
-  includes,
-  flow,
-  isEmpty,
-  isFunction,
-} from "lodash";
-import { VictoryContainer, Log } from "victory-core";
+import { toPairs, groupBy, forOwn, includes, flow, isEmpty } from "lodash";
+import { Helpers, VictoryContainer, Log } from "victory-core";
 import { voronoiContainerMixin } from "victory-voronoi-container";
 import { zoomContainerMixin } from "victory-zoom-container";
 import { selectionContainerMixin } from "victory-selection-container";
@@ -108,7 +100,7 @@ export const combineContainerMixins = (
     static defaultEvents = (props) => {
       return combineDefaultEvents(
         Classes.reduce((defaultEvents, Class) => {
-          const events = isFunction(Class.defaultEvents)
+          const events = Helpers.isFunction(Class.defaultEvents)
             ? Class.defaultEvents(props)
             : Class.defaultEvents;
           return [...defaultEvents, ...events];

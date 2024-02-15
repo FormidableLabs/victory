@@ -1,7 +1,8 @@
+/* eslint-disable react/no-multi-comp */
 import React from "react";
-import { VictoryAxis } from "victory-axis";
-import { VictoryBar } from "victory-bar";
-import { Axis, Scale } from "victory-core";
+
+import * as Axis from "./axis";
+import * as Scale from "./scale";
 
 describe("helpers/axis", () => {
   describe("isVertical", () => {
@@ -67,9 +68,15 @@ describe("helpers/axis", () => {
   });
 
   describe("getAxisComponent", () => {
-    const dependentAxis = <VictoryAxis dependentAxis />;
-    const independentAxis = <VictoryAxis dependentAxis={false} />;
-    const bar = <VictoryBar />;
+    const MockVictoryAxis = (props) => <div {...props} />;
+    MockVictoryAxis.getAxis = (props) => (props.dependentAxis ? "y" : "x");
+    MockVictoryAxis.role = "axis";
+
+    const MockVictoryBar = (props) => <div {...props} />;
+
+    const dependentAxis = <MockVictoryAxis dependentAxis />;
+    const independentAxis = <MockVictoryAxis dependentAxis={false} />;
+    const bar = <MockVictoryBar />;
 
     beforeEach(() => {
       jest.spyOn(dependentAxis.type, "getAxis");

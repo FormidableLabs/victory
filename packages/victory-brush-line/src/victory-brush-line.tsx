@@ -10,7 +10,7 @@ import {
   DomainTuple,
   VictoryStyleObject,
 } from "victory-core";
-import { defaults, isFunction, pick } from "lodash";
+import { defaults, pick } from "lodash";
 import isEqual from "react-fast-compare";
 
 export type VictoryBrushLineTargetType = "data" | "labels" | "parent";
@@ -372,7 +372,7 @@ export class VictoryBrushLine<
                     parentSVG,
                   };
 
-                  if (isFunction(onBrushDomainChange)) {
+                  if (Helpers.isFunction(onBrushDomainChange)) {
                     onBrushDomainChange(
                       currentDomain,
                       defaults({}, mutatedProps, targetProps),
@@ -423,7 +423,7 @@ export class VictoryBrushLine<
                       maxHandle: activeHandle === "max",
                     },
                   };
-                  if (isFunction(onBrushDomainChange)) {
+                  if (Helpers.isFunction(onBrushDomainChange)) {
                     onBrushDomainChange(
                       currentDomain,
                       defaults({}, mutatedProps, targetProps),
@@ -453,7 +453,7 @@ export class VictoryBrushLine<
                   brushDomain,
                   activeBrushes,
                 };
-                if (allowResize && isFunction(onBrushDomainChange)) {
+                if (allowResize && Helpers.isFunction(onBrushDomainChange)) {
                   onBrushDomainChange(
                     brushDomain,
                     defaults({}, mutatedProps, targetProps),

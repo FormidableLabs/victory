@@ -1,4 +1,4 @@
-import { PointPathHelpers as PathHelpers } from "victory-core";
+import * as PathHelpers from "./point-path-helpers";
 
 describe("point-path-helpers", () => {
   const x = 0;

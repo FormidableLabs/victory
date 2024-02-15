@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React, { isValidElement } from "react";
-import { defaults, isFunction, property, pick, keys } from "lodash";
+import { defaults, property, pick, keys } from "lodash";
 import { CallbackArgs } from "../types/callbacks";
 import { ValueOrAccessor } from "../types/prop-types";
 
@@ -183,6 +183,26 @@ export function getRange(props, axis) {
   return props.polar
     ? getPolarRange(props, axis)
     : getCartesianRange(props, axis);
+}
+
+/**
+ * Checks if `value` is `null` or `undefined`.
+ * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
+ */
+export function isNil(value: any): boolean {
+  // eslint-disable-next-line eqeqeq
+  return value == null;
+}
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @since 0.1.0
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ */
+export function isFunction(value: any): value is (...args: any[]) => any {
+  return typeof value === "function";
 }
 
 export function createAccessor(key) {

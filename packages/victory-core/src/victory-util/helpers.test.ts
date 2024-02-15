@@ -1,4 +1,4 @@
-import { Helpers } from "victory-core";
+import * as Helpers from "./helpers";
 
 describe("victory-util/helpers", () => {
   describe("omit", () => {

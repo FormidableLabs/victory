@@ -1,7 +1,8 @@
 import React from "react";
 import { VictoryBar } from "victory-bar";
-import { SelectionHelpers } from "victory-selection-container";
 import * as d3Scale from "victory-vendor/d3-scale";
+
+import { SelectionHelpers } from "./selection-helpers";
 
 const scale = { x: d3Scale.scaleLinear(), y: d3Scale.scaleLinear() };
 

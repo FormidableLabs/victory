@@ -1,4 +1,4 @@
-import { Events } from "victory-core";
+import * as Events from "./events";
 
 describe("victory-util/events", () => {
   describe("getPartialEvents", () => {

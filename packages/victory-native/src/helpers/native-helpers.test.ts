@@ -1,4 +1,4 @@
-import { NativeHelpers } from "victory-native";
+import NativeHelpers from "./native-helpers";
 
 describe("getStyle", () => {
   it("should return undefined if not called with any arguments", () => {

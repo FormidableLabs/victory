@@ -52,9 +52,6 @@
   "peerDependencies": {
     "react": ">=16.6.0"
   },
-  "devDependencies": {
-    "victory": "*"
-  },
   "publishConfig": {
     "provenance": true
   },
@@ -494,7 +491,7 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest --passWithNoTests",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
@@ -503,9 +500,34 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs",
-        "../victory-vendor:build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs"
+        "../victory-area:build",
+        "../victory-axis:build",
+        "../victory-bar:build",
+        "../victory-box-plot:build",
+        "../victory-brush-container:build",
+        "../victory-brush-line:build",
+        "../victory-candlestick:build",
+        "../victory-canvas:build",
+        "../victory-chart:build",
+        "../victory-core:build",
+        "../victory-create-container:build",
+        "../victory-cursor-container:build",
+        "../victory-errorbar:build",
+        "../victory-group:build",
+        "../victory-histogram:build",
+        "../victory-legend:build",
+        "../victory-line:build",
+        "../victory-pie:build",
+        "../victory-polar-axis:build",
+        "../victory-scatter:build",
+        "../victory-selection-container:build",
+        "../victory-shared-events:build",
+        "../victory-stack:build",
+        "../victory-tooltip:build",
+        "../victory-voronoi:build",
+        "../victory-voronoi-container:build",
+        "../victory-zoom-container:build",
+        "../victory-vendor:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

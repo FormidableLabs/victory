@@ -23,11 +23,11 @@
     "lodash": "^4.17.19",
     "victory-core": "^36.9.1"
   },
+  "devDependencies": {
+    "victory-vendor": "*"
+  },
   "peerDependencies": {
     "react": ">=16.6.0"
-  },
-  "devDependencies": {
-    "victory-errorbar": "*"
   },
   "publishConfig": {
     "provenance": true
@@ -263,7 +263,7 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest --passWithNoTests",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
@@ -272,9 +272,9 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs",
-        "../victory-vendor:build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs"
+        "../victory-core:build",
+        "../victory-vendor:build",
+        "../victory-voronoi:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

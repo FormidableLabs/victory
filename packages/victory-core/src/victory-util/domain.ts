@@ -1,13 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
-import {
-  flatten,
-  isPlainObject,
-  sortedUniq,
-  isFunction,
-  includes,
-  isDate,
-} from "lodash";
+import { flatten, isPlainObject, sortedUniq, includes, isDate } from "lodash";
 import * as Data from "./data";
 import * as Scale from "./scale";
 import * as Helpers from "./helpers";
@@ -183,10 +176,10 @@ export function createDomainFunction(
   getDomainFromDataFunction?,
   formatDomainFunction?,
 ) {
-  const getDomainFromDataFn = isFunction(getDomainFromDataFunction)
+  const getDomainFromDataFn = Helpers.isFunction(getDomainFromDataFunction)
     ? getDomainFromDataFunction
     : getDomainFromData;
-  const formatDomainFn = isFunction(formatDomainFunction)
+  const formatDomainFn = Helpers.isFunction(formatDomainFunction)
     ? formatDomainFunction
     : formatDomain;
   return (props, axis) => {

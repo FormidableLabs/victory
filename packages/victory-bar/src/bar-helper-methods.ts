@@ -1,4 +1,4 @@
-import { isNil, isPlainObject } from "lodash";
+import { isPlainObject } from "lodash";
 import { Helpers, VictoryStyleObject } from "victory-core";
 import { BarProps } from "./bar";
 import {
@@ -41,12 +41,12 @@ const getCornerRadiusFromObject = (
     corner: VictoryBarCornerRadiusKey,
     fallback: "top" | "bottom",
   ) => {
-    if (!isNil(cornerRadius[corner])) {
+    if (!Helpers.isNil(cornerRadius[corner])) {
       realCornerRadius[corner] = Helpers.evaluateProp(
         cornerRadius[corner],
         props,
       );
-    } else if (!isNil(cornerRadius[fallback])) {
+    } else if (!Helpers.isNil(cornerRadius[fallback])) {
       realCornerRadius[corner] = Helpers.evaluateProp(
         cornerRadius[fallback],
         props,
