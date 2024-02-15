@@ -16,18 +16,26 @@ Note that paths in local development are based on a root of "/" but be careful w
 
 ## Want to see if you're ready to :shipit:?
 
-First build the static site.
+First, build the static site (within /docs folder):
+
 ```bash
 yarn build
 ```
-Once it builds successfully, serve it:
+Once the build succeeds, serve it: 
 
 ```bash
 yarn serve
 ```
-The staging and production sites are served from a nested path, e.g. `https://commerce.nearform.com/open-source/victory`. This step is important for validating that both the `basePath` used by the static HTML output and the `basename` used by the client-side router are working as expected.
+
+This will render the docs site at `http://localhost:3000/open-source/victory/`. If you go to root (i.e. `http://localhost:3000/`), you will need to click through the browser's file explorer to `open-source/victory` to get to the site.
+
+Note the staging and production sites are served from a nested path, e.g. `https://commerce.nearform.com/open-source/victory`. This step is important for validating that both the `basePath` used by the static HTML output and the `basename` used by the client-side router are working as expected.
 
 ## Deployment
+
+### Preview Environments
+
+Upon creating a Pull Request, a Vercel preview deployment is created and posted as a comment on the pull request to allow for testing changes.
 
 ### Production
 
