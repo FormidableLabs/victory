@@ -12,7 +12,6 @@ import {
   EventPropTypeInterface,
   NumberOrCallback,
   OriginType,
-  Path,
   SliceNumberOrCallback,
   StringOrNumberOrCallback,
   VictoryCommonProps,
@@ -64,6 +63,7 @@ export interface VictoryPieProps
   startAngle?: number;
   startOffset?: number;
   style?: VictoryStyleInterface;
+  reverseCurvedLabel?:boolean
 }
 
 const fallbackProps = {
@@ -89,6 +89,7 @@ const fallbackProps = {
   labelPosition: "centroid",
   labelIndicatorInnerOffset: 15,
   labelIndicatorOuterOffset: 5,
+  reverseCurvedLabel:false,
 };
 
 const datumHasXandY = (datum) => {
@@ -248,19 +249,6 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       });
 
       children.push(...labelIndicatorComponents);
-    }
-    if (labelPlacement === "curved") {
-      const groupComponentProps = this.getComponentProps(
-        groupComponent,
-        "group",
-        0,
-      );
-
-      const groupCloneElement = React.cloneElement(
-        groupComponent,
-        groupComponentProps,
-      );
-      return this.renderContainer(groupCloneElement, children);
     }
     return this.renderContainer(groupComponent, children);
   }

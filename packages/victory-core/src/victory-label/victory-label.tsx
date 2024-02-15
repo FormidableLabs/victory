@@ -75,6 +75,7 @@ export interface VictoryLabelProps {
   labelRadius?: number;
   labelStartAngle?: number;
   labelEndAngle?: number;
+  curvedLabelTransform?:  ValueOrAccessor<string | object>;
 }
 
 const defaultStyles = {
@@ -580,6 +581,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     labelPlacement,
     curvedLabelProps,
     groupComponent,
+    curvedLabelTransform
   } = calculatedProps;
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
@@ -649,6 +651,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     const pathLabelComponent = React.cloneElement(pathComponent, {
       d: curvedLabelProps.path,
       id: curvedLabelProps.id,
+      fill:"transparent"
     });
     const textPathElement = React.cloneElement(
       textPathComponent,
@@ -662,7 +665,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     );
     return React.cloneElement(
       groupComponent,
-      {},
+      {transform:curvedLabelTransform},
       pathLabelComponent,
       textLabelComponent,
     );
