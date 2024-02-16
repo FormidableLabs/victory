@@ -27,8 +27,6 @@ class OuiaDemo extends React.Component<any> {
           <VictoryChart
             containerComponent={
               <VictoryContainer
-                title="victory-container-ouia"
-                desc="victory-container-ouia"
                 ouiaId="victory-container-ouia"
                 ouiaType="Victory/container"
                 ouiaSafe
