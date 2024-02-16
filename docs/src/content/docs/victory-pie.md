@@ -585,49 +585,15 @@ The `labelIndicatorOuterOffset` prop defines the offset by which the indicator l
 
 `type: string || number || function`
 
-The `dx` prop defines a horizontal shift from the `x` coordinate.
+The `dx` prop defines a horizontal shift from the `x` coordinate. Curved labels can be shifted  using `dx` property .
 
 ```playground
-<VictoryScatter
-  domain={[-10, 10]}
-  data={[{ x: 0, y: 0 }]}
-  labels={() => ["This is a", "multi-line", "label"]}
-  style={{ labels: { padding: 0 } }}
-  labelComponent={
-    <VictoryLabel
-      dx={20}
-      textAnchor="start"
-      verticalAnchor="middle"
-    />
-  }
+<VictoryPie
+  data={sampleData}
+  labels={({ datum }) => `y: ${datum.y}`}
+  labelPlacement={"curved"}
+  dx={10}
+  radius={120}
+  labelRadius={100}
 />
 ```
-
-## dy
-
-`type: string || number || function`
-
-The `dy` prop defines a vertical shift from the `y` coordinate. This prop is affected by `capHeight`, `lineHeight`, and `verticalAnchor`, and the number of lines of text that make up the label.
-
-```playground
-<VictoryScatter
-  domain={[-10, 10]}
-  data={[{ x: 0, y: 0 }]}
-  labels={() => ["This is a", "multi-line", "label"]}
-  style={{ labels: { padding: 0 } }}
-  labelComponent={
-    <VictoryLabel
-      dy={20}
-      textAnchor="end"
-      verticalAnchor="start"
-    />
-  }
-/>
-```
-
-[animations guide]: /guides/animations
-[data accessors guide]: /guides/data-accessors
-[custom components guide]: /guides/custom-components
-[events guide]: /guides/events
-[themes guide]: /guides/themes
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js

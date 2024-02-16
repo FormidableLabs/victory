@@ -494,7 +494,7 @@ const evaluateProps = (props) => {
 
 function getCurvedLabelProps(
   labelRadius,
-  startAngle = -Math.PI / 2,
+  startAngle = 0,
   endAngle = Math.PI / 2,
 ) {
   if (labelRadius) {

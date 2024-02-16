@@ -110,6 +110,27 @@ The `className` prop specifies a class name that will be applied to the rendered
 
 _example:_ `className="myLabel"`
 
+## curvedLabelTransform
+
+type: string || object || function`
+
+The `curvedLabelTransform` prop applies a transform to the rendered `<g>` element. This prop may be supplied as a string or an object containing transform definitions.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labelComponent={
+    <VictoryLabel
+      curvedLabelTransform={"translate(150,150)"}
+      labelPlacement="curved"
+      labelRadius={90}
+      text={["Victory is awesome."]}
+    />
+  }
+/>
+```
+
 ## data
 
 `type: array[object]`
@@ -239,12 +260,80 @@ _default:_ `false`
   }
 />
 ```
+## labelRadius
+
+`type: number || function`
+
+The `labelRadius` prop defines the radius of the arc that will be used for positioning each curved label.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labelComponent={
+    <VictoryLabel
+      curvedLabelTransform={"translate(150,150)"}
+      labelPlacement="curved"
+      labelRadius={90}
+      text={["Victory is awesome."]}
+    />
+  }
+/>
+```
 
 ## labelPlacement
 
-`type: "parallel" || "perpendicular" || "vertical"`
+`type: "parallel" || "perpendicular" || "vertical" || "curved"`
 
 The `labelPlacement` prop is used to specify the placement of labels relative to the data point they represent. This prop may be given as "vertical", "parallel" or "perpendicular". This props is particularly useful in polar charts, where it may be desirable to position a label either parallel or perpendicular to its corresponding angle. When this prop is not set, perpendicular label placement will be used for polar charts, and vertical label placement will be used for cartesian charts.
+
+## labelEndAngle
+
+`type: number`
+
+The `labelEndAngle` props defines the overall end angle of the curved label in degrees. This prop is used in conjunction with `labelStartAngle`.
+
+_default:_ `90`
+
+```playground
+  <VictoryScatter
+    domain={[-10, 10]}
+    data={[{ x: 0, y: 0 }]}
+    labelComponent={
+      <VictoryLabel
+        curvedLabelTransform={"translate(150,150)"}
+        labelPlacement="curved"
+        labelRadius={90}
+        labelEndAngle={180}
+        text={["Victory is awesome."]}
+      />
+    }
+  />
+```
+
+## labelStartAngle
+
+`type: number`
+
+The `labelStartAngle` props defines the overall start angle of the curved label in degrees. This prop is used in conjunction with `labelEndAngle`.
+
+_default:_ `0`
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labelComponent={
+    <VictoryLabel
+      curvedLabelTransform={"translate(150,150)"}
+      labelPlacement="curved"
+      labelRadius={90}
+      labelStartAngle={180}
+      text={["Victory is awesome."]}
+    />
+  }
+/>
+```
 
 ## lineHeight
 
@@ -357,6 +446,14 @@ _examples:_ `text={(datum) => "x: " + datum.x}`, `text="Apples\n(green)"`, `text
 The `textComponent` prop takes a component instance which will be used to create text elements when `VictoryLabel` renders labels.
 
 _default:_ `<Text />`
+
+## textPathComponent
+
+`type: element`
+
+The `textPathComponent` prop takes a component instance which will be used to create textPath elements when `VictoryLabel` renders curved labels.
+
+_default:_ `<TextPath />`
 
 ## textAnchor
 
