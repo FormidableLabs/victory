@@ -1,4 +1,4 @@
-import { defaults, isEmpty, fromPairs, keys, difference } from "lodash";
+import { defaults, isEmpty, fromPairs, difference } from "lodash";
 import React from "react";
 import {
   EventCallbackInterface,
@@ -74,13 +74,13 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
   }
 
   componentDidMount() {
-    const globalEventKeys = keys(this.globalEvents);
+    const globalEventKeys = Object.keys(this.globalEvents);
     globalEventKeys.forEach((key) => this.addGlobalListener(key));
     this.prevGlobalEventKeys = globalEventKeys;
   }
 
   componentDidUpdate() {
-    const globalEventKeys = keys(this.globalEvents);
+    const globalEventKeys = Object.keys(this.globalEvents);
     const removedGlobalEventKeys = difference(
       this.prevGlobalEventKeys,
       globalEventKeys,
@@ -152,7 +152,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
           props.externalEventMutations,
           baseProps,
           this.state,
-          keys(baseProps),
+          Object.keys(baseProps),
         )
       : undefined;
   }
@@ -258,7 +258,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
         return memo.concat(child);
       }, []);
     };
-    const childNames = keys(baseProps);
+    const childNames = Object.keys(baseProps);
     const childComponents = React.Children.toArray(props.children);
     return alterChildren(childComponents, childNames);
   }

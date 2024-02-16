@@ -1,4 +1,4 @@
-import { defaults, groupBy, keys, sum, range } from "lodash";
+import { defaults, groupBy, sum, range } from "lodash";
 import { Helpers, Style, TextSize } from "victory-core";
 import { VictoryLegendProps } from "./victory-legend";
 
@@ -90,7 +90,7 @@ const getColumnWidths = (props, data) => {
       ? (gutter.left || 0) + (gutter.right || 0)
       : gutter || 0;
   const dataByColumn = groupBy(data, "column");
-  const columns = keys(dataByColumn);
+  const columns = Object.keys(dataByColumn);
   return columns.reduce<number[]>((memo, curr, index) => {
     const lengths = dataByColumn[curr].map((d) => {
       return d.textSize.width + d.size + d.symbolSpacer + gutterWidth;
@@ -107,7 +107,7 @@ const getRowHeights = (props, data) => {
       ? (gutter.top || 0) + (gutter.bottom || 0)
       : gutter || 0;
   const dataByRow = groupBy(data, "row");
-  return keys(dataByRow).reduce<number[]>((memo, curr, index) => {
+  return Object.keys(dataByRow).reduce<number[]>((memo, curr, index) => {
     const rows = dataByRow[curr];
     const lengths = rows.map((d) => {
       return d.textSize.height + d.symbolSpacer + gutterHeight;

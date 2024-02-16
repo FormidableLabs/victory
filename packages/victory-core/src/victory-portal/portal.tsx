@@ -1,5 +1,4 @@
 import React from "react";
-import { keys } from "lodash";
 import { PortalContextValue } from "./portal-context";
 
 export interface PortalProps {
@@ -40,7 +39,7 @@ export class Portal
   };
 
   public getChildren() {
-    return keys(this.map).map((key) => {
+    return Object.keys(this.map).map((key) => {
       const el = this.map[key];
       return el ? React.cloneElement(el, { key }) : el;
     });

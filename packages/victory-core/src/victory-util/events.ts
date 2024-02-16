@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { isEmpty, pickBy, omitBy, uniq, keys } from "lodash";
+import { isEmpty, pickBy, omitBy, uniq } from "lodash";
 import type { EventMixinCalculatedValues } from "./add-events";
 import { isFunction } from "./helpers";
 
@@ -157,12 +157,14 @@ export function getScopedEvents(
       }
       if (eventReturn.eventKey === "all") {
         return newBaseProps[childName]
-          ? keys(newBaseProps[childName]).filter((value) => value !== "parent")
-          : keys(newBaseProps).filter((value) => value !== "parent");
+          ? Object.keys(newBaseProps[childName]).filter(
+              (value) => value !== "parent",
+            )
+          : Object.keys(newBaseProps).filter((value) => value !== "parent");
       } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
         return newBaseProps[childName]
-          ? keys(newBaseProps[childName])
-          : keys(newBaseProps);
+          ? Object.keys(newBaseProps[childName])
+          : Object.keys(newBaseProps);
       }
       return eventReturn.eventKey !== undefined
         ? eventReturn.eventKey
@@ -194,7 +196,7 @@ export function getScopedEvents(
         if (state[key] && state[key][target]) {
           delete state[key][target];
         }
-        if (state[key] && !keys(state[key]).length) {
+        if (state[key] && !Object.keys(state[key]).length) {
           delete state[key];
         }
         return state;
@@ -234,7 +236,7 @@ export function getScopedEvents(
     // returns an entire mutated state for all children
     const allChildNames =
       childNames === "all"
-        ? keys(newBaseProps).filter((value) => value !== "parent")
+        ? Object.keys(newBaseProps).filter((value) => value !== "parent")
         : childNames;
     return Array.isArray(allChildNames)
       ? allChildNames.reduce((memo, childName) => {
@@ -278,7 +280,7 @@ export function getScopedEvents(
   };
 
   // returns a new events object with enhanced event handlers
-  return keys(events).reduce((memo, event) => {
+  return Object.keys(events).reduce((memo, event) => {
     memo[event] = onEvent;
     return memo;
   }, {});
@@ -295,7 +297,7 @@ export function getPartialEvents(
 ): PartialEvents {
   if (!events) return {};
 
-  return keys(events).reduce((memo, eventName) => {
+  return Object.keys(events).reduce((memo, eventName) => {
     const appliedEvent = (evt) =>
       events[eventName](evt, childProps, eventKey, eventName);
     memo[eventName] = appliedEvent;
@@ -378,7 +380,7 @@ export function getExternalMutations(
   baseState = {},
   childName?,
 ) {
-  const eventKeys = keys(baseProps);
+  const eventKeys = Object.keys(baseProps);
   return eventKeys.reduce((memo, eventKey) => {
     const keyState = baseState[eventKey] || {};
     const keyProps = baseProps[eventKey] || {};
@@ -397,7 +399,7 @@ export function getExternalMutations(
     } else {
       // use keys from both state and props so that elements not intially included in baseProps
       // will be used. (i.e. labels)
-      const targets = uniq(keys(keyProps).concat(keys(keyState)));
+      const targets = uniq(Object.keys(keyProps).concat(Object.keys(keyState)));
       memo[eventKey] = targets.reduce((m, target) => {
         const identifier = { eventKey, target, childName };
         const mutation = getExternalMutation(
