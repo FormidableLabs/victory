@@ -184,16 +184,8 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice, labelComponent, theme } = dataProps;
-  const {
-    style,
-    defaultRadius,
-    origin,
-    width,
-    height,
-    defaultTransform,
-    dx,
-    dy,
-  } = calculatedValues;
+  const { style, defaultRadius, origin, width, height, defaultTransform, dx } =
+    calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
     Object.assign({ text }, dataProps),
@@ -251,7 +243,6 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     labelPlacement,
     curvedLabelTransform: defaultTransform,
     dx,
-    dy,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -333,7 +324,6 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     padAngle,
     disableInlineStyles,
     labelIndicator,
-    labelPlacement,
     defaultTransform,
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
@@ -376,7 +366,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
         Object.assign({}, props, dataProps),
         calculatedValues,
       );
-      if (labelIndicator && labelPlacement !== "curved") {
+      if (labelIndicator) {
         const labelProps = childProps[eventKey].labels;
         if (labelProps.labelRadius > radius) {
           childProps[eventKey].labelIndicators =

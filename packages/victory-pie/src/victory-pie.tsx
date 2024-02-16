@@ -38,7 +38,6 @@ export interface VictoryPieProps
   colorScale?: ColorScalePropType;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   dx?: StringOrNumberOrCallback;
-  dy?: StringOrNumberOrCallback;
   endAngle?: number;
   events?: EventPropTypeInterface<
     VictorySliceTTargetType,
@@ -171,17 +170,13 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       groupComponent,
       labelIndicator,
       labelPosition,
-      labelPlacement,
     } = props;
 
     if (!groupComponent) {
       throw new Error("VictoryPie expects a groupComponent prop");
     }
 
-    const showIndicator =
-      labelIndicator &&
-      labelPosition === "centroid" &&
-      labelPlacement !== "curved";
+    const showIndicator = labelIndicator && labelPosition === "centroid";
 
     const children: React.ReactElement[] = [];
 
@@ -205,6 +200,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
 
       children.push(...dataComponents);
     }
+
     if (labelComponent) {
       const labelComponents = this.dataKeys
         .map((_dataKey, index) => {
@@ -248,6 +244,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
 
       children.push(...labelIndicatorComponents);
     }
+
     return this.renderContainer(groupComponent, children);
   }
 

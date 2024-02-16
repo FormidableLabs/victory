@@ -93,7 +93,7 @@ Used by `VictoryLabel`.
   return (
     <textPath href={href} startOffset={startOffset}>
       {children}
-    </text>
+    </text> 
   );
 ```
 

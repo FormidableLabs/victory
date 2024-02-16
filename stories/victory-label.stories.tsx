@@ -837,8 +837,7 @@ export const LabelPlacement = () => {
             curvedLabelTransform={"translate(150,150)"}
             labelPlacement="curved"
             dx={10}
-            dy={10}
-            labelRadius={90}
+            labelRadius={100}
             labelStartAngle={0}
             labelEndAngle={90}
             text={["Victory is awesome."]}

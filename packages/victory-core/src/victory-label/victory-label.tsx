@@ -637,7 +637,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
       style: currentStyle,
       children: line,
       dx: inline ? dx + tspanValues[i].backgroundPadding.left : dx,
-      dy: getTSpanDy(tspanValues, calculatedProps, i),
     };
     return React.cloneElement(tspanComponent, tspanProps);
   });
