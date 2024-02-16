@@ -84,6 +84,7 @@
     "eslint-plugin-react": "^7.0.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-storybook": "^0.6.15",
+    "fork-ts-checker-webpack-plugin": "^8.0.0",
     "fs-extra": "^10.0.0",
     "glob": "8.0.3",
     "immutable": "^3.8.2",
