@@ -581,7 +581,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     groupComponent,
     curvedLabelTransform,
   } = calculatedProps;
-  console.log(dx,dy)
+
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
   let textProps;
@@ -651,7 +651,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     });
     const textPathElement = React.cloneElement(
       textPathComponent,
-      {href: curvedLabelProps && curvedLabelProps.href},
+      { href: curvedLabelProps && curvedLabelProps.href },
       tspans,
     );
     const textLabelComponent = React.cloneElement(
