@@ -3,17 +3,19 @@
 const path = require("path");
 const glob = require("glob");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 const ROOT = path.resolve(__dirname, "../../.."); // eslint-disable-line no-undef
-const PKGS = path.join(ROOT, "packages")
-const VICTORY_GLOB = path.join(PKGS, "victory*/package.json").replace(/\\/g, "/");
+const PKGS = path.join(ROOT, "packages");
+const VICTORY_GLOB = path
+  .join(PKGS, "victory*/package.json")
+  .replace(/\\/g, "/");
 // Read all the victory packages and alias.
-const VICTORY_ALIASES = glob.sync(VICTORY_GLOB)
-  .reduce((memo, pkgPath) => {
-    const key = path.dirname(path.relative(PKGS, pkgPath));
-    memo[key] = path.resolve(path.dirname(pkgPath));
-    return memo;
-  }, {});
+const VICTORY_ALIASES = glob.sync(VICTORY_GLOB).reduce((memo, pkgPath) => {
+  const key = path.dirname(path.relative(PKGS, pkgPath));
+  memo[key] = path.resolve(path.dirname(pkgPath));
+  return memo;
+}, {});
 const DEMO = path.resolve("demo");
 const WDS_PORT = 3000;
 
@@ -55,6 +57,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(ROOT, "demo", "ts", "tsconfig.json"),
+      },
+    }),
     new LodashModuleReplacementPlugin({
       shorthands: true,
       currying: true,
@@ -62,5 +69,5 @@ module.exports = {
       paths: true,
       placeholders: true,
     }),
-  ]
+  ],
 };

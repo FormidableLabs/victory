@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults, some } from "lodash";
+import { defaults } from "lodash";
 
 import * as Collection from "../collection";
 import * as Transitions from "../transitions";
@@ -91,15 +91,15 @@ export const useAnimationState = (initialState = INITIAL_STATE) => {
         const nextChildren = React.Children.toArray(nextProps.children);
         const isContinuous = (child) => {
           const check = (c) => c.type && c.type.continuous;
-          return Array.isArray(child) ? some(child, check) : check(child);
+          return Array.isArray(child) ? child.some(check) : check(child);
         };
 
         const continuous =
           !props.polar &&
-          some(oldChildren, (child: React.ReactElement) => {
+          oldChildren.some((child: any) => {
             return (
               isContinuous(child) ||
-              (child.props.children && isContinuous(child.props.children))
+              (child?.props?.children && isContinuous(child.props.children))
             );
           });
         const {

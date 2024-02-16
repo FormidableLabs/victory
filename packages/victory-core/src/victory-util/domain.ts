@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
-import { flatten, isPlainObject, sortedUniq, includes, isDate } from "lodash";
+import { isPlainObject, sortedUniq, isDate } from "lodash";
 import * as Data from "./data";
 import * as Scale from "./scale";
 import * as Helpers from "./helpers";
@@ -42,7 +42,7 @@ function getDomainPadding(props, axis) {
 
 function getFlatData(dataset, axis: "x" | "y") {
   const axisKey = `_${axis}`;
-  return flatten(dataset).map((datum: any) => {
+  return dataset.flat().map((datum: any) => {
     return datum[axisKey] && datum[axisKey][1] !== undefined
       ? datum[axisKey][1]
       : datum[axisKey];
@@ -54,7 +54,7 @@ function getExtremeFromData(dataset, axis, type = "min") {
     type === "max" ? Math.max(...arr) : Math.min(...arr);
   const initialValue = type === "max" ? -Infinity : Infinity;
   let containsDate = false;
-  const result = flatten(dataset).reduce((memo: number, datum: any) => {
+  const result = dataset.flat().reduce((memo: number, datum: any) => {
     const current0 =
       datum[`_${axis}0`] !== undefined ? datum[`_${axis}0`] : datum[`_${axis}`];
     const current1 =
@@ -459,5 +459,5 @@ export function isDomainComponent(component) {
     "stack",
     "voronoi",
   ];
-  return includes(whitelist, role);
+  return whitelist.includes(role);
 }

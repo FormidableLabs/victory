@@ -7,9 +7,10 @@ import { VictoryStack } from "victory-stack";
 import { VictoryArea } from "victory-area";
 import { VictoryTheme } from "victory-core";
 
-export default class App extends React.Component {
-  constructor() {
-    super();
+export default class App extends React.Component<any, any> {
+  constructor(props) {
+    super(props);
+
     this.state = {
       data: this.getData(),
       arrayData: this.getArrayData(),
@@ -99,7 +100,7 @@ export default class App extends React.Component {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
-    const containerStyle = {
+    const containerStyle: React.CSSProperties = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",

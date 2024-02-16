@@ -1,4 +1,4 @@
-import { orderBy, defaults, uniq, groupBy, keys } from "lodash";
+import { orderBy, defaults, uniq, groupBy } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import {
   min as d3Min,
@@ -72,7 +72,7 @@ const processData = (data) => {
     } else {
       /* Group data by independent variable and generate summary statistics for each group */
       const groupedData = groupBy(data, groupKey);
-      return keys(groupedData).map((key) => {
+      return Object.keys(groupedData).map((key) => {
         const datum = groupedData[key];
         const sortedData = orderBy(datum, sortKey);
         return getSummaryStatistics(sortedData);

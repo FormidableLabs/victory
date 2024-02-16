@@ -1,5 +1,5 @@
 {
-  "extends": ["../.eslintrc.js"],
+  "extends": ["../../.eslintrc.js"],
   "rules": {
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/explicit-function-return-type": "off",

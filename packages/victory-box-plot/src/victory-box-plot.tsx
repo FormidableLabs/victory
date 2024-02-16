@@ -1,5 +1,4 @@
 import React from "react";
-import { flatten } from "lodash";
 import {
   Helpers,
   VictoryLabel,
@@ -182,8 +181,8 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
 
   renderBoxPlot(props) {
     const types = ["q1", "q3", "max", "min", "median"];
-    const dataComponents = flatten(
-      types.map((type) => {
+    const dataComponents = types
+      .map((type) => {
         return this.dataKeys.reduce((validDataComponents, _key, index) => {
           const baseComponent = props[`${type}Component`];
           const componentProps = this.getComponentProps(
@@ -198,11 +197,11 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
           }
           return validDataComponents;
         }, [] as React.ReactElement[]);
-      }),
-    );
+      })
+      .flat();
 
-    const labelComponents = flatten(
-      types.map((type) => {
+    const labelComponents = types
+      .map((type) => {
         const components = this.dataKeys.reduce(
           (validComponents, _key, index) => {
             const name = `${type}Labels`;
@@ -222,8 +221,9 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
           [] as React.ReactElement[],
         );
         return components.filter(Boolean);
-      }),
-    );
+      })
+      .flat();
+
     const children = [...dataComponents, ...labelComponents];
     return this.renderContainer(props.groupComponent, children);
   }

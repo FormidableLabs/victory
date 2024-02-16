@@ -315,6 +315,7 @@ describe("victory-core", () => {
             "isHorizontal": [Function],
             "isNil": [Function],
             "isTooltip": [Function],
+            "mapValues": [Function],
             "modifyProps": [Function],
             "omit": [Function],
             "radiansToDegrees": [Function],

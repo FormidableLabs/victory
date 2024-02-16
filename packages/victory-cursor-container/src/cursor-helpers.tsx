@@ -1,5 +1,5 @@
 import { Helpers, Selection, SVGCoordinateType } from "victory-core";
-import { throttle, mapValues } from "lodash";
+import { throttle } from "lodash";
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 16;
 
@@ -13,8 +13,8 @@ class CursorHelpersClass {
   }
 
   withinBounds(point, bounds) {
-    const { x1, x2, y1, y2 } = mapValues(bounds, Number);
-    const { x, y } = mapValues(point, Number);
+    const { x1, x2, y1, y2 } = Helpers.mapValues(bounds, Number);
+    const { x, y } = Helpers.mapValues(point, Number);
     return (
       x >= Math.min(x1, x2) &&
       x <= Math.max(x1, x2) &&

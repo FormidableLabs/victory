@@ -1,5 +1,5 @@
 import { Helpers as CoreHelpers, Selection } from "victory-core";
-import { throttle, defaults, mapValues } from "lodash";
+import { throttle, defaults } from "lodash";
 import isEqual from "react-fast-compare";
 
 const Helpers = {
@@ -12,8 +12,8 @@ const Helpers = {
   },
 
   withinBounds(point, bounds, padding?) {
-    const { x1, x2, y1, y2 } = mapValues(bounds, Number);
-    const { x, y } = mapValues(point, Number);
+    const { x1, x2, y1, y2 } = CoreHelpers.mapValues(bounds, Number);
+    const { x, y } = CoreHelpers.mapValues(point, Number);
     const paddingValue = padding ? padding / 2 : 0;
     return (
       x + paddingValue >= Math.min(x1, x2) &&
@@ -190,7 +190,7 @@ const Helpers = {
   },
 
   constrainBox(box, fullDomainBox) {
-    const { x1, y1, x2, y2 } = mapValues(fullDomainBox, Number);
+    const { x1, y1, x2, y2 } = CoreHelpers.mapValues(fullDomainBox, Number);
     return {
       x1: box.x2 > x2 ? x2 - Math.abs(box.x2 - box.x1) : Math.max(box.x1, x1),
       y1: box.y2 > y2 ? y2 - Math.abs(box.y2 - box.y1) : Math.max(box.y1, y1),
@@ -200,7 +200,7 @@ const Helpers = {
   },
 
   constrainPoint(point, fullDomainBox) {
-    const { x1, y1, x2, y2 } = mapValues(fullDomainBox, Number);
+    const { x1, y1, x2, y2 } = CoreHelpers.mapValues(fullDomainBox, Number);
     return {
       x: Math.min(Math.max(point.x, x1), x2),
       y: Math.min(Math.max(point.y, y1), y2),
