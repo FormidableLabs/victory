@@ -58,7 +58,9 @@ export function useVictoryContainer<TProps extends VictoryContainerProps>(
 
   const localContainerRef = useRef<HTMLDivElement>(null);
 
-  const portalRef = useRef<Portal>(null);
+  const [portalElement, setPortalElement] = React.useState<SVGSVGElement>();
+
+  const portalRef = (element: SVGSVGElement) => setPortalElement(element);
 
   // Generated ID stored in ref because it needs to persist across renders
   const generatedId = useRef(uniqueId("victory-container-"));
@@ -102,6 +104,7 @@ export function useVictoryContainer<TProps extends VictoryContainerProps>(
     ariaDescribedBy,
     userProps,
     portalRef,
+    portalElement,
     localContainerRef,
   };
 }
@@ -132,6 +135,7 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
     userProps,
     titleId,
     descId,
+    portalElement,
     portalRef,
     containerRef,
     localContainerRef,
@@ -154,14 +158,7 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
   }, []);
 
   return (
-    <PortalContext.Provider
-      value={{
-        // TODO: Fix types
-        portalUpdate: portalRef.current?.portalUpdate,
-        portalRegister: portalRef.current?.portalRegister,
-        portalDeregister: portalRef.current?.portalDeregister,
-      }}
-    >
+    <PortalContext.Provider value={{ portalElement }}>
       <div
         className={className}
         style={{
