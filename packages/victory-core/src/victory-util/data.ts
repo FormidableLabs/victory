@@ -2,13 +2,11 @@
 import React from "react";
 import {
   uniq,
-  last,
   isPlainObject,
   property,
   orderBy,
   isEmpty,
   isEqual,
-  includes,
   isUndefined,
   omitBy,
 } from "lodash";
@@ -45,7 +43,9 @@ function generateDataArray(props, axis) {
   const domainMin = Math.min(...domain);
   const step = (domainMax - domainMin) / samples;
   const values = Helpers.range(domainMin, domainMax, step);
-  return last(values) === domainMax ? values : values.concat(domainMax);
+  return values[values.length - 1] === domainMax
+    ? values
+    : values.concat(domainMax);
 }
 
 // Returns sorted data. If no sort keys are provided, data is returned unaltered.
@@ -454,5 +454,5 @@ export function isDataComponent(component) {
     "stack",
     "voronoi",
   ];
-  return includes(whitelist, role);
+  return whitelist.includes(role);
 }

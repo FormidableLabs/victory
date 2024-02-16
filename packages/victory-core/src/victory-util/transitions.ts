@@ -1,4 +1,4 @@
-import { defaults, identity, keys } from "lodash";
+import { defaults, identity } from "lodash";
 import React from "react";
 import { AnimatePropTypeInterface } from "../types/prop-types";
 
@@ -16,7 +16,7 @@ function getKeyedData(data) {
 
 function getKeyedDataDifference(a, b) {
   let hasDifference = false;
-  const difference = keys(a).reduce((_difference, key) => {
+  const difference = Object.keys(a).reduce((_difference, key) => {
     if (!(key in b)) {
       hasDifference = true;
       _difference[key] = true;

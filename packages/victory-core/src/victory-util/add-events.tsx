@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults, difference, isEmpty, keys, pick, without } from "lodash";
+import { defaults, difference, isEmpty, pick } from "lodash";
 import type { ComponentEvent } from "./events";
 import * as Events from "./events";
 import isEqual from "react-fast-compare";
@@ -180,7 +180,7 @@ export function addEvents<
     }
 
     componentDidMount() {
-      const globalEventKeys = keys(this.globalEvents);
+      const globalEventKeys = Object.keys(this.globalEvents);
       globalEventKeys.forEach((key) => this.addGlobalListener(key));
       this.prevGlobalEventKeys = globalEventKeys;
     }
@@ -188,7 +188,7 @@ export function addEvents<
     componentDidUpdate(prevProps) {
       const calculatedState = this.getStateChanges(prevProps);
       this.calculatedState = calculatedState;
-      const globalEventKeys = keys(this.globalEvents);
+      const globalEventKeys = Object.keys(this.globalEvents);
       const removedGlobalEventKeys = difference(
         this.prevGlobalEventKeys,
         globalEventKeys,
@@ -285,7 +285,7 @@ export function addEvents<
           ? sharedEvents.getEventState
           : () => undefined;
       const baseProps = this.getBaseProps(props, getSharedEventState);
-      const dataKeys = keys(baseProps).filter((key) => key !== "parent");
+      const dataKeys = Object.keys(baseProps).filter((key) => key !== "parent");
       const hasEvents = props.events || props.sharedEvents || componentEvents;
       const events = this.getAllEvents(props);
       return {
@@ -310,7 +310,7 @@ export function addEvents<
     }
 
     cacheValues(obj) {
-      keys(obj).forEach((key) => {
+      Object.keys(obj).forEach((key) => {
         this[key] = obj[key];
       });
     }
@@ -424,7 +424,7 @@ export function addEvents<
     // Used by `VictoryLine` and `VictoryArea`
     renderContinuousData(props: TProps) {
       const { dataComponent, labelComponent, groupComponent } = props;
-      const dataKeys = without(this.dataKeys, "all");
+      const dataKeys = this.dataKeys.filter((value) => value !== "all");
       const labelComponents = dataKeys.reduce((memo, key) => {
         let newMemo = memo;
         const labelProps = this.getComponentProps(

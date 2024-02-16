@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { keys, orderBy } from "lodash";
+import { orderBy } from "lodash";
 import React from "react";
 import { Helpers, Scale, Wrapper } from "victory-core";
 import isEqual from "react-fast-compare";
@@ -19,7 +19,7 @@ function fillData(props, datasets) {
     });
     return prev;
   }, {});
-  const xKeys = keys(xMap).map((k) => Number(k));
+  const xKeys = Object.keys(xMap).map((k) => Number(k));
   const xArr = orderBy(xKeys);
 
   return datasets.map((dataset) => {
