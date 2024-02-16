@@ -24,6 +24,13 @@ export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   voronoiBlacklist?: (string | RegExp)[];
   voronoiDimension?: "x" | "y";
   voronoiPadding?: PaddingProps;
+  horizontal?: boolean;
+}
+
+interface VictoryVoronoiContainerMutatedProps
+  extends VictoryVoronoiContainerProps {
+  mousePosition: { x: number; y: number };
+  activePoints: any[];
 }
 
 export const VICTORY_VORONOI_CONTAINER_DEFAULT_PROPS = {
@@ -41,7 +48,10 @@ const getPoint = (point) => {
 export const useVictoryVoronoiContainer = (
   initialProps: VictoryVoronoiContainerProps,
 ) => {
-  const props = { ...VICTORY_VORONOI_CONTAINER_DEFAULT_PROPS, ...initialProps };
+  const props = {
+    ...VICTORY_VORONOI_CONTAINER_DEFAULT_PROPS,
+    ...(initialProps as VictoryVoronoiContainerMutatedProps),
+  };
   const { children } = props;
 
   const getDimension = () => {

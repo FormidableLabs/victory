@@ -38,6 +38,12 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   ) => void;
 }
 
+interface VictoryBrushContainerMutatedProps extends VictoryBrushContainerProps {
+  domain: { x: DomainTuple; y: DomainTuple };
+  currentDomain: { x: DomainTuple; y: DomainTuple } | undefined;
+  cachedBrushDomain: { x: DomainTuple; y: DomainTuple } | undefined;
+}
+
 export const VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS = {
   allowDrag: true,
   allowDraw: true,
@@ -60,7 +66,10 @@ export const VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS = {
 export const useVictoryBrushContainer = (
   initialProps: VictoryBrushContainerProps,
 ) => {
-  const props = { ...VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS, ...initialProps };
+  const props = {
+    ...VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS,
+    ...(initialProps as VictoryBrushContainerMutatedProps),
+  };
   const { children } = props;
 
   const getSelectBox = (coordinates) => {

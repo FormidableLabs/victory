@@ -85,7 +85,7 @@ export type ContainerType =
  * - These hooks contain shared logic for both web and Victory Native containers.
  * - In this utility, we call multiple of these hooks with the props returned by the previous to combine the container logic.
  */
-export const CONTAINER_HOOKS = {
+const CONTAINER_HOOKS = {
   zoom: useVictoryZoomContainer,
   selection: useVictorySelectionContainer,
   brush: useVictoryBrushContainer,
@@ -136,13 +136,16 @@ export function makeCreateContainerFunction<
       props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
     ) => {
       const { children: childrenA, props: propsA } = useContainerA(props);
-      const { children: childrenB, props: propsB } = useContainerB({
-        ...propsA,
-        children: childrenA,
-      });
+      const { children: combinedChildren, props: combinedProps } =
+        useContainerB({
+          ...propsA,
+          children: childrenA,
+        });
 
       return (
-        <VictoryContainerBase {...propsB}>{childrenB}</VictoryContainerBase>
+        <VictoryContainerBase {...combinedProps}>
+          {combinedChildren}
+        </VictoryContainerBase>
       );
     };
 

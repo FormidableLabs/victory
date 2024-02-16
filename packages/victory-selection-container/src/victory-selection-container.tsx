@@ -43,12 +43,20 @@ export const VICTORY_SELECTION_CONTAINER_DEFAULT_PROPS = {
   },
 };
 
+interface VictorySelectionContainerMutatedProps
+  extends VictorySelectionContainerProps {
+  x1: number;
+  x2: number;
+  y1: number;
+  y2: number;
+}
+
 export const useVictorySelectionContainer = (
   initialProps: VictorySelectionContainerProps,
 ) => {
   const props = {
     ...VICTORY_SELECTION_CONTAINER_DEFAULT_PROPS,
-    ...initialProps,
+    ...(initialProps as VictorySelectionContainerMutatedProps),
   };
 
   const { x1, x2, y1, y2, selectionStyle, selectionComponent, children, name } =
@@ -73,7 +81,7 @@ export const useVictorySelectionContainer = (
           height,
           style: selectionStyle,
         }),
-    ],
+    ] as React.ReactElement[],
   };
 };
 

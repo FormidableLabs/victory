@@ -9,6 +9,8 @@ import {
   LineSegment,
   VictoryContainer,
   VictoryEventHandler,
+  DomainTuple,
+  PaddingProps,
 } from "victory-core";
 import { defaults, isObject } from "lodash";
 import { CursorHelpers } from "./cursor-helpers";
@@ -23,10 +25,18 @@ export interface VictoryCursorContainerProps extends VictoryContainerProps {
   cursorLabelOffset?: CursorCoordinatesPropType;
   defaultCursorValue?: CursorCoordinatesPropType;
   disable?: boolean;
+  horizontal?: boolean;
+  padding?: PaddingProps;
   onCursorChange?: (
     value: CursorCoordinatesPropType,
     props: VictoryCursorContainerProps,
   ) => void;
+}
+
+interface VictoryCursorContainerMutatedProps
+  extends VictoryCursorContainerProps {
+  cursorValue: CoordinatesPropType | null;
+  domain: { x: DomainTuple; y: DomainTuple };
 }
 
 export const VICTORY_CURSOR_CONTAINER_DEFAULT_PROPS = {
@@ -41,7 +51,10 @@ export const VICTORY_CURSOR_CONTAINER_DEFAULT_PROPS = {
 export const useVictoryCursorContainer = (
   initialProps: VictoryCursorContainerProps,
 ) => {
-  const props = { ...VICTORY_CURSOR_CONTAINER_DEFAULT_PROPS, ...initialProps };
+  const props = {
+    ...VICTORY_CURSOR_CONTAINER_DEFAULT_PROPS,
+    ...(initialProps as VictoryCursorContainerMutatedProps),
+  };
   const { children } = props;
 
   const getCursorPosition = () => {
@@ -52,9 +65,9 @@ export const useVictoryCursorContainer = (
 
     if (typeof defaultCursorValue === "number") {
       return {
-        x: (domain.x[0] + domain.x[1]) / 2,
-        y: (domain.y[0] + domain.y[1]) / 2,
-        [cursorDimension]: defaultCursorValue,
+        x: ((domain.x[0] as number) + (domain.x[1] as number)) / 2,
+        y: ((domain.y[0] as number) + (domain.y[1] as number)) / 2,
+        ...(cursorDimension ? { [cursorDimension]: defaultCursorValue } : {}),
       };
     }
 
@@ -76,10 +89,12 @@ export const useVictoryCursorContainer = (
 
   const getPadding = () => {
     if (props.padding === undefined) {
-      const child = props.children.find((c) => {
-        return isObject(c.props) && c.props.padding !== undefined;
-      });
-      return Helpers.getPadding(child.props);
+      const child = Array.isArray(props.children)
+        ? props.children.find((c: any) => {
+            return isObject(c.props) && c.props.padding !== undefined;
+          })
+        : props.children;
+      return Helpers.getPadding(child?.props);
     }
     return Helpers.getPadding(props);
   };
@@ -108,13 +123,13 @@ export const useVictoryCursorContainer = (
     const newElements: React.ReactElement[] = [];
     const padding = getPadding();
     const cursorCoordinates = {
-      x: horizontal ? scale.y(cursorValue.y) : scale.x(cursorValue.x),
-      y: horizontal ? scale.x(cursorValue.x) : scale.y(cursorValue.y),
+      x: horizontal ? scale?.y?.(cursorValue.y) : scale?.x?.(cursorValue.x),
+      y: horizontal ? scale?.x?.(cursorValue.x) : scale?.y?.(cursorValue.y),
     };
     if (cursorLabel) {
       let labelProps = defaults({ active: true }, cursorLabelComponent.props, {
-        x: cursorCoordinates.x + cursorLabelOffset.x,
-        y: cursorCoordinates.y + cursorLabelOffset.y,
+        x: cursorCoordinates.x || 0 + cursorLabelOffset.x,
+        y: cursorCoordinates.y || 0 + cursorLabelOffset.y,
         datum: cursorValue,
         active: true,
         key: `${name}-cursor-label`,
@@ -144,7 +159,7 @@ export const useVictoryCursorContainer = (
           x1: cursorCoordinates.x,
           x2: cursorCoordinates.x,
           y1: padding.top,
-          y2: height - padding.bottom,
+          y2: height || 0 - padding.bottom,
           style: cursorStyle,
         }),
       );
@@ -154,7 +169,7 @@ export const useVictoryCursorContainer = (
         React.cloneElement(cursorComponent, {
           key: `${name}-y-cursor`,
           x1: padding.left,
-          x2: width - padding.right,
+          x2: width || 0 - padding.right,
           y1: cursorCoordinates.y,
           y2: cursorCoordinates.y,
           style: cursorStyle,

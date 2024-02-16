@@ -32,6 +32,17 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
   ) => void;
   zoomDimension?: ZoomDimensionType;
   zoomDomain?: Partial<ZoomDomain>;
+  horizontal?: boolean;
+}
+
+interface VictoryZoomContainerMutatedProps extends VictoryZoomContainerProps {
+  domain: ZoomDomain;
+  originalDomain: ZoomDomain;
+  currentDomain: ZoomDomain;
+  cachedZoomDomain: ZoomDomain;
+  scale: any;
+  polar: boolean;
+  origin: { x: number; y: number };
 }
 
 export const VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS = {
@@ -44,7 +55,10 @@ export const VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS = {
 export const useVictoryZoomContainer = (
   initialProps: VictoryZoomContainerProps,
 ) => {
-  const props = { ...VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS, ...initialProps };
+  const props = {
+    ...VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS,
+    ...(initialProps as VictoryZoomContainerMutatedProps),
+  };
   const {
     children,
     currentDomain,
