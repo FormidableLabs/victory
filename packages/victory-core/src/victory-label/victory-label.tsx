@@ -70,7 +70,6 @@ export interface VictoryLabelProps {
   y?: number;
   dx?: StringOrNumberOrCallback;
   dy?: StringOrNumberOrCallback;
-  startOffset?: number;
   textPathComponent?: React.ReactElement;
   labelRadius?: number;
   labelStartAngle?: number;
@@ -577,12 +576,12 @@ const renderLabel = (calculatedProps, tspanValues) => {
     tspanComponent,
     textComponent,
     textPathComponent,
-    startOffset,
     labelPlacement,
     curvedLabelProps,
     groupComponent,
     curvedLabelTransform,
   } = calculatedProps;
+  console.log(dx,dy)
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
   let textProps;
@@ -619,11 +618,6 @@ const renderLabel = (calculatedProps, tspanValues) => {
     };
   }
 
-  const textPathProps = {
-    href: curvedLabelProps && curvedLabelProps.href,
-    startOffset,
-  };
-
   const tspans = text.map((line, i) => {
     const currentStyle = tspanValues[i].style;
     if (labelPlacement !== "curved") {
@@ -642,6 +636,8 @@ const renderLabel = (calculatedProps, tspanValues) => {
       key: `${id}-key-${i}`,
       style: currentStyle,
       children: line,
+      dx: inline ? dx + tspanValues[i].backgroundPadding.left : dx,
+      dy: getTSpanDy(tspanValues, calculatedProps, i),
     };
     return React.cloneElement(tspanComponent, tspanProps);
   });
@@ -655,7 +651,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     });
     const textPathElement = React.cloneElement(
       textPathComponent,
-      textPathProps,
+      {href: curvedLabelProps && curvedLabelProps.href},
       tspans,
     );
     const textLabelComponent = React.cloneElement(

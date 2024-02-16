@@ -60,9 +60,7 @@ export interface VictoryPieProps
   padAngle?: NumberOrCallback;
   radius?: NumberOrCallback;
   startAngle?: number;
-  startOffset?: number;
   style?: VictoryStyleInterface;
-  reverseCurvedLabel?: boolean;
 }
 
 const fallbackProps = {
@@ -88,7 +86,6 @@ const fallbackProps = {
   labelPosition: "centroid",
   labelIndicatorInnerOffset: 15,
   labelIndicatorOuterOffset: 5,
-  reverseCurvedLabel: false,
 };
 
 const datumHasXandY = (datum) => {

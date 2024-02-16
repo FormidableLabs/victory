@@ -825,7 +825,6 @@ export const LabelPlacement = () => {
           <VictoryLabel
             curvedLabelTransform={"translate(150,150)"}
             labelPlacement="curved"
-            startOffset={50}
             labelRadius={90}
             text={["Victory is awesome."]}
           />
@@ -837,7 +836,8 @@ export const LabelPlacement = () => {
           <VictoryLabel
             curvedLabelTransform={"translate(150,150)"}
             labelPlacement="curved"
-            startOffset={50}
+            dx={10}
+            dy={10}
             labelRadius={90}
             labelStartAngle={0}
             labelEndAngle={90}
@@ -851,7 +851,6 @@ export const LabelPlacement = () => {
           <VictoryLabel
             curvedLabelTransform={"translate(150,150)"}
             labelPlacement="curved"
-            startOffset={50}
             labelRadius={90}
             labelStartAngle={180}
             labelEndAngle={110}

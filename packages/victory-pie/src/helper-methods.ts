@@ -183,9 +183,9 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 };
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
-  const { index, datum, data, slice, labelComponent, theme, startOffset } =
+  const { index, datum, data, slice, labelComponent, theme } =
     dataProps;
-  const { style, defaultRadius, origin, width, height, defaultTransform } =
+  const { style, defaultRadius, origin, width, height, defaultTransform,dx,dy } =
     calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
@@ -222,12 +222,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
 
   const labelStartAngle = slice.startAngle;
   const labelEndAngle = slice.endAngle;
-  // if(reverseCurvedLabel && Helpers.radiansToDegrees (slice.endAngle) > 90 &&
-  //   Helpers.radiansToDegrees ( slice.startAngle) < 270){
-  //   // reverse lower label
-  //   labelStartAngle= slice.endAngle;
-  //   labelEndAngle = slice.startAngle
-  // }
+
   const labelProps = {
     width,
     height,
@@ -246,9 +241,10 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     labelRadius: calculatedLabelRadius,
     labelStartAngle,
     labelEndAngle,
-    startOffset,
     labelPlacement,
     curvedLabelTransform: defaultTransform,
+    dx,
+    dy
   };
 
   if (!Helpers.isTooltip(labelComponent)) {

@@ -276,7 +276,7 @@ The `labelPlacement` prop specifies the angular placement of each label relative
   data={sampleData}
   labels={({ datum }) => `y: ${datum.y}`}
   labelPlacement={"curved"}
-  startOffset={30}
+  dx={10}
   radius={120}
   labelRadius={100}
 />
@@ -578,34 +578,6 @@ The `labelIndicatorOuterOffset` prop defines the offset by which the indicator l
   data={sampleData}
   labelIndicator
   labelIndicatorOuterOffset={5}
-/>
-```
-
-## startOffset
-
-`type: number`
-
-The `startOffset` prop is used along with `labelPlacement="curved"` type.
-The startOffset attribute defines an offset from the start of the path current text position along the path.This will help us to center the curved labels 
-
-```playground
-<VictoryPie
-  data={sampleData}
-  labels={({ datum }) => `${datum.l} deg`}
-  labelPlacement={"curved"}
-  startOffset={30}
-  radius={120}
-  labelRadius={100}
-  data={[
-          { x: 1, y: 1, l: 0 },
-          { x: 2, y: 1, l: 45 },
-          { x: 3, y: 1, l: 90 },
-          { x: 4, y: 1, l: 135 },
-          { x: 5, y: 1, l: 180 },
-          { x: 6, y: 1, l: 225 },
-          { x: 7, y: 1, l: 270 },
-          { x: 8, y: 1, l: 315 },
-        ]}
 />
 ```
 
