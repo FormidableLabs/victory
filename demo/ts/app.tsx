@@ -116,6 +116,47 @@ interface AppState {
   route: string;
 }
 
+const containerStyle = {
+  fontFamily: "sans-serif",
+  display: "flex",
+  gap: "20px",
+  height: "100vh",
+  overflow: "hidden",
+};
+
+const sidebarStyle = {
+  flexShrink: "0",
+  width: "240px",
+  borderRight: "1px solid #ddd",
+  overflow: "auto",
+  padding: "0 20px 20px",
+};
+
+const mainStyle = {
+  overflow: "auto",
+};
+
+const listStyle = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+  listStyle: "none",
+  padding: "0",
+  margin: "0",
+} as const;
+
+const linkStyle = {
+  color: "black",
+  fontSize: "14px",
+  textDecoration: "none",
+};
+
+const activeLinkStyle = {
+  ...linkStyle,
+  fontWeight: "bold",
+  textDecoration: "underline",
+};
+
 class App extends React.Component<any, AppState> {
   constructor(props: any) {
     super(props);
@@ -142,19 +183,29 @@ class App extends React.Component<any, AppState> {
     const Child = this.getDemo();
     const routes = keys(MAP).sort();
     return (
-      <div>
-        <h1>Demos (Typescript)</h1>
-        <ul>
-          {routes.map((route, index) => {
-            const item = MAP[route] || {};
-            return (
-              <li key={index}>
-                <a href={`#${route}`}>{item.name}</a>
-              </li>
-            );
-          })}
-        </ul>
-        <Child />
+      <div style={containerStyle}>
+        <aside style={sidebarStyle}>
+          <h1>Victory Demos</h1>
+          <ul style={listStyle}>
+            {routes.map((route, index) => {
+              const item = MAP[route] || {};
+              const isActive = this.state.route === route;
+              return (
+                <li key={index}>
+                  <a
+                    href={`#${route}`}
+                    style={isActive ? activeLinkStyle : linkStyle}
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </aside>
+        <main style={mainStyle}>
+          <Child />
+        </main>
       </div>
     );
   }
