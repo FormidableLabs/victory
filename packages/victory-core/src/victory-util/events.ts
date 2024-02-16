@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { isEmpty, without, pickBy, omitBy, uniq, includes, keys } from "lodash";
+import { isEmpty, pickBy, omitBy, uniq, keys } from "lodash";
 import type { EventMixinCalculatedValues } from "./add-events";
 import { isFunction } from "./helpers";
 
@@ -50,7 +50,7 @@ export function getEvents(
       const targetEvents = events.reduce((memo, event) => {
         if (event.target !== undefined) {
           const matchesTarget = Array.isArray(event.target)
-            ? includes(event.target, target)
+            ? event.target.includes(target)
             : `${event.target}` === `${target}`;
           return matchesTarget ? memo.concat(event) : memo;
         }
@@ -157,8 +157,8 @@ export function getScopedEvents(
       }
       if (eventReturn.eventKey === "all") {
         return newBaseProps[childName]
-          ? without(keys(newBaseProps[childName]), "parent")
-          : without(keys(newBaseProps), "parent");
+          ? keys(newBaseProps[childName]).filter((value) => value !== "parent")
+          : keys(newBaseProps).filter((value) => value !== "parent");
       } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
         return newBaseProps[childName]
           ? keys(newBaseProps[childName])
@@ -233,7 +233,9 @@ export function getScopedEvents(
 
     // returns an entire mutated state for all children
     const allChildNames =
-      childNames === "all" ? without(keys(newBaseProps), "parent") : childNames;
+      childNames === "all"
+        ? keys(newBaseProps).filter((value) => value !== "parent")
+        : childNames;
     return Array.isArray(allChildNames)
       ? allChildNames.reduce((memo, childName) => {
           return Object.assign(memo, getReturnByChild(childName));
@@ -438,7 +440,7 @@ export function getExternalMutation(
     } else if (Array.isArray(mutation[type])) {
       // coerce arrays to strings before matching
       const stringArray = mutation[type].map((m) => `${m}`);
-      return includes(stringArray, identifier[type]);
+      return stringArray.includes(identifier[type]);
     }
     return false;
   };

@@ -1,11 +1,4 @@
-import {
-  defaults,
-  flatten,
-  uniq,
-  groupBy,
-  uniqBy,
-  isPlainObject,
-} from "lodash";
+import { defaults, uniq, groupBy, uniqBy, isPlainObject } from "lodash";
 import React from "react";
 import * as Axis from "./axis";
 import * as Style from "./style";
@@ -428,7 +421,7 @@ export function getCategoryAndAxisStringsFromChildren(
     : [];
   const categoryStrings =
     categories || getStringsFromCategories(childComponents, axis);
-  return uniq(flatten([...categoryStrings, ...axisStrings]));
+  return uniq([...categoryStrings, ...axisStrings].flat());
 }
 
 export function getStringsFromChildren(props, childComponents) {
@@ -440,8 +433,8 @@ export function getStringsFromChildren(props, childComponents) {
   const dataStrings = getStringsFromData(children);
 
   return {
-    x: uniq(flatten([...xStrings, ...dataStrings.x])),
-    y: uniq(flatten([...yStrings, ...dataStrings.y])),
+    x: uniq([...xStrings, ...dataStrings.x].flat()),
+    y: uniq([...yStrings, ...dataStrings.y].flat()),
   };
 }
 
