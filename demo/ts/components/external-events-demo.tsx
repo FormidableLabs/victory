@@ -10,9 +10,10 @@ import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryVoronoiContainer } from "victory-voronoi-container";
 import { range } from "lodash";
 
-class App extends React.Component {
-  constructor() {
-    super();
+class App extends React.Component<any, any> {
+  constructor(props) {
+    super(props);
+
     this.state = {
       data: this.getData(),
     };
@@ -77,7 +78,7 @@ class App extends React.Component {
   }
 
   render() {
-    const containerStyle = {
+    const containerStyle: React.CSSProperties = {
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
@@ -240,7 +241,7 @@ class App extends React.Component {
                   strokeWidth: 2,
                 },
               }}
-              size={({ active }) => (active ? 5 : 3)}
+              barWidth={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -259,7 +260,7 @@ class App extends React.Component {
                   strokeWidth: 2,
                 },
               }}
-              size={({ active }) => (active ? 5 : 3)}
+              barWidth={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },

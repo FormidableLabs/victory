@@ -23,7 +23,7 @@ const Charts = ({ behaviors }) => {
   const chartStyle = {
     parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
   };
-  const CustomContainer = createContainer(behaviors[0], behaviors[1]);
+  const CustomContainer: any = createContainer(behaviors[0], behaviors[1]);
   const behaviorsList = behaviors.map((behavior) => `"${behavior}"`).join(", ");
 
   return (
@@ -211,7 +211,7 @@ const Charts = ({ behaviors }) => {
                 strokeWidth: 2,
               },
             }}
-            size={({ active }) => (active ? 5 : 3)}
+            barWidth={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -230,7 +230,7 @@ const Charts = ({ behaviors }) => {
                 strokeWidth: 2,
               },
             }}
-            size={({ active }) => (active ? 5 : 3)}
+            barWidth={({ active }) => (active ? 5 : 3)}
             data={[
               { x: 1, y: -3 },
               { x: 2, y: 5 },
