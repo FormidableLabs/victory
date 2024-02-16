@@ -18,10 +18,15 @@ describe("components/victory-container", () => {
   });
 
   it("renders an svg with a title node", () => {
-    const { container } = render(<VictoryContainer title="Victory Chart" />);
+    const { container } = render(
+      <VictoryContainer
+        containerId="victory-container"
+        title="Victory Chart"
+      />,
+    );
     expect(container.querySelector("title")).toMatchInlineSnapshot(`
       <title
-        id="victory-container-3-title"
+        id="victory-container-title"
       >
         Victory Chart
       </title>
@@ -29,10 +34,12 @@ describe("components/victory-container", () => {
   });
 
   it("renders an svg with a desc node", () => {
-    const { container } = render(<VictoryContainer desc="description" />);
+    const { container } = render(
+      <VictoryContainer containerId="victory-container" desc="description" />,
+    );
     expect(container.querySelector("desc")).toMatchInlineSnapshot(`
       <desc
-        id="victory-container-4-desc"
+        id="victory-container-desc"
       >
         description
       </desc>

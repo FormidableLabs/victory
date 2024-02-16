@@ -14,7 +14,7 @@ const defaultProps: VictoryPortalProps = {
   groupComponent: <g />,
 };
 
-export const VictoryPortal: React.FC<VictoryPortalProps> = (initialProps) => {
+export const VictoryPortal = (initialProps: VictoryPortalProps) => {
   const props = { ...defaultProps, ...initialProps };
   const portalContext = React.useContext(PortalContext);
 
@@ -45,3 +45,5 @@ export const VictoryPortal: React.FC<VictoryPortalProps> = (initialProps) => {
     ? createPortal(child, portalContext.portalElement)
     : child;
 };
+
+VictoryPortal.role = "portal";
