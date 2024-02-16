@@ -64,7 +64,7 @@ export function useVictoryContainer<TProps extends VictoryContainerProps>(
 
   // Generated ID stored in ref because it needs to persist across renders
   const generatedId = useRef(uniqueId("victory-container-"));
-  const containerId = props.containerId ?? generatedId;
+  const containerId = props.containerId ?? generatedId.current;
 
   const getIdForElement = (elName: string) => `${containerId}-${elName}`;
 

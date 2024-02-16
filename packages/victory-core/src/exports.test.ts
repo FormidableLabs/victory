@@ -188,7 +188,6 @@ describe("victory-core", () => {
         "VictoryAnimation",
         "VictoryClipContainer",
         "VictoryContainer",
-        'useVictoryContainer',
         "VictoryLabel",
         "VictoryPortal",
         "VictoryTheme",
@@ -197,6 +196,7 @@ describe("victory-core", () => {
         "Wrapper",
         "addEvents",
         "mergeRefs",
+        "useVictoryContainer",
       ]
     `);
   });
