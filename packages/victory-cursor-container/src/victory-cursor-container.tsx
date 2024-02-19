@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from "react";
 import {
   Helpers,
@@ -122,14 +123,24 @@ export const useVictoryCursorContainer = (
 
     const newElements: React.ReactElement[] = [];
     const padding = getPadding();
-    const cursorCoordinates = {
-      x: horizontal ? scale?.y?.(cursorValue.y) : scale?.x?.(cursorValue.x),
-      y: horizontal ? scale?.x?.(cursorValue.x) : scale?.y?.(cursorValue.y),
-    };
+    const cursorCoordinates =
+      scale &&
+      "x" in scale &&
+      "y" in scale &&
+      typeof scale.y === "function" &&
+      typeof scale.x === "function"
+        ? {
+            x: horizontal ? scale.y(cursorValue.y) : scale.x(cursorValue.x),
+            y: horizontal ? scale.x(cursorValue.x) : scale.y(cursorValue.y),
+          }
+        : {
+            x: cursorValue.x,
+            y: cursorValue.y,
+          };
     if (cursorLabel) {
       let labelProps = defaults({ active: true }, cursorLabelComponent.props, {
-        x: cursorCoordinates.x || 0 + cursorLabelOffset.x,
-        y: cursorCoordinates.y || 0 + cursorLabelOffset.y,
+        x: cursorCoordinates.x + cursorLabelOffset.x,
+        y: cursorCoordinates.y + cursorLabelOffset.y,
         datum: cursorValue,
         active: true,
         key: `${name}-cursor-label`,
