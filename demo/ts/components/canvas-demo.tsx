@@ -1,17 +1,18 @@
 /* eslint-disable no-magic-numbers */
 import React from "react";
-import {
-  CanvasGroup,
-  CanvasCurve,
-  VictoryAxis,
-  VictoryBar,
-  CanvasBar,
-  VictoryChart,
-  VictoryLine,
-  VictoryScatter,
-  CanvasPoint,
-} from "victory";
+
 import { range, random } from "lodash";
+import { VictoryChart } from "victory-chart";
+import { VictoryLine } from "victory-line";
+import { VictoryAxis } from "victory-axis";
+import { VictoryScatter } from "victory-scatter";
+import { VictoryBar } from "victory-bar";
+import {
+  CanvasBar,
+  CanvasCurve,
+  CanvasGroup,
+  CanvasPoint,
+} from "victory-canvas";
 
 const populationData = [
   {
@@ -213,7 +214,7 @@ const populationData = [
   },
 ];
 
-const containerStyle = {
+const containerStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   flexWrap: "wrap",
@@ -239,7 +240,7 @@ const formatPopulation = (value) => {
 };
 
 const getRandomData = (length = 100) => {
-  const data = [];
+  const data: any = [];
   for (let i = 0; i < length; i++) {
     data.push({ x: Math.random(), y: Math.random() });
   }

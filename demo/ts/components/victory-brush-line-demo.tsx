@@ -117,7 +117,7 @@ class App extends React.Component<any, BrushLineDemoState> {
     };
 
     return this.state.datasets
-      .map((dataset) => (isActive(dataset) ? dataset.name : null))
+      .map((dataset) => (isActive(dataset) ? dataset.name : null) || "")
       .filter(Boolean);
   }
 

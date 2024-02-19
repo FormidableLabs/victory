@@ -66,6 +66,7 @@ importers:
       eslint-plugin-react: ^7.0.0
       eslint-plugin-react-hooks: ^4.2.0
       eslint-plugin-storybook: ^0.6.15
+      fork-ts-checker-webpack-plugin: ^8.0.0
       fs-extra: ^10.0.0
       glob: 8.0.3
       immutable: ^3.8.2
@@ -160,6 +161,7 @@ importers:
       eslint-plugin-react: 7.30.1_eslint@8.21.0
       eslint-plugin-react-hooks: 4.6.0_eslint@8.21.0
       eslint-plugin-storybook: 0.6.15_qugx7qdu5zevzvxaiqyxfiwquq
+      fork-ts-checker-webpack-plugin: 8.0.0_xnp4kzegbjokq62cajex2ovgkm
       fs-extra: 10.1.0
       glob: 8.0.3
       immutable: 3.8.2
@@ -3465,7 +3467,7 @@ packages:
     resolution: {integrity: sha512-QG3yxTcTIBoAcQmkCs+wAPYZhu7Dk9rXKacINfNbdJDNERTbLQbHGyVG8q/YGMPeCJRIhSY0+fTc5+xuh6WPSQ==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/helper-validator-identifier': 7.18.6
+      '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
     dev: true
 
@@ -6460,7 +6462,7 @@ packages:
     resolution: {integrity: sha512-m8FOdUo77iMTwVRCyzWcqxlEIk+GnopbrRI15a0EaLbpZSCinIVI4kSQzWhkShK83GogvEFJSsHF3Ws0z1vrqA==}
     engines: {node: '>=12'}
     dependencies:
-      '@babel/code-frame': 7.18.6
+      '@babel/code-frame': 7.23.5
       '@babel/runtime': 7.18.6
       '@types/aria-query': 4.2.2
       aria-query: 5.0.0
@@ -11086,14 +11088,14 @@ packages:
       cosmiconfig: 7.0.1
       deepmerge: 4.2.2
       fs-extra: 10.1.0
-      memfs: 3.4.7
+      memfs: 3.5.3
       minimatch: 3.1.2
       node-abort-controller: 3.1.1
       schema-utils: 3.1.1
       semver: 7.5.4
       tapable: 2.2.1
       typescript: 4.7.4
-      webpack: 5.74.0_jmvevvrkvprlsib7tsbgxwazju
+      webpack: 5.74.0_webpack-cli@4.10.0
     dev: true
 
   /form-data/4.0.0:
@@ -11188,10 +11190,6 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       minipass: 3.3.4
-    dev: true
-
-  /fs-monkey/1.0.3:
-    resolution: {integrity: sha512-cybjIfiiE+pTWicSCLFHSrXZ6EilF30oh91FDP9S2B051prEa7QWfrVTQm10/dDpswBDXZugPa1Ogu8Yh+HV0Q==}
     dev: true
 
   /fs-monkey/1.0.5:
@@ -13588,13 +13586,6 @@ packages:
   /media-typer/0.3.0:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
     engines: {node: '>= 0.6'}
-    dev: true
-
-  /memfs/3.4.7:
-    resolution: {integrity: sha512-ygaiUSNalBX85388uskeCyhSAoOSgzBbtVCr9jA2RROssFL9Q19/ZXFqS+2Th2sr1ewNIWgFdLzLC3Yl1Zv+lw==}
-    engines: {node: '>= 4.0.0'}
-    dependencies:
-      fs-monkey: 1.0.3
     dev: true
 
   /memfs/3.5.3:
@@ -17877,7 +17868,7 @@ packages:
       webpack: ^4.0.0 || ^5.0.0
     dependencies:
       colorette: 2.0.19
-      memfs: 3.4.7
+      memfs: 3.5.3
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0

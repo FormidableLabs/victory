@@ -8,7 +8,6 @@ import { VictoryBrushLine } from "victory-brush-line";
 import { VictoryScatter } from "victory-scatter";
 import {
   DomainTuple,
-  DomainPropObjectType,
   VictoryClipContainer,
   Point,
   Selection,
@@ -26,7 +25,7 @@ type PointDataType = {
   date: Date;
 };
 
-type ZoomDomainType = DomainPropObjectType;
+type ZoomDomainType = { x?: DomainTuple; y?: DomainTuple };
 
 interface DraggableDemoInterface {
   bars: BarDataType[];
