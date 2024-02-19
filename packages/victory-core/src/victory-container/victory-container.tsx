@@ -142,7 +142,6 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
   } = useVictoryContainer(initialProps);
 
   React.useEffect(() => {
-    // TODO check that this works
     if (!events?.onWheel) return;
 
     const handleWheel = (e: WheelEvent) => e.preventDefault();
