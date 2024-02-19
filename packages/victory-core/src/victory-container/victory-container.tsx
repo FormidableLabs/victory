@@ -147,8 +147,7 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
 
     const handleWheel = (e: WheelEvent) => e.preventDefault();
 
-    const container = (containerRef as React.RefObject<HTMLDivElement>)
-      ?.current;
+    const container = localContainerRef?.current;
     container?.addEventListener("wheel", handleWheel);
 
     return () => {
