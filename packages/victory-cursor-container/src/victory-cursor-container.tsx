@@ -170,7 +170,7 @@ export const useVictoryCursorContainer = (
           x1: cursorCoordinates.x,
           x2: cursorCoordinates.x,
           y1: padding.top,
-          y2: height || 0 - padding.bottom,
+          y2: (typeof height === "number" ? height : 0) - padding.bottom,
           style: cursorStyle,
         }),
       );
@@ -180,7 +180,7 @@ export const useVictoryCursorContainer = (
         React.cloneElement(cursorComponent, {
           key: `${name}-y-cursor`,
           x1: padding.left,
-          x2: width || 0 - padding.right,
+          x2: (typeof width === "number" ? width : 0) - padding.right,
           y1: cursorCoordinates.y,
           y2: cursorCoordinates.y,
           style: cursorStyle,
