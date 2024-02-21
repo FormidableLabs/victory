@@ -80,7 +80,7 @@ Changes to the Victory and Victory Native source code will be reflected in the d
 
 ### Documentation
 
-See the docs and examples on [the Victory website](https://formidable.com/open-source/victory/docs/native).
+See the docs and examples on [the Victory website](https://commerce.nearform.com/open-source/victory/docs/native/).
 
 ## Contributor Covenant Code of Conduct
 
