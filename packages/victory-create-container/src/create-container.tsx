@@ -98,7 +98,7 @@ const CONTAINER_HOOKS = {
  * - These containers are specific to the web. Victory Native has its own container components.
  * - For this utility, we only need the container components to extract the defaultEvents.
  */
-const CONTAINER_COMPONENTS = {
+const CONTAINER_COMPONENTS_WEB = {
   zoom: VictoryZoomContainer,
   selection: VictorySelectionContainer,
   brush: VictoryBrushContainer,
@@ -164,6 +164,6 @@ export function makeCreateContainerFunction<
 }
 
 export const createContainer = makeCreateContainerFunction(
-  CONTAINER_COMPONENTS,
+  CONTAINER_COMPONENTS_WEB,
   VictoryContainer,
 );
