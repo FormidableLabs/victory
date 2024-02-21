@@ -93,6 +93,5 @@ Please review our [Code of Conduct][code] before contributing.
 
 
 [code]: https://github.com/FormidableLabs/.github/blob/master/CODE_OF_CONDUCT.md
-[victory-native-demo]:https://github.com/FormidableLabs/victory-native-demo
 [react-native-svg-readme]: https://github.com/react-native-community/react-native-svg#notice
 [maintenance-image]: https://img.shields.io/badge/maintenance-active-green.svg
