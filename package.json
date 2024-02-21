@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/formidablelabs/victory/issues"
   },
-  "homepage": "https://formidable.com/open-source/victory",
+  "homepage": "https://commerce.nearform.com/open-source/victory",
   "devDependencies": {
     "@babel/cli": "7.18.9",
     "@babel/core": "7.18.9",
