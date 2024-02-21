@@ -143,5 +143,5 @@ To render a Victory component in a custom container set the `standalone` prop on
 
 *caveats:* `VictoryPortal` will not work with components that are not rendered within `VictoryContainer`.
 
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
 [`VictoryPortal`]: /docs/victory-portal
