@@ -1,5 +1,5 @@
 import React from "react";
-import { merge, random, range } from "lodash";
+import { random, range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryScatter } from "victory-scatter";
 import { ErrorType, VictoryErrorBar } from "victory-errorbar";
@@ -134,9 +134,9 @@ export default class VictoryErrorBarDemo extends React.Component<
           data={this.state.data}
         />
 
-        <svg style={style.parent} width={500} height={300}>
+        <VictoryChart>
           <VictoryErrorBar style={style} standalone={false} />
-        </svg>
+        </VictoryChart>
 
         <VictoryErrorBar
           style={{ parent: style.parent, data: this.state.hoverStyle }}
@@ -150,7 +150,9 @@ export default class VictoryErrorBarDemo extends React.Component<
                     {
                       mutation: (props: any) => {
                         return {
-                          style: merge({}, props.style, { stroke: "orange" }),
+                          style: Object.assign({}, props.style, {
+                            stroke: "orange",
+                          }),
                         };
                       },
                     },

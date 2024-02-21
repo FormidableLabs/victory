@@ -1,6 +1,6 @@
 {
   "name": "victory-create-container",
-  "version": "36.7.0",
+  "version": "36.9.1",
   "description": "Container Helper for Victory",
   "keywords": [
     "data visualization",
@@ -21,12 +21,12 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.19",
-    "victory-brush-container": "^36.7.0",
-    "victory-core": "^36.7.0",
-    "victory-cursor-container": "^36.7.0",
-    "victory-selection-container": "^36.7.0",
-    "victory-voronoi-container": "^36.7.0",
-    "victory-zoom-container": "^36.7.0"
+    "victory-brush-container": "^36.9.1",
+    "victory-core": "^36.9.1",
+    "victory-cursor-container": "^36.9.1",
+    "victory-selection-container": "^36.9.1",
+    "victory-voronoi-container": "^36.9.1",
+    "victory-zoom-container": "^36.9.1"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
@@ -305,7 +305,7 @@
       ]
     },
     "jest": {
-      "command": "nps jest:pkg",
+      "command": "jest --passWithNoTests",
       "files": [
         "src/**/*.test.*",
         "../../.babelrc.js",
@@ -314,9 +314,14 @@
       ],
       "output": [],
       "dependencies": [
-        "build:lib:cjs",
-        "../victory-vendor:build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs"
+        "../victory-brush-container:build",
+        "../victory-core:build",
+        "../victory-cursor-container:build",
+        "../victory-selection-container:build",
+        "../victory-voronoi-container:build",
+        "../victory-zoom-container:build",
+        "../victory-vendor:build",
+        "../victory-voronoi:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

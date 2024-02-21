@@ -1,6 +1,6 @@
 <h1 align="center">Victory Documentation Site</h1>
 
-[Documentation site](https://formidable.com/open-source/victory/) for [victory](https://github.com/FormidableLabs/victory) built with [react-static](https://github.com/nozzle/react-static), and deployed with [formideploy](https://github.com/FormidableLabs/formideploy)
+[Documentation site](https://formidable.com/open-source/victory/) for [victory](https://github.com/FormidableLabs/victory) built with [react-static](https://github.com/nozzle/react-static).
 
 
 ## Getting Started
@@ -16,71 +16,31 @@ Note that paths in local development are based on a root of "/" but be careful w
 
 ## Want to see if you're ready to :shipit:?
 
-First build the static site.
+First, build the static site (within /docs folder):
+
 ```bash
 yarn build
 ```
-Once it builds successfully, serve it:
+Once the build succeeds, serve it: 
 
 ```bash
 yarn serve
 ```
-The staging and production sites are served from a nested path, e.g. `https://formidable.com/open-source/victory`. This step is important for validating that both the `basePath` used by the static HTML output and the `basename` used by the client-side router are working as expected.
+
+This will render the docs site at `http://localhost:3000/open-source/victory/`. If you go to root (i.e. `http://localhost:3000/`), you will need to click through the browser's file explorer to `open-source/victory` to get to the site.
+
+Note the staging and production sites are served from a nested path, e.g. `https://commerce.nearform.com/open-source/victory`. This step is important for validating that both the `basePath` used by the static HTML output and the `basename` used by the client-side router are working as expected.
 
 ## Deployment
 
-### Staging
+### Preview Environments
 
-_Only for project administrators._
-
-Our CI deploys to staging for each PR using surge.sh at the following URL:
-
-`https://formidable-com-victory-staging-${PR_NUMBER}.surge.sh/open-source/victory`
-
-To test things out locally find the `Surge.sh` entry in 1password in the IC vault and make up some pretend values for a PR number in `FORMIDEPLOY_PULL_REQUEST`:
-
-```sh
-$ cd docs
-$ yarn clean && \
-  yarn build
-$ SURGE_LOGIN=<SNIPPED> \
-  SURGE_TOKEN=<SNIPPED> \
-  FORMIDEPLOY_PULL_REQUEST=12 \
-  yarn deploy:stage
-```
+Upon creating a Pull Request, a Vercel preview deployment is created and posted as a comment on the pull request to allow for testing changes.
 
 ### Production
 
-_Only for project administrators._
+This site is deployed with Vercel infrastructure and is automated with a repository trigger in the Formidable Labs Vercel account. 
 
-Our CI is configured to deploy the production build in `dist` to `formidable.com/open-source/victory`. This will happen automatically when a branch with docs changes that was opened by an internal collaborator is merged into the `main` branch of this repo. This section discusses kicking the tires locally:
+The site is directly accessible at [https://victory-rose.vercel.app/open-source/victory](https://victory-rose.vercel.app/open-source/victory).
 
-First, install the AWS CLI:
-
-```sh
-$ brew install awscli
-```
-
-Then, set up `aws-vault` with the AWS access and secret keys for "CI" in the `AWS IAM (victory-ci)` entry in the IC vault:
-
-```sh
-$ brew cask install aws-vault
-$ aws-vault add fmd-victory-ci
-# Enter AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY values.
-```
-
-_note_ if these keys do not already exist in the IC vault, they will need to be created. Please reach out to a member of the cloud team for help.
-
-Then build for production and deploy with dry run to check things:
-
-```sh
-$ cd docs
-$ yarn clean && \
-  yarn build
-$ aws-vault exec fmd-victory-ci --no-session -- \
-  yarn deploy:prod --dryrun
-```
-
-### Notes
-
-Docs PRs that originate from forks will not trigger staging or production builds of the docs site. To trigger a docs update based on a forked PR, someone with write access to the repo should open a new PR based on the changes and close the original with a reference. [Here's a handy git alias for creating a new branch based on a pr](https://gist.github.com/gvaughn/f3c7897a51e52138eac1)
+The `commerce.nearform.com` site uses a rewrite to host it under the path [https://commerce.nearform.com/open-source/victory/](https://commerce.nearform.com/open-source/victory/).

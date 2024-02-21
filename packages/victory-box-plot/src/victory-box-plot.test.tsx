@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryChart } from "victory-chart";
 import { Border, LineSegment, Whisker } from "victory-core";
+
+import { VictoryBoxPlot } from "./victory-box-plot";
 
 const TEST_GROUP_ID = "test-group-id";
 const dataset = [

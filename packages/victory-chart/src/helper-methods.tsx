@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Helpers, Scale, Axis, Wrapper } from "victory-core";
-import { defaults, assign } from "lodash";
+import { defaults } from "lodash";
 
 const fallbackProps = {
   width: 450,
@@ -82,16 +82,24 @@ function getStyles(props) {
   };
 }
 
-export function getCalculatedProps(props, childComponents) {
-  const style = getStyles(props);
-  props = Helpers.modifyProps(props, fallbackProps, "chart");
+export function getCalculatedProps(initialProps, childComponents) {
+  const style = getStyles(initialProps);
+  const props = Helpers.modifyProps(initialProps, fallbackProps, "chart");
   const { horizontal, polar } = props;
   const allStrings = Wrapper.getStringsFromChildren(props, childComponents);
   const categories = Wrapper.getCategories(props, childComponents, allStrings);
   const stringMap = createStringMap(props, childComponents, allStrings);
   const domain = {
-    x: getDomain(assign({}, props, { categories }), "x", childComponents),
-    y: getDomain(assign({}, props, { categories }), "y", childComponents),
+    x: getDomain(
+      Object.assign({}, props, { categories }),
+      "x",
+      childComponents,
+    ),
+    y: getDomain(
+      Object.assign({}, props, { categories }),
+      "y",
+      childComponents,
+    ),
   };
 
   const range = {
@@ -125,20 +133,20 @@ export function getCalculatedProps(props, childComponents) {
 }
 
 export function getChildren(props, childComponents, calculatedProps) {
-  childComponents = childComponents || getChildComponents(props);
-  calculatedProps =
-    calculatedProps || getCalculatedProps(props, childComponents);
-  const baseStyle = calculatedProps.style.parent;
+  const children = childComponents || getChildComponents(props);
+  const newCalculatedProps =
+    calculatedProps || getCalculatedProps(props, children);
+  const baseStyle = newCalculatedProps.style.parent;
   const { height, polar, theme, width } = props;
-  const { origin, horizontal } = calculatedProps;
+  const { origin, horizontal } = newCalculatedProps;
   const parentName = props.name || "chart";
 
-  return childComponents.map((child, index) => {
+  return children.filter(React.isValidElement).map((child, index) => {
     const role = child.type && child.type.role;
     const style = Array.isArray(child.props.style)
       ? child.props.style
       : defaults({}, child.props.style, { parent: baseStyle });
-    const childProps = getChildProps(child, props, calculatedProps);
+    const childProps = getChildProps(child, props, newCalculatedProps);
     const name = child.props.name || `${parentName}-${role}-${index}`;
     const newProps = defaults(
       {
@@ -150,7 +158,7 @@ export function getChildren(props, childComponents, calculatedProps) {
         style,
         name,
         origin: polar ? origin : undefined,
-        padding: calculatedProps.padding,
+        padding: newCalculatedProps.padding,
         key: `${name}-key-${index}`,
         standalone: false,
       },
@@ -161,11 +169,10 @@ export function getChildren(props, childComponents, calculatedProps) {
 }
 
 export const getChildComponents = (props, defaultAxes?) => {
-  const childComponents = React.Children.toArray(props.children);
-  let newChildComponents = [...childComponents];
+  let childComponents = React.Children.toArray(props.children);
 
   if (childComponents.length === 0) {
-    newChildComponents.push(defaultAxes.independent, defaultAxes.dependent);
+    childComponents.push(defaultAxes.independent, defaultAxes.dependent);
   } else {
     const axisComponents = {
       dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
@@ -179,24 +186,24 @@ export const getChildComponents = (props, defaultAxes?) => {
       axisComponents.dependent.length === 0 &&
       axisComponents.independent.length === 0
     ) {
-      newChildComponents = props.prependDefaultAxes
+      childComponents = props.prependDefaultAxes
         ? [defaultAxes.independent, defaultAxes.dependent].concat(
-            newChildComponents,
+            childComponents,
           )
-        : newChildComponents.concat([
+        : childComponents.concat([
             defaultAxes.independent,
             defaultAxes.dependent,
           ]);
     }
   }
 
-  return newChildComponents;
+  return childComponents;
 };
 
 const getDomain = (props, axis, childComponents) => {
-  childComponents = childComponents || React.Children.toArray(props.children);
-  const domain = Wrapper.getDomain(props, axis, childComponents);
-  const axisComponent = Axis.getAxisComponent(childComponents, axis);
+  const children = childComponents || React.Children.toArray(props.children);
+  const domain = Wrapper.getDomain(props, axis, children);
+  const axisComponent = Axis.getAxisComponent(children, axis);
   const invertDomain =
     axisComponent && axisComponent.props && axisComponent.props.invertAxis;
   return invertDomain ? domain.concat().reverse() : domain;

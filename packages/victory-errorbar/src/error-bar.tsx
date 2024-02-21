@@ -1,15 +1,12 @@
 /* eslint-disable max-statements */
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Helpers,
-  CommonProps,
   Line,
   UserProps,
   VictoryCommonPrimitiveProps,
   EventsMixinClass,
 } from "victory-core";
-import { assign } from "lodash";
 
 const renderBorder = (props, error, type) => {
   const vertical = type === "right" || type === "left";
@@ -79,12 +76,12 @@ const evaluateProps = (props) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ stroke: "black" }, props.style),
+    Object.assign({ stroke: "black" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, id, style, tabIndex });
 };
 
 export interface ErrorBarProps extends VictoryCommonPrimitiveProps {
@@ -116,8 +113,10 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const ErrorBar = (props: ErrorBarProps & typeof ErrorBar.default) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const ErrorBar = (
+  initialProps: ErrorBarProps & typeof ErrorBar.default,
+) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const { groupComponent } = props;
   const userProps = UserProps.getSafeUserProps(props);
   const { tabIndex, ariaLabel } = props;
@@ -137,24 +136,4 @@ export const ErrorBar = (props: ErrorBarProps & typeof ErrorBar.default) => {
     { tabIndex, "aria-label": ariaLabel, ...userProps },
     children,
   );
-};
-
-ErrorBar.propTypes = {
-  ...CommonProps.primitiveProps,
-  borderWidth: PropTypes.number,
-  datum: PropTypes.object,
-  errorX: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.array,
-    PropTypes.bool,
-  ]),
-  errorY: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.array,
-    PropTypes.bool,
-  ]),
-  groupComponent: PropTypes.element,
-  lineComponent: PropTypes.element,
-  x: PropTypes.number,
-  y: PropTypes.number,
 };

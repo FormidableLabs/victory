@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {
   VictoryContainer,
@@ -8,8 +7,9 @@ import {
   VictoryContainerProps,
 } from "victory-core";
 import { BrushHelpers } from "./brush-helpers";
-import { assign, defaults } from "lodash";
+import { defaults } from "lodash";
 import isEqual from "react-fast-compare";
+
 export interface VictoryBrushContainerProps extends VictoryContainerProps {
   allowDrag?: boolean;
   allowDraw?: boolean;
@@ -37,32 +37,15 @@ export interface VictoryBrushContainerProps extends VictoryContainerProps {
   ) => void;
 }
 
-type Constructor = new (...args: any[]) => React.Component;
+type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
 
-export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
-  class VictoryBrushContainer extends base {
+export function brushContainerMixin<
+  TBase extends ComponentClass<TProps>,
+  TProps extends VictoryBrushContainerProps,
+>(Base: TBase) {
+  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
+  return class VictoryBrushContainer extends Base {
     static displayName = "VictoryBrushContainer";
-    static propTypes = {
-      ...VictoryContainer.propTypes,
-      allowDrag: PropTypes.bool,
-      allowDraw: PropTypes.bool,
-      allowResize: PropTypes.bool,
-      brushComponent: PropTypes.element,
-      brushDimension: PropTypes.oneOf(["x", "y"]),
-      brushDomain: PropTypes.shape({
-        x: PropTypes.array,
-        y: PropTypes.array,
-      }),
-      brushStyle: PropTypes.object,
-      defaultBrushArea: PropTypes.oneOf(["all", "disable", "none", "move"]),
-      disable: PropTypes.bool,
-      handleComponent: PropTypes.element,
-      handleStyle: PropTypes.object,
-      handleWidth: PropTypes.number,
-      onBrushCleared: PropTypes.func,
-      onBrushDomainChange: PropTypes.func,
-      onBrushDomainChangeEnd: PropTypes.func,
-    };
     static defaultProps = {
       ...VictoryContainer.defaultProps,
       allowDrag: true,
@@ -193,23 +176,24 @@ export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
       };
 
       const handleProps = {
-        top: top && assign({ x: top.x1, y: top.y1 }, yProps),
-        bottom: bottom && assign({ x: bottom.x1, y: bottom.y1 }, yProps),
-        left: left && assign({ y: left.y1, x: left.x1 }, xProps),
-        right: right && assign({ y: right.y1, x: right.x1 }, xProps),
+        top: top && Object.assign({ x: top.x1, y: top.y1 }, yProps),
+        bottom: bottom && Object.assign({ x: bottom.x1, y: bottom.y1 }, yProps),
+        left: left && Object.assign({ y: left.y1, x: left.x1 }, xProps),
+        right: right && Object.assign({ y: right.y1, x: right.x1 }, xProps),
       };
       const handles = ["top", "bottom", "left", "right"].reduce(
-        (memo, curr) => {
-          memo = handleProps[curr]
+        (memo, curr) =>
+          handleProps[curr]
             ? memo.concat(
                 React.cloneElement(
                   handleComponent,
-                  assign({ key: `${name}-handle-${curr}` }, handleProps[curr]),
+                  Object.assign(
+                    { key: `${name}-handle-${curr}` },
+                    handleProps[curr],
+                  ),
                 ),
               )
-            : memo;
-          return memo;
-        },
+            : memo,
         [] as React.ReactElement[],
       );
       return handles.length ? handles : null;
@@ -234,6 +218,5 @@ export const brushContainerMixin = <TBase extends Constructor>(base: TBase) =>
       ];
     }
   };
-
+}
 export const VictoryBrushContainer = brushContainerMixin(VictoryContainer);
-export type VictoryBrushContainer = typeof VictoryBrushContainer;

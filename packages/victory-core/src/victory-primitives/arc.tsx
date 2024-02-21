@@ -1,12 +1,7 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
 import React from "react";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Path } from "./path";
 
 export interface ArcProps extends VictoryCommonPrimitiveProps {
@@ -18,6 +13,7 @@ export interface ArcProps extends VictoryCommonPrimitiveProps {
   pathComponent?: React.ReactElement;
   r?: number;
   startAngle?: number;
+  type?: string;
 }
 
 const getArcPath = (props) => {
@@ -54,12 +50,12 @@ const evaluateProps = (props) => {
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ stroke: "black", fill: "none" }, props.style),
+    Object.assign({ stroke: "black", fill: "none" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const defaultProps = {
@@ -68,8 +64,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Arc = (props: ArcProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Arc = (initialProps: ArcProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   return React.cloneElement(props.pathComponent!, {
     ...props.events,
@@ -84,16 +80,4 @@ export const Arc = (props: ArcProps) => {
     transform: props.transform,
     clipPath: props.clipPath,
   });
-};
-
-Arc.propTypes = {
-  ...CommonProps.primitiveProps,
-  closedPath: PropTypes.bool,
-  cx: PropTypes.number,
-  cy: PropTypes.number,
-  datum: PropTypes.any,
-  endAngle: PropTypes.number,
-  pathComponent: PropTypes.element,
-  r: PropTypes.number,
-  startAngle: PropTypes.number,
 };

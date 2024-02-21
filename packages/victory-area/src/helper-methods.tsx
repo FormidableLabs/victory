@@ -1,4 +1,3 @@
-import { assign, isNil } from "lodash";
 import {
   Helpers,
   LabelHelpers,
@@ -33,7 +32,7 @@ export const getDataWithBaseline = (props, scale) => {
     const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
     const _x1 = datum._x1 !== undefined ? datum._x1 : datum._x;
     const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
-    return assign({}, datum, { _y0, _y1, _x0, _x1 });
+    return Object.assign({}, datum, { _y0, _y1, _x0, _x1 });
   });
 };
 
@@ -64,9 +63,17 @@ const getCalculatedValues = (props) => {
   return { style, data, scale, domain, origin };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "area");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "area",
+  );
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     domain,
@@ -124,7 +131,7 @@ export const getBaseProps = (props, fallbackProps) => {
       (text !== undefined && text !== null) ||
       (labels && (events || sharedEvents))
     ) {
-      const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+      const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
       childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
     }
     return childProps;

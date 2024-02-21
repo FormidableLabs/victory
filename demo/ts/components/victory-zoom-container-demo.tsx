@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
-import { range, merge, random, minBy, maxBy, last } from "lodash";
+import { range, random, minBy, maxBy, last } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
@@ -331,7 +331,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: merge({}, props.style, { stroke: "orange" }),
+                            style: Object.assign({}, props.style, { stroke: "orange" }),
                           };
                         },
                       },
@@ -417,7 +417,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "gold" }),
+                          style: Object.assign({}, props.style, { fill: "gold" }),
                         };
                       },
                     },
@@ -426,7 +426,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, { fill: "orange" }),
                         };
                       },
                     },
@@ -435,7 +435,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, { fill: "red" }),
+                          style: Object.assign({}, props.style, { fill: "red" }),
                         };
                       },
                     },

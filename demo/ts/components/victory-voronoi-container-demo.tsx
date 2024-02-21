@@ -98,7 +98,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
         <div style={containerStyle}>
           <VictoryChart
             style={chartStyle}
-            domain={{ y: [0, 6] }}
+            scale={{ y: "log" }}
             containerComponent={
               <VictoryVoronoiContainer
                 voronoiDimension="x"
@@ -110,21 +110,28 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
             <VictoryScatter
               style={{ data: { fill: "red" }, labels: { fill: "red" } }}
               data={[
-                { x: 0, y: 2 },
-                { x: 2, y: 3 },
-                { x: 4, y: 4 },
-                { x: 6, y: 5 },
+                { x: 0, y: 2500 },
+                { x: 2, y: 3300 },
+                { x: 4, y: 4300 },
+                { x: 6, y: 2400 },
+                { x: 8, y: 3300 },
+                { x: 10, y: 5400 },
+                { x: 12, y: 8900 },
               ]}
             />
             <VictoryScatter
               data={[
-                { x: 2, y: 2 },
-                { x: 4, y: 3 },
-                { x: 6, y: 4 },
-                { x: 8, y: 5 },
+                { x: 0, y: 200 },
+                { x: 2, y: 3100 },
+                { x: 4, y: 2500 },
+                { x: 6, y: 870 },
+                { x: 8, y: 2300 },
+                { x: 10, y: 550 },
+                { x: 12, y: 5200 },
               ]}
             />
           </VictoryChart>
+
           <VictoryChart
             height={450}
             domain={{ y: [0, 1] }}

@@ -117,7 +117,7 @@ class App extends React.Component<any, BrushLineDemoState> {
     };
 
     return this.state.datasets
-      .map((dataset) => (isActive(dataset) ? dataset.name : null))
+      .map((dataset) => (isActive(dataset) ? dataset.name : null) || "")
       .filter(Boolean);
   }
 
@@ -246,21 +246,20 @@ class App extends React.Component<any, BrushLineDemoState> {
           </VictoryChart>
 
           <button onClick={this.clearMutation.bind(this)}>reset domain</button>
-          {this.state.externalMutation && (
-            <VictoryChart style={chartStyle}>
-              <VictoryBar
-                data={[
-                  { x: "one", y: 4 },
-                  { x: "two", y: 5 },
-                  { x: "three", y: 6 },
-                ]}
-              />
-              <VictoryAxis
-                axisComponent={<VictoryBrushLine brushWidth={20} />}
-                externalEventMutations={this.state.externalMutation}
-              />
-            </VictoryChart>
-          )}
+          <VictoryChart style={chartStyle}>
+            <VictoryBar
+              data={[
+                { x: "one", y: 4 },
+                { x: "two", y: 5 },
+                { x: "three", y: 6 },
+              ]}
+            />
+            <VictoryAxis
+              axisComponent={<VictoryBrushLine brushWidth={20} />}
+              externalEventMutations={this.state.externalMutation}
+            />
+          </VictoryChart>
+
           <VictoryChart style={chartStyle} domainPadding={{ x: 50 }}>
             <VictoryBar
               data={[

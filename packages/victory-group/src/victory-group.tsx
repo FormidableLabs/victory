@@ -1,10 +1,8 @@
-import { assign, defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
+import { defaults, isEmpty } from "lodash";
 import React from "react";
 import {
   CategoryPropType,
   ColorScalePropType,
-  CommonProps,
   DomainPaddingPropType,
   DomainPropType,
   EventPropTypeInterface,
@@ -67,8 +65,11 @@ const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
   const role = VictoryGroup?.role;
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
-  initialProps = { ...defaultProps, ...initialProps };
-  const props = getProps(initialProps);
+  const propsWithDefaults = React.useMemo(
+    () => ({ ...defaultProps, ...initialProps }),
+    [initialProps],
+  );
+  const props = getProps(propsWithDefaults);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
@@ -92,7 +93,7 @@ const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
   const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
     return children.map((child, index) => {
-      const childProps = assign(
+      const childProps = Object.assign(
         { animate: getAnimationProps(props, child, index) },
         child.props,
       );
@@ -132,8 +133,8 @@ const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
   ]);
 
   const userProps = React.useMemo(
-    () => UserProps.getSafeUserProps(initialProps),
-    [initialProps],
+    () => UserProps.getSafeUserProps(propsWithDefaults),
+    [propsWithDefaults],
   );
 
   const container = React.useMemo(() => {
@@ -160,16 +161,16 @@ const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = Hooks.usePreviousProps(initialProps);
+  const previousProps = Hooks.usePreviousProps(propsWithDefaults);
 
   React.useEffect(() => {
     // This is called before dismount to keep state in sync
     return () => {
-      if (initialProps.animate) {
+      if (propsWithDefaults.animate) {
         setAnimationState(previousProps, props);
       }
     };
-  }, [setAnimationState, previousProps, initialProps, props]);
+  }, [setAnimationState, previousProps, propsWithDefaults, props]);
 
   if (!isEmpty(events)) {
     return (
@@ -184,17 +185,6 @@ const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
     );
   }
   return React.cloneElement(container, container.props, newChildren);
-};
-
-VictoryGroupBase.propTypes = {
-  ...CommonProps.baseProps,
-  ...CommonProps.dataProps,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  horizontal: PropTypes.bool,
-  offset: PropTypes.number,
 };
 
 const componentConfig: VictoryComponentConfiguration<VictoryGroupProps> = {

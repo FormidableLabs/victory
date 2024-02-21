@@ -1,16 +1,7 @@
 /* eslint-disable no-use-before-define */
-import {
-  assign,
-  isEmpty,
-  isFunction,
-  without,
-  pickBy,
-  omitBy,
-  uniq,
-  includes,
-  keys,
-} from "lodash";
+import { isEmpty, pickBy, omitBy, uniq } from "lodash";
 import type { EventMixinCalculatedValues } from "./add-events";
+import { isFunction } from "./helpers";
 
 const GLOBAL_EVENT_REGEX = /^onGlobal(.*)$/;
 
@@ -48,10 +39,10 @@ interface ComponentWithEvents extends EventMixinCalculatedValues {
 export function getEvents(
   this: ComponentWithEvents,
   props,
-  target,
-  eventKey,
+  target?,
+  eventKey?,
   // eslint-disable-next-line no-shadow
-  getScopedEvents,
+  getScopedEvents?,
 ) {
   // Returns all events that apply to a particular target element
   const getEventsByTarget = (events: Array<ComponentEvent>) => {
@@ -59,7 +50,7 @@ export function getEvents(
       const targetEvents = events.reduce((memo, event) => {
         if (event.target !== undefined) {
           const matchesTarget = Array.isArray(event.target)
-            ? includes(event.target, target)
+            ? event.target.includes(target)
             : `${event.target}` === `${target}`;
           return matchesTarget ? memo.concat(event) : memo;
         }
@@ -82,7 +73,7 @@ export function getEvents(
     return (
       Array.isArray(selectedEvents) &&
       selectedEvents.reduce((memo, event) => {
-        return event ? assign(memo, event.eventHandlers) : memo;
+        return event ? Object.assign(memo, event.eventHandlers) : memo;
       }, {} as ComponentEvent["eventHandlers"])
     );
   };
@@ -115,7 +106,7 @@ export function getEvents(
   const sharedEvents =
     props.sharedEvents.events &&
     getSharedEvents(getEventsByTarget(props.sharedEvents.events), target);
-  return assign({}, sharedEvents, ownEvents);
+  return Object.assign({}, sharedEvents, ownEvents);
 }
 
 /* Returns a modified events object where each event handler is replaced by a new
@@ -137,12 +128,12 @@ export function getScopedEvents(
 
   // Mandatory usage: `getScopedEvents.bind(this)`
   // eslint-disable-next-line no-invalid-this
-  baseProps = baseProps || this.baseProps;
+  const newBaseProps = baseProps || this.baseProps;
   // returns the original base props or base state of a given target element
   const getTargetProps = (identifier, type) => {
     const { childName, target, key } = identifier;
     // eslint-disable-next-line no-invalid-this
-    const baseType = type === "props" ? baseProps : this.state || {};
+    const baseType = type === "props" ? newBaseProps : this.state || {};
     const base =
       childName === undefined || childName === null || !baseType[childName]
         ? baseType
@@ -165,13 +156,15 @@ export function getScopedEvents(
         return "parent";
       }
       if (eventReturn.eventKey === "all") {
-        return baseProps[childName]
-          ? without(keys(baseProps[childName]), "parent")
-          : without(keys(baseProps), "parent");
+        return newBaseProps[childName]
+          ? Object.keys(newBaseProps[childName]).filter(
+              (value) => value !== "parent",
+            )
+          : Object.keys(newBaseProps).filter((value) => value !== "parent");
       } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
-        return baseProps[childName]
-          ? keys(baseProps[childName])
-          : keys(baseProps);
+        return newBaseProps[childName]
+          ? Object.keys(newBaseProps[childName])
+          : Object.keys(newBaseProps);
       }
       return eventReturn.eventKey !== undefined
         ? eventReturn.eventKey
@@ -194,8 +187,8 @@ export function getScopedEvents(
         "state",
       );
       const mutatedProps = eventReturn.mutation(
-        assign({}, mutationTargetProps, mutationTargetState),
-        baseProps,
+        Object.assign({}, mutationTargetProps, mutationTargetState),
+        newBaseProps,
       );
       const childState = baseState[childName] || {};
 
@@ -203,7 +196,7 @@ export function getScopedEvents(
         if (state[key] && state[key][target]) {
           delete state[key][target];
         }
-        if (state[key] && !keys(state[key]).length) {
+        if (state[key] && !Object.keys(state[key]).length) {
           delete state[key];
         }
         return state;
@@ -211,9 +204,13 @@ export function getScopedEvents(
 
       const extendState = (state) => {
         return target === "parent"
-          ? assign(state, { [key]: assign(state[key], mutatedProps) })
-          : assign(state, {
-              [key]: assign(state[key], { [target]: mutatedProps }),
+          ? Object.assign(state, {
+              [key]: Object.assign(state[key] || {}, mutatedProps),
+            })
+          : Object.assign(state, {
+              [key]: Object.assign(state[key] || {}, {
+                [target]: mutatedProps,
+              }),
             });
       };
 
@@ -222,7 +219,7 @@ export function getScopedEvents(
       };
 
       return childName !== undefined && childName !== null
-        ? assign(baseState, { [childName]: updateState(childState) })
+        ? Object.assign(baseState, { [childName]: updateState(childState) })
         : updateState(baseState);
     };
 
@@ -231,17 +228,19 @@ export function getScopedEvents(
       const mutationKeys = getKeys(childName);
       return Array.isArray(mutationKeys)
         ? mutationKeys.reduce((memo, key) => {
-            return assign(memo, getMutationObject(key, childName));
+            return Object.assign(memo, getMutationObject(key, childName));
           }, {})
         : getMutationObject(mutationKeys, childName);
     };
 
     // returns an entire mutated state for all children
     const allChildNames =
-      childNames === "all" ? without(keys(baseProps), "parent") : childNames;
+      childNames === "all"
+        ? Object.keys(newBaseProps).filter((value) => value !== "parent")
+        : childNames;
     return Array.isArray(allChildNames)
       ? allChildNames.reduce((memo, childName) => {
-          return assign(memo, getReturnByChild(childName));
+          return Object.assign(memo, getReturnByChild(childName));
         }, {})
       : getReturnByChild(allChildNames);
   };
@@ -249,10 +248,10 @@ export function getScopedEvents(
   // Parses an array of event returns into a single state mutation
   const parseEventReturn = (eventReturn, eventKey) => {
     return Array.isArray(eventReturn)
-      ? eventReturn.reduce((memo, props) => {
-          memo = assign({}, memo, parseEvent(props, eventKey));
-          return memo;
-        }, {})
+      ? eventReturn.reduce(
+          (memo, props) => Object.assign({}, memo, parseEvent(props, eventKey)),
+          {},
+        )
       : parseEvent(eventReturn, eventKey);
   };
 
@@ -281,7 +280,7 @@ export function getScopedEvents(
   };
 
   // returns a new events object with enhanced event handlers
-  return keys(events).reduce((memo, event) => {
+  return Object.keys(events).reduce((memo, event) => {
     memo[event] = onEvent;
     return memo;
   }, {});
@@ -298,7 +297,7 @@ export function getPartialEvents(
 ): PartialEvents {
   if (!events) return {};
 
-  return keys(events).reduce((memo, eventName) => {
+  return Object.keys(events).reduce((memo, eventName) => {
     const appliedEvent = (evt) =>
       events[eventName](evt, childProps, eventKey, eventName);
     memo[eventName] = appliedEvent;
@@ -347,13 +346,10 @@ export function getEventState(
 // eslint-disable-next-line max-params
 export function getExternalMutationsWithChildren(
   mutations,
-  baseProps,
-  baseState,
+  baseProps = {},
+  baseState = {},
   childNames,
 ) {
-  baseProps = baseProps || {};
-  baseState = baseState || {};
-
   return childNames.reduce((memo, childName) => {
     const childState = baseState[childName];
     const mutation = getExternalMutations(
@@ -380,14 +376,11 @@ export function getExternalMutationsWithChildren(
 // eslint-disable-next-line max-params
 export function getExternalMutations(
   mutations,
-  baseProps,
-  baseState,
+  baseProps = {},
+  baseState = {},
   childName?,
 ) {
-  baseProps = baseProps || {};
-  baseState = baseState || {};
-
-  const eventKeys = keys(baseProps);
+  const eventKeys = Object.keys(baseProps);
   return eventKeys.reduce((memo, eventKey) => {
     const keyState = baseState[eventKey] || {};
     const keyProps = baseProps[eventKey] || {};
@@ -400,11 +393,13 @@ export function getExternalMutations(
         identifier,
       );
       memo[eventKey] =
-        mutation !== undefined ? assign({}, keyState, mutation) : keyState;
+        mutation !== undefined
+          ? Object.assign({}, keyState, mutation)
+          : keyState;
     } else {
       // use keys from both state and props so that elements not intially included in baseProps
       // will be used. (i.e. labels)
-      const targets = uniq(keys(keyProps).concat(keys(keyState)));
+      const targets = uniq(Object.keys(keyProps).concat(Object.keys(keyState)));
       memo[eventKey] = targets.reduce((m, target) => {
         const identifier = { eventKey, target, childName };
         const mutation = getExternalMutation(
@@ -415,7 +410,7 @@ export function getExternalMutations(
         );
         m[target] =
           mutation !== undefined
-            ? assign({}, keyState[target], mutation)
+            ? Object.assign({}, keyState[target], mutation)
             : keyState[target];
         return pickBy(m, (v) => !isEmpty(v));
       }, {});
@@ -447,13 +442,12 @@ export function getExternalMutation(
     } else if (Array.isArray(mutation[type])) {
       // coerce arrays to strings before matching
       const stringArray = mutation[type].map((m) => `${m}`);
-      return includes(stringArray, identifier[type]);
+      return stringArray.includes(identifier[type]);
     }
     return false;
   };
 
-  mutations = Array.isArray(mutations) ? mutations : [mutations];
-  let scopedMutations = mutations;
+  let scopedMutations = Array.isArray(mutations) ? mutations : [mutations];
   if (identifier.childName) {
     scopedMutations = mutations.filter((m) => filterMutations(m, "childName"));
   }
@@ -473,8 +467,10 @@ export function getExternalMutation(
   return keyMutations.reduce((memo, curr) => {
     const mutationFunction =
       curr && isFunction(curr.mutation) ? curr.mutation : () => undefined;
-    const currentMutation = mutationFunction(assign({}, baseProps, baseState));
-    return assign({}, memo, currentMutation);
+    const currentMutation = mutationFunction(
+      Object.assign({}, baseProps, baseState),
+    );
+    return Object.assign({}, memo, currentMutation);
   }, {});
 }
 
@@ -491,10 +487,9 @@ export function getComponentEvents(props, components) {
       const componentEvents = isFunction(defaultEvents)
         ? defaultEvents(component.props)
         : defaultEvents;
-      memo = Array.isArray(componentEvents)
+      return Array.isArray(componentEvents)
         ? memo.concat(...componentEvents)
         : memo;
-      return memo;
     }, [] as ComponentEvent[]);
   return events && events.length ? events : undefined;
 }
@@ -511,4 +506,4 @@ export const omitGlobalEvents = (events) =>
   omitBy(events, (_, key) => GLOBAL_EVENT_REGEX.test(key));
 
 export const emulateReactEvent = (event) =>
-  assign(event, { nativeEvent: event });
+  Object.assign(event, { nativeEvent: event });

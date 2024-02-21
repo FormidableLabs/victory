@@ -1,12 +1,9 @@
-import { defaults, assign, isEmpty } from "lodash";
-import PropTypes from "prop-types";
+import { defaults, isEmpty } from "lodash";
 import React from "react";
 import {
   Background,
-  CommonProps,
   Helpers,
   Hooks,
-  PropTypes as CustomPropTypes,
   UserProps,
   VictoryContainer,
   VictoryTheme,
@@ -53,11 +50,14 @@ const defaultProps = {
 };
 
 const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
-  initialProps = { ...defaultProps, ...initialProps };
+  const propsWithDefaults = React.useMemo(
+    () => ({ ...defaultProps, ...initialProps }),
+    [initialProps],
+  );
   const role = "chart";
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
-  const props = getProps(initialProps);
+  const props = getProps(propsWithDefaults);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
@@ -94,7 +94,7 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
     const children = getChildren(props, childComponents, calculatedProps);
 
     const mappedChildren = children.map((child, index) => {
-      const childProps = assign(
+      const childProps = Object.assign(
         { animate: getAnimationProps(props, child, index) },
         child.props,
       );
@@ -154,7 +154,7 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
         {},
         containerComponent.props,
         containerProps,
-        UserProps.getSafeUserProps(initialProps),
+        UserProps.getSafeUserProps(propsWithDefaults),
       );
       return React.cloneElement(containerComponent, defaultContainerProps);
     }
@@ -164,23 +164,23 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
     standalone,
     containerComponent,
     containerProps,
-    initialProps,
+    propsWithDefaults,
   ]);
 
   const events = React.useMemo(() => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = Hooks.usePreviousProps(initialProps);
+  const previousProps = Hooks.usePreviousProps(propsWithDefaults);
 
   React.useEffect(() => {
     // This is called before dismount to keep state in sync
     return () => {
-      if (initialProps.animate) {
-        setAnimationState(previousProps, initialProps);
+      if (propsWithDefaults.animate) {
+        setAnimationState(previousProps, propsWithDefaults);
       }
     };
-  }, [setAnimationState, previousProps, initialProps]);
+  }, [setAnimationState, previousProps, propsWithDefaults]);
 
   if (!isEmpty(events)) {
     return (
@@ -195,27 +195,6 @@ const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
     );
   }
   return React.cloneElement(container, container.props, newChildren);
-};
-
-VictoryChartImpl.propTypes = {
-  ...CommonProps.baseProps,
-  backgroundComponent: PropTypes.element,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  defaultAxes: PropTypes.shape({
-    independent: PropTypes.element,
-    dependent: PropTypes.element,
-  }),
-  defaultPolarAxes: PropTypes.shape({
-    independent: PropTypes.element,
-    dependent: PropTypes.element,
-  }),
-  endAngle: PropTypes.number,
-  innerRadius: CustomPropTypes.nonNegative,
-  prependDefaultAxes: PropTypes.bool,
-  startAngle: PropTypes.number,
 };
 
 export const VictoryChart = React.memo(VictoryChartImpl, isEqual);

@@ -1,20 +1,26 @@
 import React, { forwardRef } from "react";
+import { evaluateProp } from "../victory-util/helpers";
 import { VictoryPrimitiveShapeProps } from "./types";
 
-// eslint-disable-next-line prefer-arrow-callback
-export const Path = forwardRef(function Path(
-  props: VictoryPrimitiveShapeProps,
-  ref,
-) {
-  // eslint-disable-next-line react/prop-types
-  const { desc, ...rest } = props;
-  return desc ? (
-    // @ts-expect-error FIXME: "id cannot be a number"
-    <path {...rest} ref={ref}>
-      <desc>{desc}</desc>
-    </path>
-  ) : (
-    // @ts-expect-error FIXME: "id cannot be a number"
-    <path {...rest} ref={ref} />
-  );
-});
+export const Path = forwardRef<SVGPathElement, VictoryPrimitiveShapeProps>(
+  (props, ref) => {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars --
+     * origin conflicts with the SVG element's origin attribute
+     */
+    const { desc, id, tabIndex, origin, ...rest } = props;
+
+    const svgProps: React.SVGProps<SVGPathElement> = {
+      id: evaluateProp(id, props)?.toString(),
+      tabIndex: evaluateProp(tabIndex, props),
+      ...rest,
+    };
+
+    return desc ? (
+      <path {...svgProps} ref={ref}>
+        <desc>{desc}</desc>
+      </path>
+    ) : (
+      <path {...svgProps} ref={ref} />
+    );
+  },
+);

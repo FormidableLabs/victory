@@ -1,18 +1,5 @@
 import React from "react";
-import {
-  assign,
-  defaults,
-  identity,
-  isFunction,
-  isObject,
-  invert,
-  uniq,
-  range,
-  orderBy,
-  values,
-  includes,
-  without,
-} from "lodash";
+import { defaults, identity, isObject, invert, uniq, orderBy } from "lodash";
 import * as Collection from "./collection";
 import * as Domain from "./domain";
 import * as Helpers from "./helpers";
@@ -36,10 +23,14 @@ export function getAxis(props) {
  * @returns {Array} all axis components that pass the given predicate or []
  */
 export function findAxisComponents(childComponents, predicate?) {
-  predicate = predicate || identity;
+  const predicateFunction = predicate || identity;
   const findAxes = (children) => {
     return children.reduce((memo, child) => {
-      if (child.type && child.type.role === "axis" && predicate(child)) {
+      if (
+        child.type &&
+        child.type.role === "axis" &&
+        predicateFunction(child)
+      ) {
         return memo.concat(child);
       } else if (child.props && child.props.children) {
         return memo.concat(
@@ -156,8 +147,8 @@ function getDefaultTickFormat(props) {
       : fallbackFormat;
   }
   const invertedStringMap = stringMap && invert(stringMap);
-  const tickValueArray = orderBy(values(stringMap), (n) => n);
-  const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
+  const tickValueArray = orderBy(Object.values(stringMap), (n) => n);
+  const dataNames = tickValueArray.map((tick: any) => invertedStringMap[tick]);
   // string ticks should have one tick of padding at the beginning
   const dataTicks = ["", ...dataNames, ""];
   return (x) => dataTicks[x];
@@ -173,7 +164,7 @@ function getStringTicks(props) {
     categories && Collection.containsOnlyStrings(categories)
       ? categories.map((tick) => stringMap[tick])
       : undefined;
-  const ticksFromStringMap = stringMap && values(stringMap);
+  const ticksFromStringMap = stringMap && Object.values(stringMap);
   return ticksFromCategories && ticksFromCategories.length !== 0
     ? ticksFromCategories
     : ticksFromStringMap;
@@ -204,7 +195,7 @@ function getTickArray(props) {
   if (tickValues && Collection.containsStrings(tickValues)) {
     ticks = stringMap
       ? tickValues.map((tick) => stringMap[tick])
-      : range(1, tickValues.length + 1);
+      : Helpers.range(1, tickValues.length + 1);
   }
   const tickArray = ticks ? uniq(ticks) : getTicksFromFormat();
   const buildTickArray = (arr: number[]) => {
@@ -248,7 +239,7 @@ export function getTickFormat(props, scale) {
     // by default. This changed the default formatting for some scale types when
     // we upgraded to d3-scale@4..
     const scaleTickFormat =
-      scale.tickFormat && isFunction(scale.tickFormat)
+      scale.tickFormat && Helpers.isFunction(scale.tickFormat)
         ? scale.tickFormat()
         : (x) => x;
     return defaultTickFormat || scaleTickFormat;
@@ -259,7 +250,7 @@ export function getTickFormat(props, scale) {
       tickArrayIndices?.includes(index),
     );
     return (x, index) => filteredTickFormat[index];
-  } else if (tickFormat && isFunction(tickFormat)) {
+  } else if (tickFormat && Helpers.isFunction(tickFormat)) {
     const applyStringTicks = (tick, index, ticks) => {
       const invertedStringMap = invert(stringMap);
       const stringTickArray = ticks.map((t) => invertedStringMap[t]);
@@ -289,7 +280,7 @@ export function getTicks(props, scale: D3Scale, filterZero = false) {
   const tickValues = tickArray ? tickArray.map((v) => v.value) : undefined;
   if (tickValues) {
     return downsampleTicks(tickValues, tickCount);
-  } else if (scale.ticks && isFunction(scale.ticks)) {
+  } else if (scale.ticks && Helpers.isFunction(scale.ticks)) {
     // eslint-disable-next-line no-magic-numbers
     const defaultTickCount = tickCount || 5;
     const scaleTicks = scale.ticks(defaultTickCount);
@@ -299,7 +290,7 @@ export function getTicks(props, scale: D3Scale, filterZero = false) {
         : scale.domain();
     const ticks = downsampleTicks(scaledTickArray, tickCount);
     if (filterZero) {
-      const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
+      const filteredTicks = ticks.filter((value) => value !== 0);
       return filteredTicks.length ? filteredTicks : ticks;
     }
     return ticks;
@@ -360,7 +351,7 @@ export function getAxisValue(props, axis) {
   }
   const scaleAxis = axis === "x" ? "y" : "x";
   const scale =
-    isObject(props.scale) && isFunction(props.scale[scaleAxis])
+    isObject(props.scale) && Helpers.isFunction(props.scale[scaleAxis])
       ? props.scale[scaleAxis]
       : undefined;
   if (!scale) {
@@ -389,9 +380,9 @@ export function modifyProps(props, fallbackProps) {
     return Helpers.modifyProps(props, fallbackProps, "axis");
   }
   const axisTheme = defaults({}, props.theme[role], props.theme.axis);
-  const theme = assign({}, props.theme, { axis: axisTheme });
+  const theme = Object.assign({}, props.theme, { axis: axisTheme });
   return Helpers.modifyProps(
-    assign({}, props, { theme }),
+    Object.assign({}, props, { theme }),
     fallbackProps,
     "axis",
   );

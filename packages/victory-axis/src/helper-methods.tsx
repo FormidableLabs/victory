@@ -1,5 +1,6 @@
-import { assign, defaults } from "lodash";
+import { defaults } from "lodash";
 import { Helpers, Scale, Axis } from "victory-core";
+import { VictoryAxisProps } from "./victory-axis";
 
 const orientationSign = {
   top: -1,
@@ -61,9 +62,11 @@ const getStyleObject = (props) => {
     : specificAxisStyle || generalAxisStyle;
 };
 
-export const getStyles = (props, styleObject?) => {
+export const getStyles = (
+  props,
+  styleObject: VictoryAxisProps["style"] = {},
+) => {
   const style = props.style || {};
-  styleObject = styleObject || {};
   const parentStyleProps = { height: "100%", width: "100%" };
   return {
     parent: defaults(style.parent, styleObject.parent, parentStyleProps),
@@ -242,7 +245,7 @@ const getStandaloneOffset = (props, calculatedValues) => {
     const tick = stringTicks ? props.tickValues[data - 1] : data;
     const tickStyle = Helpers.evaluateStyle(
       style.ticks,
-      assign({}, sharedProps, { tick, index }),
+      Object.assign({}, sharedProps, { tick, index }),
     );
     return tickStyle.size || 0;
   });
@@ -543,8 +546,8 @@ const getCalculatedValues = (props) => {
   };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  props = Axis.modifyProps(props, fallbackProps);
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const props = Axis.modifyProps(initialProps, fallbackProps);
   const calculatedValues = getCalculatedValues(props);
   const {
     axis,
@@ -579,7 +582,7 @@ export const getBaseProps = (props, fallbackProps) => {
     globalTransform,
   );
   const initialChildProps = {
-    parent: assign(
+    parent: Object.assign(
       {
         style: style.parent,
         ticks,
@@ -607,7 +610,7 @@ export const getBaseProps = (props, fallbackProps) => {
     const text = tickFormat(tickValue, index, ticks);
     const styles = getEvaluatedStyles(
       style,
-      assign({}, sharedProps, { tick, tickValue, index, text }),
+      Object.assign({}, sharedProps, { tick, tickValue, index, text }),
     );
     const tickLayout = {
       position: getTickPosition(styles, orientation, isVertical),
@@ -630,14 +633,14 @@ export const getBaseProps = (props, fallbackProps) => {
       },
     };
     childProps[index] = {
-      axis: assign({ dimension: axis }, sharedProps, axisProps),
-      axisLabel: assign({}, sharedProps, axisLabelProps),
-      ticks: assign(
+      axis: Object.assign({ dimension: axis }, sharedProps, axisProps),
+      axisLabel: Object.assign({}, sharedProps, axisLabelProps),
+      ticks: Object.assign(
         {},
         sharedProps,
         getTickProps(tickLayout, styles.tickStyle, tickValue),
       ),
-      tickLabels: assign(
+      tickLabels: Object.assign(
         {},
         sharedProps,
         getTickLabelProps(
@@ -648,7 +651,7 @@ export const getBaseProps = (props, fallbackProps) => {
           text,
         ),
       ),
-      grid: assign(
+      grid: Object.assign(
         {},
         sharedProps,
         gridProps,

@@ -1,6 +1,6 @@
 // http://www.pearsonified.com/2012/01/characters-per-line.php
 /* eslint-disable no-magic-numbers */
-import { assign, defaults, memoize } from "lodash";
+import { defaults, memoize } from "lodash";
 
 // Based on measuring specific character widths
 // as in the following example https://bl.ocks.org/tophtucker/62f93a4658387bb61e4510c37e2e97cf
@@ -189,7 +189,7 @@ export const convertLengthToPixels = (
 const _prepareParams = (inputStyle, index) => {
   const lineStyle = Array.isArray(inputStyle) ? inputStyle[index] : inputStyle;
   const style = defaults({}, lineStyle, defaultStyle);
-  return assign({}, style, {
+  return Object.assign({}, style, {
     fontFamily: style.fontFamily,
     letterSpacing:
       typeof style.letterSpacing === "number"
@@ -297,7 +297,11 @@ const styleToKeyComponent = (style) => {
 
 const _measureDimensionsInternal = memoize(
   (text: string | string[], style?: TextSizeStyleInterface) => {
-    const containerElement = _getMeasurementContainer();
+    let containerElement = _getMeasurementContainer();
+    if (!containerElement.isConnected) {
+      _getMeasurementContainer.cache.clear?.();
+      containerElement = _getMeasurementContainer();
+    }
 
     const lines = _splitToLines(text);
     let heightAcc = 0;

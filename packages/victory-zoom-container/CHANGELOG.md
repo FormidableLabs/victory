@@ -1,5 +1,39 @@
 # victory-zoom-container
 
+## 36.9.1
+
+### Patch Changes
+
+- Fix victory-native component prop types ([#2785](https://github.com/FormidableLabs/victory/pull/2785))
+
+## 36.9.0
+
+### Minor Changes
+
+- Remove prop-types definitions and dependency ([#2758](https://github.com/FormidableLabs/victory/pull/2758))
+
+## 36.8.6
+
+## 36.8.5
+
+### Patch Changes
+
+- Replace instances of lodash.assign with Object.assign ([#2757](https://github.com/FormidableLabs/victory/pull/2757))
+
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Migrate victory-zoom-container to TypeScript ([#2730](https://github.com/FormidableLabs/victory/pull/2730))
+
+## 36.8.2
+
+## 36.8.1
+
+## 36.8.0
+
 ## 36.7.0
 
 ## 36.6.12

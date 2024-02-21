@@ -1,11 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Rect } from "./rect";
 
 export interface BorderProps extends VictoryCommonPrimitiveProps {
@@ -29,12 +24,12 @@ const evaluateProps = (props) => {
   const desc = Helpers.evaluateProp(props.desc, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ fill: "none" }, props.style),
+    Object.assign({ fill: "none" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const defaultProps = {
@@ -43,8 +38,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Border = (props: BorderProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Border = (initialProps: BorderProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   return React.cloneElement(props.rectComponent!, {
     ...props.events,
@@ -62,13 +57,4 @@ export const Border = (props: BorderProps) => {
     height: props.height,
     clipPath: props.clipPath,
   });
-};
-
-Border.propTypes = {
-  ...CommonProps.primitiveProps,
-  height: PropTypes.number,
-  rectComponent: PropTypes.element,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
 };

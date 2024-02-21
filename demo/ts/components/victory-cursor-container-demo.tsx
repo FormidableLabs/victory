@@ -160,7 +160,6 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             containerComponent={
               <VictoryCursorContainer
                 cursorLabel={({ datum }) => round(datum.x, 2)}
-                cursorDimension="x"
                 defaultCursorValue={1}
               />
             }
@@ -173,20 +172,8 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
           <VictoryScatter
             style={{
               parent: chartStyle.parent,
-              data: {
-                fill: ({ active }) => (active ? "tomato" : "black"),
-              },
             }}
-            containerComponent={
-              <VictoryCursorContainer
-                style={{
-                  stroke: "tomato",
-                  strokeWidth: 2,
-                  fill: "tomato",
-                  fillOpacity: 0.1,
-                }}
-              />
-            }
+            containerComponent={<VictoryCursorContainer />}
             size={({ active }) => (active ? 5 : 3)}
             y={(d) => d.x * d.x}
           />

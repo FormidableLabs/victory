@@ -1,8 +1,9 @@
 import { render } from "@testing-library/react";
-import { assign } from "lodash";
 import React from "react";
-import { PointPathHelpers as pathHelpers, Point } from "victory-core";
+
 import { SVGWrapper } from "../../../../test/helpers";
+import { PointPathHelpers } from "../victory-util";
+import { Point } from "./point";
 
 describe("victory-primitives/point", () => {
   const baseProps = {
@@ -26,10 +27,10 @@ describe("victory-primitives/point", () => {
   ).forEach((symbol) => {
     it(`should render the appropriate symbol for "${symbol}"`, () => {
       const stub = jest
-        .spyOn(pathHelpers, symbol)
+        .spyOn(PointPathHelpers, symbol)
         // eslint-disable-next-line max-nested-callbacks
         .mockImplementation(() => `${symbol} symbol`);
-      const props = assign({}, baseProps, { symbol });
+      const props = Object.assign({}, baseProps, { symbol });
       const { container } = render(<Point {...props} />, {
         wrapper: SVGWrapper,
       });

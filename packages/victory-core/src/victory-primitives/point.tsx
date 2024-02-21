@@ -1,12 +1,7 @@
-import { assign } from "lodash";
-import PropTypes from "prop-types";
 import React from "react";
 import * as Helpers from "../victory-util/helpers";
 import * as pathHelpers from "../victory-util/point-path-helpers";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import * as UserProps from "../victory-util/user-props";
 import { Path } from "./path";
 import { ScatterSymbolType } from "./types";
@@ -55,7 +50,7 @@ const evaluateProps = (props) => {
   const symbol = Helpers.evaluateProp(props.symbol, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, {
+  return Object.assign({}, props, {
     ariaLabel,
     desc,
     id,
@@ -72,8 +67,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Point = (props: PointProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Point = (initialProps: PointProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent!, {
@@ -90,28 +85,4 @@ export const Point = (props: PointProps) => {
     clipPath: props.clipPath,
     ...userProps,
   });
-};
-
-Point.propTypes = {
-  ...CommonProps.primitiveProps,
-  datum: PropTypes.object,
-  getPath: PropTypes.func,
-  pathComponent: PropTypes.element,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  symbol: PropTypes.oneOfType([
-    PropTypes.oneOf([
-      "circle",
-      "cross",
-      "diamond",
-      "plus",
-      "minus",
-      "square",
-      "star",
-      "triangleDown",
-      "triangleUp",
-    ]),
-    PropTypes.func,
-  ]),
-  x: PropTypes.number,
-  y: PropTypes.number,
 };

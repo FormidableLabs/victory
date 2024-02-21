@@ -1,10 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { range } from "lodash";
 import React from "react";
-import { Area, VictoryArea, VictoryAreaProps } from "victory-area";
 import { VictoryChart } from "victory-chart";
+import { Helpers } from "victory-core";
 import { curveCatmullRom } from "victory-vendor/d3-shape";
+
 import { calculateD3Path } from "../../../test/helpers/svg";
+import { Area } from "./area";
+import { VictoryArea, VictoryAreaProps } from "./victory-area";
 
 describe("components/victory-area", () => {
   describe("default component rendering", () => {
@@ -115,7 +117,7 @@ describe("components/victory-area", () => {
         scale: "linear",
         interpolation: "linear",
         sortKey: "x",
-        data: range(5)
+        data: Helpers.range(5)
           // eslint-disable-next-line max-nested-callbacks
           .map((i) => ({ x: i, y: i, y0: 0 }))
           .reverse(),
@@ -145,7 +147,7 @@ describe("components/victory-area", () => {
         interpolation: "linear",
         sortKey: "x",
         sortOrder: "descending",
-        data: range(5)
+        data: Helpers.range(5)
           .map((i) => ({ x: i, y: i, y0: 0 }))
           .reverse(),
       };

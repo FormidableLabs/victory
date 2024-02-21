@@ -1,7 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import * as CustomPropTypes from "../victory-util/prop-types";
-import { assign, defaults, uniqueId, isObject, isFunction } from "lodash";
+import { defaults, uniqueId, isObject } from "lodash";
 import { Portal } from "../victory-portal/portal";
 import { PortalContext } from "../victory-portal/portal-context";
 import TimerContext from "../victory-util/timer-context";
@@ -43,42 +41,11 @@ export interface VictoryContainerProps {
   width?: number;
 }
 
-export class VictoryContainer extends React.Component<VictoryContainerProps> {
+export class VictoryContainer<
+  TProps extends VictoryContainerProps,
+> extends React.Component<TProps> {
   static displayName = "VictoryContainer";
   static role = "container";
-  static propTypes = {
-    "aria-describedby": PropTypes.string,
-    "aria-labelledby": PropTypes.string,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]),
-    className: PropTypes.string,
-    containerId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    containerRef: PropTypes.func,
-    desc: PropTypes.string,
-    events: PropTypes.object,
-    height: CustomPropTypes.nonNegative,
-    name: PropTypes.string,
-    origin: PropTypes.shape({
-      x: CustomPropTypes.nonNegative,
-      y: CustomPropTypes.nonNegative,
-    }),
-    ouiaId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    ouiaSafe: PropTypes.bool,
-    ouiaType: PropTypes.string,
-    polar: PropTypes.bool,
-    portalComponent: PropTypes.element,
-    portalZIndex: CustomPropTypes.integer,
-    preserveAspectRatio: PropTypes.string,
-    responsive: PropTypes.bool,
-    role: PropTypes.string,
-    style: PropTypes.object,
-    tabIndex: PropTypes.number,
-    theme: PropTypes.object,
-    title: PropTypes.string,
-    width: CustomPropTypes.nonNegative,
-  };
 
   static defaultProps = {
     className: "VictoryContainer",
@@ -96,7 +63,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
   private containerRef: HTMLElement;
   private shouldHandleWheel: boolean;
 
-  constructor(props: VictoryContainerProps) {
+  constructor(props: TProps) {
     super(props);
     this.containerId =
       !isObject(props) || props.containerId === undefined
@@ -114,7 +81,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
   portalDeregister = (key) => this.portalRef.portalDeregister(key);
 
   saveContainerRef = (container: HTMLElement) => {
-    if (isFunction(this.props.containerRef)) {
+    if (Helpers.isFunction(this.props.containerRef)) {
       this.props.containerRef(container);
     }
     this.containerRef = container;
@@ -170,7 +137,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
     const dimensions = responsive
       ? { width: "100%", height: "100%" }
       : { width, height };
-    const divStyle = assign(
+    const divStyle = Object.assign(
       {
         pointerEvents: "none",
         touchAction: "none",
@@ -178,12 +145,12 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
       } as const,
       dimensions,
     );
-    const portalDivStyle = assign(
+    const portalDivStyle = Object.assign(
       { zIndex: portalZIndex, position: "absolute", top: 0, left: 0 } as const,
       dimensions,
     );
-    const svgStyle = assign({ pointerEvents: "all" }, dimensions);
-    const portalSvgStyle = assign({ overflow: "visible" }, dimensions);
+    const svgStyle = Object.assign({ pointerEvents: "all" }, dimensions);
+    const portalSvgStyle = Object.assign({ overflow: "visible" }, dimensions);
     const portalProps = {
       width,
       height,
@@ -244,7 +211,7 @@ export class VictoryContainer extends React.Component<VictoryContainerProps> {
 
     const userProps = UserProps.getSafeUserProps(this.props);
 
-    const svgProps = assign(
+    const svgProps = Object.assign(
       {
         width,
         height,

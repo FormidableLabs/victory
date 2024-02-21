@@ -1,5 +1,35 @@
 # victory
 
+## 36.9.1
+
+## 36.9.0
+
+### Minor Changes
+
+- Remove prop-types definitions and dependency ([#2758](https://github.com/FormidableLabs/victory/pull/2758))
+
+## 36.8.6
+
+### Patch Changes
+
+- Update victory package.json source to the correct index file ([#2765](https://github.com/FormidableLabs/victory/pull/2765))
+
+## 36.8.5
+
+### Patch Changes
+
+- Replace instances of lodash.assign with Object.assign ([#2757](https://github.com/FormidableLabs/victory/pull/2757))
+
+## 36.8.4
+
+## 36.8.3
+
+## 36.8.2
+
+## 36.8.1
+
+## 36.8.0
+
 ## 36.7.0
 
 ### Patch Changes

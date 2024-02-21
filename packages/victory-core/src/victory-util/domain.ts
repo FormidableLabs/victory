@@ -1,13 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
-import {
-  flatten,
-  isPlainObject,
-  sortedUniq,
-  isFunction,
-  includes,
-  isDate,
-} from "lodash";
+import { isPlainObject, sortedUniq, isDate } from "lodash";
 import * as Data from "./data";
 import * as Scale from "./scale";
 import * as Helpers from "./helpers";
@@ -49,7 +42,7 @@ function getDomainPadding(props, axis) {
 
 function getFlatData(dataset, axis: "x" | "y") {
   const axisKey = `_${axis}`;
-  return flatten(dataset).map((datum: any) => {
+  return dataset.flat().map((datum: any) => {
     return datum[axisKey] && datum[axisKey][1] !== undefined
       ? datum[axisKey][1]
       : datum[axisKey];
@@ -61,7 +54,7 @@ function getExtremeFromData(dataset, axis, type = "min") {
     type === "max" ? Math.max(...arr) : Math.min(...arr);
   const initialValue = type === "max" ? -Infinity : Infinity;
   let containsDate = false;
-  const result = flatten(dataset).reduce((memo: number, datum: any) => {
+  const result = dataset.flat().reduce((memo: number, datum: any) => {
     const current0 =
       datum[`_${axis}0`] !== undefined ? datum[`_${axis}0`] : datum[`_${axis}`];
     const current1 =
@@ -183,22 +176,22 @@ export function createDomainFunction(
   getDomainFromDataFunction?,
   formatDomainFunction?,
 ) {
-  getDomainFromDataFunction = isFunction(getDomainFromDataFunction)
+  const getDomainFromDataFn = Helpers.isFunction(getDomainFromDataFunction)
     ? getDomainFromDataFunction
     : getDomainFromData;
-  formatDomainFunction = isFunction(formatDomainFunction)
+  const formatDomainFn = Helpers.isFunction(formatDomainFunction)
     ? formatDomainFunction
     : formatDomain;
   return (props, axis) => {
     const propsDomain = getDomainFromProps(props, axis);
     if (propsDomain) {
-      return formatDomainFunction(propsDomain, props, axis);
+      return formatDomainFn(propsDomain, props, axis);
     }
     const categories = Data.getCategories(props, axis);
     const domain = categories
       ? getDomainFromCategories(props, axis, categories)
-      : getDomainFromDataFunction(props, axis);
-    return domain ? formatDomainFunction(domain, props, axis) : undefined;
+      : getDomainFromDataFn(props, axis);
+    return domain ? formatDomainFn(domain, props, axis) : undefined;
   };
 }
 
@@ -231,14 +224,14 @@ export function getDomain(props, axis) {
  * @returns {Array|undefined} returns a domain from categories or undefined
  */
 export function getDomainFromCategories(props, axis, categories?) {
-  categories = categories || Data.getCategories(props, axis);
+  const categoriesArray = categories || Data.getCategories(props, axis);
   const { polar, startAngle = 0, endAngle = 360 } = props;
-  if (!categories) {
+  if (!categoriesArray) {
     return undefined;
   }
   const minDomain = getMinFromProps(props, axis);
   const maxDomain = getMaxFromProps(props, axis);
-  const stringArray = Collection.containsStrings(categories)
+  const stringArray = Collection.containsStrings(categoriesArray)
     ? Data.getStringsFromCategories(props, axis)
     : [];
   const stringMap =
@@ -249,8 +242,8 @@ export function getDomainFromCategories(props, axis, categories?) {
           return memo;
         }, {});
   const categoryValues = stringMap
-    ? categories.map((value) => stringMap[value])
-    : categories;
+    ? categoriesArray.map((value) => stringMap[value])
+    : categoriesArray;
   const min =
     minDomain !== undefined
       ? minDomain
@@ -273,11 +266,11 @@ export function getDomainFromCategories(props, axis, categories?) {
  * @returns {Array} the domain based on data
  */
 export function getDomainFromData(props, axis, dataset) {
-  dataset = dataset || Data.getData(props);
+  const datasetArray = dataset || Data.getData(props);
   const { polar, startAngle = 0, endAngle = 360 } = props;
   const minDomain = getMinFromProps(props, axis);
   const maxDomain = getMaxFromProps(props, axis);
-  if (dataset.length < 1) {
+  if (datasetArray.length < 1) {
     return minDomain !== undefined && maxDomain !== undefined
       ? getDomainFromMinMax(minDomain, maxDomain)
       : undefined;
@@ -285,14 +278,14 @@ export function getDomainFromData(props, axis, dataset) {
   const min =
     minDomain !== undefined
       ? minDomain
-      : getExtremeFromData(dataset, axis, "min");
+      : getExtremeFromData(datasetArray, axis, "min");
   const max =
     maxDomain !== undefined
       ? maxDomain
-      : getExtremeFromData(dataset, axis, "max");
+      : getExtremeFromData(datasetArray, axis, "max");
   const domain = getDomainFromMinMax(min, max);
   return polar && axis === "x" && Math.abs(startAngle - endAngle) === 360
-    ? getSymmetricDomain(domain, getFlatData(dataset, axis))
+    ? getSymmetricDomain(domain, getFlatData(datasetArray, axis))
     : domain;
 }
 
@@ -466,5 +459,5 @@ export function isDomainComponent(component) {
     "stack",
     "voronoi",
   ];
-  return includes(whitelist, role);
+  return whitelist.includes(role);
 }

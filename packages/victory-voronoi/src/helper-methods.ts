@@ -1,4 +1,3 @@
-import { assign, without, isNil } from "lodash";
 // victory-vendor note: This module is still CommonJS, so not part of victory-vendor.
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
@@ -75,9 +74,17 @@ const getCalculatedValues = (props) => {
   return { domain, data, scale, style, polygons, origin };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "scatter",
+  );
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     domain,
@@ -114,8 +121,8 @@ export const getBaseProps = (props, fallbackProps) => {
   };
 
   return data.reduce((childProps, datum, index) => {
-    const polygon = without(polygons[index], "data");
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const polygon = polygons[index]?.filter((value) => value !== "data");
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y } = Helpers.scalePoint(props, datum);
     const dataProps = {
       x,

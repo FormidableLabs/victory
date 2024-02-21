@@ -1,4 +1,3 @@
-import { assign } from "lodash";
 import { VictoryThemeDefinition } from "./types";
 
 // *
@@ -43,7 +42,10 @@ const baseLabelStyles = {
   stroke: "transparent",
 };
 
-const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
+const centeredLabelStyles = Object.assign(
+  { textAnchor: "middle" },
+  baseLabelStyles,
+);
 // *
 // * Strokes
 // *
@@ -51,7 +53,7 @@ const strokeLinecap = "round";
 const strokeLinejoin = "round";
 
 export const grayscale: VictoryThemeDefinition = {
-  area: assign(
+  area: Object.assign(
     {
       style: {
         data: {
@@ -62,7 +64,7 @@ export const grayscale: VictoryThemeDefinition = {
     },
     baseProps,
   ),
-  axis: assign(
+  axis: Object.assign(
     {
       style: {
         axis: {
@@ -72,7 +74,7 @@ export const grayscale: VictoryThemeDefinition = {
           strokeLinecap,
           strokeLinejoin,
         },
-        axisLabel: assign({}, centeredLabelStyles, {
+        axisLabel: Object.assign({}, centeredLabelStyles, {
           padding: 25,
         }),
         grid: {
@@ -90,7 +92,7 @@ export const grayscale: VictoryThemeDefinition = {
     },
     baseProps,
   ),
-  bar: assign(
+  bar: Object.assign(
     {
       style: {
         data: {
@@ -103,32 +105,32 @@ export const grayscale: VictoryThemeDefinition = {
     },
     baseProps,
   ),
-  boxplot: assign(
+  boxplot: Object.assign(
     {
       style: {
         max: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-        maxLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        maxLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         median: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-        medianLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        medianLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         min: { padding: 8, stroke: charcoal, strokeWidth: 1 },
-        minLabels: assign({}, baseLabelStyles, { padding: 3 }),
+        minLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         q1: { padding: 8, fill: grey },
-        q1Labels: assign({}, baseLabelStyles, { padding: 3 }),
+        q1Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         q3: { padding: 8, fill: grey },
-        q3Labels: assign({}, baseLabelStyles, { padding: 3 }),
+        q3Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
       },
       boxWidth: 20,
     },
     baseProps,
   ),
-  candlestick: assign(
+  candlestick: Object.assign(
     {
       style: {
         data: {
           stroke: charcoal,
           strokeWidth: 1,
         },
-        labels: assign({}, baseLabelStyles, { padding: 5 }),
+        labels: Object.assign({}, baseLabelStyles, { padding: 5 }),
       },
       candleColors: {
         positive: "#ffffff",
@@ -138,7 +140,7 @@ export const grayscale: VictoryThemeDefinition = {
     baseProps,
   ),
   chart: baseProps,
-  errorbar: assign(
+  errorbar: Object.assign(
     {
       borderWidth: 8,
       style: {
@@ -152,13 +154,13 @@ export const grayscale: VictoryThemeDefinition = {
     },
     baseProps,
   ),
-  group: assign(
+  group: Object.assign(
     {
       colorScale: colors,
     },
     baseProps,
   ),
-  histogram: assign(
+  histogram: Object.assign(
     {
       style: {
         data: {
@@ -181,10 +183,10 @@ export const grayscale: VictoryThemeDefinition = {
         type: "circle",
       },
       labels: baseLabelStyles,
-      title: assign({}, baseLabelStyles, { padding: 5 }),
+      title: Object.assign({}, baseLabelStyles, { padding: 5 }),
     },
   },
-  line: assign(
+  line: Object.assign(
     {
       style: {
         data: {
@@ -204,14 +206,14 @@ export const grayscale: VictoryThemeDefinition = {
         stroke: "transparent",
         strokeWidth: 1,
       },
-      labels: assign({}, baseLabelStyles, { padding: 20 }),
+      labels: Object.assign({}, baseLabelStyles, { padding: 20 }),
     },
     colorScale: colors,
     width: 400,
     height: 400,
     padding: 50,
   },
-  scatter: assign(
+  scatter: Object.assign(
     {
       style: {
         data: {
@@ -224,14 +226,17 @@ export const grayscale: VictoryThemeDefinition = {
     },
     baseProps,
   ),
-  stack: assign(
+  stack: Object.assign(
     {
       colorScale: colors,
     },
     baseProps,
   ),
   tooltip: {
-    style: assign({}, baseLabelStyles, { padding: 0, pointerEvents: "none" }),
+    style: Object.assign({}, baseLabelStyles, {
+      padding: 0,
+      pointerEvents: "none",
+    }),
     flyoutStyle: {
       stroke: charcoal,
       strokeWidth: 1,
@@ -242,7 +247,7 @@ export const grayscale: VictoryThemeDefinition = {
     cornerRadius: 5,
     pointerLength: 10,
   },
-  voronoi: assign(
+  voronoi: Object.assign(
     {
       style: {
         data: {
@@ -250,7 +255,7 @@ export const grayscale: VictoryThemeDefinition = {
           stroke: "transparent",
           strokeWidth: 0,
         },
-        labels: assign({}, baseLabelStyles, {
+        labels: Object.assign({}, baseLabelStyles, {
           padding: 5,
           pointerEvents: "none",
         }),

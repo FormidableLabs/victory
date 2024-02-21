@@ -1,4 +1,5 @@
 import * as React from "react";
+import { evaluateProp } from "./helpers";
 
 /*
   USER_PROPS_SAFELIST is to contain any string deemed safe for user props.
@@ -55,17 +56,18 @@ const testIfSafeProp = (key: string): key is SafeAttribute => {
 };
 
 /**
- * Gets the value from props if a function value is provided
- * @param {any} value: maybe function value
- * @param {Object} props: props object
- * @returns {any} newValue
+ * Asserts that value is not null or undefined, throwing an error if it is.
+ * @param value The value to assert
+ * @param message The error message to throw
  */
-const getValue = (value, props) => {
-  if (typeof value === "function") {
-    return value(props);
+export function assert<T>(
+  value: T,
+  message?: string,
+): asserts value is NonNullable<T> {
+  if (value === undefined || value === null) {
+    throw new Error(message);
   }
-  return value;
-};
+}
 
 /**
  * getSafeUserProps - function that takes in a props object and removes any
@@ -83,7 +85,7 @@ export const getSafeUserProps = <T>(
     Object.entries(propsToFilter)
       .filter(([key]) => testIfSafeProp(key))
       .map(([key, value]) => {
-        return [key, getValue(value, props)];
+        return [key, evaluateProp(value, props)];
       }),
   );
 };

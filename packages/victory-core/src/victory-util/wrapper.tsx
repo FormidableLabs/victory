@@ -1,14 +1,4 @@
-import {
-  assign,
-  defaults,
-  flatten,
-  isFunction,
-  uniq,
-  groupBy,
-  uniqBy,
-  values,
-  isPlainObject,
-} from "lodash";
+import { defaults, uniq, groupBy, uniqBy, isPlainObject } from "lodash";
 import React from "react";
 import * as Axis from "./axis";
 import * as Style from "./style";
@@ -100,19 +90,20 @@ export function getDataFromChildren(props, childComponents) {
   });
 
   const iteratee = (child, childName, parent) => {
-    const childProps = assign({}, child.props, parentProps);
+    const childProps = Object.assign({}, child.props, parentProps);
     let childData;
+    let childElement = child;
     if (!Data.isDataComponent(child)) {
       return null;
-    } else if (child.type && isFunction(child.type.getData)) {
-      child = parent ? React.cloneElement(child, parent.props) : child;
-      childData = child.type.getData(childProps);
+    } else if (child.type && Helpers.isFunction(child.type.getData)) {
+      childElement = parent ? React.cloneElement(child, parent.props) : child;
+      childData = childElement.type.getData(childProps);
     } else {
       childData = Data.getData(childProps);
     }
     stack += 1;
     return childData.map((datum, index) =>
-      assign({ _stack: stack, _group: index }, datum),
+      Object.assign({ _stack: stack, _group: index }, datum),
     );
   };
 
@@ -128,15 +119,17 @@ export function getDataFromChildren(props, childComponents) {
     combine,
   );
   const group = stacked ? "_group" : "_stack";
-  return values(groupBy(datasets, group));
+  return Object.values(groupBy(datasets, group));
 }
 
 export function getData(props, childComponents) {
   if (props.data) {
     return Data.getData(props);
   }
-  childComponents = childComponents || React.Children.toArray(props.children);
-  return getDataFromChildren(props, childComponents);
+  return getDataFromChildren(
+    props,
+    childComponents || React.Children.toArray(props.children),
+  );
 }
 
 export function getWidth(props, groupLength?, seriesLength?) {
@@ -145,12 +138,12 @@ export function getWidth(props, groupLength?, seriesLength?) {
     ? Helpers.getRange(props, "y")
     : Helpers.getRange(props, "x");
   const extent = Math.abs(range[1] - range[0]);
-  seriesLength =
+  const seriesLengthValue =
     seriesLength !== undefined
       ? seriesLength
       : (Array.isArray(datasets[0]) && datasets[0].length) || 1;
-  groupLength = groupLength || datasets.length;
-  const bars = groupLength * seriesLength;
+  const groupLengthValue = groupLength || datasets.length;
+  const bars = groupLengthValue * seriesLengthValue;
   const barRatio = 0.5;
   return Math.round((barRatio * extent) / bars);
 }
@@ -219,14 +212,14 @@ export function getDomainFromChildren(props, axis, childComponents) {
     categories,
   };
   const parentProps = parentData
-    ? assign(baseParentProps, { data: parentData })
+    ? Object.assign(baseParentProps, { data: parentData })
     : baseParentProps;
 
   const iteratee = (child) => {
-    const sharedProps = assign({}, child.props, parentProps);
+    const sharedProps = Object.assign({}, child.props, parentProps);
     if (!Domain.isDomainComponent(child)) {
       return null;
-    } else if (child.type && isFunction(child.type.getDomain)) {
+    } else if (child.type && Helpers.isFunction(child.type.getDomain)) {
       return child.props && child.type.getDomain(sharedProps, axis);
     }
     return Domain.getDomain(sharedProps, axis);
@@ -241,10 +234,10 @@ export function getDomainFromChildren(props, axis, childComponents) {
 }
 
 export function getDomain(props, axis, childComponents) {
-  childComponents = childComponents || React.Children.toArray(props.children);
+  const children = childComponents || React.Children.toArray(props.children);
 
   const propsDomain = Domain.getDomainFromProps(props, axis);
-  const domainPadding = getDefaultDomainPadding(props, axis, childComponents);
+  const domainPadding = getDefaultDomainPadding(props, axis, children);
   let domain;
 
   if (propsDomain) {
@@ -256,14 +249,18 @@ export function getDomain(props, axis, childComponents) {
     const dataDomain = dataset
       ? Domain.getDomainFromData(props, axis, dataset)!
       : [];
-    const childDomain = getDomainFromChildren(props, axis, childComponents);
+    const childDomain = getDomainFromChildren(props, axis, children);
     const min =
       minDomain || Collection.getMinValue([...dataDomain, ...childDomain]);
     const max =
       maxDomain || Collection.getMaxValue([...dataDomain, ...childDomain]);
     domain = Domain.getDomainFromMinMax(min, max);
   }
-  return Domain.formatDomain(domain, assign({ domainPadding }, props), axis);
+  return Domain.formatDomain(
+    domain,
+    Object.assign({ domainPadding }, props),
+    axis,
+  );
 }
 
 export function getScale(props, axis, childComponents?) {
@@ -274,7 +271,7 @@ export function getScale(props, axis, childComponents?) {
     ? childComponents.slice(0)
     : React.Children.toArray(props.children);
   const iteratee = (child) => {
-    const sharedProps = assign({}, child.props, {
+    const sharedProps = Object.assign({}, child.props, {
       horizontal: props.horizontal,
     });
     return Scale.getScaleType(sharedProps, axis);
@@ -344,7 +341,7 @@ export function getChildStyle(child, index, calculatedProps) {
   const dataStyle = defaults(
     {},
     childStyle.data,
-    assign({}, dataWidth, style.data, defaultColor),
+    Object.assign({}, dataWidth, style.data, defaultColor),
   );
   const labelsStyle = defaults({}, childStyle.labels, style.labels);
   return {
@@ -377,7 +374,7 @@ export function getStringsFromData(childComponents) {
     let data;
     if (!Data.isDataComponent(child)) {
       return null;
-    } else if (child.type && isFunction(child.type.getData)) {
+    } else if (child.type && Helpers.isFunction(child.type.getData)) {
       data = child.type.getData(childProps);
     } else {
       data = Data.getData(childProps);
@@ -424,28 +421,20 @@ export function getCategoryAndAxisStringsFromChildren(
     : [];
   const categoryStrings =
     categories || getStringsFromCategories(childComponents, axis);
-  return uniq(flatten([...categoryStrings, ...axisStrings]));
+  return uniq([...categoryStrings, ...axisStrings].flat());
 }
 
 export function getStringsFromChildren(props, childComponents) {
-  childComponents = childComponents || React.Children.toArray(props.children);
+  const children = childComponents || React.Children.toArray(props.children);
 
-  const xStrings = getCategoryAndAxisStringsFromChildren(
-    props,
-    "x",
-    childComponents,
-  );
-  const yStrings = getCategoryAndAxisStringsFromChildren(
-    props,
-    "y",
-    childComponents,
-  );
+  const xStrings = getCategoryAndAxisStringsFromChildren(props, "x", children);
+  const yStrings = getCategoryAndAxisStringsFromChildren(props, "y", children);
 
-  const dataStrings = getStringsFromData(childComponents);
+  const dataStrings = getStringsFromData(children);
 
   return {
-    x: uniq(flatten([...xStrings, ...dataStrings.x])),
-    y: uniq(flatten([...yStrings, ...dataStrings.y])),
+    x: uniq([...xStrings, ...dataStrings.x].flat()),
+    y: uniq([...yStrings, ...dataStrings.y].flat()),
   };
 }
 

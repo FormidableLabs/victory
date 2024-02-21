@@ -47,11 +47,10 @@ export default class Timer {
   }
 
   subscribe(callback: TimerCallback, duration: number) {
-    duration = this.shouldAnimate ? duration : 0;
     const subscriptionID = this.subscribers.push({
       startTime: now(),
       callback,
-      duration,
+      duration: this.shouldAnimate ? duration : 0,
     });
     this.activeSubscriptions++;
     this.start();

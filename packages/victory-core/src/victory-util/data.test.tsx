@@ -1,7 +1,9 @@
 /* eslint no-unused-expressions: 0, max-nested-callbacks: 0 */
 import React from "react";
-import { Data, VictoryPortal } from "victory-core";
 import { fromJS } from "immutable";
+
+import * as Data from "./data";
+import { VictoryPortal } from "../victory-portal/victory-portal";
 
 const immutableDataTest = {
   createData: (data) => fromJS(data),
@@ -332,6 +334,16 @@ describe("victory-util/data", () => {
         { x: 10, y: 10 },
       ];
       const props = { x: "x", y: "y", domain: { x: [0, 10], y: [0, 10] } };
+      const returnData = Data.generateData(props);
+      expect(returnData).toEqual(generatedReturn);
+    });
+
+    it("generates a dataset from negative domain", () => {
+      const generatedReturn = [
+        { x: -10, y: 0 },
+        { x: 10, y: 10 },
+      ];
+      const props = { x: "x", y: "y", domain: { x: [-10, 10], y: [0, 10] } };
       const returnData = Data.generateData(props);
       expect(returnData).toEqual(generatedReturn);
     });

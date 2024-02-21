@@ -1,4 +1,4 @@
-import { Helpers } from "victory-core";
+import * as Helpers from "./helpers";
 
 describe("victory-util/helpers", () => {
   describe("omit", () => {
@@ -200,6 +200,52 @@ describe("victory-util/helpers", () => {
       const undefinedAccessor = Helpers.createAccessor(undefined);
       expect(nullAccessor("ok")).toEqual("ok");
       expect(undefinedAccessor(14)).toEqual(14);
+    });
+  });
+
+  describe("range", () => {
+    it("returns an array of integers", () => {
+      expect(Helpers.range(4)).toEqual([0, 1, 2, 3]);
+    });
+
+    it("returns an array of integers for negative n", () => {
+      expect(Helpers.range(-4)).toEqual([0, -1, -2, -3]);
+    });
+
+    it("returns an array of integers from start to end", () => {
+      expect(Helpers.range(1, 5)).toEqual([1, 2, 3, 4]);
+    });
+
+    it("returns an array of integers from negative start to end", () => {
+      expect(Helpers.range(-5, 5)).toEqual([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]);
+    });
+
+    it("returns an array of integers from start to negative end", () => {
+      expect(Helpers.range(5, -5)).toEqual([5, 4, 3, 2, 1, 0, -1, -2, -3, -4]);
+    });
+
+    it("returns an array of integers using an increment", () => {
+      expect(Helpers.range(0, 20, 5)).toEqual([0, 5, 10, 15]);
+    });
+
+    it("returns an array of integers using an increment and negative start", () => {
+      expect(Helpers.range(-10, 20, 5)).toEqual([-10, -5, 0, 5, 10, 15]);
+    });
+
+    it("returns an array of numbers from a floating point increment", () => {
+      expect(Helpers.range(0, 1, 0.2).length).toEqual(5);
+    });
+
+    it("should parse non-integer values", () => {
+      expect(Helpers.range(4.7)).toEqual([0, 1, 2, 3, 4]);
+    });
+
+    it("should not throw on undefined start value", () => {
+      expect(Helpers.range(undefined as any)).toEqual([]);
+    });
+
+    it("should not throw on NaN start value", () => {
+      expect(Helpers.range(NaN as any)).toEqual([]);
     });
   });
 });

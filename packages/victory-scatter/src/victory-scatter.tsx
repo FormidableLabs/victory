@@ -1,11 +1,8 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes,
   Helpers,
   VictoryLabel,
   addEvents,
-  CommonProps,
   VictoryContainer,
   VictoryTheme,
   DefaultTransitions,
@@ -76,30 +73,7 @@ class VictoryScatterBase extends React.Component<VictoryScatterProps> {
   static role = "scatter";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    bubbleProperty: PropTypes.string,
-    maxBubbleSize: CustomPropTypes.nonNegative,
-    minBubbleSize: CustomPropTypes.nonNegative,
-    size: PropTypes.oneOfType([CustomPropTypes.nonNegative, PropTypes.func]),
-    symbol: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        "circle",
-        "cross",
-        "diamond",
-        "plus",
-        "minus",
-        "square",
-        "star",
-        "triangleDown",
-        "triangleUp",
-      ]),
-      PropTypes.func,
-    ]),
-  };
-
-  static defaultProps = {
+  static defaultProps: VictoryScatterProps = {
     containerComponent: <VictoryContainer />,
     dataComponent: <Point />,
     labelComponent: <VictoryLabel />,

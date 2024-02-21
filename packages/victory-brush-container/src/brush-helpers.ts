@@ -1,5 +1,5 @@
-import { Selection } from "victory-core";
-import { assign, throttle, isFunction, defaults, mapValues } from "lodash";
+import { Helpers as CoreHelpers, Selection } from "victory-core";
+import { throttle, defaults } from "lodash";
 import isEqual from "react-fast-compare";
 
 const Helpers = {
@@ -12,25 +12,25 @@ const Helpers = {
   },
 
   withinBounds(point, bounds, padding?) {
-    const { x1, x2, y1, y2 } = mapValues(bounds, Number);
-    const { x, y } = mapValues(point, Number);
-    padding = padding ? padding / 2 : 0;
+    const { x1, x2, y1, y2 } = CoreHelpers.mapValues(bounds, Number);
+    const { x, y } = CoreHelpers.mapValues(point, Number);
+    const paddingValue = padding ? padding / 2 : 0;
     return (
-      x + padding >= Math.min(x1, x2) &&
-      x - padding <= Math.max(x1, x2) &&
-      y + padding >= Math.min(y1, y2) &&
-      y - padding <= Math.max(y1, y2)
+      x + paddingValue >= Math.min(x1, x2) &&
+      x - paddingValue <= Math.max(x1, x2) &&
+      y + paddingValue >= Math.min(y1, y2) &&
+      y - paddingValue <= Math.max(y1, y2)
     );
   },
 
   getDomainBox(props, fullDomain, selectedDomain?) {
     const brushDimension = this.getDimension(props);
-    fullDomain = defaults({}, fullDomain, props.domain);
-    selectedDomain = defaults({}, selectedDomain, fullDomain);
-    const fullCoords = Selection.getDomainCoordinates(props, fullDomain);
+    const fullDomainObject = defaults({}, fullDomain, props.domain);
+    const selectedDomainObject = defaults({}, selectedDomain, fullDomainObject);
+    const fullCoords = Selection.getDomainCoordinates(props, fullDomainObject);
     const selectedCoords = Selection.getDomainCoordinates(
       props,
-      selectedDomain,
+      selectedDomainObject,
     );
 
     return {
@@ -92,13 +92,10 @@ const Helpers = {
   getActiveHandles(point, props, domainBox) {
     const handles = this.getHandles(props, domainBox);
     const activeHandles = ["top", "bottom", "left", "right"].reduce(
-      (memo, opt) => {
-        memo =
-          handles[opt] && this.withinBounds(point, handles[opt])
-            ? memo.concat(opt)
-            : memo;
-        return memo;
-      },
+      (memo, opt) =>
+        handles[opt] && this.withinBounds(point, handles[opt])
+          ? memo.concat(opt)
+          : memo,
       [] as string[],
     );
     return activeHandles.length && activeHandles;
@@ -113,7 +110,7 @@ const Helpers = {
       bottom: { y1: Math.min(y1, y2), y2: Math.max(y1, y2), x1, x2 },
     };
     return handles.reduce((memo, current) => {
-      return assign(memo, mutations[current]);
+      return Object.assign(memo, mutations[current]);
     }, {});
   },
 
@@ -193,7 +190,7 @@ const Helpers = {
   },
 
   constrainBox(box, fullDomainBox) {
-    const { x1, y1, x2, y2 } = mapValues(fullDomainBox, Number);
+    const { x1, y1, x2, y2 } = CoreHelpers.mapValues(fullDomainBox, Number);
     return {
       x1: box.x2 > x2 ? x2 - Math.abs(box.x2 - box.x1) : Math.max(box.x1, x1),
       y1: box.y2 > y2 ? y2 - Math.abs(box.y2 - box.y1) : Math.max(box.y1, y1),
@@ -203,7 +200,7 @@ const Helpers = {
   },
 
   constrainPoint(point, fullDomainBox) {
-    const { x1, y1, x2, y2 } = mapValues(fullDomainBox, Number);
+    const { x1, y1, x2, y2 } = CoreHelpers.mapValues(fullDomainBox, Number);
     return {
       x: Math.min(Math.max(point.x, x1), x2),
       y: Math.min(Math.max(point.y, y1), y2),
@@ -373,7 +370,7 @@ const Helpers = {
         ...constrainedBox,
       };
 
-      if (isFunction(onBrushDomainChange)) {
+      if (CoreHelpers.isFunction(onBrushDomainChange)) {
         onBrushDomainChange(
           currentDomain,
           defaults({}, mutatedProps, targetProps),
@@ -403,7 +400,7 @@ const Helpers = {
       });
 
       const mutatedProps = { x2, y2, currentDomain, parentSVG };
-      if (isFunction(onBrushDomainChange)) {
+      if (CoreHelpers.isFunction(onBrushDomainChange)) {
         onBrushDomainChange(
           currentDomain,
           defaults({}, mutatedProps, targetProps),
@@ -461,23 +458,23 @@ const Helpers = {
         evt,
       );
       mutatedProps.currentDomain = defaultDomain;
-      if (isFunction(onBrushDomainChange)) {
+      if (CoreHelpers.isFunction(onBrushDomainChange)) {
         onBrushDomainChange(
           defaultDomain,
           defaults({}, mutatedProps, targetProps),
         );
       }
-      if (isFunction(onBrushDomainChangeEnd)) {
+      if (CoreHelpers.isFunction(onBrushDomainChangeEnd)) {
         onBrushDomainChangeEnd(
           defaultDomain,
           defaults({}, mutatedProps, targetProps),
         );
       }
-      if (isFunction(onBrushCleared)) {
+      if (CoreHelpers.isFunction(onBrushCleared)) {
         onBrushCleared(defaultDomain, defaults({}, mutatedProps, targetProps));
       }
     } else if ((allowDrag && isPanning) || (allowResize && isSelecting)) {
-      if (isFunction(onBrushDomainChangeEnd)) {
+      if (CoreHelpers.isFunction(onBrushDomainChangeEnd)) {
         onBrushDomainChangeEnd(
           currentDomain,
           defaults({}, mutatedProps, targetProps),

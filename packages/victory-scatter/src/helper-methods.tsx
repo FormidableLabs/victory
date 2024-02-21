@@ -1,4 +1,3 @@
-import { assign, values, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 export const getSymbol = (data, props) => {
@@ -14,7 +13,7 @@ export const getBubbleSize = (datum, props) => {
   const zMin = Math.min(...zData);
   const zMax = Math.max(...zData);
   const getMaxRadius = () => {
-    const minPadding = Math.min(...values(Helpers.getPadding(props)));
+    const minPadding = Math.min(...Object.values(Helpers.getPadding(props)));
     return Math.max(minPadding, 5); // eslint-disable-line no-magic-numbers
   };
   const maxRadius = maxBubbleSize || getMaxRadius();
@@ -74,9 +73,17 @@ const getCalculatedValues = (props) => {
   return { domain, data, scale, style, origin, z };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "scatter");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "scatter",
+  );
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     domain,
@@ -115,7 +122,7 @@ export const getBaseProps = (props, fallbackProps) => {
   };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y } = Helpers.scalePoint(props, datum);
     const dataProps = {
       x,

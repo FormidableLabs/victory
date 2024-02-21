@@ -1,4 +1,4 @@
-import { defaults, assign, isNil } from "lodash";
+import { defaults, assign } from "lodash";
 import {
   Helpers,
   LabelHelpers,
@@ -165,9 +165,17 @@ const getLabelProps = (dataProps, text, style) => {
   return defaults({}, labelProps, Helpers.omit(tooltipTheme, ["style"]));
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "errorbar");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "errorbar",
+  );
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     borderWidth,
     data,
@@ -208,15 +216,15 @@ export const getBaseProps = (props, fallbackProps) => {
   };
 
   return data.reduce((childProps, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const { x, y } = Helpers.scalePoint(assign({}, props, { scale }), datum);
-    datum = formatDataFromDomain(datum, domain);
-    const errorX = getErrors(props, datum, "x");
-    const errorY = getErrors(props, datum, "y");
+    const formattedDatum = formatDataFromDomain(datum, domain);
+    const errorX = getErrors(props, formattedDatum, "x");
+    const errorY = getErrors(props, formattedDatum, "y");
     const dataProps = {
       borderWidth,
       data,
-      datum,
+      datum: formattedDatum,
       errorX: horizontal ? errorY : errorX,
       errorY: horizontal ? errorX : errorY,
       groupComponent,
@@ -238,7 +246,7 @@ export const getBaseProps = (props, fallbackProps) => {
       (labels && (events || sharedEvents))
     ) {
       childProps[eventKey].labels = getLabelProps(
-        assign({}, props, dataProps),
+        Object.assign({}, props, dataProps),
         text,
         style,
       );

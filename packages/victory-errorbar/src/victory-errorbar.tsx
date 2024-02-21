@@ -1,14 +1,11 @@
-import PropTypes from "prop-types";
 import React from "react";
 import {
-  PropTypes as CustomPropTypes,
   Helpers,
   VictoryLabel,
   addEvents,
   VictoryContainer,
   VictoryTheme,
   DefaultTransitions,
-  CommonProps,
   UserProps,
   EventPropTypeInterface,
   StringOrNumberOrCallback,
@@ -77,32 +74,7 @@ class VictoryErrorBarBase extends React.Component<VictoryErrorBarProps> {
   static role = "errorbar";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
-  static propTypes = {
-    ...CommonProps.baseProps,
-    ...CommonProps.dataProps,
-    borderWidth: PropTypes.number,
-    errorX: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([
-        CustomPropTypes.integer,
-        CustomPropTypes.nonNegative,
-      ]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    errorY: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([
-        CustomPropTypes.integer,
-        CustomPropTypes.nonNegative,
-      ]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    horizontal: PropTypes.bool,
-  };
-
-  static defaultProps = {
+  static defaultProps: VictoryErrorBarProps = {
     containerComponent: <VictoryContainer />,
     data: defaultData,
     dataComponent: <ErrorBar />,

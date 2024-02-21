@@ -1,4 +1,3 @@
-import { assign, isNil } from "lodash";
 import { Helpers, LabelHelpers, Data, Domain, Scale } from "victory-core";
 
 const getCalculatedValues = (props) => {
@@ -33,9 +32,17 @@ const getCalculatedValues = (props) => {
   return { domain, data, scale, style, origin };
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "line");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "line",
+  );
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     data,
     domain,
@@ -93,7 +100,7 @@ export const getBaseProps = (props, fallbackProps) => {
       (text !== undefined && text !== null) ||
       (labels && (events || sharedEvents))
     ) {
-      const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+      const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
       childProps[eventKey] = { labels: LabelHelpers.getProps(props, index) };
     }
     return childProps;

@@ -1,6 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
-import { assign, defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
+import { defaults, isEmpty } from "lodash";
 import React from "react";
 import { VictoryPortal } from "../victory-portal/victory-portal";
 import { Rect } from "../victory-primitives/rect";
@@ -9,7 +8,6 @@ import { TSpan } from "../victory-primitives/tspan";
 import * as Helpers from "../victory-util/helpers";
 import * as LabelHelpers from "../victory-util/label-helpers";
 import * as Log from "../victory-util/log";
-import * as CustomPropTypes from "../victory-util/prop-types";
 import * as Style from "../victory-util/style";
 import * as TextSize from "../victory-util/textsize";
 import * as UserProps from "../victory-util/user-props";
@@ -38,7 +36,7 @@ export interface VictoryLabelProps {
   capHeight?: StringOrNumberOrCallback;
   children?: StringOrNumberOrCallback;
   className?: string;
-  datum?: object;
+  datum?: Record<string, any>;
   data?: any[];
   desc?: string;
   direction?: string;
@@ -121,9 +119,11 @@ const getStyles = (style, props) => {
     };
   }
   const getSingleStyle = (s) => {
-    s = s ? defaults({}, s, defaultStyles) : defaultStyles;
-    const baseStyles = Helpers.evaluateStyle(s, props);
-    return assign({}, baseStyles, { fontSize: getFontSize(baseStyles) });
+    const baseStyles = Helpers.evaluateStyle(
+      s ? defaults({}, s, defaultStyles) : defaultStyles,
+      props,
+    );
+    return Object.assign({}, baseStyles, { fontSize: getFontSize(baseStyles) });
   };
 
   return Array.isArray(style) && !isEmpty(style)
@@ -320,21 +320,20 @@ const getInlineXOffset = (calculatedProps, textElements, index) => {
   const centerOffset = -totalWidth / 2;
   switch (textAnchor) {
     case "start":
-      return widths.reduce((memo, width, i) => {
-        memo = i < index ? memo + width : memo;
-        return memo;
-      }, 0);
+      return widths.reduce(
+        (memo, width, i) => (i < index ? memo + width : memo),
+        0,
+      );
     case "end":
-      return widths.reduce((memo, width, i) => {
-        memo = i > index ? memo - width : memo;
-        return memo;
-      }, 0);
+      return widths.reduce(
+        (memo, width, i) => (i > index ? memo - width : memo),
+        0,
+      );
     default:
       // middle
       return widths.reduce((memo, width, i) => {
         const offsetWidth = i < index ? width : 0;
-        memo = i === index ? memo + width / 2 : memo + offsetWidth;
-        return memo;
+        return i === index ? memo + width / 2 : memo + offsetWidth;
       }, centerOffset);
   }
 };
@@ -463,16 +462,16 @@ const evaluateProps = (props) => {
     3) everything else
   */
   const text = getContent(props.text, props);
-  const style = getStyles(props.style, assign({}, props, { text }));
+  const style = getStyles(props.style, Object.assign({}, props, { text }));
   const backgroundStyle = getBackgroundStyles(
     props.backgroundStyle,
-    assign({}, props, { text, style }),
+    Object.assign({}, props, { text, style }),
   );
   const backgroundPadding = getBackgroundPadding(
-    assign({}, props, { text, style, backgroundStyle }),
+    Object.assign({}, props, { text, style, backgroundStyle }),
   );
   const id = Helpers.evaluateProp(props.id, props);
-  return assign({}, props, {
+  return Object.assign({}, props, {
     backgroundStyle,
     backgroundPadding,
     style,
@@ -500,7 +499,7 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
   const transform = getTransform(props, x, y);
 
-  return assign({}, props, {
+  return Object.assign({}, props, {
     ariaLabel,
     lineHeight,
     direction,
@@ -508,7 +507,7 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
     verticalAnchor,
     dx,
     dy,
-    originalDy: props.dy,
+    originalDy: Helpers.evaluateProp(props.dy, props),
     transform,
     x,
     y,
@@ -584,8 +583,8 @@ const defaultProps = {
 export const VictoryLabel: {
   role: string;
   defaultStyles: typeof defaultStyles;
-} & React.FC<VictoryLabelProps> = (props) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+} & React.FC<VictoryLabelProps> = (initialProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   if (props.text === null || props.text === undefined) {
     return null;
@@ -596,7 +595,7 @@ export const VictoryLabel: {
     calculatedProps;
 
   const tspanValues = (text as string[]).map((line, i) => {
-    const currentStyle = getSingleValue(style!, i);
+    const currentStyle = getSingleValue(style, i);
     const capHeightPx = TextSize.convertLengthToPixels(
       `${capHeight}em`,
       currentStyle.fontSize as number,
@@ -607,7 +606,7 @@ export const VictoryLabel: {
       fontSize: currentStyle.fontSize || defaultStyles.fontSize,
       capHeight: capHeightPx,
       text: line,
-      // @ts-expect-error TODO: This looks like a bug:
+      // TODO: This looks like a bug:
       textSize: TextSize.approximateTextSize(line, currentStyle),
       lineHeight: currentLineHeight,
       backgroundPadding: getSingleValue(backgroundPadding, i),
@@ -641,84 +640,3 @@ export const VictoryLabel: {
 VictoryLabel.displayName = "VictoryLabel";
 VictoryLabel.role = "label";
 VictoryLabel.defaultStyles = defaultStyles;
-VictoryLabel.propTypes = {
-  active: PropTypes.bool,
-  angle: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-  ]),
-  ariaLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  backgroundComponent: PropTypes.element,
-  backgroundPadding: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.object,
-    PropTypes.array,
-  ]),
-  backgroundStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  capHeight: PropTypes.oneOfType([
-    PropTypes.string,
-    CustomPropTypes.nonNegative,
-    PropTypes.func,
-  ]),
-  className: PropTypes.string,
-  data: PropTypes.array,
-  datum: PropTypes.any,
-  // @ts-expect-error "Function is not assignable to string"
-  desc: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  direction: PropTypes.oneOf(["rtl", "ltr", "inherit"]),
-  dx: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  dy: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  events: PropTypes.object,
-  groupComponent: PropTypes.element,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.func]),
-  index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  inline: PropTypes.bool,
-  labelPlacement: PropTypes.oneOf(["parallel", "perpendicular", "vertical"]),
-  lineHeight: PropTypes.oneOfType([
-    PropTypes.string,
-    CustomPropTypes.nonNegative,
-    PropTypes.func,
-    PropTypes.array,
-  ]),
-  origin: PropTypes.shape({
-    x: CustomPropTypes.nonNegative.isRequired,
-    y: CustomPropTypes.nonNegative.isRequired,
-  }),
-  polar: PropTypes.bool,
-  renderInPortal: PropTypes.bool,
-  scale: PropTypes.shape({
-    x: CustomPropTypes.scale,
-    y: CustomPropTypes.scale,
-  }),
-  style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  tabIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.func]),
-  text: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-    PropTypes.array,
-  ]),
-  // @ts-expect-error Function is not assignable to string"
-  textAnchor: PropTypes.oneOfType([
-    PropTypes.oneOf(["start", "middle", "end", "inherit"]),
-    PropTypes.func,
-  ]),
-  textComponent: PropTypes.element,
-  title: PropTypes.string,
-  transform: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.func,
-  ]),
-  tspanComponent: PropTypes.element,
-  // @ts-expect-error Function is not assignable to string"
-  verticalAnchor: PropTypes.oneOfType([
-    PropTypes.oneOf(["start", "middle", "end"]),
-    PropTypes.func,
-  ]),
-  // @ts-expect-error Number is not assignable to string
-  x: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  // @ts-expect-error Number is not assignable to string
-  y: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-};

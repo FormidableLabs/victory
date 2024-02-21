@@ -1,5 +1,41 @@
 # victory-voronoi
 
+## 36.9.1
+
+## 36.9.0
+
+### Minor Changes
+
+- Remove prop-types definitions and dependency ([#2758](https://github.com/FormidableLabs/victory/pull/2758))
+
+## 36.8.6
+
+## 36.8.5
+
+### Patch Changes
+
+- Replace instances of lodash.assign with Object.assign ([#2757](https://github.com/FormidableLabs/victory/pull/2757))
+
+* Replace instances of lodash.range with equivalent native code ([#2760](https://github.com/FormidableLabs/victory/pull/2760))
+
+## 36.8.4
+
+## 36.8.3
+
+### Patch Changes
+
+- Migrate victory-voronoi to TypeScript ([#2726](https://github.com/FormidableLabs/victory/pull/2726))
+
+## 36.8.2
+
+## 36.8.1
+
+## 36.8.0
+
+### Patch Changes
+
+- Remove usage of defaultProps from components ([#2679](https://github.com/FormidableLabs/victory/pull/2679))
+
 ## 36.7.0
 
 ## 36.6.12

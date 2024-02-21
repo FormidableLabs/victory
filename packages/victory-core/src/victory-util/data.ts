@@ -1,17 +1,12 @@
 /* eslint-disable no-use-before-define */
 import React from "react";
 import {
-  assign,
   uniq,
-  range,
-  last,
-  isFunction,
   isPlainObject,
   property,
   orderBy,
   isEmpty,
   isEqual,
-  includes,
   isUndefined,
   omitBy,
 } from "lodash";
@@ -47,8 +42,10 @@ function generateDataArray(props, axis) {
   const domainMax = Math.max(...domain);
   const domainMin = Math.min(...domain);
   const step = (domainMax - domainMin) / samples;
-  const values = range(domainMin, domainMax, step);
-  return last(values) === domainMax ? values : values.concat(domainMax);
+  const values = Helpers.range(domainMin, domainMax, step);
+  return values[values.length - 1] === domainMax
+    ? values
+    : values.concat(domainMax);
 }
 
 // Returns sorted data. If no sort keys are provided, data is returned unaltered.
@@ -58,11 +55,12 @@ function sortData(dataset, sortKey, sortOrder = "ascending") {
   }
 
   // Ensures previous VictoryLine api for sortKey prop stays consistent
+  let formattedSortKey = sortKey;
   if (sortKey === "x" || sortKey === "y") {
-    sortKey = `_${sortKey}`;
+    formattedSortKey = `_${sortKey}`;
   }
   const order = sortOrder === "ascending" ? "asc" : "desc";
-  return orderBy(dataset, sortKey, order);
+  return orderBy(dataset, formattedSortKey, order);
 }
 
 // This method will remove data points that break certain scales. (log scale only)
@@ -83,7 +81,7 @@ function cleanData(dataset, props) {
     const _x = rules(datum, "x") ? datum._x : smallNumber;
     const _y = rules(datum, "y") ? datum._y : smallNumber;
     const _y0 = rules(datum, "y0") ? datum._y0 : smallNumber;
-    return assign({}, datum, { _x, _y, _y0 });
+    return Object.assign({}, datum, { _x, _y, _y0 });
   };
 
   return dataset.map((datum) => {
@@ -98,7 +96,7 @@ function cleanData(dataset, props) {
 function getEventKey(key) {
   // creates a data accessor function
   // given a property key, path, array index, or null for identity.
-  if (isFunction(key)) {
+  if (Helpers.isFunction(key)) {
     return key;
   } else if (key === null || key === undefined) {
     return () => undefined;
@@ -116,7 +114,9 @@ function addEventKeys(props, data) {
       return datum;
     } else if (hasEventKeyAccessor) {
       const eventKey = eventKeyAccessor(datum, index);
-      return eventKey !== undefined ? assign({ eventKey }, datum) : datum;
+      return eventKey !== undefined
+        ? Object.assign({ eventKey }, datum)
+        : datum;
     }
     return datum;
   });
@@ -169,7 +169,7 @@ export function formatDataFromDomain(dataset, domain, defaultBaseline?) {
     // baseline and value with only baseline above max, set baseline to maxDomainY
     if (isOverMaxY(baseline) && !isOverMaxY(value)) _y0 = maxDomainY;
 
-    return assign({}, datum, omitBy({ _x, _y, _y0, _y1 }, isUndefined));
+    return Object.assign({}, datum, omitBy({ _x, _y, _y0, _y1 }, isUndefined));
   });
 }
 
@@ -239,6 +239,9 @@ export function formatData(
   }
 
   const defaultKeys = ["x", "y", "y0"];
+  // TODO: We shouldn’t mutate the expectedKeys param here,
+  // but we need to figure out why changing it causes regressions in tests.
+  // eslint-disable-next-line no-param-reassign
   expectedKeys = Array.isArray(expectedKeys) ? expectedKeys : defaultKeys;
 
   const createAccessor = (name) => {
@@ -281,10 +284,10 @@ export function formatData(
     ? dataset
     : dataset.reduce((dataArr, datum, index) => {
         // eslint-disable-line complexity
-        datum = parseDatum(datum);
-        const fallbackValues = { x: index, y: datum };
+        const parsedDatum = parseDatum(datum);
+        const fallbackValues = { x: index, y: parsedDatum };
         const processedValues = expectedKeys!.reduce((memo, type) => {
-          const processedValue = accessor[type](datum);
+          const processedValue = accessor[type](parsedDatum);
           const value =
             processedValue !== undefined
               ? processedValue
@@ -300,7 +303,7 @@ export function formatData(
           return memo;
         }, {});
 
-        const formattedDatum = assign({}, processedValues, datum);
+        const formattedDatum = Object.assign({}, processedValues, parsedDatum);
         if (!isEmpty(formattedDatum)) {
           dataArr.push(formattedDatum);
         }
@@ -408,8 +411,8 @@ export function getStringsFromData(props, axis) {
   const sortedData = sortData(data, props.sortKey, props.sortOrder);
   const dataStrings = sortedData
     .reduce((dataArr, datum) => {
-      datum = parseDatum(datum);
-      dataArr.push(accessor(datum));
+      const parsedDatum = parseDatum(datum);
+      dataArr.push(accessor(parsedDatum));
       return dataArr;
     }, [])
     .filter((datum) => typeof datum === "string");
@@ -451,5 +454,5 @@ export function isDataComponent(component) {
     "stack",
     "voronoi",
   ];
-  return includes(whitelist, role);
+  return whitelist.includes(role);
 }

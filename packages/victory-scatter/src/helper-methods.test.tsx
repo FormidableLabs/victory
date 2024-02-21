@@ -1,4 +1,4 @@
-import * as Helpers from "victory-scatter/lib/helper-methods";
+import * as Helpers from "./helper-methods";
 
 describe("victory-scatter/helper-methods", () => {
   describe("getSize", () => {

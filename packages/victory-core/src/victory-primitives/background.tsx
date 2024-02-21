@@ -1,11 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { assign } from "lodash";
 import * as Helpers from "../victory-util/helpers";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Rect } from "./rect";
 import { Circle } from "./circle";
 
@@ -27,7 +22,7 @@ const evaluateProps = (props) => {
    */
   const id = Helpers.evaluateProp(props.id, props);
 
-  return assign({}, props, { id });
+  return Object.assign({}, props, { id });
 };
 
 const defaultProps = {
@@ -37,8 +32,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Background = (props: BackgroundProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Background = (initialProps: BackgroundProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   return props.polar
     ? React.cloneElement(props.circleComponent!, {
@@ -64,16 +59,4 @@ export const Background = (props: BackgroundProps) => {
         height: props.height,
         className: props.className,
       });
-};
-
-Background.propTypes = {
-  ...CommonProps.primitiveProps,
-  circleComponent: PropTypes.element,
-  height: PropTypes.number,
-  rectComponent: PropTypes.element,
-  rx: PropTypes.number,
-  ry: PropTypes.number,
-  width: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
 };

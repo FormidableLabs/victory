@@ -1,4 +1,4 @@
-import { TextSize } from "victory-core";
+import * as TextSize from "./textsize";
 
 const approximate = (text, style?) =>
   TextSize._approximateTextSizeInternal.impl(text, style, true);

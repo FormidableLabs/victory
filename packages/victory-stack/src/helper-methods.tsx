@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { assign, keys, orderBy } from "lodash";
+import { orderBy } from "lodash";
 import React from "react";
 import { Helpers, Scale, Wrapper } from "victory-core";
 import isEqual from "react-fast-compare";
@@ -19,29 +19,29 @@ function fillData(props, datasets) {
     });
     return prev;
   }, {});
-  const xKeys = keys(xMap).map((k) => Number(k));
+  const xKeys = Object.keys(xMap).map((k) => Number(k));
   const xArr = orderBy(xKeys);
 
   return datasets.map((dataset) => {
     let indexOffset = 0;
     const isDate = dataset[0] && dataset[0]._x instanceof Date;
     const filledInData = xArr.map((x: number | Date, index) => {
-      x = Number(x);
+      let parsedX: number | Date = Number(x);
       const datum = dataset[index - indexOffset];
 
       if (datum) {
         const x1 = isDate ? datum._x.getTime() : datum._x;
-        if (x1 === x) {
+        if (x1 === parsedX) {
           return datum;
         }
         indexOffset++;
         const y = fillInMissingData ? 0 : null;
-        x = isDate ? new Date(x) : x;
-        return { x, y, _x: x, _y: y };
+        parsedX = isDate ? new Date(parsedX) : parsedX;
+        return { x: parsedX, y, _x: parsedX, _y: y };
       }
       const y = fillInMissingData ? 0 : null;
-      x = isDate ? new Date(x) : x;
-      return { x, y, _x: x, _y: y };
+      parsedX = isDate ? new Date(parsedX) : parsedX;
+      return { x: parsedX, y, _x: parsedX, _y: y };
     });
 
     return filledInData;
@@ -85,7 +85,7 @@ function addLayoutData(props, datasets, index) {
   const xOffset = props.xOffset || 0;
   return datasets[index].map((datum) => {
     const yOffset = getY0(datum, index, datasets) || 0;
-    return assign({}, datum, {
+    return Object.assign({}, datum, {
       _y0: !(datum._y instanceof Date)
         ? yOffset
         : yOffset
@@ -117,20 +117,28 @@ function stackData(props, childComponents) {
   return datasets.map((d, i) => addLayoutData(props, datasets, i));
 }
 
-export function getCalculatedProps(props, childComponents) {
-  childComponents = childComponents || React.Children.toArray(props.children);
+export function getCalculatedProps(initialProps, childComponents) {
+  const children =
+    childComponents || React.Children.toArray(initialProps.children);
   const role = "stack";
-  props = Helpers.modifyProps(props, fallbackProps, role);
+  const props = Helpers.modifyProps(initialProps, fallbackProps, role);
   const style = Wrapper.getStyle(props.theme, props.style, role);
-  const categories =
-    props.categories || Wrapper.getCategories(props, childComponents);
-  const datasets = props.datasets || stackData(props, childComponents);
-  const children = childComponents.map((c, i) => {
+  const categories = props.categories || Wrapper.getCategories(props, children);
+  const datasets = props.datasets || stackData(props, children);
+  const clonedChildren = children.map((c, i) => {
     return React.cloneElement(c, { data: datasets[i] });
   });
   const domain = {
-    x: Wrapper.getDomain(assign({}, props, { categories }), "x", children),
-    y: Wrapper.getDomain(assign({}, props, { categories }), "y", children),
+    x: Wrapper.getDomain(
+      Object.assign({}, props, { categories }),
+      "x",
+      clonedChildren,
+    ),
+    y: Wrapper.getDomain(
+      Object.assign({}, props, { categories }),
+      "y",
+      clonedChildren,
+    ),
   };
   const range = props.range || {
     x: Helpers.getRange(props, "x"),
@@ -224,25 +232,25 @@ function getColorScale(props, child) {
     : colorScaleOptions;
 }
 
-export function getChildren(props, childComponents, calculatedProps) {
-  props = Helpers.modifyProps(props, fallbackProps, "stack");
-  childComponents = childComponents || React.Children.toArray(props.children);
-  calculatedProps =
-    calculatedProps || getCalculatedProps(props, childComponents);
-  const { datasets } = calculatedProps;
-  const childProps = getChildProps(props, calculatedProps);
+export function getChildren(initialProps, childComponents, calculatedProps) {
+  const props = Helpers.modifyProps(initialProps, fallbackProps, "stack");
+  const children = childComponents || React.Children.toArray(props.children);
+  const newCalculatedProps =
+    calculatedProps || getCalculatedProps(props, children);
+  const { datasets } = newCalculatedProps;
+  const childProps = getChildProps(props, newCalculatedProps);
   const parentName = props.name || "stack";
-  return childComponents.map((child, index) => {
+  return children.map((child, index) => {
     const role = child.type && child.type.role;
     const data = datasets[index];
-    const style = Wrapper.getChildStyle(child, index, calculatedProps);
+    const style = Wrapper.getChildStyle(child, index, newCalculatedProps);
     const labels = props.labels
       ? getLabels(props, datasets, index)
       : child.props.labels;
     const name = child.props.name || `${parentName}-${role}-${index}`;
     return React.cloneElement(
       child,
-      assign(
+      Object.assign(
         {
           key: `${name}-key-${index}`,
           labels,

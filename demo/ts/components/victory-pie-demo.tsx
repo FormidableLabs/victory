@@ -2,7 +2,7 @@ import React from "react";
 import { random, range } from "lodash";
 import { VictoryPie } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme } from "victory-core";
+import { VictoryTheme, LineSegment } from "victory-core";
 
 interface VictoryPieDemoState {
   data: {
@@ -305,6 +305,64 @@ export default class VictoryPieDemo extends React.Component<
             startAngle={-6}
             animate={{ duration: 2000 }}
             innerRadius={140}
+          />
+          <VictoryPie
+            style={{ parent: parentStyle, labels: { fill: "magenta" } }}
+            radius={100}
+            labelPosition="startAngle"
+            labelPlacement="parallel"
+            labels={({ datum }) => `${datum.l}\ndegrees`}
+            data={[
+              { x: 1, y: 1, l: 0 },
+              { x: 2, y: 1, l: 45 },
+              { x: 3, y: 1, l: 90 },
+              { x: 4, y: 1, l: 135 },
+              { x: 5, y: 1, l: 180 },
+              { x: 6, y: 1, l: 225 },
+              { x: 7, y: 1, l: 270 },
+              { x: 8, y: 1, l: 315 },
+            ]}
+          />
+          <VictoryPie
+            style={{ parent: parentStyle, labels: { fill: "magenta" } }}
+            radius={100}
+            labelPosition="startAngle"
+            labelPlacement="perpendicular"
+            labels={({ datum }) => `${datum.l}\ndegrees`}
+            data={[
+              { x: 1, y: 1, l: 0 },
+              { x: 2, y: 1, l: 45 },
+              { x: 3, y: 1, l: 90 },
+              { x: 4, y: 1, l: 135 },
+              { x: 5, y: 1, l: 180 },
+              { x: 6, y: 1, l: 225 },
+              { x: 7, y: 1, l: 270 },
+              { x: 8, y: 1, l: 315 },
+            ]}
+          />
+          <VictoryPie style={{ parent: parentStyle }} labelIndicator />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator={
+              <LineSegment
+                style={{ opacity: "1", strokeWidth: "1px", stroke: "red" }}
+              />
+            }
+          />
+          <VictoryPie
+            style={{ parent: parentStyle }}
+            labelIndicator={
+              <LineSegment
+                style={{
+                  opacity: "1",
+                  strokeWidth: "1px",
+                  strokeDasharray: "1",
+                  stroke: "red",
+                }}
+              />
+            }
+            labelIndicatorInnerOffset={45}
+            labelIndicatorOuterOffset={15}
           />
         </div>
       </div>

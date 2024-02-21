@@ -1,11 +1,6 @@
 import React from "react";
-import { assign } from "lodash";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
-import {
-  CommonProps,
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Line } from "./line";
 
 export type WhiskerAxes = {
@@ -37,7 +32,7 @@ const evaluateProps = (props) => {
   const style = Helpers.evaluateStyle(props.style, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
 
-  return assign({}, props, { ariaLabel, desc, id, style, tabIndex });
+  return Object.assign({}, props, { ariaLabel, desc, id, style, tabIndex });
 };
 
 const defaultProps = {
@@ -47,8 +42,8 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const Whisker = (props: WhiskerProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const Whisker = (initialProps: WhiskerProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
   const {
     ariaLabel,
     groupComponent,
@@ -77,40 +72,22 @@ export const Whisker = (props: WhiskerProps) => {
     shapeRendering,
   };
 
-  return React.cloneElement(groupComponent!, {}, [
+  return React.cloneElement(groupComponent, {}, [
     React.cloneElement(
-      lineComponent!,
-      assign(
+      lineComponent,
+      Object.assign(
         { key: "major-whisker", "aria-label": ariaLabel },
         baseProps,
         majorWhisker,
       ),
     ),
     React.cloneElement(
-      lineComponent!,
-      assign(
+      lineComponent,
+      Object.assign(
         { key: "minor-whisker", "aria-label": ariaLabel },
         baseProps,
         minorWhisker,
       ),
     ),
   ]);
-};
-
-Whisker.propTypes = {
-  ...CommonProps.primitiveProps,
-  groupComponent: PropTypes.element,
-  lineComponent: PropTypes.element,
-  majorWhisker: PropTypes.shape({
-    x1: PropTypes.number,
-    x2: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number,
-  }),
-  minorWhisker: PropTypes.shape({
-    x1: PropTypes.number,
-    x2: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number,
-  }),
 };

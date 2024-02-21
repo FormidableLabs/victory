@@ -1,19 +1,11 @@
-import {
-  orderBy,
-  defaults,
-  assign,
-  uniq,
-  groupBy,
-  keys,
-  isNaN,
-  isNil,
-} from "lodash";
+import { orderBy, defaults, uniq, groupBy } from "lodash";
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import {
   min as d3Min,
   max as d3Max,
   quantile as d3Quantile,
 } from "victory-vendor/d3-array";
+import { VictoryBoxPlotProps } from "./victory-box-plot";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];
 
@@ -38,7 +30,7 @@ const checkProcessedData = (data) => {
   return false;
 };
 
-const nanToNull = (val) => (isNaN(val) ? null : val);
+const nanToNull = (val) => (Number.isNaN(val) ? null : val);
 
 const getSummaryStatistics = (data) => {
   const dependentVars = data.map((datum) => datum._y);
@@ -50,7 +42,7 @@ const getSummaryStatistics = (data) => {
     _max: nanToNull(d3Max(dependentVars)),
   };
 
-  return assign({}, data[0], quartiles, { _y: data[0]._y });
+  return Object.assign({}, data[0], quartiles, { _y: data[0]._y });
 };
 
 const processData = (data) => {
@@ -72,7 +64,7 @@ const processData = (data) => {
       the depedentVarArray and process each datum separately */
       return data.map((datum) => {
         const dataArray = datum[sortKey].map((d) =>
-          assign({}, datum, { [sortKey]: d }),
+          Object.assign({}, datum, { [sortKey]: d }),
         );
         const sortedData = orderBy(dataArray, sortKey);
         return getSummaryStatistics(sortedData);
@@ -80,7 +72,7 @@ const processData = (data) => {
     } else {
       /* Group data by independent variable and generate summary statistics for each group */
       const groupedData = groupBy(data, groupKey);
-      return keys(groupedData).map((key) => {
+      return Object.keys(groupedData).map((key) => {
         const datum = groupedData[key];
         const sortedData = orderBy(datum, sortKey);
         return getSummaryStatistics(sortedData);
@@ -162,12 +154,11 @@ const getLabelStyle = (props, styleObject, namespace?) => {
   return defaults({}, tooltipTheme.style, baseStyle);
 };
 
-const getStyles = (props, styleObject) => {
+const getStyles = (props, styleObject: VictoryBoxPlotProps["style"] = {}) => {
   if (props.disableInlineStyles) {
     return {};
   }
   const style = props.style || {};
-  styleObject = styleObject || {};
   const parentStyles = { height: "100%", width: "100%" };
   const labelStyles = defaults(
     {},
@@ -457,9 +448,17 @@ const isDatumOutOfBounds = (datum, domain) => {
   return yOutOfBounds || xOutOfBounds;
 };
 
-export const getBaseProps = (props, fallbackProps) => {
-  const modifiedProps = Helpers.modifyProps(props, fallbackProps, "boxplot");
-  props = assign({}, modifiedProps, getCalculatedValues(modifiedProps));
+export const getBaseProps = (initialProps, fallbackProps) => {
+  const modifiedProps = Helpers.modifyProps(
+    initialProps,
+    fallbackProps,
+    "boxplot",
+  );
+  const props = Object.assign(
+    {},
+    modifiedProps,
+    getCalculatedValues(modifiedProps),
+  );
   const {
     groupComponent,
     width,
@@ -494,7 +493,7 @@ export const getBaseProps = (props, fallbackProps) => {
   };
   const boxScale = scale.y;
   return data.reduce((acc, datum, index) => {
-    const eventKey = !isNil(datum.eventKey) ? datum.eventKey : index;
+    const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
 
     if (isDatumOutOfBounds(datum, domain)) return acc;
 
@@ -507,7 +506,7 @@ export const getBaseProps = (props, fallbackProps) => {
       q1: boxScale(datum._q1),
       q3: boxScale(datum._q3),
     };
-    const dataProps = assign({ index, datum, positions }, props);
+    const dataProps = Object.assign({ index, datum, positions }, props);
     const dataObj = TYPES.reduce((memo, type) => {
       memo[type] = getDataProps(dataProps, type);
       return memo;
@@ -524,7 +523,7 @@ export const getBaseProps = (props, fallbackProps) => {
       ) {
         const target = `${type}Labels`;
         acc[eventKey][target] = getLabelProps(
-          assign({}, props, dataProps),
+          Object.assign({}, props, dataProps),
           labelText,
           type,
         );

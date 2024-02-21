@@ -1,4 +1,4 @@
-import * as VictoryCore from "victory-core";
+import * as VictoryCore from "./index";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/named */ // We don't need eslint to validate imports; TypeScript handles that for us.
@@ -28,7 +28,6 @@ import {
   ClipPathProps,
   Collection,
   ColorScalePropType,
-  CommonProps,
   CoordinatesPropType,
   D3Scale,
   Data,
@@ -68,7 +67,6 @@ import {
   PortalContext,
   PortalContextValue,
   PortalProps,
-  PropTypes,
   RangePropType,
   RangeTuple,
   Rect,
@@ -137,7 +135,7 @@ import {
   WhiskerProps,
   Wrapper,
   addEvents,
-} from "victory-core";
+} from "./index";
 import { pick } from "lodash";
 
 describe("victory-core", () => {
@@ -147,7 +145,7 @@ describe("victory-core", () => {
   });
   it("should export everything", () => {
     expect(Object.keys(VictoryCore).sort()).toMatchInlineSnapshot(`
-      Array [
+      [
         "Arc",
         "Axis",
         "Background",
@@ -156,7 +154,6 @@ describe("victory-core", () => {
         "Circle",
         "ClipPath",
         "Collection",
-        "CommonProps",
         "Data",
         "DefaultTransitions",
         "Domain",
@@ -174,7 +171,6 @@ describe("victory-core", () => {
         "PointPathHelpers",
         "Portal",
         "PortalContext",
-        "PropTypes",
         "Rect",
         "Scale",
         "Selection",
@@ -217,7 +213,6 @@ describe("victory-core", () => {
       "LineHelpers",
       "Log",
       "PointPathHelpers",
-      "PropTypes",
       "Scale",
       "Selection",
       "Style",
@@ -229,8 +224,8 @@ describe("victory-core", () => {
 
     it("should export all namespaces", () => {
       expect(pick(VictoryCore, namespaces)).toMatchInlineSnapshot(`
-        Object {
-          "Axis": Object {
+        {
+          "Axis": {
             "findAxisComponents": [Function],
             "getAxis": [Function],
             "getAxisComponent": [Function],
@@ -245,7 +240,7 @@ describe("victory-core", () => {
             "modifyProps": [Function],
             "stringTicks": [Function],
           },
-          "Collection": Object {
+          "Collection": {
             "containsDates": [Function],
             "containsNumbers": [Function],
             "containsOnlyStrings": [Function],
@@ -255,7 +250,7 @@ describe("victory-core", () => {
             "isArrayOfArrays": [Function],
             "removeUndefined": [Function],
           },
-          "Data": Object {
+          "Data": {
             "createStringMap": [Function],
             "downsample": [Function],
             "formatData": [Function],
@@ -268,12 +263,12 @@ describe("victory-core", () => {
             "getStringsFromData": [Function],
             "isDataComponent": [Function],
           },
-          "DefaultTransitions": Object {
+          "DefaultTransitions": {
             "continuousPolarTransitions": [Function],
             "continuousTransitions": [Function],
             "discreteTransitions": [Function],
           },
-          "Domain": Object {
+          "Domain": {
             "createDomainFunction": [Function],
             "formatDomain": [Function],
             "getDomain": [Function],
@@ -287,7 +282,7 @@ describe("victory-core", () => {
             "getSymmetricDomain": [Function],
             "isDomainComponent": [Function],
           },
-          "Events": Object {
+          "Events": {
             "emulateReactEvent": [Function],
             "getComponentEvents": [Function],
             "getEventState": [Function],
@@ -301,7 +296,7 @@ describe("victory-core", () => {
             "getScopedEvents": [Function],
             "omitGlobalEvents": [Function],
           },
-          "Helpers": Object {
+          "Helpers": {
             "createAccessor": [Function],
             "degreesToRadians": [Function],
             "evaluateProp": [Function],
@@ -314,19 +309,23 @@ describe("victory-core", () => {
             "getRadius": [Function],
             "getRange": [Function],
             "getStyles": [Function],
+            "isFunction": [Function],
             "isHorizontal": [Function],
+            "isNil": [Function],
             "isTooltip": [Function],
+            "mapValues": [Function],
             "modifyProps": [Function],
             "omit": [Function],
             "radiansToDegrees": [Function],
+            "range": [Function],
             "reduceChildren": [Function],
             "scalePoint": [Function],
           },
-          "Hooks": Object {
+          "Hooks": {
             "useAnimationState": [Function],
             "usePreviousProps": [Function],
           },
-          "Immutable": Object {
+          "Immutable": {
             "IMMUTABLE_ITERABLE": "@@__IMMUTABLE_ITERABLE__@@",
             "IMMUTABLE_LIST": "@@__IMMUTABLE_LIST__@@",
             "IMMUTABLE_MAP": "@@__IMMUTABLE_MAP__@@",
@@ -338,7 +337,7 @@ describe("victory-core", () => {
             "isRecord": [Function],
             "shallowToJS": [Function],
           },
-          "LabelHelpers": Object {
+          "LabelHelpers": {
             "getDegrees": [Function],
             "getPolarAngle": [Function],
             "getPolarTextAnchor": [Function],
@@ -346,14 +345,14 @@ describe("victory-core", () => {
             "getProps": [Function],
             "getText": [Function],
           },
-          "LineHelpers": Object {
+          "LineHelpers": {
             "getInterpolationFunction": [Function],
             "getLineFunction": [Function],
           },
-          "Log": Object {
+          "Log": {
             "warn": [Function],
           },
-          "PointPathHelpers": Object {
+          "PointPathHelpers": {
             "circle": [Function],
             "cross": [Function],
             "diamond": [Function],
@@ -364,19 +363,7 @@ describe("victory-core", () => {
             "triangleDown": [Function],
             "triangleUp": [Function],
           },
-          "PropTypes": Object {
-            "allOfType": [Function],
-            "deprecated": [Function],
-            "domain": [Function],
-            "greaterThanZero": [Function],
-            "homogeneousArray": [Function],
-            "integer": [Function],
-            "matchDataLength": [Function],
-            "nonNegative": [Function],
-            "regExp": [Function],
-            "scale": [Function],
-          },
-          "Scale": Object {
+          "Scale": {
             "getBaseScale": [Function],
             "getDefaultScale": [Function],
             "getScaleFromName": [Function],
@@ -385,33 +372,34 @@ describe("victory-core", () => {
             "getType": [Function],
             "validScale": [Function],
           },
-          "Selection": Object {
+          "Selection": {
             "getBounds": [Function],
             "getDataCoordinates": [Function],
             "getDomainCoordinates": [Function],
             "getParentSVG": [Function],
             "getSVGEventCoordinates": [Function],
           },
-          "Style": Object {
+          "Style": {
             "getColorScale": [Function],
             "toTransformString": [Function],
           },
-          "TextSize": Object {
-            "_approximateTextSizeInternal": Object {
+          "TextSize": {
+            "_approximateTextSizeInternal": {
               "impl": [Function],
             },
             "approximateTextSize": [Function],
             "convertLengthToPixels": [Function],
           },
-          "Transitions": Object {
+          "Transitions": {
             "getInitialTransitionState": [Function],
             "getTransitionPropsFactory": [Function],
           },
-          "UserProps": Object {
+          "UserProps": {
+            "assert": [Function],
             "getSafeUserProps": [Function],
             "withSafeUserProps": [Function],
           },
-          "Wrapper": Object {
+          "Wrapper": {
             "addBinsToParentPropsIfHistogram": [Function],
             "getAllEvents": [Function],
             "getCategories": [Function],

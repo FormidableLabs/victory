@@ -12,27 +12,49 @@ on:
       - main
 
 jobs:
-  test:
-    name: Check Code
+  build:
     runs-on: ubuntu-latest
-    env:
-      DISPLAY: :99.0
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Check all package.json's and tsconfig.json's are in sync.
         run: |
           pnpm sync
           git diff --no-ext-diff --quiet --exit-code
 
-      - name: Build libraries and distributions ${{ matrix.node-version }}
+      - name: Build libraries and distributions
         run: pnpm build
 
-      - name: Check Code ${{ matrix.node-version }}
-        run: pnpm check:ci
+      - name: Types
+        run: pnpm types:check
+
+  format:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: Format
+        run: pnpm format
+
+  lint:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: Lint
+        run: pnpm lint
+
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: Test
+        run: pnpm jest

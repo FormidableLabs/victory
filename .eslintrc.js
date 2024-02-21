@@ -17,6 +17,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:eslint-comments/recommended",
     "prettier",
+    "plugin:storybook/recommended",
   ],
   rules: {
     "eslint-comments/disable-enable-pair": "off",
@@ -43,6 +44,7 @@ module.exports = {
       "error",
       { ignore: [-1, 0, 0.5, 1, 2, 90, 180, 270, 360] },
     ],
+    "no-param-reassign": "error",
   },
   parser: "@babel/eslint-parser",
   parserOptions: {
@@ -65,7 +67,6 @@ module.exports = {
         "no-undef": "off",
         "max-nested-callbacks": "off",
         "@typescript-eslint/no-empty-function": "off",
-        "react/prop-types": "off",
       },
     },
     {
@@ -84,6 +85,7 @@ module.exports = {
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
       ],
       rules: {
+        "react/prop-types": "off",
         "no-use-before-define": "off",
         "valid-jsdoc": "off",
         "@typescript-eslint/no-use-before-define": [

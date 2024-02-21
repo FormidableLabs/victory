@@ -41,7 +41,7 @@
 - [Contributing](#contributing)
 
 * See the **docs and examples** on the website: http://formidable.com/open-source/victory.
-* **Experiment** with all Victory components in this [code sandbox](https://codesandbox.io/s/m3xo745x2x)
+* **Experiment** with all Victory components in this [code sandbox](https://codesandbox.io/s/dj4f7t)
 
 ## Getting started
 
@@ -85,10 +85,11 @@ Projects using Victory should also depend on [React][]. Victory works with React
 Victory Native shares most of its code with Victory, and has a nearly identical API! To learn more, check out the [Victory Native package README](./packages/victory-native/README.md).
 
 ## Contributing
+
 Please see the [Contributing guide](CONTRIBUTING.md).
 
 ## Maintenance Status
 
-**Active:** Formidable is actively working on this project, and we expect to continue for work for the foreseeable future. Bug reports, feature requests and pull requests are welcome.
+**Active:** Formidable is actively working on this project, and we expect to continue to work for the foreseeable future. Bug reports, feature requests and pull requests are welcome.
 
 [react]: https://facebook.github.io/react/

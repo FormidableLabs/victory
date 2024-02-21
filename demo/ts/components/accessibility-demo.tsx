@@ -32,7 +32,7 @@ import {
   accessibilityVoronoiData,
   accessibilityErrorBarData,
   accessibilityCandlestickData,
-} from "../../demo-data";
+} from "../demo-data";
 
 const pageHeadingStyle: React.CSSProperties = {
   display: "flex",
@@ -65,7 +65,7 @@ const chartContainerStyle: React.CSSProperties = {
 };
 
 export const assignIndexValue = (
-  index: number | string,
+  index: number | string | undefined,
   value: number,
 ): number => {
   const determineValidNumber = Number(index);
@@ -180,7 +180,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) =>
-                        `area chart stack ${data[0]._stack}`
+                        `area chart stack ${data?.[0]._stack}`
                       }
                       tabIndex={20}
                     />
@@ -192,7 +192,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) =>
-                        `area chart stack ${data[0]._stack}`
+                        `area chart stack ${data?.[0]._stack}`
                       }
                       tabIndex={20.1}
                     />
@@ -204,7 +204,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) =>
-                        `area chart stack ${data[0]._stack}`
+                        `area chart stack ${data?.[0]._stack}`
                       }
                       tabIndex={20.2}
                     />
@@ -216,7 +216,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) =>
-                        `area chart stack ${data[0]._stack}`
+                        `area chart stack ${data?.[0]._stack}`
                       }
                       tabIndex={20.3}
                     />
@@ -242,12 +242,14 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 dataComponent={
                   <Curve
                     ariaLabel={({ data }) =>
-                      data.map(
-                        (dataPoint: any, i: number) =>
-                          `data point ${i + 1} x value is ${
-                            dataPoint.x
-                          } and y value is ${dataPoint.y}`,
-                      )
+                      data
+                        ?.map(
+                          (dataPoint: any, i: number) =>
+                            `data point ${i + 1} x value is ${
+                              dataPoint.x
+                            } and y value is ${dataPoint.y}`,
+                        )
+                        .join("") || ""
                     }
                   />
                 }

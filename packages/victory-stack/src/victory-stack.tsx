@@ -1,5 +1,4 @@
-import { assign, defaults, isEmpty } from "lodash";
-import PropTypes from "prop-types";
+import { defaults, isEmpty } from "lodash";
 import React from "react";
 import {
   CategoryPropType,
@@ -11,10 +10,8 @@ import {
   VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface,
-  CommonProps,
   Helpers,
   Hooks,
-  PropTypes as CustomPropTypes,
   UserProps,
   VictoryComponentConfiguration,
   VictoryContainer,
@@ -61,13 +58,15 @@ const defaultProps = {
 };
 
 const VictoryStackBase = (initialProps: VictoryStackProps) => {
-  // eslint-disable-next-line no-use-before-define
   const { role } = VictoryStack;
-  initialProps = { ...defaultProps, ...initialProps };
+  const propsWithDefaults = React.useMemo(
+    () => ({ ...defaultProps, ...initialProps }),
+    [initialProps],
+  );
   const { setAnimationState, getAnimationProps, getProps } =
     Hooks.useAnimationState();
 
-  const props = getProps(initialProps);
+  const props = getProps(propsWithDefaults);
 
   const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
   const {
@@ -91,7 +90,7 @@ const VictoryStackBase = (initialProps: VictoryStackProps) => {
   const newChildren = React.useMemo(() => {
     const children = getChildren(props, childComponents, calculatedProps);
     const orderedChildren = children.map((child, index) => {
-      const childProps = assign(
+      const childProps = Object.assign(
         { animate: getAnimationProps(props, child, index) },
         child.props,
       );
@@ -134,8 +133,8 @@ const VictoryStackBase = (initialProps: VictoryStackProps) => {
     name,
   ]);
   const userProps = React.useMemo(
-    () => UserProps.getSafeUserProps(initialProps),
-    [initialProps],
+    () => UserProps.getSafeUserProps(propsWithDefaults),
+    [propsWithDefaults],
   );
 
   const container = React.useMemo(() => {
@@ -161,16 +160,16 @@ const VictoryStackBase = (initialProps: VictoryStackProps) => {
     return Wrapper.getAllEvents(props);
   }, [props]);
 
-  const previousProps = Hooks.usePreviousProps(initialProps);
+  const previousProps = Hooks.usePreviousProps(propsWithDefaults);
 
   React.useEffect(() => {
     // This is called before dismount to keep state in sync
     return () => {
-      if (initialProps.animate) {
-        setAnimationState(previousProps, initialProps);
+      if (propsWithDefaults.animate) {
+        setAnimationState(previousProps, propsWithDefaults);
       }
     };
-  }, [setAnimationState, previousProps, initialProps]);
+  }, [setAnimationState, previousProps, propsWithDefaults]);
 
   if (!isEmpty(events)) {
     return (
@@ -186,53 +185,6 @@ const VictoryStackBase = (initialProps: VictoryStackProps) => {
   }
 
   return React.cloneElement(container, container.props, newChildren);
-};
-
-VictoryStackBase.propTypes = {
-  ...CommonProps.baseProps,
-  bins: PropTypes.oneOfType([
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        CustomPropTypes.nonNegative,
-        PropTypes.instanceOf(Date),
-      ]),
-    ),
-    CustomPropTypes.nonNegative,
-  ]),
-  categories: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.shape({
-      x: PropTypes.arrayOf(PropTypes.string),
-      y: PropTypes.arrayOf(PropTypes.string),
-    }),
-  ]),
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  colorScale: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.oneOf([
-      "grayscale",
-      "qualitative",
-      "heatmap",
-      "warm",
-      "cool",
-      "red",
-      "green",
-      "blue",
-    ]),
-  ]),
-  fillInMissingData: PropTypes.bool,
-  horizontal: PropTypes.bool,
-  labelComponent: PropTypes.element,
-  labels: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
-  style: PropTypes.shape({
-    parent: PropTypes.object,
-    data: PropTypes.object,
-    labels: PropTypes.object,
-  }),
-  xOffset: PropTypes.number,
 };
 
 const componentConfig: VictoryComponentConfiguration<VictoryStackProps> = {

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Selection,
   Helpers,
@@ -11,7 +10,7 @@ import {
   DomainTuple,
   VictoryStyleObject,
 } from "victory-core";
-import { assign, defaults, isFunction, pick } from "lodash";
+import { defaults, pick } from "lodash";
 import isEqual from "react-fast-compare";
 
 export type VictoryBrushLineTargetType = "data" | "labels" | "parent";
@@ -174,37 +173,9 @@ const fallbackProps = {
   },
 };
 
-export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
-  static propTypes = {
-    allowDrag: PropTypes.bool,
-    allowDraw: PropTypes.bool,
-    allowResize: PropTypes.bool,
-    brushAreaComponent: PropTypes.element,
-    brushAreaStyle: PropTypes.object,
-    brushAreaWidth: PropTypes.number,
-    brushComponent: PropTypes.element,
-    brushDimension: PropTypes.oneOf(["x", "y"]),
-    brushDomain: PropTypes.array,
-    brushStyle: PropTypes.object,
-    brushWidth: PropTypes.number,
-    className: PropTypes.string,
-    dimension: PropTypes.oneOf(["x", "y"]),
-    disable: PropTypes.bool,
-    events: PropTypes.object,
-    groupComponent: PropTypes.element,
-    handleComponent: PropTypes.element,
-    handleStyle: PropTypes.object,
-    handleWidth: PropTypes.number,
-    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    lineComponent: PropTypes.element,
-    name: PropTypes.string,
-    onBrushDomainChange: PropTypes.func,
-    scale: PropTypes.object,
-    style: PropTypes.object,
-    type: PropTypes.string,
-    width: PropTypes.number,
-  };
-
+export class VictoryBrushLine<
+  T extends VictoryBrushLineProps,
+> extends React.Component<T> {
   static defaultProps = {
     allowDrag: true,
     allowDraw: true,
@@ -401,7 +372,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
                     parentSVG,
                   };
 
-                  if (isFunction(onBrushDomainChange)) {
+                  if (Helpers.isFunction(onBrushDomainChange)) {
                     onBrushDomainChange(
                       currentDomain,
                       defaults({}, mutatedProps, targetProps),
@@ -452,7 +423,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
                       maxHandle: activeHandle === "max",
                     },
                   };
-                  if (isFunction(onBrushDomainChange)) {
+                  if (Helpers.isFunction(onBrushDomainChange)) {
                     onBrushDomainChange(
                       currentDomain,
                       defaults({}, mutatedProps, targetProps),
@@ -466,7 +437,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
                 }
                 return [];
               },
-              onMouseUp(evt, targetProps) {
+              onMouseUp: (evt, targetProps) => {
                 const {
                   onBrushDomainChange,
                   brushDomain,
@@ -482,7 +453,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
                   brushDomain,
                   activeBrushes,
                 };
-                if (allowResize && isFunction(onBrushDomainChange)) {
+                if (allowResize && Helpers.isFunction(onBrushDomainChange)) {
                   onBrushDomainChange(
                     brushDomain,
                     defaults({}, mutatedProps, targetProps),
@@ -494,7 +465,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
                   },
                 ];
               },
-              onMouseLeave(evt, targetProps) {
+              onMouseLeave: (evt, targetProps) => {
                 const { brushDomain } = targetProps;
                 return [
                   {
@@ -517,8 +488,10 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
   getRectDimensions(props, brushWidth, domain?) {
     const { brushDomain } = props;
     const dimension = getDimension(props);
-    domain = domain || getBrushDomain(brushDomain, getFullDomain(props));
-    const range = toRange(props, domain);
+    const range = toRange(
+      props,
+      domain || getBrushDomain(brushDomain, getFullDomain(props)),
+    );
     const coordinates =
       dimension === "x"
         ? {
@@ -595,16 +568,16 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
       return null;
     }
     const handleDimensions = this.getHandleDimensions(props);
-    const style = assign({}, fallbackProps.handleStyle, handleStyle);
-    const minDatum = assign(
+    const style = Object.assign({}, fallbackProps.handleStyle, handleStyle);
+    const minDatum = Object.assign(
       { handleValue: Collection.getMinValue(brushDomain) },
       datum,
     );
-    const maxDatum = assign(
+    const maxDatum = Object.assign(
       { handleValue: Collection.getMaxValue(brushDomain) },
       datum,
     );
-    const minHandleProps = assign(
+    const minHandleProps = Object.assign(
       {
         key: `${id}-min`,
         style: Helpers.evaluateStyle(style, {
@@ -614,7 +587,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
       },
       handleDimensions.min,
     );
-    const maxHandleProps = assign(
+    const maxHandleProps = Object.assign(
       {
         key: `${id}-max`,
         style: Helpers.evaluateStyle(style, {
@@ -643,12 +616,12 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
     }
     const brushWidth = props.brushWidth || props.width;
     const rectDimensions = this.getRectDimensions(props, brushWidth);
-    const baseStyle = assign({}, fallbackProps.brushStyle, brushStyle);
+    const baseStyle = Object.assign({}, fallbackProps.brushStyle, brushStyle);
     const style = Helpers.evaluateStyle(baseStyle, {
       datum,
       active: activeBrushes.brush,
     });
-    const brushProps = assign({ style }, rectDimensions);
+    const brushProps = Object.assign({ style }, rectDimensions);
     return React.cloneElement(brushComponent, brushProps);
   }
 
@@ -666,7 +639,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
       brushAreaWidth,
       getFullDomain(props),
     );
-    const baseStyle = assign(
+    const baseStyle = Object.assign(
       { cursor },
       fallbackProps.brushAreaStyle,
       brushAreaStyle,
@@ -675,7 +648,7 @@ export class VictoryBrushLine extends React.Component<VictoryBrushLineProps> {
       datum,
       active: activeBrushes.brushArea,
     });
-    const brushAreaProps = assign({ style }, rectDimensions);
+    const brushAreaProps = Object.assign({ style }, rectDimensions);
     return React.cloneElement(brushAreaComponent, brushAreaProps);
   }
 
