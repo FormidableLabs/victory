@@ -184,7 +184,7 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice, labelComponent, theme } = dataProps;
-  const { style, defaultRadius, origin, width, height, defaultTransform, dx } =
+  const { style, defaultRadius, origin, width, height, defaultTransform } =
     calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
@@ -242,7 +242,6 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     labelEndAngle,
     labelPlacement,
     curvedLabelTransform: defaultTransform,
-    dx,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {

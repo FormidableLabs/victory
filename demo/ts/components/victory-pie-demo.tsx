@@ -2,7 +2,7 @@ import React from "react";
 import { random, range } from "lodash";
 import { VictoryPie } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, LineSegment } from "victory-core";
+import { VictoryTheme, LineSegment, VictoryLabel} from "victory-core";
 
 interface VictoryPieDemoState {
   data: {
@@ -387,7 +387,7 @@ export default class VictoryPieDemo extends React.Component<
             labelPlacement="curved"
             labels={({ datum }) => `${datum.l}`}
             labelRadius={85}
-            dx={10}
+            labelComponent={<VictoryLabel dx={10}/>}
             data={[
               { x: 1, y: 1, l: 0 },
               { x: 2, y: 1, l: 45 },

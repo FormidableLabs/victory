@@ -37,7 +37,6 @@ export interface VictoryPieProps
     VictoryMultiLabelableProps {
   colorScale?: ColorScalePropType;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
-  dx?: StringOrNumberOrCallback;
   endAngle?: number;
   events?: EventPropTypeInterface<
     VictorySliceTTargetType,

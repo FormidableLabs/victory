@@ -1,7 +1,12 @@
 import React from "react";
 import { VictoryPie, Slice } from "../packages/victory-pie";
 import { VictoryTooltip } from "../packages/victory-tooltip";
-import { LineSegment, VictoryTheme, Helpers } from "../packages/victory-core";
+import {
+  LineSegment,
+  VictoryTheme,
+  Helpers,
+  VictoryLabel,
+} from "../packages/victory-core";
 import { fromJS } from "immutable";
 import styled from "styled-components";
 import { Meta } from "@storybook/react";
@@ -602,6 +607,7 @@ export const LabelPlacement = () => {
         labelPlacement="curved"
         labels={({ datum }) => `${datum.l}`}
         labelRadius={85}
+        labelComponent={<VictoryLabel dx={10} />}
         data={[
           { x: 1, y: 1, l: 0 },
           { x: 2, y: 1, l: 45 },
@@ -612,7 +618,22 @@ export const LabelPlacement = () => {
           { x: 7, y: 1, l: 270 },
           { x: 8, y: 1, l: 315 },
         ]}
-        dx={10}
+      />
+      <VictoryPie
+        style={{ ...parentStyle, labels: { fill: "white" } }}
+        radius={100}
+        labelPlacement="curved"
+        labels={({ datum }) => `${datum.l}`}
+        labelRadius={85}
+        innerRadius={75}
+        colorScale="qualitative"
+        data={[
+          { x: 1, y: 10, l: "A" },
+          { x: 2, y: 50, l: "B" },
+          { x: 3, y: 100, l: "C" },
+          { x: 4, y: 50, l: "D" },
+          { x: 5, y: 20, l: "E" },
+        ]}
       />
     </>
   );

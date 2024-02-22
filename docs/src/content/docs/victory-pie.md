@@ -275,8 +275,8 @@ The `labelPlacement` prop specifies the angular placement of each label relative
 <VictoryPie
   data={sampleData}
   labels={({ datum }) => `y: ${datum.y}`}
-  labelPlacement={"curved"}
-  dx={10}
+  labelPlacement="curved"
+  labelComponent={<VictoryLabel dx={10}/>}
   radius={120}
   labelRadius={100}
 />
@@ -578,22 +578,5 @@ The `labelIndicatorOuterOffset` prop defines the offset by which the indicator l
   data={sampleData}
   labelIndicator
   labelIndicatorOuterOffset={5}
-/>
-```
-
-## dx
-
-`type: string || number || function`
-
-The `dx` prop defines a horizontal shift from the `x` coordinate. Curved labels can be shifted  using `dx` property .
-
-```playground
-<VictoryPie
-  data={sampleData}
-  labels={({ datum }) => `y: ${datum.y}`}
-  labelPlacement={"curved"}
-  dx={10}
-  radius={120}
-  labelRadius={100}
 />
 ```
