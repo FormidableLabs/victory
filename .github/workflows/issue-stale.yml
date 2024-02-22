@@ -24,5 +24,5 @@ jobs:
           stale-issue-message: 'This issue is stale because it has been open for 90 days with no activity. If there is no activity in the next 7 days, the issue will be closed.'
           close-issue-message: 'This issue was closed because it has been inactive for 7 days since being marked as stale. Please open a new issue if you believe you are encountering a related problem.'
           days-before-pr-stale: -1
-          days-before-pr-close: -14
+          days-before-pr-close: -1
           enable-statistics: true
