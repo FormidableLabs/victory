@@ -290,6 +290,67 @@ export const getLabelIndicatorPropsForLineSegment = (
   return defaults({}, labelIndicatorProps);
 };
 
+export const getLabelIndicatorPropsForPolyLineSegment = (
+  props,
+  calculatedValues,
+  labelProps,
+) => {
+  const {
+    innerRadius,
+    radius,
+    slice,
+    labelIndicatorInnerOffset,
+    labelIndicatorOuterOffset,
+    labelIndicatorMiddleOffset=20,
+    index,
+  } = props;
+  const { height, width,cornerRadius,padAngle } = calculatedValues;
+  const {x,y} = labelProps
+
+  const middleRadius = getAverage([innerRadius, radius]);
+  const midAngle = getAverage([slice.endAngle, slice.startAngle]);
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const innerOffset = middleRadius + labelIndicatorInnerOffset;
+
+  const x1 = centerX + getXOffset(innerOffset, midAngle);
+  const y1 = centerY + getYOffset(innerOffset, midAngle);
+
+  const inflexionInfo = {
+    innerRadius: radius + labelIndicatorMiddleOffset,
+    outerRadius: radius + labelIndicatorMiddleOffset,
+    startAngle: slice.startAngle,
+    endAngle: slice.endAngle,
+  };
+  const sliceInfo = {
+    innerRadius: innerRadius || 0,
+    outerRadius: radius,
+    cornerRadius,
+    padAngle,
+    startAngle: slice.startAngle,
+    endAngle: slice.endAngle,
+  };
+
+  const arcGenerator = d3Shape.arc();
+  const centroid = arcGenerator.centroid(sliceInfo);
+  const inflexionPoint = arcGenerator.centroid(inflexionInfo);
+
+  const isRightLabel = inflexionPoint[0] > 0;
+  const labelPosX = Math.round(inflexionPoint[0]) + 50 * (isRightLabel ? 1 : -1);
+  const textAnchor = isRightLabel ? "start" : "end";
+  const points = `${Math.round(x1)},${Math.round(y1)} 
+                  ${Math.round(inflexionPoint[0])},${Math.round(inflexionPoint[1])}  
+                  ${Math.round(inflexionPoint[0])},${Math.round(inflexionPoint[1])} 
+                  ${x},${Math.round(inflexionPoint[1])}`;
+
+
+  const labelIndicatorProps = {
+    points,
+    index,
+  };
+  return defaults({}, labelIndicatorProps);
+};
+
 export const getBaseProps = (initialProps, fallbackProps) => {
   const props = Helpers.modifyProps(initialProps, fallbackProps, "pie");
   const calculatedValues = getCalculatedValues(props);
@@ -356,14 +417,14 @@ export const getBaseProps = (initialProps, fallbackProps) => {
         const labelProps = childProps[eventKey].labels
         if(labelIndicatorType === "single" && labelProps.calculatedLabelRadius > radius){
           childProps[eventKey].labelIndicators = getLabelIndicatorPropsForLineSegment(
-            assign({}, props, dataProps),
+            Object.assign({}, props, dataProps),
             calculatedValues,
             labelProps
           )
         }
         if(labelIndicatorType === "multiple" && labelProps.calculatedLabelRadius > radius){
-          childProps[eventKey].labelIndicators = getLabelIndicatorPropsForPolylineSegment(
-            assign({}, props, dataProps),
+          childProps[eventKey].labelIndicators = getLabelIndicatorPropsForPolyLineSegment(
+            Object.assign({}, props, dataProps),
             calculatedValues,
             labelProps
           )

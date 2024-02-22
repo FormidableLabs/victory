@@ -1,16 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import {
-  CommonProps,
   VictoryCommonPrimitiveProps,
 } from "../victory-util/common-props";
-import { Polyline } from "./polyline";
+import { PolyLine } from "./polyline";
 
-export interface PolylineSegmentProps extends VictoryCommonPrimitiveProps {
+export interface PolyLineSegmentProps extends VictoryCommonPrimitiveProps {
   polylineComponent?: React.ReactElement;
-  points: string;
+  points?: string;
 }
 
 const evaluateProps = (props) => {
@@ -33,13 +31,13 @@ const evaluateProps = (props) => {
 };
 
 const defaultProps = {
-  polylineComponent: <Polyline />,
+  polylineComponent: <PolyLine />,
   role: "presentation",
   shapeRendering: "auto",
 };
 
-export const PolylineSegment = (props: PolylineSegmentProps) => {
-  props = evaluateProps({ ...defaultProps, ...props });
+export const PolyLineSegment = (initialProps: PolyLineSegmentProps) => {
+  const props = evaluateProps({ ...defaultProps, ...initialProps });
 
   return React.cloneElement(props.polylineComponent!, {
     ...props.events,
@@ -53,10 +51,4 @@ export const PolylineSegment = (props: PolylineSegmentProps) => {
     transform: props.transform,
     clipPath: props.clipPath,
   });
-};
-
-PolylineSegment.propTypes = {
-  ...CommonProps.primitiveProps,
-  points: PropTypes.string,
-  polylineComponent: PropTypes.element,
 };

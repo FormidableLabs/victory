@@ -20,6 +20,7 @@ import {
   VictoryStyleInterface,
   EventsMixinClass,
   VictoryDatableProps,
+  PolyLineSegment
 } from "victory-core";
 import { getBaseProps } from "./helper-methods";
 import {
@@ -46,6 +47,7 @@ export interface VictoryPieProps
   innerRadius?: NumberOrCallback;
   labelIndicator?: boolean | React.ReactElement;
   labelIndicatorInnerOffset?: number;
+  labelIndicatorMiddleOffset?:number;
   labelIndicatorOuterOffset?: number;
   labelIndicatorType?: string;
   labelPlacement?:
@@ -87,6 +89,8 @@ const fallbackProps = {
   labelPosition: "centroid",
   labelIndicatorInnerOffset: 15,
   labelIndicatorOuterOffset: 5,
+  labelIndicatorMiddleOffset: 10,
+  labelIndicatorType: "single"
 };
 
 const datumHasXandY = (datum) => {
@@ -170,6 +174,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       groupComponent,
       labelIndicator,
       labelPosition,
+      labelIndicatorType
     } = props;
 
     if (!groupComponent) {
@@ -225,13 +230,17 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       children.push(...labelComponents);
     }
 
-    if (showIndicator && labelIndicator) {
+    if (showIndicator) {
       let labelIndicatorComponent: React.ReactElement = <LineSegment />;
 
-      if (typeof labelIndicator === "object") {
-        // pass user provided react component
-        labelIndicatorComponent = labelIndicator;
-      }
+          if(labelIndicatorType === "multiple" && labelIndicator === true){
+            labelIndicatorComponent= <PolyLineSegment/> 
+          }
+          if( typeof labelIndicator === "object"){
+            // pass user provided react component
+            labelIndicatorComponent = labelIndicator;
+          }
+
 
       const labelIndicatorComponents = this.dataKeys.map((_dataKey, index) => {
         const labelIndicatorProps = this.getComponentProps(

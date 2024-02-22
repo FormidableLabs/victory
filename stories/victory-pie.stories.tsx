@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryPie, Slice } from "../packages/victory-pie";
 import { VictoryTooltip } from "../packages/victory-tooltip";
-import { LineSegment, VictoryTheme, Helpers } from "../packages/victory-core";
+import { LineSegment, VictoryTheme, Helpers,PolyLineSegment } from "../packages/victory-core";
 import { fromJS } from "immutable";
 import styled from "styled-components";
 import { Meta } from "@storybook/react";
@@ -585,7 +585,7 @@ export const DisableInlineStyles = () => {
 export const LabelIndicator = () => {
   return (
     <>
-      <VictoryPie style={parentStyle} labelIndicator />
+      {/* <VictoryPie style={parentStyle} labelIndicator />
 
       <VictoryPie
         style={parentStyle}
@@ -623,58 +623,13 @@ export const LabelIndicator = () => {
             }}
           />
         }
-      />
-    </>
-  );
-};
-
-export const LabelIndicator = () => {
-  return (
-    <div style={containerStyle}>
-       <VictoryPie 
-        style={parentStyle}
-        labelIndicator 
-      />
-
-      <VictoryPie 
-        style={parentStyle}
-        labelIndicator 
-        radius={90} 
-        labelRadius={100} 
-        labelIndicatorInnerOffset={45}
-        labelIndicatorOuterOffset={30}
-      />
-       <VictoryPie
-        style={parentStyle}
-        innerRadius={50} 
-        labelIndicator
-      />
-      <VictoryPie
-        style={parentStyle}
-        innerRadius={50} 
-        labelIndicator
-        labelIndicatorInnerOffset = {10}
-        labelIndicatorOuterOffset = {15}
-      />
-      <VictoryPie
-        style={parentStyle}
-        innerRadius={50} 
-        labelIndicator={<LineSegment />}
-      />
-       <VictoryPie
-        style={parentStyle}
-        labelRadius={90}
-        innerRadius={50} 
-        radius={75}
-        labelIndicator={<LineSegment style = {{stroke:"red",strokeDasharray:1,
-        fill: "none",}}/>}
-      />
+      /> */}
       <VictoryPie
         style={parentStyle}
         labelIndicator
+        radius={55}
         labelIndicatorType={"multiple"}
         labelIndicatorInnerOffset = {25}
-        labelIndicatorMiddleOffset = {15}
         labelIndicatorOuterOffset = {10}
       />
        <VictoryPie
@@ -683,10 +638,10 @@ export const LabelIndicator = () => {
         innerRadius={50} 
         radius={75}
         labelIndicatorType={"multiple"}
-        labelIndicator={<PolylineSegment style = {{stroke:"red",strokeDasharray:1,
+        labelIndicator={<PolyLineSegment style = {{stroke:"red",strokeDasharray:1,
         fill: "none",}}/>}
       />
-    </div>
+    </>
   );
 };
 

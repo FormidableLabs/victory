@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryPrimitiveShapeProps } from "./types";
 
-export const Polyline = (props: VictoryPrimitiveShapeProps) => {
+export const PolyLine = (props: VictoryPrimitiveShapeProps) => {
 
   return (
     // @ts-expect-error FIXME: "id cannot be a number"
