@@ -804,4 +804,4 @@ x={(datum) => new Date(datum.day)}
 [`close`]: /docs/victory-candlestick#close
 [`high`]: /docs/victory-candlestick#high
 [`low`]: /docs/victory-candlestick#low
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx

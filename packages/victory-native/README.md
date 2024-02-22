@@ -80,7 +80,7 @@ Changes to the Victory and Victory Native source code will be reflected in the d
 
 ### Documentation
 
-See the docs and examples on [the Victory website](https://formidable.com/open-source/victory/docs/native).
+See the docs and examples on [the Victory website](https://commerce.nearform.com/open-source/victory/docs/native/).
 
 ## Contributor Covenant Code of Conduct
 
@@ -93,6 +93,5 @@ Please review our [Code of Conduct][code] before contributing.
 
 
 [code]: https://github.com/FormidableLabs/.github/blob/master/CODE_OF_CONDUCT.md
-[victory-native-demo]:https://github.com/FormidableLabs/victory-native-demo
 [react-native-svg-readme]: https://github.com/react-native-community/react-native-svg#notice
 [maintenance-image]: https://img.shields.io/badge/maintenance-active-green.svg

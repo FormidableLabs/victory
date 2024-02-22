@@ -9,7 +9,7 @@ scope: null
 # Getting Started with Victory Native
 
 > These docs are for the legacy versions of Victory Native. Victory Native XL is our rewrite of Victory Native designed specifically for React Native. Please [see here for more information]
-(https://formidable.com/open-source/victory-native/). If you would like to continue to use this version of Victory with React Native, follow the legacy guide below.
+(https://commerce.nearform.com/open-source/victory-native/). If you would like to continue to use this version of Victory with React Native, follow the legacy guide below.
 
 In this guide, we’ll show you how to get started with Victory Native and the React Native SVG dependency running in your React Native app for iOS and Android.
 
