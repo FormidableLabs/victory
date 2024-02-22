@@ -71,21 +71,21 @@ const content = {
         title: "Spectacle",
         description:
           "A React.js based library for creating sleek presentations using JSX syntax with the ability to live demo your code!",
-        link: "https://formidable.com/open-source/spectacle",
+        link: "https://commerce.nearform.com/open-source/spectacle",
         featured: true,
       },
       {
         title: "Urql",
         description:
           "Universal React Query Library is a blazing-fast GraphQL client, exposed as a set of ReactJS components.",
-        link: "https://formidable.com/open-source/urql",
+        link: "https://commerce.nearform.com/open-source/urql",
         featured: true,
       },
       {
         title: "Renature",
         description:
           "A physics-based animation library for React inspired by the natural world.",
-        link: "https://formidable.com/open-source/renature",
+        link: "https://commerce.nearform.com/open-source/renature",
         featured: true,
       },
       {
@@ -99,7 +99,7 @@ const content = {
     ],
     link: {
       text: "VIEW ALL",
-      location: "https://formidable.com/open-source",
+      location: "https://commerce.nearform.com/open-source",
     },
   },
 };

@@ -66,7 +66,7 @@ const Footer = ({ className = "" }) => (
     <InnerContainer>
       <IconAndContact>
         <a
-          href="https://formidable.com"
+          href="https://commerce.nearform.com"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -74,14 +74,14 @@ const Footer = ({ className = "" }) => (
         </a>
         <Contact>
           <a
-            href="https://formidable.com/contact/"
+            href="https://commerce.nearform.com/contact/"
             target="_blank"
             rel="noopener noreferrer"
           >
             CONTACT
           </a>
           <a
-            href="https://formidable.com/careers/"
+            href="https://commerce.nearform.com/careers/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -94,7 +94,7 @@ const Footer = ({ className = "" }) => (
           "Formidable is a global design and engineering consultancy and open source software organization, specializing in React.js, React Native, GraphQL, Node.js, and the extended JavaScript ecosystem. We have locations in Seattle, London, Toronto, Denver, and Phoenix with remote consultants worldwide. For more information please visit "
         }
         <a
-          href="https://formidable.com/"
+          href="https://commerce.nearform.com/"
           target="_blank"
           rel="noopener noreferrer"
         >

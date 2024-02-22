@@ -38,6 +38,6 @@ This package currently exports:
 - `CanvasBar`
 
 Please visit our documentation site to read more about these components
-https://formidable.com/open-source/victory
+https://commerce.nearform.com/open-source/victory
 
 To suggest an addition or correction to this documentation please see https://github.com/FormidableLabs/victory/blob/main/docs/src/content/docs
