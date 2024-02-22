@@ -555,6 +555,8 @@ The horizontal prop determines whether data will be plotted horizontally. When t
 
 The `labelComponent` prop takes a component instance which will be used to render labels for the component. The new element created from the passed `labelComponent` will be supplied with the following properties: x, y, index, data, datum, verticalAnchor, textAnchor, angle, style, text, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `labelComponent` is omitted, a new [VictoryLabel][] will be created with the props described above. [VictoryTooltip][] is commonly used as a `labelComponent`
 
+_note_: `labelComponent` is not currently supported for `VictoryBoxPlot` as it has its own label components (`maxLabelComponent`, `medianLabelComponent`, `minLabelComponent`, `q1LabelComponent` & `q3LabelComponent`). See [VictoryBoxPlot][] for more info.
+
 _examples:_
 
 - `labelComponent={<VictoryLabel dy={20}/>}`
@@ -1081,6 +1083,7 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 [victorylabel]: /docs/victory-label
 [victorytooltip]: /docs/victory-tooltip
 [victoryportal]: /docs/victory-portal
+[victoryboxplot]: /docs/victory-box-plot
 [victoryclipcontainer]: /docs/victory-clip-container
 [victorybrushcontainer]: /docs/victory-brush-container
 [victorycursorcontainer]: /docs/victory-cursor-container
