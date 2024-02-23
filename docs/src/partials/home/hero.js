@@ -230,7 +230,7 @@ const Hero = ({
       <Corner>
         <CornerText>{cornerText}</CornerText>
         <a
-          href="https://formidable.com"
+          href="https://commerce.nearform.com"
           target="_blank"
           rel="noopener noreferrer"
         >

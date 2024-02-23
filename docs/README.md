@@ -1,6 +1,6 @@
 <h1 align="center">Victory Documentation Site</h1>
 
-[Documentation site](https://formidable.com/open-source/victory/) for [victory](https://github.com/FormidableLabs/victory) built with [react-static](https://github.com/nozzle/react-static).
+[Documentation site](https://commerce.nearform.com/open-source/victory/) for [victory](https://github.com/FormidableLabs/victory) built with [react-static](https://github.com/nozzle/react-static).
 
 
 ## Getting Started

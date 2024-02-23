@@ -12,7 +12,7 @@
     "type": "git",
     "url": "https://github.com/FormidableLabs/victory"
   },
-  "homepage": "https://formidable.com/open-source/victory",
+  "homepage": "https://commerce.nearform.com/open-source/victory",
   "sideEffects": false,
   "main": "lib/index.js",
   "module": "es/index.js",

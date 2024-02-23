@@ -177,14 +177,14 @@ const Header = ({ className = "", onMenuClick }) => {
         </LeftContainer>
 
         <a
-          href="https://formidable.com/"
+          href="https://commerce.nearform.com/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <FormidableIcon src={formidableIcon} />
         </a>
         <a
-          href="https://formidable.com/"
+          href="https://commerce.nearform.com/"
           target="_blank"
           rel="noopener noreferrer"
         >
