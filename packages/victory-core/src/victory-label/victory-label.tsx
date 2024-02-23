@@ -1,4 +1,4 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2, 50] }]*/
 import { defaults, isEmpty, uniqueId } from "lodash";
 import React from "react";
 import { VictoryPortal } from "../victory-portal/victory-portal";
@@ -57,6 +57,7 @@ export interface VictoryLabelProps {
   origin?: OriginType;
   polar?: boolean;
   renderInPortal?: boolean;
+  startOffset?: number | string;
   style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
@@ -493,7 +494,7 @@ const evaluateProps = (props) => {
 };
 
 function getCurvedLabelProps(
-  labelRadius,
+  labelRadius = 50,
   startAngle = 0,
   endAngle = Math.PI / 2,
 ) {
@@ -580,6 +581,7 @@ const renderLabel = (calculatedProps, tspanValues) => {
     curvedLabelProps,
     groupComponent,
     curvedLabelTransform,
+    startOffset,
   } = calculatedProps;
 
   const userProps = UserProps.getSafeUserProps(calculatedProps);
@@ -650,7 +652,11 @@ const renderLabel = (calculatedProps, tspanValues) => {
     });
     const textPathElement = React.cloneElement(
       textPathComponent,
-      { href: curvedLabelProps && curvedLabelProps.href },
+      {
+        href: curvedLabelProps && curvedLabelProps.href,
+        startOffset,
+        textAnchor: startOffset ? textAnchor : undefined,
+      },
       tspans,
     );
     const textLabelComponent = React.cloneElement(

@@ -857,6 +857,20 @@ export const LabelPlacement = () => {
           />
         }
       />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            curvedLabelTransform={"translate(150,150)"}
+            labelPlacement="curved"
+            labelRadius={90}
+            labelStartAngle={0}
+            labelEndAngle={180}
+            text={["Victory is awesome."]}
+            startOffset={"10%"}
+          />
+        }
+      />
     </>
   );
 };

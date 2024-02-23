@@ -383,6 +383,29 @@ The `renderInPortal` prop specifies whether `VictoryLabel` should render text in
 
 Victory components can pass a `scale` prop to their label component. This can be used to calculate the position of label elements from `datum`. **This prop should not be set manually.**
 
+## startOffset
+
+`type: number || string`
+
+The `startOffset` prop defines an offset from the start of the path for curved labels. Using this we can move the curved label along the path. This can be percentage or a number.
+
+```playground
+<VictoryScatter
+  domain={[-10, 10]}
+  data={[{ x: 0, y: 0 }]}
+  labelComponent={
+    <VictoryLabel
+      curvedLabelTransform={"translate(150,150)"}
+      labelPlacement="curved"
+      labelRadius={90}
+      startOffset={"50%"}
+      textAnchor="middle"
+      text={["Victory is awesome."]}
+    />
+  }
+/>
+```
+
 ## style
 
 `type: object || array`

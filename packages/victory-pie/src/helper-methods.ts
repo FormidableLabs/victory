@@ -140,13 +140,37 @@ const getLabelOrientation = (degree, labelPlacement) => {
   return "left";
 };
 
-const getTextAnchor = (orientation) => {
+const getTextAnchor = (orientation, labelPlacement, labelPosition) => {
+  if (labelPlacement === "curved") {
+    if (labelPosition === "centroid") {
+      return "middle";
+    }
+    if (labelPosition === "startAngle") {
+      return "start";
+    }
+    if (labelPosition === "endAngle") {
+      return "end";
+    }
+  }
   if (orientation === "top" || orientation === "bottom") {
     return "middle";
   }
   return orientation === "right" ? "start" : "end";
 };
 
+const getStartOffset = (labelPlacement, labelPosition) => {
+  if (labelPlacement === "curved") {
+    if (labelPosition === "centroid") {
+      return "25%";
+    }
+    if (labelPosition === "startAngle") {
+      return "0%";
+    }
+    if (labelPosition === "endAngle") {
+      return "50%";
+    }
+  }
+};
 const getVerticalAnchor = (orientation) => {
   if (orientation === "left" || orientation === "right") {
     return "middle";
@@ -215,12 +239,15 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   const baseAngle = getBaseLabelAngle(slice, labelPosition, labelStyle);
   const labelAngle = getLabelAngle(baseAngle, labelPlacement);
   const orientation = getLabelOrientation(baseAngle, labelPlacement);
-  const textAnchor = labelStyle.textAnchor || getTextAnchor(orientation);
+  const textAnchor =
+    labelStyle.textAnchor ||
+    getTextAnchor(orientation, labelPlacement, labelPosition);
   const verticalAnchor =
     labelStyle.verticalAnchor || getVerticalAnchor(orientation);
 
   const labelStartAngle = slice.startAngle;
   const labelEndAngle = slice.endAngle;
+  const startOffset = getStartOffset(labelPlacement, labelPosition);
 
   const labelProps = {
     width,
@@ -242,6 +269,7 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     labelEndAngle,
     labelPlacement,
     curvedLabelTransform: defaultTransform,
+    startOffset,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
