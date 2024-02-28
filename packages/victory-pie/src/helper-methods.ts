@@ -287,6 +287,7 @@ export const getLabelIndicatorPropsForLineSegment = (
     y2,
     index,
   };
+  console.log(labelIndicatorProps)
   return defaults({}, labelIndicatorProps);
 };
 
@@ -305,7 +306,7 @@ export const getLabelIndicatorPropsForPolyLineSegment = (
     index,
   } = props;
   const { height, width,cornerRadius,padAngle } = calculatedValues;
-  const {x,y} = labelProps
+  const {x,y,calculatedLabelRadius} = labelProps
 
   const middleRadius = getAverage([innerRadius, radius]);
   const midAngle = getAverage([slice.endAngle, slice.startAngle]);
@@ -318,7 +319,13 @@ export const getLabelIndicatorPropsForPolyLineSegment = (
 
   const inflexionInfo = {
     innerRadius: radius + labelIndicatorMiddleOffset,
-    outerRadius: radius + labelIndicatorMiddleOffset,
+    outerRadius: radius + labelIndicatorMiddleOffset ,
+    startAngle: slice.startAngle,
+    endAngle: slice.endAngle,
+  };
+  const labelInfo = {
+    innerRadius: calculatedLabelRadius,
+    outerRadius: calculatedLabelRadius ,
     startAngle: slice.startAngle,
     endAngle: slice.endAngle,
   };
@@ -334,14 +341,16 @@ export const getLabelIndicatorPropsForPolyLineSegment = (
   const arcGenerator = d3Shape.arc();
   const centroid = arcGenerator.centroid(sliceInfo);
   const inflexionPoint = arcGenerator.centroid(inflexionInfo);
+  console.log(radius,x1,y1,centroid,inflexionPoint)
 
   const isRightLabel = inflexionPoint[0] > 0;
   const labelPosX = Math.round(inflexionPoint[0]) + 50 * (isRightLabel ? 1 : -1);
   const textAnchor = isRightLabel ? "start" : "end";
-  const points = `${Math.round(x1)},${Math.round(y1)} 
+  const points = `${Math.round(centroid[0])},${Math.round(centroid[1])} 
                   ${Math.round(inflexionPoint[0])},${Math.round(inflexionPoint[1])}  
                   ${Math.round(inflexionPoint[0])},${Math.round(inflexionPoint[1])} 
-                  ${x},${Math.round(inflexionPoint[1])}`;
+                  ${x},${Math.round(inflexionPoint[1])}
+                  `;
 
 
   const labelIndicatorProps = {
