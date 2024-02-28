@@ -202,10 +202,7 @@ export function getChildren(initialProps, childComponents?, calculatedProps?) {
       ? getPolarX0(props, newCalculatedProps, index, role)
       : getX0(props, newCalculatedProps, index, role);
     const style =
-      role === "voronoi" ||
-      role === "tooltip" ||
-      role === "label" ||
-      role === "boxplot"
+      role === "voronoi" || role === "tooltip" || role === "label"
         ? child.props.style
         : Wrapper.getChildStyle(child, index, newCalculatedProps);
     const labels = props.labels
