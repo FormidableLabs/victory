@@ -5,7 +5,6 @@ import { range } from "lodash";
 import seedrandom from "seedrandom";
 
 import { VictoryBoxPlot } from "../packages/victory-box-plot";
-import { VictoryBar } from "../packages/victory-bar";
 import { VictoryChart } from "../packages/victory-chart";
 import { VictoryTooltip } from "../packages/victory-tooltip";
 import { VictoryGroup } from "../packages/victory-group";
