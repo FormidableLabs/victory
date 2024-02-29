@@ -1,9 +1,6 @@
 "use client";
 
 import React from "react";
-import ReactDOM from "react-dom";
-import { createPortal } from "react-dom";
-import { createRoot } from "react-dom/client";
 import styled from "styled-components";
 import Link from "next/link";
 import * as Victory from "victory";
@@ -68,9 +65,6 @@ const renderPreviewItem = (item: any) => {
     _: require("lodash"),
     styled,
     React,
-    ReactDOM,
-    createRoot,
-    createPortal,
     Slider,
     basketballData,
     listeningData,
@@ -87,7 +81,7 @@ const renderPreviewItem = (item: any) => {
           <LiveProvider
             code={code}
             scope={scope}
-            noInline={true}
+            noInline
             theme={themes.oneLight}
           >
             <LivePreview />

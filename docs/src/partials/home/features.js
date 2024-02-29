@@ -43,8 +43,8 @@ const Feature = styled.li`
   }
 `;
 
-const FeatureImg = ({ className, ...props }) => (
-  <Image className={`feature-img ${className}`} {...props} />
+const FeatureImg = ({ className, alt, ...props }) => (
+  <Image className={`feature-img ${className}`} alt={alt} {...props} />
 );
 
 const FeatureTitle = styled.h3`

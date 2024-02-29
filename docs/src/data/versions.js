@@ -1,4 +1,4 @@
-export default {
+const data = {
   data: [
     { version: "35.6.1", date: "2021-05-05" },
     { version: "35.6.0", date: "2021-05-04" },
@@ -180,3 +180,5 @@ export default {
     { version: "0.1.0", date: "2015-12-18", label: "v0.1" },
   ],
 };
+
+export default data;

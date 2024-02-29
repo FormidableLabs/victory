@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 import Fuse from "fuse.js";
@@ -93,27 +93,28 @@ const getMatchTree = (link, filterTerm) => {
     return link.subHeadings
       .slice(0, last(matchIndices) + 1)
       .reduce((memo, curr, i) => {
+        let k = memo;
         const useHeading =
           i === matchIndices[0] ||
           (i < matchIndices[0] && curr.depth < maxDepth);
         if (useHeading && curr.value !== "Props") {
-          memo = memo.concat(curr);
+          k = memo.concat(curr);
           matchIndices =
             i === matchIndices[0] ? matchIndices.slice(1) : matchIndices;
         }
-        return memo;
+        return k;
       }, []);
   }
   return [];
 };
 const Sidebar = ({ className, content, onCloseClick }) => {
-  if (!content || !content.length) {
-    return null;
-  }
-
   const pathname = usePathname();
   const [filteredResults, setFilteredResults] = useState(content);
   const [filterTerm, setFilterTerm] = useState("");
+
+  if (!content || !content.length) {
+    return null;
+  }
 
   const handleInputChange = (value) => {
     const options = {

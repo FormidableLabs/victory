@@ -1,4 +1,4 @@
-export default {
+const data = {
   siteTitle: "Victory", // Site title.,
   siteDescription: "React.js components for modular charting and data visualization.",
   siteTitleAlt: "Victory.js React Charting Library", // Alternative site title for SEO.
@@ -51,3 +51,5 @@ export default {
     },
   ],
 };
+
+export default data;

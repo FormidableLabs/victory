@@ -66,6 +66,7 @@ const renderer = remark()
 /* eslint-disable max-params */
 const getMdFiles = async (mdPath, mutations = [], sort = defaultSort) => {
   const items = [];
+  /* eslint-disable promise/avoid-new */
   return new Promise((resolve) => {
     if (fs.existsSync(mdPath)) {
       klaw(mdPath)

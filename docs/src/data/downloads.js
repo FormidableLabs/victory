@@ -1,4 +1,4 @@
-export default {
+const data = {
   data: [
     { downloads: 3, day: "2015-11-28" },
     { downloads: 4, day: "2015-11-29" },
@@ -1608,3 +1608,5 @@ export default {
     { downloads: 20497, day: "2020-04-20" },
   ],
 };
+
+export default data;

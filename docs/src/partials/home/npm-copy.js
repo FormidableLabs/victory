@@ -1,5 +1,3 @@
-/*global setTimeout:false */
-/*global clearTimeout:false */
 import React, { useState, useRef } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { BounceAnimation } from "./styles";

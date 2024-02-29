@@ -1,6 +1,7 @@
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 3] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 3] }] */
+/* eslint-disable react/no-multi-comp */
 import React from "react";
-import Link from 'next/link';
+import Link from "next/link";
 import { maxBy, minBy, isEmpty } from "lodash";
 import styled from "styled-components";
 
@@ -24,8 +25,10 @@ const SubItemLink = ({ href, children, $depth }) => {
   ];
 
   return (
-    <Link href={href} className={classNames.join('')}>{children}</Link>
-  )
+    <Link href={href} className={classNames.join("")}>
+      {children}
+    </Link>
+  );
 };
 
 const TableOfContents = ({ active, link, headings }) => {
@@ -43,10 +46,11 @@ const TableOfContents = ({ active, link, headings }) => {
       return treeHeadings;
     }
     const parentIndices = treeHeadings.reduce((memo, curr, index) => {
+      let k = memo;
       if (curr.depth === depth) {
-        memo = memo.concat(index);
+        k = memo.concat(index);
       }
-      return memo;
+      return k;
     }, []);
     return parentIndices.reduce((memo, curr, index) => {
       const lastChild =
@@ -54,11 +58,9 @@ const TableOfContents = ({ active, link, headings }) => {
           ? undefined
           : parentIndices[index + 1];
       const children = [treeHeadings.slice(curr + 1, lastChild)];
-      memo =
-        children.length > 0
-          ? memo.concat(treeHeadings[curr], children)
-          : memo.concat(treeHeadings[curr]);
-      return memo;
+      return children.length > 0
+        ? memo.concat(treeHeadings[curr], children)
+        : memo.concat(treeHeadings[curr]);
     }, []);
   };
 
@@ -76,9 +78,7 @@ const TableOfContents = ({ active, link, headings }) => {
     // and take a long sip from a mint julep while mumbling something about the brittleness of scope and the joys of
     // referential transparency, but we're not generalizing this behavior and location-injection is table stakes
     // for front-end routing
-    return pathname.includes(absPath)
-      ? hashPath
-      : `${absPath}${hashPath}`;
+    return pathname.includes(absPath) ? hashPath : `${absPath}${hashPath}`;
   };
 
   const getTOC = (tocLink, tocHeadings, i = 0) => {
@@ -94,6 +94,7 @@ const TableOfContents = ({ active, link, headings }) => {
       <SidebarSectionSublist>
         {tree.map((item, index) => {
           if (Array.isArray(item)) {
+            /* eslint-disable no-param-reassign */
             return <li key={`${i}-${depth}`}>{getTOC(tocLink, item, i++)}</li>;
           }
 

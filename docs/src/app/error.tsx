@@ -15,7 +15,7 @@ const ErrorPage = () => {
       <Page>
         <h1>Uh oh.</h1>
         <p>
-          Something went wrong while serving this page. We're looking into it!
+          Something went wrong while serving this page. We are looking into it!
         </p>
         <Link href="/" className="block my-12">
           Take me back to the good stuff.

@@ -17,6 +17,8 @@
   "devDependencies": {
     "@d3fc/d3fc-discontinuous-scale": "^4.0.2",
     "@next/third-parties": "^14.1.0",
+    "@typescript-eslint/eslint-plugin": "^6",
+    "@typescript-eslint/parser": "^6",
     "@types/klaw": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -36,6 +38,7 @@
     "klaw": "^3.0.0",
     "lodash": "^4.17.19",
     "postcss": "^8",
+    "prism-react-renderer": "^2.3.1",
     "react-cool-inview": "^3.0.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-inlinesvg": "^4.1.1",

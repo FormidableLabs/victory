@@ -14,7 +14,7 @@ const NotFound = () => {
     <StyledLayout>
       <Page>
         <h1>Uh oh.</h1>
-        <p>Looks like that page doesn't exist. What a bummer.</p>
+        <p>Looks like that page does not exist. What a bummer.</p>
         <Link href="/" className="block my-12">
           Take me back to the good stuff.
         </Link>

@@ -1,4 +1,4 @@
-export default [
+const data = [
   {
     day: new Date("2020-01-01T08:00:00.000Z"),
     genre: "rap",
@@ -9808,3 +9808,5 @@ export default [
     genre: "hip-hop",
   },
 ];
+
+export default data;

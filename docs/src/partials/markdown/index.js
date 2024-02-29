@@ -13,10 +13,10 @@ import PlaygroundContainer from "./playground-container";
 
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 import { themes } from "prism-react-renderer";
-import theme from "@/styles/theme";
+import siteTheme from "@/styles/theme";
 
 const reactLiveTheme = { ...themes.oneLight };
-reactLiveTheme.plain.backgroundColor = theme.color.codeMirror.bgDim;
+reactLiveTheme.plain.backgroundColor = siteTheme.color.codeMirror.bgDim;
 
 const renderCodeBlock = (props, scope, theme) => {
   const scopeObject =
@@ -61,7 +61,7 @@ const renderCodeBlock = (props, scope, theme) => {
         noInline={noRender}
         theme={reactLiveTheme}
       >
-        {!isPlayground && <LiveEditor disabled={true} className="h-auto" />}
+        {!isPlayground && <LiveEditor disabled className="h-auto" />}
         {isPlayground && (
           <>
             <LiveError className="playgroundError" />
@@ -155,7 +155,7 @@ const Markdown = (props) => {
   };
 
   return (
-    <ReactMarkdown className={className} components={renderers} skipHtml={true}>
+    <ReactMarkdown className={className} components={renderers} skipHtml>
       {source}
     </ReactMarkdown>
   );
