@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import Helmet from "react-helmet";
-import config from "../../../static-config-helpers/site-data";
+import config from "../../static-config-helpers/site-data";
 
 class SEO extends Component {
   generateTitle() {
@@ -118,11 +117,5 @@ class SEO extends Component {
     );
   }
 }
-
-SEO.propTypes = {
-  postNode: PropTypes.object,
-  postPath: PropTypes.string,
-  postSEO: PropTypes.bool,
-};
 
 export default SEO;

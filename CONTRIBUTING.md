@@ -19,7 +19,7 @@ Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and 
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/) 14 or higher.
+- [Node.js](https://nodejs.org/) 14 or higher
 - [pnpm](https://pnpm.io/) 7 or higher.
 
 ### Setup
@@ -92,6 +92,14 @@ We also have some helper tasks to fix issues that are fixable.
 ```sh
 $ pnpm run format:fix
 $ pnpm run lint:fix
+```
+
+### Running Docs locally
+
+You can run the documentation website locally with the following command. It is linked to the Victory package via PNPM and will reflect changes in packages when they are rebuilt.
+
+```sh
+$ pnpm docs:dev
 ```
 
 ### Victory Native

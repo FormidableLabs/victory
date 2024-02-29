@@ -1,7 +1,6 @@
 /*eslint-disable no-magic-numbers */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import PropTypes from "prop-types";
 
 // VComponents
 import {
@@ -70,9 +69,7 @@ const latestVersion = versions.data[0].version;
 const voronoiBlacklist = minorVersions.map((v) => `ignore-${v.version}`);
 
 const LinkLabel = (props) => {
-  /* eslint-disable react/prop-types */
   const { x, index, version } = props;
-  /* eslint-disable react/prop-types*/
   if (Number(index) || !version.label) {
     return null;
   }
@@ -95,12 +92,10 @@ const LinkLabel = (props) => {
 
 // eslint-disable-next-line react/no-multi-comp
 const VoronoiLabel = (props) => {
-  /* eslint-disable react/prop-types */
   const { datum, x, y, data } = props;
   if (last(data).downloads === datum.downloads) {
     return null;
   }
-  /* eslint-disable react/prop-types*/
   const labelStyles = {
     fill: importedTheme.color.white,
     fontSize: 20,

@@ -22,7 +22,6 @@ const GradientPath = (props) => {
     return `rgb(${gray}, ${gray}, ${gray})`;
   };
 
-  // eslint-disable-next-line react/prop-types
   const { percent, style = {}, ...rest } = props;
 
   const gradientId = `gradient-${Math.random()}`;

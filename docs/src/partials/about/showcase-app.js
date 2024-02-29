@@ -1,14 +1,6 @@
+import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-import LazyImage from "../lazy-image";
-
-const Img = styled(LazyImage)`
-  max-width: 100%;
-  box-shadow: -1.2rem 1.2rem 0px 0px ${({ theme }) => theme.color.brown};
-  margin: 0 0 1.2rem 1.2rem;
-  padding-right: 1.2rem;
-`;
 
 const Grid = styled.div`
   display: grid;
@@ -30,22 +22,14 @@ const ShowcaseApp = (props) => {
         <Company>{props.company}</Company>
         {props.description}
       </div>
-      <Img
-        minHeight={200}
+      <Image
+      
         alt={props.screenshot.alt}
         src={props.screenshot.src}
+        className="w-full pr-5 mr-5 mb-5 feature-img"
       />
     </Grid>
   );
-};
-
-ShowcaseApp.propTypes = {
-  company: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  screenshot: PropTypes.shape({
-    src: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
-  }),
 };
 
 export default ShowcaseApp;

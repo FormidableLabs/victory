@@ -37,7 +37,7 @@ class CustomChart extends React.Component {
   }
 }
 
-ReactDOM.render(<CustomChart data={allData}/>, mountNode);
+render(<CustomChart data={allData}/>);
 ```
 
 ## Render only visible points
@@ -233,7 +233,7 @@ class CustomChart extends React.Component {
   }
 }
 
-ReactDOM.render(<CustomChart data={allData} maxPoints={120} />, mountNode);
+render(<CustomChart data={allData} maxPoints={120} />);
 ```
 
 ## Extending this Demo

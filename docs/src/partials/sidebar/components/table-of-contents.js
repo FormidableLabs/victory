@@ -1,54 +1,35 @@
 /*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 3] }]*/
 import React from "react";
-import PropTypes from "prop-types";
-import { NavLink, useLocation } from "react-router-dom";
+import Link from 'next/link';
 import { maxBy, minBy, isEmpty } from "lodash";
 import styled from "styled-components";
-import createPath from "../../../helpers/path-helpers";
 
 import { SidebarSectionSublist } from "../styles";
-
-const getLinkStylesByDepth = (depth, theme) => {
-  if (depth === 2) {
-    return {
-      "font-size": "1.4rem",
-      height: "3rem",
-      color: theme.color.otherBrown,
-      "letter-spacing": "0.53px",
-    };
-  }
-
-  if (depth === 3) {
-    return {
-      "font-size": "1.2rem",
-      color: theme.color.nearBlack,
-    };
-  }
-  return {};
-};
+import { usePathname } from "next/navigation";
 
 const SubItemListItem = styled.li`
-  padding-left: ${({ depth }) => (depth === 3 ? "7.7rem" : "5.3rem")};
-  line-height: ${({ depth }) => (depth === 3 ? "1.3rem" : "2.3rem")};
-  margin: ${({ depth }) =>
-    depth === 3 ? "0 .7rem 1.3rem 0" : "0 0.7rem 0.7rem 0"};
+  padding-left: ${({ $depth }) => ($depth === 3 ? "7.7rem" : "5.3rem")};
+  line-height: ${({ $depth }) => ($depth === 3 ? "1.3rem" : "2.3rem")};
+  margin: ${({ $depth }) =>
+    $depth === 3 ? "0 .7rem 1.3rem 0" : "0 0.7rem 0.7rem 0"};
   display: block;
   hyphens: auto;
 `;
-SubItemListItem.propTypes = {
-  depth: PropTypes.number.isRequired,
-};
 
-const SubItemLink = styled(NavLink)((props) => ({
-  ...getLinkStylesByDepth(props.depth, props.theme),
-  "font-family": props.theme.font.bold,
-}));
-SubItemLink.propTypes = {
-  depth: PropTypes.number.isRequired,
+const SubItemLink = ({ href, children, $depth }) => {
+  const classNames = [
+    "font-bold",
+    $depth === 2 && "h-12 text-2xl text-[#793d33] tracking-wide",
+    $depth === 3 && "text-lg text-[#242121]",
+  ];
+
+  return (
+    <Link href={href} className={classNames.join('')}>{children}</Link>
+  )
 };
 
 const TableOfContents = ({ active, link, headings }) => {
-  const location = useLocation();
+  const pathname = usePathname();
   if (!active || isEmpty(headings)) {
     return null;
   }
@@ -95,7 +76,7 @@ const TableOfContents = ({ active, link, headings }) => {
     // and take a long sip from a mint julep while mumbling something about the brittleness of scope and the joys of
     // referential transparency, but we're not generalizing this behavior and location-injection is table stakes
     // for front-end routing
-    return location.pathname.includes(absPath)
+    return pathname.includes(absPath)
       ? hashPath
       : `${absPath}${hashPath}`;
   };
@@ -117,11 +98,10 @@ const TableOfContents = ({ active, link, headings }) => {
           }
 
           return item.depth === 2 ? (
-            <SubItemListItem key={index} depth={item.depth}>
+            <SubItemListItem key={index} $depth={item.depth}>
               <SubItemLink
-                depth={item.depth}
-                to={createPath(getPath(item, tocLink))}
-                prefetch={"data"}
+                $depth={item.depth}
+                href={getPath(item, tocLink)}
                 strict
               >
                 {item.value}
@@ -134,13 +114,6 @@ const TableOfContents = ({ active, link, headings }) => {
   };
 
   return getTOC(link, headings);
-};
-
-TableOfContents.propTypes = {
-  active: PropTypes.bool,
-  headings: PropTypes.array,
-  link: PropTypes.object,
-  searchTerm: PropTypes.string,
 };
 
 export default TableOfContents;

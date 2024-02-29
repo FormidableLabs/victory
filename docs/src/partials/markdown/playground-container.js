@@ -73,7 +73,6 @@ const PlaygroundContainer = styled.div`
     .playgroundStage {
       background-color: ${theme.color.codeMirror.bgDim};
       overflow: auto;
-      padding: ${theme.spacing.sm} ${theme.spacing.md};
       width: 80%;
       margin: 0 auto;
       resize: both;
@@ -85,12 +84,6 @@ const PlaygroundContainer = styled.div`
       }
     }
 
-    .playgroundStage.ReactCodeMirror--focused {
-      /* Focused state when editing code */
-      background-color: ${theme.color.codeMirror.bgFocused};
-      transition: background-color 250ms ease-out;
-    }
-
     .playgroundPreview {
       align-items: center;
       display: flex;
@@ -100,7 +93,8 @@ const PlaygroundContainer = styled.div`
       position: relative;
       text-align: center;
       margin: 0 auto;
-      min-width: 80%
+      min-width: 80%;
+      padding-top: 3rem;
     }
 
     @media ${theme.mediaQuery.lg} {
@@ -155,144 +149,9 @@ const PlaygroundContainer = styled.div`
       text-align: left;
       white-space: pre;
       width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
-
-    /**
-     * Code Mirror Color Theme
-    **/
-    .CodeMirror-line {
-      background: none !important;
-    }
-
-    .cm-s-elegant.CodeMirror {
-      height: auto;
-      overflow: hidden;
-      padding: 0;
-
-      background: none !important;
-      color: ${theme.color.codeMirror.punctuation};
-      font-family: ${theme.font.monospace};
-      font-size: 1.3rem;
-      font-variant-ligatures: none;
-      hyphens: none;
-      line-height: 1.9;
-      tab-size: 2;
-      text-shadow: 0 0.1rem white;
-      white-space: pre;
-      word-break: normal;
-      word-spacing: normal;
-      word-wrap: normal;
-    }
-
-    .cm-s-elegant .CodeMirror-selected { /* text selection */
-      background: ${theme.color.codeMirror.bgSelected};
-      color: white;
-    }
-
-    .cm-s-elegant .CodeMirror-activeline {
-      background: ${theme.color.codeMirror.bgSelected};
-    }
-
-    .cm-s-elegant .CodeMirror-activeline-background {
-      background: ${theme.color.codeMirror.bgSelected};
-    }
-
-    .cm-s-elegant .CodeMirror-gutters {
-      background: ${theme.color.codeMirror.bg} !important;
-    }
-
-    .cm-s-elegant .CodeMirror-foldgutter-open,
-    .CodeMirror-foldgutter-folded {
-      color: ${theme.color.gray};
-    }
-
-    .cm-s-elegant div.CodeMirror-cursor {
-      border-left: 0.1rem solid ${theme.color.black} !important;
-    }
-
-    .cm-s-elegant span.cm-builtin {
-      color: ${theme.color.white};
-      text-decoration: underline;
-    }
-
-    .cm-s-elegant span.cm-atom {
-      color: ${theme.color.codeMirror.function};
-    }
-
-    .cm-s-elegant span.cm-attribute {
-      color: ${theme.color.codeMirror.attribute};
-    }
-
-    .cm-s-elegant span.cm-comment {
-      color: ${theme.color.codeMirror.comment};
-    }
-
-    .cm-s-elegant span.cm-def {
-      color: ${theme.color.codeMirror.def};
-    }
-
-    .cm-s-elegant span.cm-header {
-      color: ${theme.color.codeMirror.bgSelected};
-    }
-
-    .cm-s-elegant span.cm-keyword {
-      color: ${theme.color.codeMirror.keyword};
-    }
-
-    .cm-s-elegant span.cm-meta {
-      color: ${theme.color.codeMirror.comment};
-    }
-
-    .cm-s-elegant span.cm-number {
-      color: ${theme.color.codeMirror.number};
-    }
-
-    .cm-s-elegant span.cm-operater,
-    .cm-s-elegant span.cm-operator {
-      color: ${theme.color.codeMirror.operator};
-    }
-
-    .cm-s-elegant span.cm-property {
-      color: ${theme.color.codeMirror.function};
-    }
-
-    .cm-s-elegant span.cm-qualifier {
-      color: ${theme.color.codeMirror.function};
-    }
-
-    .cm-s-elegant span.cm-string {
-      color: ${theme.color.codeMirror.selector};
-    }
-
-    .cm-s-elegant span.cm-string-2 {
-      color: ${theme.color.codeMirror.selector};
-    }
-
-    .cm-s-elegant span.cm-tag {
-      color: ${theme.color.codeMirror.tag};
-    }
-
-    .cm-s-elegant span.cm-tag.cm-bracket,
-    .cm-s-elegant span.cm-bracket {
-      color: ${theme.color.codeMirror.operator};
-    }
-
-    .cm-s-elegant span.cm-variable,
-    .cm-s-elegant span.cm-variable-2 {
-      color: ${theme.color.black};
-    }
-
-    .cm-s-elegant span.CodeMirror-matchingbracket {
-      box-sizing: border-box;
-      background: transparent;
-      border-bottom: 0.1rem solid;
-    }
-
-    .cm-s-elegant span.CodeMirror-nonmatchingbracket {
-      border-bottom: 0.1rem solid;
-      background: none;
-    }
-
   `}
 `;
 

@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { withRouteData } from "react-static";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 import Fuse from "fuse.js";
 import { maxBy, findIndex, includes, last, isEmpty } from "lodash";
 import { FeaturedBadge } from "formidable-oss-badges";
 
-import createPath from "../../helpers/path-helpers";
+import { StyledLink } from "@/partials/styled-link";
 import Introduction from "./components/introduction";
 import Category from "./components/category";
 import SearchInput from "./components/search-input";
@@ -16,10 +13,12 @@ import TableOfContents from "./components/table-of-contents";
 import { TABLE_OF_CONTENTS_SECTIONS } from "./constants";
 
 import {
-  SidebarSectionHeading,
-  SidebarListItemLink,
   SidebarListItem,
+  SidebarListItemLink,
+  SidebarSectionHeading,
 } from "./styles";
+
+import { usePathname } from "next/navigation";
 
 // was gonna pass this but I'm leaning towards this being an internal detail since at the end of the day the proper
 // behavior is based on a bunch of magic strings for a non-configurable internal method
@@ -31,15 +30,15 @@ const getPathPrefix = (item) => {
     return item.slug === "getting-started" ? "/docs" : `/docs/${item.slug}`;
   }
   if (item.category === "support") {
-    return "docs/faq/";
+    return "/docs/faq";
   }
   if (item.category === "documentation") {
-    return "docs/common-props/";
+    return "/docs/common-props";
   }
   const checkedCategory = documentationSubcategories.includes(item.category)
     ? "docs"
     : item.category;
-  return `${checkedCategory}/${item.slug}`;
+  return `/${checkedCategory}/${item.slug}`;
 };
 
 const SidebarContainer = styled.nav`
@@ -63,7 +62,7 @@ const CloseButton = styled.button`
   }
 `;
 
-const VictoryLogo = styled(Link)`
+const VictoryLogo = styled(StyledLink)`
   display: flex;
   justify-content: center;
   margin-bottom: ${({ theme }) => theme.spacing.md};
@@ -107,14 +106,12 @@ const getMatchTree = (link, filterTerm) => {
   }
   return [];
 };
-const defaultProps = {
-  className: "",
-};
+const Sidebar = ({ className, content, onCloseClick }) => {
+  if (!content || !content.length) {
+    return null;
+  }
 
-const Sidebar = (_props) => {
-  const props = { ...defaultProps, ..._props };
-  const { className, content, onCloseClick } = props;
-  const location = useLocation();
+  const pathname = usePathname();
   const [filteredResults, setFilteredResults] = useState(content);
   const [filterTerm, setFilterTerm] = useState("");
 
@@ -137,6 +134,7 @@ const Sidebar = (_props) => {
     setFilterTerm("");
   };
 
+  // TODO: address this function, it's doing too much
   // We need this to rerender every time a new item is clicked in the side nav until the visibility isn't tied to the currently selected item
   const linksLists = (() => {
     const filteredByCategory = {};
@@ -161,9 +159,6 @@ const Sidebar = (_props) => {
       const filteredCategory = category[1];
       renderList[filteredCategoryKey] = filteredCategory.map((edge) => {
         const link = edge.data;
-        // if (link.display === false) { // display isn't actually in all of the links we want, i'm not sure what happened with the data but we just want to return null if link isn't present
-        //   return null;
-        // }
         if (!link) {
           return null;
         }
@@ -172,20 +167,21 @@ const Sidebar = (_props) => {
         // then display its table of contents underneath it
         const active =
           filteredCategoryKey !== "introduction" &&
-          location.pathname.includes(`/${link.type}/${link.slug}`)
+          pathname.includes(`/${link.type}/${link.slug}`)
             ? true
             : filterTerm !== "";
+
+        const finalLink = getPathPrefix(link);
+        const activeLink = pathname === finalLink;
+
         const headings =
           filterTerm !== "" ? getMatchTree(link, filterTerm) : link.subHeadings;
 
         return (
           <SidebarListItem key={link.slug} onClick={handleClearInput}>
             <SidebarListItemLink
-              to={createPath(getPathPrefix(link))}
-              activeClassName={"is-active"}
-              prefetch={"data"}
-              exact
-              strict
+              href={finalLink}
+              className={activeLink && "bg-[#ddd]"}
             >
               {link.title}
             </SidebarListItemLink>
@@ -205,7 +201,7 @@ const Sidebar = (_props) => {
   return (
     <SidebarContainer className={className}>
       <CloseButton onClick={onCloseClick}>&times;</CloseButton>
-      <VictoryLogo to={createPath("/")}>
+      <VictoryLogo href="/">
         <FeaturedBadge name="victory" isHoverable />
       </VictoryLogo>
       <SearchInput
@@ -220,20 +216,11 @@ const Sidebar = (_props) => {
       ) : (
         <>
           <Introduction content={linksLists.introduction} />
-          <Category
-            title="Support"
-            content={linksLists.support}
-            location={location}
-          />
-          <Category
-            title="Guides"
-            content={linksLists.guides}
-            location={location}
-          />
+          <Category title="Support" content={linksLists.support} />
+          <Category title="Guides" content={linksLists.guides} />
           <Category
             title="Documentation"
             content={linksLists.documentation}
-            location={location}
             subCategories={[
               {
                 title: "Charts",
@@ -255,11 +242,4 @@ const Sidebar = (_props) => {
   );
 };
 
-Sidebar.propTypes = {
-  className: PropTypes.string,
-  content: PropTypes.array,
-  hideCloseButton: PropTypes.bool,
-  onCloseClick: PropTypes.func,
-};
-
-export default withRouteData(Sidebar);
+export default Sidebar;

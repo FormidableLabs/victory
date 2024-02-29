@@ -44,7 +44,7 @@ const theme = {
   font: {
     primary: "Helvetica, sans-serif",
     secondary: "Castledown-Bold, sans-serif",
-    monospace: "Monaco, Courier, monospace",
+    monospace: "ui-monospace, SFMono-Regular, Menlo, Monaco, Courier, monospace",
     bold: "Helvetica-Bold, sans-serif",
   },
   typography: {

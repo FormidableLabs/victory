@@ -114,7 +114,7 @@ const App = () => {
   );
 }
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 ## binSpacing
