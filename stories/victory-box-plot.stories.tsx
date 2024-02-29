@@ -6,6 +6,7 @@ import seedrandom from "seedrandom";
 
 import { VictoryBoxPlot } from "../packages/victory-box-plot";
 import { VictoryChart } from "../packages/victory-chart";
+import { VictoryGroup } from "../packages/victory-group";
 import { VictoryTooltip } from "../packages/victory-tooltip";
 import {
   VictoryTheme,
@@ -358,5 +359,31 @@ export const DisableInlineStyles = () => {
         />
       </VictoryChart>
     </>
+  );
+};
+
+export const VictoryGroupAsParent = () => {
+  return (
+    <VictoryGroup style={parentStyle}>
+      <VictoryBoxPlot
+        minLabels
+        maxLabels
+        data={[
+          { x: 1, y: [1, 2, 3, 5] },
+          { x: 2, y: [3, 2, 8, 10] },
+          { x: 3, y: [2, 8, 6, 5] },
+          { x: 4, y: [1, 3, 2, 9] },
+        ]}
+        style={{
+          min: { stroke: "tomato" },
+          max: { stroke: "orange" },
+          q1: { fill: "tomato" },
+          q3: { fill: "orange" },
+          median: { stroke: "white", strokeWidth: 2 },
+          minLabels: { fill: "tomato" },
+          maxLabels: { fill: "orange" },
+        }}
+      />
+    </VictoryGroup>
   );
 };
