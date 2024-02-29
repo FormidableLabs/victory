@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
-import StyledComponentsRegistry from "@/lib/registry";
+import StyledComponentsRegistry from "@/styles/registry";
 import siteConfig from "@/static-config-helpers/site-data";
 
 import "./globals.css";
