@@ -80,7 +80,7 @@ const PlaygroundContainer = styled.div`
       min-height: 40rem;
       @media ${theme.mediaQuery.lg} {
         width: 95%;
-        min-height: 110%;
+        min-height: 100%;
       }
     }
 
