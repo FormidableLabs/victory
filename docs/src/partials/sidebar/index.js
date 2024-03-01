@@ -5,6 +5,7 @@ import Fuse from "fuse.js";
 import { maxBy, findIndex, includes, last, isEmpty } from "lodash";
 import { FeaturedBadge } from "formidable-oss-badges";
 
+import { getPathPrefix } from "@/content/path";
 import { StyledLink } from "@/partials/styled-link";
 import Introduction from "./components/introduction";
 import Category from "./components/category";
@@ -19,27 +20,6 @@ import {
 } from "./styles";
 
 import { usePathname } from "next/navigation";
-
-// was gonna pass this but I'm leaning towards this being an internal detail since at the end of the day the proper
-// behavior is based on a bunch of magic strings for a non-configurable internal method
-const documentationSubcategories = ["charts", "containers", "more"];
-
-const getPathPrefix = (item) => {
-  // just a bunch of one-offs, elegance is harder to realize gains from
-  if (item.category === "introduction") {
-    return item.slug === "getting-started" ? "/docs" : `/docs/${item.slug}`;
-  }
-  if (item.category === "support") {
-    return "/docs/faq";
-  }
-  if (item.category === "documentation") {
-    return "/docs/common-props";
-  }
-  const checkedCategory = documentationSubcategories.includes(item.category)
-    ? "docs"
-    : item.category;
-  return `/${checkedCategory}/${item.slug}`;
-};
 
 const SidebarContainer = styled.nav`
   background-color: ${({ theme }) => theme.color.nearWhite};

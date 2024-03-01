@@ -4,6 +4,7 @@ import config from "@/static-config-helpers/site-data";
 
 import { Content } from "./content";
 import { getDocsPageContent } from "@/content/data";
+import { staticPathPrefix } from "@/content/path";
 
 interface Props {
   params: {
@@ -39,6 +40,6 @@ export async function generateStaticParams() {
   return sidebarList
     .filter((x) => x.data.type === "docs")
     .map((x) => ({
-      slug: x.data.slug.split("/"),
+      slug: staticPathPrefix(x.data.slug).split("/"),
     }));
 }

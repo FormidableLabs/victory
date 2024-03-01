@@ -1,5 +1,6 @@
 import Page, { generateMetadata } from "@/app/docs/[[...slug]]/page";
 import { getDocsPageContent } from "@/content/data";
+import { staticPathPrefix } from '@/content/path';
 
 async function generateStaticParams() {
   const { sidebarList } = await getDocsPageContent();
@@ -7,7 +8,7 @@ async function generateStaticParams() {
   return sidebarList
     .filter((x) => x.data.type === "guides")
     .map((x) => ({
-      slug: x.data.slug.split("/"),
+      slug: staticPathPrefix(x.data.slug).split("/"),
     }));
 }
 

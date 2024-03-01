@@ -5,6 +5,7 @@
     "react/no-multi-comp": 0,
     "new-cap": 0,
     "max-params": 0,
-    "@typescript-eslint/ban-ts-comment": 0
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/no-unnecessary-type-assertion": 0
   }
 }
