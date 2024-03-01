@@ -5,7 +5,6 @@ import { FeaturedBadge } from "formidable-oss-badges";
 import NpmCopy from "./npm-copy";
 import HeroDemo from "./hero-demo";
 import { LandingSectionContent, LinkButton } from "./styles";
-import importedTheme from "../../styles/theme";
 
 const HeroContainer = styled.section`
   background-image: url(${({ $bg }) => $bg});
