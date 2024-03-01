@@ -62,7 +62,7 @@ const GuideDemo = styled.div`
 const GuideLink = ({ href, children }) => (
   <Link
     href={href}
-    className="block text-2xl font-bold mx-auto mt-4 text-center text-[#4c2e29] md:text-4xl md:mt-12"
+    className="block text-2xl font-bold mx-auto mt-8 text-center text-[#4c2e29] md:text-4xl md:mt-12"
   >
     {children}
   </Link>
