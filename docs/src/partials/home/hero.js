@@ -8,7 +8,7 @@ import { LandingSectionContent, LinkButton } from "./styles";
 import importedTheme from "../../styles/theme";
 
 const HeroContainer = styled.section`
-  background-image: url(${({ bg }) => bg});
+  background-image: url(${({ $bg }) => $bg});
   background-size: cover;
   color: ${({ theme }) => theme.color.white};
   height: 650px;
@@ -201,7 +201,7 @@ const Hero = ({
   link,
 }) => (
   <>
-    <HeroContainer bg={background}>
+    <HeroContainer $bg={background}>
       <Corner>
         <CornerText>{cornerText}</CornerText>
         <a
@@ -223,7 +223,6 @@ const Hero = ({
             <NpmCopy text={code} />
             <StyledLinkButton
               href={link.location}
-              bg={importedTheme.color.red}
               noMargin
             >
               {link.text}

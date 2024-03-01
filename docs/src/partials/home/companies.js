@@ -87,7 +87,7 @@ const Companies = () => (
           <CompanyLogo src={TUNE} alt="Tune" title="Tune" />
         </Company>
       </CompaniesList>
-      <LinkButton href="about#showcase" className="mx-auto bg-white">
+      <LinkButton href="/about#showcase" className="mx-auto bg-white">
         SEE SHOWCASE
       </LinkButton>
     </LandingSectionContent>
