@@ -59,13 +59,10 @@ const GuideDemo = styled.div`
   }
 `;
 
-const GuideLink = ({ href, children }) => (
-  <Link
-    href={href}
-    className="block text-2xl font-bold mx-auto mt-8 text-center text-[#4c2e29] md:text-4xl md:mt-12"
-  >
+const GuideLinkTitle = ({ children }) => (
+  <div className="block text-2xl font-bold mx-auto mt-8 text-center text-[#4c2e29] md:text-4xl md:mt-12">
     {children}
-  </Link>
+  </div>
 );
 
 const Guides = () => (
@@ -74,42 +71,52 @@ const Guides = () => (
       <SectionHeading>Guides</SectionHeading>
       <GuidesList>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoCustomChart} />
-          </GuideDemo>
-          <GuideLink href="/guides/custom-charts">Custom Charts</GuideLink>
+          <Link href="/guides/custom-charts">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoCustomChart} />
+            </GuideDemo>
+            <GuideLinkTitle>Custom Charts</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoZoom} />
-          </GuideDemo>
-          <GuideLink href="/guides/brush-and-zoom">Brush and Zoom</GuideLink>
+          <Link href="/guides/brush-and-zoom">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoZoom} />
+            </GuideDemo>
+            <GuideLinkTitle>Brush and Zoom</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoCustomComponents} />
-          </GuideDemo>
-          <GuideLink href="/guides/custom-components">
-            Custom Components
-          </GuideLink>
+          <Link href="/guides/custom-components">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoCustomComponents} />
+            </GuideDemo>
+            <GuideLinkTitle>Custom Components</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoTooltips} />
-          </GuideDemo>
-          <GuideLink href="/guides/tooltips">Tooltips</GuideLink>
+          <Link href="/guides/tooltips">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoTooltips} />
+            </GuideDemo>
+            <GuideLinkTitle>Tooltips</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoSharedEvents} />
-          </GuideDemo>
-          <GuideLink href="/guides/events">Events</GuideLink>
+          <Link href="/guides/events">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoSharedEvents} />
+            </GuideDemo>
+            <GuideLinkTitle>Events</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoAnimation} />
-          </GuideDemo>
-          <GuideLink href="/guides/animations">Animations</GuideLink>
+          <Link href="/guides/animations">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoAnimation} />
+            </GuideDemo>
+            <GuideLinkTitle>Animations</GuideLinkTitle>
+          </Link>
         </li>
       </GuidesList>
     </LandingSectionContent>
