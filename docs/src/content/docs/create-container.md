@@ -58,5 +58,5 @@ const App = () => (
   </VictoryChart>
 );
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```

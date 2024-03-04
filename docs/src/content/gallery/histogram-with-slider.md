@@ -206,5 +206,5 @@ const YearSlider = ({ year, setYear }) => {
   );
 };
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```

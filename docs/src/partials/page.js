@@ -1,18 +1,9 @@
-/*global document:false */
+'use client';
+
 import React, { useState, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import _Header from "./header";
 import _Sidebar from "../partials/sidebar";
-
-// sidebar logic is as follows:
-// if on large devices, sidebar is only shown if the `withSidebar` prop is
-// `true`
-// if on small devices, sidebar is always hidden until toggled open, regardless
-// of the value of `withSidebar`
-
-// the PageContainer and Header components need to be nudged over to make space
-// for the sidebar only on large devices if `withSidebar` is `true`
 
 const PageContainer = styled.main`
   position: relative;
@@ -20,9 +11,9 @@ const PageContainer = styled.main`
   margin-top: ${({ theme }) => theme.layout.headerHeight};
 
   @media ${({ theme }) => theme.mediaQuery.md} {
-    margin-left: ${({ spaceForSidebar, theme }) =>
+    margin-left: ${({ $spaceForSidebar, theme }) =>
       `calc(${theme.layout.stripesWidth} + ${
-        spaceForSidebar ? theme.layout.sidebarWidth : "0rem"
+        $spaceForSidebar ? theme.layout.sidebarWidth : "0rem"
       })`};
   }
 `;
@@ -119,7 +110,7 @@ const Page = (props) => {
   });
 
   return (
-    <PageContainer spaceForSidebar={withSidebar} className="Page-content">
+    <PageContainer $spaceForSidebar={withSidebar} className="Page-content">
       <Header
         spaceForSidebar={withSidebar}
         onMenuClick={() => setSidebarOpen(true)}
@@ -141,12 +132,6 @@ const Page = (props) => {
       </ContentContainer>
     </PageContainer>
   );
-};
-
-Page.propTypes = {
-  children: PropTypes.node,
-  sidebarContent: PropTypes.array,
-  withSidebar: PropTypes.bool,
 };
 
 export default Page;

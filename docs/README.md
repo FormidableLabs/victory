@@ -1,33 +1,36 @@
 <h1 align="center">Victory Documentation Site</h1>
 
-[Documentation site](https://commerce.nearform.com/open-source/victory/) for [victory](https://github.com/FormidableLabs/victory) built with [react-static](https://github.com/nozzle/react-static).
+[Documentation site](https://commerce.nearform.com/open-source/victory/) for [victory](https://github.com/FormidableLabs/victory) built with [Next.js](https://nextjs.org/).
 
 
 ## Getting Started
 
-To install and run the docs site locally:
+To install and run the docs site locally, first install and build from the ROOT of this repository
+
+The victory packages are PNPM linked into this project. You will need to execute a build at the root of the repository before the changes will be picked up by the documentation site.
 
 ```bash
-yarn install
-yarn start
+pnpm install
+pnpm build
+pnpm dev
 ```
 
-Note that paths in local development are based on a root of "/" but be careful when defining relative and absolute paths inline or doing url parsing, as the production output root will be "open-source/victory." Links in markdown files are currently handled with a link helper that prefixes relative paths with "/open-source/victory", so links like "/docs/victory-area" will work as expected in development and production. When adding links elsewhere, use `createPath` from `src/helpers/path-helpers` to ensure the path is correctly prefixed.
+Note that paths in local development are based on a root of "/" but be careful when defining relative and absolute paths inline or doing url parsing, as the production output root will be "open-source/victory."
 
 ## Want to see if you're ready to :shipit:?
 
 First, build the static site (within /docs folder):
 
 ```bash
-yarn build
+pnpm build
 ```
 Once the build succeeds, serve it: 
 
 ```bash
-yarn serve
+pnpm start
 ```
 
-This will render the docs site at `http://localhost:3000/open-source/victory/`. If you go to root (i.e. `http://localhost:3000/`), you will need to click through the browser's file explorer to `open-source/victory` to get to the site.
+This will render the docs site at `http://localhost:3000/open-source/victory/`. If you go to root (i.e. `http://localhost:3000/`).
 
 Note the staging and production sites are served from a nested path, e.g. `https://commerce.nearform.com/open-source/victory`. This step is important for validating that both the `basePath` used by the static HTML output and the `basename` used by the client-side router are working as expected.
 

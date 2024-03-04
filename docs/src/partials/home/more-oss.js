@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { FeaturedBadge, ProjectBadge } from "formidable-oss-badges";
 import styled from "styled-components";
 import {
@@ -131,16 +130,11 @@ const MoreOSS = ({ ossArray, link }) => (
           </OSSItem>
         ))}
       </OSSWrapper>
-      <LinkButton isExternal to={link.location}>
+      <LinkButton isExternal href={link.location} className="bg-white mx-auto">
         {link.text}
       </LinkButton>
     </LandingSectionContent>
   </LandingSectionWrapper>
 );
-
-MoreOSS.propTypes = {
-  link: PropTypes.shape({ location: PropTypes.string, text: PropTypes.string }),
-  ossArray: PropTypes.array,
-};
 
 export default MoreOSS;

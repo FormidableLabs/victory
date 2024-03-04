@@ -318,5 +318,5 @@ const Matterhorn = props => {
   )
 };
 
-ReactDOM.render(<Matterhorn/>, mountNode);
+render(<Matterhorn/>);
 ```

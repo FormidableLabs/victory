@@ -1,9 +1,15 @@
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import SidebarListItemLinkStyle from "./sidebar-list-item-link-style";
+import { StyledLink } from "@/partials/styled-link";
 
-const SidebarListItemLink = styled(NavLink)`
-  ${SidebarListItemLinkStyle}
-`;
+const SidebarListItemLink = ({ className, ...props }) => {
+  const classNames = [
+    "block text-2xl text-[#bc5240] tracking-wide hyphens-auto leading-9",
+    "pt-2 pr-4 pb-1.5 pl-14",
+    className,
+  ];
+
+  return (
+    <StyledLink className={classNames.join(" ")} {...props} />
+  );
+};
 
 export default SidebarListItemLink;

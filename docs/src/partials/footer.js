@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import SVG from "react-inlinesvg";
 import styled from "styled-components";
-import formidableIcon from "../../static/logos/logo-formidable-icon.svg";
+
+const formidableIcon = "/open-source/victory/static/logos/logo-formidable-icon.svg";
 
 const FooterContainer = styled.footer`
   background-color: ${({ theme }) => theme.color.black};
@@ -70,7 +70,7 @@ const Footer = ({ className = "" }) => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Icon src={formidableIcon} />
+          <Icon src={formidableIcon} alt="Formidable" />
         </a>
         <Contact>
           <a
@@ -104,9 +104,5 @@ const Footer = ({ className = "" }) => (
     </InnerContainer>
   </FooterContainer>
 );
-
-Footer.propTypes = {
-  className: PropTypes.string,
-};
 
 export default Footer;
