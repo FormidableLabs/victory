@@ -8,7 +8,7 @@ import { D3Scale } from "../types/prop-types";
 /**
  * Returns the first argument it receives
  * @param value The value to return
- * @returns The value give
+ * @returns The value given
  */
 function identity<T>(value: T): T {
   return value;
