@@ -58,6 +58,29 @@ describe("victory-util/collection", () => {
     });
   });
 
+  describe("difference", () => {
+    it("handles empty arguments", () => {
+      // @ts-expect-error "Method expects 2 arguments"
+      expect(Collection.difference()).toEqual([]);
+    });
+
+    it("handles empty arrays", () => {
+      expect(Collection.difference([], [])).toEqual([]);
+    });
+
+    it("returns an empty array if there are no differences", () => {
+      expect(Collection.difference([1, 2], [1, 2])).toEqual([]);
+    });
+
+    it("returns the difference between two arrays", () => {
+      expect(Collection.difference([1, 2], [2, 3])).toEqual([1]);
+    });
+
+    it("returns the difference between two unequal arrays", () => {
+      expect(Collection.difference([1, 2, 3, 4, 5], [5, 2, 10])).toEqual([1, 3, 4]);
+    });
+  });
+
   describe("isArrayOfArrays", () => {
     it("handles empty argument", () => {
       // @ts-expect-error "Method expects 1 argument"

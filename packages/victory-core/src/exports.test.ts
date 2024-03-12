@@ -245,6 +245,7 @@ describe("victory-core", () => {
             "containsNumbers": [Function],
             "containsOnlyStrings": [Function],
             "containsStrings": [Function],
+            "difference": [Function],
             "getMaxValue": [Function],
             "getMinValue": [Function],
             "isArrayOfArrays": [Function],
