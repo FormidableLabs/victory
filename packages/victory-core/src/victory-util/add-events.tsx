@@ -5,7 +5,7 @@ import isEqual from "react-fast-compare";
 import { VictoryLabelableProps } from "../types/prop-types";
 import { VictoryTransition } from "../victory-transition/victory-transition";
 import { VictoryCommonProps, VictoryDatableProps } from "./common-props";
-import { difference } from './collection';
+import { difference } from "./collection";
 import type { ComponentEvent } from "./events";
 import * as Events from "./events";
 import { isFunction, isNil } from "./helpers";
