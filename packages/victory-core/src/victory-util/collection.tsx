@@ -34,6 +34,19 @@ export function containsOnlyStrings(
   );
 }
 
+/**
+ * Creates an array of array values not included in the other given arrays
+ * @param a The array to inspect
+ * @param b The values to exclude
+ * @returns The new array of filtered values
+ */
+export function difference<T>(a: Array<T>, b: Array<T>): Array<T> {
+  if (a && b) {
+    return a.filter((value) => !b.includes(value));
+  }
+  return [];
+}
+
 export function isArrayOfArrays<T>(
   collection: Array<T> | Array<Array<T>> | unknown,
 ): collection is Array<Array<T>> {
