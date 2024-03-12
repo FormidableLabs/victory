@@ -1,5 +1,5 @@
 import { Collection, Selection, Data, Helpers } from "victory-core";
-import { isEmpty, isString, isRegExp, throttle } from "lodash";
+import { isEmpty, isRegExp, throttle } from "lodash";
 import isEqual from "react-fast-compare";
 import Delaunay from "delaunay-find/lib/index.js";
 import React from "react";
@@ -66,7 +66,9 @@ class VoronoiHelpersClass {
       const childProps = child.props || {};
       const name = childProps.name || childName;
       const blacklist = props.voronoiBlacklist || [];
-      const blacklistStr = blacklist.filter(isString);
+      const blacklistStr = blacklist.filter(
+        (value) => !!value && typeof value.valueOf() === "string",
+      );
       const blacklistRegExp = blacklist.filter(isRegExp);
       const isRegExpMatch = blacklistRegExp.some((regExp) => regExp.test(name));
       if (
