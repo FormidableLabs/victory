@@ -1,4 +1,4 @@
-import { defaults, groupBy, sum, range } from "lodash";
+import { defaults, groupBy, range } from "lodash";
 import { Helpers, Style, TextSize } from "victory-core";
 import { VictoryLegendProps } from "./victory-legend";
 
@@ -330,3 +330,19 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
+
+/**
+ * Computes the sum of the values in `array`.
+ * @param {Array} array The array to iterate over.
+ * @returns {number} Returns the sum.
+ */
+function sum(array: number[]) {
+  if (array && array.length) {
+    let value = 0;
+    for (let i = 0; i < array.length; i++) {
+      value += array[i];
+    }
+    return value;
+  }
+  return 0;
+}
