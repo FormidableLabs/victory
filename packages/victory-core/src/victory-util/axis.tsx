@@ -1,9 +1,18 @@
 import React from "react";
-import { defaults, identity, isObject, uniq, orderBy } from "lodash";
+import { defaults, isObject, uniq, orderBy } from "lodash";
 import * as Collection from "./collection";
 import * as Domain from "./domain";
 import * as Helpers from "./helpers";
 import { D3Scale } from "../types/prop-types";
+
+/**
+ * Returns the first argument it receives
+ * @param value The value to return
+ * @returns The value give
+ */
+function identity<T>(value: T): T {
+  return value;
+}
 
 /**
  * Returns the axis (x or y) of a particular axis component
