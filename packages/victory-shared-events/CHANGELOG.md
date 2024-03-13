@@ -1,5 +1,15 @@
 # victory-shared-events
 
+## 36.9.2
+
+### Patch Changes
+
+- Replace lodash keys with native code ([#2811](https://github.com/FormidableLabs/victory/pull/2811))
+
+* Replace lodash difference with native code ([#2828](https://github.com/FormidableLabs/victory/pull/2828))
+
+- Replace lodash isFunction with native code ([#2802](https://github.com/FormidableLabs/victory/pull/2802))
+
 ## 36.9.1
 
 ## 36.9.0

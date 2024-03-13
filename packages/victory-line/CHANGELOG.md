@@ -1,5 +1,13 @@
 # victory-line
 
+## 36.9.2
+
+### Patch Changes
+
+- Replace lodash isNil and isNan with native code ([#2800](https://github.com/FormidableLabs/victory/pull/2800))
+
+* Replace lodash isFunction with native code ([#2802](https://github.com/FormidableLabs/victory/pull/2802))
+
 ## 36.9.1
 
 ### Patch Changes

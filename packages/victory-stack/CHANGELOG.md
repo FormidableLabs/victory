@@ -1,5 +1,11 @@
 # victory-stack
 
+## 36.9.2
+
+### Patch Changes
+
+- Replace lodash keys with native code ([#2811](https://github.com/FormidableLabs/victory/pull/2811))
+
 ## 36.9.1
 
 ## 36.9.0
