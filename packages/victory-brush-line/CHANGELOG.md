@@ -1,5 +1,11 @@
 # victory-brush-line
 
+## 36.9.2
+
+### Patch Changes
+
+- Replace lodash isFunction with native code ([#2802](https://github.com/FormidableLabs/victory/pull/2802))
+
 ## 36.9.1
 
 ## 36.9.0

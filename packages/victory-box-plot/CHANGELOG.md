@@ -1,5 +1,17 @@
 # victory-box-plot
 
+## 36.9.2
+
+### Patch Changes
+
+- Replace lodash keys with native code ([#2811](https://github.com/FormidableLabs/victory/pull/2811))
+
+* Replace lodash array utils with native code ([#2810](https://github.com/FormidableLabs/victory/pull/2810))
+
+- Replace lodash isNil and isNan with native code ([#2800](https://github.com/FormidableLabs/victory/pull/2800))
+
+* Replace lodash isFunction with native code ([#2802](https://github.com/FormidableLabs/victory/pull/2802))
+
 ## 36.9.1
 
 ## 36.9.0
