@@ -1,5 +1,11 @@
 # victory-bar
 
+## 37.0.0
+
+### Major Changes
+
+- Upgrade babel dependencies and build target to modern browsers ([#2804](https://github.com/FormidableLabs/victory/pull/2804))
+
 ## 36.9.2
 
 ### Patch Changes
