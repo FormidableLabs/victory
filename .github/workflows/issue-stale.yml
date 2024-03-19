@@ -2,7 +2,7 @@ name: Close inactive issues
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   close-issues:
@@ -13,7 +13,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/stale@v4
+      - uses: actions/stale@v9
         with:
           ascending: false
           operations-per-run: 100
