@@ -2,8 +2,9 @@ name: Setup
 description: Setup Build Step
 inputs:
   node-version:
+    default: "18.x"
+    description: "The version of nodejs to use."
     required: true
-    default: '18.x'
 
 runs:
   using: "composite"
