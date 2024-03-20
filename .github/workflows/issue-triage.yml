@@ -1,0 +1,39 @@
+name: Issue Triage
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  needs-repro:
+    runs-on: ubuntu-22.04
+    if: "${{ contains(github.event.label.name, 'Status: Needs More Info :hand:') }}"
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Hi there! It looks like your issue requires a minimal reproducible example, but it is invalid or absent. Please prepare such an example and share it with us.
+
+              **The best way to get attention to your issue is to provide a clean and easy way for a developer to reproduce the issue on their own machine.** Please do not provide your entire project, or a project with more code than is necessary to reproduce the issue.
+
+              A side benefit of going through the process of narrowing down the minimal amount of code needed to reproduce the issue is that you may get lucky and discover that the bug is due to a mistake in your application code that you can quickly fix on your own.
+
+              ### Resources
+
+              - ["How to create a Minimal, Reproducible Example"](https://stackoverflow.com/help/minimal-reproducible-example)
+              - ["Codesandbox Starterkit for Victory"](https://codesandbox.io/p/sandbox/victory-starter-dj4f7t)
+
+              ### Common concerns
+
+              #### "I didn't have time to create one"
+
+              That's understandable, it can take some time to prepare. We ask that you hold off on filing an issue until you are able to fully complete the required fields in the issue template.
+
+              #### "You can reproduce it by yourself by creating a project and following these steps"
+
+              This is useful knowledge, but it's still valuable to have the resulting project that is produced from running the steps, where you have verified you can reproduce the issue.
+            `})

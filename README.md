@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://formidable.com/open-source/" target="_blank">
+  <a href="https://commerce.nearform.com/open-source/" target="_blank">
     <img alt="Victory — Formidable, We build the modern web" src="https://raw.githubusercontent.com/FormidableLabs/victory/main//Victory-Hero.png" />
   </a>
 
@@ -40,7 +40,7 @@
 - [Guides](http://formidable.com/open-source/victory/guides)
 - [Contributing](#contributing)
 
-* See the **docs and examples** on the website: http://formidable.com/open-source/victory.
+* See the **docs and examples** on the website: https://commerce.nearform.com/open-source/victory.
 * **Experiment** with all Victory components in this [code sandbox](https://codesandbox.io/s/dj4f7t)
 
 ## Getting started
@@ -78,7 +78,7 @@ render(<PieChart />, document.getElementById("app"));
 
 ## Requirements
 
-Projects using Victory should also depend on [React][]. Victory works with React ~~version 15 and above.~~ As of `victory@34.0.0` Victory requires React version `16.3.0` or above
+Projects using Victory should also depend on [React][]. As of `victory@34.0.0` Victory requires React version `16.3.0` or above
 
 ## Victory Native
 

@@ -1,6 +1,7 @@
-import { defaults, isEmpty, fromPairs, difference } from "lodash";
+import { defaults, isEmpty, fromPairs } from "lodash";
 import React from "react";
 import {
+  Collection,
   EventCallbackInterface,
   EventMixinCalculatedValues,
   EventPropTypeInterface,
@@ -81,12 +82,12 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
 
   componentDidUpdate() {
     const globalEventKeys = Object.keys(this.globalEvents);
-    const removedGlobalEventKeys = difference(
+    const removedGlobalEventKeys = Collection.difference(
       this.prevGlobalEventKeys,
       globalEventKeys,
     );
     removedGlobalEventKeys.forEach((key) => this.removeGlobalListener(key));
-    const addedGlobalEventKeys = difference(
+    const addedGlobalEventKeys = Collection.difference(
       globalEventKeys,
       this.prevGlobalEventKeys,
     );

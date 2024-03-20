@@ -297,6 +297,5 @@ class CustomTheme extends React.Component {
   }
 }
 
-ReactDOM.render(<CustomTheme/>, mountNode)
-
+render(<CustomTheme/>);
 ```

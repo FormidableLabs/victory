@@ -1,5 +1,21 @@
 # victory-cursor-container
 
+## 37.0.0
+
+### Major Changes
+
+- Upgrade babel dependencies and build target to modern browsers ([#2804](https://github.com/FormidableLabs/victory/pull/2804))
+
+## 36.9.2
+
+### Patch Changes
+
+- Replace lodash array utils with native code ([#2810](https://github.com/FormidableLabs/victory/pull/2810))
+
+* Replace lodash values and mapValues with native code ([#2808](https://github.com/FormidableLabs/victory/pull/2808))
+
+- Replace lodash isFunction with native code ([#2802](https://github.com/FormidableLabs/victory/pull/2802))
+
 ## 36.9.1
 
 ### Patch Changes

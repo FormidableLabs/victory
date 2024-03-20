@@ -345,6 +345,7 @@ export function getChildStyle(child, index, calculatedProps) {
   );
   const labelsStyle = defaults({}, childStyle.labels, style.labels);
   return {
+    ...childStyle,
     parent: style.parent,
     data: dataStyle,
     labels: labelsStyle,

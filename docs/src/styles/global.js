@@ -1,15 +1,14 @@
 import { createGlobalStyle } from "styled-components";
 import normalize from "styled-normalize";
-import prism from "./prism";
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
-  ${prism}
 
   html {
     box-sizing: border-box;
     font-size: 62.5%;
     overflow-x: hidden;
+    scroll-padding-top: 80px;
   }
 
   *,
@@ -201,10 +200,6 @@ const GlobalStyle = createGlobalStyle`
     code {
       font-size: 1.2rem;
     }
-  }
-
-  svg {
-    fill: currentColor;
   }
 
   table {

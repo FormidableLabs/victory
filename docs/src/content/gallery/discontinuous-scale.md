@@ -41,5 +41,5 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, mountNode);
+render(<App />);
 ```

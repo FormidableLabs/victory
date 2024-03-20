@@ -28,6 +28,17 @@ function getPolarRange(props, axis) {
 // Exported Functions
 
 /**
+ * Creates an object composed of the inverted keys and values of object.
+ * If object contains duplicate values, subsequent values overwrite property assignments of previous values.
+ */
+export function invert(original: Record<string, string | number>) {
+  return Object.entries(original).reduce((acc, current) => {
+    acc[current[1]] = current[0];
+    return acc;
+  }, {});
+}
+
+/**
  * creates an object with some keys excluded
  * replacement for lodash.omit for performance. does not mimic the entire lodash.omit api
  * @param {Object} originalObject: created object will be based on this object

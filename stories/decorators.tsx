@@ -8,6 +8,6 @@ const containerStyle: React.CSSProperties = {
   justifyContent: "center",
 };
 
-export const storyContainer = (story) => (
+export const storyContainer = (story: any) => (
   <div style={containerStyle}>{story()}</div>
 );

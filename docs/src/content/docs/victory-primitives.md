@@ -243,7 +243,7 @@ _note_ `Box` also exported as `Border`
 
 ### Candle
 
-[VictoryCandlestick][] uses `Candle` to represent a single data point as a candle. `Candle` renders a group with `<Rect>` and `<Line>` elements. [View the source][candle]
+[VictoryCandlestick][] uses `Candle` to represent a single data point as a candle. `Candle` renders a group with `<Rect>` and `<Line>` elements. [View the source][candlestick]
 
 **Props**
 
@@ -473,29 +473,29 @@ _note_ `Box` also exported as `Border`
 [victoryclipcontainer]: /docs/victory-clip-container
 [victorylabel]: /docs/victory-label
 [react-native-svg]: https://github.com/react-native-community/react-native-svg
-[arc]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/arc.js
+[arc]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/arc.tsx
 [victorypolaraxis]: /docs/victory-polar-axis
-[area]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/area.js
+[area]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-area/src/area.tsx
 [victoryarea]: /docs/victory-area
-[background]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/background.js
-[bar]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/bar.js
-[border]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/border.js
+[background]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/background.tsx
+[bar]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-bar/src/bar.tsx 
+[border]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/border.tsx
 [victorybar]: /docs/victory-bar
-[candle]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/candle.js
+[candlestick]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-candlestick/src/victory-candlestick.tsx 
 [victorycandlestick]: /docs/victory-candlestick
-[curve]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/curve.js
+[curve]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-line/src/curve.tsx 
 [victoryline]: /docs/victory-line
-[errorbar]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/error-bar.js
+[errorbar]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-errorbar/src/error-bar.tsx
 [victoryerrorbar]: /docs/victory-errorbar
-[flyout]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-tooltip/src/flyout.js
+[flyout]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-tooltip/src/flyout.tsx
 [victorytooltip]: /docs/victory-tooltip
 [victoryaxis]: /docs/victory-axis
-[axis]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/axis.js
-[point]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/point.js
-[slice]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/slice.js
-[whisker]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/whisker.js
+[axis]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-axis/src/victory-axis.tsx
+[point]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/point.tsx
+[slice]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-pie/src/slice.tsx
+[whisker]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/whisker.tsx
 [victorypie]: /docs/victory-pie
-[voronoi]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/voronoi.js
+[voronoi]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-voronoi/src/voronoi.tsx
 [victoryvoronoi]: /docs/victory-voronoi
 [victoryscatter]: /docs/victory-scatter
 [victorylegend]: /docs/victory-legend

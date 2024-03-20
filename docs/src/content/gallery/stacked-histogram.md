@@ -56,6 +56,7 @@ const App = () => {
           return (
             <VictoryHistogram
               data={dataGroup}
+              key={key}
               x="day"
               binSpacing={8}
               style={{
@@ -81,5 +82,5 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```

@@ -76,7 +76,7 @@ class App extends React.Component {
     );
   }
 }
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 ## Creating new components
@@ -111,7 +111,7 @@ class App extends React.Component {
     );
   }
 }
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 More complex components may be supplied as direct children of `VictoryChart`. These components will have access to shared chart props such as `scale`. In the example below, the custom `Polygon` components draws a polygon based on a collection of points. The scale provided by `VictoryChart` is used to correctly position the points within the chart.
@@ -157,7 +157,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode)
+render(<App/>);
 ```
 
 Other Victory components may even be used in creating custom components, as in the example below.
@@ -226,7 +226,7 @@ class CustomDataComponent extends React.Component {
   }
 }
 
-ReactDOM.render(<CustomDataComponent/>, mountNode)
+render(<CustomDataComponent/>);
 ```
 
 Since any custom SVG element can be used as a Victory component, any styling system can be used to style custom components, including styled components, CSS modules, or inline styles.
@@ -279,7 +279,7 @@ const App = () => {
   );
 }
 
-ReactDOM.render(<App/>, mountNode)
+render(<App/>);
 
 ```
 

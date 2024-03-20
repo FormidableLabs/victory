@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const InputContainer = styled.div`
@@ -29,11 +28,5 @@ const SidebarSearchInput = ({ content, onHandleInputChange, searchText }) => (
     />
   </InputContainer>
 );
-
-SidebarSearchInput.propTypes = {
-  content: PropTypes.array,
-  onHandleInputChange: PropTypes.func,
-  searchText: PropTypes.string,
-};
 
 export default SidebarSearchInput;

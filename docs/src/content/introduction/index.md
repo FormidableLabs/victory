@@ -11,7 +11,7 @@ Victory is an opinionated, but fully overridable, ecosystem of composable React 
 
 #### Getting Started with Victory Native?
 
-Check out the documentation for [Victory Native XL](https://formidable.com/open-source/victory-native/) - the rewrite of Victory Native that favors flexibility, ease of use, and performance.
+Check out the documentation for [Victory Native XL](https://commerce.nearform.com/open-source/victory-native/) - the rewrite of Victory Native that favors flexibility, ease of use, and performance.
 
 For the legacy versions of Victory Native, see [Getting Started with Victory Native](/docs/native).
 
@@ -113,7 +113,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 #### 5. Add a Chart wrapper
@@ -150,7 +150,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 While the axes defaults are great, you can see there's some overlap with the y-axis and first bar. Let's fix that in the next section.
@@ -204,7 +204,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 #### 7. Add a theme
@@ -255,7 +255,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 #### 8. Stack multiple bar charts
@@ -342,7 +342,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 #### 9. Override theme's color scale
@@ -422,7 +422,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 ## Next Steps

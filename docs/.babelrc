@@ -1,6 +1,0 @@
-{
-  "extends": "react-static/.babelrc",
-  "plugins": [
-    "react-hot-loader/babel"
-  ]
-}

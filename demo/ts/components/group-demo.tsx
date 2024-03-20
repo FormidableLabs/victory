@@ -9,6 +9,7 @@ import { VictoryScatter } from "victory-scatter";
 import { VictoryErrorBar } from "victory-errorbar";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryVoronoi } from "victory-voronoi";
+import { VictoryBoxPlot } from "victory-box-plot";
 import { range, random } from "lodash";
 
 class App extends React.Component {
@@ -160,6 +161,27 @@ class App extends React.Component {
               />
             </VictoryGroup>
           </VictoryChart>
+          <VictoryGroup style={chartStyle}>
+              <VictoryBoxPlot
+                minLabels
+                maxLabels
+                data={[
+                  { x: 1, y: [1, 2, 3, 5] },
+                  { x: 2, y: [3, 2, 8, 10] },
+                  { x: 3, y: [2, 8, 6, 5] },
+                  { x: 4, y: [1, 3, 2, 9] },
+                ]}
+                style={{
+                  min: { stroke: "tomato" },
+                  max: { stroke: "orange" },
+                  q1: { fill: "tomato" },
+                  q3: { fill: "orange" },
+                  median: { stroke: "white", strokeWidth: 2 },
+                  minLabels: { fill: "tomato" },
+                  maxLabels: { fill: "orange" },
+                }}
+              />
+            </VictoryGroup>
         </div>
       </div>
     );

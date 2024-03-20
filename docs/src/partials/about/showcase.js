@@ -1,10 +1,10 @@
 import React from "react";
 import ShowcaseApp from "./showcase-app";
-// Images
-import IMG538 from "../../../static/showcase-fivethirtyeight.jpg";
-import IMGPOSTMARK from "../../../static/showcase-postmark.jpg";
-import IMGTUNE from "../../../static/showcase-tune.jpg";
-import IMGCUMUL8 from "../../../static/showcase-cumul8.jpg";
+
+import IMG538 from "../../static/showcase-fivethirtyeight.jpg";
+import IMGPOSTMARK from "../../static/showcase-postmark.jpg";
+import IMGTUNE from "../../static/showcase-tune.jpg";
+import IMGCUMUL8 from "../../static/showcase-cumul8.jpg";
 
 const showcaseAppData = [
   {

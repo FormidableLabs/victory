@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 
 import {
@@ -32,17 +31,6 @@ const Category = ({ content, title, subCategories }) => {
       {sectionContent}
     </>
   );
-};
-
-Category.propTypes = {
-  content: PropTypes.array,
-  subCategories: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      content: PropTypes.array,
-    }),
-  ),
-  title: PropTypes.string,
 };
 
 export default Category;

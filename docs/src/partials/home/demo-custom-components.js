@@ -1,5 +1,4 @@
-/* global window:false */
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import React from "react";
 import { range, random } from "lodash";
 import {
@@ -22,7 +21,6 @@ const GradientPath = (props) => {
     return `rgb(${gray}, ${gray}, ${gray})`;
   };
 
-  // eslint-disable-next-line react/prop-types
   const { percent, style = {}, ...rest } = props;
 
   const gradientId = `gradient-${Math.random()}`;
