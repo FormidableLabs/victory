@@ -97,7 +97,9 @@ class VictoryHistogramBase extends React.Component<VictoryHistogramProps> {
     },
   };
 
-  static getFormattedData = getFormattedData;
+  static getFormattedData(...args: any) {
+    return getFormattedData(...args);
+  }
 
   static defaultProps: VictoryHistogramProps = {
     containerComponent: <VictoryContainer />,
