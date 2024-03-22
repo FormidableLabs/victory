@@ -171,8 +171,9 @@ class VictoryCandlestickBase extends React.Component<VictoryCandlestickProps> {
 
   static getDomain = getDomain;
   static getData = getData;
-  static getBaseProps = (props: VictoryCandlestickProps) =>
-    getBaseProps(props, fallbackProps);
+  static getBaseProps(props: VictoryCandlestickProps) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents = [
     "openLabelComponent",
     "closeLabelComponent",

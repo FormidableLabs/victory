@@ -97,7 +97,7 @@ export const combineContainerMixins = (
       {},
     );
 
-    static defaultEvents = (props) => {
+    static defaultEvents(props) {
       return combineDefaultEvents(
         Classes.reduce((defaultEvents, Class) => {
           const events = Helpers.isFunction(Class.defaultEvents)
@@ -106,7 +106,7 @@ export const combineContainerMixins = (
           return [...defaultEvents, ...events];
         }, []),
       );
-    };
+    }
 
     getChildren(props) {
       return instances.reduce(

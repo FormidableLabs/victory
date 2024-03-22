@@ -39,7 +39,7 @@ function nativeZoomMixin<
     };
 
     // overrides all web events with native specific events
-    static defaultEvents = (props: TProps) => {
+    static defaultEvents(props: TProps) {
       const { disable } = props;
       return [
         {
@@ -80,7 +80,7 @@ function nativeZoomMixin<
           },
         },
       ];
-    };
+    }
   };
 }
 

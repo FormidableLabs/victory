@@ -77,7 +77,9 @@ class VictoryLineBase extends React.Component<VictoryLineProps> {
 
   static getDomain = Domain.getDomain;
   static getData = Data.getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static getBaseProps(props) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents = [
     "dataComponent",
     "labelComponent",

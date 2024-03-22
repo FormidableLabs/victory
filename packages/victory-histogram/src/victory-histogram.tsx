@@ -113,8 +113,9 @@ class VictoryHistogramBase extends React.Component<VictoryHistogramProps> {
 
   static getDomain = getDomain;
   static getData = getData;
-  static getBaseProps = (props: VictoryHistogramProps) =>
-    getBaseProps(props, fallbackProps);
+  static getBaseProps(props: VictoryHistogramProps) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents: Partial<keyof VictoryHistogramProps>[] = [
     "dataComponent",
     "labelComponent",

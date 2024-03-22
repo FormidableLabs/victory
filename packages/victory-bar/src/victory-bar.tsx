@@ -119,8 +119,9 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
 
   static getDomain = Domain.getDomainWithZero;
   static getData = Data.getData;
-  static getBaseProps = (props: VictoryBarProps) =>
-    getBaseProps(props, fallbackProps);
+  static getBaseProps(props: VictoryBarProps) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents: (keyof VictoryBarProps)[] = [
     "dataComponent",
     "labelComponent",

@@ -88,7 +88,9 @@ class VictoryErrorBarBase extends React.Component<VictoryErrorBarProps> {
 
   static getDomain = getDomain;
   static getData = getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static getBaseProps(props) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents = [
     "dataComponent",
     "labelComponent",

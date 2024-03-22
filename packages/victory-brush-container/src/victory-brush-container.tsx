@@ -66,7 +66,7 @@ export function brushContainerMixin<
       mouseMoveThreshold: 0,
     };
 
-    static defaultEvents = (props) => {
+    static defaultEvents(props) {
       return [
         {
           target: "parent",
@@ -111,7 +111,7 @@ export function brushContainerMixin<
           },
         },
       ];
-    };
+    }
 
     getSelectBox(props, coordinates) {
       const { x, y } = coordinates;
