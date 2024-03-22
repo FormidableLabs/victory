@@ -111,8 +111,12 @@ class VictoryHistogramBase extends React.Component<VictoryHistogramProps> {
     theme: VictoryTheme.grayscale,
   };
 
-  static getDomain = getDomain;
-  static getData = getData;
+  static getDomain(props, axis) {
+    return getDomain(props, axis);
+  }
+  static getData(props) {
+    return getData(props);
+  }
   static getBaseProps(props: VictoryHistogramProps) {
     return getBaseProps(props, fallbackProps);
   }
