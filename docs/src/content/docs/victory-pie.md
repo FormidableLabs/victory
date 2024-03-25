@@ -252,9 +252,9 @@ _default:_ `<VictoryLabel/>`
 
 ## labelPlacement
 
-`type "parallel" || "perpendicular" || "vertical" || function`
+`type "parallel" || "perpendicular" || "vertical" || "curved" || function`
 
-The `labelPlacement` prop specifies the angular placement of each label relative to the angle of its corresponding slice. This prop should be given as "parallel", "perpendicular", "vertical", or as a function that returns one of these values. When this prop is not given, the label will be placed vertically.
+The `labelPlacement` prop specifies the angular placement of each label relative to the angle of its corresponding slice. This prop should be given as "parallel", "perpendicular", "vertical", "curved" or as a function that returns one of these values. When this prop is not given, the label will be placed vertically.
 
 ```playground
 <VictoryPie
@@ -271,6 +271,16 @@ The `labelPlacement` prop specifies the angular placement of each label relative
 />
 ```
 
+```playground
+<VictoryPie
+  data={sampleData}
+  labels={({ datum }) => `y: ${datum.y}`}
+  labelPlacement="curved"
+  labelComponent={<VictoryLabel dx={10}/>}
+  radius={120}
+  labelRadius={100}
+/>
+```
 ## labelPosition
 
 `type "startAngle" || "endAngle" || "centroid" || function`
