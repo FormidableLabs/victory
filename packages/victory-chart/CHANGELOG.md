@@ -1,5 +1,7 @@
 # victory-chart
 
+## 37.0.1
+
 ## 37.0.0
 
 ### Major Changes
