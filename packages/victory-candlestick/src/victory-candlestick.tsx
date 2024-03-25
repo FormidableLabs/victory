@@ -169,10 +169,15 @@ class VictoryCandlestickBase extends React.Component<VictoryCandlestickProps> {
     theme: VictoryTheme.grayscale,
   };
 
-  static getDomain = getDomain;
-  static getData = getData;
-  static getBaseProps = (props: VictoryCandlestickProps) =>
-    getBaseProps(props, fallbackProps);
+  static getDomain(props, axis) {
+    return getDomain(props, axis);
+  }
+  static getData(props) {
+    return getData(props);
+  }
+  static getBaseProps(props: VictoryCandlestickProps) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents = [
     "openLabelComponent",
     "closeLabelComponent",

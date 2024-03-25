@@ -46,7 +46,7 @@ export function cursorContainerMixin<
       },
       cursorComponent: <LineSegment />,
     };
-    static defaultEvents = (props) => {
+    static defaultEvents(props) {
       return [
         {
           target: "parent",
@@ -72,7 +72,7 @@ export function cursorContainerMixin<
           },
         },
       ];
-    };
+    }
 
     getCursorPosition(props) {
       const { cursorValue, defaultCursorValue, domain, cursorDimension } =

@@ -84,11 +84,13 @@ class VictoryLegendBase extends React.Component<VictoryLegendProps> {
     titleComponent: <VictoryLabel />,
   };
 
-  static getBaseProps = (props: VictoryLegendProps) =>
-    getBaseProps(props, fallbackProps);
+  static getBaseProps(props: VictoryLegendProps) {
+    return getBaseProps(props, fallbackProps);
+  }
 
-  static getDimensions = (props: VictoryLegendProps) =>
-    getDimensions(props, fallbackProps);
+  static getDimensions(props: VictoryLegendProps) {
+    return getDimensions(props, fallbackProps);
+  }
 
   static expectedComponents = [
     "borderComponent",

@@ -52,7 +52,7 @@ export function selectionContainerMixin<
       },
     };
 
-    static defaultEvents = (props: TProps) => {
+    static defaultEvents(props: TProps) {
       return [
         {
           target: "parent",
@@ -90,7 +90,7 @@ export function selectionContainerMixin<
           },
         },
       ];
-    };
+    }
 
     getRect(props) {
       const { x1, x2, y1, y2, selectionStyle, selectionComponent, name } =

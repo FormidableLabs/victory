@@ -106,12 +106,10 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
     groupComponent: <g />,
   };
 
-  static defaultEvents = (
-    props: VictoryTooltipProps,
-  ): {
+  static defaultEvents(props: VictoryTooltipProps): {
     target: string;
     eventHandlers: EventHandlers;
-  }[] => {
+  }[] {
     const activate = props.activateData
       ? [
           { target: "labels", mutation: () => ({ active: true }) },
@@ -137,7 +135,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
         },
       },
     ];
-  };
+  }
 
   id: string | number;
 
