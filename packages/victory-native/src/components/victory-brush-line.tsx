@@ -2,6 +2,7 @@ import React from "react";
 import { PanResponder } from "react-native";
 import { G, Rect } from "react-native-svg";
 import { get } from "lodash";
+import { VictoryEventHandler } from "victory-core";
 import {
   VictoryBrushLine as VictoryBrushLineBase,
   VictoryBrushLineProps,
@@ -12,18 +13,8 @@ import NativeHelpers from "../helpers/native-helpers"; // ensure the selection c
 import { wrapCoreComponent } from "../helpers/wrap-core-component";
 
 export interface VictoryNativeBrushLineProps extends VictoryBrushLineProps {
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
 const RectWithStyle = ({

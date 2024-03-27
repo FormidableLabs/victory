@@ -108,6 +108,7 @@ import {
   VictoryCommonProps,
   VictoryCommonThemeProps,
   VictoryContainer,
+  useVictoryContainer,
   VictoryContainerProps,
   VictoryDatableProps,
   VictoryLabel,
@@ -135,6 +136,7 @@ import {
   WhiskerProps,
   Wrapper,
   addEvents,
+  mergeRefs,
 } from "./index";
 import { pick } from "lodash";
 
@@ -193,6 +195,8 @@ describe("victory-core", () => {
         "Whisker",
         "Wrapper",
         "addEvents",
+        "mergeRefs",
+        "useVictoryContainer",
       ]
     `);
   });

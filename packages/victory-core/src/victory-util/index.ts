@@ -1,4 +1,5 @@
 export * from "./add-events";
+export * from "./merge-refs";
 export * as Axis from "./axis";
 export * as Collection from "./collection";
 export * from "./common-props";

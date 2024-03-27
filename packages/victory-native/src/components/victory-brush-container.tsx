@@ -1,11 +1,12 @@
+/* eslint-disable react/no-multi-comp */
 import React from "react";
 import { Rect } from "react-native-svg";
-import { flow } from "lodash";
+import { VictoryEventHandler } from "victory-core";
 import {
-  VictoryBrushContainer as VictoryBrushContainerBase,
   BrushHelpers,
-  brushContainerMixin as originalBrushMixin,
   VictoryBrushContainerProps,
+  useVictoryBrushContainer,
+  VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS,
 } from "victory-brush-container";
 import { VictoryContainer } from "./victory-container";
 import NativeHelpers from "../helpers/native-helpers";
@@ -13,18 +14,8 @@ import NativeHelpers from "../helpers/native-helpers";
 export interface VictoryBrushContainerNativeProps
   extends VictoryBrushContainerProps {
   disableContainerEvents?: boolean;
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
 // ensure the selection component get native styles
@@ -35,60 +26,46 @@ const RectWithStyle = ({
   style?: Record<string, any>;
 }) => <Rect {...otherProps} {...NativeHelpers.getStyle(style)} />;
 
-function nativeBrushMixin<
-  TBase extends React.ComponentClass<TProps>,
-  TProps extends VictoryBrushContainerNativeProps,
->(Base: TBase) {
-  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
-  return class VictoryNativeBrushContainer extends Base {
-    // eslint-disable-line max-len
-    // assign native specific defaultProps over web `VictoryBrushContainer` defaultProps
-    static defaultProps = {
-      ...VictoryBrushContainerBase.defaultProps,
-      brushComponent: <RectWithStyle />,
-      handleComponent: <RectWithStyle />,
+export const VictoryBrushContainer = (
+  initialProps: VictoryBrushContainerNativeProps,
+) => {
+  const props = useVictoryBrushContainer({
+    ...initialProps,
+    brushComponent: initialProps.brushComponent ?? <RectWithStyle />,
+    handleComponent: initialProps.handleComponent ?? <RectWithStyle />,
+  });
+  return <VictoryContainer {...props} />;
+};
+
+VictoryBrushContainer.role = "container";
+
+VictoryBrushContainer.defaultEvents = (
+  initialProps: VictoryBrushContainerNativeProps,
+) => {
+  const props = { ...VICTORY_BRUSH_CONTAINER_DEFAULT_PROPS, ...initialProps };
+  const createEventHandler =
+    (handler: VictoryEventHandler, cancel: boolean): VictoryEventHandler =>
+    // eslint-disable-next-line max-params
+    (event, targetProps, eventKey, context) => {
+      if (props.disable) {
+        return {};
+      }
+
+      if (cancel) {
+        BrushHelpers.onGlobalMouseMove.cancel();
+      }
+
+      return handler(event, { ...props, ...targetProps }, eventKey, context);
     };
 
-    // overrides all web events with native specific events
-    static defaultEvents(props: TProps) {
-      return [
-        {
-          target: "parent",
-          eventHandlers: {
-            onTouchStart: (evt, targetProps) => {
-              if (props.disable) {
-                return {};
-              }
-              BrushHelpers.onGlobalMouseMove.cancel();
-              return BrushHelpers.onMouseDown(evt, targetProps);
-            },
-            onTouchMove: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : BrushHelpers.onGlobalMouseMove(evt, targetProps);
-            },
-            onTouchEnd: (evt, targetProps) => {
-              if (props.disable) {
-                return {};
-              }
-              BrushHelpers.onGlobalMouseMove.cancel();
-              return BrushHelpers.onGlobalMouseUp(evt, targetProps);
-            },
-          },
-        },
-      ];
-    }
-  };
-}
-
-const combinedMixin: (
-  base: React.ComponentClass,
-) => React.ComponentClass<VictoryBrushContainerNativeProps> = flow(
-  originalBrushMixin,
-  nativeBrushMixin,
-);
-
-export const brushContainerMixin = (base: React.ComponentClass) =>
-  combinedMixin(base);
-
-export const VictoryBrushContainer = brushContainerMixin(VictoryContainer);
+  return [
+    {
+      target: "parent",
+      eventHandlers: {
+        onTouchStart: createEventHandler(BrushHelpers.onMouseDown, true),
+        onTouchMove: createEventHandler(BrushHelpers.onGlobalMouseMove, false),
+        onTouchEnd: createEventHandler(BrushHelpers.onGlobalMouseUp, true),
+      },
+    },
+  ];
+};

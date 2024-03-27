@@ -194,3 +194,10 @@ export type CoordinatesPropType = {
   x: number;
   y: number;
 };
+
+export type VictoryEventHandler = (
+  event?: any,
+  targetProps?: any,
+  eventKey?: any,
+  context?: any,
+) => void;

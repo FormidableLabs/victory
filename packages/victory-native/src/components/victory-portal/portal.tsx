@@ -1,9 +1,9 @@
-import React from "react";
+import React, { LegacyRef } from "react";
 import Svg from "react-native-svg";
-import { Portal as PortalBase } from "victory-core/es";
+import { PortalProps } from "victory-core/es";
 
-export class Portal extends PortalBase {
-  render() {
-    return <Svg {...this.props}>{this.getChildren()}</Svg>;
-  }
-}
+export const Portal = React.forwardRef<SVGSVGElement, PortalProps>(
+  (props, ref) => {
+    return <Svg ref={ref as LegacyRef<Svg>} {...props} />;
+  },
+);
