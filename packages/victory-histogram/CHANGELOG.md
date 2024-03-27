@@ -1,5 +1,11 @@
 # victory-histogram
 
+## 37.0.1
+
+### Patch Changes
+
+- Fix the signature of class static functions in components ([#2840](https://github.com/FormidableLabs/victory/pull/2840))
+
 ## 37.0.0
 
 ### Major Changes
