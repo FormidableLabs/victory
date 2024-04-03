@@ -1,7 +1,12 @@
 import React from "react";
 import { VictoryPie, Slice } from "../packages/victory-pie";
 import { VictoryTooltip } from "../packages/victory-tooltip";
-import { LineSegment, VictoryTheme, Helpers,PolyLineSegment } from "../packages/victory-core";
+import {
+  LineSegment,
+  VictoryTheme,
+  Helpers,
+  PolyLineSegment,
+} from "../packages/victory-core";
 import { fromJS } from "immutable";
 import styled from "styled-components";
 import { Meta } from "@storybook/react";
@@ -630,11 +635,11 @@ export const LabelIndicator = () => {
         radius={55}
         innerRadius={20}
         labelIndicatorType="polyLine"
-        labelIndicatorInnerOffset = {5}
-        labelIndicatorOuterOffset = {40}
-        labelIndicatorMiddleOffset = {20}
+        labelIndicatorInnerOffset={5}
+        labelIndicatorOuterOffset={40}
+        labelIndicatorMiddleOffset={20}
         labels={({ datum }) => `${datum.name}`}
-        data = {[
+        data={[
           { name: "Mark", y: 40 },
           { name: "Robert", y: 12 },
           { name: "Emily", y: 34 },
@@ -643,18 +648,25 @@ export const LabelIndicator = () => {
           { name: "Karen", y: 18 },
         ]}
       />
-       <VictoryPie
+      <VictoryPie
         style={parentStyle}
-        innerRadius={50} 
-        labelIndicatorInnerOffset = {5}
-        labelIndicatorOuterOffset = {40}
-        labelIndicatorMiddleOffset = {20}
+        innerRadius={50}
+        labelIndicatorInnerOffset={5}
+        labelIndicatorOuterOffset={40}
+        labelIndicatorMiddleOffset={20}
         radius={75}
         labelIndicatorType={"polyLine"}
-        labelIndicator={<PolyLineSegment style = {{stroke:"red",strokeWidth: 1,strokeDasharray:1,
-        fill: "none",}}/>}
+        labelIndicator={
+          <PolyLineSegment
+            style={{
+              stroke: "red",
+              strokeWidth: 1,
+              strokeDasharray: 1,
+              fill: "none",
+            }}
+          />
+        }
       />
     </>
   );
 };
-
