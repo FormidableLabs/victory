@@ -1,13 +1,13 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import createPath from "../../helpers/path-helpers";
+
 import {
   LinkButton,
   LandingSectionWrapper,
   LandingSectionContent,
 } from "./styles";
 import importedTheme from "../../styles/theme";
-import PropTypes from "prop-types";
+
 const stripeStyle = css`
   content: "";
   display: block;
@@ -38,22 +38,12 @@ const GetStarted = ({ description, link }) => {
       <StyledLandingSectionContent color={importedTheme.color.white}>
         <SectionHeading>Get Started</SectionHeading>
         <SectionDescription>{description}</SectionDescription>
-        <LinkButton
-          to={createPath(link.location)}
-          color={importedTheme.color.darkBrown}
-        >
-          {link.text}
-        </LinkButton>
+        <LinkButton href={link.location} className="mx-auto bg-white">{link.text}</LinkButton>
       </StyledLandingSectionContent>
       <Stripe bg={importedTheme.color.brown} />
       <Stripe bg={importedTheme.color.otherBrown} />
     </LandingSectionWrapper>
   );
-};
-
-GetStarted.propTypes = {
-  description: PropTypes.string,
-  link: PropTypes.shape({ text: PropTypes.string, location: PropTypes.string }),
 };
 
 export default GetStarted;

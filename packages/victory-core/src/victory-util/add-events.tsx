@@ -1,11 +1,13 @@
 import React from "react";
-import { defaults, difference, isEmpty, pick } from "lodash";
-import type { ComponentEvent } from "./events";
-import * as Events from "./events";
+import { defaults, isEmpty, pick } from "lodash";
 import isEqual from "react-fast-compare";
+
+import { VictoryLabelableProps } from "../types/prop-types";
 import { VictoryTransition } from "../victory-transition/victory-transition";
 import { VictoryCommonProps, VictoryDatableProps } from "./common-props";
-import { VictoryLabelableProps } from "../types/prop-types";
+import { difference } from "./collection";
+import type { ComponentEvent } from "./events";
+import * as Events from "./events";
 import { isFunction, isNil } from "./helpers";
 
 // DISCLAIMER:

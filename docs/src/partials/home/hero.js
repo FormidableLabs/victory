@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-import { Link } from "react-scroll";
+import Link from "next/link";
 import { FeaturedBadge } from "formidable-oss-badges";
 import NpmCopy from "./npm-copy";
 import HeroDemo from "./hero-demo";
 import { LandingSectionContent, LinkButton } from "./styles";
-import importedTheme from "../../styles/theme";
-import createPath from "../../helpers/path-helpers";
 
 const HeroContainer = styled.section`
-  background-image: url(${({ bg }) => bg});
+  background-image: url(${({ $bg }) => $bg});
   background-size: cover;
   color: ${({ theme }) => theme.color.white};
   height: 650px;
@@ -175,10 +172,11 @@ const LinkContainer = styled.div`
   }
 `;
 
-const LinkItem = styled.a`
-  color: ${({ theme }) => theme.color.white};
-  justify-self: center;
-`;
+const LinkItem = ({ href, children }) => {
+  return (
+    <Link href={href} className="text-white justify-self-center">{children}</Link>
+  )
+};
 
 const StyledLinkButton = styled(LinkButton)`
   margin-top: 1.2rem;
@@ -192,30 +190,6 @@ const StyledLinkButton = styled(LinkButton)`
   }
 `;
 
-const LearnMore = styled(Link)`
-  display: block;
-  color: ${({ theme }) => theme.color.white};
-  font-size: 1.4rem;
-  margin: auto;
-  line-height: 2.29;
-  letter-spacing: 0.88px;
-  text-align: center;
-
-  &::after {
-    border-top: 2.5px solid white;
-    border-right: 2.5px solid white;
-    content: "";
-    display: inline-block;
-    height: 12px;
-    margin: 2rem 0 0.2rem 2rem;
-    width: 12px;
-    transform: rotate(135deg);
-  }
-  @media ${({ theme }) => theme.mediaQuery.sm} {
-    display: none;
-  }
-`;
-
 const Hero = ({
   background,
   code,
@@ -226,15 +200,15 @@ const Hero = ({
   link,
 }) => (
   <>
-    <HeroContainer bg={background}>
+    <HeroContainer $bg={background}>
       <Corner>
         <CornerText>{cornerText}</CornerText>
         <a
-          href="https://formidable.com"
+          href="https://commerce.nearform.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <CornerF src={cornerIcon} />
+          <CornerF src={cornerIcon} alt="Brand Icon" title="Formidable" />
         </a>
       </Corner>
       <LandingSectionContent>
@@ -247,9 +221,7 @@ const Hero = ({
           <GetStarted>
             <NpmCopy text={code} />
             <StyledLinkButton
-              to={createPath(link.location)}
-              bg={importedTheme.color.red}
-              width="100%"
+              href={link.location}
               noMargin
             >
               {link.text}
@@ -268,34 +240,16 @@ const Hero = ({
                 {l.text}
               </LinkItem>
             ) : (
-              <LinkItem key={l.text} href={createPath(l.location)}>
+              <LinkItem key={l.text} href={l.location}>
                 {l.text}
               </LinkItem>
             );
           })}
         </LinkContainer>
-        <LearnMore to="Features" smooth offset={-25} duration={500}>
-          LEARN MORE
-        </LearnMore>
       </LandingSectionContent>
     </HeroContainer>
     <HeroDemo />
   </>
 );
-
-const linkPropType = PropTypes.shape({
-  text: PropTypes.string,
-  location: PropTypes.string,
-});
-
-Hero.propTypes = {
-  background: PropTypes.string,
-  code: PropTypes.string,
-  cornerIcon: PropTypes.string,
-  cornerText: PropTypes.string,
-  description: PropTypes.string,
-  link: linkPropType,
-  linksArray: PropTypes.arrayOf(linkPropType),
-};
 
 export default Hero;

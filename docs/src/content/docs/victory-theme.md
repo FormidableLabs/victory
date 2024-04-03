@@ -39,5 +39,5 @@ To create your own theme, create an object with props and styles specified for a
 }
 ```
 
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
 [See all Victory Themes here]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme

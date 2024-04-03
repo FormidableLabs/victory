@@ -161,9 +161,15 @@ class VictoryBoxPlotBase extends React.Component<VictoryBoxPlotProps> {
     theme: VictoryTheme.grayscale,
   };
 
-  static getDomain = getDomain;
-  static getData = getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static getDomain(props, axis) {
+    return getDomain(props, axis);
+  }
+  static getData(props) {
+    return getData(props);
+  }
+  static getBaseProps(props) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents: Array<keyof VictoryBoxPlotProps> = [
     "maxComponent",
     "maxLabelComponent",

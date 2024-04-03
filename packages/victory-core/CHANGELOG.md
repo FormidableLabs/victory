@@ -1,5 +1,39 @@
 # victory-core
 
+## 37.0.1
+
+## 37.0.0
+
+### Major Changes
+
+- Upgrade babel dependencies and build target to modern browsers ([#2804](https://github.com/FormidableLabs/victory/pull/2804))
+
+## 36.9.2
+
+### Patch Changes
+
+- Replace lodash keys with native code ([#2811](https://github.com/FormidableLabs/victory/pull/2811))
+
+* Replace lodash identity with native code ([#2829](https://github.com/FormidableLabs/victory/pull/2829))
+
+- Refactor victory-accessible-group to a function component ([#2777](https://github.com/FormidableLabs/victory/pull/2777))
+
+* Convert victory-animation to function component ([#2788](https://github.com/FormidableLabs/victory/pull/2788))
+
+- Replace lodash.invert with native code ([#2830](https://github.com/FormidableLabs/victory/pull/2830))
+
+* Replace lodash difference with native code ([#2828](https://github.com/FormidableLabs/victory/pull/2828))
+
+- Replace lodash array utils with native code ([#2810](https://github.com/FormidableLabs/victory/pull/2810))
+
+* allow VictoryBoxPlot childStyles to override VictoryGroup parent styles ([#2824](https://github.com/FormidableLabs/victory/pull/2824))
+
+- Replace lodash values and mapValues with native code ([#2808](https://github.com/FormidableLabs/victory/pull/2808))
+
+* Replace lodash isNil and isNan with native code ([#2800](https://github.com/FormidableLabs/victory/pull/2800))
+
+- Replace lodash isFunction with native code ([#2802](https://github.com/FormidableLabs/victory/pull/2802))
+
 ## 36.9.1
 
 ## 36.9.0

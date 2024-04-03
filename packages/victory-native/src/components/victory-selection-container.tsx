@@ -50,7 +50,7 @@ function nativeSelectionMixin<
     };
 
     // overrides all web events with native specific events
-    static defaultEvents = (props: TProps) => {
+    static defaultEvents(props: TProps) {
       return [
         {
           target: "parent",
@@ -77,7 +77,7 @@ function nativeSelectionMixin<
           },
         },
       ];
-    };
+    }
   };
 }
 

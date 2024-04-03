@@ -75,8 +75,9 @@ class VictoryVoronoiBase extends React.Component<VictoryVoronoiProps> {
 
   static getDomain = Domain.getDomain;
   static getData = Data.getData;
-  static getBaseProps = (props: VictoryVoronoiProps) =>
-    getBaseProps(props, fallbackProps);
+  static getBaseProps(props: VictoryVoronoiProps) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents: (keyof VictoryVoronoiProps)[] = [
     "dataComponent",
     "labelComponent",

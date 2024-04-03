@@ -55,7 +55,7 @@ Victory renders svg elements, so there is no concept of z-index. Instead the ren
 
 Some components, such as tooltips, should _always_ render above others. Use [`VictoryPortal`][] to render components in a top level container so that they appear above all other elements. `VictoryTooltip` uses `VictoryPortal`, by default, but any component may be wrapped in `VictoryPortal` to alter its rendering.
 
-*caveats:* `VictoryPortal` will not work with components that are not rendered within `VictoryContainer`.
+*caveats:* `VictoryPortal` only works with components that are rendered within `VictoryContainer`.
 
 ```playground
   <VictoryChart domainPadding={40}>
@@ -141,7 +141,7 @@ To render a Victory component in a custom container set the `standalone` prop on
 </svg>
 ```
 
-*caveats:* `VictoryPortal` will not work with components that are not rendered within `VictoryContainer`.
+*caveats:* `VictoryPortal` only works with components that are rendered within `VictoryContainer`.
 
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.js
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
 [`VictoryPortal`]: /docs/victory-portal

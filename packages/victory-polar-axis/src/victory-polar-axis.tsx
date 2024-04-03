@@ -67,9 +67,15 @@ class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
 
   static getDomain = Axis.getDomain;
   static getAxis = Axis.getAxis;
-  static getScale = getScale;
-  static getStyles = (props) => getStyles(props, fallbackProps.style);
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static getScale(props) {
+    return getScale(props);
+  }
+  static getStyles(props) {
+    return getStyles(props, fallbackProps.style);
+  }
+  static getBaseProps(props) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents = [
     "axisComponent",
     "circularAxisComponent",

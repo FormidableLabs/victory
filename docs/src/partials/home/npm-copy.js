@@ -1,9 +1,6 @@
-/*global setTimeout:false */
-/*global clearTimeout:false */
 import React, { useState, useRef } from "react";
-import PropTypes from "prop-types";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { BounceAnimation } from "./styles/";
+import { BounceAnimation } from "./styles";
 import styled from "styled-components";
 
 const HeroNPMWrapper = styled.div`
@@ -54,19 +51,19 @@ const HeroNPMButton = styled.button`
 `;
 
 const NpmCopy = ({ text }) => {
-  const [animating, setAnimating] = useState(false);
+  const [animating, setAnimating] = useState('false');
   const [copied, setCopied] = useState(false);
   const animatingTimeout = useRef(null);
   const copiedTimeout = useRef(null);
 
   const handleCopy = (e) => {
     e.preventDefault();
-    setAnimating(true);
+    setAnimating('true');
     setCopied(true);
     clearTimeout(animatingTimeout.current);
     clearTimeout(copiedTimeout.current);
     animatingTimeout.current = setTimeout(() => {
-      setAnimating(false);
+      setAnimating('false');
     }, "100");
     copiedTimeout.current = setTimeout(() => {
       setCopied(false);
@@ -78,17 +75,13 @@ const NpmCopy = ({ text }) => {
       <HeroNPMWrapper>
         <HeroNPMCopy>{text}</HeroNPMCopy>
         <HeroNPMButton onClick={handleCopy}>
-          <BounceAnimation bouncing={animating}>
+          <BounceAnimation data-bouncing={animating}>
             {copied ? "Copied" : "Copy"}
           </BounceAnimation>
         </HeroNPMButton>
       </HeroNPMWrapper>
     </CopyToClipboard>
   );
-};
-
-NpmCopy.propTypes = {
-  text: PropTypes.string,
 };
 
 export default NpmCopy;

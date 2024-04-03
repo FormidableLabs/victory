@@ -1,4 +1,4 @@
-## [Victory Documentation](https://formidable.com/open-source/victory)
+## [Victory Documentation](https://commerce.nearform.com/open-source/victory)
 
 ## Getting started
 
@@ -30,7 +30,7 @@ render(<PieChart />, document.getElementById("app"));
   <img align="center" width="471" alt="pie" src="https://cloud.githubusercontent.com/assets/3719995/20915779/b51e3652-bb3c-11e6-8243-6e7521a59115.png">
 </p>
 
-For detailed documentation and examples please see [Victory Documentation](https://formidable.com/open-source/victory)
+For detailed documentation and examples please see [Victory Documentation](https://commerce.nearform.com/open-source/victory)
 
 ## Requirements
 

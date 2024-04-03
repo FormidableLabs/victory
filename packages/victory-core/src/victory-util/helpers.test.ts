@@ -1,6 +1,20 @@
 import * as Helpers from "./helpers";
 
 describe("victory-util/helpers", () => {
+  describe("invert", () => {
+    it("inverts a given object", () => {
+      const data = { x: 3, y: "2", z: 1 };
+      const invertedData = Helpers.invert(data);
+      expect(invertedData).toEqual({ 3: "x", 2: "y", 1: "z" });
+    });
+
+    it("handles duplicate values by taking the last key", () => {
+      const data = { x: 3, y: 2, z: 1, a: 2 };
+      const invertedData = Helpers.invert(data);
+      expect(invertedData).toEqual({ 3: "x", 2: "a", 1: "z" });
+    });
+  });
+
   describe("omit", () => {
     const data = { x: 3, y: 2, z: 1 };
 

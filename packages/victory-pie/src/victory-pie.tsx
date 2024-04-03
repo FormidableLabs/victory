@@ -152,8 +152,9 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
     theme: VictoryTheme.grayscale,
   };
 
-  static getBaseProps = (props: VictoryPieProps) =>
-    getBaseProps(props, fallbackProps);
+  static getBaseProps(props: VictoryPieProps) {
+    return getBaseProps(props, fallbackProps);
+  }
   static getData = Data.getData;
   static expectedComponents: (keyof VictoryPieProps)[] = [
     "dataComponent",
