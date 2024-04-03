@@ -50,6 +50,12 @@ Used by `Arc`, `Area`, `Bar`, `Curve`, `Flyout`, `Point`, `Slice`, and `Voronoi`
 const Path = (props) => <path {...props} />;
 ```
 
+### PolyLine
+
+```jsx
+const PolyLine = (props) => <polyline vectorEffect="non-scaling-stroke" {...props} />;
+```
+
 ### Rect
 
 Used by `VictoryClipPath`, `Background`, `Border`, and `Candle`
@@ -160,6 +166,28 @@ The `LineSegment` component renders straight lines. This component is used to re
 - `x2` _number_ the x coordinate of the end of the line
 - `y1` _number_ the y coordinate of the beginning of the line
 - `y2` _number_ the y coordinate of the end of the line
+
+### PolyLineSegment
+
+The `PolyLineSegment` component renders straight lines connecting several points. This component is used to render polyline label indicator[VictoryPie][]. [View the source]
+
+**Props**
+
+- `active` _boolean_ a flag signifying whether the component is active
+- `ariaLabel` _string or function_ a prop controlling the aria-label that will be applied to the rendered polyLineComponent. When this prop is given as a function it will be called with the rest of the props supplied to `PolyLineSegment`
+- `className` _string_ the class name that will be applied to the rendered element
+- `data` _array_ the entire dataset
+- `datum` _object_ the data point corresponding to this line
+- `events` _object_ events to attach to the rendered element
+- `id` _string or number_ an id to apply to the rendered component
+- `index` _number_ the index of this component within the dataset
+- `polyLineComponent` _element_ the rendered polyLine element _default_ `<PolyLine/>`
+- `role` _string_ the aria role to assign to the element
+- `shapeRendering` _string_ the shape rendering attribute to apply to the rendered elements
+- `style` _object_ the styles to apply to the rendered element
+- `tabIndex` _number or function_ will be applied to the rendered polyLineComponent. When this prop is given as a function it will be called with the rest of the props supplied to `PolyLineSegment`
+- `transform` _string_ a transform that will be supplied to elements this component renders
+- `points` _number_ this attribute defines the list of points (pairs of x,y absolute coordinates) required to draw the polyline.
 
 ### Background
 
