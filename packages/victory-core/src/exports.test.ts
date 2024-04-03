@@ -65,6 +65,7 @@ import {
   PointProps,
   PolyLine,
   PolyLineSegment,
+  PolyLineSegmentProps,
   Portal,
   PortalContext,
   PortalContextValue,
