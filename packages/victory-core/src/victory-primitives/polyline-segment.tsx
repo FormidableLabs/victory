@@ -1,9 +1,7 @@
 import React from "react";
 import * as Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
-import {
-  VictoryCommonPrimitiveProps,
-} from "../victory-util/common-props";
+import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { PolyLine } from "./polyline";
 
 export interface PolyLineSegmentProps extends VictoryCommonPrimitiveProps {
@@ -22,7 +20,7 @@ const evaluateProps = (props) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const id = Helpers.evaluateProp(props.id, props);
   const style = Helpers.evaluateStyle(
-    assign({ stroke: "black",fill:"none" }, props.style),
+    assign({ stroke: "black", fill: "none" }, props.style),
     props,
   );
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);

@@ -587,7 +587,7 @@ export const LabelIndicator = () => {
     <>
       <VictoryPie style={parentStyle} labelIndicator />
 
-      {/* <VictoryPie
+      <VictoryPie
         style={parentStyle}
         labelIndicator
         radius={90}
@@ -623,24 +623,37 @@ export const LabelIndicator = () => {
             }}
           />
         }
-      /> */}
+      />
       <VictoryPie
         style={parentStyle}
         labelIndicator
         radius={55}
-        labelIndicatorType={"multiple"}
-        labelIndicatorInnerOffset = {25}
-        labelIndicatorOuterOffset = {10}
+        innerRadius={20}
+        labelIndicatorType="polyLine"
+        labelIndicatorInnerOffset = {5}
+        labelIndicatorOuterOffset = {40}
+        labelIndicatorMiddleOffset = {20}
+        labels={({ datum }) => `${datum.name}`}
+        data = {[
+          { name: "Mark", y: 40 },
+          { name: "Robert", y: 12 },
+          { name: "Emily", y: 34 },
+          { name: "Marion", y: 23 },
+          { name: "Nicolas", y: 28 },
+          { name: "Karen", y: 18 },
+        ]}
       />
-       {/* <VictoryPie
+       <VictoryPie
         style={parentStyle}
-        labelRadius={90}
         innerRadius={50} 
+        labelIndicatorInnerOffset = {5}
+        labelIndicatorOuterOffset = {40}
+        labelIndicatorMiddleOffset = {20}
         radius={75}
-        labelIndicatorType={"multiple"}
-        labelIndicator={<PolyLineSegment style = {{stroke:"red",strokeDasharray:1,
+        labelIndicatorType={"polyLine"}
+        labelIndicator={<PolyLineSegment style = {{stroke:"red",strokeWidth: 1,strokeDasharray:1,
         fill: "none",}}/>}
-      /> */}
+      />
     </>
   );
 };

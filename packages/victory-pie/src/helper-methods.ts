@@ -287,14 +287,12 @@ export const getLabelIndicatorPropsForLineSegment = (
     y2,
     index,
   };
-  console.log(labelIndicatorProps)
   return defaults({}, labelIndicatorProps);
 };
 
 export const getLabelIndicatorPropsForPolyLineSegment = (
   props,
   calculatedValues,
-  labelProps,
 ) => {
   const {
     innerRadius,
@@ -302,60 +300,52 @@ export const getLabelIndicatorPropsForPolyLineSegment = (
     slice,
     labelIndicatorInnerOffset,
     labelIndicatorOuterOffset,
-    labelIndicatorMiddleOffset=20,
+    labelIndicatorMiddleOffset,
     index,
   } = props;
-  const { height, width,cornerRadius,padAngle } = calculatedValues;
-  const {x,y,calculatedLabelRadius} = labelProps
+  const { origin } = calculatedValues;
+
+  const centerX = origin.x;
+  const centerY = origin.y;
 
   const middleRadius = getAverage([innerRadius, radius]);
   const midAngle = getAverage([slice.endAngle, slice.startAngle]);
-  const centerX = width / 2;
-  const centerY = height / 2;
+
   const innerOffset = middleRadius + labelIndicatorInnerOffset;
 
   const x1 = centerX + getXOffset(innerOffset, midAngle);
   const y1 = centerY + getYOffset(innerOffset, midAngle);
 
-  const inflexionInfo = {
+  const midPointInfo = {
     innerRadius: radius + labelIndicatorMiddleOffset,
-    outerRadius: radius + labelIndicatorMiddleOffset ,
-    startAngle: slice.startAngle,
-    endAngle: slice.endAngle,
-  };
-  const labelInfo = {
-    innerRadius: calculatedLabelRadius,
-    outerRadius: calculatedLabelRadius ,
-    startAngle: slice.startAngle,
-    endAngle: slice.endAngle,
-  };
-  const sliceInfo = {
-    innerRadius: innerRadius || 0,
-    outerRadius: radius,
-    cornerRadius,
-    padAngle,
+    outerRadius: radius + labelIndicatorMiddleOffset,
     startAngle: slice.startAngle,
     endAngle: slice.endAngle,
   };
 
   const arcGenerator = d3Shape.arc();
-  const centroid = arcGenerator.centroid(sliceInfo);
-  const inflexionPoint = arcGenerator.centroid(inflexionInfo);
-  console.log(radius,x1,y1,centroid,inflexionPoint)
+  const midPoint = arcGenerator.centroid(midPointInfo);
+  const isRightLabel = midPoint[0] > 0;
 
-  const isRightLabel = inflexionPoint[0] > 0;
-  const labelPosX = Math.round(inflexionPoint[0]) + 50 * (isRightLabel ? 1 : -1);
   const textAnchor = isRightLabel ? "start" : "end";
-  const points = `${Math.round(centroid[0])},${Math.round(centroid[1])} 
-                  ${Math.round(inflexionPoint[0])},${Math.round(inflexionPoint[1])}  
-                  ${Math.round(inflexionPoint[0])},${Math.round(inflexionPoint[1])} 
-                  ${x},${Math.round(inflexionPoint[1])}
-                  `;
+  const labelPosX =
+    midPoint[0] + labelIndicatorOuterOffset * (isRightLabel ? 1 : -1);
 
-
+  const points = `${Math.round(x1)},${Math.round(y1)} 
+                  ${Math.round(midPoint[0]) + centerX},${
+    Math.round(midPoint[1]) + centerY
+  }  
+                 ${Math.round(midPoint[0]) + centerX},${
+    Math.round(midPoint[1]) + centerY
+  } 
+                 ${labelPosX + centerX},${Math.round(midPoint[1] + centerY)}
+            `;
   const labelIndicatorProps = {
     points,
     index,
+    textAnchor,
+    x: labelPosX + centerX,
+    y: midPoint[1] + centerY,
   };
   return defaults({}, labelIndicatorProps);
 };
@@ -381,7 +371,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     padAngle,
     disableInlineStyles,
     labelIndicator,
-    labelIndicatorType
+    labelIndicatorType,
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -422,21 +412,30 @@ export const getBaseProps = (initialProps, fallbackProps) => {
         Object.assign({}, props, dataProps),
         calculatedValues,
       );
-      if(labelIndicator ){
-        const labelProps = childProps[eventKey].labels
-        if(labelIndicatorType === "single" && labelProps.calculatedLabelRadius > radius){
-          childProps[eventKey].labelIndicators = getLabelIndicatorPropsForLineSegment(
-            Object.assign({}, props, dataProps),
-            calculatedValues,
-            labelProps
-          )
+      if (labelIndicator) {
+        const labelProps = childProps[eventKey].labels;
+        if (
+          labelIndicatorType === "singleLine" &&
+          labelProps.calculatedLabelRadius > radius
+        ) {
+          childProps[eventKey].labelIndicators =
+            getLabelIndicatorPropsForLineSegment(
+              Object.assign({}, props, dataProps),
+              calculatedValues,
+              labelProps,
+            );
         }
-        if(labelIndicatorType === "multiple" && labelProps.calculatedLabelRadius > radius){
-          childProps[eventKey].labelIndicators = getLabelIndicatorPropsForPolyLineSegment(
+
+        if (labelIndicatorType === "polyLine") {
+          const labelIndicatorProps = getLabelIndicatorPropsForPolyLineSegment(
             Object.assign({}, props, dataProps),
             calculatedValues,
-            labelProps
-          )
+          );
+
+          childProps[eventKey].labelIndicators = labelIndicatorProps;
+          labelProps.x = labelIndicatorProps.x;
+          labelProps.y = labelIndicatorProps.y;
+          labelProps.textAnchor = labelIndicatorProps.textAnchor;
         }
       }
     }
