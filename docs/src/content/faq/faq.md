@@ -403,7 +403,7 @@ Whilst using `victory-native` in Expo apps that target iOS & Android is fully su
 
 However as both `victory-native` and `victory` share the same public API, it's possible to configure your Expo project so that it automatically uses `victory-native` when building your native apps for iOS & Android, and `victory` when building your web app.
 
-> ☣️ Please note that while you can follow the instructions below to configure your Expo project to make this work, Formidable still does not officially support Expo Web apps.
+> ☣️ Please note that while you can follow the instructions below to configure your Expo project to make this work, Victory does not officially support Expo Web apps.
 
 ```sh
 yarn add -D @expo/webpack-config

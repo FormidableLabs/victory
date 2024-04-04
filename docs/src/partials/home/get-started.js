@@ -34,7 +34,7 @@ const StyledLandingSectionContent = styled(LandingSectionContent)`
 
 const GetStarted = ({ description, link }) => {
   return (
-    <LandingSectionWrapper bg={importedTheme.color.red}>
+    <LandingSectionWrapper $bg={importedTheme.color.red}>
       <StyledLandingSectionContent color={importedTheme.color.white}>
         <SectionHeading>Get Started</SectionHeading>
         <SectionDescription>{description}</SectionDescription>

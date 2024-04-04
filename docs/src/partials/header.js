@@ -1,12 +1,11 @@
 import React from "react";
+import Image from "next/image";
 import Link from 'next/link';
+import { usePathname } from "next/navigation";
 import styled, { css } from "styled-components";
 import SVG from "react-inlinesvg";
 
-import { usePathname } from "next/navigation";
-
-const formidableIcon = "/open-source/victory/static/logos/logo-formidable-icon.svg";
-const formidableLogo = "/open-source/victory/static/logos/logo-formidable.svg";
+import nearformLogo from "@/static/logos/nf_icon.png";
 const burgerIcon = "/open-source/victory/static/burger.svg";
 
 const HeaderContainer = styled.header`
@@ -90,32 +89,6 @@ const NavAnchor = styled(({ active, theme, ...rest }) => <a {...rest} />)`
   ${navItemStyle}
 `;
 
-const FormidableIcon = styled(SVG)`
-  color: ${({ theme }) => theme.color.red};
-  display: flex;
-
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    display: none;
-  }
-
-  > svg {
-    height: 2.4rem;
-    width: 1.8rem;
-  }
-`;
-
-const FormidableLogo = styled(SVG)`
-  color: ${({ theme }) => theme.color.nearBlack};
-  display: none;
-  height: 2.8rem;
-  position: relative;
-  top: -0.1rem;
-
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    display: block;
-  }
-`;
-
 const Header = ({ className = "", onMenuClick }) => {
   const pathname = usePathname();
   return (
@@ -177,14 +150,7 @@ const Header = ({ className = "", onMenuClick }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FormidableIcon src={formidableIcon} />
-        </a>
-        <a
-          href="https://commerce.nearform.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FormidableLogo src={formidableLogo} />
+          <Image src={nearformLogo} height={50} />
         </a>
       </InnerContainer>
     </HeaderContainer>
