@@ -42,7 +42,7 @@ Upon creating a Pull Request, a Vercel preview deployment is created and posted 
 
 ### Production
 
-This site is deployed with Vercel infrastructure and is automated with a repository trigger in the Formidable Labs Vercel account. 
+This site is deployed with Vercel infrastructure. 
 
 The site is directly accessible at [https://victory-rose.vercel.app/open-source/victory](https://victory-rose.vercel.app/open-source/victory).
 
