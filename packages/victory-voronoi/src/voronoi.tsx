@@ -1,4 +1,6 @@
 import React from "react";
+import { defaults } from "lodash";
+
 import {
   Helpers,
   ClipPath,
@@ -55,7 +57,7 @@ const defaultProps = {
 };
 
 export const Voronoi = (initialProps: VoronoiProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const {
     ariaLabel,
     role,

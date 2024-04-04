@@ -122,7 +122,7 @@ const defaultProps: Partial<CandleProps> = {
 };
 
 export const Candle = (props: CandleProps) => {
-  const modifiedProps = evaluateProps({ ...defaultProps, ...props });
+  const modifiedProps = evaluateProps(defaults({}, props, defaultProps));
   const {
     ariaLabel,
     events,

@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import { defaults } from "lodash";
 import {
   Helpers,
   NumberOrCallback,
@@ -78,7 +79,7 @@ export const Bar = forwardRef<SVGPathElement, BarProps>(function Bar(
   initialProps,
   ref,
 ) {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const { polar, origin, style, barWidth, cornerRadius } = props;
 
   const path = polar
