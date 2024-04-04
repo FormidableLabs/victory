@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://commerce.nearform.com/open-source/" target="_blank">
-    <img alt="Victory — Formidable, We build the modern web" src="https://raw.githubusercontent.com/FormidableLabs/victory/main//Victory-Hero.png" />
+    <img alt="Victory — Formidable, We build the modern web" src="https://oss.nearform.com/api/banner.svg?badge=victory&bg=9c2f1e" />
   </a>
 
   <strong>
@@ -20,8 +20,6 @@
     <img alt="build status" src="https://github.com/FormidableLabs/victory/actions/workflows/ci.yml/badge.svg">
   </a>
 
-  <img alt="Gzip size" src="http://img.badgesize.io/https://unpkg.com/victory/dist/victory.min.js?compression=gzip&label=gzip%20size">
-
   <a href="https://github.com/FormidableLabs/victory#maintenance-status">
     <img alt="Maintenance Status" src="https://img.shields.io/badge/maintenance-active-green.svg" />
   </a>
@@ -36,11 +34,11 @@
 
 - [Getting Started](#getting-started)
 - [Victory Native](#victory-native)
-- [API Documentation](http://formidable.com/open-source/victory/docs)
-- [Guides](http://formidable.com/open-source/victory/guides)
+- [API Documentation](http://commerce.nearform.com/open-source/victory/docs)
+- [Guides](http://commerce.nearform.com/open-source/victory/guides)
 - [Contributing](#contributing)
 
-* See the **docs and examples** on the website: https://commerce.nearform.com/open-source/victory.
+* See the **docs and examples** on the website: https://commerce.nearform.com/open-source/victory
 * **Experiment** with all Victory components in this [code sandbox](https://codesandbox.io/s/dj4f7t)
 
 ## Getting started
