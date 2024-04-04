@@ -1,5 +1,11 @@
 # victory-tooltip
 
+## 37.0.2
+
+### Patch Changes
+
+- Ensure undefined props do not overwrite defaults ([#2852](https://github.com/FormidableLabs/victory/pull/2852))
+
 ## 37.0.1
 
 ### Patch Changes

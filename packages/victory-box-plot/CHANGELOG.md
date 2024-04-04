@@ -1,5 +1,7 @@
 # victory-box-plot
 
+## 37.0.2
+
 ## 37.0.1
 
 ### Patch Changes
