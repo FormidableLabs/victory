@@ -1,5 +1,6 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
+import { defaults } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 import {
   Helpers,
@@ -100,7 +101,7 @@ const defaultProps = {
  * The area primitive used by VictoryArea
  */
 export const Area: React.FC<AreaProps> = (initialProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const {
     ariaLabel,
     role,

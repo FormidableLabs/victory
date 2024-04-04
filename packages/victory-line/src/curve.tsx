@@ -1,5 +1,7 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
+import { defaults } from "lodash";
+
 import {
   Helpers,
   Path,
@@ -39,7 +41,7 @@ const defaultProps = {
 };
 
 export const Curve: React.FC<CurveProps> = (initialProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const userProps = UserProps.getSafeUserProps(props);
   const { polar, origin } = props;
   const lineFunction = LineHelpers.getLineFunction(props);

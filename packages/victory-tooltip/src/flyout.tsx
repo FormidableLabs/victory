@@ -1,4 +1,6 @@
 import React from "react";
+import { defaults } from "lodash";
+
 import {
   Helpers,
   Path,
@@ -142,7 +144,7 @@ const defaultProps = {
 };
 
 export const Flyout: React.FC<FlyoutProps> = (initialProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const userProps = UserProps.getSafeUserProps(props);
 
   // check for required props for this subcomponent

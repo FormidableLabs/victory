@@ -115,7 +115,7 @@ const defaultProps: SliceProps = {
 };
 
 export const Slice = (initialProps: SliceProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const defaultTransform = props.origin
     ? `translate(${props.origin.x}, ${props.origin.y})`
     : undefined;
