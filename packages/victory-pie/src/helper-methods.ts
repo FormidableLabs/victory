@@ -333,7 +333,7 @@ export const getLabelIndicatorPropsForPolyLineSegment = (
   // third point
   const labelPosX =
     midPoint[0] + labelIndicatorOuterOffset * (isRightLabel ? 1 : -1);
-  const labelPosY = midPoint[1]  
+  const labelPosY = midPoint[1];
 
   const points = `${Math.round(x1)},${Math.round(y1)} 
                   ${Math.round(midPoint[0]) + centerX},${
