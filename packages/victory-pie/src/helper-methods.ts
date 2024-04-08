@@ -313,9 +313,11 @@ export const getLabelIndicatorPropsForPolyLineSegment = (
 
   const innerOffset = middleRadius + labelIndicatorInnerOffset;
 
+  // First point
   const x1 = centerX + getXOffset(innerOffset, midAngle);
   const y1 = centerY + getYOffset(innerOffset, midAngle);
 
+  // second point
   const midPointInfo = {
     innerRadius: radius + labelIndicatorMiddleOffset,
     outerRadius: radius + labelIndicatorMiddleOffset,
@@ -328,8 +330,10 @@ export const getLabelIndicatorPropsForPolyLineSegment = (
   const isRightLabel = midPoint[0] > 0;
 
   const textAnchor = isRightLabel ? "start" : "end";
+  // third point
   const labelPosX =
     midPoint[0] + labelIndicatorOuterOffset * (isRightLabel ? 1 : -1);
+  const labelPosY = midPoint[1]  
 
   const points = `${Math.round(x1)},${Math.round(y1)} 
                   ${Math.round(midPoint[0]) + centerX},${
@@ -345,7 +349,7 @@ export const getLabelIndicatorPropsForPolyLineSegment = (
     index,
     textAnchor,
     x: labelPosX + centerX,
-    y: midPoint[1] + centerY,
+    y: labelPosY + centerY,
   };
   return defaults({}, labelIndicatorProps);
 };
