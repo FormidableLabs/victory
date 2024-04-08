@@ -8,7 +8,7 @@ scope:
 ---
 # Animations
 
-VictoryAnimation is able to animate changes in props using [d3-interpolate][]. Victory components define their animations via the `animate` prop. `duration`, `delay`, `easing` and `onEnd` functions may all be specified via the `animate` prop.
+VictoryAnimation is able to animate changes in props using [d3-interpolate][]. Victory components define their animations via the `animate` prop. `duration`, `delay`, `easing` and `onEnd` functions may all be specified via the `animate` prop. An `animationWhitelist` may also be specified on the `animate` prop. When given, only props specified in the whitelist will animate.
 
 ```playground_norender
 class App extends React.Component {
