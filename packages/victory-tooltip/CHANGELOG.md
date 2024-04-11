@@ -1,5 +1,25 @@
 # victory-tooltip
 
+## 37.0.2
+
+### Patch Changes
+
+- Ensure undefined props do not overwrite defaults ([#2852](https://github.com/FormidableLabs/victory/pull/2852))
+
+## 37.0.1
+
+### Patch Changes
+
+- Fix the signature of class static functions in components ([#2840](https://github.com/FormidableLabs/victory/pull/2840))
+
+## 37.0.0
+
+### Major Changes
+
+- Upgrade babel dependencies and build target to modern browsers ([#2804](https://github.com/FormidableLabs/victory/pull/2804))
+
+## 36.9.2
+
 ## 36.9.1
 
 ## 36.9.0

@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: "${{ contains(github.event.label.name, 'Status: Needs More Info :hand:') }}"
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
           script: |

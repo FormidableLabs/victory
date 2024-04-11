@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import LazyRender from "../lazy-render";
 import {
@@ -7,8 +7,6 @@ import {
   LandingSectionContent,
   DropShadow,
 } from "./styles";
-
-import createPath from "../../helpers/path-helpers";
 
 // Demos
 import DemoCustomChart from "./demo-custom-chart";
@@ -60,25 +58,12 @@ const GuideDemo = styled.div`
     width: 450px;
   }
 `;
-const GuideLink = styled(Link)`
-  color: ${({ theme }) => theme.color.darkBrown};
-  display: block;
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin: auto;
-  margin-top: 1.5rem;
-  text-align: center;
 
-  @media ${({ theme }) => theme.mediaQuery.sm} {
-    line-height: 1.29;
-    margin-top: 2rem;
-  }
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    font-size: 2.4rem;
-    line-height: 1.6;
-    margin-top: 2.3rem;
-  }
-`;
+const GuideLinkTitle = ({ children }) => (
+  <div className="block text-2xl font-bold mx-auto mt-8 text-center text-[#4c2e29] md:text-4xl md:mt-12">
+    {children}
+  </div>
+);
 
 const Guides = () => (
   <LandingSectionWrapper>
@@ -86,48 +71,52 @@ const Guides = () => (
       <SectionHeading>Guides</SectionHeading>
       <GuidesList>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoCustomChart} />
-          </GuideDemo>
-          <GuideLink to={createPath("/guides/custom-charts")}>
-            Custom Charts
-          </GuideLink>
+          <Link href="/guides/custom-charts">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoCustomChart} />
+            </GuideDemo>
+            <GuideLinkTitle>Custom Charts</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoZoom} />
-          </GuideDemo>
-          <GuideLink to={createPath("/guides/brush-and-zoom")}>
-            Brush and Zoom
-          </GuideLink>
+          <Link href="/guides/brush-and-zoom">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoZoom} />
+            </GuideDemo>
+            <GuideLinkTitle>Brush and Zoom</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoCustomComponents} />
-          </GuideDemo>
-          <GuideLink to={createPath("/guides/custom-components")}>
-            Custom Components
-          </GuideLink>
+          <Link href="/guides/custom-components">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoCustomComponents} />
+            </GuideDemo>
+            <GuideLinkTitle>Custom Components</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoTooltips} />
-          </GuideDemo>
-          <GuideLink to={createPath("/guides/tooltips")}>Tooltips</GuideLink>
+          <Link href="/guides/tooltips">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoTooltips} />
+            </GuideDemo>
+            <GuideLinkTitle>Tooltips</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoSharedEvents} />
-          </GuideDemo>
-          <GuideLink to={createPath("/guides/events")}>Events</GuideLink>
+          <Link href="/guides/events">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoSharedEvents} />
+            </GuideDemo>
+            <GuideLinkTitle>Events</GuideLinkTitle>
+          </Link>
         </li>
         <li>
-          <GuideDemo>
-            <LazyRender LazyRenderedComponent={DemoAnimation} />
-          </GuideDemo>
-          <GuideLink to={createPath("/guides/animations")}>
-            Animations
-          </GuideLink>
+          <Link href="/guides/animations">
+            <GuideDemo>
+              <LazyRender LazyRenderedComponent={DemoAnimation} />
+            </GuideDemo>
+            <GuideLinkTitle>Animations</GuideLinkTitle>
+          </Link>
         </li>
       </GuidesList>
     </LandingSectionContent>

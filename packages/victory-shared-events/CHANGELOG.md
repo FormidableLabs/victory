@@ -1,5 +1,25 @@
 # victory-shared-events
 
+## 37.0.2
+
+## 37.0.1
+
+## 37.0.0
+
+### Major Changes
+
+- Upgrade babel dependencies and build target to modern browsers ([#2804](https://github.com/FormidableLabs/victory/pull/2804))
+
+## 36.9.2
+
+### Patch Changes
+
+- Replace lodash keys with native code ([#2811](https://github.com/FormidableLabs/victory/pull/2811))
+
+* Replace lodash difference with native code ([#2828](https://github.com/FormidableLabs/victory/pull/2828))
+
+- Replace lodash isFunction with native code ([#2802](https://github.com/FormidableLabs/victory/pull/2802))
+
 ## 36.9.1
 
 ## 36.9.0

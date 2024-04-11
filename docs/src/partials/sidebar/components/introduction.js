@@ -1,15 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 import styled from "styled-components";
-import createPath from "../../../helpers/path-helpers";
 
 import {
   SidebarSectionHeading,
   SidebarSectionList,
   SidebarListItem,
   SidebarListItemLink,
-  SidebarListItemAnchorLink,
 } from "../styles";
 
 const MobileSidebarLinks = styled.div`
@@ -24,19 +21,15 @@ const renderMobileSidebarLinks = (mobileLinks) => {
     return (
       <SidebarListItem key={link.slug}>
         {isExternal ? (
-          <SidebarListItemAnchorLink
+          <SidebarListItemLink
             href={link.slug}
             target="_blank"
             rel="noopener noreferrer"
           >
             {link.title}
-          </SidebarListItemAnchorLink>
+          </SidebarListItemLink>
         ) : (
-          <SidebarListItemLink
-            to={createPath(link.slug)}
-            activeClassName={"is-active"}
-            prefetch={"data"}
-          >
+          <SidebarListItemLink href={link.slug}>
             {link.title}
           </SidebarListItemLink>
         )}
@@ -66,10 +59,6 @@ const Introduction = ({ content }) => {
       </SidebarSectionList>
     </>
   );
-};
-
-Introduction.propTypes = {
-  content: PropTypes.array,
 };
 
 export default Introduction;

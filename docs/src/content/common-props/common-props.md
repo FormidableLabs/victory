@@ -91,7 +91,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode)
+render(<App/>);
 ```
 
 ## categories
@@ -226,7 +226,7 @@ class App extends React.Component {
     );
   }
 }
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```
 
 ## disableInlineStyles
@@ -263,7 +263,7 @@ function CustomStyledBarChart() {
   )
 }
 
-ReactDOM.render(<CustomStyledBarChart/>, mountNode);
+render(<CustomStyledBarChart/>);
 ```
 
 It can also be passed to individual data or label components to disable styles on a more granular level.
@@ -285,7 +285,7 @@ function CustomStyledBarChart() {
   )
 }
 
-ReactDOM.render(<CustomStyledBarChart/>, mountNode);
+render(<CustomStyledBarChart/>);
 ```
 
 ## domain
@@ -491,7 +491,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode)
+render(<App/>);
 ```
 
 _Note_ External mutations are applied to the same state object that is used to control events in Victory, so depending on the order in which they are triggered, external event mutations may override mutations caused by internal Victory events or vice versa.
@@ -554,6 +554,8 @@ The horizontal prop determines whether data will be plotted horizontally. When t
 `type: element`
 
 The `labelComponent` prop takes a component instance which will be used to render labels for the component. The new element created from the passed `labelComponent` will be supplied with the following properties: x, y, index, data, datum, verticalAnchor, textAnchor, angle, style, text, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `labelComponent` is omitted, a new [VictoryLabel][] will be created with the props described above. [VictoryTooltip][] is commonly used as a `labelComponent`
+
+_note_: `labelComponent` is not currently supported for `VictoryBoxPlot` as it has its own label components (`maxLabelComponent`, `medianLabelComponent`, `minLabelComponent`, `q1LabelComponent` & `q3LabelComponent`). See [VictoryBoxPlot][] for more info.
 
 _examples:_
 
@@ -795,7 +797,7 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, mountNode);
+render(<App />);
 ```
 
 ## sharedEvents
@@ -1081,6 +1083,7 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 [victorylabel]: /docs/victory-label
 [victorytooltip]: /docs/victory-tooltip
 [victoryportal]: /docs/victory-portal
+[victoryboxplot]: /docs/victory-box-plot
 [victoryclipcontainer]: /docs/victory-clip-container
 [victorybrushcontainer]: /docs/victory-brush-container
 [victorycursorcontainer]: /docs/victory-cursor-container

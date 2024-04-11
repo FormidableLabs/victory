@@ -43,7 +43,7 @@ export function voronoiContainerMixin<
       voronoiPadding: 5,
     };
 
-    static defaultEvents = (props: VictoryVoronoiContainerProps) => {
+    static defaultEvents(props: VictoryVoronoiContainerProps) {
       return [
         {
           target: "parent",
@@ -81,7 +81,7 @@ export function voronoiContainerMixin<
               },
         },
       ];
-    };
+    }
 
     getDimension(props) {
       const { horizontal, voronoiDimension } = props;

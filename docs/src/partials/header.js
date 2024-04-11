@@ -1,13 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Link, useLocation } from "react-router-dom";
+import Image from "next/image";
+import Link from 'next/link';
+import { usePathname } from "next/navigation";
 import styled, { css } from "styled-components";
 import SVG from "react-inlinesvg";
-import createPath from "../helpers/path-helpers";
-import config from "../../static-config-helpers/site-data";
-import formidableIcon from "../../static/logos/logo-formidable-icon.svg";
-import formidableLogo from "../../static/logos/logo-formidable.svg";
-import burgerIcon from "../../static/burger.svg";
+
+import nearformLogo from "@/static/logos/nf_icon.png";
+const burgerIcon = "/open-source/victory/static/burger.svg";
 
 const HeaderContainer = styled.header`
   background: ${({ theme }) => theme.color.white};
@@ -49,17 +48,16 @@ const BurgerIcon = styled(SVG)`
   display: flex;
 `;
 
-const VictoryLogoLink = styled(Link)`
-  color: ${({ theme }) => theme.color.nearBlack};
-  font-size: 2.4rem;
-  font-weight: bold;
-  letter-spacing: 0.4rem;
-  margin-right: 3rem;
-  text-transform: uppercase;
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    font-size: 2.8rem;
-  }
-`;
+const VictoryLogoLink = ({ className, href, children }) => {
+  const classNames = [
+    "text-4xl font-bold tracking-wider uppercase mr-12 text-black leading-8",
+    className
+  ];
+
+  return (
+    <Link href={href} className={classNames.join('')}>{children}</Link>
+  )
+};
 
 const NavLinksList = styled.ul`
   margin: 0;
@@ -91,35 +89,8 @@ const NavAnchor = styled(({ active, theme, ...rest }) => <a {...rest} />)`
   ${navItemStyle}
 `;
 
-const FormidableIcon = styled(SVG)`
-  color: ${({ theme }) => theme.color.red};
-  display: flex;
-
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    display: none;
-  }
-
-  > svg {
-    height: 2.4rem;
-    width: 1.8rem;
-  }
-`;
-
-const FormidableLogo = styled(SVG)`
-  color: ${({ theme }) => theme.color.nearBlack};
-  display: none;
-  height: 2.8rem;
-  position: relative;
-  top: -0.1rem;
-
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    display: block;
-  }
-`;
-
 const Header = ({ className = "", onMenuClick }) => {
-  const location = useLocation();
-  const pathname = location ? location.pathname : "";
+  const pathname = usePathname();
   return (
     <HeaderContainer className={className}>
       <InnerContainer>
@@ -127,12 +98,12 @@ const Header = ({ className = "", onMenuClick }) => {
           <MenuButton onClick={onMenuClick}>
             <BurgerIcon src={burgerIcon} />
           </MenuButton>
-          <VictoryLogoLink to={createPath("/")}>Victory</VictoryLogoLink>
+          <VictoryLogoLink href="/">Victory</VictoryLogoLink>
 
           <NavLinksList>
             <NavLink
               active={pathname.includes("about")}
-              to={createPath("about")}
+              href="/about"
             >
               About
             </NavLink>
@@ -145,31 +116,29 @@ const Header = ({ className = "", onMenuClick }) => {
                 (pathname.includes("docs") || pathname.includes("guides")) &&
                 !pathname.includes("faq")
               }
-              to={createPath("docs")}
+              href="/docs"
             >
               Docs
             </NavLink>
             <NavLink
               active={pathname.includes("gallery")}
-              to={createPath("gallery")}
+              href="/gallery"
             >
               Gallery
             </NavLink>
 
-            {config.projectLinks.map((link) => (
-              <NavAnchor
-                key={link.url}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {link.label}
-              </NavAnchor>
-            ))}
+            <NavAnchor
+              key="GitHub"
+              href="https://github.com/FormidableLabs/victory"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </NavAnchor>
 
             <NavLink
               active={pathname.includes("faq")}
-              to={createPath("docs/faq")}
+              href="/docs/faq"
             >
               FAQs
             </NavLink>
@@ -181,23 +150,11 @@ const Header = ({ className = "", onMenuClick }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <FormidableIcon src={formidableIcon} />
-        </a>
-        <a
-          href="https://commerce.nearform.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FormidableLogo src={formidableLogo} />
+          <Image src={nearformLogo} height={50} />
         </a>
       </InnerContainer>
     </HeaderContainer>
   );
-};
-
-Header.propTypes = {
-  className: PropTypes.string,
-  onMenuClick: PropTypes.func,
 };
 
 export default Header;

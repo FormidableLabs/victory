@@ -575,7 +575,7 @@ The `x` prop defines the x coordinate to use as a basis for positioning the labe
   };
 
 
-ReactDOM.render(<MyChart/>, mountNode);
+render(<MyChart/>);
 ```
 
 ## y

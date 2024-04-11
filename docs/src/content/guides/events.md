@@ -257,7 +257,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode)
+render(<App/>);
 ```
 
 _Note_ External mutations are applied to the same state object that is used to control events in Victory, so depending on the order in which they are triggered, external event mutations may override mutations caused by internal Victory events or vice versa.
@@ -330,5 +330,5 @@ const App = () => {
   )
 }
 
-ReactDOM.render(<App/>, mountNode);
+render(<App/>);
 ```

@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-import { Link } from "react-scroll";
+import Link from "next/link";
+import Image from "next/image";
 import { FeaturedBadge } from "formidable-oss-badges";
-import NpmCopy from "./npm-copy";
+
+import siteConfig from "@/static-config-helpers/site-data";
+import nearformLogo from "@/static/logos/nearform-commerce-logo-white.svg";
 import HeroDemo from "./hero-demo";
+import NpmCopy from "./npm-copy";
 import { LandingSectionContent, LinkButton } from "./styles";
-import importedTheme from "../../styles/theme";
-import createPath from "../../helpers/path-helpers";
 
 const HeroContainer = styled.section`
-  background-image: url(${({ bg }) => bg});
+  background-image: url(${({ $bg }) => $bg});
   background-size: cover;
   color: ${({ theme }) => theme.color.white};
   height: 650px;
@@ -26,7 +27,7 @@ const HeroContainer = styled.section`
 `;
 
 const Corner = styled.div`
-  background-color: ${({ theme }) => theme.color.red};
+  background-color: #242526;
   clip-path: polygon(0 0, 0 100%, 100% 0);
   height: 156px;
   padding: 15px 18px;
@@ -44,7 +45,7 @@ const Corner = styled.div`
 `;
 
 const CornerText = styled.p`
-  color: ${({ theme }) => theme.color.nearBlack};
+  color: ${({ theme }) => theme.color.white};
   font-size: 0.8rem;
   font-weight: normal;
   font-stretch: normal;
@@ -52,6 +53,7 @@ const CornerText = styled.p`
   line-height: 1.5;
   letter-spacing: 0.57px;
   margin: 0;
+  margin-top: 10px;
   white-space: pre-line;
   @media ${({ theme }) => theme.mediaQuery.md} {
     font-size: 1.2rem;
@@ -59,14 +61,16 @@ const CornerText = styled.p`
   }
 `;
 
-const CornerF = styled.img`
-  color: ${({ theme }) => theme.color.nearBlack};
-  height: 43px;
-  margin-top: 5px;
-  width: 33px;
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    height: 63px;
-    width: 48px;
+const CornerF = styled.a`
+  > img {
+    color: ${({ theme }) => theme.color.nearBlack};
+    margin-top: 16px;
+    height: 19px;
+    width: 40px;
+    @media ${({ theme }) => theme.mediaQuery.md} {
+      height: 32px;
+      width: 65px;
+    }
   }
 `;
 
@@ -175,10 +179,13 @@ const LinkContainer = styled.div`
   }
 `;
 
-const LinkItem = styled.a`
-  color: ${({ theme }) => theme.color.white};
-  justify-self: center;
-`;
+const LinkItem = ({ href, children }) => {
+  return (
+    <Link href={href} className="text-white justify-self-center">
+      {children}
+    </Link>
+  );
+};
 
 const StyledLinkButton = styled(LinkButton)`
   margin-top: 1.2rem;
@@ -192,50 +199,48 @@ const StyledLinkButton = styled(LinkButton)`
   }
 `;
 
-const LearnMore = styled(Link)`
-  display: block;
-  color: ${({ theme }) => theme.color.white};
-  font-size: 1.4rem;
-  margin: auto;
-  line-height: 2.29;
-  letter-spacing: 0.88px;
-  text-align: center;
+const content = {
+  linksArray: [
+    {
+      text: "ABOUT",
+      location: "/about",
+    },
+    {
+      text: "DOCS",
+      location: "/docs",
+    },
+    {
+      text: "GALLERY",
+      location: "/gallery",
+    },
+    {
+      text: "GITHUB",
+      location: "https://github.com/FormidableLabs/victory",
+      external: true,
+    },
+    {
+      text: "FAQS",
+      location: "/docs/faq",
+    },
+  ],
+};
 
-  &::after {
-    border-top: 2.5px solid white;
-    border-right: 2.5px solid white;
-    content: "";
-    display: inline-block;
-    height: 12px;
-    margin: 2rem 0 0.2rem 2rem;
-    width: 12px;
-    transform: rotate(135deg);
-  }
-  @media ${({ theme }) => theme.mediaQuery.sm} {
-    display: none;
-  }
-`;
-
-const Hero = ({
-  background,
-  code,
-  cornerIcon,
-  cornerText,
-  description,
-  linksArray,
-  link,
-}) => (
+const Hero = () => (
   <>
-    <HeroContainer bg={background}>
+    <HeroContainer $bg="/open-source/victory/static/hero-background.svg">
       <Corner>
-        <CornerText>{cornerText}</CornerText>
-        <a
+        <CornerText>
+          ANOTHER OSS
+          <br />
+          PROJECT BY
+        </CornerText>
+        <CornerF
           href="https://commerce.nearform.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <CornerF src={cornerIcon} />
-        </a>
+          <Image src={nearformLogo} alt="Nearform Logo" title="Nearform" />
+        </CornerF>
       </Corner>
       <LandingSectionContent>
         <CenterWrapper>
@@ -243,21 +248,16 @@ const Hero = ({
             <FeaturedBadge name="victory" />
           </HeroBadge>
           <SectionHeading>VICTORY</SectionHeading>
-          <SectionSubHeading>{description}</SectionSubHeading>
+          <SectionSubHeading>{siteConfig.siteDescription}</SectionSubHeading>
           <GetStarted>
-            <NpmCopy text={code} />
-            <StyledLinkButton
-              to={createPath(link.location)}
-              bg={importedTheme.color.red}
-              width="100%"
-              noMargin
-            >
-              {link.text}
+            <NpmCopy text="npm install victory" />
+            <StyledLinkButton href="/docs" noMargin>
+              DOCUMENTATION
             </StyledLinkButton>
           </GetStarted>
         </CenterWrapper>
         <LinkContainer>
-          {linksArray.map((l) => {
+          {content.linksArray.map((l) => {
             return l.external ? (
               <LinkItem
                 key={l.text}
@@ -268,34 +268,16 @@ const Hero = ({
                 {l.text}
               </LinkItem>
             ) : (
-              <LinkItem key={l.text} href={createPath(l.location)}>
+              <LinkItem key={l.text} href={l.location}>
                 {l.text}
               </LinkItem>
             );
           })}
         </LinkContainer>
-        <LearnMore to="Features" smooth offset={-25} duration={500}>
-          LEARN MORE
-        </LearnMore>
       </LandingSectionContent>
     </HeroContainer>
     <HeroDemo />
   </>
 );
-
-const linkPropType = PropTypes.shape({
-  text: PropTypes.string,
-  location: PropTypes.string,
-});
-
-Hero.propTypes = {
-  background: PropTypes.string,
-  code: PropTypes.string,
-  cornerIcon: PropTypes.string,
-  cornerText: PropTypes.string,
-  description: PropTypes.string,
-  link: linkPropType,
-  linksArray: PropTypes.arrayOf(linkPropType),
-};
 
 export default Hero;

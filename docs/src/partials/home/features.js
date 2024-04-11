@@ -1,14 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { Element } from "react-scroll";
+import Image from "next/image";
 
-import LazyImage from "../lazy-image";
-import {
-  LandingSectionWrapper,
-  LandingSectionContent,
-  DropShadow,
-} from "./styles";
+import { LandingSectionWrapper, LandingSectionContent } from "./styles";
 
 const SectionHeading = styled.h2`
   color: ${({ theme }) => theme.color.darkBrown};
@@ -48,11 +43,9 @@ const Feature = styled.li`
   }
 `;
 
-const FeatureImg = styled(LazyImage)`
-  ${DropShadow}
-  display: block;
-  margin: auto;
-`;
+const FeatureImg = ({ className, alt, ...props }) => (
+  <Image className={`feature-img ${className}`} alt={alt} {...props} />
+);
 
 const FeatureTitle = styled.h3`
   color: ${({ theme }) => theme.color.darkBrown};
@@ -109,7 +102,13 @@ const Features = ({ featureArray }) => (
       <FeaturesList>
         {featureArray.map((feature) => (
           <Feature key={feature.title}>
-            <FeatureImg src={feature.icon} />
+            <FeatureImg
+              src={feature.icon}
+              width={280}
+              height={280}
+              alt={feature.title}
+              title={feature.description}
+            />
             <FeatureTitle>{feature.title}</FeatureTitle>
             <FeatureText>
               {feature.description}{" "}
@@ -126,16 +125,5 @@ const Features = ({ featureArray }) => (
     </LandingSectionContent>
   </LandingSectionWrapper>
 );
-
-const featureProps = {
-  title: PropTypes.string,
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  description: PropTypes.string,
-  code: PropTypes.string,
-};
-
-Features.propTypes = {
-  featureArray: PropTypes.arrayOf(PropTypes.shape(featureProps)),
-};
 
 export default Features;

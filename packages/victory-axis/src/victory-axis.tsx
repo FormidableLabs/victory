@@ -102,8 +102,12 @@ class VictoryAxisBase extends React.Component<VictoryAxisProps> {
 
   static getDomain = Axis.getDomain;
   static getAxis = Axis.getAxis;
-  static getStyles = (props) => getStyles(props);
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static getStyles(props) {
+    return getStyles(props);
+  }
+  static getBaseProps(props) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents: Array<keyof VictoryAxisProps> = [
     "axisComponent",
     "axisLabelComponent",

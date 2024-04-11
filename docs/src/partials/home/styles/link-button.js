@@ -1,26 +1,28 @@
 import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
-// * Use isExternal prop to create an anchor link with the same styling
-// eslint-disable-next-line no-unused-vars
-const LinkButton = styled(({ isExternal, noMargin, ...props }) =>
-  isExternal ? (
-    <a {...props} href={props.to} target="_blank" rel="noopener noreferrer" />
-  ) : (
-    <Link {...props} />
-  ),
-)`
-  background-color: ${({ bg, theme }) => bg || theme.color.white};
-  color: ${({ color, theme }) => color || theme.color.black};
-  display: block;
-  font-size: 1.4rem;
-  height: 40px;
-  line-height: 40px;
-  margin: ${({ noMargin }) => noMargin || "auto"};
-  letter-spacing: 1px;
-  width: ${({ width }) => width || "200px"};
-  text-align: center;
-`;
+function LinkButton({ isExternal, href, className, children }) {
+  const classes = [
+    "block text-center h-[40px] w-[200px] bg-[#ff684f] text-[#1f1f1f] leading-[40px] text-xl tracking-widest",
+    className,
+  ];
+
+  if (isExternal) {
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={classes.join(" ")}
+    >
+      {children}
+    </a>;
+  }
+
+  return (
+    <Link href={href} className={classes.join(" ")}>
+      {children}
+    </Link>
+  );
+}
 
 export default LinkButton;

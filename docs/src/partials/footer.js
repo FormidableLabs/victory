@@ -1,112 +1,35 @@
 import React from "react";
-import PropTypes from "prop-types";
-import SVG from "react-inlinesvg";
 import styled from "styled-components";
-import formidableIcon from "../../static/logos/logo-formidable-icon.svg";
+import Image from "next/image";
+
+import nearFormLogo from "../static/logos/nearform-logo-white.svg";
 
 const FooterContainer = styled.footer`
-  background-color: ${({ theme }) => theme.color.black};
+  background-color: #1b1b1d;
   color: ${({ theme }) => theme.color.white};
   display: flex;
-  justify-content: center;
-`;
-
-const InnerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: ${({ theme }) => theme.layout.footerHeight};
-  justify-content: center;
-  padding: 0 ${({ theme }) => theme.spacing.md};
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    flex-direction: row;
-    height: ${({ theme }) => theme.layout.md.footerHeight};
-    max-width: ${({ theme }) => theme.layout.footerMaxWidth};
-    padding-bottom: ${({ theme }) => theme.spacing.lg};
-    padding-top: ${({ theme }) => theme.spacing.lg};
-  }
+  padding: 48px 48px;
 `;
 
-const IconAndContact = styled.div`
-  display: flex;
-  margin-bottom: ${({ theme }) => theme.spacing.sm};
-  margin-right: ${({ theme }) => theme.spacing.xl};
-`;
-
-const Contact = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  > a {
-    color: ${({ theme }) => theme.color.white};
-    margin-bottom: ${({ theme }) => theme.spacing.xs};
-  }
-`;
-
-const Icon = styled(SVG)`
+const BrandLogo = styled.a`
+  display: block;
   margin-right: ${({ theme }) => theme.spacing.sm};
-
-  > svg {
-    color: ${({ theme }) => theme.color.white};
-    height: 6rem;
-  }
-`;
-
-const Blurb = styled.p`
-  margin: 0;
-  > a {
-    color: ${({ theme }) => theme.color.white};
-    text-decoration: underline;
-  }
 `;
 
 const Footer = ({ className = "" }) => (
   <FooterContainer className={className}>
-    <InnerContainer>
-      <IconAndContact>
-        <a
-          href="https://commerce.nearform.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon src={formidableIcon} />
-        </a>
-        <Contact>
-          <a
-            href="https://commerce.nearform.com/contact/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            CONTACT
-          </a>
-          <a
-            href="https://commerce.nearform.com/careers/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            CAREERS
-          </a>
-        </Contact>
-      </IconAndContact>
-      <Blurb>
-        {
-          "Formidable is a global design and engineering consultancy and open source software organization, specializing in React.js, React Native, GraphQL, Node.js, and the extended JavaScript ecosystem. We have locations in Seattle, London, Toronto, Denver, and Phoenix with remote consultants worldwide. For more information please visit "
-        }
-        <a
-          href="https://commerce.nearform.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          formidable.com.
-        </a>
-      </Blurb>
-    </InnerContainer>
+    <BrandLogo
+      href="https://commerce.nearform.com"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Image src={nearFormLogo} alt="Nearform logo" height={100} width={100} />
+    </BrandLogo>
+    <div>Copyright © 2013-2024 Nearform</div>
   </FooterContainer>
 );
-
-Footer.propTypes = {
-  className: PropTypes.string,
-};
 
 export default Footer;

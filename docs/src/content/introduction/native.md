@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
 #### 4. Ignoring require cycles
 
-- see https://github.com/FormidableLabs/victory/issues/2230
+- see [https://github.com/FormidableLabs/victory/issues/2230](https://github.com/FormidableLabs/victory/issues/2230)
 
 As of victory@36.4.0, React Native apps (on both iOS and Android) will warn about require cycles.
 

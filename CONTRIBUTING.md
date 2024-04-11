@@ -19,7 +19,7 @@ Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and 
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/) 14 or higher.
+- [Node.js](https://nodejs.org/) 18 or higher.
 - [pnpm](https://pnpm.io/) 7 or higher.
 
 ### Setup
@@ -41,7 +41,7 @@ $ pnpm install
 
 ## Development
 
-### Dev servers
+### Dev demo app
 
 We have some dev servers available for a sample development environment.
 
@@ -51,6 +51,14 @@ $ pnpm start
 ```
 
 These run appropriate file watchers, so you can just start developing source files and wait for the webpack dev server to pick up the new changes.
+
+### Running Docs locally
+
+You can run the documentation website locally with the following command. It is linked to the Victory package via PNPM and will reflect changes in packages when they are rebuilt.
+
+```sh
+$ pnpm start:docs
+```
 
 ### Build and checks
 

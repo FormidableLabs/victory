@@ -1,4 +1,6 @@
 import React from "react";
+import { defaults } from "lodash";
+
 import * as Helpers from "../victory-util/helpers";
 import * as pathHelpers from "../victory-util/point-path-helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
@@ -68,7 +70,7 @@ const defaultProps = {
 };
 
 export const Point = (initialProps: PointProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const userProps = UserProps.getSafeUserProps(props);
 
   return React.cloneElement(props.pathComponent!, {

@@ -116,8 +116,8 @@ const defaultProps: SliceProps = {
 };
 
 export const Slice = (initialProps: SliceProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
-
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
+  
   return React.cloneElement(props.pathComponent, {
     ...props.events,
     "aria-label": props.ariaLabel,

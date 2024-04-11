@@ -1,8 +1,6 @@
-/*global window:false */
-/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 100] }]*/
+/* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 100] }]*/
 /* eslint-disable react/no-multi-comp */
 import React, { useLayoutEffect, useState, useRef, useCallback } from "react";
-import PropTypes from "prop-types";
 import clamp from "lodash/clamp";
 import styled from "styled-components";
 
@@ -35,9 +33,9 @@ const UnfilledBar = styled.div`
   border-radius: 6px;
 `;
 
-const ColoredBar = styled.div.attrs(({ percentage }) => ({
+const ColoredBar = styled.div.attrs(({ $percentage }) => ({
   style: {
-    transform: `scaleX(${percentage})`,
+    transform: `scaleX(${$percentage})`,
   },
 }))`
   position: absolute;
@@ -68,7 +66,7 @@ const Circle = styled.div`
   top: 50%;
   height: 25px;
   width: 25px;
-  cursor: ${({ dragging }) => (dragging ? "grabbing" : "grab")};
+  cursor: ${({ $dragging }) => ($dragging ? "grabbing" : "grab")};
   border-radius: 50%;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   background-color: ${({ color }) => color};
@@ -89,15 +87,15 @@ const BiggerCircle = styled.div`
   height: 42px;
   width: 42px;
   border-radius: 50%;
-  cursor: ${({ dragging }) => (dragging ? "grabbing" : "grab")};
+  cursor: ${({ $dragging }) => ($dragging ? "grabbing" : "grab")};
   background-color: ${LIGHT_GREY};
-  opacity: ${({ dragging }) => (dragging ? DRAG_OPACITY : 0)};
+  opacity: ${({ $dragging }) => ($dragging ? DRAG_OPACITY : 0)};
   z-index: 9;
   transform: translate(-50%, -50%);
   transition: opacity 0.25s ease-out;
   :hover,
   ${Circle}:hover + & {
-    opacity: ${({ dragging }) => (dragging ? DRAG_OPACITY : HOVER_OPACITY)};
+    opacity: ${({ $dragging }) => ($dragging ? DRAG_OPACITY : HOVER_OPACITY)};
   }
 
   a & {
@@ -122,8 +120,8 @@ const Tooltip = styled.div`
   z-index: 100;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
   transition: transform 0.3s ease-out;
-  transform: ${({ dragging }) =>
-    `translate(-50%, ${dragging ? "-36px" : "-25px"})`};
+  transform: ${({ $dragging }) =>
+    `translate(-50%, ${$dragging ? "-36px" : "-25px"})`};
   border-radius: 3px;
   font-weight: bold;
   font-size: 16px;
@@ -140,8 +138,8 @@ const Triangle = styled.div`
   border-left: solid transparent 14px;
   border-right: solid transparent 14px;
   border-top: solid ${({ color }) => color} 14px;
-  transform: ${({ dragging }) =>
-    `translate(-50%, ${dragging ? "-36px" : "-25px"})`};
+  transform: ${({ $dragging }) =>
+    `translate(-50%, ${$dragging ? "-36px" : "-25px"})`};
   transition: color 0.3s ease-out, transform 0.3s ease-out;
 `;
 
@@ -152,7 +150,7 @@ const Notch = styled.div`
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  background-color: ${({ active, color }) => (active ? color : LIGHT_GREY)};
+  background-color: ${({ $active, color }) => ($active ? color : LIGHT_GREY)};
   margin-top: 14px;
   transform: translate(-50%, -50%);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
@@ -235,7 +233,7 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
       onTouchStart={handleDragStart}
     >
       <UnfilledBar />
-      <ColoredBar percentage={percentage} color={color} />
+      <ColoredBar $percentage={percentage} color={color} />
 
       {tooltipValues.map((tooltip, index) => {
         const tooltipPercentage = index / (tooltipValues.length - 1);
@@ -245,41 +243,33 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
             key={index}
             value={tooltipPercentage * 100}
             color={color}
-            active={tooltipPercentage <= percentage}
+            $active={tooltipPercentage <= percentage}
           />
         );
       })}
 
       <TooltipContainer value={percentage * 100}>
-        <Tooltip dragging={dragging} color={color}>
+        <Tooltip $dragging={dragging} color={color}>
           {getTooltipText()}
         </Tooltip>
-        <Triangle dragging={dragging} color={color} />
+        <Triangle $dragging={dragging} color={color} />
       </TooltipContainer>
 
       <CircleTransitionContainer value={percentage * 100}>
         <Circle
-          dragging={dragging}
+          $dragging={dragging}
           color={color}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
         />
         <BiggerCircle
-          dragging={dragging}
+          $dragging={dragging}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
         />
       </CircleTransitionContainer>
     </Container>
   );
-};
-
-Slider.propTypes = {
-  color: PropTypes.string.isRequired,
-  maxValue: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  tooltipValues: PropTypes.arrayOf(PropTypes.string).isRequired,
-  value: PropTypes.number.isRequired,
 };
 
 export default Slider;

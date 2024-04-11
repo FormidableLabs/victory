@@ -86,7 +86,9 @@ class VictoryScatterBase extends React.Component<VictoryScatterProps> {
 
   static getDomain = Domain.getDomain;
   static getData = Data.getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static getBaseProps(props) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents = [
     "dataComponent",
     "labelComponent",

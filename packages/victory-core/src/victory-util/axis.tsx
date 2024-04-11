@@ -1,9 +1,18 @@
 import React from "react";
-import { defaults, identity, isObject, invert, uniq, orderBy } from "lodash";
+import { defaults, isObject, uniq, orderBy } from "lodash";
 import * as Collection from "./collection";
 import * as Domain from "./domain";
 import * as Helpers from "./helpers";
 import { D3Scale } from "../types/prop-types";
+
+/**
+ * Returns the first argument it receives
+ * @param value The value to return
+ * @returns The value given
+ */
+function identity<T>(value: T): T {
+  return value;
+}
 
 /**
  * Returns the axis (x or y) of a particular axis component
@@ -146,7 +155,7 @@ function getDefaultTickFormat(props) {
       ? (x, index) => tickValues[index]
       : fallbackFormat;
   }
-  const invertedStringMap = stringMap && invert(stringMap);
+  const invertedStringMap = stringMap && Helpers.invert(stringMap);
   const tickValueArray = orderBy(Object.values(stringMap), (n) => n);
   const dataNames = tickValueArray.map((tick: any) => invertedStringMap[tick]);
   // string ticks should have one tick of padding at the beginning
@@ -252,7 +261,7 @@ export function getTickFormat(props, scale) {
     return (x, index) => filteredTickFormat[index];
   } else if (tickFormat && Helpers.isFunction(tickFormat)) {
     const applyStringTicks = (tick, index, ticks) => {
-      const invertedStringMap = invert(stringMap);
+      const invertedStringMap = Helpers.invert(stringMap);
       const stringTickArray = ticks.map((t) => invertedStringMap[t]);
       return props.tickFormat(invertedStringMap[tick], index, stringTickArray);
     };

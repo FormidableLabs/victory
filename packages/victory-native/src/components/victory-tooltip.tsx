@@ -13,40 +13,42 @@ export class VictoryTooltip extends VictoryTooltipBase {
     groupComponent: <G />,
   };
 
-  static defaultEvents = () => [
-    {
-      target: "data",
-      eventHandlers: {
-        onPressIn: (targetProps) => {
-          return [
-            {
-              target: "labels",
-              mutation: () => ({ active: true }),
-            },
-            {
-              target: "data",
-              mutation: () =>
-                targetProps.activateData
-                  ? { active: true }
-                  : { active: undefined },
-            },
-          ];
-        },
-        onPressOut: () => {
-          return [
-            {
-              target: "labels",
-              mutation: () => ({ active: undefined }),
-            },
-            {
-              target: "data",
-              mutation: () => ({ active: undefined }),
-            },
-          ];
+  static defaultEvents() {
+    return [
+      {
+        target: "data",
+        eventHandlers: {
+          onPressIn: (targetProps) => {
+            return [
+              {
+                target: "labels",
+                mutation: () => ({ active: true }),
+              },
+              {
+                target: "data",
+                mutation: () =>
+                  targetProps.activateData
+                    ? { active: true }
+                    : { active: undefined },
+              },
+            ];
+          },
+          onPressOut: () => {
+            return [
+              {
+                target: "labels",
+                mutation: () => ({ active: undefined }),
+              },
+              {
+                target: "data",
+                mutation: () => ({ active: undefined }),
+              },
+            ];
+          },
         },
       },
-    },
-  ];
+    ];
+  }
 
   renderTooltip(props) {
     const evaluatedProps = this.getEvaluatedProps(props);

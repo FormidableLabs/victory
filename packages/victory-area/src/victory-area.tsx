@@ -88,7 +88,9 @@ class VictoryAreaBase extends React.Component<VictoryAreaProps> {
     DefaultTransitions.continuousPolarTransitions();
   static getDomain = Domain.getDomainWithZero;
   static getData = Data.getData;
-  static getBaseProps = (props) => getBaseProps(props, fallbackProps);
+  static getBaseProps(props) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents = [
     "dataComponent",
     "labelComponent",

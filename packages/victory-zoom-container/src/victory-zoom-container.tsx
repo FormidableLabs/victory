@@ -47,7 +47,7 @@ export function zoomContainerMixin<
       zoomActive: false,
     };
 
-    static defaultEvents = (props: TProps) => {
+    static defaultEvents(props: TProps) {
       return [
         {
           target: "parent",
@@ -103,7 +103,7 @@ export function zoomContainerMixin<
           },
         },
       ];
-    };
+    }
 
     clipDataComponents(children: React.ReactElement[], props) {
       const { scale, clipContainerComponent, polar, origin, horizontal } =

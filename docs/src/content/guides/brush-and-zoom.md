@@ -53,7 +53,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App/>, mountNode)
+render(<App/>);
 ```
 
 In the next example, `VictoryZoomContainer` and `VictoryBrushContainer` are used to create a zoomable chart with a mini-map brush control.
@@ -155,7 +155,7 @@ class App extends React.Component {
     );
   }
 }
-ReactDOM.render(<App/>, mountNode)
+render(<App/>);
 ```
 
 `VictoryBrushContainer` may be used with any Victory component that works on an x-y coordinate system.

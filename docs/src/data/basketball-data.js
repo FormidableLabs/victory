@@ -1,4 +1,4 @@
-export default {
+const data = {
   1990: [
     {
       player: "Michael Jordan",
@@ -19120,3 +19120,5 @@ export default {
     },
   ],
 };
+
+export default data;

@@ -97,7 +97,9 @@ class VictoryHistogramBase extends React.Component<VictoryHistogramProps> {
     },
   };
 
-  static getFormattedData = getFormattedData;
+  static getFormattedData(...args: any) {
+    return getFormattedData(...args);
+  }
 
   static defaultProps: VictoryHistogramProps = {
     containerComponent: <VictoryContainer />,
@@ -111,10 +113,15 @@ class VictoryHistogramBase extends React.Component<VictoryHistogramProps> {
     theme: VictoryTheme.grayscale,
   };
 
-  static getDomain = getDomain;
-  static getData = getData;
-  static getBaseProps = (props: VictoryHistogramProps) =>
-    getBaseProps(props, fallbackProps);
+  static getDomain(props, axis) {
+    return getDomain(props, axis);
+  }
+  static getData(props) {
+    return getData(props);
+  }
+  static getBaseProps(props: VictoryHistogramProps) {
+    return getBaseProps(props, fallbackProps);
+  }
   static expectedComponents: Partial<keyof VictoryHistogramProps>[] = [
     "dataComponent",
     "labelComponent",

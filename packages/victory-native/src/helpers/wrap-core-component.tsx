@@ -1,4 +1,5 @@
 import React from "react";
+import { defaults } from "lodash";
 
 /**
  * Wrap a core component, pass props through.
@@ -11,7 +12,7 @@ export function wrapCoreComponent<TProps extends object>({
   defaultProps: TProps;
 }) {
   const WrappedComponent = (props: TProps) => {
-    const propsWithDefaults = { ...defaultProps, ...props };
+    const propsWithDefaults = defaults({}, props, defaultProps);
     return <Component {...propsWithDefaults} />;
   };
 

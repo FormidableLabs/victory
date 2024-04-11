@@ -1,4 +1,4 @@
-/*eslint-disable no-magic-numbers */
+/* eslint-disable no-magic-numbers */
 import _ from "lodash";
 // NOTE(2220): Keep on old CommonJS-supported D3 versions
 // https://github.com/FormidableLabs/victory/issues/2220
