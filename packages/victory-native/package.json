@@ -55,13 +55,13 @@
     "victory-zoom-container": "^37.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.9",
-    "react-native": "^0.65.1",
-    "react-native-gesture-handler": "^1.10.3",
-    "react-native-svg": "^12.4.3"
+    "@babel/core": "^7.20.0",
+    "react-native": "^0.73.1",
+    "react-native-gesture-handler": "^2.16.0",
+    "react-native-svg": "^14.1.0"
   },
   "peerDependencies": {
-    "react": ">=16.6.0"
+    "react": "18.2.0"
   },
   "publishConfig": {
     "provenance": true,
