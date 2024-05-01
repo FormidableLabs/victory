@@ -29,7 +29,7 @@
     "victory": "^37.0.2",
     "victory-area": "^37.0.2",
     "victory-axis": "^37.0.2",
-    "victory-bar": "^37.0.2",
+    "victory-bar": "workspace:*",
     "victory-box-plot": "^37.0.2",
     "victory-brush-container": "^37.0.2",
     "victory-brush-line": "^37.0.2",
@@ -58,7 +58,8 @@
     "@babel/core": "^7.20.0",
     "react-native": "^0.73.1",
     "react-native-gesture-handler": "^2.16.0",
-    "react-native-svg": "^14.1.0"
+    "react-native-svg": "^14.1.0",
+    "@shopify/react-native-skia": "0.1.221"
   },
   "peerDependencies": {
     "react": "18.2.0"

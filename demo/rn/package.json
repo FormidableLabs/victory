@@ -13,6 +13,7 @@
   "dependencies": {
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
+    "@shopify/react-native-skia": "0.1.221",
     "expo": "~50.0.17",
     "expo-status-bar": "~1.11.1",
     "lodash": "^4.17.21",

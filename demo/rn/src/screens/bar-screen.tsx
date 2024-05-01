@@ -48,7 +48,7 @@ export const BarScreen: React.FC = () => {
         />
       </VictoryGroup>
 
-      <VictoryStack width={300} height={375} colorScale={"qualitative"}>
+      {/* <VictoryStack width={300} height={375} colorScale={"qualitative"}>
         <VictoryBar
           data={[
             { x: 1, y: 1 },
@@ -70,7 +70,7 @@ export const BarScreen: React.FC = () => {
             { x: 3, y: 2 },
           ]}
         />
-      </VictoryStack>
+      </VictoryStack> */}
 
       <VictoryBar
         height={375}

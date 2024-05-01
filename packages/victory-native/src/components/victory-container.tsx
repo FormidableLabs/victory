@@ -1,5 +1,6 @@
 import React from "react";
 import Svg, { Rect } from "react-native-svg";
+import { Canvas, Circle, Group } from "@shopify/react-native-skia";
 import { get } from "lodash";
 import { View, PanResponder } from "react-native";
 import {
@@ -138,39 +139,49 @@ export class VictoryContainer extends VictoryContainerBase<VictoryContainerNativ
     const handlers = disableContainerEvents
       ? {}
       : this.panResponder.panHandlers;
+    const widthSkia = 256;
+    const heightSkia = 256;
+    const r = widthSkia * 0.33;
+    // console.log(children);
+
     return (
       <View
-        {...handlers}
-        style={divStyle}
-        pointerEvents="box-none"
-        className={className}
-        ref={props.containerRef}
-        {...this.getOUIAProps(props)}
+      // {...handlers}
+      // style={divStyle}
+      // pointerEvents="box-none"
+      // className={className}
+      // ref={props.containerRef}
+      // {...this.getOUIAProps(props)}
       >
-        <Svg
-          {...svgProps}
-          style={dimensions}
-          accessible={props["aria-labelledby"] && title ? true : undefined}
-          accessibilityLabel={
-            props["aria-labelledby"] && title ? title : undefined
-          }
-          accessibilityHint={
-            props["aria-describedby"] && desc ? desc : undefined
-          }
-        >
-          {/*
-            The following Rect is a temporary solution until the following RNSVG issue is resolved
-            https://github.com/react-native-svg/react-native-svg/issues/1488
-          */}
-          <Rect x={0} y={0} width={width} height={height} fill="none" />
-          {title ? <title id="title">{title}</title> : null}
-          {desc ? <desc id="desc">{desc}</desc> : null}
+        <Canvas style={{ width: widthSkia, height: heightSkia }}>
           {children}
-          <View style={portalDivStyle} pointerEvents="box-none">
-            <Portal {...portalProps} ref={this.savePortalRef} />
-          </View>
-        </Svg>
+          {/* <></> */}
+        </Canvas>
       </View>
     );
   }
 }
+
+//    <Svg
+// {...svgProps}
+// style={dimensions}
+// accessible={props["aria-labelledby"] && title ? true : undefined}
+// accessibilityLabel={
+//   props["aria-labelledby"] && title ? title : undefined
+// }
+// accessibilityHint={
+//   props["aria-describedby"] && desc ? desc : undefined
+// }
+// >
+// {/*
+//   The following Rect is a temporary solution until the following RNSVG issue is resolved
+//   https://github.com/react-native-svg/react-native-svg/issues/1488
+// */}
+// <Rect x={0} y={0} width={width} height={height} fill="none" />
+// {title ? <title id="title">{title}</title> : null}
+// {desc ? <desc id="desc">{desc}</desc> : null}
+//
+// <View style={portalDivStyle} pointerEvents="box-none">
+//   <Portal {...portalProps} ref={this.savePortalRef} />
+// </View>
+// </Svg>

@@ -93,18 +93,19 @@ export const Bar = forwardRef<SVGPathElement, BarProps>(function Bar(
   }
 
   return React.cloneElement(props.pathComponent, {
-    ...props.events,
-    "aria-label": props.ariaLabel,
-    style,
-    d: path,
-    className: props.className,
-    clipPath: props.clipPath,
-    desc: props.desc,
-    index: props.index,
-    role: props.role,
-    shapeRendering: props.shapeRendering,
-    transform: props.transform || defaultTransform,
-    tabIndex: props.tabIndex,
-    ref,
+    // ...props.events,
+    // "aria-label": props.ariaLabel,
+    // style,
+    // d: path,
+    // className: props.className,
+    // clipPath: props.clipPath,
+    // desc: props.desc,
+    // index: props.index,
+    // role: props.role,
+    // shapeRendering: props.shapeRendering,
+    // transform: props.transform || defaultTransform,
+    // tabIndex: props.tabIndex,
+    // ref,
+    path
   });
 });
