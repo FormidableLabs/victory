@@ -81,6 +81,7 @@ export const Bar = forwardRef<SVGPathElement, BarProps>(function Bar(
 ) {
   const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const { polar, origin, style, barWidth, cornerRadius } = props;
+  console.log(style);
 
   const path = polar
     ? getPolarBarPath(props, cornerRadius)
@@ -106,6 +107,8 @@ export const Bar = forwardRef<SVGPathElement, BarProps>(function Bar(
     // transform: props.transform || defaultTransform,
     // tabIndex: props.tabIndex,
     // ref,
-    path
+    path,
+    color: style.fill,
+    // color: "red",
   });
 });

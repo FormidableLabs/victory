@@ -2,7 +2,7 @@ import React from "react";
 import Svg, { Rect } from "react-native-svg";
 import { Canvas, Circle, Group } from "@shopify/react-native-skia";
 import { get } from "lodash";
-import { View, PanResponder } from "react-native";
+import { View, PanResponder, LayoutChangeEvent } from "react-native";
 import {
   VictoryContainer as VictoryContainerBase,
   VictoryContainerProps,
@@ -144,16 +144,24 @@ export class VictoryContainer extends VictoryContainerBase<VictoryContainerNativ
     const r = widthSkia * 0.33;
     // console.log(children);
 
+
     return (
       <View
-      // {...handlers}
-      // style={divStyle}
-      // pointerEvents="box-none"
-      // className={className}
-      // ref={props.containerRef}
-      // {...this.getOUIAProps(props)}
+        style={{ flex: 1 }}
+        // {...handlers}
+        // style={divStyle}
+        // pointerEvents="box-none"
+        // className={className}
+        // ref={props.containerRef}
+        // {...this.getOUIAProps(props)}
       >
-        <Canvas style={{ width: widthSkia, height: heightSkia }}>
+        <Canvas
+          // onLayout={onLayout}
+          style={[
+            { flex: 1, width: '100%', minHeight: 450 },
+            // hasMeasuredLayoutSize ? { width, height } : null,
+          ]}
+        >
           {children}
           {/* <></> */}
         </Canvas>
