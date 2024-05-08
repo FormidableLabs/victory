@@ -29,7 +29,7 @@
     "victory": "^37.0.2",
     "victory-area": "^37.0.2",
     "victory-axis": "^37.0.2",
-    "victory-bar": "workspace:*",
+    "victory-bar": "^37.0.2",
     "victory-box-plot": "^37.0.2",
     "victory-brush-container": "^37.0.2",
     "victory-brush-line": "^37.0.2",
