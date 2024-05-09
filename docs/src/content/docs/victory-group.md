@@ -1,7 +1,7 @@
 ---
 id: 14
 title: VictoryGroup
-category: charts
+category: containers
 type: docs
 scope:
   - sampleData

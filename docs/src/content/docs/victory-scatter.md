@@ -1,5 +1,5 @@
 ---
-id: 22
+id: 11
 title: VictoryScatter
 category: charts
 type: docs

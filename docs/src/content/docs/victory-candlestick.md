@@ -1,5 +1,5 @@
 ---
-id: 8
+id: 5
 title: VictoryCandlestick
 category: charts
 type: docs

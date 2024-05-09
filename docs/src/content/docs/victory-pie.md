@@ -1,5 +1,5 @@
 ---
-id: 18
+id: 9
 title: VictoryPie
 category: charts
 type: docs
