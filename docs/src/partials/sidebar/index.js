@@ -197,26 +197,12 @@ const Sidebar = ({ className, content, onCloseClick }) => {
       ) : (
         <>
           <Introduction content={linksLists.introduction} />
-          <Category title="Support" content={linksLists.support} />
+          <Category title="Charts" content={linksLists.charts} />
+          <Category title="Containers" content={linksLists.containers} />
+          <Category title="More" content={linksLists.more} />
+          <Category title="Component API" content={linksLists.documentation} />
           <Category title="Guides" content={linksLists.guides} />
-          <Category
-            title="Documentation"
-            content={linksLists.documentation}
-            subCategories={[
-              {
-                title: "Charts",
-                content: linksLists.charts,
-              },
-              {
-                title: "Containers",
-                content: linksLists.containers,
-              },
-              {
-                title: "More",
-                content: linksLists.more,
-              },
-            ]}
-          />
+          <Category title="Support" content={linksLists.support} />
         </>
       )}
     </SidebarContainer>

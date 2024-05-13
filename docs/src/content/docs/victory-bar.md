@@ -1,5 +1,5 @@
 ---
-id: 6
+id: 3
 title: VictoryBar
 category: charts
 type: docs

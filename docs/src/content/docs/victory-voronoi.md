@@ -1,5 +1,5 @@
 ---
-id: 30
+id: 12
 title: VictoryVoronoi
 category: charts
 type: docs

@@ -1,5 +1,5 @@
 ---
-id: 4
+id: 1
 title: VictoryArea
 category: charts
 type: docs

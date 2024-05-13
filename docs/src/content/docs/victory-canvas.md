@@ -8,7 +8,9 @@ scope: null
 
 # Victory Canvas
 
-The `victory-canvas` package currently provides a set of experimental primitive components that will allow Victory to render data in a Canvas container rather than as an SVG.
+The `victory-canvas` package currently provides a set of *experimental* primitive components that will allow Victory to render data in a Canvas container rather than as an SVG.
+
+> This API should not be used in production and only serves as an experiment to help guide the next phase of Victory development.
 
 ## Container Components
 
