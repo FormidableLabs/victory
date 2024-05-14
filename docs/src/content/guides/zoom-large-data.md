@@ -27,17 +27,15 @@ In this guide, we'll be working with time-series data. We'll make a few basic as
 These just serve to simplify the example. We'll start with a simple chart:
 
 ```js
-class CustomChart extends React.Component {
-	render() {
-  	return (
-      <VictoryChart containerComponent={<VictoryZoomContainer/>}
-        <VictoryScatter data={this.props.data} />
-      </VictoryChart>
-    );
-  }
-}
+function CustomChart(props) {
+  const [state, setState] = React.useState({});
 
-render(<CustomChart data={allData}/>);
+  return (
+    <VictoryChart containerComponent={<VictoryZoomContainer/>}
+      <VictoryScatter data={props.data} />
+    </VictoryChart>
+  );
+}
 ```
 
 ## Render only visible points
@@ -49,10 +47,10 @@ To do this, we must keep track of the chart's visible domain;
 ```js
 <VictoryChart
   containerComponent={<VictoryZoomContainer
-    onZoomDomainChange={this.onDomainChange.bind(this)}
+    onZoomDomainChange={onDomainChange}
   />}
 >
-  <VictoryScatter data={this.getData()} />
+  <VictoryScatter data={getData()} />
 </VictoryChart>
 ```
 
@@ -60,7 +58,7 @@ Update the state every time the domain changes (note that we are only keeping tr
 
 ```js
 onDomainChange(domain) {
-  this.setState({
+  setState({
     zoomedXDomain: domain.x,
   });
 }
@@ -70,9 +68,9 @@ Use this `zoomedXDomain` state to filter out all data that isn't currently visib
 Here we're making a simple `getData` method; note the data array's `filter` function:
 
 ```js
-getData() {
-  const { zoomedXDomain } = this.state;
-  const { data } = this.props;
+function getData() {
+  const { zoomedXDomain } = state;
+  const { data } = props;
   return data.filter(
     // is d "between" the ends of the visible x-domain?
     (d) => (d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]));
@@ -88,7 +86,7 @@ In fact, there would be no way to zoom back out!
 To remedy this, we must calculate the domain of the entire dataset:
 
 ```js
-getEntireDomain(props) {
+function getEntireDomain(props) {
   const { data } = props;
   return {
     y: [_.minBy(data, d => d.y).y, _.maxBy(data, d => d.y).y],
@@ -104,25 +102,23 @@ Because we are assuming the data is static we just need to call this function on
 The calculated `x` domain will also be used as the initial value for `state.zoomedXDomain`:
 
 ```js
-constructor(props) {
-  super();
-  this.entireDomain = this.getEntireDomain(props);
-  this.state = {
-    zoomedXDomain: this.entireDomain.x,
-  };
-}
+const entireDomain = getEntireDomain(props);
+const [state, setState] = React.useState({
+  zoomedXDomain: entireDomain.x,
+});
 ```
 
-The static value `this.entireDomain` can then be used by `VictoryChart`:
+The static value `entireDomain` can then be used by `VictoryChart`:
+
 ```js
 <VictoryChart
-  domain={this.entireDomain}
+  domain={entireDomain}
   containerComponent={<VictoryZoomContainer
     zoomDimension="x"
-    onZoomDomainChange={this.onDomainChange.bind(this)}
+    onZoomDomainChange={onDomainChange}
   />}
 >
-  <VictoryScatter data={this.getData()} />
+  <VictoryScatter data={getData()} />
 </VictoryChart>
 ```
 
@@ -142,9 +138,9 @@ All of the existing logic in `getData` will stay
 and another `filter` will be added afterwards:
 
 ```js
-getData() {
-  const { zoomedXDomain } = this.state;
-  const { data, maxPoints } = this.props;
+function getData() {
+  const { zoomedXDomain } = state;
+  const { data, maxPoints } = props;
   const filtered = data.filter(
     (d) => (d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]));
 
@@ -165,28 +161,36 @@ no matter the zoom level.
 ## Demo
 
 ```playground_norender
-// 10000 points (10 / 0.001 = 10000) - see what happens when you render 50k or 100k
+// 10000 points (10 / 0.001 = 10000)
+// see what happens when you render 50k or 100k
 const allData = _.range(0, 10, 0.001).map(x => ({
 	x: x,
   y: Math.sin(Math.PI*x/2) * x / 10
 }));
 
-class CustomChart extends React.Component {
-  constructor(props) {
-  	super();
-    this.entireDomain = this.getEntireDomain(props);
-   	this.state = {
-    	zoomedXDomain: this.entireDomain.x,
-    };
-  }
-	onDomainChange(domain) {
-  	this.setState({
+function getEntireDomain(props) {
+  const { data } = props;
+  return {
+    y: [_.minBy(data, d => d.y).y, _.maxBy(data, d => d.y).y],
+    x: [ data[0].x, _.last(data).x ]
+  };
+}
+
+function CustomChart(props) {
+  const entireDomain = getEntireDomain(props);
+  const [state, setState] = React.useState({
+    zoomedXDomain: entireDomain.x,
+  });
+
+	function onDomainChange(domain) {
+  	setState({
     	zoomedXDomain: domain.x,
     });
   }
-  getData() {
-  	const { zoomedXDomain } = this.state;
-    const { data, maxPoints } = this.props;
+  
+  function getData() {
+  	const { zoomedXDomain } = state;
+    const { data, maxPoints } = props;
   	const filtered = data.filter(
     	(d) => (d.x >= zoomedXDomain[0] && d.x <= zoomedXDomain[1]));
 
@@ -198,39 +202,32 @@ class CustomChart extends React.Component {
     }
     return filtered;
   }
-  getEntireDomain(props) {
-  	const { data } = props;
-    return {
-    	y: [_.minBy(data, d => d.y).y, _.maxBy(data, d => d.y).y],
-      x: [ data[0].x, _.last(data).x ]
-    };
-  }
-  getZoomFactor() {
-    const { zoomedXDomain } = this.state;
+
+  function getZoomFactor() {
+    const { zoomedXDomain } = state;
     const factor = 10 / (zoomedXDomain[1] - zoomedXDomain[0]);
     return _.round(factor, factor < 3 ? 1 : 0);
   }
-	render() {
-    const renderedData = this.getData();
-  	return (
-    	<div>
-        <VictoryChart
-          domain={this.entireDomain}
-          containerComponent={<VictoryZoomContainer
-            zoomDimension="x"
-            onZoomDomainChange={this.onDomainChange.bind(this)}
-            minimumZoom={{x: 1/10000}}
-          />}
-        >
-          <VictoryScatter data={renderedData} />
-        </VictoryChart>
-        <div>
-          {this.getZoomFactor()}x zoom;
-          rendering {renderedData.length} of {this.props.data.length}
-        </div>
+	
+  const renderedData = getData();
+  return (
+    <div>
+      <VictoryChart
+        domain={entireDomain}
+        containerComponent={<VictoryZoomContainer
+          zoomDimension="x"
+          onZoomDomainChange={onDomainChange}
+          minimumZoom={{x: 1/10000}}
+        />}
+      >
+        <VictoryScatter data={renderedData} />
+      </VictoryChart>
+      <div>
+        {getZoomFactor()}x zoom;
+        rendering {renderedData.length} of {props.data.length}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 render(<CustomChart data={allData} maxPoints={120} />);
@@ -247,24 +244,24 @@ This apparent movement of the points while zooming happens because different poi
 Here is an example that reduces flicker by reliably choosing the same data points to display:
 
 ```js
-getData() {
-	const { zoomedXDomain } = this.state;
-	const { data, maxPoints } = this.props;
+function getData() {
+  const { zoomedXDomain } = state;
+  const { data, maxPoints } = props;
 
-	const startIndex = data.findIndex((d) => d.x >= zoomedXDomain[0]);
-	const endIndex = data.findIndex((d) => d.x > zoomedXDomain[1]);
-	const filtered = data.slice(startIndex, endIndex);
+  const startIndex = data.findIndex((d) => d.x >= zoomedXDomain[0]);
+  const endIndex = data.findIndex((d) => d.x > zoomedXDomain[1]);
+  const filtered = data.slice(startIndex, endIndex);
 
-	if (filtered.length > maxPoints ) {
-		// limit k to powers of 2, e.g. 64, 128, 256
-		// so that the same points will be chosen reliably, reducing flicker
-		const k = Math.pow(2, Math.ceil(Math.log2(filtered.length / maxPoints)));
-		return filtered.filter(
-			// ensure modulo is always calculated from same reference: i + startIndex
-			(d, i) => (((i + startIndex) % k) === 0)
-		);
-	}
-	return filtered;
+  if (filtered.length > maxPoints ) {
+    // limit k to powers of 2, e.g. 64, 128, 256
+    // so that the same points will be chosen reliably, reducing flicker
+    const k = Math.pow(2, Math.ceil(Math.log2(filtered.length / maxPoints)));
+    return filtered.filter(
+      // ensure modulo is always calculated from same reference: i + startIndex
+      (d, i) => (((i + startIndex) % k) === 0)
+    );
+  }
+  return filtered;
 }
 ```
 

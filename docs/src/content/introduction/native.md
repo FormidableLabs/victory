@@ -62,16 +62,14 @@ const data = [
   { quarter: 4, earnings: 19000 }
 ];
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <VictoryChart width={350} theme={VictoryTheme.material}>
-          <VictoryBar data={data} x="quarter" y="earnings" />
-        </VictoryChart>
-      </View>
-    );
-  }
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <VictoryChart width={350} theme={VictoryTheme.material}>
+        <VictoryBar data={data} x="quarter" y="earnings" />
+      </VictoryChart>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
