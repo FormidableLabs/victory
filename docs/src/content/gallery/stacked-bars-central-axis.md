@@ -24,54 +24,51 @@ const dataB = dataA.map((point) => {
 const width = 400;
 const height = 400;
 
-class App extends React.Component {
-
-  render() {
-    return (
-      <VictoryChart horizontal
-        height={height}
-        width={width}
-        padding={40}
+function App() {
+  return (
+    <VictoryChart horizontal
+      height={height}
+      width={width}
+      padding={40}
+    >
+      <VictoryStack
+        style={{ data: { width: 25 }, labels: { fontSize: 15 } }}
       >
-        <VictoryStack
-          style={{ data: { width: 25 }, labels: { fontSize: 15 } }}
-        >
-          <VictoryBar
-            style={{ data: { fill: "tomato" } }}
-            data={dataA}
-            y={(data) => (-Math.abs(data.y))}
-            labels={({ datum }) => (`${Math.abs(datum.y)}%`)}
-          />
-          <VictoryBar
-            style={{ data: { fill: "orange" } }}
-            data={dataB}
-            labels={({ datum }) => (`${Math.abs(datum.y)}%`)}
-          />
-        </VictoryStack>
-
-        <VictoryAxis
-          style={{
-            axis: { stroke: "transparent" },
-            ticks: { stroke: "transparent" },
-            tickLabels: { fontSize: 15, fill: "black" }
-          }}
-          /*
-            Use a custom tickLabelComponent with
-            an absolutely positioned x value to position
-            your tick labels in the center of the chart. The correct
-            y values are still provided by VictoryAxis for each tick
-          */
-          tickLabelComponent={
-            <VictoryLabel
-              x={width / 2}
-              textAnchor="middle"
-            />
-          }
-          tickValues={dataA.map((point) => point.x).reverse()}
+        <VictoryBar
+          style={{ data: { fill: "tomato" } }}
+          data={dataA}
+          y={(data) => (-Math.abs(data.y))}
+          labels={({ datum }) => (`${Math.abs(datum.y)}%`)}
         />
-      </VictoryChart>
-    );
-  }
+        <VictoryBar
+          style={{ data: { fill: "orange" } }}
+          data={dataB}
+          labels={({ datum }) => (`${Math.abs(datum.y)}%`)}
+        />
+      </VictoryStack>
+
+      <VictoryAxis
+        style={{
+          axis: { stroke: "transparent" },
+          ticks: { stroke: "transparent" },
+          tickLabels: { fontSize: 15, fill: "black" }
+        }}
+        /*
+          Use a custom tickLabelComponent with
+          an absolutely positioned x value to position
+          your tick labels in the center of the chart. The correct
+          y values are still provided by VictoryAxis for each tick
+        */
+        tickLabelComponent={
+          <VictoryLabel
+            x={width / 2}
+            textAnchor="middle"
+          />
+        }
+        tickValues={dataA.map((point) => point.x).reverse()}
+      />
+    </VictoryChart>
+  );
 }
 
 render(<App/>);

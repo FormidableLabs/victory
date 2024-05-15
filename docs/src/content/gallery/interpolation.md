@@ -42,48 +42,44 @@ const InterpolationSelect = ({ currentValue, values, onChange }) => (
   </select>
 );
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      interpolation: "linear",
-      polar: false
-    };
-  }
-  render() {
-    return (
-      <div>
-        <InterpolationSelect
-          currentValue={this.state.interpolation}
-          values={this.state.polar ? polarInterpolations : cartesianInterpolations }
-          onChange={(event) => this.setState({ interpolation: event.target.value })}
+function App() {
+  const [state, setState] = React.useState({
+    interpolation: "linear",
+    polar: false
+  });
+
+  return (
+    <div>
+      <InterpolationSelect
+        currentValue={state.interpolation}
+        values={state.polar ? polarInterpolations : cartesianInterpolations }
+        onChange={(event) => setState({ interpolation: event.target.value })}
+      />
+      <input
+        type="checkbox"
+        id="polar"
+        value={state.polar}
+        onChange={
+          (event) => setState({
+            polar: event.target.checked,
+            interpolation: "linear"
+          })
+        }
+        style={{ marginLeft: 25, marginRight: 5 }}
+      />
+      <label htmlFor="polar">polar</label>
+      <VictoryChart polar={state.polar} height={390}>
+        <VictoryLine
+          interpolation={state.interpolation} data={data}
+          style={{ data: { stroke: "#c43a31" } }}
         />
-        <input
-          type="checkbox"
-          id="polar"
-          value={this.state.polar}
-          onChange={
-            (event) => this.setState({
-              polar: event.target.checked,
-              interpolation: "linear"
-            })
-          }
-          style={{ marginLeft: 25, marginRight: 5 }}
+        <VictoryScatter data={data}
+          size={5}
+          style={{ data: { fill: "#c43a31" } }}
         />
-        <label htmlFor="polar">polar</label>
-        <VictoryChart polar={this.state.polar} height={390}>
-          <VictoryLine
-            interpolation={this.state.interpolation} data={data}
-            style={{ data: { stroke: "#c43a31" } }}
-          />
-          <VictoryScatter data={data}
-            size={5}
-            style={{ data: { fill: "#c43a31" } }}
-          />
-        </VictoryChart>
-      </div>
-    );
-  }
+      </VictoryChart>
+    </div>
+  );
 }
 
 render(<App/>);

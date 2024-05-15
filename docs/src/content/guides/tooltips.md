@@ -74,47 +74,43 @@ Tooltips can be customized directly on the `VictoryTooltip` component
 `VictoryTooltip` is composed of [`VictoryLabel`][] and the primitive [`Flyout`][] component. Both of these components are highly configurable, but may also be replaced if necessary.
 
 ```playground_norender
-class CustomFlyout extends React.Component {
-  render() {
-    const {x, y, orientation} = this.props;
-    const newY = orientation === "bottom" ? y - 35 : y + 35;
-    return (
-      <g>
-        <circle cx={x} cy={newY} r="20" stroke="tomato" fill="none"/>
-        <circle cx={x} cy={newY} r="25" stroke="orange" fill="none"/>
-        <circle cx={x} cy={newY} r="30" stroke="gold" fill="none"/>
-      </g>
-    );
-  }
+function CustomFlyout(props) {
+  const { x, y, orientation } = props;
+  const newY = orientation === "bottom" ? y - 35 : y + 35;
+  return (
+    <g>
+      <circle cx={x} cy={newY} r="20" stroke="tomato" fill="none"/>
+      <circle cx={x} cy={newY} r="25" stroke="orange" fill="none"/>
+      <circle cx={x} cy={newY} r="30" stroke="gold" fill="none"/>
+    </g>
+  );
 }
 
-class App extends React.Component {
-  render() {
-    return (
-      <VictoryChart
-          domain={{ x: [0, 11], y: [-10, 10] }}
-        >
-          <VictoryBar
-            labelComponent={
-              <VictoryTooltip
-                flyoutComponent={<CustomFlyout/>}
-              />
-            }
-            data={[
-              {x: 2, y: 5, label: "A"},
-              {x: 4, y: -6, label: "B"},
-              {x: 6, y: 4, label: "C"},
-              {x: 8, y: -5, label: "D"},
-              {x: 10, y: 7, label: "E"}
-            ]}
-            style={{
-              data: {fill: "tomato", width: 20},
-              labels: { fill: "tomato"}
-            }}
-          />
-        </VictoryChart>
-    );
-  }
+function App() {
+  return (
+    <VictoryChart
+        domain={{ x: [0, 11], y: [-10, 10] }}
+      >
+        <VictoryBar
+          labelComponent={
+            <VictoryTooltip
+              flyoutComponent={<CustomFlyout/>}
+            />
+          }
+          data={[
+            {x: 2, y: 5, label: "A"},
+            {x: 4, y: -6, label: "B"},
+            {x: 6, y: 4, label: "C"},
+            {x: 8, y: -5, label: "D"},
+            {x: 10, y: 7, label: "E"}
+          ]}
+          style={{
+            data: {fill: "tomato", width: 20},
+            labels: { fill: "tomato"}
+          }}
+        />
+      </VictoryChart>
+  );
 }
 render(<App/>);
 ```
@@ -344,41 +340,37 @@ The events that control `VictoryTooltip` are stored on the static `defaultEvents
 
 
 ```playground_norender
-class CustomTooltip extends React.Component {
-  static defaultEvents = VictoryTooltip.defaultEvents
-  render() {
-    const {x, y} = this.props;
-    const rotation = `rotate(45 ${x} ${y})`
-    return (
-      <g transform={rotation}>
-        <VictoryTooltip {...this.props} renderInPortal={false}/>
-      </g>
-    );
-  }
+function CustomTooltip(props) {
+  const { x, y } = props;
+  const rotation = `rotate(45 ${x} ${y})`
+  return (
+    <g transform={rotation}>
+      <VictoryTooltip {...props} renderInPortal={false}/>
+    </g>
+  );
 }
+CustomTooltip.defaultEvents = VictoryTooltip.defaultEvents;
 
-class App extends React.Component {
-  render() {
-    return (
-      <VictoryChart
-          domain={{ x: [0, 11], y: [-10, 10] }}
-        >
-          <VictoryBar
-            labelComponent={<CustomTooltip/>}
-            data={[
-              {x: 2, y: 5, label: "A"},
-              {x: 4, y: -6, label: "B"},
-              {x: 6, y: 4, label: "C"},
-              {x: 8, y: -5, label: "D"},
-              {x: 10, y: 7, label: "E"}
-            ]}
-            style={{
-              data: {fill: "tomato", width: 20}
-            }}
-          />
-        </VictoryChart>
-    );
-  }
+function App() {
+  return (
+    <VictoryChart
+        domain={{ x: [0, 11], y: [-10, 10] }}
+      >
+        <VictoryBar
+          labelComponent={<CustomTooltip/>}
+          data={[
+            {x: 2, y: 5, label: "A"},
+            {x: 4, y: -6, label: "B"},
+            {x: 6, y: 4, label: "C"},
+            {x: 8, y: -5, label: "D"},
+            {x: 10, y: 7, label: "E"}
+          ]}
+          style={{
+            data: {fill: "tomato", width: 20}
+          }}
+        />
+      </VictoryChart>
+  );
 }
 render(<App/>);
 ```

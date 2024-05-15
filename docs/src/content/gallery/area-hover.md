@@ -4,7 +4,7 @@ title: Area Hover Styles
 ---
 
 ```playground_norender
-const CustomArea = props => {
+function CustomArea(props) {
   if (!props.active) {
     return <Area {...props} />;
   } else {
@@ -46,64 +46,56 @@ const CustomArea = props => {
       </g>
     );
   }
-};
+}
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      activeX: null
-    };
-    this.setActiveX = this.onActivated.bind(this);
+function App() {
+  const [state, setState] = React.useState({
+    activeX: null
+  });
+
+  function onActivated(points, props) {
+    setState({ activeX: points[0]._x });
   }
 
-  onActivated(points, props) {
-    this.setState({ activeX: points[0]._x });
-  }
+  return (
+    <VictoryChart
+      scale={{ x: "time" }}
+      containerComponent={
+        <VictoryVoronoiContainer onActivated={onActivated} />
+      }
+    >
+      <VictoryStack colorScale="blue">
+        <VictoryArea
+          data={[
+            { x: new Date(1986, 1, 1), y: 2 },
+            { x: new Date(1996, 1, 1), y: 3 },
+            { x: new Date(2006, 1, 1), y: 5 },
+            { x: new Date(2016, 1, 1), y: 4 }
+          ]}
+          dataComponent={<CustomArea activeX={state.activeX} />}
+        />
 
-  render() {
-    return (
-      <VictoryChart
-        height={400}
-        width={400}
-        scale={{ x: "time" }}
-        containerComponent={
-          <VictoryVoronoiContainer onActivated={this.setActiveX} />
-        }
-      >
-        <VictoryStack colorScale="blue">
-          <VictoryArea
-            data={[
-              { x: new Date(1986, 1, 1), y: 2 },
-              { x: new Date(1996, 1, 1), y: 3 },
-              { x: new Date(2006, 1, 1), y: 5 },
-              { x: new Date(2016, 1, 1), y: 4 }
-            ]}
-            dataComponent={<CustomArea activeX={this.state.activeX} />}
-          />
-
-          <VictoryArea
-            data={[
-              { x: new Date(1986, 1, 1), y: 4 },
-              { x: new Date(1996, 1, 1), y: 3 },
-              { x: new Date(2006, 1, 1), y: 2 },
-              { x: new Date(2016, 1, 1), y: 5 }
-            ]}
-            dataComponent={<CustomArea activeX={this.state.activeX} />}
-          />
-          <VictoryArea
-            data={[
-              { x: new Date(1986, 1, 1), y: 3 },
-              { x: new Date(1996, 1, 1), y: 1 },
-              { x: new Date(2006, 1, 1), y: 4 },
-              { x: new Date(2016, 1, 1), y: 2 }
-            ]}
-            dataComponent={<CustomArea activeX={this.state.activeX} />}
-          />
-        </VictoryStack>
-      </VictoryChart>
-    );
-  }
+        <VictoryArea
+          data={[
+            { x: new Date(1986, 1, 1), y: 4 },
+            { x: new Date(1996, 1, 1), y: 3 },
+            { x: new Date(2006, 1, 1), y: 2 },
+            { x: new Date(2016, 1, 1), y: 5 }
+          ]}
+          dataComponent={<CustomArea activeX={state.activeX} />}
+        />
+        <VictoryArea
+          data={[
+            { x: new Date(1986, 1, 1), y: 3 },
+            { x: new Date(1996, 1, 1), y: 1 },
+            { x: new Date(2006, 1, 1), y: 4 },
+            { x: new Date(2016, 1, 1), y: 2 }
+          ]}
+          dataComponent={<CustomArea activeX={state.activeX} />}
+        />
+      </VictoryStack>
+    </VictoryChart>
+  );
 }
 
 render(<App/>);
