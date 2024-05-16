@@ -13,6 +13,26 @@ scope:
 
 *note:* When providing tooltips for `VictoryLine` or `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](/docs/victory-voronoi-container), as these components only render a single element for the entire dataset.
 
+See the [tooltips guide](/guides/tooltips) for more expanded examples of usage.
+
+```playground
+<VictoryChart domain={{ x: [0, 11], y: [-10, 10] }}>
+  <VictoryBar
+    labelComponent={<VictoryTooltip/>}
+    data={[
+      {x: 2, y: 5, label: "right-side-up"},
+      {x: 4, y: -6, label: "upside-down"},
+      {x: 6, y: 4, label: "tiny"},
+      {x: 8, y: -5, label: "or a little \n BIGGER"},
+      {x: 10, y: 7, label: "automatically"}
+    ]}
+    style={{
+      data: {fill: "tomato", width: 20}
+    }}
+  />
+</VictoryChart>
+```
+
 ## active
 
 `type: boolean`

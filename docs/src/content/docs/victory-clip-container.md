@@ -1,7 +1,7 @@
 ---
 id: 10
 title: VictoryClipContainer
-category: more
+category: containers
 type: docs
 scope: null
 ---
@@ -9,6 +9,16 @@ scope: null
 # VictoryClipContainer
 
 `VictoryClipContainer` is a specialized group container that enables curtain-style transitions for continuous data types like `VictoryLine` and `VictoryArea`. `VictoryClipContainer` will render its children either in a regular `<g>` element, or in a `<g>` element clipped by a rectangular clip path when a `clipWidth` is supplied.
+
+```playground
+<VictoryChart>
+  <VictoryLine
+    groupComponent={
+      <VictoryClipContainer clipPadding={{ top: -100 }} />
+    }
+  />
+</VictoryChart>
+```
 
 ## children
 
