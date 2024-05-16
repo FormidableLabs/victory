@@ -66,6 +66,10 @@ import {
   Portal,
   PortalContext,
   PortalContextValue,
+  PortalOutlet,
+  PortalOutletProps,
+  PortalProvider,
+  PortalProviderProps,
   PortalProps,
   RangePropType,
   RangeTuple,
@@ -137,6 +141,7 @@ import {
   Wrapper,
   addEvents,
   mergeRefs,
+  usePortalContext,
 } from "./index";
 import { pick } from "lodash";
 
@@ -173,6 +178,8 @@ describe("victory-core", () => {
         "PointPathHelpers",
         "Portal",
         "PortalContext",
+        "PortalOutlet",
+        "PortalProvider",
         "Rect",
         "Scale",
         "Selection",
@@ -196,6 +203,7 @@ describe("victory-core", () => {
         "Wrapper",
         "addEvents",
         "mergeRefs",
+        "usePortalContext",
         "useVictoryContainer",
       ]
     `);

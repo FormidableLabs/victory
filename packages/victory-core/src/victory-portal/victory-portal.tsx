@@ -52,3 +52,5 @@ export const VictoryPortal = (initialProps: VictoryPortalProps) => {
 
   return null;
 };
+
+VictoryPortal.role = "portal";
