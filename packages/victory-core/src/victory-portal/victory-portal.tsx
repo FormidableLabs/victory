@@ -2,21 +2,21 @@ import React from "react";
 import { defaults } from "lodash";
 import * as Log from "../victory-util/log";
 import * as Helpers from "../victory-util/helpers";
-import { PortalContext } from "./portal-context";
-import { createPortal } from "react-dom";
+import { usePortalContext } from "./portal-context";
 
 export interface VictoryPortalProps {
-  children?: React.ReactElement;
+  children: React.ReactElement;
   groupComponent?: React.ReactElement;
 }
 
-const defaultProps: VictoryPortalProps = {
+const defaultProps: Partial<VictoryPortalProps> = {
   groupComponent: <g />,
 };
 
 export const VictoryPortal = (initialProps: VictoryPortalProps) => {
   const props = { ...defaultProps, ...initialProps };
-  const portalContext = React.useContext(PortalContext);
+  const id = React.useId();
+  const portalContext = usePortalContext();
 
   if (!portalContext) {
     const msg =
@@ -25,25 +25,30 @@ export const VictoryPortal = (initialProps: VictoryPortalProps) => {
     Log.warn(msg);
   }
 
-  const children = (
-    Array.isArray(props.children) ? props.children[0] : props.children
-  ) as React.ReactElement;
-  const { groupComponent } = props;
-  const childProps = (children && children.props) || {};
-  const standardProps = childProps.groupComponent
-    ? { groupComponent, standalone: false }
-    : {};
-  const newProps = defaults(
-    standardProps,
-    childProps,
-    Helpers.omit(props, ["children", "groupComponent"]),
-  );
-  const child = children && React.cloneElement(children, newProps);
+  React.useEffect(() => {
+    const children = Array.isArray(props.children)
+      ? props.children[0]
+      : props.children;
+    const { groupComponent } = props;
+    const childProps = (children && children.props) || {};
+    const standardProps = childProps.groupComponent
+      ? { groupComponent, standalone: false }
+      : {};
+    const newProps = defaults(
+      standardProps,
+      childProps,
+      Helpers.omit(props, ["children", "groupComponent"]),
+    );
+    const child = children && React.cloneElement(children, newProps);
 
-  // If there is no portal context, render the child in place
-  return portalContext?.portalElement
-    ? createPortal(child, portalContext.portalElement)
-    : child;
+    portalContext.addChild(id, child);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.children]);
+
+  React.useEffect(() => {
+    return () => portalContext.removeChild(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return null;
 };
-
-VictoryPortal.role = "portal";
