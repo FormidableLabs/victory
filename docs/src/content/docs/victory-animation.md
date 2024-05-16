@@ -8,6 +8,8 @@ type: docs
 
 # VictoryAnimation
 
+> [See this guide to animations with Victory Charts](/guides/animations). The `VictoryAnimation` component is used for animating arbitrary React components and is not commonly used.
+
 `VictoryAnimation` animates prop changes for any React component. To animate prop changes, define a child function that accepts an object of tweened values and other animation information and returns a component to render.
 
 ```jsx
