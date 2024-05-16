@@ -1,6 +1,6 @@
 ---
 id: 1
-title: Native
+title: React Native
 category: introduction
 type: docs
 scope: null
@@ -8,8 +8,7 @@ scope: null
 
 # Getting Started with Victory Native
 
-> These docs are for the legacy versions of Victory Native. Victory Native XL is our rewrite of Victory Native designed specifically for React Native. Please [see here for more information]
-(https://commerce.nearform.com/open-source/victory-native/). If you would like to continue to use this version of Victory with React Native, follow the legacy guide below.
+> These docs are for the legacy versions of Victory Native. Victory Native XL is our rewrite of Victory Native designed specifically for React Native. Please [see here for more information](https://commerce.nearform.com/open-source/victory-native/). If you would like to continue to use this version of Victory with React Native, follow the legacy guide below.
 
 In this guide, we’ll show you how to get started with Victory Native and the React Native SVG dependency running in your React Native app for iOS and Android.
 
@@ -63,16 +62,14 @@ const data = [
   { quarter: 4, earnings: 19000 }
 ];
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <VictoryChart width={350} theme={VictoryTheme.material}>
-          <VictoryBar data={data} x="quarter" y="earnings" />
-        </VictoryChart>
-      </View>
-    );
-  }
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <VictoryChart width={350} theme={VictoryTheme.material}>
+        <VictoryBar data={data} x="quarter" y="earnings" />
+      </VictoryChart>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -54,7 +54,7 @@ const Company = styled.li`
 const CompanyLogo = Image;
 
 const Companies = () => (
-  <LandingSectionWrapper bg={importedTheme.color.lightGray}>
+  <LandingSectionWrapper $bg={importedTheme.color.lightGray}>
     <LandingSectionContent>
       <SectionHeading>A Few of Our Fans</SectionHeading>
       <CompaniesList>

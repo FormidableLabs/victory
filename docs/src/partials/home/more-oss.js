@@ -38,7 +38,7 @@ const OSSWrapper = styled.ul`
 
 const OSSItem = styled.li`
   display: flex;
-  justify-self: ${({ index }) => (index % 2 === 0 ? "right" : "left")};
+  justify-self: ${({ $index }) => ($index % 2 === 0 ? "right" : "left")};
   flex-direction: column;
 
   > a {
@@ -83,7 +83,6 @@ const OSSLink = styled.a`
 `;
 
 const OSSTitle = styled.h3`
-  font-family: Helvetica Neue;
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0;
@@ -99,12 +98,12 @@ const OSSText = styled.p`
 `;
 
 const MoreOSS = ({ ossArray, link }) => (
-  <LandingSectionWrapper bg="#000">
+  <LandingSectionWrapper $bg="#242526">
     <LandingSectionContent color={importedTheme.color.white}>
-      <SectionHeading>More Open Source from Formidable</SectionHeading>
+      <SectionHeading>More Open Source from Nearform Commerce</SectionHeading>
       <OSSWrapper>
         {ossArray.map((card, index) => (
-          <OSSItem key={card.link} index={index}>
+          <OSSItem key={card.link} $index={index}>
             <OSSLink href={card.link} target="_blank" rel="noopener noreferrer">
               {card.featured ? (
                 <FeaturedBadge isHoverable name={card.title.toLowerCase()} />

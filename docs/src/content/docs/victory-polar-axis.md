@@ -1,5 +1,5 @@
 ---
-id: 19
+id: 10
 title: VictoryPolarAxis
 category: charts
 type: docs

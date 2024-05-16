@@ -1,7 +1,7 @@
 ---
 id: 25
 title: VictoryStack
-category: charts
+category: containers
 type: docs
 scope:
   - sampleData

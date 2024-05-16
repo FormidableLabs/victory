@@ -115,99 +115,95 @@ externalEventMutations: PropTypes.arrayOf(
 The `target`, `eventKey`, and `childName` (when applicable) must always be specified. The `mutation` function will be called with the current props of the element specified by the `target`, `eventKey` and `childName` provided. The mutation function should return a mutation object for that element. The `callback` prop should be used to clear the `externalEventMutations` prop once the mutation has been applied. Clearing `externalEventMutations` is crucial for charts that animate.
 
 ```playground_norender
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      externalMutations: undefined
-    };
-  }
+function App() {
+  const [state, setState] = React.useState({
+    externalMutations: undefined
+  });
 
-  removeMutation() {
-    this.setState({
+  function removeMutation() {
+    setState({
       externalMutations: undefined
     });
   }
 
-  clearClicks() {
-    this.setState({
+  function clearClicks() {
+    setState({
       externalMutations: [
         {
           childName: ["bar", "pie"],
           target: ["data"],
           eventKey: "all",
           mutation: () => ({ style: undefined }),
-          callback: this.removeMutation.bind(this)
+          callback: removeMutation
         }
       ]
     });
   }
 
-  render() {
-    const buttonStyle = {
-      backgroundColor: "black",
-      color: "white",
-      padding: "10px",
-      marginTop: "10px"
-    };
-    return (
-      <div>
-        <button
-          onClick={this.clearClicks.bind(this)}
-          style={buttonStyle}
-        >
-          Reset
-        </button>
-        <svg viewBox="0 0 450 350">
-          <VictorySharedEvents
-            externalEventMutations={this.state.externalMutations}
-            events={[{
-              childName: ["pie", "bar"],
-              target: "data",
-              eventHandlers: {
-                onClick: () => {
-                  return [{
-                    childName: ["pie", "bar"],
-                    mutation: (props) => {
-                      return {
-                        style: Object.assign({}, props.style, {fill: "tomato"})
-                      };
-                    }
-                  }];
-                }
+  const buttonStyle = {
+    backgroundColor: "black",
+    color: "white",
+    padding: "10px",
+    marginTop: "10px"
+  };
+
+  return (
+    <div>
+      <button
+        onClick={clearClicks}
+        style={buttonStyle}
+      >
+        Reset
+      </button>
+      <svg viewBox="0 0 450 350">
+        <VictorySharedEvents
+          externalEventMutations={state.externalMutations}
+          events={[{
+            childName: ["pie", "bar"],
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [{
+                  childName: ["pie", "bar"],
+                  mutation: (props) => {
+                    return {
+                      style: Object.assign({}, props.style, {fill: "tomato"})
+                    };
+                  }
+                }];
               }
-            }]}
-          >
-            <g transform={"translate(150, 50)"}>
-              <VictoryBar name="bar"
-                width={300}
-                standalone={false}
-                style={{
-                  data: { width: 20 },
-                  labels: {fontSize: 25}
-                }}
-                data={[
-                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}
-                ]}
-                labels={["a", "b", "c", "d"]}
-                labelComponent={<VictoryLabel y={290}/>}
-              />
-            </g>
-            <g transform={"translate(0, -75)"}>
-              <VictoryPie name="pie"
-                width={250}
-                standalone={false}
-                style={{ labels: {fontSize: 25, padding: 10}}}
-                data={[
-                  {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}
-                ]}
-              />
-            </g>
-          </VictorySharedEvents>
-        </svg>
-      </div>
-    )
-  }
+            }
+          }]}
+        >
+          <g transform={"translate(150, 50)"}>
+            <VictoryBar name="bar"
+              width={300}
+              standalone={false}
+              style={{
+                data: { width: 20 },
+                labels: {fontSize: 25}
+              }}
+              data={[
+                {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}
+              ]}
+              labels={["a", "b", "c", "d"]}
+              labelComponent={<VictoryLabel y={290}/>}
+            />
+          </g>
+          <g transform={"translate(0, -75)"}>
+            <VictoryPie name="pie"
+              width={250}
+              standalone={false}
+              style={{ labels: {fontSize: 25, padding: 10}}}
+              data={[
+                {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}
+              ]}
+            />
+          </g>
+        </VictorySharedEvents>
+      </svg>
+    </div>
+  )
 }
 
 render(<App/>);

@@ -183,78 +183,74 @@ externalEventMutations: PropTypes.arrayOf(
 The `target`, `eventKey`, and `childName` (when applicable) must always be specified. The `mutation` function will be called with the current props of the element specified by the `target`, `eventKey` and `childName` provided. The mutation function should return a mutation object for that element. The `callback` prop should be used to clear the `externalEventMutations` prop once the mutation has been applied. Clearing `externalEventMutations` is crucial for charts that animate.
 
 ```playground_norender
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      externalMutations: undefined
-    };
-  }
+function App() {
+  const [state, setState] = React.useState({
+    externalMutations: undefined
+  });
 
-  removeMutation() {
-    this.setState({
+  function removeMutation() {
+    setState({
       externalMutations: undefined
     });
   }
 
-  clearClicks() {
-    this.setState({
+  function clearClicks() {
+    setState({
       externalMutations: [
         {
           childName: "Bar-1",
           target: ["data"],
           eventKey: "all",
           mutation: () => ({ style: undefined }),
-          callback: this.removeMutation.bind(this)
+          callback: removeMutation
         }
       ]
     });
   }
 
-  render() {
-    const buttonStyle = {
-      backgroundColor: "black",
-      color: "white",
-      padding: "10px",
-      marginTop: "10px"
-    };
-    return (
-      <div>
-        <button
-          onClick={this.clearClicks.bind(this)}
-          style={buttonStyle}
-        >
-          Reset
-        </button>
-        <VictoryChart domain={{ x: [0, 5 ] }}
-          externalEventMutations={this.state.externalMutations}
-          events={[
-            {
-              target: "data",
-              childName: "Bar-1",
-              eventHandlers: {
-                onClick: () => ({
-                  target: "data",
-                  mutation: () => ({ style: { fill: "orange" } })
-                })
-              }
+  const buttonStyle = {
+    backgroundColor: "black",
+    color: "white",
+    padding: "10px",
+    marginTop: "10px"
+  };
+
+  return (
+    <div>
+      <button
+        onClick={clearClicks}
+        style={buttonStyle}
+      >
+        Reset
+      </button>
+      <VictoryChart domain={{ x: [0, 5 ] }}
+        externalEventMutations={state.externalMutations}
+        events={[
+          {
+            target: "data",
+            childName: "Bar-1",
+            eventHandlers: {
+              onClick: () => ({
+                target: "data",
+                mutation: () => ({ style: { fill: "orange" } })
+              })
             }
+          }
+        ]}
+      >
+        <VictoryBar name="Bar-1"
+          style={{ data: { fill: "grey"} }}
+          labels={() => "click me!"}
+          data={[
+            { x: 1, y: 2 },
+            { x: 2, y: 4 },
+            { x: 3, y: 1 },
+            { x: 4, y: 5 }
           ]}
-        >
-          <VictoryBar name="Bar-1"
-            style={{ data: { fill: "grey"} }}
-            labels={() => "click me!"}
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 4 },
-              { x: 3, y: 1 },
-              { x: 4, y: 5 }
-            ]}
-          />
-        </VictoryChart>
-      </div>
-    )
-  }
+        />
+      </VictoryChart>
+    </div>
+  )
 }
 
 render(<App/>);
@@ -267,22 +263,22 @@ _Note_ External mutations are applied to the same state object that is used to c
 For simple events, it may be desirable to bypass Victory's event system. To do so, specify `events` props directly on primitive components rather than using the `events` prop on Victory components. The simple `events` prop should be given as an object whose properties are event names like `onClick`, and whose values are event handlers. Events specified this way will only be called with the standard event objects.
 
 ```playground
-  <VictoryBar
-    data={[
-      {x: 1, y: 2},
-      {x: 2, y: 4},
-      {x: 3, y: 7},
-      {x: 4, y: 3},
-      {x: 5, y: 5},
-    ]}
-    dataComponent={
-      <Bar
-        events={{
-          onClick: (evt) => alert(`(${evt.clientX}, ${evt.clientY})`)
-        }}
-      />
-    }
-  />
+<VictoryBar
+  data={[
+    {x: 1, y: 2},
+    {x: 2, y: 4},
+    {x: 3, y: 7},
+    {x: 4, y: 3},
+    {x: 5, y: 5},
+  ]}
+  dataComponent={
+    <Bar
+      events={{
+        onClick: (evt) => alert(`(${evt.clientX}, ${evt.clientY})`)
+      }}
+    />
+  }
+/>
 ```
 
 ## Events on Custom Components

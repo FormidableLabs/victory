@@ -1,5 +1,5 @@
 ---
-id: 22
+id: 11
 title: VictoryScatter
 category: charts
 type: docs
@@ -124,30 +124,27 @@ See the [Custom Components Guide][] for more detail on creating your own `dataCo
 _default:_ `<Point/>`
 
 ```playground_norender
-class CatPoint extends React.Component {
-  render() {
-    const {x, y, datum} = this.props; // VictoryScatter supplies x, y and datum
-    const cat = datum._y >= 0 ? "😻" : "😹";
-    return (
-      <text x={x} y={y} fontSize={30}>
-        {cat}
-      </text>
-    );
-  }
+function CatPoint(props) {
+  const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
+  const cat = datum._y >= 0 ? "😻" : "😹";
+
+  return (
+    <text x={x} y={y} fontSize={30}>
+      {cat}
+    </text>
+  );
 }
 
-class App extends React.Component {
-  render() {
-    return (
-      <VictoryChart>
-        <VictoryScatter
-          dataComponent={<CatPoint/>}
-          y={(d) => Math.sin(2 * Math.PI * d.x)}
-          samples={15}
-        />
-      </VictoryChart>
-    );
-  }
+function App() {
+  return (
+    <VictoryChart>
+      <VictoryScatter
+        dataComponent={<CatPoint/>}
+        y={(d) => Math.sin(2 * Math.PI * d.x)}
+        samples={15}
+      />
+    </VictoryChart>
+  );
 }
 render(<App/>);
 ```

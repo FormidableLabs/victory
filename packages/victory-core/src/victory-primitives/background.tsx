@@ -1,4 +1,6 @@
 import React from "react";
+import { defaults } from "lodash";
+
 import * as Helpers from "../victory-util/helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Rect } from "./rect";
@@ -33,7 +35,7 @@ const defaultProps = {
 };
 
 export const Background = (initialProps: BackgroundProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
 
   return props.polar
     ? React.cloneElement(props.circleComponent!, {

@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <StyledLayout>
       <IndexWrapper>
-        <Hero {...content.hero} />
+        <Hero />
         <Features featureArray={content.features} />
         <Companies />
         <Guides />

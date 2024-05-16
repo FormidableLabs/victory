@@ -1,5 +1,7 @@
 # victory-shared-events
 
+## 37.0.2
+
 ## 37.0.1
 
 ## 37.0.0

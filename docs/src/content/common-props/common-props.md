@@ -28,67 +28,61 @@ See the [Animations Guide][] for more detail on animations and transitions
 _example:_ `animate={{ duration: 2000 }}`
 
 ```playground_norender
-class App extends React.Component {
-
-  render() {
-    return (
-      <VictoryChart
-      	domain={{ y: [0, 1] }}
-      	animate={{ duration: 2000 }}
-      >
-        <VictoryScatter
-          size={this.state.size}
-          data={this.state.data}
-          style={{ data: { opacity: ({ datum }) => datum.opacity || 1 } }}
-          animate={{
-            animationWhitelist: ["style", "data", "size"], // Try removing "size"
-            onExit: {
-              duration: 500,
-              before: () => ({ opacity: 0.3, _y: 0 })
-            },
-            onEnter: {
-              duration: 500,
-              before: () => ({ opacity: 0.3, _y: 0 }),
-              after: (datum) => ({ opacity: 1, _y: datum._y })
-            }
-          }}
-        />
-      </VictoryChart>
-    );
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-       data: this.getData(),
-       size: this.getSize()
-    };
-  }
-
-  componentDidMount() {
-    this.setStateInterval = window.setInterval(() => {
-      this.setState({
-        data: this.getData(),
-        size: this.getSize()
+function App(props) {
+  const [state, setState] = React.useState({
+    data: getData(),
+    size: getSize()
+  });
+  
+  React.useEffect(() => {
+    const setStateInterval = window.setInterval(() => {
+      setState({
+        data: getData(),
+        size: getSize()
       });
     }, 3000);
-  }
 
-  componentWillUnmount() {
-    window.clearInterval(this.setStateInterval);
-  }
+    return () => {
+      window.clearInterval(setStateInterval);
+    };
+  }, []);
 
-  getData() {
-    const num = Math.floor(10 * Math.random() + 5);
-    const points = new Array(num).fill(1);
-    return points.map((point, index) => {
-      return { x: index + 1, y: Math.random() };
-    });
-  }
+  return (
+    <VictoryChart
+      domain={{ y: [0, 1] }}
+      animate={{ duration: 2000 }}
+    >
+      <VictoryScatter
+        size={state.size}
+        data={state.data}
+        style={{ data: { opacity: ({ datum }) => datum.opacity || 1 } }}
+        animate={{
+          animationWhitelist: ["style", "data", "size"], // Try removing "size"
+          onExit: {
+            duration: 500,
+            before: () => ({ opacity: 0.3, _y: 0 })
+          },
+          onEnter: {
+            duration: 500,
+            before: () => ({ opacity: 0.3, _y: 0 }),
+            after: (datum) => ({ opacity: 1, _y: datum._y })
+          }
+        }}
+      />
+    </VictoryChart>
+  );
+}
 
-  getSize() {
-    return Math.random() * 10
-  }
+function getData() {
+  const num = Math.floor(10 * Math.random() + 5);
+  const points = new Array(num).fill(1);
+  return points.map((point, index) => {
+    return { x: index + 1, y: Math.random() };
+  });
+}
+
+function getSize() {
+  return Math.random() * 10
 }
 
 render(<App/>);
@@ -201,31 +195,29 @@ See the [Custom Components Guide][] for more detail on creating your own `dataCo
 _examples:_ `dataComponent={<Area/>}`
 
 ```playground_norender
-class CatPoint extends React.Component {
-  render() {
-    const {x, y, datum} = this.props; // VictoryScatter supplies x, y and datum
-    const cat = datum._y >= 0 ? "😻" : "😹";
-    return (
-      <text x={x} y={y} fontSize={30}>
-        {cat}
-      </text>
-    );
-  }
+function CatPoint(props) {
+  const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
+  const cat = datum._y >= 0 ? "😻" : "😹";
+
+  return (
+    <text x={x} y={y} fontSize={30}>
+      {cat}
+    </text>
+  );
 }
 
-class App extends React.Component {
-  render() {
-    return (
-      <VictoryChart>
-        <VictoryScatter
-          dataComponent={<CatPoint/>}
-          y={(d) => Math.sin(2 * Math.PI * d.x)}
-          samples={15}
-        />
-      </VictoryChart>
-    );
-  }
+function App() {
+  return (
+    <VictoryChart>
+      <VictoryScatter
+        dataComponent={<CatPoint/>}
+        y={(d) => Math.sin(2 * Math.PI * d.x)}
+        samples={15}
+      />
+    </VictoryChart>
+  );
 }
+
 render(<App/>);
 ```
 
@@ -418,77 +410,74 @@ externalEventMutations: PropTypes.arrayOf(
 The `target`, `eventKey`, and `childName` (when applicable) must always be specified. The `mutation` function will be called with the current props of the element specified by the `target`, `eventKey` and `childName` provided. The mutation function should return a mutation object for that element. The `callback` prop should be used to clear the `externalEventMutations` prop once the mutation has been applied. Clearing `externalEventMutations` is crucial for charts that animate.
 
 ```playground_norender
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      externalMutations: undefined
-    };
-  }
-  removeMutation() {
-    this.setState({
+function App() {
+  const [state, setState] = React.useState({
+    externalMutations: undefined
+  });
+
+  function removeMutation() {
+    setState({
       externalMutations: undefined
     });
   }
 
-  clearClicks() {
-    this.setState({
+  function clearClicks() {
+    setState({
       externalMutations: [
         {
           childName: "Bar-1",
           target: ["data"],
           eventKey: "all",
           mutation: () => ({ style: undefined }),
-          callback: this.removeMutation.bind(this)
+          callback: removeMutation
         }
       ]
     });
   }
 
-  render() {
-    const buttonStyle = {
-      backgroundColor: "black",
-      color: "white",
-      padding: "10px",
-      marginTop: "10px"
-    };
-    return (
-      <div>
-        <button
-          onClick={this.clearClicks.bind(this)}
-          style={buttonStyle}
-        >
-          Reset
-        </button>
-        <VictoryChart domain={{ x: [0, 5 ] }}
-          externalEventMutations={this.state.externalMutations}
-          events={[
-            {
-              target: "data",
-              childName: "Bar-1",
-              eventHandlers: {
-                onClick: () => ({
-                  target: "data",
-                  mutation: () => ({ style: { fill: "orange" } })
-                })
-              }
+  const buttonStyle = {
+    backgroundColor: "black",
+    color: "white",
+    padding: "10px",
+    marginTop: "10px"
+  };
+
+  return (
+    <div>
+      <button
+        onClick={clearClicks}
+        style={buttonStyle}
+      >
+        Reset
+      </button>
+      <VictoryChart domain={{ x: [0, 5 ] }}
+        externalEventMutations={state.externalMutations}
+        events={[
+          {
+            target: "data",
+            childName: "Bar-1",
+            eventHandlers: {
+              onClick: () => ({
+                target: "data",
+                mutation: () => ({ style: { fill: "orange" } })
+              })
             }
+          }
+        ]}
+      >
+        <VictoryBar name="Bar-1"
+          style={{ data: { fill: "grey"} }}
+          labels={() => "click me!"}
+          data={[
+            { x: 1, y: 2 },
+            { x: 2, y: 4 },
+            { x: 3, y: 1 },
+            { x: 4, y: 5 }
           ]}
-        >
-          <VictoryBar name="Bar-1"
-            style={{ data: { fill: "grey"} }}
-            labels={() => "click me!"}
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 4 },
-              { x: 3, y: 1 },
-              { x: 4, y: 5 }
-            ]}
-          />
-        </VictoryChart>
-      </div>
-    )
-  }
+        />
+      </VictoryChart>
+    </div>
+  )
 }
 
 render(<App/>);

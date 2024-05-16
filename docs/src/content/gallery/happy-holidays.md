@@ -113,17 +113,15 @@ function Snow() {
   );
 }
 
-class App extends React.Component {
-  render() {
-    return (
-      <div style={{ backgroundColor: '#242424' }}>
-        <svg width={sceneWidth} height={sceneHeight}>
-          <Santa />
-          <Snow />
-        </svg>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div style={{ backgroundColor: '#242424' }}>
+      <svg width={sceneWidth} height={sceneHeight}>
+        <Santa />
+        <Snow />
+      </svg>
+    </div>
+  );
 }
 
 render(<App/>);

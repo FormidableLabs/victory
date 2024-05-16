@@ -1,5 +1,5 @@
 ---
-id: 13
+id: 6
 title: VictoryErrorBar
 category: charts
 type: docs

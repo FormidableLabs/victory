@@ -1,7 +1,7 @@
 ---
-id: 9
+id: 1
 title: VictoryChart
-category: charts
+category: containers
 type: docs
 scope:
   - sampleData

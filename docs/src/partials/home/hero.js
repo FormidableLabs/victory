@@ -1,9 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 import { FeaturedBadge } from "formidable-oss-badges";
-import NpmCopy from "./npm-copy";
+
+import siteConfig from "@/static-config-helpers/site-data";
+import nearformLogo from "@/static/logos/nearform-commerce-logo-white.svg";
 import HeroDemo from "./hero-demo";
+import NpmCopy from "./npm-copy";
 import { LandingSectionContent, LinkButton } from "./styles";
 
 const HeroContainer = styled.section`
@@ -23,7 +27,7 @@ const HeroContainer = styled.section`
 `;
 
 const Corner = styled.div`
-  background-color: ${({ theme }) => theme.color.red};
+  background-color: #242526;
   clip-path: polygon(0 0, 0 100%, 100% 0);
   height: 156px;
   padding: 15px 18px;
@@ -41,7 +45,7 @@ const Corner = styled.div`
 `;
 
 const CornerText = styled.p`
-  color: ${({ theme }) => theme.color.nearBlack};
+  color: ${({ theme }) => theme.color.white};
   font-size: 0.8rem;
   font-weight: normal;
   font-stretch: normal;
@@ -49,6 +53,7 @@ const CornerText = styled.p`
   line-height: 1.5;
   letter-spacing: 0.57px;
   margin: 0;
+  margin-top: 10px;
   white-space: pre-line;
   @media ${({ theme }) => theme.mediaQuery.md} {
     font-size: 1.2rem;
@@ -56,14 +61,16 @@ const CornerText = styled.p`
   }
 `;
 
-const CornerF = styled.img`
-  color: ${({ theme }) => theme.color.nearBlack};
-  height: 43px;
-  margin-top: 5px;
-  width: 33px;
-  @media ${({ theme }) => theme.mediaQuery.md} {
-    height: 63px;
-    width: 48px;
+const CornerF = styled.a`
+  > img {
+    color: ${({ theme }) => theme.color.nearBlack};
+    margin-top: 16px;
+    height: 19px;
+    width: 40px;
+    @media ${({ theme }) => theme.mediaQuery.md} {
+      height: 32px;
+      width: 65px;
+    }
   }
 `;
 
@@ -174,8 +181,10 @@ const LinkContainer = styled.div`
 
 const LinkItem = ({ href, children }) => {
   return (
-    <Link href={href} className="text-white justify-self-center">{children}</Link>
-  )
+    <Link href={href} className="text-white justify-self-center">
+      {children}
+    </Link>
+  );
 };
 
 const StyledLinkButton = styled(LinkButton)`
@@ -190,26 +199,48 @@ const StyledLinkButton = styled(LinkButton)`
   }
 `;
 
-const Hero = ({
-  background,
-  code,
-  cornerIcon,
-  cornerText,
-  description,
-  linksArray,
-  link,
-}) => (
+const content = {
+  linksArray: [
+    {
+      text: "ABOUT",
+      location: "/about",
+    },
+    {
+      text: "DOCS",
+      location: "/docs",
+    },
+    {
+      text: "GALLERY",
+      location: "/gallery",
+    },
+    {
+      text: "GITHUB",
+      location: "https://github.com/FormidableLabs/victory",
+      external: true,
+    },
+    {
+      text: "FAQS",
+      location: "/docs/faq",
+    },
+  ],
+};
+
+const Hero = () => (
   <>
-    <HeroContainer $bg={background}>
+    <HeroContainer $bg="/open-source/victory/static/hero-background.svg">
       <Corner>
-        <CornerText>{cornerText}</CornerText>
-        <a
+        <CornerText>
+          ANOTHER OSS
+          <br />
+          PROJECT BY
+        </CornerText>
+        <CornerF
           href="https://commerce.nearform.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <CornerF src={cornerIcon} alt="Brand Icon" title="Formidable" />
-        </a>
+          <Image src={nearformLogo} alt="Nearform Logo" title="Nearform" />
+        </CornerF>
       </Corner>
       <LandingSectionContent>
         <CenterWrapper>
@@ -217,19 +248,16 @@ const Hero = ({
             <FeaturedBadge name="victory" />
           </HeroBadge>
           <SectionHeading>VICTORY</SectionHeading>
-          <SectionSubHeading>{description}</SectionSubHeading>
+          <SectionSubHeading>{siteConfig.siteDescription}</SectionSubHeading>
           <GetStarted>
-            <NpmCopy text={code} />
-            <StyledLinkButton
-              href={link.location}
-              noMargin
-            >
-              {link.text}
+            <NpmCopy text="npm install victory" />
+            <StyledLinkButton href="/docs" noMargin>
+              DOCUMENTATION
             </StyledLinkButton>
           </GetStarted>
         </CenterWrapper>
         <LinkContainer>
-          {linksArray.map((l) => {
+          {content.linksArray.map((l) => {
             return l.external ? (
               <LinkItem
                 key={l.text}

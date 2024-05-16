@@ -1,48 +1,10 @@
-import siteConfig from "@/static-config-helpers/site-data";
-
-const LogoFormidable = "/open-source/victory/static/logos/logo-formidable-icon.svg";
 const FeatureRobust = "/open-source/victory/static/feature-robust.svg";
 const FeatureFlexible = "/open-source/victory/static/feature-flexible.svg";
 const FeatureNative = "/open-source/victory/static/feature-native.png";
-const HeroBackground = "/open-source/victory/static/hero-background.svg";
 
 // TODO: just merge this into the actual HTML and not
 // hidden inside a JS file
 const content = {
-  hero: {
-    background: HeroBackground,
-    cornerText: "ANOTHER OSS \n PROJECT BY",
-    cornerIcon: LogoFormidable,
-    description:      siteConfig.siteDescription,
-    code: "npm install victory",
-    link: {
-      text: "DOCUMENTATION",
-      location: "/docs",
-    },
-    linksArray: [
-      {
-        text: "ABOUT",
-        location: "/about",
-      },
-      {
-        text: "DOCS",
-        location: "/docs",
-      },
-      {
-        text: "GALLERY",
-        location: "/gallery",
-      },
-      {
-        text: "GITHUB",
-        location: "https://github.com/FormidableLabs/victory",
-        external: true,
-      },
-      {
-        text: "FAQS",
-        location: "/docs/faq",
-      },
-    ],
-  },
   features: [
     {
       title: "Robust",

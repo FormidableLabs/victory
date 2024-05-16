@@ -1,5 +1,5 @@
 ---
-id: 5
+id: 2
 title: VictoryAxis
 category: charts
 type: docs

@@ -1,5 +1,5 @@
 ---
-id: 35
+id: 7
 title: VictoryHistogram
 category: charts
 type: docs

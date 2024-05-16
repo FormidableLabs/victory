@@ -1,55 +1,55 @@
 ---
 id: 14
-title: VictoryArea Animation
+title: Victory Area Animation
 ---
 
 ```playground_norender
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { data: this.getData() };
-  }
+function App() {
+  const [state, setState] = React.useState({ data: getData() });
 
-  componentDidMount() {
-    this.setStateInterval = window.setInterval(() => {
-      this.setState({ data: this.getData() });
+  React.useState(() => {
+    const setStateInterval = window.setInterval(() => {
+      setState({ data: getData() });
     }, 4000);
-  }
 
-  getData() {
-    return _.range(7).map(() => {
-      return [
-        { x: 1, y: _.random(1, 5) },
-        { x: 2, y: _.random(1, 10) },
-        { x: 3, y: _.random(2, 10) },
-        { x: 4, y: _.random(2, 10) },
-        { x: 5, y: _.random(2, 15) }
-      ];
-    });
-  }
+    return () => {
+      window.clearInterval(setStateInterval);
+    }
+  }, []);
 
-  render() {
-    return (
-      <VictoryChart
-        theme={VictoryTheme.material}
-        animate={{ duration: 1000 }}
+  return (
+    <VictoryChart
+      theme={VictoryTheme.material}
+      animate={{ duration: 1000 }}
+    >
+      <VictoryStack
+        colorScale={"blue"}
       >
-        <VictoryStack
-          colorScale={"blue"}
-        >
-          {this.state.data.map((data, i) => {
-            return (
-              <VictoryArea
-                key={i}
-                data={data}
-                interpolation={"basis"}
-              />
-            );
-          })}
-        </VictoryStack>
-      </VictoryChart>
-    );
-  }
+        {state.data.map((data, i) => {
+          return (
+            <VictoryArea
+              key={i}
+              data={data}
+              interpolation={"basis"}
+            />
+          );
+        })}
+      </VictoryStack>
+    </VictoryChart>
+  );
+}
+
+
+function getData() {
+  return _.range(7).map(() => {
+    return [
+      { x: 1, y: _.random(1, 5) },
+      { x: 2, y: _.random(1, 10) },
+      { x: 3, y: _.random(2, 10) },
+      { x: 4, y: _.random(2, 10) },
+      { x: 5, y: _.random(2, 15) }
+    ];
+  });
 }
 
 render(<App/>);

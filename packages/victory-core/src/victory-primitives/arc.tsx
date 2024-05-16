@@ -1,5 +1,7 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
 import React from "react";
+import { defaults } from "lodash";
+
 import * as Helpers from "../victory-util/helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 import { Path } from "./path";
@@ -65,7 +67,7 @@ const defaultProps = {
 };
 
 export const Arc = (initialProps: ArcProps) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
 
   return React.cloneElement(props.pathComponent!, {
     ...props.events,

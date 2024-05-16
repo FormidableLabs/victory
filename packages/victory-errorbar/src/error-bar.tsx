@@ -1,5 +1,7 @@
 /* eslint-disable max-statements */
 import React from "react";
+import { defaults } from "lodash";
+
 import {
   Helpers,
   Line,
@@ -116,7 +118,7 @@ const defaultProps = {
 export const ErrorBar = (
   initialProps: ErrorBarProps & typeof ErrorBar.default,
 ) => {
-  const props = evaluateProps({ ...defaultProps, ...initialProps });
+  const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const { groupComponent } = props;
   const userProps = UserProps.getSafeUserProps(props);
   const { tabIndex, ariaLabel } = props;
