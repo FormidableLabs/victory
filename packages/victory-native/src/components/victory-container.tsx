@@ -7,7 +7,8 @@ import {
   VictoryEventHandler,
   mergeRefs,
   useVictoryContainer,
-  PortalContext,
+  PortalProvider,
+  PortalOutlet,
 } from "victory-core/es";
 import NativeHelpers from "../helpers/native-helpers";
 import { Portal } from "./victory-portal/portal";
@@ -41,8 +42,6 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
     viewBox,
     preserveAspectRatio,
     userProps,
-    portalRef,
-    portalElement,
     containerRef,
     events,
     onTouchStart,
@@ -124,7 +123,7 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
   const baseStyle = NativeHelpers.getStyle(style, ["width", "height"]);
 
   return (
-    <PortalContext.Provider value={{ portalElement }}>
+    <PortalProvider>
       <View
         {...handlers}
         style={{ ...baseStyle, positition: "relative" }}
@@ -165,17 +164,17 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
             }}
             pointerEvents="box-none"
           >
-            <Portal
+            <PortalOutlet
+              as={<Portal />}
               width={width}
               height={height}
               viewBox={viewBox}
               style={{ ...dimensions, overflow: "visible" }}
-              ref={portalRef}
             />
           </View>
         </Svg>
       </View>
-    </PortalContext.Provider>
+    </PortalProvider>
   );
 };
 
