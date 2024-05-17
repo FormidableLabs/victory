@@ -13,12 +13,6 @@ PortalContext.displayName = "PortalContext";
 
 export const usePortalContext = () => {
   const context = React.useContext(PortalContext);
-
-  if (!context) {
-    throw new Error(
-      "`usePortalContext` must be used within a `<PortalProvider />`",
-    );
-  }
   return context;
 };
 

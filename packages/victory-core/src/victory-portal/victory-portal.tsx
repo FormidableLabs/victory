@@ -25,33 +25,33 @@ export const VictoryPortal = (initialProps: VictoryPortalProps) => {
     Log.warn(msg);
   }
 
-  React.useEffect(() => {
-    const children = Array.isArray(props.children)
-      ? props.children[0]
-      : props.children;
-    const { groupComponent } = props;
-    const childProps = (children && children.props) || {};
-    const standardProps = childProps.groupComponent
-      ? { groupComponent, standalone: false }
-      : {};
-    const newProps = defaults(
-      standardProps,
-      childProps,
-      Helpers.omit(props, ["children", "groupComponent"]),
-      { key: childProps.key ?? id },
-    );
-    const child = children && React.cloneElement(children, newProps);
+  const children = Array.isArray(props.children)
+    ? props.children[0]
+    : props.children;
+  const { groupComponent } = props;
+  const childProps = (children && children.props) || {};
+  const standardProps = childProps.groupComponent
+    ? { groupComponent, standalone: false }
+    : {};
+  const newProps = defaults(
+    standardProps,
+    childProps,
+    Helpers.omit(props, ["children", "groupComponent"]),
+    { key: childProps.key ?? id },
+  );
+  const child = children && React.cloneElement(children, newProps);
 
-    portalContext.addChild(id, child);
+  React.useEffect(() => {
+    portalContext?.addChild(id, child);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.children]);
 
   React.useEffect(() => {
-    return () => portalContext.removeChild(id);
+    return () => portalContext?.removeChild(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return null;
+  return portalContext ? null : child;
 };
 
 VictoryPortal.role = "portal";

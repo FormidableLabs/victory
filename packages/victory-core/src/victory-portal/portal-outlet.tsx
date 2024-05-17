@@ -17,7 +17,10 @@ export const PortalOutlet = ({
 }: PortalOutletProps) => {
   const portalContext = usePortalContext();
 
-  const children = Array.from(portalContext.children.values());
+  if (!portalContext) {
+    return null;
+  }
 
+  const children = Array.from(portalContext.children.values());
   return React.cloneElement(portalComponent, props, children);
 };
