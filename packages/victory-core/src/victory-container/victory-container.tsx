@@ -149,22 +149,22 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
   }, []);
 
   return (
-    <PortalProvider>
-      <div
-        className={className}
-        style={{
-          ...style,
-          width: responsive ? style?.width : dimensions.width,
-          height: responsive ? style?.height : dimensions.height,
-          pointerEvents: "none",
-          touchAction: "none",
-          position: "relative",
-        }}
-        data-ouia-component-id={ouiaId}
-        data-ouia-component-type={ouiaType}
-        data-ouia-safe={ouiaSafe}
-        ref={mergeRefs([localContainerRef, containerRef])}
-      >
+    <div
+      className={className}
+      style={{
+        ...style,
+        width: responsive ? style?.width : dimensions.width,
+        height: responsive ? style?.height : dimensions.height,
+        pointerEvents: "none",
+        touchAction: "none",
+        position: "relative",
+      }}
+      data-ouia-component-id={ouiaId}
+      data-ouia-component-type={ouiaType}
+      data-ouia-safe={ouiaSafe}
+      ref={mergeRefs([localContainerRef, containerRef])}
+    >
+      <PortalProvider>
         <svg
           width={width}
           height={height}
@@ -203,8 +203,8 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
             }}
           />
         </div>
-      </div>
-    </PortalProvider>
+      </PortalProvider>
+    </div>
   );
 };
 
