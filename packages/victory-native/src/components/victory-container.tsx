@@ -7,7 +7,8 @@ import {
   VictoryEventHandler,
   mergeRefs,
   useVictoryContainer,
-  PortalContext,
+  PortalProvider,
+  PortalOutlet,
 } from "victory-core/es";
 import NativeHelpers from "../helpers/native-helpers";
 import { Portal } from "./victory-portal/portal";
@@ -41,8 +42,6 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
     viewBox,
     preserveAspectRatio,
     userProps,
-    portalRef,
-    portalElement,
     containerRef,
     events,
     onTouchStart,
@@ -124,37 +123,37 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
   const baseStyle = NativeHelpers.getStyle(style, ["width", "height"]);
 
   return (
-    <PortalContext.Provider value={{ portalElement }}>
-      <View
-        {...handlers}
-        style={{ ...baseStyle, positition: "relative" }}
-        pointerEvents="box-none"
-        className={className}
-        data-ouia-component-id={ouiaId}
-        data-ouia-component-type={ouiaType}
-        data-ouia-safe={ouiaSafe}
-        ref={mergeRefs([localContainerRef, containerRef])}
+    <View
+      {...handlers}
+      style={{ ...baseStyle, positition: "relative" }}
+      pointerEvents="box-none"
+      className={className}
+      data-ouia-component-id={ouiaId}
+      data-ouia-component-type={ouiaType}
+      data-ouia-safe={ouiaSafe}
+      ref={mergeRefs([localContainerRef, containerRef])}
+    >
+      <Svg
+        width={width}
+        height={height}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        viewBox={viewBox}
+        preserveAspectRatio={preserveAspectRatio}
+        // @ts-expect-error - style prop does not seem to be recognized by react-native-svg
+        // preserved during refactor for compatibility, if it ever worked
+        style={dimensions}
+        accessible={ariaLabelledBy && title ? true : undefined}
+        accessibilityLabel={ariaLabelledBy && title ? title : undefined}
+        accessibilityHint={ariaDescribedBy && desc ? desc : undefined}
+        {...events}
+        {...userProps}
       >
-        <Svg
-          width={width}
-          height={height}
-          aria-labelledby={ariaLabelledBy}
-          aria-describedby={ariaDescribedBy}
-          viewBox={viewBox}
-          preserveAspectRatio={preserveAspectRatio}
-          // @ts-expect-error - style prop does not seem to be recognized by react-native-svg
-          // preserved during refactor for compatibility, if it ever worked
-          style={dimensions}
-          accessible={ariaLabelledBy && title ? true : undefined}
-          accessibilityLabel={ariaLabelledBy && title ? title : undefined}
-          accessibilityHint={ariaDescribedBy && desc ? desc : undefined}
-          {...events}
-          {...userProps}
-        >
-          {/* The following Rect is a temporary solution until the following RNSVG issue is resolved https://github.com/react-native-svg/react-native-svg/issues/1488 */}
-          <Rect x={0} y={0} width={width} height={height} fill="none" />
-          {title ? <title id="title">{title}</title> : null}
-          {desc ? <desc id="desc">{desc}</desc> : null}
+        {/* The following Rect is a temporary solution until the following RNSVG issue is resolved https://github.com/react-native-svg/react-native-svg/issues/1488 */}
+        <Rect x={0} y={0} width={width} height={height} fill="none" />
+        {title ? <title id="title">{title}</title> : null}
+        {desc ? <desc id="desc">{desc}</desc> : null}
+        <PortalProvider>
           {children}
           <View
             style={{
@@ -165,17 +164,17 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
             }}
             pointerEvents="box-none"
           >
-            <Portal
+            <PortalOutlet
+              as={<Portal />}
               width={width}
               height={height}
               viewBox={viewBox}
               style={{ ...dimensions, overflow: "visible" }}
-              ref={portalRef}
             />
           </View>
-        </Svg>
-      </View>
-    </PortalContext.Provider>
+        </PortalProvider>
+      </Svg>
+    </View>
   );
 };
 

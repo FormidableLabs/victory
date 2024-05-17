@@ -1,12 +1,13 @@
 import React, { useRef } from "react";
 import { uniqueId } from "lodash";
 import { Portal } from "../victory-portal/portal";
-import { PortalContext } from "../victory-portal/portal-context";
 import * as UserProps from "../victory-util/user-props";
 import { OriginType } from "../victory-label/victory-label";
 import { D3Scale } from "../types/prop-types";
 import { VictoryThemeDefinition } from "../victory-theme/types";
 import { mergeRefs } from "../victory-util";
+import { PortalOutlet } from "../victory-portal/portal-outlet";
+import { PortalProvider } from "../victory-portal/portal-context";
 
 export interface VictoryContainerProps {
   "aria-describedby"?: string;
@@ -58,10 +59,6 @@ export function useVictoryContainer<TProps extends VictoryContainerProps>(
 
   const localContainerRef = useRef<HTMLDivElement>(null);
 
-  const [portalElement, setPortalElement] = React.useState<SVGSVGElement>();
-
-  const portalRef = (element: SVGSVGElement) => setPortalElement(element);
-
   // Generated ID stored in ref because it needs to persist across renders
   const generatedId = useRef(uniqueId("victory-container-"));
   const containerId = props.containerId ?? generatedId.current;
@@ -103,8 +100,6 @@ export function useVictoryContainer<TProps extends VictoryContainerProps>(
     ariaLabelledBy,
     ariaDescribedBy,
     userProps,
-    portalRef,
-    portalElement,
     localContainerRef,
   };
 }
@@ -135,8 +130,6 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
     userProps,
     titleId,
     descId,
-    portalElement,
-    portalRef,
     containerRef,
     localContainerRef,
   } = useVictoryContainer(initialProps);
@@ -156,22 +149,22 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
   }, []);
 
   return (
-    <PortalContext.Provider value={{ portalElement }}>
-      <div
-        className={className}
-        style={{
-          ...style,
-          width: responsive ? style?.width : dimensions.width,
-          height: responsive ? style?.height : dimensions.height,
-          pointerEvents: "none",
-          touchAction: "none",
-          position: "relative",
-        }}
-        data-ouia-component-id={ouiaId}
-        data-ouia-component-type={ouiaType}
-        data-ouia-safe={ouiaSafe}
-        ref={mergeRefs([localContainerRef, containerRef])}
-      >
+    <div
+      className={className}
+      style={{
+        ...style,
+        width: responsive ? style?.width : dimensions.width,
+        height: responsive ? style?.height : dimensions.height,
+        pointerEvents: "none",
+        touchAction: "none",
+        position: "relative",
+      }}
+      data-ouia-component-id={ouiaId}
+      data-ouia-component-type={ouiaType}
+      data-ouia-safe={ouiaSafe}
+      ref={mergeRefs([localContainerRef, containerRef])}
+    >
+      <PortalProvider>
         <svg
           width={width}
           height={height}
@@ -198,17 +191,20 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
             left: 0,
           }}
         >
-          {React.cloneElement(portalComponent, {
-            width,
-            height,
-            viewBox,
-            preserveAspectRatio,
-            style: { ...dimensions, overflow: "visible" },
-            ref: portalRef,
-          })}
+          <PortalOutlet
+            as={portalComponent}
+            width={width}
+            height={height}
+            viewBox={viewBox}
+            preserveAspectRatio={preserveAspectRatio}
+            style={{
+              ...dimensions,
+              overflow: "visible",
+            }}
+          />
         </div>
-      </div>
-    </PortalContext.Provider>
+      </PortalProvider>
+    </div>
   );
 };
 
