@@ -38,6 +38,7 @@ export const VictoryPortal = (initialProps: VictoryPortalProps) => {
       standardProps,
       childProps,
       Helpers.omit(props, ["children", "groupComponent"]),
+      { key: childProps.key ?? id },
     );
     const child = children && React.cloneElement(children, newProps);
 
