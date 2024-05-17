@@ -1,7 +1,6 @@
 import React from "react";
-import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 
-export interface ClipPathProps extends VictoryCommonPrimitiveProps {
+export interface ClipPathProps {
   children?: React.ReactNode[] | React.ReactNode;
   clipId?: number | string;
 }

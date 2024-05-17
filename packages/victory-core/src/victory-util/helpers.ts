@@ -3,6 +3,7 @@ import React, { isValidElement } from "react";
 import { defaults, property, pick } from "lodash";
 import { CallbackArgs } from "../types/callbacks";
 import { ValueOrAccessor } from "../types/prop-types";
+import { VictoryCommonPrimitiveProps } from "./common-props";
 
 // Private Functions
 
@@ -136,6 +137,25 @@ export function getStyles(style, defaultStyles) {
     parent: defaults({}, parent, defaultParent, { width, height }),
     labels: defaults({}, labels, defaultLabels),
     data: defaults({}, data, defaultData),
+  };
+}
+
+export function evaluatePrimitiveProps<T extends VictoryCommonPrimitiveProps>(
+  props: T,
+) {
+  const ariaLabel = evaluateProp(props.ariaLabel, props);
+  const desc = evaluateProp(props.desc, props);
+  const id = evaluateProp(props.id, props);
+  const style = evaluateProp(props.style, props);
+  const tabIndex = evaluateProp(props.tabIndex, props);
+
+  return {
+    ...props,
+    ariaLabel,
+    desc,
+    id,
+    style,
+    tabIndex,
   };
 }
 

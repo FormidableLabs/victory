@@ -13,7 +13,6 @@ export type ScatterSymbolType =
 
 export interface VictoryPrimitiveShapeProps
   extends VictoryCommonPrimitiveProps {
-  desc?: string;
   rx?: number;
   ry?: number;
 }

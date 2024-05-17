@@ -1,18 +1,15 @@
 import React, { forwardRef } from "react";
-import { evaluateProp } from "../victory-util/helpers";
+
+import { evaluatePrimitiveProps } from "../victory-util/helpers";
 import { VictoryPrimitiveShapeProps } from "./types";
 
 export const Path = forwardRef<SVGPathElement, VictoryPrimitiveShapeProps>(
   (props, ref) => {
-    /* eslint-disable-next-line @typescript-eslint/no-unused-vars --
-     * origin conflicts with the SVG element's origin attribute
-     */
-    const { desc, id, tabIndex, origin, ...rest } = props;
+    const { desc, ...resolvedProps } = evaluatePrimitiveProps(props);
 
     const svgProps: React.SVGProps<SVGPathElement> = {
-      id: evaluateProp(id, props)?.toString(),
-      tabIndex: evaluateProp(tabIndex, props),
-      ...rest,
+      vectorEffect: "non-scaling-stroke",
+      ...resolvedProps,
     };
 
     return desc ? (

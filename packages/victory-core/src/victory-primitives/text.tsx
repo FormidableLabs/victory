@@ -1,5 +1,6 @@
 import React from "react";
-import { evaluateProp } from "../victory-util/helpers";
+
+import { evaluatePrimitiveProps } from "../victory-util/helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
 
 export interface TextProps extends VictoryCommonPrimitiveProps {
@@ -9,15 +10,11 @@ export interface TextProps extends VictoryCommonPrimitiveProps {
 }
 
 export const Text = (props: TextProps) => {
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars --
-   * origin conflicts with the SVG element's origin attribute
-   */
-  const { children, desc, id, origin, tabIndex, title, ...rest } = props;
+  const { children, desc, title, ...resolvedProps } = evaluatePrimitiveProps(props);
 
   const svgProps: React.SVGProps<SVGTextElement> = {
-    id: evaluateProp(id, props)?.toString(),
-    tabIndex: evaluateProp(tabIndex, props),
-    ...rest,
+    vectorEffect: "non-scaling-stroke",
+    ...resolvedProps,
   };
 
   return (

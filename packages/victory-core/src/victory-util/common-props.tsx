@@ -70,21 +70,38 @@ export interface VictoryCommonPrimitiveProps {
   active?: boolean;
   ariaLabel?: StringOrCallback;
   className?: string;
-  clipPath?: string;
+  /**
+   * Applies a clipping path to the rendered element.
+   *
+   * {@link https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/clip-path}
+   */
+  clipPath?: string | undefined;
   data?: any;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  desc?: string | Function;
+  desc?: StringOrCallback;
   disableInlineStyles?: boolean;
   events?: object;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  id?: number | string | Function;
+  /**
+   * The unique identifier for the element. Can be a number, string, or function.
+   *
+   * {@link https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/id}
+   */
+  id?: StringOrCallback;
   index?: number | string;
-  origin?: OriginType;
   polar?: boolean;
-  role?: string;
+  role?: React.AriaRole | undefined;
   scale?: any;
+  /**
+   * Provides hints to the renderer about what tradeoffs to make when rendering shapes.
+   *
+   * {@link https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering}
+   */
   shapeRendering?: string;
   style?: any;
   tabIndex?: NumberOrCallback;
+  /**
+   * Applies a transform to the rendered element.
+   *
+   * {@link https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform}
+   */
   transform?: string;
 }

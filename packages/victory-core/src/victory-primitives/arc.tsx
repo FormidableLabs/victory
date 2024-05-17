@@ -1,25 +1,66 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
 import React from "react";
-import { defaults } from "lodash";
 
-import * as Helpers from "../victory-util/helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";
+import * as Helpers from "../victory-util/helpers";
 import { Path } from "./path";
 
 export interface ArcProps extends VictoryCommonPrimitiveProps {
   closedPath?: boolean;
-  cx?: number;
-  cy?: number;
+  cx: number;
+  cy: number;
   datum?: any;
-  endAngle?: number;
+  endAngle: number;
   pathComponent?: React.ReactElement;
-  r?: number;
-  startAngle?: number;
+  r: number;
+  startAngle: number;
   type?: string;
 }
 
-const getArcPath = (props) => {
+interface InternalArcProps extends ArcProps {
+  pathComponent: React.ReactElement;
+  role: string;
+  shapeRendering: string;
+  style: React.CSSProperties;
+}
+
+const defaultProps = {
+  pathComponent: <Path />,
+  role: "presentation",
+  shapeRendering: "auto",
+  style: { stroke: "black", fill: "none" },
+};
+
+export const Arc = (props: ArcProps) => {
+  const resolvedProps = evaluateProps(props);
+
+  return React.cloneElement(resolvedProps.pathComponent, {
+    ...resolvedProps.events,
+    "aria-label": resolvedProps.ariaLabel,
+    d: getArcPath(resolvedProps),
+    style: resolvedProps.style,
+    desc: resolvedProps.desc,
+    tabIndex: resolvedProps.tabIndex,
+    className: resolvedProps.className,
+    role: resolvedProps.role,
+    shapeRendering: resolvedProps.shapeRendering,
+    transform: resolvedProps.transform,
+    clipPath: resolvedProps.clipPath,
+  });
+};
+
+function evaluateProps(props: ArcProps): InternalArcProps {
+  const resolvedProps = Helpers.evaluatePrimitiveProps(props);
+
+  return {
+    ...defaultProps,
+    ...resolvedProps,
+  };
+}
+
+function getArcPath(props: InternalArcProps) {
   const { cx, cy, r, startAngle, endAngle, closedPath } = props;
+  
   // Always draw the path as two arcs so that complete circles may be rendered.
   const halfAngle = Math.abs(endAngle - startAngle) / 2 + startAngle;
   const x1 = cx + r * Math.cos(Helpers.degreesToRadians(startAngle));
@@ -37,49 +78,4 @@ const getArcPath = (props) => {
   const arc2 = `A ${r}, ${r}, 0, ${largerArcFlag2}, 0, ${x3}, ${y3}`;
   const arcEnd = closedPath ? "Z" : "";
   return `${arcStart} ${arc1} ${arc2} ${arcEnd}`;
-};
-
-const evaluateProps = (props) => {
-  /**
-   * Potential evaluated props are:
-   * `ariaLabel`
-   * `desc`
-   * `id`
-   * `style`
-   * `tabIndex`
-   */
-  const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
-  const desc = Helpers.evaluateProp(props.desc, props);
-  const id = Helpers.evaluateProp(props.id, props);
-  const style = Helpers.evaluateStyle(
-    Object.assign({ stroke: "black", fill: "none" }, props.style),
-    props,
-  );
-  const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
-
-  return Object.assign({}, props, { ariaLabel, desc, id, style, tabIndex });
-};
-
-const defaultProps = {
-  pathComponent: <Path />,
-  role: "presentation",
-  shapeRendering: "auto",
-};
-
-export const Arc = (initialProps: ArcProps) => {
-  const props = evaluateProps(defaults({}, initialProps, defaultProps));
-
-  return React.cloneElement(props.pathComponent!, {
-    ...props.events,
-    "aria-label": props.ariaLabel,
-    d: getArcPath(props),
-    style: props.style,
-    desc: props.desc,
-    tabIndex: props.tabIndex,
-    className: props.className,
-    role: props.role,
-    shapeRendering: props.shapeRendering,
-    transform: props.transform,
-    clipPath: props.clipPath,
-  });
-};
+}
