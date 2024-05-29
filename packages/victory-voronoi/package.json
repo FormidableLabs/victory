@@ -22,7 +22,7 @@
   "dependencies": {
     "d3-voronoi": "^1.1.4",
     "lodash": "^4.17.19",
-    "victory-core": "^37.0.2"
+    "victory-core": "37.0.2"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
