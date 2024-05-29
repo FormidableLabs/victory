@@ -3,8 +3,12 @@ import Svg, { Rect } from "react-native-svg";
 import { get } from "lodash";
 import { View, PanResponder } from "react-native";
 import {
-  VictoryContainer as VictoryContainerBase,
   VictoryContainerProps,
+  VictoryEventHandler,
+  mergeRefs,
+  useVictoryContainer,
+  PortalProvider,
+  PortalOutlet,
 } from "victory-core/es";
 import NativeHelpers from "../helpers/native-helpers";
 import { Portal } from "./victory-portal/portal";
@@ -14,163 +18,164 @@ const no = () => false;
 
 export interface VictoryContainerNativeProps extends VictoryContainerProps {
   disableContainerEvents?: boolean;
-  onTouchStart?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
-  onTouchEnd?: (
-    evt?: any,
-    targetProps?: any,
-    eventKey?: any,
-    ctx?: any,
-  ) => void;
+  onTouchStart?: VictoryEventHandler;
+  onTouchEnd?: VictoryEventHandler;
 }
 
-export class VictoryContainer extends VictoryContainerBase<VictoryContainerNativeProps> {
-  panResponder: any;
+export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
+  const props = useVictoryContainer<VictoryContainerNativeProps>(initialProps);
+  const {
+    title,
+    desc,
+    width,
+    height,
+    dimensions,
+    children,
+    style,
+    className,
+    ouiaId,
+    ouiaSafe,
+    ouiaType,
+    ariaLabelledBy,
+    ariaDescribedBy,
+    portalZIndex,
+    viewBox,
+    preserveAspectRatio,
+    userProps,
+    containerRef,
+    events,
+    onTouchStart,
+    onTouchEnd,
+    localContainerRef,
+    disableContainerEvents,
+  } = props;
 
-  constructor(props) {
-    super(props);
-    this.panResponder = this.getResponder();
-  }
+  const callOptionalEventCallback = (eventName, event) => {
+    const callback = get(events, eventName);
+    if (callback) {
+      event.persist(); // RN nativeEvent is reused. see https://fb.me/react-event-pooling
+      callback(event, props, "__unknownEventKey__", eventName);
+    }
+  };
 
-  getResponder() {
+  const handleResponderGrant = (event) => {
+    if (onTouchStart) {
+      onTouchStart(event);
+    }
+    callOptionalEventCallback("onTouchStart", event);
+  };
+
+  const handleResponderMove = (event) => {
+    const { touches } = event.nativeEvent;
+    if (touches && touches.length === 2) {
+      callOptionalEventCallback("onTouchPinch", event);
+    } else {
+      callOptionalEventCallback("onTouchMove", event);
+    }
+  };
+
+  const handleResponderEnd = (event) => {
+    if (onTouchEnd) {
+      onTouchEnd(event);
+    }
+    callOptionalEventCallback("onTouchEnd", event);
+  };
+
+  const getResponder = () => {
     let shouldBlockNativeResponder = no;
+    const {
+      allowDrag,
+      allowDraw,
+      allowResize,
+      allowSelection,
+      allowPan,
+      allowZoom,
+    } = props as any;
+
     if (
-      this.props &&
-      ((this.props as any).allowDrag ||
-        (this.props as any).allowDraw ||
-        (this.props as any).allowResize ||
-        (this.props as any).allowSelection ||
-        (this.props as any).allowPan ||
-        (this.props as any).allowZoom)
+      allowDrag ||
+      allowDraw ||
+      allowResize ||
+      allowSelection ||
+      allowPan ||
+      allowZoom
     ) {
       shouldBlockNativeResponder = yes;
     }
 
     return PanResponder.create({
       onStartShouldSetPanResponder: yes,
-
       onStartShouldSetPanResponderCapture: no,
-
       onMoveShouldSetPanResponder: yes,
-
       onMoveShouldSetPanResponderCapture: yes,
-
       onShouldBlockNativeResponder: shouldBlockNativeResponder,
-
       onPanResponderTerminationRequest: yes,
-      // User has started a touch move
-      onPanResponderGrant: this.handleResponderGrant.bind(this),
-      // Active touch or touches have moved
-      onPanResponderMove: this.handleResponderMove.bind(this),
-      // The user has released all touches
-      onPanResponderRelease: this.handleResponderEnd.bind(this),
-      // Another component has become the responder
-      onPanResponderTerminate: this.handleResponderEnd.bind(this),
+      onPanResponderGrant: handleResponderGrant, // User has started a touch move
+      onPanResponderMove: handleResponderMove, // Active touch or touches have moved
+      onPanResponderRelease: handleResponderEnd, // The user has released all touches
+      onPanResponderTerminate: handleResponderEnd, // Another component has become the responder
     });
-  }
+  };
 
-  callOptionalEventCallback(eventName, evt) {
-    const callback = get(this.props.events, eventName);
-    if (callback) {
-      evt.persist(); // RN nativeEvent is reused. see https://fb.me/react-event-pooling
-      callback(evt, this.props, "__unknownEventKey__", eventName);
-    }
-  }
+  const panResponder = getResponder();
+  const handlers = disableContainerEvents ? {} : panResponder.panHandlers;
 
-  handleResponderGrant(evt) {
-    if (this.props.onTouchStart) {
-      this.props.onTouchStart(evt);
-    }
-    this.callOptionalEventCallback("onTouchStart", evt);
-  }
+  const baseStyle = NativeHelpers.getStyle(style, ["width", "height"]);
 
-  handleResponderMove(evt) {
-    const { touches } = evt.nativeEvent;
-    if (touches && touches.length === 2) {
-      this.callOptionalEventCallback("onTouchPinch", evt);
-    } else {
-      this.callOptionalEventCallback("onTouchMove", evt);
-    }
-  }
-
-  handleResponderEnd(evt) {
-    if (this.props.onTouchEnd) {
-      this.props.onTouchEnd(evt);
-    }
-    this.callOptionalEventCallback("onTouchEnd", evt);
-  }
-
-  // Overrides method in victory-core
-  renderContainer(props, svgProps, style) {
-    const {
-      title,
-      desc,
-      className,
-      width,
-      height,
-      portalZIndex,
-      responsive,
-      disableContainerEvents,
-    } = props;
-    const children = this.getChildren(props);
-    const dimensions = responsive
-      ? { width: "100%", height: "100%" }
-      : { width, height };
-    const baseStyle = NativeHelpers.getStyle(style, ["width", "height"]);
-    const divStyle = Object.assign({}, baseStyle, { position: "relative" });
-    const portalDivStyle = {
-      zIndex: portalZIndex,
-      position: "absolute",
-      top: 0,
-      left: 0,
-    };
-    const portalSvgStyle = Object.assign({ overflow: "visible" }, dimensions);
-    const portalProps = {
-      width,
-      height,
-      viewBox: svgProps.viewBox,
-      style: portalSvgStyle,
-    };
-    const handlers = disableContainerEvents
-      ? {}
-      : this.panResponder.panHandlers;
-    return (
-      <View
-        {...handlers}
-        style={divStyle}
-        pointerEvents="box-none"
-        className={className}
-        ref={props.containerRef}
-        {...this.getOUIAProps(props)}
+  return (
+    <View
+      {...handlers}
+      style={{ ...baseStyle, positition: "relative" }}
+      pointerEvents="box-none"
+      className={className}
+      data-ouia-component-id={ouiaId}
+      data-ouia-component-type={ouiaType}
+      data-ouia-safe={ouiaSafe}
+      ref={mergeRefs([localContainerRef, containerRef])}
+    >
+      <Svg
+        width={width}
+        height={height}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        viewBox={viewBox}
+        preserveAspectRatio={preserveAspectRatio}
+        // @ts-expect-error - style prop does not seem to be recognized by react-native-svg
+        // preserved during refactor for compatibility, if it ever worked
+        style={dimensions}
+        accessible={ariaLabelledBy && title ? true : undefined}
+        accessibilityLabel={ariaLabelledBy && title ? title : undefined}
+        accessibilityHint={ariaDescribedBy && desc ? desc : undefined}
+        {...events}
+        {...userProps}
       >
-        <Svg
-          {...svgProps}
-          style={dimensions}
-          accessible={props["aria-labelledby"] && title ? true : undefined}
-          accessibilityLabel={
-            props["aria-labelledby"] && title ? title : undefined
-          }
-          accessibilityHint={
-            props["aria-describedby"] && desc ? desc : undefined
-          }
-        >
-          {/*
-            The following Rect is a temporary solution until the following RNSVG issue is resolved
-            https://github.com/react-native-svg/react-native-svg/issues/1488
-          */}
-          <Rect x={0} y={0} width={width} height={height} fill="none" />
-          {title ? <title id="title">{title}</title> : null}
-          {desc ? <desc id="desc">{desc}</desc> : null}
+        {/* The following Rect is a temporary solution until the following RNSVG issue is resolved https://github.com/react-native-svg/react-native-svg/issues/1488 */}
+        <Rect x={0} y={0} width={width} height={height} fill="none" />
+        {title ? <title id="title">{title}</title> : null}
+        {desc ? <desc id="desc">{desc}</desc> : null}
+        <PortalProvider>
           {children}
-          <View style={portalDivStyle} pointerEvents="box-none">
-            <Portal {...portalProps} ref={this.savePortalRef} />
+          <View
+            style={{
+              zIndex: portalZIndex,
+              position: "absolute",
+              top: 0,
+              left: 0,
+            }}
+            pointerEvents="box-none"
+          >
+            <PortalOutlet
+              as={<Portal />}
+              width={width}
+              height={height}
+              viewBox={viewBox}
+              style={{ ...dimensions, overflow: "visible" }}
+            />
           </View>
-        </Svg>
-      </View>
-    );
-  }
-}
+        </PortalProvider>
+      </Svg>
+    </View>
+  );
+};
+
+VictoryContainer.role = "container";

@@ -66,6 +66,10 @@ import {
   Portal,
   PortalContext,
   PortalContextValue,
+  PortalOutlet,
+  PortalOutletProps,
+  PortalProvider,
+  PortalProviderProps,
   PortalProps,
   RangePropType,
   RangeTuple,
@@ -108,6 +112,7 @@ import {
   VictoryCommonProps,
   VictoryCommonThemeProps,
   VictoryContainer,
+  useVictoryContainer,
   VictoryContainerProps,
   VictoryDatableProps,
   VictoryLabel,
@@ -135,6 +140,8 @@ import {
   WhiskerProps,
   Wrapper,
   addEvents,
+  mergeRefs,
+  usePortalContext,
 } from "./index";
 import { pick } from "lodash";
 
@@ -171,6 +178,8 @@ describe("victory-core", () => {
         "PointPathHelpers",
         "Portal",
         "PortalContext",
+        "PortalOutlet",
+        "PortalProvider",
         "Rect",
         "Scale",
         "Selection",
@@ -193,6 +202,9 @@ describe("victory-core", () => {
         "Whisker",
         "Wrapper",
         "addEvents",
+        "mergeRefs",
+        "usePortalContext",
+        "useVictoryContainer",
       ]
     `);
   });

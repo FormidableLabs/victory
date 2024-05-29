@@ -1,18 +1,23 @@
 import React from "react";
-import { defaults } from "lodash";
 import { ZoomHelpers } from "./zoom-helpers";
 import {
-  Data,
-  DomainTuple,
-  Helpers,
-  VictoryContainer,
   VictoryClipContainer,
   VictoryContainerProps,
+  DomainTuple,
+  VictoryContainer,
+  Data,
+  VictoryEventHandler,
 } from "victory-core";
+import { defaults } from "lodash";
 
 const DEFAULT_DOWNSAMPLE = 150;
 
 export type ZoomDimensionType = "x" | "y";
+
+export type ZoomDomain = {
+  x: DomainTuple;
+  y: DomainTuple;
+};
 
 export interface VictoryZoomContainerProps extends VictoryContainerProps {
   allowPan?: boolean;
@@ -22,92 +27,146 @@ export interface VictoryZoomContainerProps extends VictoryContainerProps {
   downsample?: number | boolean;
   minimumZoom?: { x?: number; y?: number };
   onZoomDomainChange?: (
-    domain: { x: DomainTuple; y: DomainTuple },
+    domain: ZoomDomain,
     props: VictoryZoomContainerProps,
   ) => void;
   zoomDimension?: ZoomDimensionType;
-  zoomDomain?: { x?: DomainTuple; y?: DomainTuple };
+  zoomDomain?: Partial<ZoomDomain>;
+  horizontal?: boolean;
 }
 
-type ComponentClass<TProps> = { new (props: TProps): React.Component<TProps> };
+interface VictoryZoomContainerMutatedProps extends VictoryZoomContainerProps {
+  domain: ZoomDomain;
+  originalDomain: ZoomDomain;
+  currentDomain: ZoomDomain;
+  cachedZoomDomain: ZoomDomain;
+  scale: any;
+  polar: boolean;
+  origin: { x: number; y: number };
+}
 
-export function zoomContainerMixin<
-  TBase extends ComponentClass<TProps>,
-  TProps extends VictoryZoomContainerProps,
->(Base: TBase) {
-  // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."
-  return class VictoryZoomContainer extends Base {
-    static displayName = "VictoryZoomContainer";
+export const VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS = {
+  clipContainerComponent: <VictoryClipContainer />,
+  allowPan: true,
+  allowZoom: true,
+  zoomActive: false,
+};
 
-    static defaultProps = {
-      ...VictoryContainer.defaultProps,
-      clipContainerComponent: <VictoryClipContainer />,
-      allowPan: true,
-      allowZoom: true,
-      zoomActive: false,
+export const useVictoryZoomContainer = (
+  initialProps: VictoryZoomContainerProps,
+) => {
+  const props = {
+    ...VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS,
+    ...(initialProps as VictoryZoomContainerMutatedProps),
+  };
+  const {
+    children,
+    currentDomain,
+    zoomActive,
+    allowZoom,
+    downsample,
+    scale,
+    clipContainerComponent,
+    polar,
+    origin,
+    horizontal,
+  } = props;
+
+  const downsampleZoomData = (child: React.ReactElement, domain) => {
+    const getData = (childProps) => {
+      const { data, x, y } = childProps;
+      const defaultGetData =
+        child.type && typeof (child.type as any).getData === "function"
+          ? (child.type as any).getData
+          : () => undefined;
+      // skip costly data formatting if x and y accessors are not present
+      return Array.isArray(data) && !x && !y
+        ? data
+        : defaultGetData(childProps);
     };
 
-    static defaultEvents(props: TProps) {
-      return [
-        {
-          target: "parent",
-          eventHandlers: {
-            onMouseDown: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : ZoomHelpers.onMouseDown(evt, targetProps);
-            },
-            onTouchStart: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : ZoomHelpers.onMouseDown(evt, targetProps);
-            },
-            onMouseUp: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : ZoomHelpers.onMouseUp(evt, targetProps);
-            },
-            onTouchEnd: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : ZoomHelpers.onMouseUp(evt, targetProps);
-            },
-            onMouseLeave: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : ZoomHelpers.onMouseLeave(evt, targetProps);
-            },
-            onTouchCancel: (evt, targetProps) => {
-              return props.disable
-                ? {}
-                : ZoomHelpers.onMouseLeave(evt, targetProps);
-            },
-            // eslint-disable-next-line max-params
-            onMouseMove: (evt, targetProps, eventKey, ctx) => {
-              if (props.disable) {
-                return {};
-              }
-              return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
-            },
-            // eslint-disable-next-line max-params
-            onTouchMove: (evt, targetProps, eventKey, ctx) => {
-              if (props.disable) {
-                return {};
-              }
-              evt.preventDefault();
-              return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
-            },
-            ...(props.disable || !props.allowZoom
-              ? {}
-              : { onWheel: ZoomHelpers.onWheel }),
-          },
-        },
-      ];
+    const data = getData(child.props);
+
+    // return undefined if downsample is not run, then default() will replace with child.props.data
+    if (!downsample || !domain || !data) {
+      return undefined;
     }
 
-    clipDataComponents(children: React.ReactElement[], props) {
-      const { scale, clipContainerComponent, polar, origin, horizontal } =
-        props;
+    const maxPoints = downsample === true ? DEFAULT_DOWNSAMPLE : downsample;
+    const dimension = props.zoomDimension || "x";
+
+    // important: assumes data is ordered by dimension
+    // get the start and end of the data that is in the current visible domain
+    let startIndex = data.findIndex(
+      (d) => d[dimension] >= domain[dimension][0],
+    );
+    let endIndex = data.findIndex((d) => d[dimension] > domain[dimension][1]);
+    // pick one more point (if available) at each end so that VictoryLine, VictoryArea connect
+    if (startIndex !== 0) {
+      startIndex -= 1;
+    }
+    if (endIndex !== -1) {
+      endIndex += 1;
+    }
+
+    const visibleData = data.slice(startIndex, endIndex);
+
+    return Data.downsample(visibleData, maxPoints, startIndex);
+  };
+
+  const modifiedChildren = (
+    React.Children.toArray(children) as React.ReactElement[]
+  ).map((child) => {
+    const role = (child as any).type && (child as any).type.role;
+    const isDataComponent = Data.isDataComponent(child);
+    const originalDomain = defaults({}, props.originalDomain, props.domain);
+    const zoomDomain = defaults({}, props.zoomDomain, props.domain);
+    const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
+
+    let domain: ZoomDomain;
+
+    if (!ZoomHelpers.checkDomainEquality(zoomDomain, cachedZoomDomain)) {
+      // if zoomDomain has been changed, use it
+      domain = zoomDomain;
+    } else if (allowZoom && !zoomActive) {
+      // if user has zoomed all the way out, use the child domain
+      domain = child.props.domain;
+    } else {
+      // default: use currentDomain, set by the event handlers
+      domain = defaults({}, currentDomain, originalDomain);
+    }
+
+    let newDomain = props.polar
+      ? {
+          x: originalDomain.x,
+          y: [0, domain.y[1]],
+        }
+      : domain;
+
+    if (newDomain && props.zoomDimension) {
+      // if zooming is restricted to a dimension, don't squash changes to zoomDomain in other dim
+      newDomain = {
+        ...zoomDomain,
+        [props.zoomDimension]: newDomain[props.zoomDimension],
+      };
+    }
+
+    // don't downsample stacked data
+    const childProps =
+      isDataComponent && role !== "stack"
+        ? {
+            domain: newDomain,
+            data: downsampleZoomData(child, newDomain),
+          }
+        : { domain: newDomain };
+
+    const newChild = React.cloneElement(
+      child,
+      defaults(childProps, child.props),
+    );
+
+    // Clip data components
+    if (Data.isDataComponent(newChild)) {
       const rangeX = horizontal ? scale.y.range() : scale.x.range();
       const rangeY = horizontal ? scale.x.range() : scale.y.range();
       const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
@@ -123,124 +182,53 @@ export function zoomContainerMixin<
         radius: polar ? radius : undefined,
         ...clipContainerComponent.props,
       });
-      return React.Children.toArray(children).map((child) => {
-        if (!Data.isDataComponent(child)) {
-          return child;
-        }
-        return React.cloneElement(child as React.ReactElement, {
-          groupComponent,
-        });
+
+      return React.cloneElement(newChild, {
+        groupComponent,
       });
     }
 
-    modifyPolarDomain(domain, originalDomain) {
-      // Only zoom the radius of polar charts. Zooming angles is very confusing
-      return {
-        x: originalDomain.x,
-        y: [0, domain.y[1]],
-      };
-    }
+    return newChild;
+  });
 
-    downsampleZoomData(props, child, domain) {
-      const { downsample } = props;
+  return { props, children: modifiedChildren };
+};
 
-      const getData = (childProps) => {
-        const { data, x, y } = childProps;
-        const defaultGetData =
-          child.type && Helpers.isFunction(child.type.getData)
-            ? child.type.getData
-            : () => undefined;
-        // skip costly data formatting if x and y accessors are not present
-        return Array.isArray(data) && !x && !y
-          ? data
-          : defaultGetData(childProps);
-      };
+export const VictoryZoomContainer = (
+  initialProps: VictoryZoomContainerProps,
+) => {
+  const { props, children } = useVictoryZoomContainer(initialProps);
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
+};
 
-      const data = getData(child.props);
+VictoryZoomContainer.role = "container";
 
-      // return undefined if downsample is not run, then default() will replace with child.props.data
-      if (!downsample || !domain || !data) {
-        return undefined;
-      }
+VictoryZoomContainer.defaultEvents = (
+  initialProps: VictoryZoomContainerProps,
+) => {
+  const props = { ...VICTORY_ZOOM_CONTAINER_DEFAULT_PROPS, ...initialProps };
+  const createEventHandler =
+    (handler: VictoryEventHandler, disabled?: boolean): VictoryEventHandler =>
+    // eslint-disable-next-line max-params
+    (event, targetProps, eventKey, context) =>
+      disabled || props.disable
+        ? {}
+        : handler(event, { ...props, ...targetProps }, eventKey, context);
 
-      const maxPoints = downsample === true ? DEFAULT_DOWNSAMPLE : downsample;
-      const dimension = props.zoomDimension || "x";
-
-      // important: assumes data is ordered by dimension
-      // get the start and end of the data that is in the current visible domain
-      let startIndex = data.findIndex(
-        (d) => d[dimension] >= domain[dimension][0],
-      );
-      let endIndex = data.findIndex((d) => d[dimension] > domain[dimension][1]);
-      // pick one more point (if available) at each end so that VictoryLine, VictoryArea connect
-      if (startIndex !== 0) {
-        startIndex -= 1;
-      }
-      if (endIndex !== -1) {
-        endIndex += 1;
-      }
-
-      const visibleData = data.slice(startIndex, endIndex);
-
-      return Data.downsample(visibleData, maxPoints, startIndex);
-    }
-
-    modifyChildren(props) {
-      const childComponents = React.Children.toArray(
-        props.children,
-      ) as React.ReactElement[];
-
-      return childComponents.map((child) => {
-        const role = child.type && (child.type as any).role;
-        const isDataComponent = Data.isDataComponent(child);
-        const { currentDomain, zoomActive, allowZoom } = props;
-        const originalDomain = defaults({}, props.originalDomain, props.domain);
-        const zoomDomain = defaults({}, props.zoomDomain, props.domain);
-        const cachedZoomDomain = defaults(
-          {},
-          props.cachedZoomDomain,
-          props.domain,
-        );
-        let domain;
-        if (!ZoomHelpers.checkDomainEquality(zoomDomain, cachedZoomDomain)) {
-          // if zoomDomain has been changed, use it
-          domain = zoomDomain;
-        } else if (allowZoom && !zoomActive) {
-          // if user has zoomed all the way out, use the child domain
-          domain = child.props.domain;
-        } else {
-          // default: use currentDomain, set by the event handlers
-          domain = defaults({}, currentDomain, originalDomain);
-        }
-
-        let newDomain = props.polar
-          ? this.modifyPolarDomain(domain, originalDomain)
-          : domain;
-        if (newDomain && props.zoomDimension) {
-          // if zooming is restricted to a dimension, don't squash changes to zoomDomain in other dim
-          newDomain = {
-            ...zoomDomain,
-            [props.zoomDimension]: newDomain[props.zoomDimension],
-          };
-        }
-        // don't downsample stacked data
-        const newProps =
-          isDataComponent && role !== "stack"
-            ? {
-                domain: newDomain,
-                data: this.downsampleZoomData(props, child, newDomain),
-              }
-            : { domain: newDomain };
-        return React.cloneElement(child, defaults(newProps, child.props));
-      });
-    }
-
-    // Overrides method in VictoryContainer
-    getChildren(props: TProps) {
-      const children = this.modifyChildren(props);
-      return this.clipDataComponents(children, props);
-    }
-  };
-}
-
-export const VictoryZoomContainer = zoomContainerMixin(VictoryContainer);
+  return [
+    {
+      target: "parent",
+      eventHandlers: {
+        onMouseDown: createEventHandler(ZoomHelpers.onMouseDown),
+        onTouchStart: createEventHandler(ZoomHelpers.onMouseDown),
+        onMouseUp: createEventHandler(ZoomHelpers.onMouseUp),
+        onTouchEnd: createEventHandler(ZoomHelpers.onMouseUp),
+        onMouseLeave: createEventHandler(ZoomHelpers.onMouseLeave),
+        onTouchCancel: createEventHandler(ZoomHelpers.onMouseLeave),
+        onMouseMove: createEventHandler(ZoomHelpers.onMouseMove),
+        onTouchMove: createEventHandler(ZoomHelpers.onMouseMove),
+        onWheel: createEventHandler(ZoomHelpers.onWheel, !props.allowZoom),
+      },
+    },
+  ];
+};

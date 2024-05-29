@@ -600,7 +600,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
     const active = Helpers.evaluateProp(props.active, props);
     const { renderInPortal } = props;
     if (!active) {
-      return renderInPortal ? <VictoryPortal /> : null;
+      return null;
     }
     const evaluatedProps = this.getEvaluatedProps(props);
     const { flyoutComponent, labelComponent, groupComponent } = evaluatedProps;
