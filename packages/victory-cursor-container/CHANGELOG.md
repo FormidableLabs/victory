@@ -1,5 +1,11 @@
 # victory-cursor-container
 
+## 37.1.0
+
+### Minor Changes
+
+- Refactor containers and portal to function components ([#2799](https://github.com/FormidableLabs/victory/pull/2799))
+
 ## 37.0.2
 
 ## 37.0.1
