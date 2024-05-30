@@ -20,6 +20,7 @@ export type VictorySliceLabelPlacementType =
   | "parallel"
   | "perpendicular";
 export type VictorySliceTTargetType = "data" | "labels" | "parent";
+export type VictorySliceLabelIndicatorType = "singleLine" | "polyLine";
 
 export interface SliceProps extends VictoryCommonProps {
   ariaLabel?: StringOrCallback;

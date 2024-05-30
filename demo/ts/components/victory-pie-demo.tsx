@@ -2,7 +2,7 @@ import React from "react";
 import { random, range } from "lodash";
 import { VictoryPie } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, LineSegment } from "victory-core";
+import { VictoryTheme, LineSegment,PolyLineSegment } from "victory-core";
 
 interface VictoryPieDemoState {
   data: {
@@ -364,6 +364,50 @@ export default class VictoryPieDemo extends React.Component<
             labelIndicatorInnerOffset={45}
             labelIndicatorOuterOffset={15}
           />
+          <VictoryPie
+         style={{ parent: parentStyle }}
+        labelIndicator
+        radius={55}
+        innerRadius={20}
+        labelIndicatorType="polyLine"
+        labelIndicatorInnerOffset={5}
+        labelIndicatorOuterOffset={40}
+        labelIndicatorMiddleOffset={20}
+        labels={({ datum }) => `${datum.name}`}
+        data={[
+          { name: "Mark", y: 40 },
+          { name: "Robert", y: 12 },
+          { name: "Emily", y: 34 },
+          { name: "Marion", y: 23 },
+          { name: "Nicolas", y: 28 },
+          { name: "Karen", y: 18 },
+        ]}
+      />
+      <VictoryPie
+         style={{ parent: parentStyle }}
+        innerRadius={50}
+        labelIndicatorInnerOffset={5}
+        labelIndicatorOuterOffset={40}
+        labelIndicatorMiddleOffset={20}
+        radius={75}
+        labelIndicatorType={"polyLine"}
+        labelIndicator={
+          <PolyLineSegment
+            style={{
+              stroke: "red",
+              strokeWidth: 1,
+              strokeDasharray: 1,
+              fill: "none",
+            }}
+          />
+        }
+      />
+      <VictoryPie 
+   style={{ parent: parentStyle }}
+  labelIndicator 
+  labelIndicatorType ="polyLine"
+  labelIndicatorOuterOffset= {15}
+/>
         </div>
       </div>
     );

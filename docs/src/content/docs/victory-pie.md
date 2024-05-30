@@ -250,6 +250,32 @@ _default:_ `<VictoryLabel/>`
 />
 ```
 
+## labelIndicatorType
+
+`type: singleLine | polyLine`
+
+`singleLine` is used to draw single line label indicator and `polyLine` is set to draw
+polyline label indicator.
+
+_default:_ `singleLine`
+
+```playground
+<div>
+<VictoryPie 
+  data={sampleData}
+  labels={({ datum }) => datum.y} 
+  labelIndicator 
+/>
+<VictoryPie 
+  data={sampleData}
+  labels={({ datum }) => datum.y} 
+  labelIndicator 
+  labelIndicatorType ="polyLine"
+  labelIndicatorOuterOffset= {15}
+/>
+</div>
+```
+
 ## labelPlacement
 
 `type "parallel" || "perpendicular" || "vertical" || function`
@@ -523,7 +549,7 @@ y={(d) => d.value + d.error}
 
 `type: boolean || element`
 
-The `labelIndicator` prop defines the label indicator line between labels and the pie chart. If this prop is used as a boolean,then the default indicator will be displayed. To customize or pass your own styling `<LineSegment/>` can be passed to labelIndicator. LabelIndicator is functional only when labelPosition = "centroid". To adjust the labelIndicator length, `labelIndicatorInnerOffset` and `labelIndicatorOuterOffset` props can be used alongside labelIndicator. 
+The `labelIndicator` prop defines the label indicator line between labels and the pie chart. If this prop is used as a boolean,then the default indicator will be displayed. To customize or pass your own styling `<LineSegment/>` can be passed to labelIndicator. LabelIndicator is functional only when labelPosition = "centroid". To adjust the labelIndicator length, `labelIndicatorInnerOffset`,`labelIndicatorMiddleOffset` and `labelIndicatorOuterOffset` props can be used alongside labelIndicator. 
 
 ```playground
 <div>
@@ -541,6 +567,22 @@ The `labelIndicator` prop defines the label indicator line between labels and th
       labelIndicatorInnerOffset={10}
       labelIndicatorOuterOffset={5}
     />
+    <VictoryPie
+      data={sampleData}
+      labelIndicator
+      labelIndicatorType="polyLine"
+      labelIndicatorInnerOffset={10}
+      labelIndicatorMiddleOffset={10}
+      labelIndicatorOuterOffset={25}
+    />
+    <VictoryPie
+      data={sampleData}
+      labelIndicator={<PolyLineSegment style = {{stroke:"red", strokeDasharray:1,fill: "none",}}/>}
+      labelIndicatorType="polyLine"
+      labelIndicatorInnerOffset={10}
+      labelIndicatorMiddleOffset={10}
+      labelIndicatorOuterOffset={25}
+    />
 </div>
 ```
 ## labelIndicatorInnerOffset
@@ -557,18 +599,49 @@ The `labelIndicatorInnerOffset` prop defines the offset by which the indicator l
 />
 ```
 
+## labelIndicatorMiddleOffset
+
+`type: number`
+
+The `labelIndicatorMiddleOffset` prop defines the offset by which the polyLine indicator length outside pie chart is being drawn. Higher the number longer the length.
+
+```playground
+      <VictoryPie
+        data={sampleData}
+        labelIndicator
+        radius={55}
+        innerRadius={20}
+        labelIndicatorType="polyLine"
+        labelIndicatorInnerOffset={5}
+        labelIndicatorOuterOffset={40}
+        labelIndicatorMiddleOffset={20}
+      />
+```
+
 ## labelIndicatorOuterOffset
 
 `type: number`
 
-The `labelIndicatorOuterOffset` prop defines the offset by which the indicator length outside the pie chart is being drawn. Higher the number shorter the length.
+For labelIndicatorType `singleLine`, `labelIndicatorOuterOffset` prop defines the offset by which the indicator length outside the pie chart is being drawn. Higher the number shorter the length.
+
+For labelIndicatorType `polyLine`, `labelIndicatorOuterOffset` prop defines the offset by which the indicator length outside the pie chart is being drawn from the mid point to the label. Higher the number higher the length.
 
 ```playground
-<VictoryPie
-  data={sampleData}
-  labelIndicator
-  labelIndicatorOuterOffset={5}
-/>
+<div>
+    <VictoryPie
+      data={sampleData}
+      labelIndicator
+      labelIndicatorOuterOffset={5}
+    />
+    <VictoryPie
+      data={sampleData}
+      labelIndicator
+      radius={55}
+      innerRadius={20}
+      labelIndicatorType="polyLine"
+      labelIndicatorOuterOffset={40}
+    />
+</div>
 ```
 
 [animations guide]: /guides/animations
