@@ -292,6 +292,24 @@ export default class App extends React.Component<any, {}> {
             />
           }
         />
+
+         {/* example for curved label */}
+         <VictoryScatter
+          {...defaultScatterProps}
+          labelComponent={
+            <VictoryLabel
+              startOffset={"10%"}
+              labelRadius={90}
+              labelPlacement="curved"
+              text={[
+                "Victory is awesome."
+              ]}
+              labelStartAngle={0}
+              labelEndAngle={180}
+              curvedLabelTransform={"translate(200,200)"}
+            />
+          }
+        />
       </div>
     );
   }

@@ -71,6 +71,9 @@ const getCalculatedValues = (props) => {
   const origin = getOrigin(props, padding);
   const data = Data.getData(props);
   const slices = getSlices(props, data);
+  const defaultTransform = origin
+    ? `translate(${origin.x}, ${origin.y})`
+    : undefined;
   return Object.assign({}, props, {
     style,
     colors,
@@ -79,6 +82,7 @@ const getCalculatedValues = (props) => {
     data,
     slices,
     origin,
+    defaultTransform,
   });
 };
 
@@ -136,13 +140,37 @@ const getLabelOrientation = (degree, labelPlacement) => {
   return "left";
 };
 
-const getTextAnchor = (orientation) => {
+const getTextAnchor = (orientation, labelPlacement, labelPosition) => {
+  if (labelPlacement === "curved") {
+    if (labelPosition === "centroid") {
+      return "middle";
+    }
+    if (labelPosition === "startAngle") {
+      return "start";
+    }
+    if (labelPosition === "endAngle") {
+      return "end";
+    }
+  }
   if (orientation === "top" || orientation === "bottom") {
     return "middle";
   }
   return orientation === "right" ? "start" : "end";
 };
 
+const getStartOffset = (labelPlacement, labelPosition) => {
+  if (labelPlacement === "curved") {
+    if (labelPosition === "centroid") {
+      return "25%";
+    }
+    if (labelPosition === "startAngle") {
+      return "0%";
+    }
+    if (labelPosition === "endAngle") {
+      return "50%";
+    }
+  }
+};
 const getVerticalAnchor = (orientation) => {
   if (orientation === "left" || orientation === "right") {
     return "middle";
@@ -180,7 +208,8 @@ const getLabelAngle = (baseAngle, labelPlacement) => {
 
 const getLabelProps = (text, dataProps, calculatedValues) => {
   const { index, datum, data, slice, labelComponent, theme } = dataProps;
-  const { style, defaultRadius, origin, width, height } = calculatedValues;
+  const { style, defaultRadius, origin, width, height, defaultTransform } =
+    calculatedValues;
   const labelRadius = Helpers.evaluateProp(
     calculatedValues.labelRadius,
     Object.assign({ text }, dataProps),
@@ -210,9 +239,15 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
   const baseAngle = getBaseLabelAngle(slice, labelPosition, labelStyle);
   const labelAngle = getLabelAngle(baseAngle, labelPlacement);
   const orientation = getLabelOrientation(baseAngle, labelPlacement);
-  const textAnchor = labelStyle.textAnchor || getTextAnchor(orientation);
+  const textAnchor =
+    labelStyle.textAnchor ||
+    getTextAnchor(orientation, labelPlacement, labelPosition);
   const verticalAnchor =
     labelStyle.verticalAnchor || getVerticalAnchor(orientation);
+
+  const labelStartAngle = slice.startAngle;
+  const labelEndAngle = slice.endAngle;
+  const startOffset = getStartOffset(labelPlacement, labelPosition);
 
   const labelProps = {
     width,
@@ -229,7 +264,12 @@ const getLabelProps = (text, dataProps, calculatedValues) => {
     textAnchor,
     verticalAnchor,
     angle: labelAngle,
-    calculatedLabelRadius,
+    labelRadius: calculatedLabelRadius,
+    labelStartAngle,
+    labelEndAngle,
+    labelPlacement,
+    curvedLabelTransform: defaultTransform,
+    startOffset,
   };
 
   if (!Helpers.isTooltip(labelComponent)) {
@@ -265,14 +305,14 @@ export const getLabelIndicatorPropsForLineSegment = (
   } = props;
 
   const { height, width } = calculatedValues;
-  const { calculatedLabelRadius } = labelProps;
+  const { labelRadius } = labelProps;
   // calculation
   const middleRadius = getAverage([innerRadius, radius]);
   const midAngle = getAverage([endAngle, startAngle]);
   const centerX = width / 2;
   const centerY = height / 2;
   const innerOffset = middleRadius + labelIndicatorInnerOffset;
-  const outerOffset = calculatedLabelRadius - labelIndicatorOuterOffset;
+  const outerOffset = labelRadius - labelIndicatorOuterOffset;
 
   const x1 = centerX + getXOffset(innerOffset, midAngle);
   const y1 = centerY + getYOffset(innerOffset, midAngle);
@@ -311,6 +351,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     padAngle,
     disableInlineStyles,
     labelIndicator,
+    defaultTransform,
   } = calculatedValues;
   const radius = props.radius || defaultRadius;
   const initialChildProps = {
@@ -336,6 +377,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       padAngle,
       style: disableInlineStyles ? {} : getSliceStyle(index, calculatedValues),
       disableInlineStyles,
+      transform: props.transform || defaultTransform,
     };
     childProps[eventKey] = {
       data: dataProps,
@@ -353,7 +395,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       );
       if (labelIndicator) {
         const labelProps = childProps[eventKey].labels;
-        if (labelProps.calculatedLabelRadius > radius) {
+        if (labelProps.labelRadius > radius) {
           childProps[eventKey].labelIndicators =
             getLabelIndicatorPropsForLineSegment(
               Object.assign({}, props, dataProps),

@@ -83,6 +83,20 @@ Used by `VictoryLabel`
 const TSpan = (props) => <tspan {...props} />;
 ```
 
+### TextPath
+
+Used by `VictoryLabel`.
+
+```jsx
+  const TextPath = (props) => {
+  const { children, href, startOffset, ...rest } = props;
+  return (
+    <textPath href={href} startOffset={startOffset}>
+      {children}
+    </text> 
+  );
+```
+
 ## Simple Components
 
 ### Arc

@@ -815,3 +815,62 @@ export const BackgroundPadding = () => {
     </>
   );
 };
+
+export const LabelPlacement = () => {
+  return (
+    <>
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            curvedLabelTransform={"translate(150,150)"}
+            labelPlacement="curved"
+            labelRadius={90}
+            text={["Victory is awesome."]}
+          />
+        }
+      />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            curvedLabelTransform={"translate(150,150)"}
+            labelPlacement="curved"
+            dx={10}
+            labelRadius={100}
+            labelStartAngle={0}
+            labelEndAngle={90}
+            text={["Victory is awesome."]}
+          />
+        }
+      />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            curvedLabelTransform={"translate(150,150)"}
+            labelPlacement="curved"
+            labelRadius={90}
+            labelStartAngle={180}
+            labelEndAngle={110}
+            text={["Victory is awesome."]}
+          />
+        }
+      />
+      <VictoryScatter
+        {...defaultScatterProps}
+        labelComponent={
+          <VictoryLabel
+            curvedLabelTransform={"translate(150,150)"}
+            labelPlacement="curved"
+            labelRadius={90}
+            labelStartAngle={0}
+            labelEndAngle={180}
+            text={["Victory is awesome."]}
+            startOffset={"10%"}
+          />
+        }
+      />
+    </>
+  );
+};
