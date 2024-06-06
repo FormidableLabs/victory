@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 import Svg, { Rect } from "react-native-svg";
 import { get } from "lodash";
 import { View, PanResponder } from "react-native";
@@ -125,13 +125,15 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
   return (
     <View
       {...handlers}
-      style={{ ...baseStyle, positition: "relative" }}
+      style={{ ...baseStyle, position: "relative" }}
       pointerEvents="box-none"
-      className={className}
       data-ouia-component-id={ouiaId}
       data-ouia-component-type={ouiaType}
       data-ouia-safe={ouiaSafe}
-      ref={mergeRefs([localContainerRef, containerRef])}
+      ref={mergeRefs<View>([
+        localContainerRef as unknown as RefObject<View>,
+        containerRef as unknown as RefObject<View>,
+      ])}
     >
       <Svg
         width={width}
