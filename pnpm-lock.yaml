@@ -605,6 +605,7 @@ importers:
   packages/victory-native:
     specifiers:
       '@babel/core': ^7.20.0
+      hoist-non-react-statics: ^3.3.2
       lodash: ^4.17.21
       react: ^18.2.0
       react-fast-compare: ^3.2.0
@@ -639,6 +640,7 @@ importers:
       victory-voronoi-container: workspace:*
       victory-zoom-container: workspace:*
     dependencies:
+      hoist-non-react-statics: 3.3.2
       lodash: 4.17.21
       react: 18.2.0
       react-fast-compare: 3.2.0
