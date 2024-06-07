@@ -32,7 +32,6 @@ export const VictoryContainer = (initialProps: VictoryContainerNativeProps) => {
     dimensions,
     children,
     style,
-    className,
     ouiaId,
     ouiaSafe,
     ouiaType,
