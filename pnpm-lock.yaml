@@ -194,7 +194,34 @@ importers:
       react-native-screens: ~3.31.1
       react-native-svg: 14.1.0
       typescript: ~5.3.3
+      victory: workspace:*
+      victory-area: workspace:*
+      victory-axis: workspace:*
+      victory-bar: workspace:*
+      victory-box-plot: workspace:*
+      victory-brush-container: workspace:*
+      victory-brush-line: workspace:*
+      victory-candlestick: workspace:*
+      victory-chart: workspace:*
+      victory-core: workspace:*
+      victory-create-container: workspace:*
+      victory-cursor-container: workspace:*
+      victory-errorbar: workspace:*
+      victory-group: workspace:*
+      victory-histogram: workspace:*
+      victory-legend: workspace:*
+      victory-line: workspace:*
       victory-native: workspace:*
+      victory-pie: workspace:*
+      victory-polar-axis: workspace:*
+      victory-scatter: workspace:*
+      victory-selection-container: workspace:*
+      victory-shared-events: workspace:*
+      victory-stack: workspace:*
+      victory-tooltip: workspace:*
+      victory-voronoi: workspace:*
+      victory-voronoi-container: workspace:*
+      victory-zoom-container: workspace:*
     dependencies:
       '@react-navigation/native': 6.1.17_tchrajkkmv6qul4ozjgsp53moe
       '@react-navigation/native-stack': 6.9.26_7ig245sa57irso5aa2ofg4ksey
@@ -208,7 +235,34 @@ importers:
       react-native-safe-area-context: 4.10.1_tchrajkkmv6qul4ozjgsp53moe
       react-native-screens: 3.31.1_tchrajkkmv6qul4ozjgsp53moe
       react-native-svg: 14.1.0_tchrajkkmv6qul4ozjgsp53moe
+      victory: link:../../packages/victory
+      victory-area: link:../../packages/victory-area
+      victory-axis: link:../../packages/victory-axis
+      victory-bar: link:../../packages/victory-bar
+      victory-box-plot: link:../../packages/victory-box-plot
+      victory-brush-container: link:../../packages/victory-brush-container
+      victory-brush-line: link:../../packages/victory-brush-line
+      victory-candlestick: link:../../packages/victory-candlestick
+      victory-chart: link:../../packages/victory-chart
+      victory-core: link:../../packages/victory-core
+      victory-create-container: link:../../packages/victory-create-container
+      victory-cursor-container: link:../../packages/victory-cursor-container
+      victory-errorbar: link:../../packages/victory-errorbar
+      victory-group: link:../../packages/victory-group
+      victory-histogram: link:../../packages/victory-histogram
+      victory-legend: link:../../packages/victory-legend
+      victory-line: link:../../packages/victory-line
       victory-native: link:../../packages/victory-native
+      victory-pie: link:../../packages/victory-pie
+      victory-polar-axis: link:../../packages/victory-polar-axis
+      victory-scatter: link:../../packages/victory-scatter
+      victory-selection-container: link:../../packages/victory-selection-container
+      victory-shared-events: link:../../packages/victory-shared-events
+      victory-stack: link:../../packages/victory-stack
+      victory-tooltip: link:../../packages/victory-tooltip
+      victory-voronoi: link:../../packages/victory-voronoi
+      victory-voronoi-container: link:../../packages/victory-voronoi-container
+      victory-zoom-container: link:../../packages/victory-zoom-container
     devDependencies:
       '@babel/core': 7.23.9
       '@babel/runtime': 7.24.0
@@ -612,33 +666,33 @@ importers:
       react-native: ^0.73.1
       react-native-gesture-handler: ^2.16.0
       react-native-svg: ^14.1.0
-      victory: workspace:*
-      victory-area: workspace:*
-      victory-axis: workspace:*
-      victory-bar: workspace:*
-      victory-box-plot: workspace:*
-      victory-brush-container: workspace:*
-      victory-brush-line: workspace:*
-      victory-candlestick: workspace:*
-      victory-chart: workspace:*
-      victory-core: workspace:*
-      victory-create-container: workspace:*
-      victory-cursor-container: workspace:*
-      victory-errorbar: workspace:*
-      victory-group: workspace:*
-      victory-histogram: workspace:*
-      victory-legend: workspace:*
-      victory-line: workspace:*
-      victory-pie: workspace:*
-      victory-polar-axis: workspace:*
-      victory-scatter: workspace:*
-      victory-selection-container: workspace:*
-      victory-shared-events: workspace:*
-      victory-stack: workspace:*
-      victory-tooltip: workspace:*
-      victory-voronoi: workspace:*
-      victory-voronoi-container: workspace:*
-      victory-zoom-container: workspace:*
+      victory: ^37.0.2
+      victory-area: ^37.0.2
+      victory-axis: ^37.0.2
+      victory-bar: ^37.0.2
+      victory-box-plot: ^37.0.2
+      victory-brush-container: ^37.0.2
+      victory-brush-line: ^37.0.2
+      victory-candlestick: ^37.0.2
+      victory-chart: ^37.0.2
+      victory-core: ^37.0.2
+      victory-create-container: ^37.0.2
+      victory-cursor-container: ^37.0.2
+      victory-errorbar: ^37.0.2
+      victory-group: ^37.0.2
+      victory-histogram: ^37.0.2
+      victory-legend: ^37.0.2
+      victory-line: ^37.0.2
+      victory-pie: ^37.0.2
+      victory-polar-axis: ^37.0.2
+      victory-scatter: ^37.0.2
+      victory-selection-container: ^37.0.2
+      victory-shared-events: ^37.0.2
+      victory-stack: ^37.0.2
+      victory-tooltip: ^37.0.2
+      victory-voronoi: ^37.0.2
+      victory-voronoi-container: ^37.0.2
+      victory-zoom-container: ^37.0.2
     dependencies:
       hoist-non-react-statics: 3.3.2
       lodash: 4.17.21
@@ -1423,7 +1477,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.23.9
-      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/helper-plugin-utils': 7.24.7
       '@babel/plugin-syntax-logical-assignment-operators': 7.10.4_@babel+core@7.23.9
     dev: false
 
@@ -5134,7 +5188,7 @@ packages:
       '@babel/plugin-transform-sticky-regex': 7.23.3_@babel+core@7.23.9
       '@babel/plugin-transform-typescript': 7.23.6_@babel+core@7.23.9
       '@babel/plugin-transform-unicode-regex': 7.23.3_@babel+core@7.23.9
-      '@babel/template': 7.24.0
+      '@babel/template': 7.24.7
       '@react-native/babel-plugin-codegen': 0.74.84_@babel+preset-env@7.23.9
       babel-plugin-transform-flow-enums: 0.0.2_@babel+core@7.23.9
       react-refresh: 0.14.0
@@ -5166,7 +5220,7 @@ packages:
     peerDependencies:
       '@babel/preset-env': ^7.1.6
     dependencies:
-      '@babel/parser': 7.24.0
+      '@babel/parser': 7.24.7
       '@babel/preset-env': 7.23.9_@babel+core@7.23.9
       glob: 7.2.3
       hermes-parser: 0.19.1
