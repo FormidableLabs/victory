@@ -110,11 +110,13 @@ function addLayoutData(props, datasets, index) {
 
 function stackData(props, childComponents) {
   const dataFromChildren = Wrapper.getDataFromChildren(props, childComponents);
-  const filterNullChildData = dataFromChildren.map((dataset) =>
+  const filledDatasets = fillData(props, dataFromChildren);
+  const filteredNullChild = filledDatasets.map((dataset) =>
     dataset.filter((datum) => datum._x !== null && datum._y !== null),
   );
-  const datasets = fillData(props, filterNullChildData);
-  return datasets.map((d, i) => addLayoutData(props, datasets, i));
+  return filteredNullChild.map((d, i) =>
+    addLayoutData(props, filledDatasets, i),
+  );
 }
 
 export function getCalculatedProps(initialProps, childComponents) {
