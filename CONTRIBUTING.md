@@ -20,7 +20,11 @@ Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and 
 ### Requirements
 
 - [Node.js](https://nodejs.org/) 18 or higher.
-- [pnpm](https://pnpm.io/) 7 or higher.
+- [pnpm](https://pnpm.io/) 7.
+
+> [!Note]
+> If you have a different pnpm version installed locally you can still use version 7 by prefixing the commands with `npx pnpm@7`.
+> For example, `npx pnpm@7 install`.
 
 ### Setup
 
