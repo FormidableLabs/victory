@@ -21,7 +21,7 @@ jobs:
       - name: Check all package.json's and tsconfig.json's are in sync.
         run: |
           pnpm sync
-          git diff --no-ext-diff --quiet --exit-code
+          git diff --no-ext-diff --exit-code
 
       - name: Build libraries and distributions
         run: pnpm build
