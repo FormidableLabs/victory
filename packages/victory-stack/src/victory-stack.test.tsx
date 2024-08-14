@@ -5,6 +5,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 import { VictoryBar } from "victory-bar";
 import { VictoryHistogram } from "victory-histogram";
+import { VictoryArea } from "victory-area";
 
 import { VictoryStack } from "./victory-stack";
 
@@ -39,6 +40,21 @@ describe("components/victory-stack", () => {
         <VictoryStack data-testid="victory-stack" aria-label="Stack">
           <VictoryBar />
           <VictoryBar />
+        </VictoryStack>,
+      );
+
+      const svgNode = container.querySelector("svg")!;
+      expect(svgNode.getAttribute("data-testid")).toEqual("victory-stack");
+      expect(svgNode.getAttribute("aria-label")).toEqual("Stack");
+    });
+  });
+
+  describe("children data", () => {
+    it("should be able to handle all null values when using dates", () => {
+      const { container } = render(
+        <VictoryStack data-testid="victory-stack" aria-label="Stack">
+          <VictoryArea data={[{ x: new Date(2006, 1, 1), y: null }]} />
+          <VictoryArea data={[{ x: new Date(2006, 1, 1), y: 2 }]} />
         </VictoryStack>,
       );
 

@@ -29,6 +29,7 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
+    "victory-area": "^37.0.2",
     "victory-bar": "*",
     "victory-histogram": "*"
   },
