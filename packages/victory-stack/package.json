@@ -29,6 +29,7 @@
     "react": ">=16.6.0"
   },
   "devDependencies": {
+    "victory-area": "*",
     "victory-bar": "*",
     "victory-histogram": "*"
   },
@@ -181,6 +182,7 @@
         "types:create",
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-area:types:create",
         "../victory-bar:types:create",
         "../victory-histogram:types:create",
         "../victory-vendor:types:create",
@@ -250,6 +252,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-area:types:create",
         "../victory-bar:types:create",
         "../victory-histogram:types:create",
         "../victory-vendor:types:create",
@@ -270,6 +273,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-shared-events:types:create",
+        "../victory-area:types:create",
         "../victory-bar:types:create",
         "../victory-histogram:types:create",
         "../victory-vendor:types:create",
@@ -291,6 +295,7 @@
       "dependencies": [
         "../victory-core:build",
         "../victory-shared-events:build",
+        "../victory-area:build",
         "../victory-bar:build",
         "../victory-histogram:build",
         "../victory-vendor:build",
