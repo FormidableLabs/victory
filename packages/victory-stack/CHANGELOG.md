@@ -1,5 +1,15 @@
 # victory-stack
 
+## 37.1.0
+
+### Minor Changes
+
+- Pin all internal victory package versions ([#2876](https://github.com/FormidableLabs/victory/pull/2876))
+
+### Patch Changes
+
+- Fix bug when one child of a Stack has a date axis and all null values for the other axis ([#2888](https://github.com/FormidableLabs/victory/pull/2888))
+
 ## 37.0.2
 
 ### Patch Changes
