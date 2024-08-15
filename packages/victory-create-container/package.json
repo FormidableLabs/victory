@@ -21,12 +21,12 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.19",
-    "victory-brush-container": "^37.0.2",
-    "victory-core": "^37.0.2",
-    "victory-cursor-container": "^37.0.2",
-    "victory-selection-container": "^37.0.2",
-    "victory-voronoi-container": "^37.0.2",
-    "victory-zoom-container": "^37.0.2"
+    "victory-brush-container": "37.0.2",
+    "victory-core": "37.0.2",
+    "victory-cursor-container": "37.0.2",
+    "victory-selection-container": "37.0.2",
+    "victory-voronoi-container": "37.0.2",
+    "victory-zoom-container": "37.0.2"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
