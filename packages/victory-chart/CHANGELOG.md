@@ -1,5 +1,11 @@
 # victory-chart
 
+## 37.1.0
+
+### Minor Changes
+
+- Pin all internal victory package versions ([#2876](https://github.com/FormidableLabs/victory/pull/2876))
+
 ## 37.0.2
 
 ### Patch Changes
