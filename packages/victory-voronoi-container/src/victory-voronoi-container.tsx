@@ -222,14 +222,16 @@ VictoryVoronoiContainer.defaultEvents = (
         ? {}
         : handler(event, { ...props, ...targetProps }, eventKey, context);
 
+  const voronioHelper = new VoronoiHelpers();
+
   return [
     {
       target: "parent",
       eventHandlers: {
-        onMouseLeave: createEventHandler(VoronoiHelpers.onMouseLeave),
-        onTouchCancel: createEventHandler(VoronoiHelpers.onMouseLeave),
-        onMouseMove: createEventHandler(VoronoiHelpers.onMouseMove),
-        onTouchMove: createEventHandler(VoronoiHelpers.onMouseMove),
+        onMouseLeave: createEventHandler(voronioHelper.onMouseLeave),
+        onTouchCancel: createEventHandler(voronioHelper.onMouseLeave),
+        onMouseMove: createEventHandler(voronioHelper.onMouseMove),
+        onTouchMove: createEventHandler(voronioHelper.onMouseMove),
       },
     },
     {

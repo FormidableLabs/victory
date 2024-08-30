@@ -260,4 +260,4 @@ class VoronoiHelpersClass {
   });
 }
 
-export const VoronoiHelpers = new VoronoiHelpersClass();
+export const VoronoiHelpers = VoronoiHelpersClass;
