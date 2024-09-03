@@ -199,7 +199,7 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
             preserveAspectRatio={preserveAspectRatio}
             style={{
               ...dimensions,
-              overflow: "visible",
+              overflow: "hidden",
             }}
           />
         </div>

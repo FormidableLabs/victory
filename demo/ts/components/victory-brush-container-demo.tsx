@@ -10,7 +10,7 @@ import { VictoryScatter } from "victory-scatter";
 import { VictoryLegend } from "victory-legend";
 import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryBrushContainer } from "victory-brush-container";
-import { DomainTuple } from "victory-core";
+import { DomainTuple, VictoryLabel } from "victory-core";
 
 interface VictoryBrushContainerDemoState {
   zoomDomain: {
@@ -76,6 +76,39 @@ export default class VictoryBrushContainerDemo extends React.Component<
               ]}
             />
           </VictoryChart>
+          {/* With labels  */}
+          <VictoryChart
+            width={800}
+            height={500}
+            scale={{ x: "time" }}
+            containerComponent={
+              <VictoryZoomContainer
+                responsive={false}
+                zoomDomain={this.state?.zoomDomain}
+                zoomDimension="x"
+                onZoomDomainChange={this.handleZoom.bind(this)}
+              />
+            }
+          >
+            <VictoryLine
+              style={{
+                data: { stroke: "tomato" },
+              }}
+              data={[
+                { x: new Date(1982, 1, 1), y: 125 },
+                { x: new Date(1987, 1, 1), y: 257 },
+                { x: new Date(1993, 1, 1), y: 345 },
+                { x: new Date(1997, 1, 1), y: 515 },
+                { x: new Date(2001, 1, 1), y: 132 },
+                { x: new Date(2005, 1, 1), y: 305 },
+                { x: new Date(2011, 1, 1), y: 270 },
+                { x: new Date(2015, 1, 1), y: 470 },
+              ]}
+              labels={({ datum }) => `${datum.y}`}
+              labelComponent={<VictoryLabel renderInPortal dy={-20} />}
+            />
+          </VictoryChart>
+
           <VictoryChart
             padding={{ top: 0, left: 50, right: 50, bottom: 30 }}
             width={800}
