@@ -1,5 +1,11 @@
 # victory-zoom-container
 
+## 37.1.1
+
+### Patch Changes
+
+- Fix: #2761 zoom out zooming in if cursor outside chart container ([#2893](https://github.com/FormidableLabs/victory/pull/2893))
+
 ## 37.1.0
 
 ### Minor Changes
