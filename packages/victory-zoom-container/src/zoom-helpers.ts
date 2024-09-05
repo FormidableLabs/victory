@@ -64,8 +64,8 @@ export const RawZoomHelpers = {
     const [from, to] = currentDomain;
     const range = Math.abs(to - from);
     const diff = range - range * factor;
-    const newMin = Number(from) + diff * percent;
-    const newMax = Number(to) - diff * (1 - percent);
+    const newMin = Number(from) + diff * Math.max(percent, 0);
+    const newMax = Number(to) - diff * Math.max(1 - percent, 0);
     return [Math.min(newMin, newMax), Math.max(newMin, newMax)];
   },
 
