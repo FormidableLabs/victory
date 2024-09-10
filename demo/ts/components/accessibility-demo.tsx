@@ -89,7 +89,6 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             <h3 style={chartHeadingStyle}>Bar chart</h3>
             <VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 40, y: 40 }}>
               <VictoryBar
-                // style={{ data: { fill: "#c43a31" } }}
                 data={accessibilityBarData}
                 dataComponent={
                   <Bar
@@ -176,8 +175,8 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 }
               >
                 <VictoryArea
+                  style={{ data: { fill: "#D0F0FD" } }}
                   data={accessibilityAreaData.a}
-                  // style={{ data: { fill: "#c43a31" } }}
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) =>
@@ -187,8 +186,8 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                     />
                   }
                 />
-                <VictoryArea
-                  // style={{ data: { fill: "#c43a31", opacity: 0.9 } }}
+                <VictoryArea 
+                  style={{ data: { fill: "#77D1F3" } }}
                   data={accessibilityAreaData.b}
                   dataComponent={
                     <Area
@@ -200,20 +199,20 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   }
                 />
                 <VictoryArea
+                  style={{ data: { fill: "#18BFFF" } }}
                   data={accessibilityAreaData.c}
-                  // style={{ data: { fill: "#c43a31", opacity: 0.8 } }}
                   dataComponent={
-                    <Area
+                      <Area
                       ariaLabel={({ data }) =>
                         `area chart stack ${data?.[0]._stack}`
-                      }
-                      tabIndex={20.2}
+                    }
+                    tabIndex={20.2}
                     />
                   }
                 />
                 <VictoryArea
+                  style={{ data: { fill: "#0B76B7" } }}
                   data={accessibilityAreaData.d}
-                  // style={{ data: { fill: "#c43a31", opacity: 0.6 } }}
                   dataComponent={
                     <Area
                       ariaLabel={({ data }) =>
@@ -283,7 +282,6 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             <h3 style={chartHeadingStyle}>Scatter</h3>
             <VictoryChart theme={VictoryTheme.clean} domain={{ x: [0, 6], y: [0, 8] }}>
               <VictoryScatter
-                // style={{ data: { fill: "#c43a31" } }}
                 size={7}
                 data={accessibilityScatterData}
                 dataComponent={
@@ -301,9 +299,8 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           {/** VORONOI */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Voronoi</h3>
-            <VictoryChart theme={VictoryTheme.clean}>
+            <VictoryChart theme={VictoryTheme.clean} >
               <VictoryVoronoi
-                style={{ data: { stroke: "#c43a31", strokeWidth: 2 } }}
                 data={accessibilityVoronoiData}
                 dataComponent={
                   <Voronoi
@@ -360,6 +357,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             <h3 style={chartHeadingStyle}>Accessible Group</h3>
             <VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 40 }}>
               <VictoryGroup
+                theme={VictoryTheme.clean}
                 offset={20}
                 groupComponent={
                   <VictoryAccessibleGroup
@@ -371,7 +369,6 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                 <VictoryBar horizontal data={accessibilityGroupData.a} />
                 <VictoryBar
                   horizontal
-                  style={{ data: { fill: "#c43a31", opacity: 0.9 } }}
                   data={accessibilityGroupData.b}
                   groupComponent={
                     <VictoryAccessibleGroup

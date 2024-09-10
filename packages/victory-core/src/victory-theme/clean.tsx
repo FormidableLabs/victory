@@ -22,77 +22,76 @@ const yellow = {
   "100": "#FFEAB6",
   "300": "#FFD66E",
   "500": "#FCB400",
-  "600": "#E08D00",
+  // "600": "#E08D00",
   "900": "#B87503",
 };
 const orange = {
   "100": "#FEE2D5",
   "300": "#FFA981",
   "500": "#FF6F2C",
-  "600": "#F7653B",
+  // "600": "#F7653B",
   "900": "#D74D26",
 };
 const red = {
   "100": "#FFDCE5",
   "300": "#FF9EB7",
   "500": "#F82B60",
-  "600": "#EF3061",
+  // "600": "#EF3061",
   "900": "#BA1E45",
 };
 const pink = {
   "100": "#FFDAF6",
   "300": "#F99DE2",
   "500": "#FF08C2",
-  "600": "#E929BA",
+  // "600": "#E929BA",
   "900": "#B2158B",
 };
 const purple = {
   "100": "#EDE3FE",
   "300": "#CDB0FF",
   "500": "#8B46FF",
-  "600": "#7C39ED",
+  // "600": "#7C39ED",
   "900": "#6B1CB0",
 };
 const blue = {
   "100": "#CFDFFF",
   "300": "#9CC7FF",
   "500": "#2D7FF9",
-  "600": "#1283DA",
+  // "600": "#1283DA",
   "900": "#2750AE",
 };
 const cyan = {
   "100": "#D0F0FD",
   "300": "#77D1F3",
   "500": "#18BFFF",
-  "600": "#01A9DB",
+  // "600": "#01A9DB",
   "900": "#0B76B7",
 };
 const teal = {
   "100": "#C2F5E9",
   "300": "#72DDC3",
   "500": "#20D9D2",
-  "600": "#02AAA4",
+  // "600": "#02AAA4",
   "900": "#06A09B",
 };
 const green = {
   "100": "#D1F7C4",
   "300": "#93E088",
   "500": "#20C933",
-  "600": "#11AF22",
+  // "600": "#11AF22",
   "900": "#338A17",
 };
 
 const colors = [
-  ...Object.values(gray),
-  ...Object.values(yellow),
-  ...Object.values(orange),
-  ...Object.values(red),
-  ...Object.values(pink),
-  ...Object.values(purple),
-  ...Object.values(blue),
-  ...Object.values(cyan),
-  ...Object.values(teal),
-  ...Object.values(green),
+  blue["500"],
+  pink["500"],
+  teal["500"],
+  purple["500"],
+  green["500"],
+  orange["500"],
+  cyan["500"],
+  red["500"],
+  yellow["500"],
 ];
 // *
 // * Typography
@@ -134,7 +133,7 @@ const centeredLabelStyles = Object.assign(
 // const strokeDasharray = "10, 5";
 const strokeLinecap = "round";
 const strokeLinejoin = "round";
-const borderRadius = 2;
+const borderRadius = 1;
 // *
 // * Theme
 // *
@@ -143,7 +142,7 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: blue["500"],
+          fill: cyan["500"],
         },
         labels: baseLabelStyles,
       },
@@ -207,13 +206,13 @@ export const clean: VictoryThemeDefinition = {
       style: {
         max: { padding, stroke: gray["400"], strokeWidth: 2 },
         maxLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
-        median: { padding, stroke: gray["300"], strokeWidth: 2 },
+        median: { padding, stroke: gray.white, strokeWidth: 2 },
         medianLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         min: { padding, stroke: gray["400"], strokeWidth: 2 },
         minLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
-        q1: { padding, fill: blue["500"] },
+        q1: { padding, fill: teal["500"], rx: borderRadius },
         q1Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
-        q3: { padding, fill: blue["500"] },
+        q3: { padding, fill: teal["500"], rx: borderRadius },
         q3Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
       },
       boxWidth: 20,
@@ -224,14 +223,17 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          stroke: gray["700"],
+          stroke: gray["300"],
+          strokeWidth: 0,
+          rx: borderRadius,
         },
         labels: Object.assign({}, baseLabelStyles, { padding: 5 }),
       },
       candleColors: {
-        positive: "#ffffff",
-        negative: gray["700"],
+        positive: teal["500"],
+        negative: orange["500"],
       },
+      wickStrokeWidth: 2,
     },
     baseProps,
   ),
@@ -245,6 +247,7 @@ export const clean: VictoryThemeDefinition = {
           opacity: 1,
           stroke: gray["700"],
           strokeWidth: 2,
+          strokeLinecap,
         },
         labels: baseLabelStyles,
       },
@@ -261,12 +264,14 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: gray["700"],
-          stroke: gray["900"],
-          strokeWidth: 2,
+          fill: cyan["500"],
+          stroke: "transparent",
+          strokeWidth: 0,
         },
         labels: baseLabelStyles,
       },
+      binSpacing: 4,
+      cornerRadius: { top: borderRadius },
     },
     baseProps,
   ),
@@ -289,8 +294,10 @@ export const clean: VictoryThemeDefinition = {
         data: {
           fill: "transparent",
           opacity: 1,
-          stroke: gray["700"],
+          stroke: pink["500"],
           strokeWidth: 2,
+          strokeLinecap,
+          strokeLinejoin,
         },
         labels: baseLabelStyles,
       },
@@ -299,15 +306,16 @@ export const clean: VictoryThemeDefinition = {
   ),
   pie: Object.assign(
     {
-      colorScale: colors,
       style: {
         data: {
           padding,
-          stroke: gray["50"],
+          stroke: gray.white,
           strokeWidth: 1,
         },
         labels: Object.assign({}, baseLabelStyles, { padding: 20 }),
       },
+      colorScale: colors,
+      cornerRadius: borderRadius,
     },
     baseProps,
   ),
@@ -315,7 +323,7 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: gray["700"],
+          fill: purple["500"],
           opacity: 1,
           stroke: "transparent",
           strokeWidth: 0,
@@ -350,9 +358,9 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: "transparent",
-          stroke: "transparent",
-          strokeWidth: 0,
+          fill: red["100"],
+          stroke: red["500"],
+          strokeWidth: 2,
         },
         labels: Object.assign({}, baseLabelStyles, {
           padding: 5,
@@ -364,6 +372,7 @@ export const clean: VictoryThemeDefinition = {
           fill: gray["100"],
           pointerEvents: "none",
         },
+        padding: { left: 2, bottom: 2 },
       },
     },
     baseProps,
