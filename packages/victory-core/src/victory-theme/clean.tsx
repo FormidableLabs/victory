@@ -98,7 +98,7 @@ const colors = [
 // *
 const sansSerif = "'Inter-Light', 'Helvetica Neue', 'Seravek', 'Helvetica', sans-serif";
 const letterSpacing = "normal";
-const fontSize = 10;
+const fontSize = 12;
 // *
 // * Layout
 // *
@@ -275,6 +275,7 @@ export const clean: VictoryThemeDefinition = {
     },
     baseProps,
   ),
+  label: baseLabelStyles,
   legend: {
     colorScale: colors,
     gutter: 10,
