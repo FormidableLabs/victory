@@ -8,7 +8,7 @@ import { VictoryBar } from "victory-bar";
 import { VictoryBrushLine } from "victory-brush-line";
 import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
-import { VictoryLabel } from "victory-core";
+import { VictoryLabel, VictoryTheme } from "victory-core";
 import { DomainPropType, EventCallbackInterface } from "victory-core";
 import _ from "lodash";
 
@@ -246,7 +246,7 @@ class App extends React.Component<any, BrushLineDemoState> {
           </VictoryChart>
 
           <button onClick={this.clearMutation.bind(this)}>reset domain</button>
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
             <VictoryBar
               data={[
                 { x: "one", y: 4 },

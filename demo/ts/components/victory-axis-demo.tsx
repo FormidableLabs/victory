@@ -110,11 +110,12 @@ export default class VictoryAxisDemo extends React.Component<
 
           <VictoryAxis
             scale="time"
+            theme={VictoryTheme.clean}
             style={{
               parent: style.parent,
               axis: { strokeWidth: 3 },
               tickLabels: { angle: 45 },
-              grid: { stroke: "#F4511E", strokeWidth: 2 },
+              grid: { stroke: "#F82B60", strokeWidth: 2 },
             }}
             containerComponent={
               <VictoryContainer title="Time Scale Axis Example" />
@@ -200,6 +201,7 @@ export default class VictoryAxisDemo extends React.Component<
               parent: style.parent,
               axisLabel: { padding: 45 },
             }}
+            theme={VictoryTheme.clean}
             label="cool log axis"
             padding={{ top: 30, bottom: 30, left: 80, right: 30 }}
             orientation="left"
@@ -222,6 +224,7 @@ export default class VictoryAxisDemo extends React.Component<
             label="TEAMS"
             padding={{ top: 90, bottom: 40, left: 40, right: 40 }}
             orientation="top"
+            theme={VictoryTheme.clean}
             style={styleOverrides}
             tickValues={[
               "Mets\nNY",

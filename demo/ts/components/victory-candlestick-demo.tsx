@@ -153,7 +153,7 @@ export default class VictoryCandlestickDemo extends React.Component<
           lowLabels={({ datum }) => datum.low}
           highLabels={({ datum }) => datum.high}
           data={data}
-          theme={VictoryTheme.material}
+          theme={VictoryTheme.clean}
           size={8}
           events={[
             {
@@ -240,7 +240,7 @@ export default class VictoryCandlestickDemo extends React.Component<
           />
         </VictoryChart>
 
-        <VictoryCandlestick style={style} size={1} />
+        <VictoryCandlestick style={style} size={1} theme={VictoryTheme.clean}/>
 
         <VictoryChart style={style}>
           <VictoryCandlestick />

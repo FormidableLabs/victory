@@ -237,6 +237,7 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             polar
             title="Victory Polar Scatter Chart"

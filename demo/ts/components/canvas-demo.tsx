@@ -13,6 +13,7 @@ import {
   CanvasGroup,
   CanvasPoint,
 } from "victory-canvas";
+import { VictoryTheme } from "victory-core/lib";
 
 const populationData = [
   {
@@ -279,7 +280,7 @@ const CanvasDemo = () => {
 
   return (
     <div className="demo" style={containerStyle}>
-      <VictoryChart animate style={{ parent: parentStyle }}>
+      <VictoryChart theme={VictoryTheme.clean} animate style={{ parent: parentStyle }}>
         {populationData.map(({ country, values }) => {
           const data = values.map(({ year, value }) => ({
             x: year,

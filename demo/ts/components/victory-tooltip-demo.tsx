@@ -8,6 +8,7 @@ import { VictoryScatter } from "victory-scatter";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryCandlestick } from "victory-candlestick";
 import { VictoryErrorBar } from "victory-errorbar";
+import { VictoryTheme } from "victory-core/lib";
 
 class App extends React.Component {
   render() {
@@ -69,9 +70,23 @@ class App extends React.Component {
           />
 
           <VictoryCandlestick
+            theme={VictoryTheme.clean}
             horizontal
             style={{ parent: parentStyle }}
-            highLabelComponent={<VictoryTooltip active dy={-3} />}
+            highLabelComponent={
+              <VictoryTooltip
+                active dy={-3}
+                theme={VictoryTheme.clean}
+                pointerLength={4}
+                flyoutPadding={{ top: 8, bottom: 8, left: 16, right: 16 }}
+                cornerRadius={1}
+                flyoutStyle={{
+                  stroke: "#757575",
+                  strokeWidth: 2,
+                  fill: "white",
+                }}
+              />
+            }
             highLabels={({ datum }) => `hello #${datum.x}`}
             data={[
               { x: 1, open: 5, close: 10, high: 15, low: 0 },
@@ -128,7 +143,10 @@ class App extends React.Component {
             </VictoryGroup>
           </VictoryChart>
 
-          <VictoryChart style={{ parent: parentStyle }}>
+          <VictoryChart
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
+          >
             <VictoryAxis />
             <VictoryStack
               colorScale={"qualitative"}

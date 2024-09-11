@@ -96,7 +96,7 @@ const colors = [
 // *
 // * Typography
 // *
-const sansSerif = "'Inter-Light', 'Seravek', 'Trebuchet MS', sans-serif";
+const sansSerif = "'Inter-Light', 'Helvetica Neue', 'Seravek', 'Helvetica', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 10;
 // *
@@ -345,14 +345,14 @@ export const clean: VictoryThemeDefinition = {
       pointerEvents: "none",
     }),
     flyoutStyle: {
-      stroke: gray["900"],
-      strokeWidth: 1,
-      fill: gray["100"],
+      stroke: gray["500"],
+      strokeWidth: 2,
+      fill: gray.white,
       pointerEvents: "none",
     },
-    flyoutPadding: 5,
-    cornerRadius: 5,
-    pointerLength: 10,
+    flyoutPadding: { top: 8, bottom: 8, left: 16, right: 16 },
+    cornerRadius: borderRadius,
+    pointerLength: 4,
   },
   voronoi: Object.assign(
     {

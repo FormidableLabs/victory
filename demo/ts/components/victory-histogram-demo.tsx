@@ -256,13 +256,15 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
               },
             },
           ]}
+          binSpacing={0}
         />
 
         <VictoryHistogram
+          theme={VictoryTheme.clean}
           horizontal
           style={{
             parent: parentStyle,
-            data: { stroke: "#1f4068", strokeWidth: 4, fill: "#e43f5a" },
+            // data: { stroke: "#1f4068", strokeWidth: 4, fill: "#e43f5a" },
           }}
           data={this.data.map(({ x }) => ({ value: x }))}
           x="value"
