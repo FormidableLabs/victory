@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { orderBy } from "lodash";
+import { orderBy, uniqBy } from "lodash";
 import React from "react";
 import { Helpers, Scale, Wrapper } from "victory-core";
 import isEqual from "react-fast-compare";
@@ -19,15 +19,43 @@ function fillData(props, datasets) {
     });
     return prev;
   }, {});
+
   const xKeys = Object.keys(xMap).map((k) => Number(k));
+
   const xArr = orderBy(xKeys);
 
+  const dataSetLengths = new Set();
+
+  for (const dataset of datasets) {
+    dataSetLengths.add(dataset.length);
+  }
+
+  if (dataSetLengths.size > 1) {
+    console.warn(
+      "Your datasets have different length. That means some elements might not have a corresponding pair in other datasets.",
+    );
+  }
+
   return datasets.map((dataset) => {
+    const dedupedDataset = uniqBy(dataset, (el) => {
+      const isDate = el && el.x instanceof Date;
+
+      const x1 = isDate ? el.x.getTime() : el.x;
+
+      return x1;
+    });
+
+    if (dataset.length !== dedupedDataset.length) {
+      console.warn(
+        "The data you provided has elements with duplicate keys (Same value for the x axis). This might not be what you wnat. Please check the data you provided.",
+      );
+    }
+
     let indexOffset = 0;
-    const isDate = dataset[0] && dataset[0]._x instanceof Date;
+    const isDate = dedupedDataset[0] && dedupedDataset[0]._x instanceof Date;
     const filledInData = xArr.map((x: number | Date, index) => {
       let parsedX: number | Date = Number(x);
-      const datum = dataset[index - indexOffset];
+      const datum = dedupedDataset[index - indexOffset];
 
       if (datum) {
         const x1 = isDate ? datum._x.getTime() : datum._x;
@@ -114,6 +142,14 @@ function stackData(props, childComponents) {
   const filteredNullChild = filledDatasets.map((dataset) =>
     dataset.filter((datum) => datum._x !== null && datum._y !== null),
   );
+
+  console.log("stackData", {
+    props,
+    filledDatasets,
+    filteredNullChild,
+    dataFromChildren,
+  });
+
   return filteredNullChild.map((d, i) =>
     addLayoutData(props, filledDatasets, i),
   );
