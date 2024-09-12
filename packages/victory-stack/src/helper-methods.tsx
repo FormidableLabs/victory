@@ -37,7 +37,7 @@ function fillData(props, datasets) {
   }
 
   return datasets.map((dataset) => {
-    const dedupedDataset = uniqBy(dataset, (el) => {
+    const dedupedDataset = uniqBy(dataset, (el: any) => {
       const isDate = el && el.x instanceof Date;
 
       const x1 = isDate ? el.x.getTime() : el.x;
@@ -142,13 +142,6 @@ function stackData(props, childComponents) {
   const filteredNullChild = filledDatasets.map((dataset) =>
     dataset.filter((datum) => datum._x !== null && datum._y !== null),
   );
-
-  console.log("stackData", {
-    props,
-    filledDatasets,
-    filteredNullChild,
-    dataFromChildren,
-  });
 
   return filteredNullChild.map((d, i) =>
     addLayoutData(props, filledDatasets, i),
