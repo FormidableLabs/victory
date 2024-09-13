@@ -22,63 +22,54 @@ const yellow = {
   "100": "#FFEAB6",
   "300": "#FFD66E",
   "500": "#FCB400",
-  // "600": "#E08D00",
   "900": "#B87503",
 };
 const orange = {
   "100": "#FEE2D5",
   "300": "#FFA981",
   "500": "#FF6F2C",
-  // "600": "#F7653B",
   "900": "#D74D26",
 };
 const red = {
   "100": "#FFDCE5",
   "300": "#FF9EB7",
   "500": "#F82B60",
-  // "600": "#EF3061",
   "900": "#BA1E45",
 };
 const pink = {
   "100": "#FFDAF6",
   "300": "#F99DE2",
   "500": "#FF08C2",
-  // "600": "#E929BA",
   "900": "#B2158B",
 };
 const purple = {
   "100": "#EDE3FE",
   "300": "#CDB0FF",
   "500": "#8B46FF",
-  // "600": "#7C39ED",
   "900": "#6B1CB0",
 };
 const blue = {
   "100": "#CFDFFF",
   "300": "#9CC7FF",
   "500": "#2D7FF9",
-  // "600": "#1283DA",
   "900": "#2750AE",
 };
 const cyan = {
   "100": "#D0F0FD",
   "300": "#77D1F3",
   "500": "#18BFFF",
-  // "600": "#01A9DB",
   "900": "#0B76B7",
 };
 const teal = {
   "100": "#C2F5E9",
   "300": "#72DDC3",
   "500": "#20D9D2",
-  // "600": "#02AAA4",
   "900": "#06A09B",
 };
 const green = {
   "100": "#D1F7C4",
   "300": "#93E088",
   "500": "#20C933",
-  // "600": "#11AF22",
   "900": "#338A17",
 };
 
@@ -117,7 +108,6 @@ const baseLabelStyles = {
   fontSize,
   letterSpacing,
   padding,
-  // fontWeight: "light",
   fill: gray["900"],
   stroke: "transparent",
 };
@@ -130,7 +120,7 @@ const centeredLabelStyles = Object.assign(
 // *
 // * Strokes
 // *
-// const strokeDasharray = "10, 5";
+const strokeDasharray = "10, 5";
 const strokeLinecap = "round";
 const strokeLinejoin = "round";
 const borderRadius = 1;
@@ -154,7 +144,7 @@ export const clean: VictoryThemeDefinition = {
       style: {
         axis: {
           fill: "transparent",
-          stroke: gray["200"],
+          stroke: gray["300"],
           strokeWidth: 1,
           strokeLinecap,
           strokeLinejoin,
@@ -170,7 +160,7 @@ export const clean: VictoryThemeDefinition = {
         },
         ticks: {
           fill: "transparent",
-          size: 1,
+          size: 5,
           stroke: "transparent",
         },
         tickLabels: baseLabelStyles,
@@ -178,13 +168,50 @@ export const clean: VictoryThemeDefinition = {
     },
     baseProps,
   ),
-  polarDependentAxis: Object.assign({
+  polarAxis: Object.assign({
     style: {
+      axis: {
+        stroke: gray["300"],
+      },
+      grid: {
+        stroke: gray["200"],
+        strokeDasharray,
+        strokeLinecap,
+        strokeLinejoin,
+        pointerEvents: "painted",
+      },
       ticks: {
         fill: "transparent",
-        size: 1,
-        stroke: "transparent",
+        size: 5,
+        stroke: gray["200"],
+        strokeWidth: 1,
+        strokeLinecap,
+        strokeLinejoin,
       },
+      tickLabels: baseLabelStyles,
+    }
+  }),
+  polarDependentAxis: Object.assign({
+    style: {
+      axis: {
+        stroke: gray["300"],
+      },
+      grid: {
+        stroke: gray["200"],
+        strokeDasharray,
+        strokeLinecap,
+        strokeLinejoin,
+        pointerEvents: "painted",
+      },
+      ticks: {
+        fill: "transparent",
+        size: 5,
+        stroke: gray["200"],
+        strokeWidth: 1,
+        strokeLinecap,
+        strokeLinejoin,
+      },
+      tickLabels: baseLabelStyles,
     },
   }),
   bar: Object.assign(
@@ -285,8 +312,9 @@ export const clean: VictoryThemeDefinition = {
       data: {
         type: "circle",
       },
-      labels: baseLabelStyles,
-      title: Object.assign({}, baseLabelStyles, { padding: 5 }),
+      labels: { ...baseLabelStyles, fontSize: 14},
+      title: Object.assign({}, baseLabelStyles, { padding, fontSize: 20 }),
+      border: { stroke: gray["200"], strokeWidth: 2, padding: 16 }
     },
   },
   line: Object.assign(

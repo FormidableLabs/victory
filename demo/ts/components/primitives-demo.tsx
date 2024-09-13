@@ -5,7 +5,7 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryChart } from "victory-chart";
 import { VictoryPolarAxis } from "victory-polar-axis";
-import { Arc, LineSegment, Whisker } from "victory-core";
+import { Arc, LineSegment, VictoryTheme, Whisker } from "victory-core";
 import { range, random } from "lodash";
 
 interface PrimitivesDemoState {
@@ -146,7 +146,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
             />
           </VictoryChart>
 
-          <VictoryChart domainPadding={20}>
+          <VictoryChart domainPadding={20} theme={VictoryTheme.clean}>
             <VictoryBoxPlot
               boxWidth={20}
               data={this.state.boxPlotData}

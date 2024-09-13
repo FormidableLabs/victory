@@ -220,6 +220,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
         />
 
         <VictoryGroup
+          theme={VictoryTheme.clean}
           containerComponent={<VictoryZoomContainer zoomDimension="y" />}
           style={{ parent: parentStyle }}
           data={this.state.transitionData}
@@ -262,6 +263,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           animate={{ duration: 1500 }}
           domainPadding={{ x: 20, y: 0 }}

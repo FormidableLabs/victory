@@ -97,6 +97,9 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart
+            theme={VictoryTheme.clean}
+            width={350}
+            height={350}
             style={chartStyle}
             scale={{ y: "log" }}
             containerComponent={
@@ -133,6 +136,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
           </VictoryChart>
 
           <VictoryChart
+            theme={VictoryTheme.clean}
             height={450}
             domain={{ y: [0, 1] }}
             style={chartStyle}
@@ -141,7 +145,7 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
                 labels={({ datum }) => `I'm kind of a long label ${datum.y}`}
                 mouseFollowTooltips
                 labelComponent={
-                  <VictoryTooltip constrainToVisibleArea flyoutWidth={80} />
+                  <VictoryTooltip constrainToVisibleArea />
                 }
               />
             }
@@ -205,7 +209,8 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
 
           <VictoryChart
             style={chartStyle}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
+            height={450}
             domainPadding={{ y: 2 }}
             containerComponent={
               <VictoryVoronoiContainer

@@ -630,20 +630,14 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }} scale={{ x: "time" }}>
+        <VictoryChart theme={VictoryTheme.clean} style={{ parent: parentStyle }} scale={{ x: "time" }}>
           <VictoryStack colorScale="qualitative">
             <VictoryHistogram
-              style={{
-                data: { stroke: "#833B61" },
-              }}
               data={this.state.dateDynamicBins.data}
               bins={this.state.dateDynamicBins.bins}
               animate={{ duration: 500 }}
             />
             <VictoryHistogram
-              style={{
-                data: { stroke: "#833B61" },
-              }}
               data={this.state.dateDynamicBins.data}
               bins={this.state.dateDynamicBins.bins}
               animate={{ duration: 500 }}

@@ -30,6 +30,7 @@ class PointedLine extends React.Component<PointedLineProps> {
 
       return (
         <Point
+          style={{ fill: "#FF08C2" }}
           symbol="circle"
           size={2}
           key={`line-${index}-point-${pointIndex}`}
@@ -183,6 +184,7 @@ export default class VictoryLineDemo extends React.Component<
         />
 
         <VictoryLine
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           data={this.state.arrayData}
           x={0}

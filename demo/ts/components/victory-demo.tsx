@@ -10,11 +10,12 @@ import { VictoryScatter } from "victory-scatter";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
 import { VictorySelectionContainer } from "victory-selection-container";
+import { VictoryTheme } from "victory-core/lib";
 
 export default class App extends React.Component {
   render() {
     const style = {
-      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
+      parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "100%" },
     };
     return (
       <div className="demo">
@@ -24,18 +25,19 @@ export default class App extends React.Component {
 
         <h3>VictoryPie</h3>
         <p>Default props</p>
-        <VictoryPie style={style} />
+        <VictoryPie theme={VictoryTheme.clean} style={style} />
 
         <h3>VictoryChart</h3>
         <p>
           Line chart of function <code>y = x^2</code>
         </p>
 
-        <VictoryChart style={style}>
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
           <VictoryLine y={(data) => data.x * data.x} />
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={style}
           domainPadding={{ x: 30, y: 30 }}
           height={600}
@@ -107,7 +109,7 @@ export default class App extends React.Component {
 
         <h3>VictoryChart</h3>
         <p>Custom axes and tickformats; Bar + line chart</p>
-        <VictoryChart style={style} domainPadding={{ x: 30, y: 30 }}>
+        <VictoryChart theme={VictoryTheme.clean} style={style} domainPadding={{ x: 30, y: 30 }}>
           <VictoryAxis
             tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
             tickFormat={(x) => `${x}\ntick`}
@@ -156,27 +158,28 @@ export default class App extends React.Component {
 
         <h3>VictoryAxis</h3>
         <p>Default props</p>
-        <VictoryAxis style={style} />
+        <VictoryAxis theme={VictoryTheme.clean} style={style} />
 
         <h3>VictoryBar</h3>
         <p>Default props</p>
-        <VictoryBar style={style} />
+        <VictoryBar theme={VictoryTheme.clean} style={style} />
 
         <h3>VictoryLine</h3>
         <p>Default props</p>
-        <VictoryLine style={style} />
+        <VictoryLine theme={VictoryTheme.clean} style={style} />
 
         <h3>VictoryScatter</h3>
         <p>Default props</p>
-        <VictoryScatter style={style} />
+        <VictoryScatter theme={VictoryTheme.clean} style={style} />
 
         <h3>VictoryArea</h3>
         <p>Default props</p>
-        <VictoryArea style={style} />
+        <VictoryArea theme={VictoryTheme.clean} style={style} />
 
         <h3>VictorySelectionContainer</h3>
 
         <VictoryGroup
+          theme={VictoryTheme.clean}
           style={style}
           containerComponent={
             <VictorySelectionContainer
@@ -234,6 +237,7 @@ export default class App extends React.Component {
         </VictoryGroup>
 
         <VictoryStack
+          theme={VictoryTheme.clean}
           style={style}
           containerComponent={
             <VictorySelectionContainer
@@ -286,7 +290,7 @@ export default class App extends React.Component {
             style={{
               data: {
                 fill: "gold",
-                stroke: ({ active }) => (active ? "black" : "none"),
+                stroke: ({ active }) => (active ? "#292929" : "none"),
                 strokeWidth: 2,
               },
             }}

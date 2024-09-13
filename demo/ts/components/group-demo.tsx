@@ -11,6 +11,7 @@ import { VictoryTooltip } from "victory-tooltip";
 import { VictoryVoronoi } from "victory-voronoi";
 import { VictoryBoxPlot } from "victory-box-plot";
 import { range, random } from "lodash";
+import { VictoryTheme } from "victory-core/lib";
 
 class App extends React.Component {
   getGroupData() {
@@ -57,7 +58,11 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle} domainPadding={20}>
+          <VictoryChart
+            theme={VictoryTheme.clean}
+            style={chartStyle}
+            domainPadding={20}
+          >
             <VictoryStack
               style={{
                 data: { strokeDasharray: "10, 5" },

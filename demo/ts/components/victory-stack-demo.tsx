@@ -1,6 +1,7 @@
 import React from "react";
 import { VictoryStack } from "victory-stack";
 import { VictoryArea } from "victory-area";
+import { VictoryTheme } from "victory-core/lib";
 
 class App extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class App extends React.Component {
         <h3 style={{ textAlign: "center" }}>Standalone Stack</h3>
 
         <div style={containerStyle}>
-          <VictoryStack style={chartStyle} aria-label="Victory Stack Demo">
+          <VictoryStack theme={VictoryTheme.clean} style={chartStyle} aria-label="Victory Stack Demo">
             <VictoryArea
               data={[
                 { x: "a", y: 2 },
