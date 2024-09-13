@@ -5,7 +5,7 @@ import { VictoryThemeDefinition } from "./victory-theme";
 // *
 
 const gray = {
-  "white": "#FFFFFF",
+  white: "#FFFFFF",
   "50": "#FAFAFA",
   "100": "#F2F2F2",
   "200": "#E8E8E8",
@@ -16,8 +16,8 @@ const gray = {
   "700": "#424242",
   "800": "#333333",
   "900": "#292929",
-  "black": "#0F0F0F",
-}
+  black: "#0F0F0F",
+};
 const yellow = {
   "100": "#FFEAB6",
   "300": "#FFD66E",
@@ -87,7 +87,8 @@ const colors = [
 // *
 // * Typography
 // *
-const sansSerif = "'Inter', 'Helvetica Neue', 'Seravek', 'Helvetica', sans-serif";
+const sansSerif =
+  "'Inter', 'Helvetica Neue', 'Seravek', 'Helvetica', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 12;
 // *
@@ -190,7 +191,7 @@ export const clean: VictoryThemeDefinition = {
         strokeLinejoin,
       },
       tickLabels: baseLabelStyles,
-    }
+    },
   }),
   polarDependentAxis: Object.assign({
     style: {
@@ -313,9 +314,9 @@ export const clean: VictoryThemeDefinition = {
       data: {
         type: "circle",
       },
-      labels: { ...baseLabelStyles, fontSize: 14},
+      labels: { ...baseLabelStyles, fontSize: 14 },
       title: Object.assign({}, baseLabelStyles, { padding, fontSize: 20 }),
-      border: { stroke: gray["200"], strokeWidth: 2, padding: 16 }
+      border: { stroke: gray["200"], strokeWidth: 2, padding: 16 },
     },
   },
   line: Object.assign(
