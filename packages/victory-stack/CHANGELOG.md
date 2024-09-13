@@ -1,5 +1,7 @@
 # victory-stack
 
+## 37.1.1
+
 ## 37.1.0
 
 ### Minor Changes
