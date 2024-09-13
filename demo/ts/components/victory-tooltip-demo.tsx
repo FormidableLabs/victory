@@ -76,15 +76,6 @@ class App extends React.Component {
             highLabelComponent={
               <VictoryTooltip
                 active dy={-3}
-                theme={VictoryTheme.clean}
-                pointerLength={4}
-                flyoutPadding={{ top: 8, bottom: 8, left: 16, right: 16 }}
-                cornerRadius={1}
-                flyoutStyle={{
-                  stroke: "#757575",
-                  strokeWidth: 2,
-                  fill: "white",
-                }}
               />
             }
             highLabels={({ datum }) => `hello #${datum.x}`}
@@ -98,6 +89,7 @@ class App extends React.Component {
           />
 
           <VictoryErrorBar
+            theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}
             labelComponent={<VictoryTooltip />}
             labels={({ datum }) => `hello #${datum.x}`}
