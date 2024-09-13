@@ -87,7 +87,7 @@ const colors = [
 // *
 // * Typography
 // *
-const sansSerif = "'Inter-Light', 'Helvetica Neue', 'Seravek', 'Helvetica', sans-serif";
+const sansSerif = "'Inter', 'Helvetica Neue', 'Seravek', 'Helvetica', sans-serif";
 const letterSpacing = "normal";
 const fontSize = 12;
 // *
@@ -106,6 +106,7 @@ const baseProps = {
 const baseLabelStyles = {
   fontFamily: sansSerif,
   fontSize,
+  fontWeight: 300,
   letterSpacing,
   padding,
   fill: gray["900"],
