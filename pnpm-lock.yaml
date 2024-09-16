@@ -3617,7 +3617,7 @@ packages:
 
   /@expo/bunyan@4.0.1:
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {node: '>=0.10.0'}
+    engines: {'0': node >=0.10.0}
     dependencies:
       uuid: 8.3.2
     dev: false
@@ -5675,7 +5675,7 @@ packages:
       '@babel/plugin-transform-object-rest-spread': 7.24.7(@babel/core@7.23.9)
       '@babel/plugin-transform-optional-catch-binding': 7.24.7(@babel/core@7.23.9)
       '@babel/plugin-transform-optional-chaining': 7.24.8(@babel/core@7.23.9)
-      '@babel/plugin-transform-parameters': 7.23.3(@babel/core@7.23.9)
+      '@babel/plugin-transform-parameters': 7.24.7(@babel/core@7.23.9)
       '@babel/plugin-transform-private-methods': 7.23.3(@babel/core@7.23.9)
       '@babel/plugin-transform-private-property-in-object': 7.23.4(@babel/core@7.23.9)
       '@babel/plugin-transform-react-display-name': 7.23.3(@babel/core@7.23.9)
@@ -5689,7 +5689,7 @@ packages:
       '@babel/plugin-transform-sticky-regex': 7.23.3(@babel/core@7.23.9)
       '@babel/plugin-transform-typescript': 7.23.6(@babel/core@7.23.9)
       '@babel/plugin-transform-unicode-regex': 7.23.3(@babel/core@7.23.9)
-      '@babel/template': 7.24.0
+      '@babel/template': 7.25.0
       '@react-native/babel-plugin-codegen': 0.75.3(@babel/preset-env@7.23.9)
       babel-plugin-transform-flow-enums: 0.0.2(@babel/core@7.23.9)
       react-refresh: 0.14.0
@@ -5721,7 +5721,7 @@ packages:
     peerDependencies:
       '@babel/preset-env': ^7.1.6
     dependencies:
-      '@babel/parser': 7.24.0
+      '@babel/parser': 7.25.6
       '@babel/preset-env': 7.23.9(@babel/core@7.23.9)
       glob: 7.2.3
       hermes-parser: 0.22.0
