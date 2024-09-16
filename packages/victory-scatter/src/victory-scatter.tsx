@@ -46,7 +46,10 @@ export interface VictoryScatterProps
   minBubbleSize?: number;
   size?: number | { (data: any): number };
   style?: VictoryStyleInterface;
-  symbol?: ScatterSymbolType | { (data: any): ScatterSymbolType };
+  symbol?:
+    | ScatterSymbolType
+    | { (data?: any): ScatterSymbolType }
+    | React.ReactElement;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

@@ -5,6 +5,7 @@ category: charts
 type: docs
 scope:
   - sampleData
+  - reactIconsFa
 ---
 
 # VictoryScatter
@@ -530,16 +531,52 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 
 `type: function || options`
 
-The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp". When this prop is given as a function, it will be evaluated for each point with the props corresponding to that point. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
+The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp".It also supports "custom React icons". When this prop is given as a function, it will be evaluated for each point with the props corresponding to that point. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
 
 _default:_ `symbol="circle"`
 
-```playground
-<VictoryScatter
-  symbol={({ datum }) => datum.y > 3 ? "triangleUp" : "triangleDown"}
-  size={7}
-  data={sampleData}
+```jsx
+import { FaSun,FaStar, FaVolleyballBall } from "react-icons/fa";
+const CustomIcon = (props) => <FaStar x={props.x - 25} y={props.y - 25} />
+const App(){
+  return <VictoryScatter
+  data={[
+    { x: 1, y: 85, symbol: <FaVolleyballBall size={20} /> },
+    { x: 2, y: 55, symbol: <CustomIcon /> },
+    { x: 3, y: 25, symbol: (props) => {
+        const x = props.x - 20;
+        const y = props.y - 20;
+        return <FaFootballBall x={x} y={y} size={40} />;
+      }
+    }
+  ]}
+  size={50}
 />
+}
+```
+
+```playground
+<>
+  <VictoryScatter
+    symbol={({ datum }) => datum.y > 3 ? "triangleUp" : "triangleDown"}
+    size={7}
+    data={sampleData}
+  />
+  <VictoryScatter
+    size={10}
+  data={[
+    { x: 1, y: 85, symbol: "star" },
+    { x: 2, y: 55, 
+    symbol: (props)=>{
+      const FaSun = reactIconsFa['FaSun'];
+      const x = props.x - 8;
+      const y = props.y - 8;
+      return <FaSun size={30} x={x} y={y}/>
+    }
+    },
+  ]}
+/>
+</>
 ```
 
 ## theme

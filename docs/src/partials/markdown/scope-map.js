@@ -5,6 +5,7 @@ import _ from "lodash";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 import * as d3Time from "d3-time";
+import * as reactIconsFa from 'react-icons/fa'
 
 import styled from "styled-components";
 import basketballData from "../../data/basketball-data";
@@ -25,6 +26,7 @@ const scopeMap = {
   Slider,
   basketballData,
   listeningData,
+  reactIconsFa,
   sampleData: [
     {
       x: 1,

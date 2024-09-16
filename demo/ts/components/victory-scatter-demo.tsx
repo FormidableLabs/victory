@@ -11,6 +11,7 @@ import {
 } from "victory-core";
 import bubbleData from "./bubble-data";
 import symbolData from "./symbol-data";
+import { FaFootballBall, FaMoon, FaSmile, FaStar, FaSun, FaVolleyballBall } from "react-icons/fa";
 
 type DataType = {
   x?: string | number;
@@ -136,6 +137,8 @@ class CatPoint extends React.Component<any, CatPointInterface> {
   }
 }
 
+const CustomIcon = (props) => <FaStar x={props.x - 25} y={props.y - 25} size={15} />
+
 export default class VictoryScatterDemo extends React.Component<
   any,
   VictoryScatterDemoState
@@ -208,7 +211,33 @@ export default class VictoryScatterDemo extends React.Component<
           y={(d) => Math.sin(2 * Math.PI * d.x)}
           samples={25}
         />
+        {/* custom icons */}
+        <VictoryScatter
+          style={{
+            parent: style.parent
+          }}
+          data={[
+            { x: 1, y: 45, symbol: (props) => <FaSun {...props} /> },
+            { x: 2, y: 85, symbol: <FaVolleyballBall size={30} /> },
+            { x: 3, y: 55, symbol: <CustomIcon /> },
+            {
+              x: 4, y: 25, symbol: (props) => {
+                const x = props.x - 10;
+                const y = props.y - 10;
+                return <FaFootballBall x={x} y={y} size={40} />;
+              }
+            },
+            { x: 5, y: 65, symbol: <FaSmile /> }
+          ]}
 
+          size={50}
+        />
+        <VictoryScatter
+          style={{
+            parent: style.parent
+          }}
+          symbol={<FaMoon size={10} />}
+        />
         <VictoryScatter
           style={symbolStyle}
           width={500}

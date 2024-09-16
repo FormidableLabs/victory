@@ -383,7 +383,8 @@ _note_ `Box` also exported as `Border`
 - `shapeRendering` _string_ the shape rendering attribute to apply to the rendered path
 - `size` _number or function_ the size of the point. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
 - `style` _object_ the styles to apply to the rendered element
-- `symbol` _"circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"_ which symbol the point should render. This prop may also be given as a function that returns one of the above options. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
+- `symbol` _"circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp"_ , which symbol the point should render.It also supports "custom react icons". 
+This prop may also be given as a function that returns one of the above options. When this prop is given as a function, it will be called with the rest of the props supplied to `Point`.
 - `tabIndex` _number or function_ number will be applied to the rendered path. When this prop is given as a function it will be called with the rest of the props supplied to `Point`
 - `transform` _string_ a transform that will be supplied to elements this component renders
 - `x` _number_ the x coordinate of the center of the point
