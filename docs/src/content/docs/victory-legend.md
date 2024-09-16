@@ -3,7 +3,8 @@ id: 16
 title: VictoryLegend
 category: more
 type: docs
-scope: null
+scope: 
+  - reactIconsFa
 ---
 
 # VictoryLegend
@@ -112,10 +113,51 @@ containerComponent={<VictoryContainer responsive={false}/>}
 
 `type: array[{ name, symbol, labels }]`
 
-Specify data via the `data` prop. `VictoryLegend` expects data as an array of objects with `name` (required), `symbol`, and `labels` properties. The `data` prop must be given as an array. The symbol rendered may be changed by altering the `type` property of the `symbol` object. Valid types include: circle", "diamond", "plus", "minus", "square", "star", "triangleDown", and "triangleUp"
+Specify data via the `data` prop. `VictoryLegend` expects data as an array of objects with `name` (required), `symbol`, and `labels` properties. The `data` prop must be given as an array. The symbol rendered may be changed by altering the `type` property of the `symbol` object. Valid types include: circle", "diamond", "plus", "minus", "square", "star", "triangleDown", and "triangleUp". It also supports custom icons.
 
 _default:_ `data={[{ name: "Series 1" }, { name: "Series 2" }]}`
 
+custom icons example:
+```jsx
+import { FaSun, FaFootballBall } from "react-icons/fa";
+
+const CustomIconSun = (props) => {
+  const x = props.x - 11;
+  const y = props.y - 11;
+  return (
+    <FaSun {...props} size={20} x={x} y={y} />
+  )
+}
+const App (){
+  return (
+  <VictoryLegend
+    orientation="vertical"
+    rowGutter={0}
+    style={{
+      labels: { lineHeight: 0.275 },
+    }}
+    symbolSpacer={18}
+    data={[
+      { name: "One", symbol: { type: <CustomIconSun />, fill: "red" } },
+      { name: "Three", symbol: { type: "star", fill: "brown", size: 6 } },
+      {
+        name: "Five",
+        symbol: {
+          type: (props) => {
+            const x = props.x - 8;
+            const y = props.y - 10;
+            return <FaFootballBall {...props} x={x} y={y} size={15} />;
+          },
+          fill: "red",
+        },
+      },
+    ]}
+  />;
+  )
+}
+```
+
+Icons from `react-icons/fa` can be used inside playground for testing.
 ```playground
 <VictoryLegend x={125} y={50}
   orientation="horizontal"
@@ -124,7 +166,16 @@ _default:_ `data={[{ name: "Series 1" }, { name: "Series 2" }]}`
   data={[
     { name: "One", symbol: { fill: "tomato", type: "star" } },
     { name: "Two", symbol: { fill: "orange" }, labels: { fill: "orange" } },
-    { name: "Three", symbol: { fill: "gold" } }
+    { name: "Three", symbol: { fill: "gold" } },
+    { name: "Four", symbol: { 
+    type: (props)=>{
+      const FaSun = reactIconsFa['FaSun'];
+      const x = props.x - 8;
+      const y = props.y - 8;
+      return <FaSun size={15} x={x} y={y}/>
+    }
+    }
+    },
   ]}
 />
 ```

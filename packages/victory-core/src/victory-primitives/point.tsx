@@ -1,4 +1,4 @@
-import React from "react";
+import React, { isValidElement } from "react";
 import { defaults } from "lodash";
 
 import * as Helpers from "../victory-util/helpers";
@@ -15,7 +15,7 @@ export interface PointProps extends VictoryCommonPrimitiveProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   size?: number | Function;
   // eslint-disable-next-line @typescript-eslint/ban-types
-  symbol?: ScatterSymbolType | Function;
+  symbol?: ScatterSymbolType | Function | React.ReactElement;
   x?: number;
   y?: number;
 }
@@ -49,8 +49,18 @@ const evaluateProps = (props) => {
   const id = Helpers.evaluateProp(props.id, props);
   const size = Helpers.evaluateProp(props.size, props);
   const style = Helpers.evaluateStyle(props.style, props);
-  const symbol = Helpers.evaluateProp(props.symbol, props);
   const tabIndex = Helpers.evaluateProp(props.tabIndex, props);
+
+  let isSymbolCallbackFn = false;
+  let symbol;
+
+  if (typeof props.symbol === "function") {
+    const symbolFn = props.symbol(props);
+    isSymbolCallbackFn = isValidElement(symbolFn);
+    symbol = isSymbolCallbackFn ? props.symbol : symbolFn;
+  } else {
+    symbol = props.symbol;
+  }
 
   return Object.assign({}, props, {
     ariaLabel,
@@ -60,11 +70,11 @@ const evaluateProps = (props) => {
     style,
     symbol,
     tabIndex,
+    isSymbolCallbackFn,
   });
 };
 
 const defaultProps = {
-  pathComponent: <Path />,
   role: "presentation",
   shapeRendering: "auto",
 };
@@ -73,18 +83,41 @@ export const Point = (initialProps: PointProps) => {
   const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const userProps = UserProps.getSafeUserProps(props);
 
-  return React.cloneElement(props.pathComponent!, {
+  const commonProps = {
     ...props.events,
     "aria-label": props.ariaLabel,
-    d: getPath(props),
     style: props.style,
-    desc: props.desc,
     tabIndex: props.tabIndex,
     role: props.role,
     shapeRendering: props.shapeRendering,
     className: props.className,
     transform: props.transform,
-    clipPath: props.clipPath,
     ...userProps,
+  };
+
+  // check if symbol is React element
+  if (isValidElement(props.symbol) || props.isSymbolCallbackFn) {
+    const symbolProps = {
+      ...commonProps,
+      height: props.size,
+      width: props.size,
+      x: props.x,
+      y: props.y,
+    };
+    if (props.isSymbolCallbackFn) {
+      const symbol = props.symbol(symbolProps);
+      return React.cloneElement(symbol);
+    }
+    return React.cloneElement(props.symbol, {
+      ...symbolProps,
+    });
+  }
+
+  const pathComponent = <Path />;
+  return React.cloneElement(pathComponent!, {
+    d: getPath(props),
+    desc: props.desc,
+    clipPath: props.clipPath,
+    ...commonProps,
   });
 };

@@ -6,6 +6,8 @@ import { VictoryLegend } from "../packages/victory-legend";
 import { range } from "lodash";
 import { Meta } from "@storybook/react";
 import { storyContainer } from "./decorators";
+import { FaSun, FaMoon, FaFootballBall } from "react-icons/fa";
+import { FaEarthAmericas } from "react-icons/fa6";
 
 const meta: Meta<typeof VictoryLegend> = {
   title: "Victory Charts/SVG Container/VictoryLegend",
@@ -160,5 +162,69 @@ export const Title = () => {
         />
       </Wrapper>
     </>
+  );
+};
+
+const CustomIconSun = (props) => {
+  const x = props.x - 11;
+  const y = props.y - 11;
+  return <FaSun {...props} size={20} x={x} y={y} />;
+};
+
+const CustomIconMoon = (props) => {
+  const x = props.x - 8;
+  const y = props.y - 8;
+  return <FaMoon {...props} fill={"orange"} x={x} y={y} size={15} />;
+};
+
+const CustomIconEarth = (props) => {
+  const x = props.x - 7;
+  const y = props.y - 7;
+  return <FaEarthAmericas {...props} x={x} y={y} size={14} />;
+};
+
+export const CustomIcon = () => {
+  return (
+    <Wrapper>
+      <VictoryLegend
+        orientation="vertical"
+        rowGutter={0}
+        style={{
+          labels: { lineHeight: 0.275 },
+        }}
+        symbolSpacer={18}
+        data={[
+          { name: "One", symbol: { type: <CustomIconSun />, fill: "red" } },
+          { name: "Two", symbol: { type: <CustomIconMoon /> } },
+          { name: "Three", symbol: { type: "star", fill: "brown", size: 6 } },
+          { name: "Four", symbol: { type: <CustomIconEarth /> } },
+          {
+            name: "Five",
+            symbol: {
+              type: (props) => {
+                const x = props.x - 8;
+                const y = props.y - 10;
+                return <FaFootballBall {...props} x={x} y={y} size={15} />;
+              },
+              fill: "red",
+            },
+          },
+        ]}
+        events={[
+          {
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: () => ({ symbol: "star" }),
+                  },
+                ];
+              },
+            },
+          },
+        ]}
+      />
+    </Wrapper>
   );
 };

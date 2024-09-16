@@ -1,6 +1,7 @@
 import React from "react";
 import { VictoryLabel, Border } from "victory-core";
 import { VictoryLegend } from "victory-legend";
+import { FaMoon, FaSun } from 'react-icons/fa'
 
 const containerStyle: React.CSSProperties = {
   display: "flex",
@@ -18,6 +19,12 @@ const legendStyle = {
 
 const symbolSize = 5;
 const symbolSpacer = 10;
+
+const CustomSun = (props) => {
+  return (
+    <FaSun {...props} x={props.x - 7} y={props.y - 7} />)
+}
+
 const data = [
   {
     name: "Series 1",
@@ -72,18 +79,26 @@ const data = [
     name: "Series 6: also quite long",
     symbol: {
       size: symbolSize,
-      type: "circle",
+      type: <CustomSun size={15} />,
       fill: "orange",
     },
     labels: {
       fill: "blue",
     },
   },
+  {
+    name: "Series 7",
+    symbol: {
+      size: symbolSize,
+      type: (props) => <FaMoon {...props} x={props.x - 8} y={props.y - 8} size={15} />,
+      fill: "orange",
+    },
+  },
 ];
 
 const LegendDemo = () => (
   <div className="demo" style={containerStyle}>
-    <svg height={800} width={1000} style={{ margin: "2%" }}>
+    <svg height={800} width={1200} style={{ margin: "2%" }}>
       <VictoryLegend
         standalone={false}
         x={25}

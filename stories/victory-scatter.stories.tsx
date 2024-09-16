@@ -14,6 +14,13 @@ import { fromJS } from "immutable";
 import styled from "styled-components";
 import { Meta } from "@storybook/react";
 import { storyContainer } from "./decorators";
+import {
+  FaFootballBall,
+  FaMoon,
+  FaStar,
+  FaSun,
+  FaVolleyballBall,
+} from "react-icons/fa";
 
 const meta: Meta = {
   title: "Victory Charts/SVG Container/VictoryScatter",
@@ -157,6 +164,46 @@ export const FunctionalSymbols = () => {
           symbol={({ index }) => SYMBOLS[index]}
           labels={({ index }) => SYMBOLS[index]}
           size={8}
+        />
+      </VictoryChart>
+    </>
+  );
+};
+
+const CustomIcon = (props) => <FaStar x={props.x - 25} y={props.y - 25} />;
+
+export const CustomSymbols = () => {
+  return (
+    <>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          data={[
+            { x: 1, y: 45, symbol: <FaSun size={15} /> },
+            { x: 2, y: 85, symbol: "circle" },
+            { x: 3, y: 55, symbol: "square" },
+            { x: 4, y: 15 },
+          ]}
+          symbol={<FaMoon />}
+          size={18}
+        />
+      </VictoryChart>
+      <VictoryChart {...defaultChartProps}>
+        <VictoryScatter
+          data={[
+            { x: 1, y: 45, symbol: (props) => <FaSun {...props} /> },
+            { x: 2, y: 85, symbol: <FaVolleyballBall size={20} /> },
+            { x: 3, y: 55, symbol: <CustomIcon /> },
+            {
+              x: 4,
+              y: 25,
+              symbol: (props) => {
+                const x = props.x - 20;
+                const y = props.y - 20;
+                return <FaFootballBall x={x} y={y} size={40} />;
+              },
+            },
+          ]}
+          size={50}
         />
       </VictoryChart>
     </>
