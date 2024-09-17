@@ -31,6 +31,8 @@ const fallbackProps = {
 
 export type VictoryScatterTTargetType = "data" | "labels" | "parent";
 
+type SymbolType = ScatterSymbolType | React.ReactElement;
+
 export interface VictoryScatterProps
   extends VictoryCommonProps,
     VictoryDatableProps,
@@ -46,10 +48,7 @@ export interface VictoryScatterProps
   minBubbleSize?: number;
   size?: number | { (data: any): number };
   style?: VictoryStyleInterface;
-  symbol?:
-    | ScatterSymbolType
-    | { (data?: any): ScatterSymbolType }
-    | React.ReactElement;
+  symbol?: SymbolType | { (data?: any): SymbolType };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
