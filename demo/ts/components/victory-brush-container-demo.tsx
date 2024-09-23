@@ -10,7 +10,7 @@ import { VictoryScatter } from "victory-scatter";
 import { VictoryLegend } from "victory-legend";
 import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryBrushContainer } from "victory-brush-container";
-import { DomainTuple } from "victory-core";
+import { DomainTuple, VictoryTheme } from "victory-core";
 
 interface VictoryBrushContainerDemoState {
   zoomDomain: {
@@ -48,6 +48,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart
+            theme={VictoryTheme.clean}
             width={800}
             height={500}
             scale={{ x: "time" }}
@@ -119,6 +120,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
           </VictoryChart>
 
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}

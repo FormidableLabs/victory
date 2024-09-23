@@ -9,6 +9,7 @@ import { VictoryScatter } from "victory-scatter";
 import { VictorySelectionContainer } from "victory-selection-container";
 import { VictoryLegend } from "victory-legend";
 import { VictoryTooltip } from "victory-tooltip";
+import { VictoryTheme } from "victory-core/lib";
 
 interface SelectionDemoState {
   points: { x: number; y: number }[];
@@ -74,6 +75,7 @@ export default class SelectionDemo extends React.Component<
         <div style={containerStyle}>
           {this.listData()}
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             height={400}
             padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
@@ -311,6 +313,7 @@ export default class SelectionDemo extends React.Component<
 
           <VictoryChart
             horizontal
+            theme={VictoryTheme.clean}
             style={chartStyle}
             containerComponent={
               <VictorySelectionContainer
@@ -329,7 +332,7 @@ export default class SelectionDemo extends React.Component<
                 style={{
                   data: {
                     fill: "tomato",
-                    stroke: ({ active }) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "#292929" : "none"),
                     strokeWidth: 2,
                   },
                 }}
@@ -347,7 +350,7 @@ export default class SelectionDemo extends React.Component<
                 style={{
                   data: {
                     fill: "orange",
-                    stroke: ({ active }) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "#292929" : "none"),
                     strokeWidth: 2,
                   },
                 }}
@@ -365,7 +368,7 @@ export default class SelectionDemo extends React.Component<
                 style={{
                   data: {
                     fill: "gold",
-                    stroke: ({ active }) => (active ? "black" : "none"),
+                    stroke: ({ active }) => (active ? "#292929" : "none"),
                     strokeWidth: 2,
                   },
                 }}

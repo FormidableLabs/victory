@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers*/
 import React from "react";
-import { VictoryLabel } from "victory-core";
+import { VictoryLabel, VictoryTheme } from "victory-core";
 import { VictoryScatter, VictoryScatterProps } from "victory-scatter";
 
 const containerStyle: React.CSSProperties = {
@@ -31,6 +31,7 @@ export default class App extends React.Component<any, {}> {
     return (
       <div style={containerStyle}>
         <VictoryScatter
+          theme={VictoryTheme.clean}
           {...defaultScatterProps}
           labelComponent={<VictoryLabel />}
         />

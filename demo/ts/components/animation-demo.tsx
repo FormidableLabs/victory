@@ -115,10 +115,10 @@ export default class App extends React.Component<any, any> {
           animate
           data={this.state.areaTransitionData}
           x={(d) => d.x}
-          theme={VictoryTheme.material}
+          theme={VictoryTheme.clean}
         />
 
-        <VictoryChart style={style} animate theme={VictoryTheme.material}>
+        <VictoryChart style={style} animate theme={VictoryTheme.clean}>
           <VictoryArea data={this.state.areaTransitionData} />
         </VictoryChart>
 

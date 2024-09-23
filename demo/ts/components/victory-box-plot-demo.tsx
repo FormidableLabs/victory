@@ -64,7 +64,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
         <VictoryChart
           style={chartStyle}
           minDomain={0}
-          theme={VictoryTheme.material}
+          theme={VictoryTheme.clean}
         >
           <VictoryBoxPlot
             minLabels
@@ -78,7 +78,10 @@ export default class VictoryBoxPlotDemo extends React.Component<
             ]}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle}>
+        <VictoryChart 
+          style={chartStyle}
+          theme={VictoryTheme.clean}
+        >
           <VictoryBoxPlot
             data={[
               { x: 1, y: 10 },

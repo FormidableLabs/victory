@@ -343,6 +343,7 @@ export default class ImmutableDemo extends React.Component<
           </VictoryChart>
 
           <VictoryLine
+            theme={VictoryTheme.clean}
             style={chartStyle}
             labels={({ datum }) => Math.round(datum.y)}
             data={fromJS([
@@ -1003,7 +1004,7 @@ export default class ImmutableDemo extends React.Component<
 
           <VictoryChart
             polar
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             domain={{ y: [0, 1] }}
             style={chartStyle}
           >

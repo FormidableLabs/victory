@@ -80,7 +80,7 @@ export default class VictoryErrorBarDemo extends React.Component<
           justifyContent: "center",
         }}
       >
-        <VictoryChart style={style}>
+        <VictoryChart style={style} theme={VictoryTheme.clean}>
           <VictoryErrorBar data={basicData} />
           <VictoryScatter data={basicData} />
         </VictoryChart>

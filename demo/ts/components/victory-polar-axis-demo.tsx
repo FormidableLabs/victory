@@ -163,7 +163,9 @@ class App extends React.Component<any, VictoryPolarAxisState> {
 
           <VictoryChart
             polar
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
+            width={350}
+            height={350}
             style={chartStyle}
             containerComponent={<VictorySelectionContainer />}
           >
@@ -227,7 +229,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
             </VictoryGroup>
           </VictoryChart>
 
-          <VictoryChart polar theme={VictoryTheme.material} style={chartStyle}>
+          <VictoryChart polar theme={VictoryTheme.clean} width={350} height={350} style={chartStyle}>
             <VictoryPolarAxis dependentAxis tickValues={[2, 6, 8]} />
 
             <VictoryGroup
@@ -262,7 +264,9 @@ class App extends React.Component<any, VictoryPolarAxisState> {
 
           <VictoryChart
             polar
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
+            width={350}
+            height={350}
             style={chartStyle}
             containerComponent={<VictoryVoronoiContainer />}
           >

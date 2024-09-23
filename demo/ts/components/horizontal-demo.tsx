@@ -14,6 +14,7 @@ import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryAxis } from "victory-axis";
 import { VictoryBrushContainer } from "victory-brush-container";
 import { range, random } from "lodash";
+import { VictoryTheme } from "victory-core/lib";
 
 const errorData = [
   { x: 1, y: 10, errorX: [1, 0.5], errorY: 1 },
@@ -77,9 +78,9 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart horizontal style={chartStyle}>
+        <VictoryChart horizontal theme={VictoryTheme.clean} style={chartStyle}>
           <VictoryBar
-            cornerRadius={{ topRight: 5 }}
+            cornerRadius={{ topLeft: 1, topRight: 5 }}
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },

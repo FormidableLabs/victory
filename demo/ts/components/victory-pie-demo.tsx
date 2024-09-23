@@ -117,8 +117,10 @@ export default class VictoryPieDemo extends React.Component<
           <VictoryPie
             startAngle={90}
             endAngle={-90}
+            theme={VictoryTheme.clean}
             style={{
               parent: parentStyle,
+              data: { stroke: "#f7f7f7" }, // stroke to "disappear" into background
               labels: { fill: "white", fontSize: 10 },
             }}
             labelRadius={60}
@@ -145,7 +147,8 @@ export default class VictoryPieDemo extends React.Component<
             ]}
           />
           <VictoryPie
-            style={{ parent: parentStyle }}
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle, data: { stroke: "#f7f7f7" }, }}
             labelPosition="endAngle"
             width={200}
             height={400}

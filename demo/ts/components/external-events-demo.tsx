@@ -9,6 +9,7 @@ import { VictoryLine } from "victory-line";
 import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryVoronoiContainer } from "victory-voronoi-container";
 import { range } from "lodash";
+import { VictoryTheme } from "victory-core/lib";
 
 class App extends React.Component<any, any> {
   constructor(props) {
@@ -105,6 +106,7 @@ class App extends React.Component<any, any> {
             </li>
           </ul>
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             domainPadding={{ x: 40 }}
             animate
@@ -139,7 +141,7 @@ class App extends React.Component<any, any> {
               name="data"
               labels={() => null}
               data={this.state.data}
-              style={{ data: { fill: "cyan" } }}
+              // style={{ data: { fill: "cyan" } }}
             />
           </VictoryChart>
 
@@ -228,6 +230,7 @@ class App extends React.Component<any, any> {
             </VictoryStack>
           </VictoryChart>
           <VictoryStack
+            theme={VictoryTheme.clean}
             style={chartStyle}
             externalEventMutations={this.state.externalMutation}
             containerComponent={<VictoryVoronoiContainer />}
@@ -241,7 +244,8 @@ class App extends React.Component<any, any> {
                   strokeWidth: 2,
                 },
               }}
-              barWidth={({ active }) => (active ? 5 : 3)}
+              cornerRadius={{ top: 1, bottom: 1 }}
+              barWidth={({ active }) => (active ? 7 : 4)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -260,7 +264,8 @@ class App extends React.Component<any, any> {
                   strokeWidth: 2,
                 },
               }}
-              barWidth={({ active }) => (active ? 5 : 3)}
+              cornerRadius={{ top: 1, bottom: 1 }}
+              barWidth={({ active }) => (active ? 7 : 4)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },

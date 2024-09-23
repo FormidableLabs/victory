@@ -222,7 +222,7 @@ export default class VictoryBarDemo extends React.Component<
           />
         </ChartWrap>
 
-        <VictoryChart domainPadding={{ y: 20 }}>
+        <VictoryChart domainPadding={ 20 } theme={VictoryTheme.clean}>
           <VictoryBar
             data={[
               { x: 1, y: "Alpha" },
@@ -250,6 +250,7 @@ export default class VictoryBarDemo extends React.Component<
         </VictoryChart>
 
         <VictoryBar
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           labels={() => "HELLO"}
           labelComponent={
@@ -314,7 +315,7 @@ export default class VictoryBarDemo extends React.Component<
         <VictoryChart
           style={{ parent: parentStyle }}
           domainPadding={{ x: 30 }}
-          theme={VictoryTheme.material}
+          theme={VictoryTheme.clean}
         >
           <VictoryGroup
             offset={12}

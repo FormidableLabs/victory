@@ -11,6 +11,7 @@ import {
   VictoryClipContainer,
   Point,
   Selection,
+  VictoryTheme,
 } from "victory-core";
 import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryBrushContainer } from "victory-brush-container";
@@ -163,6 +164,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
     return (
       <div style={containerStyle}>
         <VictoryChart
+          theme={VictoryTheme.clean}
           horizontal
           {...sharedProps}
           height={400}
@@ -228,6 +230,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
           />
         </VictoryChart>
         <VictoryChart
+          theme={VictoryTheme.clean}
           horizontal
           {...sharedProps}
           padding={{ top: 30, left: 50, right: 30, bottom: 0 }}

@@ -135,9 +135,8 @@ export default class VictoryAreaDemo extends React.Component<
 
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryChart style={style} scale={{ y: "log" }}>
+        <VictoryChart style={style} scale={{ y: "log" }} theme={VictoryTheme.clean}>
           <VictoryArea
-            style={{ data: { fill: "cyan", stroke: "cyan" } }}
             labels={({ datum }: any) => Math.round(datum.y)}
             data={[
               { x: 1, y: 0.2 },

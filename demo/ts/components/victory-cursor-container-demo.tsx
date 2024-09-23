@@ -103,7 +103,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
           <VictoryChart
             horizontal
             style={chartStyle}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             domainPadding={{ x: 15 }}
             containerComponent={
               <VictoryCursorContainer
@@ -150,6 +150,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
           </VictoryChart>
 
           <VictoryScatter
+            theme={VictoryTheme.clean}
             animate={{ duration: 1000 }}
             style={{
               parent: chartStyle.parent,
@@ -159,6 +160,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             }}
             containerComponent={
               <VictoryCursorContainer
+                theme={VictoryTheme.clean}
                 cursorLabel={({ datum }) => round(datum.x, 2)}
                 defaultCursorValue={1}
               />

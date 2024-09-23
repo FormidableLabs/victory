@@ -11,6 +11,7 @@ import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryLegend } from "victory-legend";
+import { VictoryTheme } from "victory-core/lib";
 
 const Charts = ({ behaviors }) => {
   const containerStyle: React.CSSProperties = {
@@ -112,6 +113,7 @@ const Charts = ({ behaviors }) => {
         </VictoryChart>
         {/* B */}
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: chartStyle.parent }}
           containerComponent={
             <CustomContainer
@@ -140,6 +142,7 @@ const Charts = ({ behaviors }) => {
         </VictoryChart>
         {/* C */}
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={chartStyle}
           containerComponent={
             <CustomContainer selectedDomain={{ x: [0, 0] }} />
@@ -152,7 +155,18 @@ const Charts = ({ behaviors }) => {
               }}
               size={({ active }) => (active ? 5 : 3)}
               labels={({ datum }) => datum.y}
-              labelComponent={<VictoryTooltip />}
+              labelComponent={
+                <VictoryTooltip
+                  pointerLength={4}
+                  flyoutPadding={{ top: 8, bottom: 8, left: 16, right: 16 }}
+                  cornerRadius={1}
+                  flyoutStyle={{
+                    stroke: "#757575",
+                    strokeWidth: 2,
+                    fill: "white",
+                  }}
+                />
+              }
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -169,7 +183,18 @@ const Charts = ({ behaviors }) => {
               }}
               size={({ active }) => (active ? 5 : 3)}
               labels={({ datum }) => datum.y}
-              labelComponent={<VictoryTooltip />}
+              labelComponent={
+                <VictoryTooltip
+                  pointerLength={4}
+                  flyoutPadding={{ top: 8, bottom: 8, left: 16, right: 16 }}
+                  cornerRadius={1}
+                  flyoutStyle={{
+                    stroke: "#757575",
+                    strokeWidth: 2,
+                    fill: "white",
+                  }}
+                />
+              }
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -191,7 +216,18 @@ const Charts = ({ behaviors }) => {
                 { x: 7, y: -3 },
               ]}
               labels={({ datum }) => datum.y}
-              labelComponent={<VictoryTooltip />}
+              labelComponent={
+                <VictoryTooltip
+                  pointerLength={4}
+                  flyoutPadding={{ top: 8, bottom: 8, left: 16, right: 16 }}
+                  cornerRadius={1}
+                  flyoutStyle={{
+                    stroke: "#757575",
+                    strokeWidth: 2,
+                    fill: "white",
+                  }}
+                />
+              }
               size={({ active }) => (active ? 5 : 3)}
             />
           </VictoryGroup>

@@ -26,6 +26,7 @@ class EventsDemo extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryBar
+            theme={VictoryTheme.clean}
             style={{
               parent: chartStyle.parent,
               data: { fill: "blue", width: 20 },
@@ -152,6 +153,7 @@ class EventsDemo extends React.Component {
           </VictoryChart>
 
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             events={[
               {
@@ -188,7 +190,7 @@ class EventsDemo extends React.Component {
               },
             ]}
           >
-            <VictoryLabel text="Parent Events" y={50} x={150} />
+            <VictoryLabel text="Parent Events" y={50} x={150} style={{...VictoryTheme.clean.label, fontSize: 18 }} />
             <VictoryBar name="bar" labels={() => null} />
           </VictoryChart>
 

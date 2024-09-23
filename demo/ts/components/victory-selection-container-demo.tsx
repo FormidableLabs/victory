@@ -119,7 +119,9 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
           <VictoryChart
             polar
             animate={{ duration: 500 }}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
+            width={350}
+            height={350}
             domain={{ y: [0, 10] }}
             style={chartStyle}
             containerComponent={<VictorySelectionContainer />}
@@ -144,7 +146,9 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
             polar
             animate={{ duration: 500 }}
             domain={{ y: [0, 10] }}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
+            width={350}
+            height={350}
             style={chartStyle}
             containerComponent={<VictoryVoronoiContainer />}
           >

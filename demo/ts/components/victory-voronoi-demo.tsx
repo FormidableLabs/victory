@@ -5,6 +5,7 @@ import { VictoryTooltip } from "victory-tooltip";
 import { VictoryChart } from "victory-chart";
 import { VictoryScatter } from "victory-scatter";
 import { range, random } from "lodash";
+import { VictoryTheme } from "victory-core/lib";
 
 type dataType = {
   x: number;
@@ -74,9 +75,10 @@ class VoronoiDemo extends React.Component<any, VoronoiDemoStateProps> {
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryVoronoi style={{ parent: parentStyle, data: visible }} />
+          <VictoryVoronoi theme={VictoryTheme.clean} style={{ parent: parentStyle, data: visible }} />
 
           <VictoryVoronoi
+            theme={VictoryTheme.clean}
             style={{ parent: parentStyle, data: visible }}
             data={[
               { x: 1, y: 1 },
@@ -124,7 +126,7 @@ class VoronoiDemo extends React.Component<any, VoronoiDemoStateProps> {
             data={this.state.data}
           />
 
-          <VictoryChart horizontal style={{ parent: parentStyle }}>
+          <VictoryChart horizontal style={{ parent: parentStyle }}  theme={VictoryTheme.clean} >
             <VictoryVoronoi
               labels={({ datum }) => `#${datum.i}`}
               labelComponent={<VictoryTooltip />}
