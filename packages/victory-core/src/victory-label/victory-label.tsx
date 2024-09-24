@@ -1,10 +1,12 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
-import { defaults, isEmpty } from "lodash";
+/* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2, 50] }]*/
+import { defaults, isEmpty, uniqueId } from "lodash";
 import React from "react";
 import { VictoryPortal } from "../victory-portal/victory-portal";
 import { Rect } from "../victory-primitives/rect";
 import { Text } from "../victory-primitives/text";
 import { TSpan } from "../victory-primitives/tspan";
+import { TextPath } from "../victory-primitives/text-path";
+import { Path } from "../victory-primitives/path";
 import * as Helpers from "../victory-util/helpers";
 import * as LabelHelpers from "../victory-util/label-helpers";
 import * as Log from "../victory-util/log";
@@ -22,10 +24,15 @@ import {
   VerticalAnchorType,
   VictoryLabelStyleObject,
 } from "../victory-theme/victory-theme";
+import * as d3Shape from "victory-vendor/d3-shape";
 
 export type TextAnchorType = "start" | "middle" | "end" | "inherit";
 export type OriginType = { x: number; y: number };
-export type LabelOrientationType = "parallel" | "perpendicular" | "vertical";
+export type LabelOrientationType =
+  | "parallel"
+  | "perpendicular"
+  | "vertical"
+  | "curved";
 
 export interface VictoryLabelProps {
   angle?: StringOrNumberOrCallback;
@@ -50,6 +57,7 @@ export interface VictoryLabelProps {
   origin?: OriginType;
   polar?: boolean;
   renderInPortal?: boolean;
+  startOffset?: number | string;
   style?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   tabIndex?: NumberOrCallback;
   text?: string[] | StringOrNumberOrCallback;
@@ -63,6 +71,11 @@ export interface VictoryLabelProps {
   y?: number;
   dx?: StringOrNumberOrCallback;
   dy?: StringOrNumberOrCallback;
+  textPathComponent?: React.ReactElement;
+  labelRadius?: number;
+  labelStartAngle?: number;
+  labelEndAngle?: number;
+  curvedLabelTransform?: ValueOrAccessor<string | object>;
 }
 
 const defaultStyles = {
@@ -480,6 +493,26 @@ const evaluateProps = (props) => {
   });
 };
 
+function getCurvedLabelProps(
+  labelRadius = 50,
+  startAngle = 0,
+  endAngle = Math.PI / 2,
+) {
+  if (labelRadius) {
+    const labelArc = d3Shape.arc();
+    const path = labelArc({
+      outerRadius: labelRadius,
+      innerRadius: labelRadius,
+      startAngle,
+      endAngle,
+    });
+    const id = uniqueId("label-path-");
+    const curvedLabelProps = { path, id, href: `#${id}` };
+    return curvedLabelProps;
+  }
+  return undefined;
+}
+
 const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
   const ariaLabel = Helpers.evaluateProp(props.ariaLabel, props);
   const style = getSingleValue(props.style!);
@@ -498,6 +531,14 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
   const x = props.x !== undefined ? props.x : getPosition(props, "x");
   const y = props.y !== undefined ? props.y : getPosition(props, "y");
   const transform = getTransform(props, x, y);
+  const curvedLabelProps =
+    props.labelPlacement === "curved"
+      ? getCurvedLabelProps(
+          props.labelRadius,
+          props.labelStartAngle,
+          props.labelEndAngle,
+        )
+      : undefined;
 
   return Object.assign({}, props, {
     ariaLabel,
@@ -511,6 +552,7 @@ const getCalculatedProps = <T extends VictoryLabelProps>(props: T) => {
     transform,
     x,
     y,
+    curvedLabelProps,
   });
 };
 
@@ -534,40 +576,101 @@ const renderLabel = (calculatedProps, tspanValues) => {
     tabIndex,
     tspanComponent,
     textComponent,
+    textPathComponent,
+    labelPlacement,
+    curvedLabelProps,
+    groupComponent,
+    curvedLabelTransform,
+    startOffset,
   } = calculatedProps;
+
   const userProps = UserProps.getSafeUserProps(calculatedProps);
 
-  const textProps = {
-    "aria-label": ariaLabel,
-    key: "text",
-    ...events,
-    direction,
-    dx,
-    x,
-    y: y + dy,
-    transform,
-    className,
-    title,
-    desc: Helpers.evaluateProp(desc, calculatedProps),
-    tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
-    id,
-    ...userProps,
-  };
+  let textProps;
+
+  if (labelPlacement !== "curved") {
+    textProps = {
+      "aria-label": ariaLabel,
+      key: "text",
+      ...events,
+      direction,
+      dx,
+      x,
+      y: y + dy,
+      transform,
+      className,
+      title,
+      desc: Helpers.evaluateProp(desc, calculatedProps),
+      tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
+      id,
+      ...userProps,
+    };
+  } else {
+    textProps = {
+      "aria-label": ariaLabel,
+      key: "text",
+      ...events,
+      direction,
+      className,
+      title,
+      desc: Helpers.evaluateProp(desc, calculatedProps),
+      tabIndex: Helpers.evaluateProp(tabIndex, calculatedProps),
+      id,
+      ...userProps,
+    };
+  }
 
   const tspans = text.map((line, i) => {
     const currentStyle = tspanValues[i].style;
+    if (labelPlacement !== "curved") {
+      const tspanProps = {
+        key: `${id}-key-${i}`,
+        style: currentStyle,
+        children: line,
+        x: !inline ? x : undefined,
+        dx: inline ? dx + tspanValues[i].backgroundPadding.left : dx,
+        dy: getTSpanDy(tspanValues, calculatedProps, i),
+        textAnchor: currentStyle.textAnchor || textAnchor,
+      };
+      return React.cloneElement(tspanComponent, tspanProps);
+    }
     const tspanProps = {
       key: `${id}-key-${i}`,
-      x: !inline ? x : undefined,
-      dx: inline ? dx + tspanValues[i].backgroundPadding.left : dx,
-      dy: getTSpanDy(tspanValues, calculatedProps, i),
-      textAnchor: currentStyle.textAnchor || textAnchor,
       style: currentStyle,
       children: line,
+      dx: inline ? dx + tspanValues[i].backgroundPadding.left : dx,
     };
     return React.cloneElement(tspanComponent, tspanProps);
   });
 
+  if (labelPlacement === "curved") {
+    const pathComponent: React.ReactElement = <Path />;
+    const pathLabelComponent = React.cloneElement(pathComponent, {
+      d: curvedLabelProps.path,
+      id: curvedLabelProps.id,
+      fill: "transparent",
+    });
+    const textPathElement = React.cloneElement(
+      textPathComponent,
+      {
+        href: curvedLabelProps && curvedLabelProps.href,
+        startOffset,
+        textAnchor: startOffset ? textAnchor : undefined,
+      },
+      tspans,
+    );
+    const textLabelComponent = React.cloneElement(
+      textComponent,
+      textProps,
+      textPathElement,
+    );
+    return React.cloneElement(
+      groupComponent,
+      { transform: curvedLabelTransform },
+      pathLabelComponent,
+      textLabelComponent,
+    );
+  }
   return React.cloneElement(textComponent, textProps, tspans);
 };
 
@@ -579,7 +682,9 @@ const defaultProps = {
   tspanComponent: <TSpan />,
   capHeight: 0.71, // Magic number from d3.
   lineHeight: 1,
+  textPathComponent: <TextPath />,
 };
+
 export const VictoryLabel: {
   role: string;
   defaultStyles: typeof defaultStyles;
