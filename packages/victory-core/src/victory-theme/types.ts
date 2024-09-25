@@ -73,6 +73,16 @@ export type VerticalAnchorType = "start" | "middle" | "end";
 // #region Victory Theme
 // Note: Many SVG attributes are missed in CSSProperties interface
 export interface VictoryThemeDefinition {
+  palette?: {
+    grayscale?: string[];
+    qualitative?: string[];
+    heatmap?: string[];
+    warm?: string[];
+    cool?: string[];
+    red?: string[];
+    blue?: string[];
+    green?: string[];
+  };
   area?: {
     style?: {
       data?: VictoryStyleObject;

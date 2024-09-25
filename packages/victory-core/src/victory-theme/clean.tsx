@@ -1,3 +1,4 @@
+import { random } from "lodash";
 import { VictoryThemeDefinition } from "./victory-theme";
 
 // *
@@ -130,11 +131,16 @@ const borderRadius = 1;
 // * Theme
 // *
 export const clean: VictoryThemeDefinition = {
+  palette: {
+    qualitative: colors,
+  },
   area: Object.assign(
     {
       style: {
         data: {
-          fill: cyan["500"],
+          fill: colors[random(0, colors.length - 1)],
+          strokeWidth: 2,
+          fillOpacity: 0.4,
         },
         labels: baseLabelStyles,
       },

@@ -4,7 +4,11 @@ import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
 import { VictoryArea } from "victory-area";
-import { VictoryContainer, VictoryTheme } from "victory-core";
+import {
+  VictoryContainer,
+  VictoryTheme,
+  VictoryThemeDefinition,
+} from "victory-core";
 
 interface VictoryAreaDemoState {
   data: {
@@ -133,311 +137,215 @@ export default class VictoryAreaDemo extends React.Component<
       justifyContent: "center",
     };
 
+    const dataStyle = { strokeWidth: 2, fillOpacity: 0.4 };
+
     return (
       <div className="demo" style={containerStyle}>
-        <VictoryChart style={style} scale={{ y: "log" }} theme={VictoryTheme.clean}>
-          <VictoryArea
-            labels={({ datum }: any) => Math.round(datum.y)}
-            data={[
-              { x: 1, y: 0.2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 50 },
-              { x: 4, y: 400 },
-              { x: 5, y: 70 },
-            ]}
-          />
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
+          <VictoryArea />
         </VictoryChart>
 
-        <VictoryChart style={style} scale={{ x: "log" }}>
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
           <VictoryArea
-            style={{ data: { fill: "cyan", stroke: "cyan" } }}
-            data={[
-              { x: 1, y: 0.2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 50 },
-              { x: 4, y: 400 },
-              { x: 5, y: 70 },
-            ]}
-          />
-        </VictoryChart>
-
-        <svg viewBox="0 0 350 350" style={style.parent}>
-          <VictoryArea
-            standalone={false}
-            animate={{ duration: 1000 }}
-            data={this.state.areaTransitionData}
-            theme={VictoryTheme.material}
-            containerComponent={
-              <VictoryContainer
-                title="Area Chart"
-                desc="This is an animated area chart that displays data."
-              />
-            }
-          />
-        </svg>
-
-        <VictoryStack
-          style={style}
-          animate={{
-            duration: 1000,
-          }}
-          colorScale={"warm"}
-          containerComponent={
-            <VictoryContainer desc="This is an animated area chart that displays data in a range of colors." />
-          }
-        >
-          {this.state.multiTransitionData.map((data, index) => {
-            return (
-              <VictoryArea key={index} data={data} interpolation={"basis"} />
-            );
-          })}
-        </VictoryStack>
-
-        <VictoryArea style={style} />
-
-        <VictoryArea
-          style={{ parent: style.parent, data: this.state.style }}
-          data={this.state.data}
-          animate={{ duration: 2000 }}
-        />
-
-        <VictoryStack style={{ parent: style.parent }}>
-          <VictoryArea
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 5 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 },
-            ]}
-          />
-          <VictoryArea
-            data={[
-              { x: 1, y: 1 },
-              { x: 2, y: 4 },
-              { x: 3, y: 5 },
-              { x: 4, y: 7 },
-              { x: 5, y: 5 },
-            ]}
-          />
-          <VictoryArea
-            data={[
-              { x: 1, y: 3 },
-              { x: 2, y: 2 },
-              { x: 3, y: 6 },
-              { x: 4, y: 2 },
-              { x: 5, y: 6 },
-            ]}
-          />
-          <VictoryArea
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 3 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 },
-            ]}
-          />
-        </VictoryStack>
-
-        <VictoryGroup
-          style={{
-            parent: style.parent,
-            data: { strokeWidth: 2, fillOpacity: 0.4 },
-          }}
-        >
-          <VictoryArea
-            style={{ data: { fill: "cyan", stroke: "cyan" } }}
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 5 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 },
-            ]}
-          />
-          <VictoryArea
-            style={{ data: { fill: "magenta", stroke: "magenta" } }}
-            data={[
-              { x: 1, y: 3 },
-              { x: 2, y: 2 },
-              { x: 3, y: 6 },
-              { x: 4, y: 2 },
-              { x: 5, y: 6 },
-            ]}
-          />
-        </VictoryGroup>
-
-        <VictoryStack
-          style={{ parent: style.parent }}
-          colorScale={"green"}
-          animate={{ duration: 2000 }}
-        >
-          {this.state.groupedData.map((data, index) => (
-            <VictoryArea data={data} key={index} />
-          ))}
-        </VictoryStack>
-
-        <VictoryArea
-          style={{ parent: style.parent, data: { fill: "red" } }}
-          interpolation={"basis"}
-          data={range(0, 100)}
-          y={(d) => Math.sin(d)}
-        />
-
-        <VictoryArea
-          style={{
-            parent: style.parent,
-            data: { fill: "gold" },
-          }}
-          events={[
-            {
-              target: "parent",
-              eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      target: "data",
-                      mutation: (props) => {
-                        return {
-                          style: Object.assign({}, props.style, { fill: "orange" }),
-                        };
-                      },
-                    },
-                    {
-                      target: "labels",
-                      eventKey: 0,
-                      mutation: () => {
-                        return { text: "hey" };
-                      },
-                    },
-                  ];
-                },
+            style={{
+              data: {
+                fill: VictoryTheme.clean.palette?.qualitative?.[3],
               },
-            },
-          ]}
-          labels={() => null}
-          data={this.state.arrayData}
-          x={0}
-          y={1}
-        />
-
-        <VictoryArea
-          style={{ parent: style.parent }}
-          data={[
-            { x: new Date(1982, 1, 1), y: 125 },
-            { x: new Date(1987, 1, 1), y: 257 },
-            { x: new Date(1993, 1, 1), y: 345 },
-            { x: new Date(1997, 1, 1), y: 515 },
-            { x: new Date(2001, 1, 1), y: 132 },
-            { x: new Date(2005, 1, 1), y: 305 },
-            { x: new Date(2011, 1, 1), y: 270 },
-            { x: new Date(2015, 1, 1), y: 470 },
-          ]}
-        />
-
-        <VictoryArea
-          style={{ parent: style.parent }}
-          data={[
-            { x: 1, y: 1 },
-            { x: 2, y: 3 },
-            { x: 3, y: 5 },
-            { x: 4, y: 2 },
-            { x: 5, y: null },
-            { x: 6, y: null },
-            { x: 7, y: 6 },
-            { x: 8, y: 7 },
-            { x: 9, y: 8 },
-            { x: 10, y: 12 },
-          ]}
-        />
-
-        <svg width={450} height={300} style={style.parent}>
-          <VictoryArea
-            y={(data) => Math.sin(data.x)}
-            standalone={false}
-            style={{ data: { opacity: 0.4 } }}
-          />
-          <VictoryArea
-            y={(data) => Math.cos(data.x)}
-            standalone={false}
-            style={{ data: { opacity: 0.4 } }}
-          />
-        </svg>
-
-        <VictoryChart style={style} theme={VictoryTheme.material}>
-          <VictoryArea
-            style={style}
-            animate={{ duration: 1000 }}
-            data={this.state.areaTransitionData}
-            containerComponent={
-              <VictoryContainer
-                title="Area Chart"
-                desc="This is an animated area chart that displays data."
-              />
-            }
+            }}
+            data={[
+              { x: new Date(1982, 1, 1), y: 125 },
+              { x: new Date(1987, 1, 1), y: 257 },
+              { x: new Date(1993, 1, 1), y: 345 },
+              { x: new Date(1997, 1, 1), y: 515 },
+              { x: new Date(2001, 1, 1), y: 132 },
+              { x: new Date(2005, 1, 1), y: 305 },
+              { x: new Date(2011, 1, 1), y: 270 },
+              { x: new Date(2015, 1, 1), y: 470 },
+            ]}
           />
         </VictoryChart>
 
-        <VictoryStack
-          style={style}
-          animate={{ duration: 1000 }}
-          theme={VictoryTheme.material}
-          containerComponent={
-            <VictoryContainer desc="This is an animated area chart that displays data in a range of colors." />
-          }
-        >
-          {this.state.multiTransitionData.map((data, index) => {
-            return (
-              <VictoryArea key={index} data={data} interpolation={"basis"} />
-            );
-          })}
-        </VictoryStack>
-
-        <VictoryStack
-          style={{ parent: style.parent }}
-          theme={VictoryTheme.material}
-        >
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
           <VictoryArea
+            style={{
+              data: {
+                fill: VictoryTheme.clean.palette?.qualitative?.[2],
+              },
+            }}
             data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 5 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 },
+              { x: 1, y: 4000 },
+              { x: 2, y: 3000 },
+              { x: 3, y: 2000 },
+              { x: 4, y: 2780 },
+              { x: 5, y: 1890 },
             ]}
+            interpolation="natural"
+            labels={({ datum }) => datum.y}
           />
+        </VictoryChart>
+
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
           <VictoryArea
+            data={this.state.data}
+            style={{
+              data: {
+                fill: VictoryTheme.clean.palette?.qualitative?.[1],
+              },
+            }}
+          />
+        </VictoryChart>
+
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
+          <VictoryStack
+            style={{ parent: style.parent }}
+            colorScale="qualitative"
+          >
+            <VictoryArea
+              data={[
+                { x: 1, y: 2 },
+                { x: 2, y: 3 },
+                { x: 3, y: 5 },
+                { x: 4, y: 4 },
+                { x: 5, y: 7 },
+              ]}
+            />
+            <VictoryArea
+              data={[
+                { x: 1, y: 1 },
+                { x: 2, y: 4 },
+                { x: 3, y: 5 },
+                { x: 4, y: 7 },
+                { x: 5, y: 5 },
+              ]}
+            />
+            <VictoryArea
+              data={[
+                { x: 1, y: 3 },
+                { x: 2, y: 2 },
+                { x: 3, y: 6 },
+                { x: 4, y: 2 },
+                { x: 5, y: 6 },
+              ]}
+            />
+            <VictoryArea
+              data={[
+                { x: 1, y: 2 },
+                { x: 2, y: 3 },
+                { x: 3, y: 3 },
+                { x: 4, y: 4 },
+                { x: 5, y: 7 },
+              ]}
+            />
+          </VictoryStack>
+        </VictoryChart>
+
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
+          <VictoryGroup
+            style={{
+              parent: style.parent,
+            }}
+          >
+            <VictoryArea
+              style={{
+                data: {
+                  fill: VictoryTheme.clean.palette?.qualitative?.[3],
+                  stroke: VictoryTheme.clean.palette?.qualitative?.[3],
+                },
+              }}
+              data={[
+                { x: 1, y: 2 },
+                { x: 2, y: 3 },
+                { x: 3, y: 5 },
+                { x: 4, y: 4 },
+                { x: 5, y: 7 },
+              ]}
+            />
+            <VictoryArea
+              style={{
+                data: {
+                  fill: VictoryTheme.clean.palette?.qualitative?.[2],
+                  stroke: VictoryTheme.clean.palette?.qualitative?.[2],
+                },
+              }}
+              data={[
+                { x: 1, y: 3 },
+                { x: 2, y: 2 },
+                { x: 3, y: 6 },
+                { x: 4, y: 2 },
+                { x: 5, y: 6 },
+              ]}
+            />
+          </VictoryGroup>
+        </VictoryChart>
+
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
+          <VictoryArea
+            style={{
+              parent: style.parent,
+            }}
+            interpolation={"basis"}
+            data={range(0, 100)}
+            y={(d) => Math.sin(d)}
+          />
+        </VictoryChart>
+
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
+          <VictoryArea
+            theme={VictoryTheme.clean}
+            style={{
+              parent: style.parent,
+              data: {
+                fill: VictoryTheme.clean.palette?.qualitative?.[3],
+              },
+            }}
             data={[
               { x: 1, y: 1 },
-              { x: 2, y: 4 },
-              { x: 3, y: 5 },
-              { x: 4, y: 7 },
-              { x: 5, y: 5 },
-            ]}
-          />
-          <VictoryArea
-            data={[
-              { x: 1, y: 3 },
-              { x: 2, y: 2 },
-              { x: 3, y: 6 },
-              { x: 4, y: 2 },
-              { x: 5, y: 6 },
-            ]}
-          />
-          <VictoryArea
-            data={[
-              { x: 1, y: 2 },
               { x: 2, y: 3 },
-              { x: 3, y: 3 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 },
+              { x: 3, y: 5 },
+              { x: 4, y: 2 },
+              { x: 5, y: null },
+              { x: 6, y: null },
+              { x: 7, y: 6 },
+              { x: 8, y: 7 },
+              { x: 9, y: 8 },
+              { x: 10, y: 12 },
             ]}
+            labels={({ datum }) => datum.y}
           />
-        </VictoryStack>
+        </VictoryChart>
 
-        <VictoryChart style={style} theme={VictoryTheme.material}>
-          <VictoryArea style={style} data={[]} />
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
+          <VictoryGroup
+            style={{
+              parent: style.parent,
+            }}
+          >
+            <VictoryArea
+              y={(data) => Math.sin(data.x)}
+              standalone={false}
+              style={{ data: { opacity: 0.4 } }}
+            />
+            <VictoryArea
+              y={(data) => Math.cos(data.x)}
+              standalone={false}
+              style={{ data: { opacity: 0.4 } }}
+            />
+          </VictoryGroup>
+        </VictoryChart>
+
+        <VictoryChart theme={VictoryTheme.clean} style={style}>
+          <VictoryStack
+            animate={{ duration: 1000 }}
+            containerComponent={
+              <VictoryContainer desc="This is an animated area chart that displays data in a range of colors." />
+            }
+          >
+            {this.state.multiTransitionData.map((data, index) => {
+              return (
+                <VictoryArea key={index} data={data} interpolation={"basis"} />
+              );
+            })}
+          </VictoryStack>
         </VictoryChart>
       </div>
     );

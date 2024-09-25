@@ -1,3 +1,5 @@
+import { VictoryTheme } from "../victory-theme/victory-theme";
+
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
@@ -35,10 +37,12 @@ export const toTransformString = function (obj, ...more) {
  * @param {String} name The name of the color scale to return (optional).
  * @returns {Array} An array of 5 hex string values composing a color scale.
  */
-export function getColorScale(name) {
+export function getColorScale(name, theme = VictoryTheme.clean) {
+  const { palette: { warm, qualitative } = {} } = theme;
+
   const scales = {
     grayscale: ["#cccccc", "#969696", "#636363", "#252525"],
-    qualitative: [
+    qualitative: qualitative ?? [
       "#334D5C",
       "#45B29D",
       "#EFC94C",
@@ -51,7 +55,7 @@ export function getColorScale(name) {
       "#DF948A",
     ],
     heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
-    warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
+    warm: warm ?? ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
     cool: ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"],
     red: ["#FCAE91", "#FB6A4A", "#DE2D26", "#A50F15", "#750B0E"],
     blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
