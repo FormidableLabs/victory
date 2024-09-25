@@ -89,7 +89,14 @@ export default class App extends React.Component<any, any> {
   }
 
   getStyles() {
-    const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
+    const colors = VictoryTheme.clean.bar?.colorScale ?? [
+      "red",
+      "orange",
+      "gold",
+      "tomato",
+      "magenta",
+      "purple",
+    ];
     return {
       fill: colors[random(0, 5)],
     };
@@ -122,12 +129,7 @@ export default class App extends React.Component<any, any> {
           <VictoryArea data={this.state.areaTransitionData} />
         </VictoryChart>
 
-        <VictoryStack
-          style={style}
-          animate
-          theme={VictoryTheme.material}
-          colorScale={"warm"}
-        >
+        <VictoryStack style={style} animate theme={VictoryTheme.clean}>
           {this.state.multiTransitionData.map((data, index) => {
             return (
               <VictoryArea key={index} data={data} interpolation={"basis"} />
@@ -135,8 +137,8 @@ export default class App extends React.Component<any, any> {
           })}
         </VictoryStack>
 
-        <VictoryChart style={style} animate theme={VictoryTheme.material}>
-          <VictoryStack colorScale={"warm"}>
+        <VictoryChart style={style} animate theme={VictoryTheme.clean}>
+          <VictoryStack>
             {this.state.multiTransitionData.map((data, index) => {
               return (
                 <VictoryArea key={index} data={data} interpolation={"basis"} />
@@ -145,7 +147,7 @@ export default class App extends React.Component<any, any> {
           </VictoryStack>
         </VictoryChart>
 
-        <VictoryChart style={style}>
+        <VictoryChart style={style} theme={VictoryTheme.clean}>
           <VictoryBar
             animate={{
               animationWhitelist: ["style"],
@@ -157,7 +159,7 @@ export default class App extends React.Component<any, any> {
           />
         </VictoryChart>
 
-        <VictoryChart style={style}>
+        <VictoryChart style={style} theme={VictoryTheme.clean}>
           <VictoryBar
             animate={{
               animationWhitelist: ["data"],
