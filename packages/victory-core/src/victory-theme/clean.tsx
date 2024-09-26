@@ -226,7 +226,7 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: blue["500"],
+          fill: colors[random(0, colors.length - 1)],
           padding,
           strokeWidth: 0,
         },
