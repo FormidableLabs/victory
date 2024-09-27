@@ -193,7 +193,7 @@ export function getChildren(initialProps, childComponents?, calculatedProps?) {
   const newCalculatedProps =
     calculatedProps || getCalculatedProps(props, children);
   const { datasets } = newCalculatedProps;
-  const { labelComponent, polar } = props;
+  const { labelComponent, polar, theme } = props;
   const childProps = getChildProps(props, newCalculatedProps);
   const parentName = props.name || "group";
   return children.map((child, index) => {
@@ -204,7 +204,7 @@ export function getChildren(initialProps, childComponents?, calculatedProps?) {
     const style =
       role === "voronoi" || role === "tooltip" || role === "label"
         ? child.props.style
-        : Wrapper.getChildStyle(child, index, newCalculatedProps);
+        : Wrapper.getChildStyle(child, index, newCalculatedProps, theme);
     const labels = props.labels
       ? getLabels(props, datasets, index)
       : child.props.labels;

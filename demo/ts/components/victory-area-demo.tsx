@@ -4,11 +4,7 @@ import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
 import { VictoryArea } from "victory-area";
-import {
-  VictoryContainer,
-  VictoryTheme,
-  VictoryThemeDefinition,
-} from "victory-core";
+import { VictoryContainer, VictoryTheme } from "victory-core";
 
 interface VictoryAreaDemoState {
   data: {
@@ -149,7 +145,7 @@ export default class VictoryAreaDemo extends React.Component<
           <VictoryArea
             style={{
               data: {
-                fill: VictoryTheme.clean.palette?.qualitative?.[3],
+                fill: VictoryTheme.clean.palette?.colors?.purple,
               },
             }}
             data={[
@@ -169,7 +165,7 @@ export default class VictoryAreaDemo extends React.Component<
           <VictoryArea
             style={{
               data: {
-                fill: VictoryTheme.clean.palette?.qualitative?.[2],
+                fill: VictoryTheme.clean.palette?.colors?.teal,
               },
             }}
             data={[
@@ -189,7 +185,7 @@ export default class VictoryAreaDemo extends React.Component<
             data={this.state.data}
             style={{
               data: {
-                fill: VictoryTheme.clean.palette?.qualitative?.[1],
+                fill: VictoryTheme.clean.palette?.colors?.pink,
               },
             }}
           />
@@ -248,8 +244,8 @@ export default class VictoryAreaDemo extends React.Component<
             <VictoryArea
               style={{
                 data: {
-                  fill: VictoryTheme.clean.palette?.qualitative?.[3],
-                  stroke: VictoryTheme.clean.palette?.qualitative?.[3],
+                  fill: VictoryTheme.clean.palette?.colors?.purple,
+                  stroke: VictoryTheme.clean.palette?.colors?.purple,
                 },
               }}
               data={[
@@ -263,8 +259,8 @@ export default class VictoryAreaDemo extends React.Component<
             <VictoryArea
               style={{
                 data: {
-                  fill: VictoryTheme.clean.palette?.qualitative?.[2],
-                  stroke: VictoryTheme.clean.palette?.qualitative?.[2],
+                  fill: VictoryTheme.clean.palette?.colors?.teal,
+                  stroke: VictoryTheme.clean.palette?.colors?.teal,
                 },
               }}
               data={[
@@ -295,7 +291,7 @@ export default class VictoryAreaDemo extends React.Component<
             style={{
               parent: style.parent,
               data: {
-                fill: VictoryTheme.clean.palette?.qualitative?.[3],
+                fill: VictoryTheme.clean.palette?.colors?.purple,
               },
             }}
             data={[

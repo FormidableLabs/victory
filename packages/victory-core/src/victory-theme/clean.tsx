@@ -74,17 +74,26 @@ const green = {
   "900": "#338A17",
 };
 
-const colors = [
-  blue["500"],
-  pink["500"],
-  teal["500"],
-  purple["500"],
-  green["500"],
-  orange["500"],
-  cyan["500"],
-  red["500"],
-  yellow["500"],
-];
+const colors = {
+  blue: blue["500"],
+  pink: pink["500"],
+  teal: teal["500"],
+  purple: purple["500"],
+  green: green["500"],
+  orange: orange["500"],
+  cyan: cyan["500"],
+  red: red["500"],
+  yellow: yellow["500"],
+};
+
+const colorScale = Object.values(colors);
+const grayscale = [gray["200"], gray["400"], gray["600"], gray["900"]];
+const warm = [yellow["500"], orange["500"], red["500"], pink["500"]];
+const cool = [cyan["500"], teal["500"], blue["500"], purple["500"]];
+const redPalette = [red["500"], red["300"], red["100"]];
+const greenPalette = [green["500"], green["300"], green["100"]];
+const bluePalette = [blue["500"], blue["300"], blue["100"]];
+
 // *
 // * Typography
 // *
@@ -100,7 +109,7 @@ const baseProps = {
   width: 450,
   height: 300,
   padding: 50,
-  colorScale: colors,
+  colorScale,
 };
 // *
 // * Labels
@@ -132,15 +141,22 @@ const borderRadius = 1;
 // *
 export const clean: VictoryThemeDefinition = {
   palette: {
-    qualitative: colors,
+    colors,
+    qualitative: colorScale,
+    grayscale,
+    warm,
+    cool,
+    red: redPalette,
+    green: greenPalette,
+    blue: bluePalette,
   },
   area: Object.assign(
     {
       style: {
         data: {
-          fill: colors[random(0, colors.length - 1)],
+          fill: blue["500"],
           strokeWidth: 2,
-          fillOpacity: 0.4,
+          fillOpacity: 0.5,
         },
         labels: baseLabelStyles,
       },
@@ -226,9 +242,10 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: colors[random(0, colors.length - 1)],
+          fill: blue["500"],
           padding,
-          strokeWidth: 0,
+          strokeWidth: 2,
+          fillOpacity: 0.5,
         },
         labels: baseLabelStyles,
       },
@@ -291,7 +308,7 @@ export const clean: VictoryThemeDefinition = {
   ),
   group: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
     },
     baseProps,
   ),
@@ -312,7 +329,7 @@ export const clean: VictoryThemeDefinition = {
   ),
   label: baseLabelStyles,
   legend: {
-    colorScale: colors,
+    colorScale,
     gutter: 10,
     orientation: "vertical",
     titleOrientation: "top",
@@ -351,7 +368,7 @@ export const clean: VictoryThemeDefinition = {
         },
         labels: Object.assign({}, baseLabelStyles, { padding: 20 }),
       },
-      colorScale: colors,
+      colorScale,
       cornerRadius: borderRadius,
     },
     baseProps,
@@ -372,7 +389,7 @@ export const clean: VictoryThemeDefinition = {
   ),
   stack: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
     },
     baseProps,
   ),

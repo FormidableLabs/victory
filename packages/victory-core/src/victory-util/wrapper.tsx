@@ -298,7 +298,7 @@ export function getAllEvents(props) {
   return events || [];
 }
 
-export function getColor(calculatedProps, child, index) {
+export function getColor(calculatedProps, child, index, theme) {
   // check for styles first
   const { style } = calculatedProps;
   let { colorScale, color } = calculatedProps;
@@ -313,7 +313,7 @@ export function getColor(calculatedProps, child, index) {
   }
   const colors = Array.isArray(colorScale)
     ? colorScale
-    : Style.getColorScale(colorScale);
+    : Style.getColorScale(colorScale, theme);
   return color || colors[index % colors.length];
 }
 
@@ -323,7 +323,7 @@ export function getStyle(theme, style, role) {
   return Helpers.getStyles(style, defaultStyle);
 }
 
-export function getChildStyle(child, index, calculatedProps) {
+export function getChildStyle(child, index, calculatedProps, theme) {
   const { style, role } = calculatedProps;
   const childStyle = child.props.style || {};
   if (Array.isArray(childStyle)) {
@@ -331,7 +331,9 @@ export function getChildStyle(child, index, calculatedProps) {
   }
   const childRole = child.type && child.type.role;
   const defaultFill =
-    childRole === "stack" ? undefined : getColor(calculatedProps, child, index);
+    childRole === "stack"
+      ? undefined
+      : getColor(calculatedProps, child, index, theme);
   const defaultColor =
     childRole === "line"
       ? { fill: "none", stroke: defaultFill }

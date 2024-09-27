@@ -54,13 +54,15 @@ export default class VictoryAxisDemo extends React.Component<
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
+    const blue = VictoryTheme.clean.palette?.colors?.blue || "blue";
+
     const styleOverrides: VictoryAxisProps["style"] = {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
       grid: {
-        stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? "red" : "grey"),
+        stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? blue : "grey"),
       },
       ticks: {
-        stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? "red" : "grey"),
+        stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? blue : "grey"),
       },
       tickLabels: {
         fontWeight: ({ tick }: any) =>
@@ -101,7 +103,7 @@ export default class VictoryAxisDemo extends React.Component<
             style={{
               parent: style.parent,
               tickLabels: { angle: 45 },
-              grid: { stroke: "#F82B60" },
+              grid: { stroke: VictoryTheme.clean.palette?.colors?.blue },
             }}
             containerComponent={
               <VictoryContainer title="Time Scale Axis Example" />
