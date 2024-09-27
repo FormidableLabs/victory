@@ -5,14 +5,13 @@ import _ from "lodash";
 import * as d3Array from "d3-array";
 import * as d3Scale from "d3-scale";
 import * as d3Time from "d3-time";
+import * as reactIconsFa from 'react-icons/fa'
 
 import styled from "styled-components";
 import basketballData from "../../data/basketball-data";
 import listeningData from "../../data/listening-data";
 import Slider from "../gallery/slider";
 const { assign, random, range, round } = _;
-import * as reactIconsFa from 'react-icons/fa'
-
 
 const scopeMap = {
   _,
