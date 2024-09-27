@@ -11,6 +11,8 @@ import basketballData from "../../data/basketball-data";
 import listeningData from "../../data/listening-data";
 import Slider from "../gallery/slider";
 const { assign, random, range, round } = _;
+import * as reactIconsFa from 'react-icons/fa'
+
 
 const scopeMap = {
   _,
@@ -25,6 +27,7 @@ const scopeMap = {
   Slider,
   basketballData,
   listeningData,
+  reactIconsFa,
   sampleData: [
     {
       x: 1,

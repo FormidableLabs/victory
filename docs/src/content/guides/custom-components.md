@@ -5,6 +5,7 @@ category: guides
 scope:
   - range
   - random
+  - reactIconsFa
 ---
 
 # Custom Components
@@ -101,6 +102,36 @@ function App() {
         }
         samples={25}
         dataComponent={<CatPoint/>}
+      />
+    </VictoryChart>
+  );
+}
+render(<App/>);
+```
+below is an example of using `CustomIcons` as dataComponent
+
+```playground_norender
+const {FaCat} = reactIconsFa;
+
+const CustomCatIcon = (props)=>{
+  const {x, y} = props;
+  const [iconColor, setIconColor] = React.useState(props?.style?.fill || 'black');
+  return <FaCat x={x-3} 
+          y={y-15} 
+          fill={iconColor}
+          size={15}
+          onClick={() => {
+            setIconColor('orange');
+          }}
+        />
+}
+
+function App() {
+  return (
+    <VictoryChart>
+      <VictoryScatter
+        dataComponent={<CustomCatIcon/>}
+        samples={15}
       />
     </VictoryChart>
   );

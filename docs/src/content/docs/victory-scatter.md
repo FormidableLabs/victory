@@ -5,6 +5,7 @@ category: charts
 type: docs
 scope:
   - sampleData
+  - reactIconsFa
 ---
 
 # VictoryScatter
@@ -99,6 +100,8 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 
 In addition to svg style properties and `label`, `VictoryScatter` will also preferentially use `symbol` and `size` properties supplied via data objects.
 
+If you want to use SVG icons from a custom component or an SVG based icon library like [react-icons](https://react-icons.github.io/react-icons/) use `dataComponent` property.[Read about it here](#datacomponent)
+
 ```playground
 <VictoryScatter
   data={[
@@ -148,7 +151,28 @@ function App() {
 }
 render(<App/>);
 ```
+below is an example of using CustomIcons as dataComponent
 
+```playground_norender
+const {FaCat} = reactIconsFa;
+
+const CustomCatIcon = (props)=>{
+  const {x, y} = props;
+  return <FaCat x={x-3} y={y-15} size={15}/>
+}
+
+function App() {
+  return (
+    <VictoryChart>
+      <VictoryScatter
+        dataComponent={<CustomCatIcon/>}
+        samples={15}
+      />
+    </VictoryChart>
+  );
+}
+render(<App/>);
+```
 ## domain
 
 `type: array[low, high] || { x: [low, high], y: [low, high] }`
@@ -531,6 +555,8 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 `type: function || options`
 
 The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp". When this prop is given as a function, it will be evaluated for each point with the props corresponding to that point. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
+
+If you want to use SVG icons from a custom component or an SVG based icon library like [react-icons](https://react-icons.github.io/react-icons/) use dataComponent property.[Read about it here](#datacomponent)
 
 _default:_ `symbol="circle"`
 

@@ -3,7 +3,8 @@ id: 16
 title: VictoryLegend
 category: more
 type: docs
-scope: null
+scope: 
+  - reactIconsFa
 ---
 
 # VictoryLegend
@@ -112,7 +113,7 @@ containerComponent={<VictoryContainer responsive={false}/>}
 
 `type: array[{ name, symbol, labels }]`
 
-Specify data via the `data` prop. `VictoryLegend` expects data as an array of objects with `name` (required), `symbol`, and `labels` properties. The `data` prop must be given as an array. The symbol rendered may be changed by altering the `type` property of the `symbol` object. Valid types include: circle", "diamond", "plus", "minus", "square", "star", "triangleDown", and "triangleUp"
+Specify data via the `data` prop. `VictoryLegend` expects data as an array of objects with `name` (required), `symbol`, and `labels` properties. The `data` prop must be given as an array. The symbol rendered may be changed by altering the `type` property of the `symbol` object. Valid types include: circle", "diamond", "plus", "minus", "square", "star", "triangleDown", and "triangleUp".If you want to use SVG icons from a custom component or an SVG based icon library like [react-icons](https://react-icons.github.io/react-icons/) use `dataComponent` property.[Read about it here](#datacomponent)
 
 _default:_ `data={[{ name: "Series 1" }, { name: "Series 2" }]}`
 
@@ -134,6 +135,55 @@ _default:_ `data={[{ name: "Series 1" }, { name: "Series 2" }]}`
 `type: element`
 
 `VictoryLegend` uses the standard `dataComponent` prop. [Read about it here](/docs/common-props#datacomponent)
+
+below is an example of using CustomIcons as dataComponent in VictoryLegend.
+
+```playground_norender
+const {FaSun,FaMoon} = reactIconsFa;
+
+const CustomMoon = (props) => {
+  const [iconColor, setIconColor] = React.useState(props?.style?.fill || 'green');
+  const [icon, setIcon] = React.useState('moon');
+  if (icon === 'moon') {
+    return <FaMoon fill={iconColor} x={props.x - 7} y={props.y - 7}
+      size={15}
+      onClick={() => {
+        setIcon('sun');
+        setIconColor('red');
+      }} />
+  }
+  return <FaSun fill={iconColor} x={props.x - 7} y={props.y - 7}
+    size={15}
+    onClick={() => {
+      setIcon('moon');
+      setIconColor('blue');
+    }} />
+
+}
+
+function App() {
+  const legendStyle = {
+    labels: { fontSize: 14, fontFamily: "Palatino" },
+    border: { stroke: "black", strokeWidth: 2 },
+    };
+
+  return (
+      <VictoryChart>
+      <VictoryLegend
+        orientation={'horizontal'}
+        x={65}
+        y={50}
+        data={[{ name: "One" ,symbol:{fill:'orange'}},
+              { name: "Two",symbol:{fill:'blue'} },
+              { name: "Three" }
+             ]}
+        dataComponent={<CustomMoon />}/>
+      </VictoryChart> 
+  );
+}
+
+render(<App/>);
+```
 
 `VictoryLegend` supplies the following props to its `dataComponent`: `data`, `datum`, `events`, `index`, `x`, `y`, `size`, `style`, and `symbol`. `VictoryLegend` renders a [Point component][] by default.
 
