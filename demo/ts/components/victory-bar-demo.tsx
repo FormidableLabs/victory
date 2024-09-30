@@ -582,6 +582,7 @@ export default class VictoryBarDemo extends React.Component<
         <VictoryChart
           theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
+          domainPadding={20}
         >
           <VictoryBar
             data={[
@@ -623,7 +624,9 @@ class ChartWrap extends React.Component<ChartWrapProps> {
     return (
       <div style={parentStyle}>
         {React.cloneElement(this.props.children)}
-        <VictoryChart {...this.props}>{this.props.children}</VictoryChart>
+        <VictoryChart domainPadding={{ x: 20 }} {...this.props}>
+          {this.props.children}
+        </VictoryChart>
       </div>
     );
   }

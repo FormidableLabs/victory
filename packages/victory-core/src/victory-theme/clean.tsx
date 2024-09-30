@@ -346,7 +346,7 @@ export const clean: VictoryThemeDefinition = {
         data: {
           fill: "transparent",
           opacity: 1,
-          stroke: pink["500"],
+          stroke: blue["500"],
           strokeWidth: 2,
           strokeLinecap,
           strokeLinejoin,

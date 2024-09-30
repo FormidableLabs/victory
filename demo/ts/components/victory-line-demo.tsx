@@ -30,7 +30,7 @@ class PointedLine extends React.Component<PointedLineProps> {
 
       return (
         <Point
-          style={{ fill: "#FF08C2" }}
+          style={{ fill: VictoryTheme.clean.palette?.colors?.purple }}
           symbol="circle"
           size={2}
           key={`line-${index}-point-${pointIndex}`}
@@ -80,8 +80,7 @@ export default class VictoryLineDemo extends React.Component<
       transitionData: this.getTransitionData(),
       arrayData: this.getArrayData(),
       style: {
-        stroke: "blue",
-        strokeWidth: 2,
+        stroke: VictoryTheme.clean.line?.colorScale?.[0] ?? "blue",
       },
     };
   }
@@ -120,10 +119,16 @@ export default class VictoryLineDemo extends React.Component<
   }
 
   getStyles() {
-    const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
+    const colors = VictoryTheme.clean.line?.colorScale ?? [
+      "red",
+      "orange",
+      "cyan",
+      "green",
+      "blue",
+      "purple",
+    ];
     return {
       stroke: colors[random(0, 5)],
-      strokeWidth: random(1, 5),
     };
   }
 
@@ -144,15 +149,17 @@ export default class VictoryLineDemo extends React.Component<
     return (
       <div className="demo" style={containerStyle}>
         <VictoryLine
-          style={{ parent: parentStyle, data: { stroke: "blue" } }}
+          style={{ parent: parentStyle }}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
           samples={25}
+          theme={VictoryTheme.clean}
         />
 
         <VictoryLine
+          theme={VictoryTheme.clean}
           style={{
             parent: parentStyle,
-            data: { stroke: "red", strokeWidth: 6 },
+            data: { stroke: VictoryTheme.clean.palette?.colors?.orange },
           }}
           events={[
             {
@@ -163,7 +170,9 @@ export default class VictoryLineDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { stroke: "orange" }),
+                          style: Object.assign({}, props.style, {
+                            stroke: "orange",
+                          }),
                         };
                       },
                     },
@@ -193,13 +202,18 @@ export default class VictoryLineDemo extends React.Component<
         />
 
         <VictoryLine
-          style={{ parent: parentStyle }}
+          theme={VictoryTheme.clean}
+          style={{
+            parent: parentStyle,
+            data: { stroke: VictoryTheme.clean.palette?.colors?.pink },
+          }}
           data={this.state.arrayData}
           x={0}
           y={1}
         />
 
         <VictoryLine
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           labels={(d: any) => Math.round(d.y)}
           data={[
@@ -215,7 +229,11 @@ export default class VictoryLineDemo extends React.Component<
         />
 
         <VictoryLine
-          style={{ parent: parentStyle }}
+          theme={VictoryTheme.clean}
+          style={{
+            parent: parentStyle,
+            data: { stroke: VictoryTheme.clean.palette?.colors?.teal },
+          }}
           data={[
             { x: 1, y: 1 },
             { x: 2, y: 3 },
@@ -231,6 +249,7 @@ export default class VictoryLineDemo extends React.Component<
         />
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           scale={{ x: "linear", y: "log" }}
         >
@@ -238,21 +257,22 @@ export default class VictoryLineDemo extends React.Component<
         </VictoryChart>
 
         <VictoryLine
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           data={this.state.arrayData}
           x={0}
           y={1}
-          theme={VictoryTheme.grayscale}
         />
 
         <VictoryChart
           style={{ parent: parentStyle }}
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.clean}
         >
           <VictoryLine data={this.state.arrayData} x={0} y={1} />
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           height={450}
           scale={{
@@ -274,6 +294,7 @@ export default class VictoryLineDemo extends React.Component<
         </VictoryChart>
 
         <VictoryLine
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           data={[
             { x: 1, y: 1 },
@@ -290,22 +311,23 @@ export default class VictoryLineDemo extends React.Component<
         />
 
         <VictoryLine
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           scale={{ x: "linear", y: "log" }}
         />
 
         <VictoryLine
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           data={this.state.arrayData}
           x={0}
           domain={{ x: [0, 100] }}
           y={1}
-          theme={VictoryTheme.material}
         />
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
         >
           <VictoryLine
             style={{ parent: parentStyle, data: this.state.style }}
@@ -321,19 +343,11 @@ export default class VictoryLineDemo extends React.Component<
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
         >
           <VictoryLine style={{ parent: parentStyle }} data={[]} />
         </VictoryChart>
-
-        <VictoryLine
-          style={{ parent: parentStyle }}
-          data={range(0, 2 * Math.PI, 0.01).map((t) => ({ t }))}
-          sortKey={"t"}
-          x={({ t }) => Math.sin(3 * t + 2 * Math.PI)}
-          y={({ t }) => Math.sin(2 * t)}
-        />
       </div>
     );
   }
