@@ -151,7 +151,7 @@ function App() {
 }
 render(<App/>);
 ```
-below is an example of using CustomIcons as dataComponent
+An example of using Custom icons as `dataComponent` in `VictoryScatter`.
 
 ```playground_norender
 const {FaCat} = reactIconsFa;
