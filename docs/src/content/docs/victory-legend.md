@@ -175,11 +175,6 @@ const CustomMoon = (props) => {
 };
 
 function App() {
-  const legendStyle = {
-    labels: { fontSize: 14, fontFamily: "Palatino" },
-    border: { stroke: "black", strokeWidth: 2 },
-  };
-
   return (
     <VictoryChart>
       <VictoryLegend
@@ -217,11 +212,6 @@ const CustomMultipleIcon = (props) => {
 };
 
 function App() {
-  const legendStyle = {
-    labels: { fontSize: 14, fontFamily: "Palatino" },
-    border: { stroke: "black", strokeWidth: 2 },
-  };
-
   return (
     <VictoryChart>
       <VictoryLegend
