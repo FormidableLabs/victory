@@ -390,7 +390,10 @@ export const clean: VictoryThemeDefinition = {
           stroke: "transparent",
           strokeWidth: 0,
         },
-        labels: baseLabelStyles,
+        labels: {
+          ...baseLabelStyles,
+          padding: 20,
+        },
       },
     },
     baseProps,
