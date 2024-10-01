@@ -154,24 +154,24 @@ render(<App/>);
 An example of using Custom icons as `dataComponent` in `VictoryScatter`.
 
 ```playground_norender
-const {FaCat} = reactIconsFa;
+const { FaCat, FaStar } = reactIconsFa;
 
-const CustomCatIcon = (props)=>{
-  const {x, y} = props;
-  return <FaCat x={x-3} y={y-15} size={15}/>
-}
+const CustomCatStarIcon = (props) => {
+  const { x, y, datum } = props;
+  if (datum._y >= 0.5) {
+    return <FaStar x={x - 3} y={y - 15} size={15} />;
+  }
+  return <FaCat x={x - 3} y={y - 15} size={15} />;
+};
 
 function App() {
   return (
     <VictoryChart>
-      <VictoryScatter
-        dataComponent={<CustomCatIcon/>}
-        samples={15}
-      />
+      <VictoryScatter dataComponent={<CustomCatStarIcon />} samples={15} />
     </VictoryChart>
   );
 }
-render(<App/>);
+render(<App />);
 ```
 ## domain
 

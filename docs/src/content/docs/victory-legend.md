@@ -139,50 +139,104 @@ _default:_ `data={[{ name: "Series 1" }, { name: "Series 2" }]}`
 An example of using Custom icons as `dataComponent` in `VictoryLegend`.
 
 ```playground_norender
-const {FaSun,FaMoon} = reactIconsFa;
+const { FaSun, FaMoon } = reactIconsFa;
 
 const CustomMoon = (props) => {
-  const [iconColor, setIconColor] = React.useState(props?.style?.fill || 'green');
-  const [icon, setIcon] = React.useState('moon');
-  if (icon === 'moon') {
-    return <FaMoon fill={iconColor} x={props.x - 7} y={props.y - 7}
+  const [iconColor, setIconColor] = React.useState(
+    props?.style?.fill || "green",
+  );
+  const [icon, setIcon] = React.useState("moon");
+  if (icon === "moon") {
+    return (
+      <FaMoon
+        fill={iconColor}
+        x={props.x - 7}
+        y={props.y - 7}
+        size={15}
+        onClick={() => {
+          setIcon("sun");
+          setIconColor("red");
+        }}
+      />
+    );
+  }
+  return (
+    <FaSun
+      fill={iconColor}
+      x={props.x - 7}
+      y={props.y - 7}
       size={15}
       onClick={() => {
-        setIcon('sun');
-        setIconColor('red');
-      }} />
-  }
-  return <FaSun fill={iconColor} x={props.x - 7} y={props.y - 7}
-    size={15}
-    onClick={() => {
-      setIcon('moon');
-      setIconColor('blue');
-    }} />
-
-}
+        setIcon("moon");
+        setIconColor("blue");
+      }}
+    />
+  );
+};
 
 function App() {
   const legendStyle = {
     labels: { fontSize: 14, fontFamily: "Palatino" },
     border: { stroke: "black", strokeWidth: 2 },
-    };
+  };
 
   return (
-      <VictoryChart>
+    <VictoryChart>
       <VictoryLegend
-        orientation={'horizontal'}
+        orientation={"horizontal"}
         x={65}
         y={50}
-        data={[{ name: "One" ,symbol:{fill:'orange'}},
-              { name: "Two",symbol:{fill:'blue'} },
-              { name: "Three" }
-             ]}
-        dataComponent={<CustomMoon />}/>
-      </VictoryChart> 
+        data={[
+          { name: "One", symbol: { fill: "orange" } },
+          { name: "Two", symbol: { fill: "blue" } },
+          { name: "Three" },
+        ]}
+        dataComponent={<CustomMoon />}
+      />
+    </VictoryChart>
   );
 }
 
-render(<App/>);
+render(<App />);
+```
+
+An example of using multiple Custom icons as `dataComponent` in `VictoryLegend`.
+
+```playground_norender
+const { FaSun, FaMoon, FaStar } = reactIconsFa;
+
+const CustomMultipleIcon = (props) => {
+  const { x, y, datum } = props;
+  if (datum.name === "One") {
+    return <FaMoon fill={"red"} x={props.x - 7} y={props.y - 7} size={15} />;
+  }
+  if (datum.name === "Two") {
+    return <FaSun fill={"orange"} x={props.x - 7} y={props.y - 7} size={15} />;
+  }
+  return <FaStar fill={"blue"} x={props.x - 7} y={props.y - 7} size={15} />;
+};
+
+function App() {
+  const legendStyle = {
+    labels: { fontSize: 14, fontFamily: "Palatino" },
+    border: { stroke: "black", strokeWidth: 2 },
+  };
+
+  return (
+    <VictoryChart>
+      <VictoryLegend
+        orientation={"horizontal"}
+        x={65}
+        y={50}
+        data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
+        dataComponent={<CustomMultipleIcon />}
+      />
+    </VictoryChart>
+  );
+}
+ 
+render(<App />);
+
 ```
 
 `VictoryLegend` supplies the following props to its `dataComponent`: `data`, `datum`, `events`, `index`, `x`, `y`, `size`, `style`, and `symbol`. `VictoryLegend` renders a [Point component][] by default.

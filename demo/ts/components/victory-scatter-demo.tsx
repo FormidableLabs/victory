@@ -99,26 +99,41 @@ const symbolStyle = {
     fill: "grey",
   },
 };
-const CustomSunIcon = (props) => <FaSun x={props.x - 25} y={props.y - 25} {...props} />
+const CustomSunIcon = (props) => (
+  <FaSun x={props.x - 25} y={props.y - 25} {...props} />
+);
 
 const CustomCustomIconWithEvents = (props) => {
-  const [iconColor, setIconColor] = useState(props?.style?.fill || 'green');
-  const [icon, setIcon] = useState('moon');
-  if (icon === 'moon') {
-    return <FaMoon fill={iconColor} x={props.x - 7} y={props.y - 7}
+  const [iconColor, setIconColor] = useState(props?.style?.fill || "green");
+  const [icon, setIcon] = useState("moon");
+  if (icon === "moon") {
+    return (
+      <FaMoon
+        fill={iconColor}
+        x={props.x - 7}
+        y={props.y - 7}
+        size={15}
+        onClick={() => {
+          setIcon("star");
+          setIconColor("red");
+        }}
+      />
+    );
+  }
+  return (
+    <FaFootballBall
+      fill={iconColor}
+      x={props.x - 7}
+      y={props.y - 7}
       size={15}
       onClick={() => {
-        setIcon('star');
-        setIconColor('red');
-      }} />
-  }
-  return <FaFootballBall fill={iconColor} x={props.x - 7} y={props.y - 7}
-    size={15}
-    onClick={() => {
-      setIcon('moon');
-      setIconColor('blue');
-    }} />
-}
+        setIcon("moon");
+        setIconColor("blue");
+      }}
+    />
+  );
+};
+
 
 class CatPoint extends React.Component<any, CatPointInterface> {
   static propTypes = {
