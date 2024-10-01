@@ -3,7 +3,6 @@ import { random, range } from "lodash";
 import { DomainPropType } from "victory-core";
 import { VictoryAxis, VictoryAxisProps } from "victory-axis";
 import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
-import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
 interface VictoryAxisDemoState {
   tickValues: number[];

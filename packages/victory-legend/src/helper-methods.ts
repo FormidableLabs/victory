@@ -3,9 +3,9 @@ import { Helpers, Style, TextSize } from "victory-core";
 import { VictoryLegendProps } from "./victory-legend";
 
 const getColorScale = (props) => {
-  const { colorScale } = props;
+  const { colorScale, theme } = props;
   return typeof colorScale === "string"
-    ? Style.getColorScale(colorScale)
+    ? Style.getColorScale(colorScale, theme)
     : colorScale || [];
 };
 

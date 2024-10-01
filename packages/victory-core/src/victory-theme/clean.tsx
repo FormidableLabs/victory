@@ -90,6 +90,7 @@ const colorScale = Object.values(colors);
 const grayscale = [gray["200"], gray["400"], gray["600"], gray["900"]];
 const warm = [yellow["500"], orange["500"], red["500"], pink["500"]];
 const cool = [cyan["500"], teal["500"], blue["500"], purple["500"]];
+const heatmap = [green["500"], yellow["500"], red["500"]];
 const redPalette = [red["500"], red["300"], red["100"]];
 const greenPalette = [green["500"], green["300"], green["100"]];
 const bluePalette = [blue["500"], blue["300"], blue["100"]];
@@ -142,8 +143,9 @@ const borderRadius = 1;
 export const clean: VictoryThemeDefinition = {
   palette: {
     colors,
-    qualitative: colorScale,
     grayscale,
+    qualitative: colorScale,
+    heatmap,
     warm,
     cool,
     red: redPalette,
@@ -359,12 +361,20 @@ export const clean: VictoryThemeDefinition = {
   pie: Object.assign(
     {
       style: {
+        parent: {
+          backgroundColor: gray.white,
+        },
         data: {
           padding,
           stroke: gray.white,
           strokeWidth: 1,
         },
-        labels: Object.assign({}, baseLabelStyles, { padding: 20 }),
+        labels: {
+          ...baseLabelStyles,
+          padding: 20,
+          fill: gray["600"],
+          fontSize: 10,
+        },
       },
       colorScale,
       cornerRadius: borderRadius,
@@ -397,7 +407,7 @@ export const clean: VictoryThemeDefinition = {
       pointerEvents: "none",
     }),
     flyoutStyle: {
-      stroke: gray["500"],
+      stroke: gray["300"],
       strokeWidth: 2,
       fill: gray.white,
       pointerEvents: "none",
