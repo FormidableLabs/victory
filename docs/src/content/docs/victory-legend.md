@@ -136,7 +136,7 @@ _default:_ `data={[{ name: "Series 1" }, { name: "Series 2" }]}`
 
 `VictoryLegend` uses the standard `dataComponent` prop. [Read about it here](/docs/common-props#datacomponent)
 
-below is an example of using CustomIcons as dataComponent in VictoryLegend.
+An example of using Custom icons as `dataComponent` in `VictoryLegend`.
 
 ```playground_norender
 const {FaSun,FaMoon} = reactIconsFa;
