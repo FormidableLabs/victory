@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { VictoryLabel, Border, VictoryTheme } from "victory-core";
 import { VictoryLegend } from "victory-legend";
+import { FaMoon, FaSun, FaStar } from 'react-icons/fa'
 
 const legendStyle = {
   labels: { fontSize: 14, fontFamily: "Palatino" },
@@ -72,6 +73,65 @@ const data = [
     },
   },
 ];
+
+const customIconData = [
+  {
+    name: "Series 1",
+    symbol: {
+      size: symbolSize,
+      fill: "green",
+    },
+  },
+  {
+    name: "Long Series Name -- so long",
+    symbol: {
+      size: symbolSize,
+      fill: "blue",
+    },
+  },
+  {
+    name: "Series 3",
+    symbol: {
+      size: symbolSize,
+      fill: "pink",
+    },
+  }]
+
+const CustomSun = (props) => {
+  return <FaSun {...props} x={props.x - 7} y={props.y - 7} size={15} />;
+};
+
+const CustomMoon = (props) => {
+  const [iconColor, setIconColor] = useState(props?.style?.fill || "green");
+  const [icon, setIcon] = useState("moon");
+  if (icon === "moon") {
+    return (
+      <FaMoon
+        fill={iconColor}
+        x={props.x - 7}
+        y={props.y - 7}
+        size={15}
+        onClick={() => {
+          setIcon("star");
+          setIconColor("red");
+        }}
+      />
+    );
+  }
+  return (
+    <FaStar
+      fill={iconColor}
+      x={props.x - 7}
+      y={props.y - 7}
+      size={15}
+      onClick={() => {
+        setIcon("moon");
+        setIconColor("blue");
+      }}
+    />
+  );
+};
+
 
 const LegendDemo = () => (
   <div className="demo">
@@ -176,8 +236,11 @@ const LegendDemo = () => (
     </svg>
     <svg height={200} width={1000}>
       <VictoryLegend
-        borderComponent={<Border width={430} height={110} />}
+        borderComponent={<Border width={630} height={110} />}
         centerTitle
+        x={25}
+        y={20}
+        standalone={false}
         title={["TITLE"]}
         gutter={30}
         symbolSpacer={symbolSpacer}
@@ -185,7 +248,40 @@ const LegendDemo = () => (
         data={data}
         style={legendStyle}
       />
-    </svg> 
+    </svg>
+    {/* CustomIcon */}
+    <svg height={200} width={1000}>
+      <VictoryLegend
+        centerTitle
+        title={["TITLE"]}
+        gutter={30}
+        x={25}
+        y={20}
+        standalone={false}
+        symbolSpacer={symbolSpacer}
+        itemsPerRow={3}
+        dataComponent={<CustomSun />}
+        data={customIconData}
+        style={legendStyle}
+      />
+    </svg>
+    {/* CustomIcon with events*/}
+    <svg height={200} width={1000}>
+      <VictoryLegend
+        theme={VictoryTheme.clean}
+        standalone={false}
+        x={25}
+        y={20}
+        itemsPerRow={2}
+        title={["My Legend title"]}
+        data={customIconData}
+        dataComponent={<CustomMoon />}
+        symbolSpacer={symbolSpacer}
+        titleComponent={
+          <VictoryLabel style={[{ fontSize: 20 }, { fontSize: 14 }]} />
+        }
+      />
+    </svg>
   </div>
 );
 

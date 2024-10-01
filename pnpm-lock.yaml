@@ -72,6 +72,7 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       react-hot-loader: 4.13.0
+      react-icons: ^5.3.0
       react-test-renderer: ^18.1.0
       remark-parse: ^7.0.1
       remark-stringify: ^7.0.3
@@ -156,6 +157,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hot-loader: 4.13.0_bb2bxwco6ptpubzwpazr52qf6i
+      react-icons: 5.3.0_react@18.2.0
       react-test-renderer: 18.2.0_react@18.2.0
       remark-parse: 7.0.2
       remark-stringify: 7.0.4
@@ -301,6 +303,7 @@ importers:
       react-cool-inview: ^3.0.1
       react-copy-to-clipboard: ^5.1.0
       react-dom: ^18
+      react-icons: ^5.3.0
       react-inlinesvg: ^4.1.1
       react-live: ^4.1.6
       react-markdown: ^9.0.1
@@ -345,6 +348,7 @@ importers:
       prism-react-renderer: 2.3.1_react@18.2.0
       react-cool-inview: 3.0.1_react@18.2.0
       react-copy-to-clipboard: 5.1.0_react@18.2.0
+      react-icons: 5.3.0_react@18.2.0
       react-inlinesvg: 4.1.3_react@18.2.0
       react-live: 4.1.6_biqbaboplfbrettd7655fr4n2y
       react-markdown: 9.0.1_3hx2ussxxho4jajbwrd6gq34qe
@@ -361,6 +365,7 @@ importers:
 
   packages/victory:
     specifiers:
+      react: '>=16.6.0'
       victory-area: 37.1.1
       victory-axis: 37.1.1
       victory-bar: 37.1.1
@@ -388,7 +393,6 @@ importers:
       victory-voronoi: 37.1.1
       victory-voronoi-container: 37.1.1
       victory-zoom-container: 37.1.1
-      react: '>=16.6.0'
     dependencies:
       react: 18.2.0
       victory-area: link:../victory-area
@@ -437,8 +441,8 @@ importers:
   packages/victory-axis:
     specifiers:
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -516,9 +520,9 @@ importers:
   packages/victory-canvas:
     specifiers:
       lodash: ^4.17.19
+      react: '>=16.6.0'
       victory-bar: 37.1.1
       victory-core: 37.1.1
-      react: '>=16.6.0'
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -558,13 +562,13 @@ importers:
   packages/victory-create-container:
     specifiers:
       lodash: ^4.17.19
+      react: '>=16.6.0'
       victory-brush-container: 37.1.1
       victory-core: 37.1.1
       victory-cursor-container: 37.1.1
       victory-selection-container: 37.1.1
       victory-voronoi-container: 37.1.1
       victory-zoom-container: 37.1.1
-      react: '>=16.6.0'
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -578,8 +582,8 @@ importers:
   packages/victory-cursor-container:
     specifiers:
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -588,8 +592,8 @@ importers:
   packages/victory-errorbar:
     specifiers:
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
       victory-vendor: '*'
     dependencies:
       lodash: 4.17.21
@@ -634,8 +638,8 @@ importers:
   packages/victory-legend:
     specifiers:
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -734,9 +738,9 @@ importers:
   packages/victory-pie:
     specifiers:
       lodash: ^4.17.19
+      react: '>=16.6.0'
       victory-core: 37.1.1
       victory-vendor: 37.1.1
-      react: '>=16.6.0'
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -746,8 +750,8 @@ importers:
   packages/victory-polar-axis:
     specifiers:
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -756,8 +760,8 @@ importers:
   packages/victory-scatter:
     specifiers:
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -816,8 +820,8 @@ importers:
   packages/victory-tooltip:
     specifiers:
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -876,8 +880,8 @@ importers:
     specifiers:
       d3-voronoi: ^1.1.4
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
     dependencies:
       d3-voronoi: 1.1.4
       lodash: 4.17.21
@@ -903,8 +907,8 @@ importers:
   packages/victory-zoom-container:
     specifiers:
       lodash: ^4.17.19
-      victory-core: 37.1.1
       react: '>=16.6.0'
+      victory-core: 37.1.1
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
@@ -16718,6 +16722,14 @@ packages:
       react-lifecycles-compat: 3.0.4
       shallowequal: 1.1.0
       source-map: 0.7.4
+    dev: true
+
+  /react-icons/5.3.0_react@18.2.0:
+    resolution: {integrity: sha512-DnUk8aFbTyQPSkCfF8dbX6kQjXA9DktMeJqfjrg6cK9vwQVMxmcA3BfP4QoiztVmEHtwlTgLFsPuH2NskKT6eg==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: true
 
   /react-inlinesvg/4.1.3_react@18.2.0:

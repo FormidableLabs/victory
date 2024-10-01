@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers,react/no-multi-comp */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { random, range } from "lodash";
 import { VictoryScatter } from "victory-scatter";
@@ -11,6 +11,11 @@ import {
 } from "victory-core";
 import bubbleData from "./bubble-data";
 import symbolData from "./symbol-data";
+import {
+  FaMoon,
+  FaFootballBall,
+  FaSun,
+} from "react-icons/fa";
 
 type DataType = {
   x?: string | number;
@@ -94,6 +99,41 @@ const symbolStyle = {
     fill: "grey",
   },
 };
+const CustomSunIcon = (props) => (
+  <FaSun x={props.x - 25} y={props.y - 25} {...props} />
+);
+
+const CustomCustomIconWithEvents = (props) => {
+  const [iconColor, setIconColor] = useState(props?.style?.fill || "green");
+  const [icon, setIcon] = useState("moon");
+  if (icon === "moon") {
+    return (
+      <FaMoon
+        fill={iconColor}
+        x={props.x - 7}
+        y={props.y - 7}
+        size={15}
+        onClick={() => {
+          setIcon("star");
+          setIconColor("red");
+        }}
+      />
+    );
+  }
+  return (
+    <FaFootballBall
+      fill={iconColor}
+      x={props.x - 7}
+      y={props.y - 7}
+      size={15}
+      onClick={() => {
+        setIcon("moon");
+        setIconColor("blue");
+      }}
+    />
+  );
+};
+
 
 class CatPoint extends React.Component<any, CatPointInterface> {
   static propTypes = {
@@ -288,6 +328,28 @@ export default class VictoryScatterDemo extends React.Component<
           })}
           x="a.x"
           y="a.b[0]y"
+        />
+        {/* custom icons */}
+        <VictoryScatter
+          style={{
+            parent: style.parent
+          }}
+          data={[
+            { x: 1, y: 45 },
+            { x: 2, y: 85 },
+            { x: 3, y: 55 },
+            { x: 4, y: 25 },
+            { x: 5, y: 65 }
+          ]}
+          dataComponent={<CustomCustomIconWithEvents />}
+        />
+        <VictoryScatter
+          style={{
+            parent: style.parent
+          }}
+          dataComponent={<CustomSunIcon />}
+          size={25}
+          samples={10}
         />
       </div>
     );

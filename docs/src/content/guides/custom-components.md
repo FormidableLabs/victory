@@ -5,6 +5,7 @@ category: guides
 scope:
   - range
   - random
+  - reactIconsFa
 ---
 
 # Custom Components
@@ -106,6 +107,39 @@ function App() {
   );
 }
 render(<App/>);
+```
+An example of using Custom icons as `dataComponent` in `VictoryScatter`.
+
+```playground_norender
+const { FaCat } = reactIconsFa;
+
+const CustomCatIcon = (props) => {
+  const { x, y } = props;
+  const [iconColor, setIconColor] = React.useState(
+    props?.style?.fill || "black",
+  );
+  return (
+    <FaCat
+      x={x - 3}
+      y={y - 15}
+      fill={iconColor}
+      size={15}
+      onClick={() => {
+        setIconColor("orange");
+      }}
+    />
+  );
+};
+
+function App() {
+  return (
+    <VictoryChart>
+      <VictoryScatter dataComponent={<CustomCatIcon />} samples={15} />
+    </VictoryChart>
+  );
+}
+render(<App />);
+
 ```
 
 More complex components may be supplied as direct children of `VictoryChart`. These components will have access to shared chart props such as `scale`. In the example below, the custom `Polygon` components draws a polygon based on a collection of points. The scale provided by `VictoryChart` is used to correctly position the points within the chart.
