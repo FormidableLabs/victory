@@ -1,0 +1,597 @@
+---
+title: Area
+---
+
+Area charts are used for visualizing trends in data over a continuous interval while emphasizing the magnitude of the values.
+
+## Basic
+
+See the [full API here](/docs/api/victory-area). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea data={sampleData} />
+</VictoryChart>
+```
+
+## Area Charts - Horizontal
+
+Area charts can be rendered with a flipped axis by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryArea`.
+
+```jsx live
+<VictoryChart
+  horizontal
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea data={sampleData} />
+</VictoryChart>
+```
+
+## Area Charts - Interpolation
+
+Area charts can use interpolation to smooth the line between data points. See the [full list of interpolation options](/docs/api/victory-area#interpolation).
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea
+    data={sampleData}
+    interpolation="natural"
+  />
+</VictoryChart>
+```
+
+## Area Charts - Null Data
+
+Area charts can handle null data points by setting the `data` prop to an array of objects with `x` and `y` values. Null data points will be skipped.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea
+    data={[
+      { x: 1, y: 1 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 2 },
+      { x: 5, y: null },
+      { x: 6, y: null },
+      { x: 7, y: 6 },
+      { x: 8, y: 7 },
+      { x: 9, y: 8 },
+      { x: 10, y: 12 },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Area Charts - Discontinuous Scale
+
+Area charts can be rendered with a discontinuous scale by using the `scaleDiscontinuous` plugin from `@d3fc/d3fc-discontinuous-scale`.
+
+```jsx live noInline
+function App() {
+  const data = [
+    { x: new Date(2021, 5, 1), y: 8 },
+    { x: new Date(2021, 5, 2), y: 10 },
+    { x: new Date(2021, 5, 3), y: 7 },
+    { x: new Date(2021, 5, 4), y: 4 },
+    { x: new Date(2021, 5, 7), y: 6 },
+    { x: new Date(2021, 5, 8), y: 3 },
+    { x: new Date(2021, 5, 9), y: 7 },
+    { x: new Date(2021, 5, 10), y: 9 },
+    { x: new Date(2021, 5, 11), y: 6 },
+  ];
+
+  // scaleDiscontinuous and discontinuitySkipWeekends are both
+  // plugins imported from @d3fc/d3fc-discontinuous-scale
+  const discontinuousScale =
+    scaleDiscontinuous(
+      d3Scale.scaleTime(),
+    ).discontinuityProvider(
+      discontinuitySkipWeekends(),
+    );
+
+  return (
+    <VictoryChart
+      scale={{ x: discontinuousScale }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryArea data={data} />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+## Area Charts - Combined
+
+Area charts can be combined into the same chart. Note that the order of the components will determine the rendering order.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    style={{
+      data: {
+        fill: "#8b46ff",
+        fillOpacity: 0.65,
+      },
+    }}
+  />
+  <VictoryArea
+    data={[
+      { x: 1, y: 1 },
+      { x: 2, y: 4 },
+      { x: 3, y: 5 },
+      { x: 4, y: 7 },
+      { x: 5, y: 5 },
+    ]}
+    style={{
+      data: {
+        fill: "#2d7ff9",
+        fillOpacity: 0.65,
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+## Area Charts - Baseline
+
+Area charts can be rendered with a baseline for dependent values by setting the `y0` property on each data point.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea
+    data={[
+      { x: 1, y: 2, y0: 0 },
+      { x: 2, y: 3, y0: 1 },
+      { x: 3, y: 5, y0: 1 },
+      { x: 4, y: 4, y0: 2 },
+      { x: 5, y: 6, y0: 2 },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Area Charts - Stacked
+
+Area charts can be stacked using the `VictoryStack` component. This will automatically adjust the `y0` property for each data point and apply a `colorScale`.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryStack colorScale="qualitative">
+    <VictoryArea
+      data={[
+        { x: 1, y: 2 },
+        { x: 2, y: 3 },
+        { x: 3, y: 5 },
+        { x: 4, y: 4 },
+        { x: 5, y: 7 },
+      ]}
+    />
+    <VictoryArea
+      data={[
+        { x: 1, y: 1 },
+        { x: 2, y: 4 },
+        { x: 3, y: 5 },
+        { x: 4, y: 7 },
+        { x: 5, y: 5 },
+      ]}
+    />
+    <VictoryArea
+      data={[
+        { x: 1, y: 3 },
+        { x: 2, y: 2 },
+        { x: 3, y: 6 },
+        { x: 4, y: 2 },
+        { x: 5, y: 6 },
+      ]}
+    />
+    <VictoryArea
+      data={[
+        { x: 1, y: 2 },
+        { x: 2, y: 3 },
+        { x: 3, y: 3 },
+        { x: 4, y: 4 },
+        { x: 5, y: 7 },
+      ]}
+    />
+  </VictoryStack>
+</VictoryChart>
+```
+
+## Area Charts - Labels
+
+Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-area#labelcomponent) prop.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea
+    data={sampleData}
+    labels={({ datum }) => datum.y}
+  />
+</VictoryChart>
+```
+
+## Area Charts - Tooltips
+
+`VictoryArea` only renders a single element to represent an entire dataset, so replacing its `labelComponent` with `VictoryTooltip` won't work as expected. Use `VictoryVoronoiContainer` to associate mouse position with the nearest data points.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  containerComponent={
+    <VictoryVoronoiContainer />
+  }
+>
+  <VictoryArea
+    data={sampleData}
+    labelComponent={<VictoryTooltip />}
+    labels={({ datum }) => datum.y}
+  />
+</VictoryChart>
+```
+
+## Area Charts - Animation
+
+Charts can be animated by setting the `animate` prop. See the [animations](/docs/guides/animations) guide for more information.
+
+```jsx live noInline
+function App() {
+  const [state, setState] =
+    React.useState({ data: getData() });
+
+  React.useState(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setState({ data: getData() });
+      }, 4000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+      animate={{ duration: 1000 }}
+    >
+      <VictoryStack colorScale={"blue"}>
+        {state.data.map((data, i) => {
+          return (
+            <VictoryArea
+              key={i}
+              data={data}
+              interpolation={"basis"}
+            />
+          );
+        })}
+      </VictoryStack>
+    </VictoryChart>
+  );
+}
+
+function getData() {
+  return _.range(7).map(() => {
+    return [
+      { x: 1, y: _.random(1, 5) },
+      { x: 2, y: _.random(1, 10) },
+      { x: 3, y: _.random(2, 10) },
+      { x: 4, y: _.random(2, 10) },
+      { x: 5, y: _.random(2, 15) },
+    ];
+  });
+}
+
+render(<App />);
+```
+
+## Area Charts - Styles
+
+Chart styling can be customized by using the theme or overriding the style prop on the component.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea
+    data={sampleData}
+    labels={({ datum }) => datum.y}
+    style={{
+      data: {
+        fill: "#c43a31",
+        fillOpacity: 0.4,
+        stroke: "#c43a31",
+        strokeWidth: 2,
+      },
+      labels: {
+        fontSize: 12,
+        fill: "#c43a31",
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+## Area Charts - Events
+
+Events can be handled by passing an array of event objects to the `events` prop on the `VictoryArea` component. `VictoryArea` uses the special `all` key for the target prop to attach events to all data points. See the [events](/docs/guides/events) guide for more information.
+
+```jsx live noInline
+function App() {
+  const toggleFillColor = (fill) => {
+    if (fill === "black") {
+      return null;
+    } else {
+      return {
+        style: {
+          fill: "black",
+        },
+      };
+    }
+  };
+
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryArea
+        data={sampleData}
+        labels={({ datum }) => datum.y}
+        events={[
+          {
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    eventKey: "all",
+                    mutation: (props) =>
+                      toggleFillColor(
+                        props.style
+                          ?.fill,
+                      ),
+                  },
+                ];
+              },
+            },
+          },
+        ]}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+## Polar Area Charts
+
+Area charts can be rendered in polar coordinates by setting the `polar` prop to `true` and using `VictoryPolarAxis` components.
+
+```jsx live
+<VictoryChart
+  polar
+  domain={{ y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryPolarAxis
+    dependentAxis
+    style={{ axis: { stroke: "none" } }}
+    tickFormat={() => null}
+  />
+  <VictoryPolarAxis />
+  <VictoryArea data={sampleData} />
+</VictoryChart>
+```
+
+## Polar Area Charts - Radar
+
+Area charts can be rendered in polar coordinates with a radar shape by setting the `polar` prop to `true` and using `VictoryPolarAxis` components.
+
+```jsx live noInline
+const characterData = [
+  {
+    strength: 1,
+    intelligence: 250,
+    luck: 1,
+    stealth: 40,
+    charisma: 50,
+  },
+  {
+    strength: 2,
+    intelligence: 300,
+    luck: 2,
+    stealth: 80,
+    charisma: 90,
+  },
+  {
+    strength: 5,
+    intelligence: 225,
+    luck: 3,
+    stealth: 60,
+    charisma: 120,
+  },
+];
+
+function App() {
+  const [state, setState] =
+    React.useState({
+      data: processData(characterData),
+      maxima: getMaxima(characterData),
+    });
+
+  return (
+    <VictoryChart
+      polar
+      theme={VictoryTheme.clean}
+      domain={{ y: [0, 1] }}
+    >
+      <VictoryGroup
+        style={{
+          data: {
+            fillOpacity: 0.2,
+            strokeWidth: 2,
+          },
+        }}
+      >
+        {state.data.map((data, i) => {
+          return (
+            <VictoryArea
+              key={i}
+              data={data}
+            />
+          );
+        })}
+      </VictoryGroup>
+      {Object.keys(state.maxima).map(
+        (key, i) => {
+          return (
+            <VictoryPolarAxis
+              key={i}
+              dependentAxis
+              style={{
+                axisLabel: {
+                  padding: 10,
+                },
+                axis: {
+                  stroke: "none",
+                },
+                grid: {
+                  stroke: "grey",
+                  strokeWidth: 0.25,
+                  opacity: 0.5,
+                },
+              }}
+              tickLabelComponent={
+                <VictoryLabel labelPlacement="vertical" />
+              }
+              labelPlacement="perpendicular"
+              axisValue={i + 1}
+              label={key}
+              tickFormat={(t) =>
+                Math.ceil(
+                  t * state.maxima[key],
+                )
+              }
+              tickValues={[
+                0.25, 0.5, 0.75,
+              ]}
+            />
+          );
+        },
+      )}
+      <VictoryPolarAxis
+        labelPlacement="parallel"
+        tickFormat={() => ""}
+        style={{
+          axis: { stroke: "none" },
+          grid: {
+            stroke: "grey",
+            opacity: 0.5,
+          },
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+function getMaxima(data) {
+  const groupedData = Object.keys(
+    data[0],
+  ).reduce((memo, key) => {
+    memo[key] = data.map((d) => d[key]);
+    return memo;
+  }, {});
+  return Object.keys(
+    groupedData,
+  ).reduce((memo, key) => {
+    memo[key] = Math.max(
+      ...groupedData[key],
+    );
+    return memo;
+  }, {});
+}
+
+function processData(data) {
+  const maxByGroup = getMaxima(data);
+  const makeDataArray = (d) => {
+    return Object.keys(d).map((key) => {
+      return {
+        x: key,
+        y: d[key] / maxByGroup[key],
+      };
+    });
+  };
+  return data.map((datum) =>
+    makeDataArray(datum),
+  );
+}
+
+render(<App />);
+```
+
+## Standalone Rendering
+
+Area charts can be rendered outside a VictoryChart.
+
+```jsx live
+<VictoryArea
+  theme={VictoryTheme.clean}
+  data={sampleData}
+/>
+```
+
+They can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<div style={{ padding: "20px" }}>
+  <svg
+    width={300}
+    height={300}
+    style={{
+      display: "block",
+      margin: "0 auto",
+    }}
+  >
+    <circle
+      cx={150}
+      cy={150}
+      r={150}
+      fill="#9ded91"
+    />
+    <VictoryArea
+      standalone={false}
+      theme={VictoryTheme.clean}
+      width={300}
+      height={300}
+      padding={{ left: 10, right: 10 }}
+      data={sampleData}
+    />
+  </svg>
+</div>
+```

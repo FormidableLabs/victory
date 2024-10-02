@@ -1,0 +1,376 @@
+---
+title: Scatter
+---
+
+Scatter charts render a dataset as a series of points.
+
+## Basic
+
+See the [full API here](/docs/api/victory-scatter). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Scatter Charts - Labels
+
+Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-area#labelcomponent) prop. `VictoryScatter` will also preferentially use the `label` property from the data object.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: 1, y: 2, label: "bob" },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    labels={({ datum }) => datum.y}
+  />
+</VictoryChart>
+```
+
+## Scatter Charts - Tooltips
+
+Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    labels={({ datum }) => datum.y}
+    labelComponent={
+      <VictoryTooltip dy={-10} />
+    }
+  />
+</VictoryChart>
+```
+
+## Scatter Charts - Horizontal
+
+Scatter charts can be rendered with a flipped axis by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryLine`.
+
+```jsx live
+<VictoryChart
+  horizontal
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Scatter Charts - Null Data
+
+Scatter charts can handle null data points by setting the `data` prop to an array of objects with `x` and `y` values. Null data points will be skipped.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    data={[
+      { x: 1, y: 1 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 2 },
+      { x: 5, y: null },
+      { x: 6, y: null },
+      { x: 7, y: 6 },
+      { x: 8, y: 7 },
+      { x: 9, y: 8 },
+      { x: 10, y: 12 },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Scatter Charts - Bubble
+
+Scatter charts can render a dynamic bubble size by setting the `bubbleProperty` to a property of the data object.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  domain={{ x: [0, 6], y: [0, 8] }}
+>
+  <VictoryScatter
+    bubbleProperty="amount"
+    maxBubbleSize={25}
+    minBubbleSize={5}
+    data={[
+      { x: 1, y: 2, amount: 20 },
+      { x: 2, y: 3, amount: 40 },
+      { x: 3, y: 5, amount: 25 },
+      { x: 4, y: 4, amount: 10 },
+      { x: 5, y: 7, amount: 45 },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Scatter Charts - Symbols
+
+Scatter chart bubbles can be customized by setting the `symbol` prop.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: 1, y: 2, symbol: "circle" },
+      { x: 2, y: 3, symbol: "star" },
+      { x: 3, y: 5, symbol: "square" },
+      {
+        x: 4,
+        y: 4,
+        symbol: "diamond",
+      },
+      {
+        x: 5,
+        y: 7,
+        symbol: "triangleDown",
+      },
+    ]}
+    labels={({ datum }) => datum.y}
+  />
+</VictoryChart>
+```
+
+## Scatter Charts - Custom Icons
+
+Scatter chart bubbles can also leverage SVG elements such as those from icon libraries like [react-icons](https://react-icons.github.io/react-icons/) by using the `dataComponent` property.
+
+```jsx live noInline
+const { FaSun } = reactIconsFa;
+
+const CustomIcon = (props) => {
+  return (
+    <FaSun
+      fill={props?.style?.fill}
+      x={props.x - 7}
+      y={props.y - 7}
+      size={15}
+    />
+  );
+};
+
+function App() {
+  return (
+    <VictoryChart
+      domain={{ x: [0, 5], y: [0, 7] }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryScatter
+        size={7}
+        data={[
+          { x: 1, y: 2 },
+          { x: 2, y: 3 },
+          { x: 3, y: 5 },
+          { x: 4, y: 4 },
+          { x: 5, y: 7 },
+        ]}
+        dataComponent={<CustomIcon />}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+## Scatter Charts - Styles
+
+Chart styling can be customized by using the theme or overriding the style prop on the component.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    style={{
+      data: {
+        fill: ({ datum }) =>
+          datum.x === 3
+            ? "#000000"
+            : "#c43a31",
+        stroke: ({ datum }) =>
+          datum.x === 3
+            ? "#000000"
+            : "#c43a31",
+        fillOpacity: 0.7,
+        strokeWidth: 3,
+      },
+      labels: {
+        fontSize: 15,
+        fill: ({ datum }) =>
+          datum.x === 3
+            ? "#000000"
+            : "#c43a31",
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+## Scatter Charts - Events
+
+Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const fill =
+                    props.style &&
+                    props.style.fill;
+                  return fill ===
+                    "black"
+                    ? null
+                    : {
+                        style: {
+                          fill: "black",
+                        },
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Polar Scatter Charts
+
+Line charts can be rendered in polar coordinates by setting the `polar` prop to `true` and using `VictoryPolarAxis` components.
+
+```jsx live
+<VictoryChart
+  polar
+  domain={{ y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryPolarAxis
+    dependentAxis
+    style={{ axis: { stroke: "none" } }}
+    tickFormat={() => null}
+  />
+  <VictoryPolarAxis />
+  <VictoryScatter
+    data={sampleData}
+    size={5}
+  />
+</VictoryChart>
+```
+
+## Standalone Rendering
+
+Scatter charts can be rendered outside a VictoryChart.
+
+```jsx live
+<VictoryScatter
+  size={7}
+  theme={VictoryTheme.clean}
+  data={sampleData}
+/>
+```
+
+They can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<div style={{ padding: "20px" }}>
+  <svg
+    width={300}
+    height={300}
+    style={{
+      display: "block",
+      margin: "0 auto",
+    }}
+  >
+    <circle
+      cx={150}
+      cy={150}
+      r={150}
+      fill="#9ded91"
+    />
+    <VictoryScatter
+      standalone={false}
+      size={7}
+      theme={VictoryTheme.clean}
+      width={300}
+      height={300}
+      padding={{ left: 10, right: 10 }}
+      data={sampleData}
+    />
+  </svg>
+</div>
+```

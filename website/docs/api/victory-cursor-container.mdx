@@ -1,0 +1,133 @@
+---
+title: VictoryCursorContainer
+---
+
+Adds a cursor to a chart to inspect coordinates.
+
+:::info
+For examples of `VictoryCursorContainer` in action, visit the [containers](/docs/guides/containers) guide.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={["VictoryContainerProps"]}
+/>
+
+## Component Props
+
+---
+
+### cursorComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<LineSegment/>" />
+</Badges>
+
+The `cursorComponent` prop takes a component instance which will be used to render a cursor element. The new element created will be supplied with `x1`, `y1`, `x2` and `y2` positioning props. If a `cursorComponent` is not supplied, a new [LineSegment][] component will be rendered.
+
+---
+
+### cursorDimension
+
+<Badges>
+  <TypeBadge value='"x" || "y"' />
+</Badges>
+
+When the `cursorDimension` prop is set, the cursor will be a line to inspect the given dimension
+(either "x" or "y"). When this prop is not specified, the cursor will be a 2-dimensional crosshair.
+For example, if you would like to inspect the time of time-series data, set `dimension={"x"}`;
+the cursor will then be a vertical line that will inspect the time value of the current mouse position.
+
+```jsx live
+<VictoryScatter
+  containerComponent={
+    <VictoryCursorContainer
+      cursorDimension="x"
+      cursorLabel={({ datum }) =>
+        `${round(datum.x, 2)}, ${round(
+          datum.y,
+          2,
+        )}`
+      }
+    />
+  }
+/>
+```
+
+---
+
+### cursorLabel
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+The `cursorLabel` prop defines the label that will appear next to the cursor.
+A label will only appear if `cursorLabel` is set. This prop should be given as a function of a point (an Object with `x` and `y` properties).
+
+_example:_ `cursorLabel={(point) => point.x}`
+
+---
+
+### cursorLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `cursorLabelComponent` prop takes a component instance which will be used to render a label for the cursor. The new element created from the passed `cursorLabelComponent` will be supplied with the following props: `x`, `y`, `active`, `text`. If `cursorLabelComponent` is omitted, a new [VictoryLabel][] will be created with the props described above.
+
+---
+
+### cursorLabelOffset
+
+<Badges>
+  <TypeBadge value="number | { x: number, y: number }" />
+  <DefaultsBadge value="{ x: 5, y: -10 }" />
+</Badges>
+
+The `cursorLabelOffset` prop determines the pixel offset of the cursor label from the cursor point.
+This prop should be an Object with `x` and `y` properties, or a number to be used for both dimensions.
+
+---
+
+### defaultCursorValue
+
+<Badges>
+  <TypeBadge value="number | { x: number, y: number }" />
+</Badges>
+
+Whenever the mouse is not over the chart, the cursor will not be displayed.
+If instead you would like to keep it displayed, use the `defaultCursorValue` prop to set the default value. The prop should be a point (an Object with `x` and `y` properties) for 2-dimensional cursors, or a number for 1-dimensional cursors.
+
+_examples:_ `defaultCursorValue={{x: 1, y: 1}}`, `defaultCursorValue={0}`
+
+---
+
+### disable
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+When the `disable` prop is set to `true`, `VictoryCursorContainer` events will not fire.
+
+---
+
+### onCursorChange
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+If provided, the `onCursorChange` function will be called every time the cursor value changes. `onCursorChange` is called with `value` (the updated cursor value) and `props` (the props used by `VictoryCursorContainer`). A common use for `onCursorChange` is to save the cursor value to state and use it in another part of the view.
+
+_example:_ `onCursorChange={(value, props) => this.setState({cursorValue: value})}`
+
+[victoryvoronoicontainer]: /docs/api/victory-voronoi-container
+[victorycontainer]: /docs/api/victory-container
+[victorylabel]: /docs/api/victory-label
+[linesegment]: /docs/api/victory-primitives#linesegment

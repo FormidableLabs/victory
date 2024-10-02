@@ -1,0 +1,615 @@
+---
+title: VictoryLegend
+---
+
+:::info
+For examples of `VictoryLegend` in action, visit the [Chart Legends](/docs/guides/legends) guide.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryDatableProps",
+    "VictorySingleLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={[
+    "containerComponent",
+    "data",
+    "dataComponent",
+    "events",
+    "x",
+    "y",
+  ]}
+  notImplemented={["y0"]}
+/>
+
+## Component Props
+
+---
+
+### borderComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Border/>" />
+</Badges>
+
+The `borderComponent` prop takes a component instance which will be responsible for rendering a border around the legend. The new element created from the passed `borderComponent` will be provided with the following properties calculated by `VictoryLegend`: `x`, `y`, `width`, `height`, and `style`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `borderComponent` is not provided, `VictoryLegend` will use its default [Border][] component. Please note that the default width and height calculated for the border component is based on _approximated_ text measurements, and may need to be adjusted.
+
+```jsx
+borderComponent={<Border width={300}/>}
+```
+
+---
+
+### borderPadding
+
+<Badges>
+  <TypeBadge value="number || { top: number, bottom: number, left: number, right: number }" />
+  <DefaultsBadge value="<Area>" />
+</Badges>
+
+The `borderPadding` specifies the amount of padding that should be added between the legend items and the border. This prop may be given as a number, or as an object with values specified for `top`, `bottom`, `left`, and `right`. Please note that the default width and height calculated for the border component is based on _approximated_ text measurements, so padding may need to be adjusted.
+
+```jsx
+borderPadding={{ top: 20, bottom: 10 }}
+```
+
+---
+
+### centerTitle
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+The `centerTitle` boolean prop specifies whether a legend title should be centered.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={10}
+  title="Legend"
+  centerTitle
+  orientation="horizontal"
+  gutter={20}
+  style={{
+    border: { stroke: "black" },
+    title: { fontSize: 20 },
+  }}
+  data={[
+    { name: "One" },
+    { name: "Two" },
+    { name: "Three" },
+  ]}
+/>
+```
+
+---
+
+### containerComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryContainer/>" />
+</Badges>
+
+`VictoryLegend` uses the standard `containerComponent` prop. [Read about it here](/docs/api/victory-common-theme-props#containercomponent)
+
+:::warning
+`VictoryLegend` only works with the `VictoryContainer` component
+:::
+
+```jsx
+containerComponent={<VictoryContainer responsive={false}/>}
+```
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="array[{ name, symbol, labels }]" />
+  <DefaultsBadge value='[{ name: "Series 1" }, { name: "Series 2" }]}' />
+</Badges>
+
+Specify data via the `data` prop. `VictoryLegend` expects data as an array of objects with `name` (required), `symbol`, and `labels` properties. The `data` prop must be given as an array. The symbol rendered may be changed by altering the `type` property of the `symbol` object. Valid types include: circle", "diamond", "plus", "minus", "square", "star", "triangleDown", and "triangleUp". If you want to use SVG icons from a custom component or an SVG based icon library like [react-icons](https://react-icons.github.io/react-icons/) use the `dataComponent` property.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={50}
+  orientation="horizontal"
+  gutter={20}
+  style={{
+    border: { stroke: "black" },
+  }}
+  data={[
+    {
+      name: "One",
+      symbol: {
+        fill: "tomato",
+        type: "star",
+      },
+    },
+    {
+      name: "Two",
+      symbol: { fill: "orange" },
+      labels: { fill: "orange" },
+    },
+    {
+      name: "Three",
+      symbol: { fill: "gold" },
+    },
+  ]}
+/>
+```
+
+---
+
+### dataComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Point/>" />
+</Badges>
+
+`VictoryLegend` uses the standard `dataComponent` prop. [Read about it here](/docs/api/victory-datatable-props#datacomponent)
+
+`VictoryLegend` supplies the following props to its `dataComponent`: `data`, `datum`, `events`, `index`, `x`, `y`, `size`, `style`, and `symbol`. `VictoryLegend` renders a [Point][] component by default.
+
+```jsx
+dataComponent={<Point events={{ onClick: handleClick }}/>}
+```
+
+An example of using Custom icons as `dataComponent` in `VictoryLegend`.
+
+```jsx live noInline
+const { FaSun } = reactIconsFa;
+
+const CustomIcon = (props) => {
+  return (
+    <FaSun
+      fill={
+        props?.style?.fill || "green"
+      }
+      x={props.x - 7}
+      y={props.y - 7}
+      size={15}
+    />
+  );
+};
+
+function App() {
+  return (
+    <VictoryLegend
+      orientation={"horizontal"}
+      x={65}
+      y={50}
+      data={[
+        {
+          name: "One",
+          symbol: { fill: "orange" },
+        },
+        {
+          name: "Two",
+          symbol: { fill: "blue" },
+        },
+        { name: "Three" },
+      ]}
+      dataComponent={<CustomIcon />}
+    />
+  );
+}
+
+render(<App />);
+```
+
+An example of using multiple Custom icons as `dataComponent` in `VictoryLegend`.
+
+```jsx live noInline
+const CustomMultipleIcon = (props) => {
+  const { x, y, datum } = props;
+  const Icon = reactIconsFa[datum.icon];
+  return (
+    <Icon
+      x={x - 7}
+      y={y - 7}
+      size={15}
+    />
+  );
+};
+
+function App() {
+  return (
+    <VictoryLegend
+      orientation={"horizontal"}
+      x={65}
+      y={50}
+      data={[
+        { name: "One", icon: "FaMoon" },
+        { name: "Two", icon: "FaSun" },
+        {
+          name: "Three",
+          icon: "FaStar",
+        },
+      ]}
+      dataComponent={
+        <CustomMultipleIcon />
+      }
+    />
+  );
+}
+
+render(<App />);
+```
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | function" />
+</Badges>
+
+`VictoryLegend` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="array[object]" />
+</Badges>
+
+`VictoryLegend` uses the standard `events` prop. [Read about it here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+```jsx live
+<div>
+  <h3>Click Me</h3>
+  <VictoryLegend
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const fill =
+                    props.style &&
+                    props.style.fill;
+                  return fill ===
+                    "#c43a31"
+                    ? null
+                    : {
+                        style: {
+                          fill: "#c43a31",
+                        },
+                      };
+                },
+              },
+              {
+                target: "labels",
+                mutation: (props) => {
+                  return props.text ===
+                    "clicked"
+                    ? null
+                    : {
+                        text: "clicked",
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={[
+      { name: "One" },
+      { name: "Two" },
+      { name: "Three" },
+    ]}
+  />
+</div>
+```
+
+---
+
+### gutter
+
+<Badges>
+  <TypeBadge value="number || { left: number, right: number }" />
+  <DefaultsBadge value="10}" />
+</Badges>
+
+The `gutter` prop defines the number of pixels between legend columns. This prop may be given as a number, or as an object with values specified for "left" and "right" gutters. To set spacing between rows, use the `rowGutter` prop.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={50}
+  orientation="horizontal"
+  gutter={50}
+  style={{
+    border: { stroke: "black" },
+  }}
+  data={[
+    { name: "One" },
+    { name: "Two" },
+    { name: "Three" },
+  ]}
+/>
+```
+
+---
+
+### itemsPerRow
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `itemsPerRow` prop determines how many items to render in each row of a horizontal legend, or in each column of a vertical legend. This prop should be given as an integer. When this prop is not given, legend items will be rendered in a single row or column.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={50}
+  orientation="horizontal"
+  itemsPerRow={3}
+  gutter={20}
+  style={{
+    border: { stroke: "black" },
+  }}
+  data={[
+    { name: "One" },
+    { name: "Two" },
+    { name: "Three" },
+    { name: "Four" },
+  ]}
+/>
+```
+
+---
+
+### orientation
+
+<Badges>
+  <TypeBadge value='"vertical" || "horizontal"' />
+  <DefaultsBadge value='vertical"' />
+</Badges>
+
+The `orientation` prop takes a string that defines whether legend data are displayed in a row or column. When `orientation` is `"horizontal"`, legend items will be displayed in rows. When `orientation` is `"vertical"`, legend items will be displayed in columns.
+
+---
+
+### rowGutter
+
+<Badges>
+  <TypeBadge value="number || { top: number, bottom: number }" />
+</Badges>
+
+The `rowGutter` prop defines the number of pixels between legend rows. This prop may be given as a number, or as an object with values specified for "top" and "bottom" gutters. To set spacing between columns, use the `gutter` prop.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={50}
+  orientation="vertical"
+  gutter={20}
+  rowGutter={{ top: 0, bottom: 10 }}
+  style={{
+    border: { stroke: "black" },
+  }}
+  data={[
+    { name: "One" },
+    { name: "Two" },
+    { name: "Three" },
+  ]}
+/>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ border: object, data: object, labels: object, parent: object, title: object }" />
+</Badges>
+
+The `style` prop defines the style of the component. The style prop should be given as an object with styles defined for `parent`, `data`, `labels`, `title`, and `border`. Any valid svg styles are supported, but `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in VictoryChart. Functional styles may be defined for `data`, and `labels` style properties, and they will be evaluated with the props corresponding to each element.
+
+_note:_ When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+
+_note:_ custom `angle` and `verticalAnchor` properties may be included in `labels` and `title` styles.
+
+_default (provided by default theme):_ See [grayscale theme][] for more detail
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={50}
+  title="Legend"
+  centerTitle
+  orientation="horizontal"
+  gutter={20}
+  style={{
+    data: {
+      fill: "blue",
+      stroke: "navy",
+      strokeWidth: 2,
+    },
+    labels: { fill: "navy" },
+    border: { stroke: "black" },
+    title: { fontSize: 20 },
+  }}
+  data={[
+    {
+      name: "One",
+      symbol: { fill: "tomato" },
+    },
+    {
+      name: "Two",
+      labels: { fill: "orange" },
+    },
+    { name: "Three" },
+  ]}
+/>
+```
+
+---
+
+### symbolSpacer
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `symbolSpacer` prop defines the number of pixels between data components and label components. When a `symbolSpacer` is not defined, spacing is calculated based on symbol size and label font size.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={50}
+  orientation="horizontal"
+  symbolSpacer={5}
+  gutter={20}
+  data={[
+    { name: "One" },
+    { name: "Two" },
+    { name: "Three" },
+  ]}
+/>
+```
+
+---
+
+### title
+
+<Badges>
+  <TypeBadge value="string | string[]" />
+</Badges>
+
+The `title` prop specifies a title to render with the legend. This prop should be given as a string, or an array of strings for multi-line titles.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={50}
+  title="Legend Title"
+  gutter={20}
+  orientation="horizontal"
+  style={{
+    border: { stroke: "black" },
+    title: { fontSize: 20 },
+  }}
+  data={[
+    { name: "One" },
+    { name: "Two" },
+    { name: "Three" },
+  ]}
+/>
+```
+
+---
+
+### titleComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel>" />
+</Badges>
+
+The `titleComponent` prop takes a component instance which will be used to render a title for the component. The new element created from the passed `labelComponent` will be supplied with the following properties: `x`, `y`, `index`, `data`, `datum`, `verticalAnchor`, `textAnchor`, `style`, `text`, and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `labelComponent` is omitted, a new [VictoryLabel][] will be created with the props described above.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={50}
+  title={["Legend Title", "subtitle"]}
+  gutter={20}
+  orientation="horizontal"
+  style={{
+    border: { stroke: "black" },
+  }}
+  titleComponent={
+    <VictoryLabel
+      style={[
+        { fontSize: 20 },
+        { fontSize: 12 },
+      ]}
+    />
+  }
+  data={[
+    { name: "One" },
+    { name: "Two" },
+    { name: "Three" },
+  ]}
+/>
+```
+
+---
+
+### titleOrientation
+
+<Badges>
+  <TypeBadge value='"top" || "bottom" || "left" || "right"' />
+  <DefaultsBadge value='"top' />
+</Badges>
+
+The `titleOrientation` prop specifies where the title should be rendered in relation to the rest of the legend. Possible values for this prop are "top", "bottom", "left", and "right".
+
+```jsx live
+<VictoryLegend
+  x={50}
+  y={50}
+  title="Legend Title"
+  titleOrientation="left"
+  gutter={20}
+  orientation="horizontal"
+  style={{
+    border: { stroke: "black" },
+    title: { fontSize: 20 },
+  }}
+  data={[
+    { name: "One" },
+    { name: "Two" },
+    { name: "Three" },
+  ]}
+/>
+```
+
+---
+
+### x
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `x` prop defines the x coordinate corresponding to the upper left corner of the legend.
+
+---
+
+### y
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `y` prop defines the y coordinate corresponding to the upper left corner of the legend.
+
+[victorylabel]: /docs/api/victory-label
+[point]: /docs/api/victory-primitives#point
+[border]: /docs/api/victory-primitives#border
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
+[read more about themes here]: /docs/guides/themes
+[custom components guide]: /docs/guides/custom-components
+[events guide]: /docs/guides/events

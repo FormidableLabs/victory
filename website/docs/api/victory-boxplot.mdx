@@ -1,0 +1,744 @@
+---
+title: VictoryBoxPlot
+---
+
+:::info
+For examples of `VictoryBoxPlot` in action, visit the [Box Plot](/docs/charts/box-plot) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryDatableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={[
+    "data",
+    "events",
+    "eventKey",
+  ]}
+/>
+
+## Component Props
+
+---
+
+### boxWidth
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `boxWidth` prop specifies how wide each box should be. If the `whiskerWidth` prop is not set, this prop will also determine the width of the whisker crosshair.
+
+```jsx live
+<VictoryChart
+  domainPadding={10}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    boxWidth={10}
+    whiskerWidth={5}
+    data={[
+      { x: 1, y: [1, 2, 3, 5] },
+      { x: 2, y: [3, 2, 8, 10] },
+      { x: 3, y: [2, 8, 6, 5] },
+      { x: 4, y: [1, 3, 2, 9] },
+    ]}
+  />
+</VictoryChart>
+```
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="any[]" />
+</Badges>
+
+The `data` prop for `VictoryBoxPlot` may be given in a a variety of formats:
+
+- As an array of standard data objects with values specified for `x` and `y`
+  When given in this format, repeated values for `x` will be used for calculating summary statistics
+
+```jsx
+data={[
+  { x: 1, y: 2 },
+  { x: 1, y: 3 },
+  { x: 1, y: 5 },
+  { x: 2, y: 1 },
+  { x: 2, y: 4 },
+  { x: 2, y: 5 },
+  ...
+]}
+```
+
+- As an array of data objects where `y` is given as an array of values
+  When given in this format, array values are used for calculating summary statistics.
+
+```jsx
+data={[
+  { x: 1, y: [1, 2, 3, 5] },
+  { x: 2, y: [3, 2, 8, 10] },
+  { x: 3, y: [2, 8, 6, 5] },
+  { x: 4, y: [1, 3, 2, 9] }
+]}
+```
+
+- As an array of data objects with pre-calculated summary statistics(`min`, `median`, `max`, `q1`, `q3`)
+  When given in this format, `VictoryBoxPlot` _will not_ perform statistical analysis. Pre-calculating summary statistics for large datasets will improve performance.
+
+```ts
+data={[
+  { x: 1, min: 2, median: 5, max: 10, q1: 3, q3: 7 },
+  { x: 2, min: 1, median: 4, max: 9, q1: 3, q3: 6 },
+  { x: 3, min: 1, median: 6, max: 12, q1: 4, q3: 10 },
+}]
+```
+
+Use the [`x`][], [`y`][], [`min`][], [`max`][], [`median`][], [`q1`][], and [`q3`][] data accessor props to specify custom data formats. Refer to the [Data Accessors Guide][] for more detail.
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | number | string[] | number[] | (args: CallbackArgs) => string | number" />
+</Badges>
+
+Specifies how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="any[]" />
+</Badges>
+
+`VictoryBoxPlot` uses the standard `events` prop. [Read about it here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+:::note
+valid event targets for `VictoryBoxPlot` are:
+"min", "minLabels", "grid", "ticks", and "tickLabels".
+:::
+
+```jsx live
+<div>
+  <h3>Click a data bar below</h3>
+  <VictoryBoxPlot
+    medianLabels={() => null}
+    events={[
+      {
+        target: "q3",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                mutation: (props) => {
+                  return {
+                    style:
+                      Object.assign(
+                        props.style,
+                        {
+                          fill: "tomato",
+                        },
+                      ),
+                  };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={[
+      { x: 1, y: [1, 2, 3, 5] },
+      { x: 2, y: [3, 2, 8, 10] },
+      { x: 3, y: [2, 8, 6, 5] },
+      { x: 4, y: [1, 3, 2, 9] },
+    ]}
+    theme={VictoryTheme.clean}
+  />
+</div>
+```
+
+---
+
+### labelOrientation
+
+<Badges>
+  <TypeBadge value='"top" | "bottom" | "left" | "right" | { min, max, median, q1, q3 }' />
+</Badges>
+
+The `labelOrientation` prop determines where labels are placed relative to their corresponding data. If this prop is not set, it will be set to "top" for horizontal charts, and "right" for vertical charts.
+
+```jsx live
+<VictoryChart
+  horizontal
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    labels
+    labelOrientation="top"
+    data={[
+      { x: 1, y: [1, 2, 3, 5] },
+      { x: 2, y: [3, 2, 8, 10] },
+      { x: 3, y: [2, 8, 6, 5] },
+      { x: 4, y: [1, 3, 2, 9] },
+    ]}
+  />
+</VictoryChart>
+```
+
+---
+
+### labels
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+When the boolean `labels` prop is set to `true`, the values for `min`, `max`, `median`, `q1`, and `q3` will be displayed for each box. For more granular label control, use the individual [`minLabels`][], [`maxLabels`][], [`medianLabels`][], [`q1Labels`][], and [`q3Labels`][] props.
+
+---
+
+### max
+
+<Badges>
+  <TypeBadge value="string | string[] | number | (args: CallbackArgs) => string | number" />
+</Badges>
+
+Defines the max value of a box plot.
+
+**string:** specify which property in an array of data objects should be used as the max value
+
+_examples:_ `max="max_value"`
+
+**function:** use a function to translate each element in a data array into a max value
+
+_examples:_ `max={() => 10}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as a max value
+
+_examples:_ `max="bonds.max"`, `max={["bonds", "max"]}`
+
+---
+
+### maxComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Whisker/>" />
+</Badges>
+
+The `maxComponent` prop takes a component instance which will be responsible for rendering an element to represent the maximum value of the box plot. The new element created from the passed `maxComponent` will be provided with the following props calculated by `VictoryBoxPlot`: `datum`, `index`, `scale`, `style`, `events`, `majorWhisker` and `minorWhisker`. The `majorWhisker` and `minorWhisker` props are given as objects with values for `x1`, `y1`, `x2` and `y2` that describes the lines that make up the major and minor whisker. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `maxComponent` is not provided, `VictoryBoxPlot` will use its default [Whisker component][].
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+maxComponent={<Whisker events={{ onClick: handleClick }}/>}
+```
+
+---
+
+### maxLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `maxLabelComponent` prop takes a component instance which will be used to render the label corresponding to the maximum value for each box. The new element created from the passed `maxLabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `maxLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+maxLabelComponent={<VictoryLabel dy={20}/>}
+```
+
+```jsx live
+<VictoryBoxPlot
+  data={[
+    { x: 1, y: [1, 2, 3, 5] },
+    { x: 2, y: [3, 2, 8, 10] },
+    { x: 3, y: [2, 8, 6, 5] },
+    { x: 4, y: [1, 3, 2, 9] },
+  ]}
+  maxLabels
+  maxLabelComponent={
+    <VictoryLabel
+      dx={-10}
+      dy={-10}
+      textAnchor="middle"
+    />
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### maxLabels
+
+<Badges>
+  <TypeBadge value="boolean | (string|number)[] | (data: any) => string" />
+</Badges>
+
+The `maxLabels` prop defines the labels that will appear above each point. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the max value of each datum will be used for the label.
+
+#### Common Usage
+
+- `maxLabels`
+- `maxLabels={["first", "second", "third"]}`
+- `maxLabels={({ datum }) => Math.round(datum.max)}`
+
+---
+
+### median
+
+<Badges>
+  <TypeBadge value="string | string[] | number | (args: CallbackArgs) => string | number" />
+</Badges>
+
+Use the `median` data accessor prop to define the median value of a box plot.
+
+**string:** specify which property in an array of data objects should be used as the median value
+
+_examples:_ `median="median_value"`
+
+**function:** use a function to translate each element in a data array into a median value
+
+_examples:_ `median={() => 10}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as a median value
+
+_examples:_ `median="bonds.median"`, `median={["bonds", "median"]}`
+
+---
+
+### medianComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<LineSegment/>" />
+</Badges>
+
+The `medianComponent` prop takes a component instance which will be responsible for rendering an element to represent the median value of the box plot. The new element created from the passed `medianComponent` will be provided with the following props calculated by `VictoryBoxPlot`: `datum`, `index`, `scale`, `style`, `events`, `x1`, `y1`, `x2` and `y2` Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `medianComponent` is not provided, `VictoryBoxPlot` will use its default [Line component][].
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+medianComponent={<LineSegment events={{ onClick: handleClick }}/>}
+```
+
+---
+
+### medianLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `medianLabelComponent` prop takes a component instance which will be used to render the label corresponding to the median value for each box. The new element created from the passed `medianLabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `medianLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+medianLabelComponent={<VictoryLabel dy={20}/>}
+```
+
+```jsx live
+<VictoryBoxPlot
+  data={[
+    { x: 1, y: [1, 2, 3, 5] },
+    { x: 2, y: [3, 2, 8, 10] },
+    { x: 3, y: [2, 8, 6, 5] },
+    { x: 4, y: [1, 3, 2, 9] },
+  ]}
+  medianLabels
+  medianLabelComponent={
+    <VictoryLabel
+      dx={-10}
+      dy={-10}
+      textAnchor="middle"
+    />
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### medianLabels
+
+<Badges>
+  <TypeBadge value="boolean | (string|number)[] | (data: any) => string" />
+</Badges>
+
+The `medianLabels` prop defines the labels that will appear above each point. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the median value of each datum will be used for the label.
+
+#### Common Usage
+
+- `medianLabels`
+- `medianLabels={["first", "second", "third"]}`
+- `medianLabels={({ datum }) => Math.round(datum.median)}`
+
+---
+
+### min
+
+<Badges>
+  <TypeBadge value="string | string[] | number | (args: CallbackArgs) => string | number" />
+</Badges>
+
+Use the `min` data accessor prop to define the min value of a box plot.
+
+**string:** specify which property in an array of data objects should be used as the min value
+
+_examples:_ `min="min_value"`
+
+**function:** use a function to translate each element in a data array into a min value
+
+_examples:_ `min={() => 10}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as a min value
+
+_examples:_ `min="bonds.min"`, `min={["bonds", "min"]}`
+
+---
+
+### minComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Whisker/>" />
+</Badges>
+
+The `minComponent` prop takes a component instance which will be responsible for rendering an element to represent the minimum value of the box plot. The new element created from the passed `minComponent` will be provided with the following props calculated by `VictoryBoxPlot`: `datum`, `index`, `scale`, `style`, `events`, `majorWhisker` and `minorWhisker`. The `majorWhisker` and `minorWhisker` props are given as objects with values for `x1`, `y1`, `x2` and `y2` that describes the lines that make up the major and minor whisker. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `minComponent` is not provided, `VictoryBoxPlot` will use its default [Whisker component][].
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+minComponent={<Whisker events={{ onClick: handleClick }}/>}
+```
+
+---
+
+### minLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge  value="<VictoryLabel/>" />
+</Badges>
+
+The `minLabelComponent` prop takes a component instance which will be used to render the label corresponding to the minimum value for each box. The new element created from the passed `minLabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `minLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+minLabelComponent={<VictoryLabel dy={20}/>}
+```
+
+```jsx live
+<VictoryBoxPlot
+  data={[
+    { x: 1, y: [1, 2, 3, 5] },
+    { x: 2, y: [3, 2, 8, 10] },
+    { x: 3, y: [2, 8, 6, 5] },
+    { x: 4, y: [1, 3, 2, 9] },
+  ]}
+  minLabels
+  minLabelComponent={
+    <VictoryLabel
+      dx={-10}
+      dy={10}
+      textAnchor="middle"
+    />
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### minLabels
+
+<Badges>
+  <TypeBadge value="boolean | (string|number)[] | (data: any) => string" />
+</Badges>
+
+The `minLabels` prop defines the labels that will appear above each point. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the min value of each datum will be used for the label.
+
+#### Common Usage
+
+- `minLabels`
+- `minLabels={["first", "second", "third"]}`
+- `minLabels={({ datum }) => Math.round(datum.min)}`
+
+---
+
+### q1
+
+<Badges>
+  <TypeBadge value="string | string[] | number | (args: CallbackArgs) => string | number" />
+</Badges>
+
+Use the `q1` data accessor prop to define the q1 value of a box plot.
+
+**string:** specify which property in an array of data objects should be used as the q1 value
+
+_examples:_ `q1="q1_value"`
+
+**function:** use a function to translate each element in a data array into a q1 value
+
+_examples:_ `q1={() => 10}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as a q1 value
+
+_examples:_ `q1="bonds.q1"`, `q1={["bonds", "q1"]}`
+
+---
+
+### q1Component
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge  value="<Box/>" />
+</Badges>
+
+The `q1Component` prop takes a component instance which will be responsible for rendering an element to represent the q1 value of the box plot. The new element created from the passed `q1Component` will be provided with the following props calculated by `VictoryBoxPlot`: `datum`, `index`, `scale`, `style`, `events`, `x`, `y`, `width` and `height` Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `q1Component` is not provided, `VictoryBoxPlot` will use its default [Box component][].
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+q1Component={<Box events={{ onClick: handleClick }}/>}
+```
+
+---
+
+### q1LabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge  value="<VictoryLabel/>" />
+</Badges>
+
+The `q1LabelComponent` prop takes a component instance which will be used to render the label corresponding to the q1 value for each box. The new element created from the passed `q1LabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `q1LabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+q1LabelComponent={<VictoryLabel dy={20}/>}
+```
+
+```jsx live
+<VictoryBoxPlot
+  data={[
+    { x: 1, y: [1, 2, 3, 5] },
+    { x: 2, y: [3, 2, 8, 10] },
+    { x: 3, y: [2, 8, 6, 5] },
+    { x: 4, y: [1, 3, 2, 9] },
+  ]}
+  q1Labels
+  q1LabelComponent={
+    <VictoryLabel dx={5} dy={5} />
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### q1Labels
+
+<Badges>
+  <TypeBadge value="boolean | (string|number)[] | (data: any) => string" />
+</Badges>
+
+The `q1Labels` prop defines the labels that will appear above each point. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the q1 value of each datum will be used for the label.
+
+#### Common Usage
+
+- `q1Labels`
+- `q1Labels={["first", "second", "third"]}`
+- `q1Labels={({ datum }) => Math.round(datum.q1)}`
+
+---
+
+### q3
+
+<Badges>
+  <TypeBadge value="string | string[] | number | (args: CallbackArgs) => string | number" />
+</Badges>
+
+Use the `q3` data accessor prop to define the q3 value of a box plot.
+
+**string:** specify which property in an array of data objects should be used as the q3 value
+
+_examples:_ `q3="q3_value"`
+
+**function:** use a function to translate each element in a data array into a q3 value
+
+_examples:_ `q3={() => 10}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as a q3 value
+
+_examples:_ `q3="bonds.q3"`, `q3={["bonds", "q3"]}`
+
+---
+
+### q3Component
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge  value="<Box/>" />
+</Badges>
+
+The `q3Component` prop takes a component instance which will be responsible for rendering an element to represent the q3 value of the box plot. The new element created from the passed `q3Component` will be provided with the following props calculated by `VictoryBoxPlot`: `datum`, `index`, `scale`, `style`, `events`, `x`, `y`, `width` and `height` Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `q3Component` is not provided, `VictoryBoxPlot` will use its default [Box component][].
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+q3Component={<Box events={{ onClick: handleClick }}/>}
+```
+
+---
+
+### q3LabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge  value="<VictoryLabel/>" />
+</Badges>
+
+The `q3LabelComponent` prop takes a component instance which will be used to render the label corresponding to the q3 value for each box. The new element created from the passed `q3LabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `q3LabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+q3LabelComponent={<VictoryLabel dy={20}/>}
+```
+
+```jsx live
+<VictoryBoxPlot
+  data={[
+    { x: 1, y: [1, 2, 3, 5] },
+    { x: 2, y: [3, 2, 8, 10] },
+    { x: 3, y: [2, 8, 6, 5] },
+    { x: 4, y: [1, 3, 2, 9] },
+  ]}
+  q3Labels
+  q3LabelComponent={
+    <VictoryLabel dx={5} dy={5} />
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### q3Labels
+
+<Badges>
+  <TypeBadge value="boolean | (string|number)[] | (data: any) => string" />
+</Badges>
+
+The `q3Labels` prop defines the labels that will appear above each point. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the q3 value of each datum will be used for the label.
+
+#### Common Usage
+
+- `q3Labels`
+- `q3Labels={["first", "second", "third"]}`
+- `q3Labels={({ datum }) => Math.round(datum.q3)}`
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="VictoryStyleInterface" />
+  <DefaultsBadge value="(provided by theme)" />
+</Badges>
+
+Defines the style of the component using `VictoryBoxPlotStyleInterface`.
+
+```ts
+type VictoryBoxPlotStyleInterface = {
+  parent: object,
+  max: object,
+  maxLabels: object,
+  min: object,
+  minLabels: object,
+  median: object,
+  medianLabels: object,
+  q1: object,
+  q1Labels: object,
+  q3: object,
+  q3Labels: object
+}
+```
+
+The `style` prop defines the style of the component. The style prop should be given as an object with styles defined for `parent`, `max`, `maxLabels`, `min`, `minLabels`,`median`, `medianLabels`,`q1`, `q1Labels`,`q3`, `q3Labels`. Any valid svg styles are supported, but `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in VictoryChart. Functional styles may be defined for style properties, and they will be evaluated with the props corresponding to each element.
+
+_note:_ When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+
+_note:_ custom `angle` and `verticalAnchor` properties may be included in `labels` styles.
+
+```jsx live
+<VictoryBoxPlot
+  minLabels
+  maxLabels
+  data={[
+    { x: 1, y: [1, 2, 3, 5] },
+    { x: 2, y: [3, 2, 8, 10] },
+    { x: 3, y: [2, 8, 6, 5] },
+    { x: 4, y: [1, 3, 2, 9] },
+  ]}
+  style={{
+    min: { stroke: "tomato" },
+    max: { stroke: "orange" },
+    q1: { fill: "tomato" },
+    q3: { fill: "orange" },
+    median: {
+      stroke: "white",
+      strokeWidth: 2,
+    },
+    minLabels: { fill: "tomato" },
+    maxLabels: { fill: "orange" },
+  }}
+/>
+```
+
+---
+
+### whiskerWidth
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `whiskerWidth` prop specifies how wide each whisker crosshair should be. If the `whiskerWidth` prop is not set, the width of the whisker crosshair will match the width of the box.
+
+```jsx live
+<VictoryChart
+  domainPadding={10}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    boxWidth={10}
+    whiskerWidth={5}
+    data={[
+      { x: 1, y: [1, 2, 3, 5] },
+      { x: 2, y: [3, 2, 8, 10] },
+      { x: 3, y: [2, 8, 6, 5] },
+      { x: 4, y: [1, 3, 2, 9] },
+    ]}
+  />
+</VictoryChart>
+```

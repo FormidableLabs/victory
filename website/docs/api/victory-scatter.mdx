@@ -1,0 +1,252 @@
+---
+title: VictoryScatter
+---
+
+:::info
+For examples of `VictoryScatter` in action, visit the [Scatter Chart](/docs/charts/scatter) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={["data"]}
+/>
+
+## Component Props
+
+---
+
+### bubbleProperty
+
+<Badges>
+  <TypeBadge value="string" />
+  <DefaultsBadge value='"z"' />
+</Badges>
+
+The `bubbleProperty` prop indicates which property of the data object should be used to scale data points in a bubble chart. If a `bubbleProperty` is given, `size` and `symbol` props will be ignored. Bubble charts always render circular points.
+
+
+```jsx live
+<VictoryScatter
+  bubbleProperty="amount"
+  maxBubbleSize={25}
+  minBubbleSize={5}
+  data={[
+    { x: 1, y: 2, amount: 30 },
+    { x: 2, y: 3, amount: 40 },
+    { x: 3, y: 5, amount: 25 },
+    { x: 4, y: 4, amount: 10 },
+    { x: 5, y: 7, amount: 45 },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryScatter` uses the standard `data` prop. However, it also will preferentially use `symbol`, `size`, and `label` properties supplied via data objects.
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+`VictoryScatter` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryScatter` uses the standard `events` prop. [Read about it in more detail here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+```jsx live
+<div>
+  <h3>Click a data point below</h3>
+  <VictoryChart
+    theme={VictoryTheme.clean}
+  >
+    <VictoryScatter
+      size={9}
+      labels={() => null}
+      events={[
+        {
+          target: "data",
+          eventHandlers: {
+            onClick: () => {
+              return [
+                {
+                  target: "data",
+                  mutation: (props) => {
+                    const fill =
+                      props.style &&
+                      props.style.fill;
+                    return fill ===
+                      "black"
+                      ? null
+                      : {
+                          style: {
+                            fill: "black",
+                          },
+                        };
+                  },
+                },
+                {
+                  target: "labels",
+                  mutation: (props) => {
+                    return props.text ===
+                      "clicked"
+                      ? null
+                      : {
+                          text: "clicked",
+                        };
+                  },
+                },
+              ];
+            },
+          },
+        },
+      ]}
+      data={sampleData}
+    />
+  </VictoryChart>
+</div>
+```
+
+---
+
+### maxBubbleSize
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `maxBubbleSize` prop sets an upper limit for scaling data points in a bubble chart. If not given, this prop will be calculated based on the `width`, `height`, and `padding` of the component.
+
+```jsx
+maxBubbleSize={25}
+```
+
+---
+
+### minBubbleSize
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `minBubbleSize` prop sets a lower limit for scaling data points in a bubble chart. If not given, this prop will be calculated based on the calculated `maxBubbleSize`.
+
+```jsx
+minBubbleSize={5}
+```
+
+---
+
+### size
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `size` prop determines how to scale each data point. When this prop given as a function, it will be called for each point with the props corresponding to that point. If `size` is not specified, either in props or in a theme, it will default to 1. `size` may also be set directly on each data object.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={({ datum }) => datum.y + 2}
+    data={sampleData}
+  />
+</VictoryChart>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ parent: object, data: object, labels: object }" />
+</Badges>
+
+`VictoryScatter` uses the standard `style` prop. [Read about it in detail here](/docs/guides/themes)
+
+_default (provided by default theme):_ See [grayscale theme][] for more detail
+
+```jsx live
+<VictoryScatter
+  style={{
+    data: {
+      fill: ({ datum }) =>
+        datum.x === 3
+          ? "#000000"
+          : "#c43a31",
+      stroke: ({ datum }) =>
+        datum.x === 3
+          ? "#000000"
+          : "#c43a31",
+      fillOpacity: 0.7,
+      strokeWidth: 3,
+    },
+    labels: {
+      fontSize: 15,
+      fill: ({ datum }) =>
+        datum.x === 3
+          ? "#000000"
+          : "#c43a31",
+    },
+  }}
+  size={9}
+  data={sampleData}
+  labels={({ datum }) => datum.x}
+/>
+```
+
+---
+
+### symbol
+
+<Badges>
+  <TypeBadge value="Function | Options" />
+  <DefaultsBadge value='"circle"' />
+</Badges>
+
+The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp". When this prop is given as a function, it will be evaluated for each point with the props corresponding to that point. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
+
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    symbol={({ datum }) =>
+      datum.y > 3
+        ? "triangleUp"
+        : "triangleDown"
+    }
+    size={7}
+    data={sampleData}
+  />
+</VictoryChart>
+```

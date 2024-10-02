@@ -1,0 +1,419 @@
+---
+title: VictoryChart
+---
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryEventProps",
+  ]}
+/>
+
+---
+
+### backgroundComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+</Badges>
+
+The `backgroundComponent` prop takes a component instance which will be responsible for rendering a background if the `VictoryChart`'s `style` component includes `background` styles. The new element created from the passed `backgroundComponent` will be provided with the following properties calculated by `VictoryChart`: `height`, `polar`, `scale`, `style`, `x`, `y`, `width`. All of these props on `Background` should take precedence over what `VictoryChart` is trying to set.
+
+```jsx live
+<VictoryChart
+  height={300}
+  width={300}
+  domain={[-1, 1]}
+  style={{
+    background: { fill: "lightblue" },
+  }}
+  backgroundComponent={
+    <Background y={20} height={100} />
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### children
+
+<Badges>
+  <TypeBadge value="ReactElement | ReactElement[]" />
+</Badges>
+
+`VictoryChart` works with any combination of the following children: [VictoryArea][], [VictoryAxis][] / [VictoryPolarAxis][], [VictoryBar][], [VictoryCandlestick][], [VictoryErrorBar][], [VictoryGroup][], [VictoryLine][], [VictoryScatter][], [VictoryHistogram][], [VictoryStack][], and [VictoryVoronoi][]. Children supplied to `VictoryChart` will be cloned and rendered with new props so that all children share common props such as `domain` and `scale`.
+
+:::note
+polar charts must use `VictoryPolarAxis` rather than `VictoryAxis`
+:::
+
+---
+
+### containerComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+</Badges>
+
+`VictoryChart` uses the standard `containerComponent` prop. [Read about it in detail here](/docs/api/victory-common-theme-props/#containercomponent)
+
+```jsx
+containerComponent={<VictoryVoronoiContainer/>}
+```
+
+---
+
+### desc
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `desc` prop specifies the description of the chart/SVG to assist with accessibility for screen readers. The more descriptive this title is, the more useful it will be for people using screen readers.
+
+---
+
+### defaultAxes
+
+<Badges>
+  <TypeBadge value="{ independent: ReactElement; dependent: ReactElement }" />
+</Badges>
+
+Set the default axis for this chart when no axis is provided. Allows you to customize the axis component for the chart.
+
+:::note
+This property is not typically used
+:::
+
+```ts
+// default
+defaultAxes = {
+  independent: <VictoryAxis />,
+  dependent: <VictoryAxis dependentAxis />
+}
+```
+
+### defaultPolarAxes
+
+<Badges>
+  <TypeBadge value="{ independent: ReactElement; dependent: ReactElement }" />
+</Badges>
+
+Set the default axis for this chart when no axis is provided. Allows you to customize the axis component for the chart.
+
+:::note
+This property is not typically used
+:::
+
+```ts
+// default
+defaultPolarAxes ={
+  independent: <VictoryPolarAxis />,
+  dependent: <VictoryPolarAxis dependentAxis />
+}
+```
+
+---
+
+### domain
+
+<Badges>
+  <TypeBadge value="array[low, high] || { x: [low, high], y: [low, high] }" />
+  <DefaultsBadge value="calculated from data" />
+</Badges>
+
+The `domain` prop describes the range of data the component will include. This prop can be given as an array of the minimum and maximum expected values of the data or as an object that specifies separate arrays for x and y. If this prop is not provided, a domain will be calculated from data, or other available information.
+
+:::note
+`VictoryChart` controls the `domain` prop of its children.
+:::
+
+---
+
+### endAngle
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="360" />
+</Badges>
+
+The `endAngle` props defines the overall end angle of a polar chart in degrees. This prop is used in conjunction with `startAngle` to create polar chart that spans only a segment of a circle, or to change overall rotation of the chart. This prop should be given as a number of degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise.
+
+```jsx live
+<div>
+  <VictoryChart
+    polar
+    theme={VictoryTheme.clean}
+    startAngle={90}
+    endAngle={450}
+  >
+    <VictoryPolarAxis
+      tickValues={[
+        0, 45, 90, 135, 180, 225, 270,
+        315,
+      ]}
+      labelPlacement="vertical"
+    />
+    <VictoryBar
+      style={{ data: { width: 30 } }}
+      data={[
+        { x: 0, y: 2 },
+        { x: 60, y: 3 },
+        { x: 120, y: 5 },
+        { x: 180, y: 4 },
+        { x: 240, y: 4 },
+        { x: 300, y: 4 },
+      ]}
+    />
+  </VictoryChart>
+
+  <VictoryChart
+    polar
+    theme={VictoryTheme.clean}
+    startAngle={0}
+    endAngle={180}
+  >
+    <VictoryPolarAxis
+      tickValues={[0, 45, 90, 135, 180]}
+      labelPlacement="vertical"
+    />
+    <VictoryBar
+      style={{ data: { width: 30 } }}
+      data={[
+        { x: 0, y: 2 },
+        { x: 45, y: 3 },
+        { x: 90, y: 5 },
+        { x: 135, y: 4 },
+        { x: 180, y: 7 },
+      ]}
+    />
+  </VictoryChart>
+</div>
+```
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="any[]" />
+</Badges>
+
+`VictoryChart` uses the standard `events` prop. [Read about it in more detail here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+:::note
+`VictoryChart` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop
+:::
+
+```jsx live
+<VictoryChart
+  events={[
+    {
+      childName: "all",
+      target: "data",
+      eventHandlers: {
+        onClick: () => {
+          return [
+            {
+              childName: "area-2",
+              target: "data",
+              mutation: (props) => ({
+                style: Object.assign(
+                  {},
+                  props.style,
+                  { fill: "gold" },
+                ),
+              }),
+            },
+            {
+              childName: "area-3",
+              target: "data",
+              mutation: (props) => ({
+                style: Object.assign(
+                  {},
+                  props.style,
+                  { fill: "orange" },
+                ),
+              }),
+            },
+            {
+              childName: "area-4",
+              target: "data",
+              mutation: (props) => ({
+                style: Object.assign(
+                  {},
+                  props.style,
+                  { fill: "red" },
+                ),
+              }),
+            },
+          ];
+        },
+      },
+    },
+  ]}
+  theme={VictoryTheme.clean}
+>
+  <VictoryStack>
+    <VictoryArea
+      name="area-1"
+      data={sampleData}
+    />
+    <VictoryArea
+      name="area-2"
+      data={sampleData}
+    />
+    <VictoryArea
+      name="area-3"
+      data={sampleData}
+    />
+    <VictoryArea
+      name="area-4"
+      data={sampleData}
+    />
+  </VictoryStack>
+</VictoryChart>
+```
+
+---
+
+### innerRadius
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+When the `innerRadius` prop is set, polar charts will be hollow rather than circular.
+
+```jsx live
+<VictoryChart
+  polar
+  theme={VictoryTheme.clean}
+>
+  <VictoryPolarAxis />
+  <VictoryPolarAxis
+    dependentAxis
+    tickValues={[1, 3, 5]}
+    axisAngle={40}
+  />
+  <VictoryBar
+    data={sampleData}
+    style={{ data: { width: 30 } }}
+  />
+</VictoryChart>
+```
+
+---
+
+### prependDefaultAxes
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+By default, `VictoryChart` will prepend default axes to the beginning of the children array. This behavior can be disabled by setting `prependDefaultAxes` to `false`.
+
+---
+
+### startAngle
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="0" />
+</Badges>
+
+The `startAngle` props defines the overall start angle of a polar chart in degrees. This prop is used in conjunction with `endAngle` to create polar chart that spans only a segment of a circle, or to change overall rotation of the chart. This prop should be given as a number of degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise.
+
+```jsx live
+<div>
+  <VictoryChart
+    polar
+    theme={VictoryTheme.clean}
+    startAngle={90}
+    endAngle={450}
+  >
+    <VictoryPolarAxis
+      tickValues={[
+        0, 45, 90, 135, 180, 225, 270,
+        315,
+      ]}
+      labelPlacement="vertical"
+    />
+    <VictoryBar
+      data={[
+        { x: 0, y: 2 },
+        { x: 60, y: 3 },
+        { x: 120, y: 5 },
+        { x: 180, y: 4 },
+        { x: 240, y: 4 },
+        { x: 300, y: 4 },
+      ]}
+    />
+  </VictoryChart>
+
+  <VictoryChart
+    polar
+    theme={VictoryTheme.clean}
+    startAngle={0}
+    endAngle={180}
+  >
+    <VictoryPolarAxis
+      tickValues={[0, 45, 90, 135, 180]}
+      labelPlacement="vertical"
+    />
+    <VictoryBar
+      data={[
+        { x: 0, y: 2 },
+        { x: 45, y: 3 },
+        { x: 90, y: 5 },
+        { x: 135, y: 4 },
+        { x: 180, y: 7 },
+      ]}
+    />
+  </VictoryChart>
+</div>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="VictoryStyleInterface" />
+  <DefaultsBadge value="(provided by theme)" />
+</Badges>
+
+Defines the style of the component using [VictoryStyleInterface](/docs/api/victory-style-interface).
+
+note: custom valid svg style properties that are supported may be included in `background` styles.
+
+_default (provided by default theme):_ See [grayscale theme][] for more detail
+
+```jsx live
+<VictoryChart
+  style={{
+    parent: {
+      border: "1px solid #ccc",
+    },
+    background: {
+      fill: "pink",
+    },
+  }}
+/>
+```
+
+---
+
+### title
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `title` prop specifies the title to be applied to the SVG to assist with accessibility for screen readers. The more descriptive this title is, the more useful it will be for people using screen readers

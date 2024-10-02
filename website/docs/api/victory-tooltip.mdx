@@ -1,0 +1,600 @@
+---
+title: VictoryTooltip
+---
+
+`VictoryTooltip` renders a tooltip component with a set of default events. When `VictoryTooltip` is used as a label component for any Victory component that renders data, it will attach events to rendered data components that will activate the tooltip when hovered or focused. `VictoryTooltip` renders text as well as a configurable [Flyout](/docs/api/victory-primitives#flyout) container.
+
+:::info
+For examples of `VictoryTooltip` in action, visit the [tooltips](/docs/guides/tooltips) guide.
+:::
+
+:::note
+When providing tooltips for `VictoryLine` or `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](/docs/api/victory-voronoi-container), as these components only render a single element for the entire dataset.
+:::
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 11], y: [-10, 10] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    labelComponent={<VictoryTooltip />}
+    data={[
+      {
+        x: 2,
+        y: 5,
+        label: "right-side-up",
+      },
+      {
+        x: 4,
+        y: -6,
+        label: "upside-down",
+      },
+      { x: 6, y: 4, label: "tiny" },
+      {
+        x: 8,
+        y: -5,
+        label: "or a little \n BIGGER",
+      },
+      {
+        x: 10,
+        y: 7,
+        label: "automatically",
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Inherited Props
+
+<CommonProps
+  interfaces={["VictoryLabelableProps"]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### active
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+The `active` prop specifies whether the tooltip component should be displayed.
+
+---
+
+### activateData
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="false}" />
+</Badges>
+
+When true, tooltip events will set the `active` prop on both data and label elements.
+
+---
+
+### angle
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `angle` prop specifies the angle to rotate the tooltip around its origin point.
+
+---
+
+### center
+
+<Badges>
+  <TypeBadge value="{ x: number, y: number }" />
+</Badges>
+
+The `center` prop determines the position of the center of the tooltip flyout. This prop should be given as an object that describes the desired x and y svg coordinates of the center of the tooltip. This prop is useful for positioning the flyout of a tooltip _independent from_ the pointer. When `VictoryTooltip` is used with `VictoryVoronoiContainer`, the `center` prop is what enables the `mouseFollowTooltips` option. When this prop is set, non-zero `pointerLength` values will no longer be respected.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 50, y: 100 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={() => "HELLO"}
+    labelComponent={
+      <VictoryTooltip
+        center={{ x: 225, y: 30 }}
+        pointerOrientation="bottom"
+        flyoutWidth={150}
+        flyoutHeight={50}
+        pointerWidth={150}
+        cornerRadius={0}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### centerOffset
+
+<Badges>
+  <TypeBadge value="{ x: number | Function, y: number | Function }" />
+</Badges>
+
+The `centerOffset` prop determines the position of the center of the tooltip flyout _in relation to_ the flyout pointer. This prop should be given as an object of x and y, where each is either a numeric offset value or a function that returns a numeric value. When this prop is set, non-zero `pointerLength` values will no longer be respected.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) =>
+      `x: ${datum.x}, y: ${datum.y}`
+    }
+    labelComponent={
+      <VictoryTooltip
+        dy={0}
+        centerOffset={{ x: 25, y: -25 }}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### constrainToVisibleArea
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+The `constrainToVisibleArea` prop determines whether to coerce tooltips so that they fit within the visible area of the chart. When this prop is set to true, tooltip pointers will still point to the correct data point, but the center of the tooltip will be shifted to fit within the overall width and height of the svg Victory renders.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={() =>
+      "These labels just go on, and on, and on..."
+    }
+    labelComponent={
+      <VictoryTooltip
+        constrainToVisibleArea
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### cornerRadius
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `cornerRadius` prop determines the corner radius of the flyout container. This prop may be given as a positive number or a function of datum.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) =>
+      `y: ${datum.y}`
+    }
+    labelComponent={
+      <VictoryTooltip
+        cornerRadius={({ datum }) =>
+          datum.x * 2
+        }
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+Victory components can pass a `data` prop to their label component. This can be useful in custom components that need to make use of the entire dataset.
+
+---
+
+### datum
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
+
+Victory components can pass a `datum` prop to their label component. This can
+be used to calculate functional styles, and determine text.
+
+---
+
+### dx
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `dx` prop defines a horizontal shift from the `x` coordinate.
+
+---
+
+### dy
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `dy` prop defines a vertical shift from the `y` coordinate.
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
+
+The `events` prop attaches arbitrary event handlers to the label component. This prop should be given as an object of event names and corresponding event handlers. When events are provided via Victory's event system, event handlers will be called with the event, the props of the component it is attached to, and an eventKey.
+
+_examples:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
+
+---
+
+### flyoutComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge valuie="<Flyout/>" />
+</Badges>
+
+The `flyoutComponent` prop takes a component instance which will be used to create the flyout path for each tooltip. The new element created from the passed `flyoutComponent` will be supplied with the following properties: x, y, dx, dy, index, datum, cornerRadius, pointerLength, pointerWidth, width, height, orientation, style, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `flyoutComponent` is omitted, a default [Flyout][] component will be created with props described above.
+
+_examples:_ `flyoutComponent={<Flyout x={50} y={50}/>}`, `flyoutComponent={<MyCustomFlyout/>}`
+
+---
+
+### flyoutHeight
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `flyoutHeight` prop defines the height of the tooltip flyout. This prop may be given as a positive number or a function of datum. If this prop is not set, `flyoutHeight` will be determined based on an [approximate text size][] calculated from the `text` and `style` props provided to `VictoryTooltip`.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) =>
+      `y: ${datum.y}`
+    }
+    labelComponent={
+      <VictoryTooltip
+        flyoutHeight={60}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### flyoutPadding
+
+<Badges>
+  <TypeBadge value="number | Function | { top: number, bottom: number, left: number, right: number}" />
+  <DefaultsBadge value="5" />
+</Badges>
+
+The `flyoutPadding` prop may be used to adjust the spacing between the tooltip label and the edges of the flyout outline. This prop may be given as a single number, an object with values for "top", "bottom", "left" and "right", or as a function that returns one of these.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) =>
+      datum.x % 2 === 0
+        ? [
+            `x: ${datum.x}`,
+            `y: ${datum.y}`,
+          ]
+        : [`y: ${datum.y}`]
+    }
+    labelComponent={
+      <VictoryTooltip
+        flyoutPadding={({ text }) =>
+          text.length > 1
+            ? {
+                top: 0,
+                bottom: 0,
+                left: 7,
+                right: 7,
+              }
+            : 7
+        }
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### flyoutStyle
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
+
+The `style` prop applies SVG style properties to the rendered flyout container. These props will be passed to the `flyoutComponent`.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) =>
+      `y: ${datum.y}`
+    }
+    labelComponent={
+      <VictoryTooltip
+        flyoutStyle={{
+          stroke: "tomato",
+          strokeWidth: 2,
+        }}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### flyoutWidth
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `flyoutWidth` prop defines the width of the tooltip flyout. This prop may be given as a positive number or a function of datum. If this prop is not set, `flyoutWidth` will be determined based on an [approximate text size][] calculated from the `text` and `style` props provided to `VictoryTooltip`.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) =>
+      `y: ${datum.y}`
+    }
+    labelComponent={
+      <VictoryTooltip
+        flyoutWidth={90}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### groupComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<g/>" />
+</Badges>
+
+The `groupComponent` prop takes a component instance which will be used to create group elements for use within container elements. This prop defaults to a `<g>` tag.
+
+---
+
+### height
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+This prop refers to the height of the `svg` that `VictoryLabel` is rendered within. **This prop is passed from parents of `VictoryLabel`, and should not be set manually. In versions before `^33.0.0` this prop referred to the height of the tooltip flyout. Please use `flyoutHeight` instead**
+
+---
+
+### horizontal
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+The `horizontal` prop determines whether to plot the flyouts to the left / right of the (x, y) coordinate rather than top / bottom. This is useful when an orientation prop is not provided, and data will determine the default orientation. _i.e._ negative values result in a left orientation and positive values will result in a right orientation by default.
+
+---
+
+### index
+
+<Badges>
+  <TypeBadge value="number | string" />
+</Badges>
+
+The `index` prop represents the index of the datum in the data array.
+
+---
+
+### pointerOrientation
+
+<Badges>
+  <TypeBadge
+    value={`"top" | "bottom" | "left" | "right" | Function`}
+  />
+</Badges>
+
+This prop determines which side of the tooltip flyout the pointer should originate on. When this prop is not set, it will be determined based on the overall `orientation` of the flyout in relation to its data point, and any `center` or `centerOffset` values.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    barWidth={20}
+    data={sampleData}
+    labels={({ datum }) => datum.y}
+    labelComponent={
+      <VictoryTooltip
+        pointerOrientation="right"
+        dy={0}
+        dx={-12}
+        pointerWidth={25}
+        flyoutHeight={25}
+        flyoutWidth={25}
+        cornerRadius={0}
+        centerOffset={{ x: -50 }}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### pointerWidth
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `pointerWidth` prop determines the width of the base of the triangular pointer extending from the flyout. This prop may be given as a positive number or a function of datum.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) =>
+      `y: ${datum.y}`
+    }
+    labelComponent={
+      <VictoryTooltip
+        pointerWidth={20}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### renderInPortal
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+When `renderInPortal` is true, rendered tooltips will be wrapped in [VictoryPortal][] and rendered within the [Portal][] element within [VictoryContainer][]. _Note:_ This prop should be set to _false_ when using a custom container element.
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
+
+The `style` prop applies SVG style properties to the rendered `<text>` element.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) =>
+      `y: ${datum.y}`
+    }
+    labelComponent={
+      <VictoryTooltip
+        style={{
+          fill: "tomato",
+          stroke: "black",
+          strokeWidth: 2,
+        }}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### text
+
+<Badges>
+  <TypeBadge value="string | number | Function | (string | number)[]" />
+</Badges>
+
+The `text` prop defines the text `VictoryTooltip` will render. The `text` prop may be given as a string, number, or function of `datum`. When [VictoryLabel][] is used as the `labelComponent`, strings may include newline characters, which VictoryLabel will split in to separate `<tspan/>` elements.
+
+---
+
+### width
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+This prop refers to the width of the `svg` that `VictoryLabel` is rendered within. **This prop is passed from parents of `VictoryLabel`, and should not be set manually. In versions before `^33.0.0` this prop referred to the width of the tooltip flyout. Please use `flyoutWidth` instead**
+
+---
+
+### x
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `x` prop defines the x coordinate to use as a basis for positioning the tooltip element.
+
+---
+
+### y
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `y` prop defines the y coordinate to use as a basis for positioning the tooltip element.

@@ -1,0 +1,858 @@
+---
+title: VictoryCommonThemeProps
+---
+
+Common props for all Victory components that use themes. Some components override these props with specific implementations. See the specific component's API documentation for more information.
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+  ]}
+/>
+
+## Props
+
+---
+
+### animate
+
+<Badges>
+  <TypeBadge value="boolean | AnimatePropTypeInterface" />
+</Badges>
+
+The `animate` prop specifies props for [VictoryAnimation][] and [VictoryTransition][] to use. The animate prop may be used to specify the duration, delay, and easing of an animation as well as the behavior of `onEnter` and `onExit` and `onLoad` transitions. Each Victory component defines its own default transitions, but these may be modified, or overwritten with the `animate` prop. An `animationWhitelist` may also be specified on the `animate` prop. When given, only props specified in the whitelist will animate.
+
+See the [Animations Guide][] for more detail on animations and transitions
+
+```jsx live noInline
+function App(props) {
+  const [state, setState] =
+    React.useState({
+      data: getData(),
+      size: getSize(),
+    });
+
+  React.useEffect(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setState({
+          data: getData(),
+          size: getSize(),
+        });
+      }, 3000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryChart
+      domain={{ y: [0, 1] }}
+      animate={{ duration: 2000 }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryScatter
+        size={state.size}
+        data={state.data}
+        style={{
+          data: {
+            opacity: ({ datum }) =>
+              datum.opacity || 1,
+          },
+        }}
+        animate={{
+          animationWhitelist: [
+            "style",
+            "data",
+            "size",
+          ], // Try removing "size"
+          onExit: {
+            duration: 500,
+            before: () => ({
+              opacity: 0.3,
+              _y: 0,
+            }),
+          },
+          onEnter: {
+            duration: 500,
+            before: () => ({
+              opacity: 0.3,
+              _y: 0,
+            }),
+            after: (datum) => ({
+              opacity: 1,
+              _y: datum._y,
+            }),
+          },
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+function getData() {
+  const num = Math.floor(
+    10 * Math.random() + 5,
+  );
+  const points = new Array(num).fill(1);
+  return points.map((point, index) => {
+    return {
+      x: index + 1,
+      y: Math.random(),
+    };
+  });
+}
+
+function getSize() {
+  return Math.random() * 10;
+}
+
+render(<App />);
+```
+
+---
+
+### containerComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryContainer>" />
+</Badges>
+
+The `containerComponent` prop takes a component instance which will be used to create a container element for standalone charts. If a `containerComponent` is not provided, the default `VictoryContainer` component will be used. Other Victory container components include:
+
+- [VictoryBrushContainer][]
+- [VictoryCursorContainer][]
+- [VictorySelectionContainer][]
+- [VictoryVoronoiContainer][]
+- [VictoryZoomContainer][]
+- hybrid containers may be created using the [createContainer][] helper
+
+Victory container components all support `title` and `desc` props, which are intended to add accessibility to Victory components. The more descriptive these props are, the more accessible your data will be for people using screen readers. These props may be set by passing them directly to the supplied component. By default, all Victory container components render responsive `svg` elements using the `viewBox` attribute. To render a static container, set `responsive={false}` directly on the container instance supplied via the `containerComponent` prop. All Victory container components also render a `Portal` element that may be used in conjunction with [VictoryPortal][] to force components to render above other children.
+
+Container components are supplied with the following props:
+
+- `domain`
+- `height`
+- `horizontal`
+- `origin` (for polar charts)
+- `padding`
+- `polar`
+- `scale`
+- `standalone`
+- `style`
+- `theme`
+- `width`
+
+```jsx live
+<VictoryScatter
+  containerComponent={
+    <VictoryCursorContainer
+      cursorLabel={({ datum }) =>
+        `${datum.x.toPrecision(
+          2,
+        )}, ${datum.y.toPrecision(2)}`
+      }
+    />
+  }
+/>
+```
+
+---
+
+### disableInlineStyles
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="false" />
+</Badges>
+
+Allows Victory components to work better with CSS classes or styled-components. By default, Victory provides inline styles to chart components, which will override any conflicting CSS styles. This flag will remove the inline styles, making it easier to provide custom styling for components via CSS.
+
+If this prop is passed to a chart type (e.g. `VictoryBar`), it will apply to all data and label components for that chart.
+
+```jsx live noInline
+const StyledBar = styled(Bar)`
+  fill: purple;
+`;
+
+const StyledLabel = styled(
+  VictoryLabel,
+)`
+  tspan {
+    fill: magenta;
+    font-family: Papyrus, fantasy;
+  }
+`;
+
+function CustomStyledBarChart() {
+  return (
+    <VictoryChart>
+      <VictoryBar
+        disableInlineStyles
+        labels={[1, 2, 3, 4]}
+        dataComponent={<StyledBar />}
+        labelComponent={<StyledLabel />}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<CustomStyledBarChart />);
+```
+
+It can also be passed to individual data or label components to disable styles on a more granular level.
+
+```jsx live noInline
+const StyledBar = styled(Bar)`
+  fill: purple;
+`;
+
+function CustomStyledBarChart() {
+  return (
+    <VictoryChart>
+      <VictoryBar
+        labels={[1, 2, 3, 4]}
+        dataComponent={
+          <StyledBar
+            disableInlineStyles
+          />
+        }
+      />
+    </VictoryChart>
+  );
+}
+
+render(<CustomStyledBarChart />);
+```
+
+---
+
+### domainPadding
+
+<Badges>
+  <TypeBadge value="number | array[left, right] | { x: [left, right], y: [bottom, top] }" />
+</Badges>
+
+The `domainPadding` prop specifies a number of pixels of padding to add to the beginning or end of a domain. This prop is useful for explicitly spacing data elements farther from the beginning or end of a domain to prevent axis crowding. When given as a single number, `domainPadding` will be applied to the upper and lower bound of both the x and y domains. This prop may also be given as an object with numbers or two-element arrays specified for x and y. When specifying arrays for `domainPadding`, the first element of the array will specify the padding to be applied to domain minimum, and the second element will specify padding the be applied to domain maximum.
+
+:::note
+The `x` value supplied to the `domainPadding` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+:::
+
+#### Common Usage
+
+- `domainPadding={20}`
+- `domainPadding={{ x: [20, 0] }}`
+
+:::note
+Values supplied for `domainPadding` will be coerced so that padding a domain will never result in charts including an additional quadrant. For example, if an original domain included only positive values, `domainPadding` will be coerced so that the resulted padded domain will not include negative values.
+:::
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 100 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar data={sampleData} />
+</VictoryChart>
+```
+
+---
+
+### externalEventMutations
+
+<Badges>
+  <TypeBadge value="EventCallbackInterface[]" />
+</Badges>
+
+Occasionally is it necessary to trigger events in Victory's event system from some external element such as a button or a form field. Use the `externalEventMutation` prop to specify a set of mutations to apply to a given chart.
+
+```ts
+type EventCallbackInterface<T, U> = {
+  target: T;
+  eventKey: U;
+  childName?: StringOrNumberOrList;
+  mutation: (props: any) => any;
+  callback?: () => void;
+};
+
+type externalEventMutations =
+  EventCallbackInterface<
+    string | string[],
+    StringOrNumberOrList
+  >[];
+```
+
+The `target`, `eventKey`, and `childName` (when applicable) must always be specified. The `mutation` function will be called with the current props of the element specified by the `target`, `eventKey` and `childName` provided. The mutation function should return a mutation object for that element. The `callback` prop should be used to clear the `externalEventMutations` prop once the mutation has been applied. Clearing `externalEventMutations` is crucial for charts that animate.
+
+```jsx live noInline
+function App() {
+  const [state, setState] =
+    React.useState({
+      externalMutations: undefined,
+    });
+
+  function removeMutation() {
+    setState({
+      externalMutations: undefined,
+    });
+  }
+
+  function clearClicks() {
+    setState({
+      externalMutations: [
+        {
+          childName: "Bar-1",
+          target: ["data"],
+          eventKey: "all",
+          mutation: () => ({
+            style: undefined,
+          }),
+          callback: removeMutation,
+        },
+      ],
+    });
+  }
+
+  const buttonStyle = {
+    backgroundColor: "black",
+    color: "white",
+    padding: "10px",
+    marginTop: "10px",
+  };
+
+  return (
+    <div>
+      <button
+        onClick={clearClicks}
+        style={buttonStyle}
+      >
+        Reset
+      </button>
+      <VictoryChart
+        domain={{ x: [0, 5] }}
+        externalEventMutations={
+          state.externalMutations
+        }
+        events={[
+          {
+            target: "data",
+            childName: "Bar-1",
+            eventHandlers: {
+              onClick: () => ({
+                target: "data",
+                mutation: () => ({
+                  style: {
+                    fill: "orange",
+                  },
+                }),
+              }),
+            },
+          },
+        ]}
+        theme={VictoryTheme.clean}
+      >
+        <VictoryBar
+          name="Bar-1"
+          style={{
+            data: { fill: "grey" },
+          }}
+          labels={() => "click me!"}
+          data={[
+            { x: 1, y: 2 },
+            { x: 2, y: 4 },
+            { x: 3, y: 1 },
+            { x: 4, y: 5 },
+          ]}
+        />
+      </VictoryChart>
+    </div>
+  );
+}
+
+render(<App />);
+```
+
+:::note
+External mutations are applied to the same state object that is used to control events in Victory, so depending on the order in which they are triggered, external event mutations may override mutations caused by internal Victory events or vice versa.
+:::
+
+---
+
+### groupComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+</Badges>
+
+The `groupComponent` prop takes a component instance which will be used to create group elements for use within container elements. For most components, this prop defaults to a `<g>` tag. Continuous data components like `VictoryLine` and `VictoryArea` use [VictoryClipContainer][] a component which renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. `VictoryClipContainer` may also be used with components like `VictoryScatter` to prevent data from overflowing the chart area.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    data={sampleData}
+    size={20}
+    groupComponent={
+      <VictoryClipContainer />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### height
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="300" />
+</Badges>
+
+The `height` prop determines the height of the containing `<svg>`. By default Victory components render responsive containers with the `viewBox` attribute set to `viewBox="0, 0, width, height"` and `width="100%"`, `height="auto"`. In responsive containers, the `width` and `height` props affect the _aspect ratio_ of the rendered component, while the absolute width and height are determined by the container. To render a static container, pass `responsive={false}` to the `containerComponent` like `containerComponent={<VictoryContainer responsive={false}/>}`, or set `standalone={false}` and render the resulting `<g>` tag in your own `<svg>` container. When a component is nested within `VictoryChart`, `VictoryStack`, or `VictoryGroup` setting the `height` prop on the child component will have no effect.
+
+```jsx live
+<div>
+  <VictoryBar height={500} />
+  <VictoryBar
+    height={500}
+    containerComponent={
+      <VictoryContainer
+        responsive={false}
+      />
+    }
+  />
+</div>
+```
+
+---
+
+### horizontal
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="false" />
+</Badges>
+
+The horizontal prop determines whether data will be plotted horizontally. When this prop is set to true, the independent variable will be plotted on the y axis and the dependent variable will be plotted on the x axis.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  domainPadding={{ x: 10 }}
+>
+  <VictoryBar
+    horizontal
+    data={sampleData}
+  />
+</VictoryChart>
+```
+
+---
+
+### maxDomain
+
+<Badges>
+  <TypeBadge value="number | { x: number, y: number }" />
+</Badges>
+
+The `maxDomain` prop defines a maximum domain value for a chart. This prop is useful in situations where the maximum domain of a chart is static, while the minimum value depends on data or other variable information. If the `domain` prop is set in addition to `maximumDomain`, `domain` will be used.
+
+:::note
+The `x` value supplied to the `maxDomain` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+:::
+
+#### Common Usage
+
+- `maxDomain={0}`
+- `maxDomain={{ y: 0 }}`
+
+```jsx live
+<VictoryChart
+  maxDomain={{ y: 0 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine
+    data={[
+      { x: 1, y: -2 },
+      { x: 2, y: 1 },
+      { x: 3, y: -1 },
+      { x: 4, y: -3 },
+    ]}
+  />
+</VictoryChart>
+```
+
+---
+
+### minDomain
+
+<Badges>
+  <TypeBadge value="number | { x: number, y: number }" />
+</Badges>
+
+The `minDomain` prop defines a minimum domain value for a chart. This prop is useful in situations where the minimum domain of a chart is static, while the maximum value depends on data or other variable information. If the `domain` prop is set in addition to `minimumDomain`, `domain` will be used.
+
+:::note
+The `x` value supplied to the `minDomain` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+:::
+
+#### Common Usage
+
+- `minDomain={0}`
+- `minDomain={{ y: 0 }}`
+
+```jsx live
+<VictoryChart
+  minDomain={{ y: 0 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: -1 },
+      { x: 3, y: 1 },
+      { x: 4, y: 3 },
+    ]}
+  />
+</VictoryChart>
+```
+
+---
+
+### name
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `name` prop is used to reference a component instance when defining shared events.
+
+---
+
+### origin
+
+<Badges>
+  <TypeBadge value="{ x: number, y: number }" />
+</Badges>
+
+The origin prop is used to define the center point in svg coordinates for polar charts. All children within a polar chart must share the same origin, so setting this prop on children nested within `VictoryChart`, `VictoryStack`, or `VictoryGroup` will have no effect. When this prop is not set, it will be calculated based on the `width`, `height` and `padding` of the chart.
+
+:::note
+This prop is typically not set by external consumers.
+:::
+
+---
+
+### padding
+
+<Badges>
+  <TypeBadge value="number | { top: number, bottom: number, left: number, right: number }" />
+  <DefaultsBadge value="50" />
+</Badges>
+
+The `padding` prop specifies the amount of padding in number of pixels between the edge of the chart and any rendered child components. This prop can be given as a number or as an object with padding specified for top, bottom, left and right. As with [width][] and [height][], the absolute padding will depend on whether the component is rendered in a responsive container. When a component is nested within `VictoryChart`, `VictoryStack`, or `VictoryGroup` setting `padding` on the child component will have no effect.
+
+#### Common Usage
+
+- `padding={{top: 20, bottom: 60}}`
+- `padding={40}`
+
+```jsx live
+<VictoryChart
+  padding={{
+    top: 40,
+    bottom: 80,
+    left: 40,
+    right: 80,
+  }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine data={sampleData} />
+</VictoryChart>
+```
+
+---
+
+### polar
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="false" />
+</Badges>
+
+Specifies whether a chart should be plotted on a polar coordinate system. All components in a given chart must share the same coordinate system, so setting this prop on children nested within `VictoryChart`, `VictoryStack`, or `VictoryGroup` will have no effect.
+
+```jsx live
+<div>
+  <VictoryBar
+    polar
+    data={sampleData}
+    labels={(d) => d.x.toFixed(0)}
+    width={400}
+    height={400}
+    domain={{ x: [0, 7], y: [0, 7] }}
+    style={{
+      data: {
+        fill: "#c43a31",
+        stroke: "black",
+        strokeWidth: 2,
+      },
+    }}
+    theme={VictoryTheme.clean}
+  />
+  <VictoryBar
+    data={sampleData}
+    labels={(d) => d.x.toFixed(0)}
+    width={400}
+    height={400}
+    domain={{ x: [0, 7], y: [0, 7] }}
+    style={{
+      data: {
+        fill: "#c43a31",
+        stroke: "black",
+        strokeWidth: 2,
+      },
+    }}
+    theme={VictoryTheme.clean}
+  />
+</div>
+```
+
+---
+
+### range
+
+<Badges>
+  <TypeBadge value="array[low, high] | { x: [low, high], y: [low, high] }" />
+</Badges>
+
+Describes the dimensions over which data may be plotted. For cartesian coordinate systems, this corresponds to minimum and maximum svg coordinates in the x and y dimension. In polar coordinate systems this corresponds to a range of angles and radii. When this value is not given it will be calculated from the `width`, `height`, and `padding`, or from the `startAngle` and `endAngle` in the case of polar charts. All components in a given chart must share the same range, so setting this prop on children nested within `VictoryChart`, `VictoryStack`, or `VictoryGroup` will have no effect.
+
+#### Common Usage
+
+- Cartesian: `range={{ x: [50, 250], y: [50, 250] }}`
+- Polar: `range={{ x: [0, 360], y: [0, 250] }}`
+
+:::note
+This prop is typically not set by external consumers.
+:::
+
+---
+
+### scale
+
+<Badges>
+  <TypeBadge value="scale || { x: scale, y: scale }" />
+  <DefaultsBadge value='linear' />
+</Badges>
+
+The `scale` prop determines which scales your chart should use. In this case, "scale" refers to the d3 scale that is used inside Victory to determine the placement of data, ticks, and labels. A scale type can be either a string ("linear", "time", "log", "sqrt"), or a custom d3 scale function. This prop can be passed as a single scale, or as an object with scales specified for x and y. For "time" scales, data points should be `Date` objects or `getTime()` instances.
+
+This prop should be set at the top-level of the chart in order to avoid being overwritten by the default value. In other words, unless an individual chart component is being used as a standalone component (without a `VictoryChart` wrapper), this prop should be added to the `VictoryChart` component.
+
+:::note
+The `x` value supplied to the `scale` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will correspond to the y axis.
+:::
+
+:::caution
+On categorical axis domains (such as bar chart), the only valid scale is "linear".
+:::
+
+_examples:_
+
+- `scale="time"`
+- `scale={{x: "linear", y: "log"}}`
+
+```jsx live
+<VictoryChart
+  scale={{ x: "linear", y: "log" }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine
+    style={{ data: { stroke: "red" } }}
+    domain={{ x: [0, 5] }}
+    y={(d) => Math.pow(1 - d.x, 10)}
+  />
+</VictoryChart>
+```
+
+In this example, a [discontinous scale plugin from d3fc](https://github.com/d3fc/d3fc/blob/master/packages/d3fc-discontinuous-scale/README.md) can be used to create a custom scale function to skip weekends along the x-axis.
+
+:::note
+The data set has already been filtered to only include weekdays.
+:::
+
+```jsx live noInline
+function App() {
+  const data = [
+    { x: new Date(2021, 5, 1), y: 8 },
+    { x: new Date(2021, 5, 2), y: 10 },
+    { x: new Date(2021, 5, 3), y: 7 },
+    { x: new Date(2021, 5, 4), y: 4 },
+    { x: new Date(2021, 5, 7), y: 6 },
+    { x: new Date(2021, 5, 8), y: 3 },
+    { x: new Date(2021, 5, 9), y: 7 },
+    { x: new Date(2021, 5, 10), y: 9 },
+    { x: new Date(2021, 5, 11), y: 6 },
+  ];
+
+  const discontinuousScale =
+    scaleDiscontinuous(
+      d3Scale.scaleTime(),
+    ).discontinuityProvider(
+      discontinuitySkipWeekends(),
+    );
+
+  return (
+    <VictoryChart
+      scale={{ x: discontinuousScale }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryArea
+        data={data}
+        style={{
+          data: {
+            fill: "lightblue",
+            stroke: "teal",
+          },
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+---
+
+### sharedEvents
+
+<Badges>
+  <TypeBadge value="{ events: any[]; getEventState: Function }" />
+</Badges>
+
+Used to coordinate events between Victory components using `VictorySharedEvents`.
+
+:::warning
+This prop should not be set manually.
+:::
+
+---
+
+### singleQuadrantDomainPadding
+
+<Badges>
+  <TypeBadge value="boolean | { x: boolean, y: boolean }" />
+</Badges>
+
+By default `domainPadding` is coerced to existing quadrants. This means that if a given domain only includes positive values, no amount of padding applied by `domainPadding` will result in a domain with negative values. This is the desired behavior in most cases. For users that need to apply padding without regard to quadrant, the `singleQuadrantDomainPadding` prop may be used. This prop may be given as a boolean or an object with boolean values specified for "x" and/or "y". When this prop is false (or false for a given dimension), padding will be applied without regard to quadrant. If this prop is not specified, `domainPadding` will be coerced to existing quadrants.
+
+:::note
+The `x` value supplied to the `singleQuadrantDomainPadding` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+:::
+
+#### Common Usage
+
+- `singleQuadrantDomainPadding={false}`
+- `singleQuadrantDomainPadding={{ x: false }}`
+
+```jsx live
+<VictoryChart
+  singleQuadrantDomainPadding={{
+    x: false,
+  }}
+  domainPadding={100}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar data={sampleData} />
+  <VictoryAxis crossAxis={false} />
+</VictoryChart>
+```
+
+---
+
+### standalone
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+Specifies whether the component should be rendered in an independent `<svg>` element or in a `<g>` tag. This prop defaults to true, and renders an `svg`. Wrapper components like `VictoryChart`, `VictoryStack`, and `VictoryGroup` force children to use `standalone={false}`.
+
+```jsx live
+<svg width={300} height={300}>
+  <circle
+    cx={150}
+    cy={150}
+    r={150}
+    fill="#c43a31"
+  />
+  <VictoryArea
+    standalone={false}
+    width={300}
+    height={300}
+    padding={0}
+    data={sampleData}
+  />
+</svg>
+```
+
+---
+
+### width
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="450" />
+</Badges>
+
+The `width` prop determines the width of the containing `<svg>`. By default Victory components render responsive containers with the `viewBox` attribute set to `viewBox="0, 0, width, height"` and `width="100%"`, `height="auto"`. In responsive containers, the `width` and `height` props affect the _aspect ratio_ of the rendered component, while the absolute width and height are determined by the container. To render a static container, pass `responsive={false}` to the `containerComponent` like `containerComponent={<VictoryContainer responsive={false}/>}`, or set `standalone={false}` and render the resulting `<g>` tag in your own `<svg>` container. When a component is nested within `VictoryChart`, `VictoryStack`, or `VictoryGroup` setting `width` prop on the child component will have no effect.
+
+```jsx live
+<div>
+  <VictoryBar width={1200} />
+  <VictoryBar
+    width={1200}
+    containerComponent={
+      <VictoryContainer
+        responsive={false}
+      />
+    }
+  />
+</div>
+```
+
+[x]: #x
+[y]: #y
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
+[width]: #width
+[height]: #height
+[victorylabel]: /docs/api/victory-label
+[victorytooltip]: /docs/api/victory-tooltip
+[victoryportal]: /docs/api/victory-portal
+[victoryboxplot]: /docs/api/victory-box-plot
+[victoryclipcontainer]: /docs/api/victory-clip-container
+[victorybrushcontainer]: /docs/api/victory-brush-container
+[victorycursorcontainer]: /docs/api/victory-cursor-container
+[victoryselectioncontainer]: /docs/api/victory-selection-container
+[victoryvoronoicontainer]: /docs/api/victory-voronoi-container
+[victoryzoomcontainer]: /docs/api/victory-zoom-container
+[createcontainer]: /docs/guides/containers
+[victoryanimation]: /docs/api/victory-animation
+[victorytransition]: /docs/api/victory-transition
+[sortby]: https://lodash.com/docs/4.17.4#sortBy
+[animations guide]: /docs/guides/animations
+[data accessors guide]: /docs/guides/data-accessors
+[custom components guide]: /docs/guides/custom-components
+[events guide]: /docs/guides/events
+[themes guide]: /docs/guides/themes

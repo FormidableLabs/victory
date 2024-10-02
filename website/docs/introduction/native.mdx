@@ -1,0 +1,172 @@
+---
+sidebar_position: 2
+title: React Native
+---
+
+:::warning
+These docs are for the legacy versions of Victory Native. Victory Native XL is our rewrite of Victory Native designed specifically for React Native. Please [see here for more information](https://commerce.nearform.com/open-source/victory-native/). If you would like to continue to use this version of Victory with React Native, follow the legacy guide below.
+:::
+
+## Getting Started
+
+In this guide, we’ll show you how to get started with Victory Native and the React Native SVG dependency running in your React Native app for iOS and Android.
+
+### 1. Adding Victory Native to your React Native app
+
+Visit [the guide on getting started](https://reactnative.dev/docs/getting-started) with React Native if you’re just getting started with React Native.
+
+Victory Native is compatible with React Native 0.50 or higher.
+
+To add Victory Native to your React Native app install `victory-native`.
+
+```bash
+$ yarn add victory-native@legacy # or npm install --save victory-native@legacy
+```
+
+### 2. Add React Native SVG to your app
+
+If you are building a project with native code, you will need to link the native dependencies of React Native SVG to the iOS and Android projects.
+
+This step is not required if you are using Expo (SDK 23.0.0 or higher) as it is already included.
+
+React Native 0.60 or newer:
+```bash
+$ yarn add react-native-svg  # or npm install --save react-native-svg
+$ cd ios
+$ pod install
+```
+
+React Native below 0.60:
+```bash
+$ react-native install react-native-svg
+```
+
+*note:* If you run the iOS app and see a linker error for `-lRNSVG-tvOS` you will need to remove `libRNSVG-tvOS.a` from the “Link Binary with Libraries” section within your iOS app’s target’s properties.
+
+### 3. Using Victory Native in your React Native app
+
+Victory Native behaves and functions the same way for React Native as it does for the web. Just import components from `victory-native` to get started. To learn more about how to use Victory visit the [Getting Started Guide][].
+
+The example below shows how Victory Native easily integrates within your React Native app.
+
+```jsx
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+
+const data = [
+  { quarter: 1, earnings: 13000 },
+  { quarter: 2, earnings: 16500 },
+  { quarter: 3, earnings: 14250 },
+  { quarter: 4, earnings: 19000 }
+];
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <VictoryChart width={350} theme={VictoryTheme.clean}>
+        <VictoryBar data={data} x="quarter" y="earnings" />
+      </VictoryChart>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f5fcff"
+  }
+});
+```
+
+### 4. Ignoring require cycles
+
+- see [https://github.com/FormidableLabs/victory/issues/2230](https://github.com/FormidableLabs/victory/issues/2230)
+
+As of victory@36.4.0, React Native apps (on both iOS and Android) will warn about require cycles.
+
+These warnings will not affect the functionality of `victory-native` or your app, and can be safely disabled.
+
+To disable the warnings, modify your app's entry point (usually `index.js`) to include
+
+```js
+LogBox.ignoreLogs([
+  "Require cycle: node_modules/victory",
+]);
+```
+
+as shown below
+
+```diff
++import { AppRegistry, LogBox } from "react-native";
+import App from "./App";
+import { name as appName } from "./app.json";
+
++LogBox.ignoreLogs(['Require cycle: node_modules/victory']);
+
+AppRegistry.registerComponent(appName, () => App);
+```
+
+### 5. Testing Components that use Victory Native
+
+You can test your components that render Victory Native using Jest and React Test Renderer which is included out–of–the box with React Native. The `jest` configuration section in `package.json` will need to be modified to ensure dependencies are transformed otherwise you will see an error when tests are run.
+
+```json
+"jest": {
+  "preset": "react-native",
+  "transformIgnorePatterns": [
+    "node_modules/(?!victory|react-native-svg|react-native)"
+  ],
+  "transform": {
+    "^.+\\.jsx?$": "babel-jest"
+  }
+}
+```
+
+To test the above `App` component you can simply do:
+
+```jsx
+import "react-native";
+import React from "react";
+import App from "../App.js";
+import renderer from "react-test-renderer";
+
+it("renders correctly", () => {
+  const tree = renderer.create(<App />);
+  expect(tree).toMatchSnapshot();
+});
+```
+
+*note:* `renderer` must be imported _after_ `react-native` for tests to work.
+
+
+## Expo Web Apps
+
+Whilst using `victory-native` in Expo apps that target iOS & Android is fully supported, we do not support building for the web with `victory-native`.
+
+However as both `victory-native` and `victory` share the same public API, it's possible to configure your Expo project so that it automatically uses `victory-native` when building your native apps for iOS & Android, and `victory` when building your web app.
+
+> ☣️ Please note that while you can follow the instructions below to configure your Expo project to make this work, Victory does not officially support Expo Web apps.
+
+```sh
+yarn add -D @expo/webpack-config
+```
+
+Then, create a `webpack.config.js` file in the root of your Expo project
+
+```js
+const createExpoWebpackConfigAsync = require('@expo/webpack-config');
+
+module.exports = async function(env, argv) {
+  const config = await createExpoWebpackConfigAsync(env, argv);
+
+  // resolve victory-native as victory for the Web app
+  config.resolve.alias['victory-native'] = 'victory';
+
+  return config;
+};
+```
+
+[getting started guide]: /docs/introduction

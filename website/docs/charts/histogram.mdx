@@ -1,0 +1,282 @@
+---
+title: Histogram
+---
+
+Renders a dataset as series of bars representing "bins", allowing the ability to view distribution of the data. The data passed in will be "binned" according to the `bin` prop that is provided (if any), allowing for flexibility in how these bins are determined.
+
+:::info
+Histograms are intended to be used with quantitative data. Please use [Bar Charts](/docs/charts/bar) for qualitative or categorical data.
+:::
+
+## Basic
+
+See the [full API here](/docs/api/victory-histogram). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    data={sampleHistogramData}
+  />
+</VictoryChart>
+```
+
+## Histogram - Labels
+
+Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-histogram) prop.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    data={sampleHistogramData}
+    labels={({ datum }) => `Bin count:\n ${datum.y}`}
+  />
+</VictoryChart>
+```
+
+## Histogram - Tooltips
+
+Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    data={sampleHistogramData}
+    labels={({ datum }) => `Bin count:\n ${datum.y}`}
+    labelComponent={<VictoryTooltip />}
+  />
+</VictoryChart>
+```
+
+## Histogram - Horizontal
+
+Histograms can be rendered horizontally by setting the `horizontal` prop to `true`.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    horizontal
+    data={sampleHistogramData}
+  />
+</VictoryChart>
+```
+
+## Histogram - Stacked
+
+Histograms can be stacked to visualize the distribution of numerical data across different categories.
+
+```jsx live noInline
+const startDate = new Date(
+  "2020-01-01T00:00:00.000Z",
+);
+const endDate = new Date(
+  "2020-12-31T11:59:59.000Z",
+);
+const genres = [
+  "pop",
+  "rap",
+  "hip-hop",
+  "r&b",
+  "indie",
+  "alternative",
+];
+
+const listeningData = [];
+for (let i = 0; i < 100; i++) {
+  listeningData.push({
+    day: new Date(
+      _.random(
+        startDate.getTime(),
+        endDate.getTime(),
+      ),
+    ),
+    genre:
+      genres[
+        _.random(0, genres.length - 1)
+      ],
+  });
+}
+
+const groupedData = _.groupBy(
+  listeningData,
+  ({ genre }) => genre,
+);
+
+const sharedAxisStyles = {
+  tickLabels: {
+    fontSize: 13,
+  },
+  axisLabel: {
+    padding: 39,
+    fontSize: 13,
+    fontStyle: "italic",
+  },
+};
+
+const App = () => {
+  return (
+    <VictoryChart
+      height={450}
+      padding={70}
+      scale={{ x: "time" }}
+      containerComponent={
+        <VictoryVoronoiContainer
+          style={{}}
+          labels={({ datum }) =>
+            datum.y > 0
+              ? `${datum.y} ${datum.binnedData[0].genre} songs`
+              : null
+          }
+        />
+      }
+      theme={VictoryTheme.clean}
+    >
+      <VictoryLabel
+        x={225}
+        y={25}
+        textAnchor="middle"
+        text="Songs listened to in 2020"
+      />
+
+      <VictoryStack
+        colorScale={[
+          "#003f5c",
+          "#2f4b7c",
+          "#665191",
+          "#a05195",
+          "#d45087",
+          "#f95d6a",
+          "#ff7c43",
+          "#ffa600",
+        ]}
+      >
+        {Object.entries(
+          groupedData,
+        ).map(([key, dataGroup]) => {
+          return (
+            <VictoryHistogram
+              data={dataGroup}
+              key={key}
+              x="day"
+              binSpacing={8}
+              style={{
+                data: {
+                  strokeWidth: 0,
+                },
+              }}
+            />
+          );
+        })}
+      </VictoryStack>
+
+      <VictoryAxis
+        tickCount={12}
+        tickFormat={(date) =>
+          date.toLocaleString(
+            "default",
+            { month: "short" },
+          )
+        }
+        style={sharedAxisStyles}
+      />
+
+      <VictoryAxis
+        dependentAxis
+        label="Total # of Songs"
+        style={sharedAxisStyles}
+      />
+    </VictoryChart>
+  );
+};
+
+render(<App />);
+```
+
+## Histogram - Styles
+
+Chart styling can be customized by using the theme or overriding the style prop on the component.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    style={{
+      data: {
+        fill: ({ datum }) =>
+          datum.y === 3
+            ? "#000000"
+            : "#c43a31",
+        stroke: ({ index }) =>
+          +index % 2 === 0
+            ? "#000000"
+            : "#c43a31",
+        fillOpacity: 0.7,
+        strokeWidth: 3,
+      },
+      labels: {
+        fontSize: 15,
+        fill: ({ datum }) =>
+          datum.y === 3
+            ? "#000000"
+            : "#c43a31",
+      },
+    }}
+    data={sampleHistogramData}
+    labels={({ datum }) => datum.y}
+  />
+</VictoryChart>
+```
+
+## Standalone Rendering
+
+Histogram charts can be rendered outside a VictoryChart.
+
+```jsx live
+<VictoryHistogram
+  theme={VictoryTheme.clean}
+  data={sampleHistogramData}
+/>
+```
+
+They can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<div style={{ padding: "20px" }}>
+  <svg
+    width={300}
+    height={300}
+    style={{
+      display: "block",
+      margin: "0 auto",
+    }}
+  >
+    <circle
+      cx={150}
+      cy={150}
+      r={150}
+      fill="#9ded91"
+    />
+    <VictoryHistogram
+      standalone={false}
+      theme={VictoryTheme.clean}
+      width={300}
+      height={300}
+      padding={{ left: 10, right: 10 }}
+      data={sampleData}
+    />
+  </svg>
+</div>
+```

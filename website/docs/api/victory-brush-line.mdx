@@ -1,0 +1,315 @@
+---
+title: VictoryBrushLine
+---
+
+`VictoryBrushLine` renders a brush component centered around a line. It may be used in place of the default `axisComponent` or `gridComponent` within `VictoryAxis`. Use `VictoryBrushLine` instead of [`VictoryBrushContainer`](/docs/api/victory-brush-container) in charts that require multiple brushes.
+
+```jsx live
+<VictoryChart
+  domainPadding={50}
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={4}
+    data={[
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+      { x: 3, y: 4 },
+    ]}
+  />
+  <VictoryAxis
+    tickValues={[1, 2, 3]}
+    gridComponent={
+      <VictoryBrushLine width={30} />
+    }
+  />
+</VictoryChart>
+```
+
+## Component Props
+
+---
+
+### allowDrag
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+The optional `allowDrag` prop accepts a boolean that enables dragging behavior for the highlighted brush area. Resizing will still be enabled when the `allowDrag` prop is set to false.
+
+---
+
+### allowResize
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+The optional `allowResize` prop accepts a boolean that enables resizing the highlighted brush area. Dragging will still be enabled when the `allowResize` prop is set to false, but the dimensions of the brush area will be fixed.
+
+---
+
+### brushAreaComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Box/>" />
+</Badges>
+
+The `brushAreaComponent` prop specifies the component to be rendered for the interactive brush region.
+This component will be supplied with the following props: x, y, width, height, and style.
+When this prop is not specified, a [`Box`](/docs/api/victory-primitives) component will be rendered.
+
+---
+
+### brushAreaStyle
+
+<Badges>
+  <TypeBadge value="VictoryStyleObject" />
+</Badges>
+
+The `brushAreaStyle` prop adds custom styles to the `brushAreaComponent`. This prop should be given as
+an object of SVG style attributes. Styles supplied to `brushAreaStyle` are assigned to the following default styles:
+
+```js
+{
+  stroke: "none",
+  fill: "black",
+  opacity: ({ active }) => active ? 0.2 : 0.1
+}
+```
+
+:::note
+`cursor` styles should not be applied via this prop, as they are dynamically assigned
+:::
+
+---
+
+### brushAreaWidth
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `brushAreaWidth` prop is used to specify the width of the interactive brush region. If this prop is not supplied, the `width` prop will be used.
+
+---
+
+### brushComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Box/>" />
+</Badges>
+
+The `brushComponent` prop specifies the component to be rendered for the active brush.
+This component will be supplied with the following props: x, y, width, height, and style.
+When this prop is not specified, a [`Box`](/docs/api/victory-primitives) component will be rendered.
+
+---
+
+### brushDomain
+
+<Badges>
+  <TypeBadge value="[low, high]" />
+  <DefaultsBadge value="<Box/>" />
+</Badges>
+
+The optional `brushDomain` prop describes the highlighted state. This prop should be given as an array of the minimum and maximum values of the highlighted region.
+
+_example:_ `brushDomain={[50, 100]}`
+
+---
+
+### brushStyle
+
+<Badges>
+  <TypeBadge value="VictoryStyleObject" />
+</Badges>
+
+The `brushStyle` prop adds custom styles to the `brushComponent`. This prop should be given as
+an object of SVG style attributes. Styles supplied to `brushStyle` are assigned to the following default styles:
+
+```js
+{
+  pointerEvents: "none",
+  stroke: "none",
+  fill: "black",
+  opacity: ({ active }) => active ? 0.4 : 0.3
+}
+```
+
+---
+
+### brushWidth
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `brushWidth` prop is used to specify the width of the active brush. If this prop is not supplied, the `width` prop will be used.
+
+---
+
+### className
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+This prop specifies the class name that will be applied to the rendered element
+
+---
+
+### dimension
+
+<Badges>
+  <TypeBadge value='"x" || "y"' />
+</Badges>
+
+The `dimension` prop specified whether the brush will be vertical ("y"), or horizontal ("x")
+
+---
+
+### disable
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+When the `disable` prop is set to `true`, `VictoryBrushLine` events will not fire.
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="any" />
+</Badges>
+
+The `events` prop specifies a set of events that will be attached to the brush component group. This prop should not be set manually.
+
+---
+
+### groupComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<g/>" />
+</Badges>
+
+This prop specifies the element used to group rendered elements
+
+---
+
+### handleComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Box/>" />
+</Badges>
+
+The `handleComponent` prop specifies the component to be rendered for each handle.
+This component will be supplied with the following props: x, y, width, height, and style.
+When this prop is not specified, a [`Box`](/docs/api/victory-primitives) component will be rendered.
+
+---
+
+### handleStyle
+
+<Badges>
+  <TypeBadge value="VictoryStyleObject" />
+</Badges>
+
+The `handleStyle` props adds custom styles to the `handleComponent`. This prop should be given as
+an object of SVG style attributes. Styles supplied to `handleStyle` are assigned to the following default styles:
+
+```js
+{
+  pointerEvents: "none",
+  stroke: "none",
+  fill: "none"
+}
+```
+
+---
+
+### handleWidth
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="10" />
+</Badges>
+
+The `handleWidth` prop is used to specify the width of each handle component.
+
+---
+
+### lineComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Axis/>" />
+</Badges>
+
+The `lineComponent` prop specifies the component to render for the underlying axis or grid line.
+This component will be supplied with the following props: x1, y1, x2, y2 and style.
+When this prop is not specified, an [`Axis`](/docs/api/victory-primitives) component will be rendered.
+
+---
+
+### onBrushDomainChange
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+The `onBrushDomainChange` prop specifies a callback function which will be called whenever the brush domain changes. The callback provided will be called with the following arguments:
+
+- `currentDomain`: The current brush domain
+- `props`: the current set of props for `VictoryBrushLine`
+
+---
+
+### scale
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
+
+This prop specifies `scale` of the parent chart with `domain` and `range` applied. This prop should not be set manually.
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
+
+The `style` prop specifies the styles that will be applied to the `lineComponent`. This prop should be given as
+an object of SVG style attributes.
+
+---
+
+### type
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `type` is used to specify which event target a particular `VictoryBrushLine` belongs to. When `VictoryBrushLine` is used by `VictoryAxis` as its `axisComponent` or `gridComponent`, this prop will be set automatically to "axis" or "grid" as appropriate.
+
+---
+
+### width
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="10" />
+</Badges>
+
+The `width` prop specified the width of both the `brush` and `brushArea`. When `brushWidth` or `brushAreaWidth` are specified, this prop will not be used

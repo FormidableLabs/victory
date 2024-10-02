@@ -1,0 +1,108 @@
+---
+title: VictoryVoronoi
+---
+
+:::info
+For examples of `VictoryVoronoi` in action, visit the [Scatter Chart](/docs/charts/voronoi) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps", // Omits 'polar'
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+  ]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryVoronoi` uses the standard `events` prop. [Read about it in more detail here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+```jsx live
+<div>
+  <h3>Click a cell below</h3>
+  <VictoryVoronoi
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const fill =
+                    props.style &&
+                    props.style.fill;
+                  return fill ===
+                    "black"
+                    ? null
+                    : {
+                        style: {
+                          fill: "black",
+                        },
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={sampleData}
+    theme={VictoryTheme.clean}
+  />
+</div>
+```
+
+---
+
+### size
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The size prop determines the maximum size of each voronoi area. When this prop is given, a circular area of the specified size will be rendered, and clipped where it would overlap with other voronoi areas. If this prop is not given, the entire voronoi area will be used.
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ parent: object, data: object, labels: object }" />
+</Badges>
+
+`VictoryVoronoi` uses the standard `style` prop. [Read about it in detail here](/docs/guides/themes)
+
+```jsx live
+<VictoryVoronoi
+  style={{
+    data: {
+      stroke: "#c43a31",
+      strokeWidth: 3,
+    },
+    labels: {
+      fontSize: 15,
+      fill: "#c43a31",
+      padding: 15,
+    },
+  }}
+  size={50}
+  data={sampleData}
+  labels={({ datum }) => datum.x}
+/>
+```

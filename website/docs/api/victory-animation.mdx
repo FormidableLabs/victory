@@ -1,0 +1,86 @@
+---
+title: VictoryAnimation
+---
+
+:::info
+[See this guide to animations with Victory Charts](/docs/guides/animations). The `VictoryAnimation` component is used for animating arbitrary React components and is not commonly used.
+:::
+
+`VictoryAnimation` animates prop changes for any React component. To animate prop changes, define a child function that accepts an object of tweened values and other animation information and returns a component to render.
+
+```jsx
+<VictoryAnimation {...animationProps} data={myComponentProps}>
+  {(tweenedProps, animationInfo) => {
+    if (animationInfo.animating && animationInfo.progress < 1) {
+      return <MyComponent {...tweenedProps} />;
+    }
+  }}
+</VictoryAnimation>
+```
+
+## Props
+
+---
+
+### children
+
+<Badges>
+  <TypeBadge value="(style: AnimationStyle, info: AnimationInfo) => React.ReactElement" />
+</Badges>
+
+`VictoryAnimation` takes a single child, which should be given as a function of a tweened props object and an animation information object. The child function should return a component to render.
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="AnimationData" />
+</Badges>
+
+
+The `data` prop specifies a set of values to tween between. When this prop changes, `VictoryAnimation` will begin animating between the current and next values. This prop should be given as an array or an object. `VictoryAnimation` uses [d3-interpolate][] to tween between values, with some [slight modifications][].
+
+---
+
+### duration
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="1000" />
+</Badges>
+
+The `duration` prop determines the number of milliseconds the animation should take to complete. This prop should be given as a number.
+
+---
+
+### delay
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="10" />
+</Badges>
+
+The `delay` prop specifies a delay in milliseconds before the start of an animation, or between each animation in the queue. This prop should be given as a number.
+
+### easing
+
+<Badges>
+  <TypeBadge value="AnimationEasing" />
+  <DefaultsBadge value='"quadInOut"' />
+</Badges>
+
+The `easing` prop specifies the type of easing to use for an animation. The supported types of easing are: _"back", "backIn", "backOut", "backInOut", "bounce", "bounceIn", "bounceOut", "bounceInOut", "circle", "circleIn", "circleOut", "circleInOut", "linear", "linearIn", "linearOut", "linearInOut", "cubic", "cubicIn", "cubicOut", "cubicInOut", "elastic", "elasticIn", "elasticOut", "elasticInOut", "exp", "expIn", "expOut", "expInOut", "poly", "polyIn", "polyOut", "polyInOut", "quad", "quadIn", "quadOut", "quadInOut", "sin", "sinIn", "sinOut", "sinInOut"_.
+
+---
+
+### onEnd
+
+<Badges>
+  <TypeBadge value="() => void" />
+</Badges>
+
+The `onEnd` prop specifies a function that will be called when the animation ends. If there are multiple animations in the queue, the `onEnd` function will be called after the last animation in the queue completes.
+
+[d3-interpolate]: https://github.com/d3/d3-interpolate
+[slight modifications]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-animation/util.ts

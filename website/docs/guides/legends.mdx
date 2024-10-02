@@ -1,0 +1,246 @@
+---
+title: Legends
+---
+
+Legends can be added to any chart by nesting a `VictoryLegend` component within `VictoryChart`. The legend can be styled and positioned using props.
+
+## Basic
+
+See the [full API here](/docs/api/victory-legend).
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 30 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryLegend
+    x={125}
+    y={20}
+    title="Pets"
+    data={[
+      {
+        name: "Dogs",
+        symbol: { fill: "tomato" },
+      },
+      {
+        name: "Cats",
+        symbol: { fill: "orange" },
+      },
+      {
+        name: "Rabbits",
+        symbol: { fill: "gold" },
+      },
+    ]}
+  />
+  <VictoryBar
+    data={[
+      {
+        x: "Dogs",
+        y: 6,
+        fill: "tomato",
+      },
+      {
+        x: "Cats",
+        y: 4,
+        fill: "orange",
+      },
+      {
+        x: "Rabbits",
+        y: 2,
+        fill: "gold",
+      },
+    ]}
+    style={{
+      data: {
+        fill: ({ datum }) => datum.fill,
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+## Legend - Symbols
+
+Victory includes basic symbols for legend items. The `symbol` prop can be used to specify the symbol type and fill color.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={20}
+  title="Legend"
+  data={[
+    {
+      name: "Dogs",
+      symbol: {
+        fill: "tomato",
+        type: "circle",
+        size: 8,
+      },
+    },
+    {
+      name: "Cats",
+      symbol: {
+        fill: "orange",
+        type: "diamond",
+        size: 8,
+      },
+    },
+    {
+      name: "Rabbits",
+      symbol: {
+        fill: "gold",
+        type: "star",
+        size: 8,
+      },
+    },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Legend - Custom Icons
+
+Victory supports custom icons for legend items such as React components from SVG libraries like [react-icons](https://react-icons.github.io/react-icons/).
+
+```jsx live noInline
+const { FaSun, FaMoon } = reactIconsFa;
+
+const CustomMoon = (props) => (
+  <FaMoon
+    fill={props.datum.fill}
+    x={props.x - 7}
+    y={props.y - 7}
+    size={15}
+  />
+);
+
+function App() {
+  return (
+    <VictoryLegend
+      x={125}
+      y={20}
+      title="Legend"
+      data={[
+        {
+          name: "One",
+          fill: "orange",
+        },
+        {
+          name: "Two",
+          fill: "blue",
+        },
+        { name: "Three" },
+      ]}
+      dataComponent={<CustomMoon />}
+      theme={VictoryTheme.clean}
+    />
+  );
+}
+
+render(<App />);
+```
+
+## Legend - Orientation
+
+The legend also supports vertical orientations.
+
+```jsx live
+<VictoryLegend
+  x={25}
+  y={75}
+  title="Legend"
+  orientation="vertical"
+  centerTitle={false}
+  data={[
+    {
+      name: "Dogs",
+      symbol: {
+        fill: "tomato",
+        type: "circle",
+        size: 8,
+      },
+    },
+    {
+      name: "Cats",
+      symbol: {
+        fill: "orange",
+        type: "diamond",
+        size: 8,
+      },
+    },
+    {
+      name: "Rabbits",
+      symbol: {
+        fill: "gold",
+        type: "star",
+        size: 8,
+      },
+    },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Legend - Columns
+
+The legend can be displayed in multiple rows by setting the `itemsPerRow` prop.
+
+```jsx live
+<VictoryLegend
+  x={100}
+  y={20}
+  title="Legend"
+  itemsPerRow={3}
+  data={[
+    {
+      name: "Dogs",
+      symbol: {
+        fill: "tomato",
+        type: "circle",
+        size: 8,
+      },
+    },
+    {
+      name: "Cats",
+      symbol: {
+        fill: "orange",
+        type: "diamond",
+        size: 8,
+      },
+    },
+    {
+      name: "Rabbits",
+      symbol: {
+        fill: "gold",
+        type: "star",
+        size: 8,
+      },
+    },
+    {
+      name: "Snakes",
+      symbol: {
+        fill: "green",
+        type: "triangleUp",
+        size: 8,
+      },
+    },
+    {
+      name: "Turtles",
+      symbol: {
+        fill: "purple",
+        type: "square",
+        size: 8,
+      },
+    },
+    {
+      name: "Llamas",
+      symbol: {
+        fill: "lightblue",
+        type: "triangleDown",
+        size: 8,
+      },
+    },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```

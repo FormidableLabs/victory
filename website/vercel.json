@@ -1,0 +1,219 @@
+{
+  "redirects": [
+    {
+      "source": "/open-source/victory/docs/faq",
+      "destination": "/open-source/victory/docs",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/gallery",
+      "destination": "/open-source/victory/docs",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/gallery/:slug",
+      "destination": "/open-source/victory/docs",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/about",
+      "destination": "/open-source/victory",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-area",
+      "destination": "/open-source/victory/docs/api/victory-area",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/react-native",
+      "destination": "/open-source/victory/docs/api/react-native",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/server-side-rendering",
+      "destination": "/open-source/victory/docs/api/server-side-rendering",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-axis",
+      "destination": "/open-source/victory/docs/api/victory-axis",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-bar",
+      "destination": "/open-source/victory/docs/api/victory-bar",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-box-plot",
+      "destination": "/open-source/victory/docs/api/victory-box-plot",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-candlestick",
+      "destination": "/open-source/victory/docs/api/victory-candlestick",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-error-bar",
+      "destination": "/open-source/victory/docs/api/victory-error-bar",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-histogram",
+      "destination": "/open-source/victory/docs/api/victory-histogram",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-line",
+      "destination": "/open-source/victory/docs/api/victory-line",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-pie",
+      "destination": "/open-source/victory/docs/api/victory-pie",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-polar-axis",
+      "destination": "/open-source/victory/docs/api/victory-polar-axis",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-scatter",
+      "destination": "/open-source/victory/docs/api/victory-scatter",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-voronoi",
+      "destination": "/open-source/victory/docs/api/victory-voronoi",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-chart",
+      "destination": "/open-source/victory/docs/api/victory-chart",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-brush-container",
+      "destination": "/open-source/victory/docs/api/victory-brush-container",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-clip-container",
+      "destination": "/open-source/victory/docs/api/victory-clip-container",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-container",
+      "destination": "/open-source/victory/docs/api/victory-container",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-cursor-container",
+      "destination": "/open-source/victory/docs/api/victory-cursor-container",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-group",
+      "destination": "/open-source/victory/docs/api/victory-group",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-selection-container",
+      "destination": "/open-source/victory/docs/api/victory-selection-container",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-stack",
+      "destination": "/open-source/victory/docs/api/victory-stack",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-voronoi-container",
+      "destination": "/open-source/victory/docs/api/victory-voronoi-container",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-zoom-container",
+      "destination": "/open-source/victory/docs/api/victory-zoom-container",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/common-container-props",
+      "destination": "/open-source/victory/docs/api/victory-common-container-props",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/create-container",
+      "destination": "/open-source/victory/docs/guides/containers",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-accessible-group",
+      "destination": "/open-source/victory/docs/api/victory-accessible-group",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-animation",
+      "destination": "/open-source/victory/docs/api/victory-animation",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-brush-line",
+      "destination": "/open-source/victory/docs/api/victory-brush-line",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-label",
+      "destination": "/open-source/victory/docs/api/victory-label",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-legend",
+      "destination": "/open-source/victory/docs/api/victory-legend",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-portal",
+      "destination": "/open-source/victory/docs/api/victory-portal",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-primitives",
+      "destination": "/open-source/victory/docs/api/victory-primitives",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-shared-events",
+      "destination": "/open-source/victory/docs/api/victory-shared-events",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-theme",
+      "destination": "/open-source/victory/docs/api/victory-theme",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-tooltip",
+      "destination": "/open-source/victory/docs/api/victory-tooltip",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-transition",
+      "destination": "/open-source/victory/docs/api/victory-transition",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/victory-canvas",
+      "destination": "/open-source/victory/docs/api/victory-canvas",
+      "permanent": true
+    },
+    {
+      "source": "/open-source/victory/docs/common-props",
+      "destination": "/open-source/victory/docs/api/victory-common-props",
+      "permanent": true
+    }
+  ]
+}

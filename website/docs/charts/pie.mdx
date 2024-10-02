@@ -1,0 +1,337 @@
+---
+title: Pie
+---
+
+Pie charts can be used to visually represent proportions of a whole for a limited number of categories.
+
+## Basic
+
+See the [full API here](/docs/api/victory-pie). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryPie
+  data={[
+    { x: "Cats", y: 35 },
+    { x: "Dogs", y: 40 },
+    { x: "Birds", y: 55 },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Pie Chart - Semi Circular
+
+Pie charts can be rendered within a specific angle range.
+
+```jsx live
+<VictoryPie
+  startAngle={90}
+  endAngle={-90}
+  data={[
+    { x: "Cats", y: 35 },
+    { x: "Dogs", y: 40 },
+    { x: "Birds", y: 55 },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Pie Chart - Donut
+
+Pie charts can be rendered as donuts by setting the `innerRadius` prop.
+
+```jsx live
+<VictoryPie
+  innerRadius={50}
+  data={[
+    { x: "Cats", y: 30 },
+    { x: "Dogs", y: 35 },
+    { x: "Birds", y: 25 },
+    { x: "Rabbits", y: 10 },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Pie Chart - Ring
+
+Pie charts can be rendered as rings by adjusting various radius props.
+
+```jsx live
+<VictoryPie
+  theme={VictoryTheme.clean}
+  data={[
+    { x: "Cats", y: 70 },
+    { x: "Dogs", y: 30 },
+  ]}
+  labels={[]}
+  cornerRadius={20}
+  startAngle={-6}
+  innerRadius={80}
+/>
+```
+
+## Pie Chart - Exploded
+
+Pie charts can be exploded to emphasize the categories.
+
+```jsx live
+<VictoryPie
+  innerRadius={50}
+  padAngle={5}
+  data={[
+    { x: "Cats", y: 30 },
+    { x: "Dogs", y: 35 },
+    { x: "Birds", y: 25 },
+    { x: "Rabbits", y: 10 },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Pie Chart - Ordered
+
+Pie chart slices can be ordered using the standard `categories` prop.
+
+```jsx live
+<VictoryPie
+  innerRadius={50}
+  padAngle={5}
+  data={[
+    { x: "Cats", y: 30 },
+    { x: "Dogs", y: 35 },
+    { x: "Birds", y: 25 },
+    { x: "Rabbits", y: 10 },
+  ]}
+  categories={{
+    x: [
+      "Cats",
+      "Birds",
+      "Dogs",
+      "Rabbits",
+    ],
+  }}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Pie Chart - Variable radius
+
+Pie charts can have variable radius by setting the `radius` prop to a function.
+
+```jsx live
+<VictoryPie
+  radius={({ datum }) => datum.y + 75}
+  data={[
+    { x: "Cats", y: 30 },
+    { x: "Dogs", y: 35 },
+    { x: "Birds", y: 25 },
+    { x: "Rabbits", y: 10 },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Pie Chart - Center Labels
+
+Pie charts can have center labels by providing a custom label.
+
+```jsx live
+<svg viewBox="0 0 400 400">
+  <VictoryPie
+    standalone={false}
+    width={400}
+    height={400}
+    data={[
+      { x: "Cats", y: 30 },
+      { x: "Dogs", y: 35 },
+      { x: "Birds", y: 25 },
+      { x: "Rabbits", y: 10 },
+    ]}
+    innerRadius={68}
+    labelRadius={100}
+    theme={VictoryTheme.clean}
+  />
+  <VictoryLabel
+    textAnchor="middle"
+    style={{ fontSize: 20 }}
+    x={200}
+    y={200}
+    text="Pets"
+  />
+</svg>
+```
+
+## Pie Chart - Independent Labels
+
+Pie chart data can use independent labels in the dataset.
+
+```jsx live
+<VictoryPie
+  innerRadius={50}
+  data={[
+    { label: "Cats", x: 1, y: 30 },
+    { label: "Dogs", x: 2, y: 35 },
+    { label: "Birds", x: 3, y: 25 },
+    { label: "Rabbits", x: 4, y: 10 },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+## Pie Chart - Label Position
+
+Pie chart labels can be positioned at different points along each slice by using the `labelPosition` prop.
+
+```jsx live
+<VictoryPie
+  theme={VictoryTheme.clean}
+  radius={100}
+  labelPosition="startAngle"
+  labelPlacement="perpendicular"
+  labels={({ datum }) =>
+    `${datum.l}\ndegrees`
+  }
+  data={[
+    { x: 1, y: 1, l: 0 },
+    { x: 2, y: 1, l: 45 },
+    { x: 3, y: 1, l: 90 },
+    { x: 4, y: 1, l: 135 },
+    { x: 5, y: 1, l: 180 },
+    { x: 6, y: 1, l: 225 },
+    { x: 7, y: 1, l: 270 },
+    { x: 8, y: 1, l: 315 },
+  ]}
+/>
+```
+
+## Pie Chart - Tooltips
+
+Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
+
+```jsx live
+<VictoryPie
+  theme={VictoryTheme.clean}
+  radius={100}
+  labels={({ datum }) =>
+    `${datum.l}\ndegrees`
+  }
+  labelComponent={<VictoryTooltip />}
+  data={[
+    { x: 1, y: 1, l: 0 },
+    { x: 2, y: 1, l: 45 },
+    { x: 3, y: 1, l: 90 },
+    { x: 4, y: 1, l: 135 },
+    { x: 5, y: 1, l: 180 },
+    { x: 6, y: 1, l: 225 },
+    { x: 7, y: 1, l: 270 },
+    { x: 8, y: 1, l: 315 },
+  ]}
+/>
+```
+
+## Pie Chart - Styles
+
+Chart styling can be customized by using the theme or overriding the style prop on the component.
+
+```jsx live
+<VictoryPie
+  data={[
+    { x: "Cats", y: 35 },
+    { x: "Dogs", y: 40 },
+    { x: "Birds", y: 55 },
+  ]}
+  theme={VictoryTheme.clean}
+  style={{
+    data: {
+      fillOpacity: 0.9,
+      stroke: "#c43a31",
+      strokeWidth: 3,
+    },
+    labels: {
+      fontSize: 25,
+      fill: "#c43a31",
+    },
+  }}
+/>
+```
+
+## Pie Chart - Events
+
+Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
+
+```jsx live
+<VictoryPie
+  data={[
+    { x: "Cats", y: 35 },
+    { x: "Dogs", y: 40 },
+    { x: "Birds", y: 55 },
+  ]}
+  theme={VictoryTheme.clean}
+  events={[
+    {
+      target: "data",
+      eventHandlers: {
+        onClick: () => {
+          return [
+            {
+              target: "data",
+              mutation: ({ style }) => {
+                return style.fill ===
+                  "#c43a31"
+                  ? null
+                  : {
+                      style: {
+                        fill: "#c43a31",
+                      },
+                    };
+              },
+            },
+            {
+              target: "labels",
+              mutation: ({ text }) => {
+                return text ===
+                  "clicked"
+                  ? null
+                  : { text: "clicked" };
+              },
+            },
+          ];
+        },
+      },
+    },
+  ]}
+/>
+```
+
+## Standalone Rendering
+
+Pie charts can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<svg
+  width={300}
+  height={300}
+  className="block mx-auto"
+>
+  <circle
+    cx={150}
+    cy={150}
+    r={50}
+    fill="#2d7ff9"
+  />
+  <VictoryPie
+    standalone={false}
+    width={300}
+    height={300}
+    innerRadius={75}
+    data={[
+      { x: "Cats", y: 30 },
+      { x: "Dogs", y: 35 },
+      { x: "Birds", y: 25 },
+      { x: "Rabbits", y: 10 },
+    ]}
+    theme={VictoryTheme.clean}
+  />
+</svg>
+```
