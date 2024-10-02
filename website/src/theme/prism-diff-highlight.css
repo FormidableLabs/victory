@@ -1,0 +1,11 @@
+code .token.diff-highlight-deleted {
+	background-color: rgba(255, 0, 0, .1);
+}
+
+code .token.diff-highlight-inserted {
+	background-color: rgba(0, 255, 128, .1);
+}
+
+code .token.coord {
+	font-weight: 700;
+}

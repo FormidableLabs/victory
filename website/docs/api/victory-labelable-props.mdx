@@ -1,0 +1,37 @@
+---
+title: VictoryLabelableProps
+---
+
+A set of props available to components that can display labels.
+
+## Props
+
+---
+
+### labelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel>" />
+</Badges>
+
+The `labelComponent` prop takes a component instance which will be used to render labels for the component. The new element created from the passed `labelComponent` will be supplied with the following properties: x, y, index, data, datum, verticalAnchor, textAnchor, angle, style, text, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `labelComponent` is omitted, a new [VictoryLabel][] will be created with the props described above. [VictoryTooltip][] is commonly used as a `labelComponent`
+
+:::note
+`labelComponent` is not currently supported for `VictoryBoxPlot` as it has its own label components (`maxLabelComponent`, `medianLabelComponent`, `minLabelComponent`, `q1LabelComponent` & `q3LabelComponent`). See [VictoryBoxPlot][] for more info.
+:::
+
+#### Common Usage
+
+- `labelComponent={<VictoryLabel dy={20}/>}`
+- `labelComponent={<VictoryTooltip/>}`
+
+```jsx live
+<VictoryBar
+  data={sampleData}
+  labels={({ datum }) => datum.y}
+  style={{ labels: { fill: "white" } }}
+  labelComponent={<VictoryLabel dy={30} />}
+  theme={VictoryTheme.clean}
+/>
+```
