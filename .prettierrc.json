@@ -1,5 +1,13 @@
 {
   "arrowParens": "always",
   "trailingComma": "all",
-  "printWidth": 80
+  "printWidth": 80,
+  "overrides": [
+    {
+      "files": "*.mdx",
+      "options": {
+        "printWidth": 40
+      }
+    }
+  ]
 }

@@ -1,0 +1,171 @@
+---
+title: Box Plot
+---
+
+Box plots are used to show the distribution of a dataset. The box represents the interquartile range, the line in the middle is the median, and the whiskers represent the range of the data.
+
+## Basic
+
+See the [full API here](/docs/api/victory-boxplot). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    boxWidth={15}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Box Plot - Horizontal
+
+Bar charts can be rendered horizontally by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryBoxPlot`.
+
+```jsx live
+<VictoryChart
+  horizontal
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    boxWidth={10}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Box Plot - Labels
+
+Box plots can be labeled by setting the `labels` prop to `true`. By default this will show all labels.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    labels
+    labelOrientation="right"
+    boxWidth={10}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</VictoryChart>
+```
+
+Specific labels can be chosen by using the appropriate label prop. In this example, the `minLabels` prop is set to `true` to show only the minimum value of each box.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    minLabels
+    boxWidth={10}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Standalone Rendering
+
+Box Plot charts can be rendered outside a VictoryChart.
+
+```jsx live
+<VictoryBoxPlot
+  boxWidth={15}
+  data={[
+    { x: 1, y: ["2", "3", "5", "8"] },
+    { x: 2, y: ["1", "3", "5", "8"] },
+    { x: 3, y: ["2", "5", "7", "9"] },
+    { x: 4, y: ["4", "6", "7", "9"] },
+    { x: 5, y: ["1", "2", "4", "5"] },
+    { x: 6, y: ["1", "2", "6", "8"] },
+    { x: 7, y: ["2", "4", "5", "8"] },
+    { x: 8, y: ["1", "4", "4", "7"] },
+    { x: 9, y: ["2", "5", "7", "9"] },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+They can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<svg
+  width={300}
+  height={300}
+  style={{
+    display: "block",
+    margin: "0 auto",
+  }}
+>
+  <circle
+    cx={150}
+    cy={150}
+    r={150}
+    fill="#9ded91"
+  />
+  <VictoryBoxPlot
+    standalone={false}
+    theme={VictoryTheme.clean}
+    width={300}
+    height={300}
+    padding={{ left: 10, right: 10 }}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</svg>
+```
