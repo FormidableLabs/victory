@@ -13,6 +13,7 @@ import { VictoryBoxPlot } from "victory-box-plot";
 import { range, random } from "lodash";
 import { VictoryTheme } from "victory-core/lib";
 
+const themeColors = VictoryTheme.clean.palette?.colors || {};
 class App extends React.Component {
   getGroupData() {
     return range(5).map(() => {
@@ -67,18 +68,14 @@ class App extends React.Component {
               style={{
                 data: { strokeDasharray: "10, 5" },
               }}
-              colorScale="qualitative"
             >
               <VictoryGroup
-                color={"purple"}
+                colorScale="red"
                 data={[
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
                   { x: 3, y: 2 },
                 ]}
-                style={{
-                  data: { width: 40, opacity: 0.6 },
-                }}
               >
                 <VictoryBar />
                 <VictoryLine />
@@ -89,9 +86,7 @@ class App extends React.Component {
                   { x: 2, y: 5 },
                   { x: 3, y: 1 },
                 ]}
-                style={{
-                  data: { width: 20, opacity: 0.8 },
-                }}
+                colorScale="green"
               >
                 <VictoryBar />
                 <VictoryLine />
@@ -102,26 +97,23 @@ class App extends React.Component {
                   { x: 2, y: 2 },
                   { x: 3, y: 5 },
                 ]}
-                style={{
-                  data: { width: 10, opacity: 1 },
-                }}
+                colorScale="blue"
               >
                 <VictoryBar />
                 <VictoryLine />
                 <VictoryScatter
                   symbol={"plus"}
-                  size={10}
                   style={{
-                    data: { fill: "tomato" },
+                    data: { fill: themeColors.purple },
                   }}
                 />
               </VictoryGroup>
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart theme={VictoryTheme.clean} style={chartStyle}>
             <VictoryGroup
-              color="red"
+              colorScale="red"
               data={[
                 { x: 1, y: 3, errorX: 0.2, errorY: 0.5 },
                 { x: 2, y: 4, errorX: 0.3, errorY: 0.3 },
@@ -166,27 +158,18 @@ class App extends React.Component {
               />
             </VictoryGroup>
           </VictoryChart>
-          <VictoryGroup style={chartStyle}>
-              <VictoryBoxPlot
-                minLabels
-                maxLabels
-                data={[
-                  { x: 1, y: [1, 2, 3, 5] },
-                  { x: 2, y: [3, 2, 8, 10] },
-                  { x: 3, y: [2, 8, 6, 5] },
-                  { x: 4, y: [1, 3, 2, 9] },
-                ]}
-                style={{
-                  min: { stroke: "tomato" },
-                  max: { stroke: "orange" },
-                  q1: { fill: "tomato" },
-                  q3: { fill: "orange" },
-                  median: { stroke: "white", strokeWidth: 2 },
-                  minLabels: { fill: "tomato" },
-                  maxLabels: { fill: "orange" },
-                }}
-              />
-            </VictoryGroup>
+          <VictoryGroup style={chartStyle} theme={VictoryTheme.clean}>
+            <VictoryBoxPlot
+              minLabels
+              maxLabels
+              data={[
+                { x: 1, y: [1, 2, 3, 5] },
+                { x: 2, y: [3, 2, 8, 10] },
+                { x: 3, y: [2, 8, 6, 5] },
+                { x: 4, y: [1, 3, 2, 9] },
+              ]}
+            />
+          </VictoryGroup>
         </div>
       </div>
     );
