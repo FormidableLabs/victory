@@ -151,7 +151,7 @@ export default class VictoryBarDemo extends React.Component<
       <div className="demo" style={containerStyle}>
         <ChartWrap>
           <VictoryBar
-            theme={VictoryTheme.clean}
+            theme={VictoryTheme.material}
             style={{
               data: { fill: VictoryTheme.clean.palette?.colors?.pink },
             }}

@@ -83,8 +83,8 @@ type VictoryThemePaletteKeys =
   | "red"
   | "yellow";
 
-type VictoryThemePalette = {
-  [key in VictoryThemePaletteKeys]: string;
+export type VictoryThemePalette = {
+  [key in VictoryThemePaletteKeys]?: string;
 };
 
 export interface VictoryThemeDefinition {

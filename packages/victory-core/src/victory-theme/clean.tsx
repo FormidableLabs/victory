@@ -170,7 +170,7 @@ export const clean: VictoryThemeDefinition = {
       style: {
         axis: {
           fill: "transparent",
-          stroke: gray["300"],
+          stroke: gray["500"],
           strokeWidth: 1,
           strokeLinecap,
           strokeLinejoin,
@@ -197,10 +197,10 @@ export const clean: VictoryThemeDefinition = {
   polarAxis: Object.assign({
     style: {
       axis: {
-        stroke: gray["300"],
+        stroke: gray["500"],
       },
       grid: {
-        stroke: gray["200"],
+        stroke: gray["400"],
         strokeDasharray,
         strokeLinecap,
         strokeLinejoin,
@@ -209,7 +209,7 @@ export const clean: VictoryThemeDefinition = {
       ticks: {
         fill: "transparent",
         size: 5,
-        stroke: gray["200"],
+        stroke: gray["400"],
         strokeWidth: 1,
         strokeLinecap,
         strokeLinejoin,
@@ -220,10 +220,10 @@ export const clean: VictoryThemeDefinition = {
   polarDependentAxis: Object.assign({
     style: {
       axis: {
-        stroke: gray["300"],
+        stroke: gray["500"],
       },
       grid: {
-        stroke: gray["200"],
+        stroke: gray["400"],
         strokeDasharray,
         strokeLinecap,
         strokeLinejoin,
@@ -232,7 +232,7 @@ export const clean: VictoryThemeDefinition = {
       ticks: {
         fill: "transparent",
         size: 5,
-        stroke: gray["200"],
+        stroke: gray["300"],
         strokeWidth: 1,
         strokeLinecap,
         strokeLinejoin,
@@ -246,6 +246,8 @@ export const clean: VictoryThemeDefinition = {
         data: {
           fill: blue["500"],
           padding,
+          strokeWidth: 1,
+          fillOpacity: 0.5,
         },
         labels: baseLabelStyles,
       },

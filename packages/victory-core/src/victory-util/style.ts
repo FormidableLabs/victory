@@ -1,5 +1,3 @@
-import { VictoryTheme } from "../victory-theme/victory-theme";
-
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
@@ -38,6 +36,7 @@ export const toTransformString = function (obj, ...more) {
  * @returns {Array} An array of 5 hex string values composing a color scale.
  */
 export function getColorScale(name, theme) {
+  console.log("🚀 ~ getColorScale ~ name:", name);
   const {
     palette: {
       grayscale = ["#cccccc", "#969696", "#636363", "#252525"],
