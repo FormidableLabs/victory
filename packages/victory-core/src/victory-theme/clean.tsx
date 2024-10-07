@@ -319,8 +319,7 @@ export const clean: VictoryThemeDefinition = {
       style: {
         data: {
           fill: cyan["500"],
-          stroke: "transparent",
-          strokeWidth: 0,
+          fillOpacity: 0.5,
         },
         labels: baseLabelStyles,
       },
