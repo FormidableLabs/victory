@@ -243,7 +243,6 @@ export function getChildren(initialProps, childComponents, calculatedProps) {
   const childProps = getChildProps(props, newCalculatedProps);
   const parentName = props.name || "stack";
   const { theme } = props;
-  console.log("🚀 ~ getChildren ~ theme:", theme);
   return children.map((child, index) => {
     const role = child.type && child.type.role;
     const data = datasets[index];
