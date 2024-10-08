@@ -1,5 +1,11 @@
 # victory-box-plot
 
+## 37.1.2
+
+### Patch Changes
+
+- Fix victory-native container styles ([`eae3fe5dd`](https://github.com/FormidableLabs/victory/commit/eae3fe5dde175e68e146576655cb2e8054ad6456))
+
 ## 37.1.1
 
 ## 37.1.0
