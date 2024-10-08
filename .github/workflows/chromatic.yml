@@ -11,8 +11,8 @@ on:
     branches:
       - main
     paths:
-      - 'stories/**'
-      - 'packages/**'
+      - "stories/**"
+      - "packages/**"
 
 jobs:
   chromatic:
@@ -33,7 +33,7 @@ jobs:
         run: pnpm run build:lib:esm
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@latest
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
