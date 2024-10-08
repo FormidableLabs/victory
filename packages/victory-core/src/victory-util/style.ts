@@ -42,7 +42,7 @@ export const toTransformString = function (obj, ...more) {
  * @returns {Array} An array of 5 hex string values composing a color scale.
  */
 export function getColorScale(
-  name?: keyof VictoryThemeDefinition["palette"],
+  name?: string,
   theme: VictoryThemeDefinition = VictoryTheme.material,
 ) {
   const {
