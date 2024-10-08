@@ -13,8 +13,7 @@ import { VictoryGroup } from "victory-group";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryStack } from "victory-stack";
 import { random, range, keys } from "lodash";
-import { VictoryTheme, VictoryLabel } from "victory-core";
-import { VictoryThemePalette } from "victory-core/src/victory-theme/types";
+import { VictoryTheme, VictoryLabel, VictoryThemePalette } from "victory-core";
 
 type multiAxisDataListType = {
   strength?: number;

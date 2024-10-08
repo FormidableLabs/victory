@@ -1,4 +1,3 @@
-import { random } from "lodash";
 import { VictoryThemeDefinition } from "./victory-theme";
 
 // *

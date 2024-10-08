@@ -53,6 +53,9 @@ const strokeLinecap = "round";
 const strokeLinejoin = "round";
 
 export const grayscale: VictoryThemeDefinition = {
+  palette: {
+    grayscale: colors,
+  },
   area: Object.assign(
     {
       style: {

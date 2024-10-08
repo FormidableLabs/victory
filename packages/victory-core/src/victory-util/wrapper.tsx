@@ -298,6 +298,7 @@ export function getAllEvents(props) {
   return events || [];
 }
 
+// eslint-disable-next-line max-params
 export function getColor(calculatedProps, child, index, theme) {
   // check for styles first
   const { style } = calculatedProps;
@@ -323,6 +324,7 @@ export function getStyle(theme, style, role) {
   return Helpers.getStyles(style, defaultStyle);
 }
 
+// eslint-disable-next-line max-params
 export function getChildStyle(child, index, calculatedProps, theme) {
   const { style, role } = calculatedProps;
   const childStyle = child.props.style || {};

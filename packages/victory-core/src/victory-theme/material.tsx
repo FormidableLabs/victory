@@ -1,4 +1,4 @@
-import { VictoryThemeDefinition } from "./types";
+import { VictoryThemeDefinition, VictoryThemePalette } from "./types";
 
 // *
 // * Colors
@@ -9,7 +9,7 @@ const lime300 = "#DCE775";
 const lightGreen500 = "#8BC34A";
 const teal700 = "#00796B";
 const cyan900 = "#006064";
-const colors = [
+const colorScale = [
   deepOrange600,
   yellow200,
   lime300,
@@ -21,6 +21,39 @@ const blueGrey50 = "#ECEFF1";
 const blueGrey300 = "#90A4AE";
 const blueGrey700 = "#455A64";
 const grey900 = "#212121";
+
+const colors: VictoryThemePalette = {
+  blue: "#4F7DA1",
+  pink: "#E2A37F",
+  teal: teal700,
+  purple: "#DF948A",
+  green: lightGreen500,
+  orange: deepOrange600,
+  cyan: cyan900,
+  red: "#DF5A49",
+  yellow: yellow200,
+};
+
+const grayscale = [blueGrey50, blueGrey300, blueGrey700, grey900];
+const qualitative = [
+  "#334D5C",
+  "#45B29D",
+  "#EFC94C",
+  "#E27A3F",
+  "#DF5A49",
+  "#4F7DA1",
+  "#55DBC1",
+  "#EFDA97",
+  "#E2A37F",
+  "#DF948A",
+];
+const heatmap = ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"];
+const warm = ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"];
+const cool = ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"];
+const red = ["#FCAE91", "#FB6A4A", "#DE2D26", "#A50F15", "#750B0E"];
+const green = ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"];
+const blue = ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"];
+
 // *
 // * Typography
 // *
@@ -61,6 +94,17 @@ const strokeLinecap = "round";
 const strokeLinejoin = "round";
 
 export const material: VictoryThemeDefinition = {
+  palette: {
+    colors,
+    grayscale,
+    qualitative,
+    heatmap,
+    warm,
+    cool,
+    red,
+    green,
+    blue,
+  },
   area: Object.assign(
     {
       style: {
@@ -182,7 +226,7 @@ export const material: VictoryThemeDefinition = {
   ),
   group: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
     },
     baseProps,
   ),
@@ -200,7 +244,7 @@ export const material: VictoryThemeDefinition = {
     baseProps,
   ),
   legend: {
-    colorScale: colors,
+    colorScale,
     gutter: 10,
     orientation: "vertical",
     titleOrientation: "top",
@@ -228,7 +272,7 @@ export const material: VictoryThemeDefinition = {
   ),
   pie: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
       style: {
         data: {
           padding,
@@ -256,7 +300,7 @@ export const material: VictoryThemeDefinition = {
   ),
   stack: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
     },
     baseProps,
   ),

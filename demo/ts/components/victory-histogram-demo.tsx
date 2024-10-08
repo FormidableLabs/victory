@@ -246,11 +246,9 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
                     },
                   },
                 ],
-                onMouseOut: () => [
-                  {
-                    mutation: (props) => {},
-                  },
-                ],
+                onMouseOut: () => ({
+                  mutation: () => null,
+                }),
               },
             },
           ]}
