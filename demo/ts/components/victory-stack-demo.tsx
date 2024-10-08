@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryStack } from "victory-stack";
 import { VictoryArea } from "victory-area";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
 
 class App extends React.Component {
   render() {
