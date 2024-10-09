@@ -14,7 +14,7 @@ import { VictoryBoxPlot } from "victory-box-plot";
 import { VictoryAxis } from "victory-axis";
 import { VictoryBrushContainer } from "victory-brush-container";
 import { range, random } from "lodash";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
 
 const errorData = [
   { x: 1, y: 10, errorX: [1, 0.5], errorY: 1 },
@@ -23,6 +23,8 @@ const errorData = [
   { x: 4, y: 20, errorX: [1, 0], errorY: 2 },
   { x: 5, y: 10, errorX: [1, 0.5], errorY: 2 },
 ];
+
+const themeColors = VictoryTheme.clean.palette?.colors || {};
 
 class App extends React.Component {
   getBarData() {
@@ -49,9 +51,19 @@ class App extends React.Component {
     };
     return (
       <div style={containerStyle}>
-        <VictoryChart horizontal scale={{ y: "log" }} style={chartStyle}>
+        <VictoryChart
+          horizontal
+          scale={{ y: "log" }}
+          style={chartStyle}
+          theme={VictoryTheme.clean}
+          domainPadding={20}
+        >
           <VictoryBar
-            cornerRadius={4}
+            style={{
+              data: {
+                fill: themeColors.green,
+              },
+            }}
             data={[
               { x: 1, y: 0.1 },
               { x: 2, y: 1 },
@@ -64,7 +76,12 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart horizontal scale={{ y: "log" }} style={chartStyle}>
+        <VictoryChart
+          horizontal
+          scale={{ y: "log" }}
+          style={chartStyle}
+          theme={VictoryTheme.clean}
+        >
           <VictoryArea
             data={[
               { x: 1, y: 0.1 },
@@ -78,9 +95,18 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart horizontal theme={VictoryTheme.clean} style={chartStyle}>
+        <VictoryChart
+          horizontal
+          theme={VictoryTheme.clean}
+          style={chartStyle}
+          domainPadding={20}
+        >
           <VictoryBar
-            cornerRadius={{ topLeft: 1, topRight: 5 }}
+            style={{
+              data: {
+                fill: themeColors.orange,
+              },
+            }}
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
@@ -89,8 +115,7 @@ class App extends React.Component {
             sortKey={"sort"}
             labels={() => "hi"}
           />
-          <VictoryScatter
-            style={{ data: { fill: "tomato" } }}
+          <VictoryLine
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
@@ -98,8 +123,12 @@ class App extends React.Component {
             ]}
             sortKey={"sort"}
           />
-          <VictoryLine
-            style={{ data: { stroke: "tomato" } }}
+          <VictoryScatter
+            style={{
+              data: {
+                fill: themeColors.cyan,
+              },
+            }}
             data={[
               { x: "low", y: 1, sort: 1 },
               { x: "med", y: 2, sort: 2 },
@@ -108,8 +137,17 @@ class App extends React.Component {
             sortKey={"sort"}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle}>
+        <VictoryChart
+          style={chartStyle}
+          theme={VictoryTheme.clean}
+          domainPadding={20}
+        >
           <VictoryBar
+            style={{
+              data: {
+                fill: themeColors.pink,
+              },
+            }}
             horizontal
             data={[
               { x: "low", y: 1, sort: 3 },
@@ -120,8 +158,13 @@ class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={chartStyle}>
+        <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
           <VictoryBar
+            style={{
+              data: {
+                fill: themeColors.yellow,
+              },
+            }}
             horizontal
             alignment="start"
             data={[
@@ -133,8 +176,12 @@ class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart style={chartStyle} domainPadding={{ y: 30 }}>
-          <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
+        <VictoryChart
+          style={chartStyle}
+          domainPadding={{ x: 30 }}
+          theme={VictoryTheme.clean}
+        >
+          <VictoryGroup offset={20}>
             <VictoryStack colorScale={"red"}>
               {this.getBarData().map((data, index) => {
                 return <VictoryBar horizontal key={index} data={data} />;
@@ -153,7 +200,12 @@ class App extends React.Component {
           </VictoryGroup>
         </VictoryChart>
 
-        <VictoryChart horizontal style={chartStyle}>
+        <VictoryChart
+          horizontal
+          style={chartStyle}
+          theme={VictoryTheme.clean}
+          domainPadding={20}
+        >
           <VictoryStack labels={["a", "b", "c"]} colorScale={"qualitative"}>
             <VictoryBar
               data={[
@@ -179,7 +231,7 @@ class App extends React.Component {
           </VictoryStack>
         </VictoryChart>
 
-        <VictoryChart horizontal style={chartStyle}>
+        <VictoryChart horizontal style={chartStyle} theme={VictoryTheme.clean}>
           <VictoryGroup
             labels={["a", "b", "c"]}
             offset={20}
@@ -214,6 +266,7 @@ class App extends React.Component {
           style={chartStyle}
           labels={["a", "b", "c"]}
           offset={20}
+          theme={VictoryTheme.clean}
           colorScale={"qualitative"}
         >
           <VictoryBar
@@ -240,10 +293,11 @@ class App extends React.Component {
         </VictoryGroup>
 
         <VictoryArea
+          theme={VictoryTheme.clean}
           horizontal
           style={{
             parent: chartStyle.parent,
-            data: { stroke: "red", strokeWidth: 2 },
+            data: { fill: themeColors.green },
           }}
           labels={() => "yo"}
           data={[
@@ -257,12 +311,13 @@ class App extends React.Component {
             { x: new Date(2015, 1, 1), y: 470 },
           ]}
         />
-        <VictoryChart horizontal style={chartStyle} scale={{ x: "time" }}>
+        <VictoryChart
+          horizontal
+          style={chartStyle}
+          scale={{ x: "time" }}
+          theme={VictoryTheme.clean}
+        >
           <VictoryLine
-            style={{
-              data: { stroke: "red", strokeWidth: 2 },
-            }}
-            labels={() => "yo"}
             data={[
               { x: new Date(1982, 1, 1), y: 125 },
               { x: new Date(1987, 1, 1), y: 257 },
@@ -276,8 +331,12 @@ class App extends React.Component {
           />
         </VictoryChart>
         <VictoryBar
+          theme={VictoryTheme.clean}
           horizontal
-          style={chartStyle}
+          style={{
+            ...chartStyle,
+            data: { fill: themeColors.red },
+          }}
           labels={() => "yo"}
           data={[
             { x: new Date(1982, 1, 1), y: 125 },
@@ -290,7 +349,7 @@ class App extends React.Component {
             { x: new Date(2015, 1, 1), y: 470 },
           ]}
         />
-        <VictoryChart horizontal style={chartStyle}>
+        <VictoryChart horizontal style={chartStyle} theme={VictoryTheme.clean}>
           <VictoryStack>
             <VictoryArea
               data={[
@@ -331,46 +390,12 @@ class App extends React.Component {
           </VictoryStack>
         </VictoryChart>
 
-        <VictoryStack horizontal style={chartStyle}>
-          <VictoryArea
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 5 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 },
-            ]}
-          />
-          <VictoryArea
-            data={[
-              { x: 1, y: 1 },
-              { x: 2, y: 4 },
-              { x: 3, y: 5 },
-              { x: 4, y: 7 },
-              { x: 5, y: 5 },
-            ]}
-          />
-          <VictoryArea
-            data={[
-              { x: 1, y: 3 },
-              { x: 2, y: 2 },
-              { x: 3, y: 6 },
-              { x: 4, y: 2 },
-              { x: 5, y: 6 },
-            ]}
-          />
-          <VictoryArea
-            data={[
-              { x: 1, y: 2 },
-              { x: 2, y: 3 },
-              { x: 3, y: 3 },
-              { x: 4, y: 4 },
-              { x: 5, y: 7 },
-            ]}
-          />
-        </VictoryStack>
-
-        <VictoryChart style={chartStyle} horizontal>
+        <VictoryChart
+          style={chartStyle}
+          horizontal
+          theme={VictoryTheme.clean}
+          domainPadding={20}
+        >
           <VictoryCandlestick
             labels={() => "yo"}
             data={[
@@ -428,25 +453,32 @@ class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart horizontal style={chartStyle}>
+        <VictoryChart horizontal style={chartStyle} theme={VictoryTheme.clean}>
           <VictoryErrorBar data={errorData} labels={() => "yo"} />
           <VictoryScatter data={errorData} />
           <VictoryAxis dependentAxis />
           <VictoryAxis crossAxis={false} />
         </VictoryChart>
 
-        <VictoryChart horizontal style={chartStyle}>
+        <VictoryChart horizontal style={chartStyle} theme={VictoryTheme.clean}>
           <VictoryLine
-            style={{ data: { stroke: "blue" } }}
             y={(d) => Math.sin(2 * Math.PI * d.x)}
             samples={25}
+            style={{
+              data: {
+                stroke: themeColors.green,
+              },
+            }}
           />
         </VictoryChart>
-        <VictoryChart horizontal style={chartStyle} domain={{ y: [100, 550] }}>
+        <VictoryChart
+          horizontal
+          style={chartStyle}
+          domain={{ y: [100, 550] }}
+          theme={VictoryTheme.clean}
+          domainPadding={20}
+        >
           <VictoryBar
-            style={{
-              data: { stroke: "red", strokeWidth: 2 },
-            }}
             labels={() => "yo"}
             data={[
               { x: new Date(1982, 1, 1), y: 125 },
@@ -464,8 +496,12 @@ class App extends React.Component {
           style={chartStyle}
           horizontal
           categories={{ y: ["E", "F", "G", "H"] }}
+          theme={VictoryTheme.clean}
         >
           <VictoryLine
+            style={{
+              data: { stroke: themeColors.teal },
+            }}
             data={[
               { x: 6, y: "E" },
               { x: 2, y: "F" },
@@ -474,7 +510,12 @@ class App extends React.Component {
             ]}
           />
         </VictoryChart>
-        <VictoryChart horizontal style={chartStyle} domainPadding={20}>
+        <VictoryChart
+          horizontal
+          style={chartStyle}
+          domainPadding={20}
+          theme={VictoryTheme.clean}
+        >
           <VictoryBoxPlot
             minLabels
             maxLabels
@@ -491,13 +532,14 @@ class App extends React.Component {
         <VictoryChart
           horizontal
           style={chartStyle}
+          theme={VictoryTheme.clean}
           containerComponent={
             <VictoryBrushContainer brushDomain={{ x: [2, 4], y: [-2, 2] }} />
           }
         >
           <VictoryLine
             style={{
-              data: { stroke: "tomato" },
+              data: { stroke: themeColors.teal },
             }}
             data={[
               { x: 1, y: -5 },
@@ -511,7 +553,7 @@ class App extends React.Component {
           />
           <VictoryLine
             style={{
-              data: { stroke: "blue" },
+              data: { stroke: themeColors.purple },
             }}
             data={[
               { x: 1, y: -3 },
@@ -534,21 +576,6 @@ class App extends React.Component {
               { x: 7, y: -3 },
             ]}
           />
-        </VictoryChart>
-
-        <VictoryChart style={chartStyle} horizontal>
-          <VictoryAxis
-            tickValues={[
-              new Date(1985, 1, 1),
-              new Date(1990, 1, 1),
-              new Date(1995, 1, 1),
-              new Date(2000, 1, 1),
-              new Date(2005, 1, 1),
-              new Date(2010, 1, 1),
-            ]}
-            tickFormat={(x) => new Date(x).getFullYear()}
-          />
-          <VictoryScatter data={[]} />
         </VictoryChart>
       </div>
     );

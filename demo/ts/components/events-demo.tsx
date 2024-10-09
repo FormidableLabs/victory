@@ -5,7 +5,7 @@ import { VictoryStack } from "victory-stack";
 import { VictoryArea } from "victory-area";
 import { VictoryBar, VictoryBarTTargetType } from "victory-bar";
 import { VictoryLine } from "victory-line";
-import { VictoryTheme, VictoryLabel } from "victory-core";
+import { VictoryTheme, VictoryLabel, VictoryThemePalette } from "victory-core";
 
 class EventsDemo extends React.Component {
   render() {
@@ -21,6 +21,8 @@ class EventsDemo extends React.Component {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
     const barTarget: VictoryBarTTargetType = "data";
+    const themeColors: VictoryThemePalette =
+      VictoryTheme.clean.palette?.colors || {};
 
     return (
       <div className="demo">
@@ -29,8 +31,6 @@ class EventsDemo extends React.Component {
             theme={VictoryTheme.clean}
             style={{
               parent: chartStyle.parent,
-              data: { fill: "blue", width: 20 },
-              labels: { fontSize: 20 },
             }}
             labels={["a", "b", "c", "d", "e"]}
             data={[
@@ -49,15 +49,17 @@ class EventsDemo extends React.Component {
                     evt.stopPropagation();
                     return [
                       {
-                        mutation: () => {
-                          return { style: { fill: "orange", width: 20 } };
+                        mutation: (props) => {
+                          return {
+                            style: { ...props.style, fill: themeColors.teal },
+                          };
                         },
                       },
                       {
                         target: "labels",
                         eventKey: 3,
-                        mutation: () => {
-                          return { text: "now click me" };
+                        mutation: (props) => {
+                          return { ...props.style, text: "now click me" };
                         },
                       },
                     ];
@@ -71,8 +73,13 @@ class EventsDemo extends React.Component {
                     return [
                       {
                         target: "data",
-                        mutation: () => {
-                          return { style: { fill: "tomato", width: 10 } };
+                        mutation: (props) => {
+                          return {
+                            style: {
+                              ...props.style,
+                              fill: themeColors.pink,
+                            },
+                          };
                         },
                       },
                     ];
@@ -83,6 +90,7 @@ class EventsDemo extends React.Component {
           />
 
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             domainPadding={{ x: 30, y: 30 }}
             events={[
@@ -105,7 +113,7 @@ class EventsDemo extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { stroke: "lime" }),
+                            style: { ...props.style, stroke: themeColors.teal },
                           };
                         },
                       },
@@ -114,7 +122,7 @@ class EventsDemo extends React.Component {
                         target: "labels",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "green" }),
+                            style: { ...props.style, fill: themeColors.purple },
                             text: "waddup",
                           };
                         },
@@ -128,7 +136,6 @@ class EventsDemo extends React.Component {
             <VictoryBar
               name="bar"
               labels={() => null}
-              style={{ data: { width: 15, fill: "green" } }}
               data={[
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },
@@ -148,13 +155,14 @@ class EventsDemo extends React.Component {
             <VictoryLine
               name="line"
               y={() => 0.5}
-              style={{ data: { stroke: "blue", strokeWidth: 5 } }}
+              style={{ data: { stroke: themeColors.purple } }}
             />
           </VictoryChart>
 
           <VictoryChart
             theme={VictoryTheme.clean}
             style={chartStyle}
+            domainPadding={20}
             events={[
               {
                 childName: "bar",
@@ -164,8 +172,10 @@ class EventsDemo extends React.Component {
                     evt.stopPropagation();
                     return [
                       {
-                        mutation: () => {
-                          return { style: { fill: "orange" } };
+                        mutation: (props) => {
+                          return {
+                            style: { ...props.style, fill: themeColors.yellow },
+                          };
                         },
                       },
                     ];
@@ -190,13 +200,18 @@ class EventsDemo extends React.Component {
               },
             ]}
           >
-            <VictoryLabel text="Parent Events" y={50} x={150} style={{...VictoryTheme.clean.label, fontSize: 18 }} />
+            <VictoryLabel
+              text="Parent Events"
+              y={50}
+              x={150}
+              style={{ ...VictoryTheme.clean.label, fontSize: 18 }}
+            />
             <VictoryBar name="bar" labels={() => null} />
           </VictoryChart>
 
           <VictoryChart
             style={chartStyle}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             events={[
               {
                 childName: ["area-1", "area-2"],
@@ -209,9 +224,14 @@ class EventsDemo extends React.Component {
                         target: "data",
                         mutation: (props) => {
                           const fill = props.style && props.style.fill;
-                          return fill === "gold"
+                          return fill === themeColors.yellow
                             ? null
-                            : { style: { fill: "gold" } };
+                            : {
+                                style: {
+                                  ...props.style,
+                                  fill: themeColors.yellow,
+                                },
+                              };
                         },
                       },
                     ];

@@ -3,7 +3,19 @@ import { VictoryThemeDefinition } from "./types";
 // *
 // * Colors
 // *
-const colors = [
+const colors = {
+  blue: "#4F7DA1",
+  pink: "#E2A37F",
+  teal: "#00796B",
+  purple: "#DF948A",
+  green: "#8BC34A",
+  orange: "#F4511E",
+  cyan: "#006064",
+  red: "#DF5A49",
+  yellow: "#FFF59D",
+};
+
+const colorScale = [
   "#252525",
   "#525252",
   "#737373",
@@ -15,6 +27,26 @@ const colors = [
 
 const charcoal = "#252525";
 const grey = "#969696";
+
+const qualitative = [
+  "#334D5C",
+  "#45B29D",
+  "#EFC94C",
+  "#E27A3F",
+  "#DF5A49",
+  "#4F7DA1",
+  "#55DBC1",
+  "#EFDA97",
+  "#E2A37F",
+  "#DF948A",
+];
+const heatmap = ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"];
+const warm = ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"];
+const cool = ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"];
+const red = ["#FCAE91", "#FB6A4A", "#DE2D26", "#A50F15", "#750B0E"];
+const green = ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"];
+const blue = ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"];
+
 // *
 // * Typography
 // *
@@ -28,7 +60,7 @@ const baseProps = {
   width: 450,
   height: 300,
   padding: 50,
-  colorScale: colors,
+  colorScale,
 };
 // *
 // * Labels
@@ -53,6 +85,17 @@ const strokeLinecap = "round";
 const strokeLinejoin = "round";
 
 export const grayscale: VictoryThemeDefinition = {
+  palette: {
+    colors,
+    grayscale: colorScale,
+    qualitative,
+    heatmap,
+    warm,
+    cool,
+    red,
+    green,
+    blue,
+  },
   area: Object.assign(
     {
       style: {
@@ -156,7 +199,7 @@ export const grayscale: VictoryThemeDefinition = {
   ),
   group: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
     },
     baseProps,
   ),
@@ -174,7 +217,7 @@ export const grayscale: VictoryThemeDefinition = {
     baseProps,
   ),
   legend: {
-    colorScale: colors,
+    colorScale,
     gutter: 10,
     orientation: "vertical",
     titleOrientation: "top",
@@ -208,7 +251,7 @@ export const grayscale: VictoryThemeDefinition = {
       },
       labels: Object.assign({}, baseLabelStyles, { padding: 20 }),
     },
-    colorScale: colors,
+    colorScale,
     width: 400,
     height: 400,
     padding: 50,
@@ -228,7 +271,7 @@ export const grayscale: VictoryThemeDefinition = {
   ),
   stack: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
     },
     baseProps,
   ),

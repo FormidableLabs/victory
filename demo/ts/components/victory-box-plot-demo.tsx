@@ -78,9 +78,10 @@ export default class VictoryBoxPlotDemo extends React.Component<
             ]}
           />
         </VictoryChart>
-        <VictoryChart 
+        <VictoryChart
           style={chartStyle}
           theme={VictoryTheme.clean}
+          domain={{ x: [0, 2], y: [0, 20] }}
         >
           <VictoryBoxPlot
             data={[
@@ -91,7 +92,11 @@ export default class VictoryBoxPlotDemo extends React.Component<
             ]}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle} domain={{ x: [0, 3], y: [0, 20] }}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={chartStyle}
+          domain={{ x: [0, 3], y: [0, 20] }}
+        >
           <VictoryBoxPlot
             boxWidth={20}
             labels
@@ -100,22 +105,15 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: 2, y: [1, 15, 6, 8] },
             ]}
             style={{
-              min: { stroke: "black", strokeWidth: 2 },
-              max: { stroke: "black", strokeWidth: 2 },
-              q1: { fill: "#FF530D", fillOpacity: "0.5" },
-              q3: { fill: "#2bbee0", fillOpacity: "0.5" },
-              median: { stroke: "#fff", strokeWidth: "4" },
-              minLabels: { fill: "green", padding: 10 },
-              maxLabels: { fill: "orange", padding: 10 },
-              q1Labels: { padding: 10 },
-              q3Labels: { padding: 10 },
-              medianLabels: { padding: 10 },
+              q1: { fill: VictoryTheme.clean.palette?.colors?.purple },
+              q3: { fill: VictoryTheme.clean.palette?.colors?.orange },
             }}
           />
         </VictoryChart>
 
         <VictoryChart
           horizontal
+          theme={VictoryTheme.clean}
           style={chartStyle}
           domain={{ y: [0, 20], x: [0, 3] }}
         >
@@ -146,18 +144,18 @@ export default class VictoryBoxPlotDemo extends React.Component<
               },
             ]}
             style={{
-              min: { stroke: "black", strokeWidth: 2 },
-              max: { stroke: "black", strokeWidth: 2 },
-              q1: { fill: "#FF530D", fillOpacity: 0.5 },
-              q3: { fill: "#2bbee0", fillOpacity: 0.5 },
-              median: { stroke: "#fff", strokeWidth: 2 },
-              minLabels: { fill: "green", padding: 10 },
-              maxLabels: { fill: "orange", padding: 10 },
+              q1: { fill: VictoryTheme.clean.palette?.colors?.yellow },
+              q3: { fill: VictoryTheme.clean.palette?.colors?.pink },
             }}
           />
         </VictoryChart>
 
-        <VictoryChart style={chartStyle} horizontal domainPadding={50}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={chartStyle}
+          horizontal
+          domainPadding={50}
+        >
           <VictoryBoxPlot
             minLabels
             maxLabels
@@ -169,9 +167,17 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: new Date(2010, 1, 1), y: [5, 20, 8, 12] },
               { x: new Date(2020, 1, 1), y: [2, 11, 12, 13] },
             ]}
+            style={{
+              q1: { fill: VictoryTheme.clean.palette?.colors?.red },
+              q3: { fill: VictoryTheme.clean.palette?.colors?.green },
+            }}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle} domainPadding={50}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={chartStyle}
+          domainPadding={50}
+        >
           <VictoryBoxPlot
             minLabels
             maxLabels
@@ -183,9 +189,17 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: "yellow", y: [5, 20, 8, 12] },
               { x: "white", y: [2, 11, 12, 13] },
             ]}
+            style={{
+              q1: { fill: VictoryTheme.clean.palette?.colors?.blue },
+              q3: { fill: VictoryTheme.clean.palette?.colors?.cyan },
+            }}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle} domainPadding={50}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={chartStyle}
+          domainPadding={50}
+        >
           <VictoryBoxPlot
             minLabels
             maxLabels
@@ -201,9 +215,17 @@ export default class VictoryBoxPlotDemo extends React.Component<
               { x: 3, y: 8 },
               { x: 3, y: 5 },
             ]}
+            style={{
+              q1: { fill: VictoryTheme.clean.palette?.colors?.green },
+              q3: { fill: VictoryTheme.clean.palette?.colors?.yellow },
+            }}
           />
         </VictoryChart>
-        <VictoryChart style={chartStyle} domainPadding={50}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={chartStyle}
+          domainPadding={50}
+        >
           <VictoryBoxPlot
             labels
             boxWidth={10}
@@ -221,12 +243,29 @@ export default class VictoryBoxPlotDemo extends React.Component<
               max: "bottom",
               median: "bottom",
             }}
+            style={{
+              q1: { fill: VictoryTheme.clean.palette?.colors?.pink },
+              q3: { fill: VictoryTheme.clean.palette?.colors?.purple },
+            }}
           />
         </VictoryChart>
-        <VictoryChart horizontal animate style={chartStyle} domainPadding={50}>
-          <VictoryBoxPlot boxWidth={10} data={this.state.data} />
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          horizontal
+          animate
+          style={chartStyle}
+        >
+          <VictoryBoxPlot
+            boxWidth={10}
+            data={this.state.data}
+            style={{
+              q1: { fill: VictoryTheme.clean.palette?.colors?.cyan },
+              q3: { fill: VictoryTheme.clean.palette?.colors?.purple },
+            }}
+          />
         </VictoryChart>
         <VictoryBoxPlot
+          theme={VictoryTheme.clean}
           animate
           style={chartStyle}
           boxWidth={10}

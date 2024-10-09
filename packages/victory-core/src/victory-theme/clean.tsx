@@ -73,17 +73,27 @@ const green = {
   "900": "#338A17",
 };
 
-const colors = [
-  blue["500"],
-  pink["500"],
-  teal["500"],
-  purple["500"],
-  green["500"],
-  orange["500"],
-  cyan["500"],
-  red["500"],
-  yellow["500"],
-];
+const colors = {
+  blue: blue["500"],
+  pink: pink["500"],
+  teal: teal["500"],
+  purple: purple["500"],
+  green: green["500"],
+  orange: orange["500"],
+  cyan: cyan["500"],
+  red: red["500"],
+  yellow: yellow["500"],
+};
+
+const colorScale = Object.values(colors);
+const grayscale = [gray["200"], gray["400"], gray["600"], gray["900"]];
+const warm = [yellow["500"], orange["500"], red["500"], pink["500"]];
+const cool = [cyan["500"], teal["500"], blue["500"], purple["500"]];
+const heatmap = [green["500"], yellow["500"], red["500"]];
+const redPalette = [red["500"], red["300"], red["100"]];
+const greenPalette = [green["500"], green["300"], green["100"]];
+const bluePalette = [blue["500"], blue["300"], blue["100"]];
+
 // *
 // * Typography
 // *
@@ -99,7 +109,7 @@ const baseProps = {
   width: 450,
   height: 300,
   padding: 50,
-  colorScale: colors,
+  colorScale,
 };
 // *
 // * Labels
@@ -130,11 +140,24 @@ const borderRadius = 1;
 // * Theme
 // *
 export const clean: VictoryThemeDefinition = {
+  palette: {
+    colors,
+    grayscale,
+    qualitative: colorScale,
+    heatmap,
+    warm,
+    cool,
+    red: redPalette,
+    green: greenPalette,
+    blue: bluePalette,
+  },
   area: Object.assign(
     {
       style: {
         data: {
-          fill: cyan["500"],
+          fill: blue["500"],
+          strokeWidth: 2,
+          fillOpacity: 0.5,
         },
         labels: baseLabelStyles,
       },
@@ -146,7 +169,7 @@ export const clean: VictoryThemeDefinition = {
       style: {
         axis: {
           fill: "transparent",
-          stroke: gray["300"],
+          stroke: gray["500"],
           strokeWidth: 1,
           strokeLinecap,
           strokeLinejoin,
@@ -173,10 +196,10 @@ export const clean: VictoryThemeDefinition = {
   polarAxis: Object.assign({
     style: {
       axis: {
-        stroke: gray["300"],
+        stroke: gray["500"],
       },
       grid: {
-        stroke: gray["200"],
+        stroke: gray["400"],
         strokeDasharray,
         strokeLinecap,
         strokeLinejoin,
@@ -185,7 +208,7 @@ export const clean: VictoryThemeDefinition = {
       ticks: {
         fill: "transparent",
         size: 5,
-        stroke: gray["200"],
+        stroke: gray["400"],
         strokeWidth: 1,
         strokeLinecap,
         strokeLinejoin,
@@ -196,10 +219,10 @@ export const clean: VictoryThemeDefinition = {
   polarDependentAxis: Object.assign({
     style: {
       axis: {
-        stroke: gray["300"],
+        stroke: gray["500"],
       },
       grid: {
-        stroke: gray["200"],
+        stroke: gray["400"],
         strokeDasharray,
         strokeLinecap,
         strokeLinejoin,
@@ -208,7 +231,7 @@ export const clean: VictoryThemeDefinition = {
       ticks: {
         fill: "transparent",
         size: 5,
-        stroke: gray["200"],
+        stroke: gray["300"],
         strokeWidth: 1,
         strokeLinecap,
         strokeLinejoin,
@@ -222,7 +245,8 @@ export const clean: VictoryThemeDefinition = {
         data: {
           fill: blue["500"],
           padding,
-          strokeWidth: 0,
+          strokeWidth: 1,
+          fillOpacity: 0.5,
         },
         labels: baseLabelStyles,
       },
@@ -239,9 +263,9 @@ export const clean: VictoryThemeDefinition = {
         medianLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         min: { padding, stroke: gray["400"], strokeWidth: 2 },
         minLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
-        q1: { padding, fill: teal["500"], rx: borderRadius },
+        q1: { padding, fill: teal["500"], rx: borderRadius, strokeWidth: 2 },
         q1Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
-        q3: { padding, fill: teal["500"], rx: borderRadius },
+        q3: { padding, fill: cyan["500"], rx: borderRadius },
         q3Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
       },
       boxWidth: 20,
@@ -285,7 +309,7 @@ export const clean: VictoryThemeDefinition = {
   ),
   group: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
     },
     baseProps,
   ),
@@ -294,8 +318,7 @@ export const clean: VictoryThemeDefinition = {
       style: {
         data: {
           fill: cyan["500"],
-          stroke: "transparent",
-          strokeWidth: 0,
+          fillOpacity: 0.5,
         },
         labels: baseLabelStyles,
       },
@@ -306,7 +329,7 @@ export const clean: VictoryThemeDefinition = {
   ),
   label: baseLabelStyles,
   legend: {
-    colorScale: colors,
+    colorScale,
     gutter: 10,
     orientation: "vertical",
     titleOrientation: "top",
@@ -325,7 +348,7 @@ export const clean: VictoryThemeDefinition = {
         data: {
           fill: "transparent",
           opacity: 1,
-          stroke: pink["500"],
+          stroke: blue["500"],
           strokeWidth: 2,
           strokeLinecap,
           strokeLinejoin,
@@ -338,14 +361,22 @@ export const clean: VictoryThemeDefinition = {
   pie: Object.assign(
     {
       style: {
+        parent: {
+          backgroundColor: gray.white,
+        },
         data: {
           padding,
           stroke: gray.white,
           strokeWidth: 1,
         },
-        labels: Object.assign({}, baseLabelStyles, { padding: 20 }),
+        labels: {
+          ...baseLabelStyles,
+          padding: 20,
+          fill: gray["600"],
+          fontSize: 10,
+        },
       },
-      colorScale: colors,
+      colorScale,
       cornerRadius: borderRadius,
     },
     baseProps,
@@ -359,14 +390,17 @@ export const clean: VictoryThemeDefinition = {
           stroke: "transparent",
           strokeWidth: 0,
         },
-        labels: baseLabelStyles,
+        labels: {
+          ...baseLabelStyles,
+          padding: 20,
+        },
       },
     },
     baseProps,
   ),
   stack: Object.assign(
     {
-      colorScale: colors,
+      colorScale,
     },
     baseProps,
   ),
@@ -376,7 +410,7 @@ export const clean: VictoryThemeDefinition = {
       pointerEvents: "none",
     }),
     flyoutStyle: {
-      stroke: gray["500"],
+      stroke: gray["300"],
       strokeWidth: 2,
       fill: gray.white,
       pointerEvents: "none",

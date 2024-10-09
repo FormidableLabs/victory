@@ -151,7 +151,10 @@ export default class VictoryBarDemo extends React.Component<
       <div className="demo" style={containerStyle}>
         <ChartWrap>
           <VictoryBar
-            cornerRadius={4}
+            theme={VictoryTheme.clean}
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.pink },
+            }}
             scale={{ y: "log", x: "linear" }}
             horizontal
             data={[
@@ -169,8 +172,10 @@ export default class VictoryBarDemo extends React.Component<
 
         <ChartWrap>
           <VictoryBar
-            cornerRadius={5}
-            style={{ data: { width: 15, fill: "red" } }}
+            theme={VictoryTheme.clean}
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.teal },
+            }}
             scale={{ x: "linear", y: "log" }}
             data={[
               { x: 1, y: 0.1 },
@@ -184,8 +189,13 @@ export default class VictoryBarDemo extends React.Component<
             ]}
           />
         </ChartWrap>
+
         <ChartWrap>
           <VictoryBar
+            theme={VictoryTheme.clean}
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.orange },
+            }}
             horizontal
             labels={({ datum }) => datum.y}
             data={[
@@ -199,6 +209,10 @@ export default class VictoryBarDemo extends React.Component<
 
         <ChartWrap>
           <VictoryBar
+            theme={VictoryTheme.clean}
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.green },
+            }}
             horizontal
             labels={({ datum }) => datum.y}
             data={[
@@ -212,6 +226,10 @@ export default class VictoryBarDemo extends React.Component<
 
         <ChartWrap>
           <VictoryBar
+            theme={VictoryTheme.clean}
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.yellow },
+            }}
             labels={({ datum }) => datum.y}
             data={[
               { x: 1, y: 20 },
@@ -222,7 +240,24 @@ export default class VictoryBarDemo extends React.Component<
           />
         </ChartWrap>
 
-        <VictoryChart domainPadding={ 20 } theme={VictoryTheme.clean}>
+        <ChartWrap>
+          <VictoryBar
+            theme={VictoryTheme.clean}
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.purple },
+            }}
+            height={250}
+            data={[{ a: { b: { c: 1, d: 1 } } }, { a: { b: { c: 2, d: 3 } } }]}
+            x={"a.b.c"}
+            y={"a.b.d"}
+          />
+        </ChartWrap>
+
+        <VictoryChart
+          domainPadding={20}
+          theme={VictoryTheme.clean}
+          style={{ parent: parentStyle }}
+        >
           <VictoryBar
             data={[
               { x: 1, y: "Alpha" },
@@ -234,8 +269,8 @@ export default class VictoryBarDemo extends React.Component<
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
         >
           <VictoryBar
             horizontal
@@ -246,12 +281,20 @@ export default class VictoryBarDemo extends React.Component<
               { x: 3, y: "Golf" },
               { x: 4, y: "Hotel" },
             ]}
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.orange },
+            }}
           />
         </VictoryChart>
 
         <VictoryBar
           theme={VictoryTheme.clean}
-          style={{ parent: parentStyle }}
+          style={{
+            parent: parentStyle,
+            data: {
+              fill: VictoryTheme.clean.palette?.colors?.teal,
+            },
+          }}
           labels={() => "HELLO"}
           labelComponent={
             <VictoryLabel angle={45} verticalAnchor="end" textAnchor="end" />
@@ -280,7 +323,9 @@ export default class VictoryBarDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, {
+                            fill: "orange",
+                          }),
                         };
                       },
                     },
@@ -302,6 +347,8 @@ export default class VictoryBarDemo extends React.Component<
         <VictoryStack
           style={{ parent: parentStyle }}
           animate={{ duration: 1000 }}
+          theme={VictoryTheme.clean}
+          colorScale="grayscale"
         >
           {this.state.multiTransitionData.map((data, index) => {
             return (
@@ -333,6 +380,7 @@ export default class VictoryBarDemo extends React.Component<
         </VictoryChart>
 
         <VictoryGroup
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           offset={18}
           colorScale={"qualitative"}
@@ -346,6 +394,7 @@ export default class VictoryBarDemo extends React.Component<
         </VictoryGroup>
 
         <VictoryGroup
+          theme={VictoryTheme.clean}
           horizontal
           style={{ parent: parentStyle }}
           offset={15}
@@ -359,6 +408,7 @@ export default class VictoryBarDemo extends React.Component<
         </VictoryGroup>
 
         <VictoryGroup
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle, data: { width: 20 } }}
           offset={25}
           animate={{ duration: 2000 }}
@@ -383,6 +433,7 @@ export default class VictoryBarDemo extends React.Component<
         <VictoryStack
           style={{ parent: parentStyle }}
           animate={{ duration: 2000 }}
+          theme={VictoryTheme.clean}
           colorScale={"warm"}
           labels={["one", "two", "three"]}
         >
@@ -391,16 +442,11 @@ export default class VictoryBarDemo extends React.Component<
           })}
         </VictoryStack>
 
-        <ChartWrap>
-          <VictoryBar
-            height={250}
-            data={[{ a: { b: { c: 1, d: 1 } } }, { a: { b: { c: 2, d: 3 } } }]}
-            x={"a.b.c"}
-            y={"a.b.d"}
-          />
-        </ChartWrap>
-
-        <VictoryStack colorScale="warm" style={{ parent: parentStyle }}>
+        <VictoryStack
+          theme={VictoryTheme.clean}
+          colorScale="warm"
+          style={{ parent: parentStyle }}
+        >
           <Wrapper>
             <VictoryBar
               data={[
@@ -417,7 +463,9 @@ export default class VictoryBarDemo extends React.Component<
                         {
                           mutation: (props) => {
                             return {
-                              style: Object.assign({}, props.style, { fill: "orange" }),
+                              style: Object.assign({}, props.style, {
+                                fill: "orange",
+                              }),
                             };
                           },
                         },
@@ -443,7 +491,9 @@ export default class VictoryBarDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "blue" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "blue",
+                            }),
                           };
                         },
                       },
@@ -455,10 +505,12 @@ export default class VictoryBarDemo extends React.Component<
           />
         </VictoryStack>
         <VictoryBar
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.clean}
           style={{
             parent: parentStyle,
-            data: { fill: "blue" },
+            data: {
+              fill: VictoryTheme.clean.palette?.colors?.pink,
+            },
           }}
           labels={["a", "b", "c", "d", "e"]}
           data={[
@@ -503,21 +555,35 @@ export default class VictoryBarDemo extends React.Component<
           ]}
         />
 
-        <VictoryChart>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={{ parent: parentStyle }}
+          domainPadding={20}
+        >
           <VictoryBar
+            style={{
+              parent: parentStyle,
+              data: {
+                fill: VictoryTheme.clean.palette?.colors?.yellow,
+              },
+            }}
             horizontal
             data={[
-              { x: 21, y: "Label 1" },
-              { x: 28, y: "Label 2" },
-              { x: 35, y: "Label 3" },
-              { x: 40, y: "Label 4" },
+              { x: 21, y: "1" },
+              { x: 28, y: "2" },
+              { x: 35, y: "3" },
+              { x: 40, y: "4" },
             ]}
             x={"y"}
             y={"x"}
           />
         </VictoryChart>
 
-        <VictoryChart>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={{ parent: parentStyle }}
+          domainPadding={20}
+        >
           <VictoryBar
             data={[
               [5, 10],
@@ -544,6 +610,7 @@ class ChartWrap extends React.Component<ChartWrapProps> {
   static defaultProps = {
     height: 250,
     width: 350,
+    theme: VictoryTheme.clean,
   };
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
@@ -557,7 +624,9 @@ class ChartWrap extends React.Component<ChartWrapProps> {
     return (
       <div style={parentStyle}>
         {React.cloneElement(this.props.children)}
-        <VictoryChart {...this.props}>{this.props.children}</VictoryChart>
+        <VictoryChart domainPadding={{ x: 20 }} {...this.props}>
+          {this.props.children}
+        </VictoryChart>
       </div>
     );
   }

@@ -259,9 +259,16 @@ const CanvasDemo = () => {
   };
 
   const getStyles = () => {
-    const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
+    const colors = VictoryTheme.clean.palette?.qualitative ?? [
+      "red",
+      "orange",
+      "gold",
+      "tomato",
+      "magenta",
+      "purple",
+    ];
     return {
-      fill: colors[random(0, 5)],
+      fill: colors[random(0, colors.length - 1)],
     };
   };
 
@@ -280,7 +287,11 @@ const CanvasDemo = () => {
 
   return (
     <div className="demo" style={containerStyle}>
-      <VictoryChart theme={VictoryTheme.clean} animate style={{ parent: parentStyle }}>
+      <VictoryChart
+        theme={VictoryTheme.clean}
+        animate
+        style={{ parent: parentStyle }}
+      >
         {populationData.map(({ country, values }) => {
           const data = values.map(({ year, value }) => ({
             x: year,
@@ -298,14 +309,14 @@ const CanvasDemo = () => {
         <VictoryAxis tickFormat={(v) => v} />
         <VictoryAxis dependentAxis tickFormat={formatPopulation} />
       </VictoryChart>
-      <VictoryChart style={{ parent: parentStyle }}>
+      <VictoryChart theme={VictoryTheme.clean} style={{ parent: parentStyle }}>
         <VictoryScatter
           groupComponent={<CanvasGroup />}
           dataComponent={<CanvasPoint />}
           data={getRandomData(1000)}
         />
       </VictoryChart>
-      <VictoryChart style={{ parent: parentStyle }}>
+      <VictoryChart theme={VictoryTheme.clean} style={{ parent: parentStyle }}>
         <VictoryBar
           groupComponent={<CanvasGroup />}
           dataComponent={<CanvasBar />}

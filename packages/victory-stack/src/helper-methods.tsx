@@ -242,10 +242,16 @@ export function getChildren(initialProps, childComponents, calculatedProps) {
   const { datasets } = newCalculatedProps;
   const childProps = getChildProps(props, newCalculatedProps);
   const parentName = props.name || "stack";
+  const { theme } = props;
   return children.map((child, index) => {
     const role = child.type && child.type.role;
     const data = datasets[index];
-    const style = Wrapper.getChildStyle(child, index, newCalculatedProps);
+    const style = Wrapper.getChildStyle(
+      child,
+      index,
+      newCalculatedProps,
+      theme,
+    );
     const labels = props.labels
       ? getLabels(props, datasets, index)
       : child.props.labels;

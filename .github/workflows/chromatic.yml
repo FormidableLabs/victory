@@ -11,8 +11,8 @@ on:
     branches:
       - main
     paths:
-      - 'stories/**'
-      - 'packages/**'
+      - "stories/**"
+      - "packages/**"
 
 jobs:
   chromatic:

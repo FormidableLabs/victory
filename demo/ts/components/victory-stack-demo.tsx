@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryStack } from "victory-stack";
 import { VictoryArea } from "victory-area";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
 
 class App extends React.Component {
   render() {
@@ -22,7 +22,11 @@ class App extends React.Component {
         <h3 style={{ textAlign: "center" }}>Standalone Stack</h3>
 
         <div style={containerStyle}>
-          <VictoryStack theme={VictoryTheme.clean} style={chartStyle} aria-label="Victory Stack Demo">
+          <VictoryStack
+            theme={VictoryTheme.clean}
+            style={chartStyle}
+            aria-label="Victory Stack Demo"
+          >
             <VictoryArea
               data={[
                 { x: "a", y: 2 },
@@ -46,7 +50,11 @@ class App extends React.Component {
             />
           </VictoryStack>
 
-          <VictoryStack style={chartStyle} colorScale={"warm"}>
+          <VictoryStack
+            theme={VictoryTheme.clean}
+            style={chartStyle}
+            colorScale="warm"
+          >
             <VictoryArea
               data={[
                 { x: new Date(2006, 1, 1), y: null },

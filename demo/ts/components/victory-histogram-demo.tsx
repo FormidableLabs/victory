@@ -47,8 +47,7 @@ interface VictoryBarDemoState {
   dateDynamicBinsBasedOnData: HistogramData;
   dateDynamicBins: HistogramData;
   style: {
-    stroke: string;
-    strokeWidth: number;
+    fill: string;
   };
 }
 
@@ -198,7 +197,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
   }
 
   getStyles() {
-    const colors = [
+    const colors = VictoryTheme.clean.palette?.qualitative ?? [
       "palevioletred",
       "orange",
       "cyan",
@@ -207,8 +206,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
       "purple",
     ];
     return {
-      stroke: colors[random(0, 5)],
-      strokeWidth: random(1, 5),
+      fill: colors[random(0, colors.length - 1)],
     };
   }
 
@@ -229,6 +227,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
     return (
       <div className="demo" style={containerStyle}>
         <VictoryHistogram
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           data={this.data}
           events={[
@@ -239,24 +238,20 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
                   {
                     mutation: (props) => {
                       return {
-                        style: Object.assign({}, props.style, { fill: "pink" }),
+                        style: {
+                          ...props.style,
+                          fill: VictoryTheme.clean.palette?.colors?.orange,
+                        },
                       };
                     },
                   },
                 ],
-                onMouseOut: () => [
-                  {
-                    mutation: (props) => {
-                      return {
-                        style: Object.assign({}, props.style, { fill: "yellow" }),
-                      };
-                    },
-                  },
-                ],
+                onMouseOut: () => ({
+                  mutation: () => null,
+                }),
               },
             },
           ]}
-          binSpacing={0}
         />
 
         <VictoryHistogram
@@ -264,33 +259,27 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           horizontal
           style={{
             parent: parentStyle,
-            // data: { stroke: "#1f4068", strokeWidth: 4, fill: "#e43f5a" },
+            data: {
+              fill: VictoryTheme.clean.palette?.colors?.purple,
+            },
           }}
           data={this.data.map(({ x }) => ({ value: x }))}
           x="value"
         />
 
         <VictoryHistogram
-          horizontal
-          cornerRadius={10}
+          theme={VictoryTheme.clean}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
-          }}
-          data={this.data}
-        />
-
-        <VictoryHistogram
-          binSpacing={5}
-          style={{
-            parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+            data: {
+              fill: VictoryTheme.clean.palette?.colors?.green,
+            },
           }}
           data={this.data2}
         />
 
         <VictoryHistogram
-          binSpacing={50}
+          theme={VictoryTheme.clean}
           style={{
             parent: parentStyle,
             data: this.state.style,
@@ -300,46 +289,46 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         />
 
         <VictoryHistogram
-          bins={3}
+          theme={VictoryTheme.clean}
+          bins={30}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
           }}
           data={this.data2}
         />
 
         <VictoryHistogram
-          bins={100}
-          style={{
-            parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
-          }}
-          data={this.data2}
-        />
-
-        <VictoryHistogram
+          theme={VictoryTheme.clean}
           horizontal
           bins={100}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+            data: {
+              fill: VictoryTheme.clean.palette?.colors?.orange,
+            },
           }}
           data={this.data2}
         />
 
         <VictoryHistogram
+          theme={VictoryTheme.clean}
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+            data: {
+              fill: VictoryTheme.clean.palette?.colors?.blue,
+            },
           }}
           data={this.data2}
         />
 
         <VictoryHistogram
+          theme={VictoryTheme.clean}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 1, fill: "#355c7d" },
+            data: {
+              fill: VictoryTheme.clean.palette?.colors?.pink,
+            },
           }}
           events={[
             {
@@ -350,7 +339,9 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
                     {
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "pink" }),
+                          style: Object.assign({}, props.style, {
+                            fill: VictoryTheme.clean.palette?.colors?.purple,
+                          }),
                         };
                       },
                     },
@@ -370,20 +361,22 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         />
 
         <VictoryHistogram
+          theme={VictoryTheme.clean}
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+            data: { fill: VictoryTheme.clean.palette?.colors?.green },
           }}
           data={this.data2}
           labels={({ datum }) => `${datum.x0} - ${datum.x1}`}
         />
 
         <VictoryHistogram
+          theme={VictoryTheme.clean}
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+            data: { fill: VictoryTheme.clean.palette?.colors?.red },
           }}
           data={this.data2}
           labels={({ datum }) => `${datum.x0} - ${datum.x1}`}
@@ -391,10 +384,11 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         />
 
         <VictoryHistogram
+          theme={VictoryTheme.clean}
           bins={[0, 20, 50, 500]}
           style={{
             parent: parentStyle,
-            data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+            data: { fill: VictoryTheme.clean.palette?.colors?.yellow },
           }}
           data={this.data2}
           labels={({ datum }) =>
@@ -404,6 +398,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         />
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           containerComponent={
             <VictoryVoronoiContainer
@@ -416,12 +411,14 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           <VictoryHistogram
             bins={[0, 20, 50, 70, 100]}
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.teal },
             }}
             data={this.data2}
           />
           <VictoryLine
-            style={{ data: { stroke: "palevioletred" } }}
+            style={{
+              data: { stroke: VictoryTheme.clean.palette?.colors?.purple },
+            }}
             data={[
               { x: 0, y: 5 },
               { x: 10, y: 5 },
@@ -436,6 +433,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           containerComponent={
             <VictoryVoronoiContainer
@@ -447,13 +445,14 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         >
           <VictoryHistogram
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.orange },
             }}
             data={this.dateData}
           />
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           containerComponent={
             <VictoryVoronoiContainer
@@ -466,22 +465,18 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           <VictoryHistogram
             horizontal
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.pink },
             }}
             data={this.dateData}
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }}>
-          <VictoryHistogram
-            bins={[0, 20, 50, 70, 100]}
-            style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
-            }}
-            data={this.data2}
-          />
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={{ parent: parentStyle }}
+        >
+          <VictoryHistogram bins={[0, 20, 50, 70, 100]} data={this.data2} />
           <VictoryScatter
-            style={{ data: { fill: "palevioletred" } }}
             data={[
               { x: 0, y: 5 },
               { x: 10, y: 5 },
@@ -495,12 +490,15 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={{ parent: parentStyle }}
+        >
           <VictoryHistogram
             horizontal
             bins={[0, 20, 50, 70, 100]}
             style={{
-              data: { stroke: "#f67280", strokeWidth: 3, fill: "#355c7d" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.yellow },
             }}
             data={this.data2}
           />
@@ -519,17 +517,20 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           animate={{ duration: 500 }}
         >
           <VictoryHistogram
-            binSpacing={20}
             data={this.state.dataLoadedInWithBins.data}
             bins={this.state.dataLoadedInWithBins.bins}
             animate={{ duration: 1500 }}
+            style={{ data: { fill: VictoryTheme.clean.palette?.colors?.red } }}
           />
           <VictoryLine
-            style={{ data: { stroke: "palevioletred" } }}
+            style={{
+              data: { stroke: VictoryTheme.clean.palette?.colors?.yellow },
+            }}
             data={[
               { x: 0, y: 5 },
               { x: 10, y: 5 },
@@ -544,6 +545,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           animate={{ duration: 500 }}
         >
@@ -555,22 +557,27 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
         >
           <VictoryHistogram
-            binSpacing={5}
             data={this.state.dynamicBins.data}
             bins={this.state.dynamicBins.bins}
             animate={{ duration: 1500 }}
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.green },
+            }}
           />
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
         >
           <VictoryHistogram
+            style={{
+              data: { fill: VictoryTheme.clean.palette?.colors?.blue },
+            }}
             horizontal
             data={this.state.dynamicBinsBasedOnData.data}
             bins={this.state.dynamicBinsBasedOnData.bins}
@@ -579,13 +586,14 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           animate={{ duration: 500 }}
           scale={{ x: "time" }}
         >
           <VictoryHistogram
             style={{
-              data: { stroke: "#fc85ae", strokeWidth: 3, fill: "#574b90" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.purple },
             }}
             data={this.state.dateDataLoadedInWithBins.data}
             bins={this.state.dateDataLoadedInWithBins.bins}
@@ -594,13 +602,14 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           animate={{ duration: 500 }}
           scale={{ x: "time" }}
         >
           <VictoryHistogram
             style={{
-              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.orange },
             }}
             data={this.state.dateDataLoadedInWithoutBins.data}
             bins={this.state.dateDataLoadedInWithoutBins.bins}
@@ -608,10 +617,13 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={{ parent: parentStyle }}
+        >
           <VictoryHistogram
             style={{
-              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.yellow },
             }}
             data={this.state.dateDynamicBinsBasedOnData.data}
             bins={this.state.dateDynamicBinsBasedOnData.bins}
@@ -619,10 +631,13 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           />
         </VictoryChart>
 
-        <VictoryChart style={{ parent: parentStyle }}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={{ parent: parentStyle }}
+        >
           <VictoryHistogram
             style={{
-              data: { stroke: "#833B61", strokeWidth: 3, fill: "#F67E7D" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.red },
             }}
             data={this.state.dateDynamicBins.data}
             bins={this.state.dateDynamicBins.bins}
@@ -630,7 +645,11 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           />
         </VictoryChart>
 
-        <VictoryChart theme={VictoryTheme.clean} style={{ parent: parentStyle }} scale={{ x: "time" }}>
+        <VictoryChart
+          theme={VictoryTheme.clean}
+          style={{ parent: parentStyle }}
+          scale={{ x: "time" }}
+        >
           <VictoryStack colorScale="qualitative">
             <VictoryHistogram
               data={this.state.dateDynamicBins.data}

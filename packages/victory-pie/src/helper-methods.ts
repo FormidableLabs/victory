@@ -60,12 +60,12 @@ const getSlices = (props, data) => {
 };
 
 const getCalculatedValues = (props) => {
-  const { colorScale } = props;
+  const { colorScale, theme } = props;
   const styleObject = Helpers.getDefaultStyles(props, "pie");
   const style = Helpers.getStyles(props.style, styleObject);
   const colors = Array.isArray(colorScale)
     ? colorScale
-    : Style.getColorScale(colorScale);
+    : Style.getColorScale(colorScale, theme);
   const padding = Helpers.getPadding(props);
   const defaultRadius = getRadius(props, padding);
   const origin = getOrigin(props, padding);

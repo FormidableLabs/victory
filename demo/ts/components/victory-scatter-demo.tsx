@@ -40,7 +40,7 @@ interface CatPointInterface {
 }
 
 const getData = () => {
-  const colors = [
+  const colors = VictoryTheme.clean.palette?.qualitative ?? [
     "violet",
     "cornflowerblue",
     "gold",
@@ -58,7 +58,6 @@ const getData = () => {
     "diamond",
     "plus",
   ];
-  // symbol: symbols[scaledIndex],
   return range(100).map((index) => {
     const scaledIndex = Math.floor(index % 7);
     return {
@@ -206,9 +205,8 @@ export default class VictoryScatterDemo extends React.Component<
     return (
       <div className="demo" style={containerStyle}>
         <VictoryScatter
+          theme={VictoryTheme.clean}
           style={style}
-          width={500}
-          height={500}
           domain={[0, 600]}
           animate={{ duration: 2000 }}
           data={this.state.data}
@@ -217,12 +215,12 @@ export default class VictoryScatterDemo extends React.Component<
             <VictoryContainer
               title="Scatter Chart"
               desc="This is a scatter chart with cat data points!"
-              style={Object.assign({}, style.parent, { border: "1px solid red" })}
             />
           }
         />
 
         <VictoryScatter
+          theme={VictoryTheme.clean}
           style={{
             parent: style.parent,
             data: {
@@ -230,51 +228,64 @@ export default class VictoryScatterDemo extends React.Component<
               opacity: ({ datum }) => datum.opacity,
             },
           }}
-          width={500}
-          height={500}
           domain={[0, 600]}
           animate={{ duration: 2000 }}
           data={this.state.data}
         />
 
         <VictoryScatter
+          theme={VictoryTheme.clean}
           style={{
             parent: style.parent,
-            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") },
+            data: {
+              fill: ({ datum }) =>
+                datum.y > 0
+                  ? VictoryTheme.clean.palette?.colors?.red ?? "red"
+                  : VictoryTheme.clean.palette?.colors?.blue ?? "blue",
+            },
           }}
-          width={500}
-          height={500}
           symbol={({ datum }) => (datum.y > 0 ? "triangleUp" : "triangleDown")}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
           samples={25}
         />
 
         <VictoryScatter
-          style={symbolStyle}
-          width={500}
-          height={500}
-          padding={50}
-          labelComponent={<VictoryLabel style={{ fill: "red" }} />}
+          theme={VictoryTheme.clean}
+          style={{
+            parent: style.parent,
+          }}
+          labelComponent={<VictoryLabel />}
           data={symbolData}
         />
 
         <VictoryScatter
+          theme={VictoryTheme.clean}
           style={{
             parent: style.parent,
-            data: { fill: "blue", opacity: 0.7 },
+            data: {
+              fill: VictoryTheme.clean.palette?.colors?.green ?? "green",
+            },
           }}
-          width={500}
-          height={500}
           bubbleProperty="z"
           maxBubbleSize={20}
           data={bubbleData}
         />
 
-        <svg style={style} width={500} height={300}>
-          <VictoryScatter style={style} standalone={false} />
+        <svg style={style.parent} width={500} height={300}>
+          <VictoryScatter
+            theme={VictoryTheme.clean}
+            style={{
+              parent: style.parent,
+              data: {
+                fill: VictoryTheme.clean.palette?.colors?.cyan ?? "cyan",
+              },
+            }}
+            standalone={false}
+          />
         </svg>
 
         <VictoryScatter
+          theme={VictoryTheme.clean}
           style={{ parent: style.parent, data: this.state.hoverStyle }}
           labels={() => ""}
           data={[
@@ -296,7 +307,9 @@ export default class VictoryScatterDemo extends React.Component<
                     {
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, {
+                            fill: "orange",
+                          }),
                           symbol: "circle",
                         };
                       },
@@ -319,8 +332,6 @@ export default class VictoryScatterDemo extends React.Component<
         <VictoryScatter
           style={style}
           theme={VictoryTheme.clean}
-          width={350}
-          height={350}
           data={range(0, 200).map((i) => {
             return {
               a: { b: [{ y: i * Math.sin(i * 0.3) }], x: Math.cos(i * 0.3) },

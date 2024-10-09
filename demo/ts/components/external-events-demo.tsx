@@ -9,8 +9,10 @@ import { VictoryLine } from "victory-line";
 import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryVoronoiContainer } from "victory-voronoi-container";
 import { range } from "lodash";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme, VictoryThemePalette } from "victory-core";
 
+const themeColors: VictoryThemePalette =
+  VictoryTheme.clean.palette?.colors || {};
 class App extends React.Component<any, any> {
   constructor(props) {
     super(props);
@@ -53,9 +55,13 @@ class App extends React.Component<any, any> {
           eventKey: "all",
           mutation: (props) => {
             const fill = props.style && props.style.fill;
-            return fill === "blue"
-              ? { style: Object.assign({}, props.style, { fill: "red" }) }
-              : { style: Object.assign({}, props.style, { fill: "blue" }) };
+            return fill === themeColors.green
+              ? {
+                  style: { ...props.style, fill: themeColors.red },
+                }
+              : {
+                  style: { ...props.style, fill: themeColors.green },
+                };
           },
           callback,
         },
@@ -108,7 +114,7 @@ class App extends React.Component<any, any> {
           <VictoryChart
             theme={VictoryTheme.clean}
             style={chartStyle}
-            domainPadding={{ x: 40 }}
+            domainPadding={20}
             animate
             externalEventMutations={this.state.externalMutation}
             events={[
@@ -119,8 +125,10 @@ class App extends React.Component<any, any> {
                   onClick: () => {
                     return [
                       {
-                        mutation: () => {
-                          return { style: { fill: "orange" } };
+                        mutation: (props) => {
+                          return {
+                            style: { ...props.style, fill: themeColors.orange },
+                          };
                         },
                       },
                       {
@@ -141,11 +149,11 @@ class App extends React.Component<any, any> {
               name="data"
               labels={() => null}
               data={this.state.data}
-              // style={{ data: { fill: "cyan" } }}
             />
           </VictoryChart>
 
           <VictoryBar
+            theme={VictoryTheme.clean}
             style={chartStyle}
             animate
             data={this.state.data}
@@ -157,8 +165,10 @@ class App extends React.Component<any, any> {
                   onClick: () => {
                     return [
                       {
-                        mutation: () => {
-                          return { style: { fill: "orange" } };
+                        mutation: (props) => {
+                          return {
+                            style: { ...props.style, fill: themeColors.orange },
+                          };
                         },
                       },
                       {
@@ -176,6 +186,8 @@ class App extends React.Component<any, any> {
             ]}
           />
           <VictoryChart
+            domainPadding={20}
+            theme={VictoryTheme.clean}
             style={chartStyle}
             externalEventMutations={this.state.externalMutation}
             events={[
@@ -186,8 +198,16 @@ class App extends React.Component<any, any> {
                   onClick: () => {
                     return [
                       {
-                        mutation: () => {
-                          return { style: { fill: "orange" } };
+                        mutation: (props) => {
+                          return {
+                            style: {
+                              ...props.style,
+                              fill:
+                                props.style.fill === themeColors.green
+                                  ? themeColors.teal
+                                  : themeColors.green,
+                            },
+                          };
                         },
                       },
                       {
@@ -239,13 +259,11 @@ class App extends React.Component<any, any> {
               name="data"
               style={{
                 data: {
-                  fill: "tomato",
+                  fill: themeColors.yellow,
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2,
                 },
               }}
-              cornerRadius={{ top: 1, bottom: 1 }}
-              barWidth={({ active }) => (active ? 7 : 4)}
+              barWidth={({ active }) => (active ? 22 : 20)}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -259,13 +277,11 @@ class App extends React.Component<any, any> {
             <VictoryBar
               style={{
                 data: {
-                  fill: "orange",
+                  fill: themeColors.orange,
                   stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2,
                 },
               }}
-              cornerRadius={{ top: 1, bottom: 1 }}
-              barWidth={({ active }) => (active ? 7 : 4)}
+              barWidth={({ active }) => (active ? 22 : 20)}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -278,13 +294,13 @@ class App extends React.Component<any, any> {
             />
           </VictoryStack>
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             containerComponent={<VictoryZoomContainer />}
             externalEventMutations={this.state.externalMutation}
           >
             <VictoryArea
               name="data"
-              style={{ data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
               data={this.state.data}
               interpolation="stepBefore"
             />

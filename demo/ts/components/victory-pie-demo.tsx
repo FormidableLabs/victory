@@ -2,7 +2,7 @@ import React from "react";
 import { random, range } from "lodash";
 import { VictoryPie } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, LineSegment } from "victory-core";
+import { VictoryTheme, LineSegment, Helpers } from "victory-core";
 
 interface VictoryPieDemoState {
   data: {
@@ -21,6 +21,7 @@ interface VictoryPieDemoState {
   style: {
     [key: string]: React.CSSProperties;
   };
+  padding: number;
 }
 
 export default class VictoryPieDemo extends React.Component<
@@ -52,6 +53,7 @@ export default class VictoryPieDemo extends React.Component<
           maxWidth: "40%",
         },
       },
+      padding: 0,
     };
   }
 
@@ -103,7 +105,6 @@ export default class VictoryPieDemo extends React.Component<
     };
 
     const parentStyle: React.CSSProperties = {
-      backgroundColor: "#f7f7f7",
       border: "1px solid #ccc",
       margin: "2%",
       maxWidth: "40%",
@@ -120,81 +121,68 @@ export default class VictoryPieDemo extends React.Component<
             theme={VictoryTheme.clean}
             style={{
               parent: parentStyle,
-              data: { stroke: "#f7f7f7" }, // stroke to "disappear" into background
-              labels: { fill: "white", fontSize: 10 },
             }}
-            labelRadius={60}
-            padding={{ bottom: 50, left: 50, right: 10 }}
-            width={400}
-            height={200}
           />
           <VictoryPie
+            theme={VictoryTheme.clean}
             style={{
               parent: parentStyle,
-              labels: { fill: "white", fontSize: 10 },
+              labels: {
+                fill: "white",
+              },
             }}
-            labelRadius={({ datum }) => datum.radius - 12}
-            padding={{ bottom: 50, left: 50, right: 10 }}
+            labelRadius={({ datum }) => datum.radius - 20}
             width={400}
             height={200}
             radius={({ datum }) => datum.radius}
             data={[
-              { x: 1, y: 1, radius: 40 },
-              { x: 2, y: 3, radius: 50 },
-              { x: 3, y: 5, radius: 70 },
-              { x: 4, y: 2, radius: 80 },
-              { x: 5, y: 3, radius: 60 },
+              { x: 1, y: 1, radius: 50 },
+              { x: 2, y: 3, radius: 60 },
+              { x: 3, y: 5, radius: 80 },
+              { x: 4, y: 2, radius: 90 },
+              { x: 5, y: 3, radius: 70 },
             ]}
           />
           <VictoryPie
             theme={VictoryTheme.clean}
-            style={{ parent: parentStyle, data: { stroke: "#f7f7f7" }, }}
+            style={{ parent: parentStyle }}
             labelPosition="endAngle"
-            width={200}
-            height={400}
           />
           <VictoryPie
+            theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}
             labelPosition="startAngle"
-            width={200}
-            height={400}
           />
           <VictoryPie
+            theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}
-            width={200}
-            height={400}
           />
 
-          <VictoryPie style={{ parent: parentStyle }} />
-
           <VictoryPie
+            theme={VictoryTheme.clean}
             animate={{ duration: 1000 }}
             style={{
               parent: parentStyle,
-              labels: {
-                fontSize: 10,
-                paintOrder: "stroke",
-                stroke: "#ffffff",
-                strokeWidth: 3,
-                strokeLinecap: "butt",
-                strokeLinejoin: "miter",
-              },
             }}
             data={this.state.transitionData}
           />
 
           <VictoryPie
             style={{ parent: parentStyle }}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             events={[
               {
                 target: "data",
                 eventHandlers: {
                   onMouseOver: () => ({
                     mutation: (props) => ({
-                      radius: 135,
-                      sliceStartAngle: props.slice.startAngle + 0.05,
-                      sliceEndAngle: props.slice.endAngle - 0.05,
+                      radius: 110,
+                      sliceStartAngle: Helpers.radiansToDegrees(
+                        props.slice.startAngle + 0.05,
+                      ),
+                      sliceEndAngle: Helpers.radiansToDegrees(
+                        props.slice.endAngle - 0.05,
+                      ),
                     }),
                   }),
                   onMouseOut: () => ({
@@ -207,7 +195,7 @@ export default class VictoryPieDemo extends React.Component<
 
           <VictoryPie
             style={{ parent: parentStyle }}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             events={[
               {
                 target: "parent",
@@ -228,81 +216,88 @@ export default class VictoryPieDemo extends React.Component<
           />
 
           <VictoryPie
+            labelComponent={<VictoryTooltip />}
+            theme={VictoryTheme.clean}
+            colorScale="grayscale"
             style={{
               parent: parentStyle,
-              labels: { fontSize: 10, padding: 10 },
             }}
-            labelComponent={<VictoryTooltip />}
-            colorScale="grayscale"
           />
 
           <VictoryPie
-            style={{ ...this.state.style }}
-            labelRadius={120}
+            theme={VictoryTheme.clean}
+            style={{
+              ...this.state.style,
+              labels: {
+                fill: "white",
+              },
+            }}
+            labelRadius={115}
             innerRadius={140}
           />
 
           <VictoryPie
-            style={{
-              parent: parentStyle,
-              data: { stroke: "transparent", opacity: 0.4 },
-            }}
-          />
-
-          <VictoryPie style={this.state.style} startAngle={-90} endAngle={90} />
-
-          <VictoryPie
+            theme={VictoryTheme.clean}
             style={{ ...this.state.style, labels: { fontSize: 0 } }}
             data={this.state.data}
-            innerRadius={100}
+            innerRadius={50}
+            padding={10}
             animate={{ duration: 2000 }}
-            colorScale={this.state.colorScale}
+            colorScale="warm"
           />
 
           <VictoryPie
-            style={{ ...this.state.style, labels: { padding: 0 } }}
+            theme={VictoryTheme.clean}
+            style={{
+              ...this.state.style,
+              labels: { padding: 0, fill: "white" },
+            }}
             data={this.state.data}
-            innerRadius={100}
-            labelRadius={110}
+            innerRadius={50}
+            labelRadius={100}
+            padding={10}
             animate={{ duration: 2000 }}
-            colorScale={this.state.colorScale}
+            colorScale="cool"
           />
 
           <VictoryPie
-            style={{ ...this.state.style }}
+            theme={VictoryTheme.clean}
+            style={{
+              parent: parentStyle,
+            }}
             endAngle={90}
-            innerRadius={140}
+            innerRadius={80}
             padAngle={5}
             startAngle={-90}
           />
 
           <VictoryPie
+            theme={VictoryTheme.clean}
             data={range(0, 6).map((i) => [i, Math.random()])}
             x={0}
             y={1}
             animate={{ duration: 2000 }}
             style={{
               ...this.state.style,
-              data: { stroke: "#252525", strokeWidth: 2 },
             }}
             colorScale="warm"
           />
 
           <VictoryPie
+            theme={VictoryTheme.clean}
             data={range(0, 6).map((i) => [i, Math.random()])}
             x={0}
             y={1}
-            theme={VictoryTheme.material}
-            style={{ parent: { maxWidth: "40%" } }}
+            style={{ parent: parentStyle }}
             animate={{ duration: 2000 }}
           />
 
           <VictoryPie
+            theme={VictoryTheme.clean}
             style={this.state.style}
             data={range(0, 2).map((i) => [i, Math.random()])}
             x={0}
             y={1}
-            colorScale={["tomato", "orange"]}
             labels={[]}
             cornerRadius={20}
             startAngle={-6}
@@ -310,8 +305,9 @@ export default class VictoryPieDemo extends React.Component<
             innerRadius={140}
           />
           <VictoryPie
-            style={{ parent: parentStyle, labels: { fill: "magenta" } }}
-            radius={100}
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
+            radius={80}
             labelPosition="startAngle"
             labelPlacement="parallel"
             labels={({ datum }) => `${datum.l}\ndegrees`}
@@ -327,7 +323,8 @@ export default class VictoryPieDemo extends React.Component<
             ]}
           />
           <VictoryPie
-            style={{ parent: parentStyle, labels: { fill: "magenta" } }}
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
             radius={100}
             labelPosition="startAngle"
             labelPlacement="perpendicular"
@@ -343,29 +340,19 @@ export default class VictoryPieDemo extends React.Component<
               { x: 8, y: 1, l: 315 },
             ]}
           />
-          <VictoryPie style={{ parent: parentStyle }} labelIndicator />
           <VictoryPie
+            theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}
-            labelIndicator={
-              <LineSegment
-                style={{ opacity: "1", strokeWidth: "1px", stroke: "red" }}
-              />
-            }
+            labelIndicator
+            colorScale="heatmap"
           />
           <VictoryPie
+            theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}
-            labelIndicator={
-              <LineSegment
-                style={{
-                  opacity: "1",
-                  strokeWidth: "1px",
-                  strokeDasharray: "1",
-                  stroke: "red",
-                }}
-              />
-            }
+            labelIndicator
             labelIndicatorInnerOffset={45}
-            labelIndicatorOuterOffset={15}
+            labelIndicatorOuterOffset={10}
+            colorScale="red"
           />
         </div>
       </div>

@@ -29,6 +29,13 @@ import {
   VictoryTheme,
 } from "victory-core";
 
+const themeColors = VictoryTheme.clean.palette?.colors || {};
+const scatterFillStyle: VictoryStyleInterface = {
+  data: {
+    fill: ({ active }) =>
+      active ? themeColors.pink || "pink" : themeColors.blue || "blue",
+  },
+};
 interface WrapperProps {
   children?: React.ReactElement | React.ReactElement[];
 }
@@ -211,7 +218,11 @@ export default class ImmutableDemo extends React.Component<
         <h1>with immutable.js data</h1>
 
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 2000 }}
+            theme={VictoryTheme.clean}
+          >
             <VictoryScatter
               groupComponent={<VictoryClipContainer />}
               data={this.state.scatterData}
@@ -237,7 +248,7 @@ export default class ImmutableDemo extends React.Component<
 
           <VictoryChart
             style={chartStyle}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             events={[
               {
                 childName: "area-1",
@@ -250,7 +261,9 @@ export default class ImmutableDemo extends React.Component<
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "gold" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "gold",
+                            }),
                           };
                         },
                       },
@@ -259,7 +272,9 @@ export default class ImmutableDemo extends React.Component<
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "orange" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "orange",
+                            }),
                           };
                         },
                       },
@@ -268,7 +283,9 @@ export default class ImmutableDemo extends React.Component<
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "red" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "red",
+                            }),
                           };
                         },
                       },
@@ -325,7 +342,7 @@ export default class ImmutableDemo extends React.Component<
           <VictoryChart
             style={chartStyle}
             domainPadding={{ x: 30 }}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
           >
             <VictoryGroup
               offset={12}
@@ -358,7 +375,7 @@ export default class ImmutableDemo extends React.Component<
             ])}
           />
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
             <VictoryErrorBar
               data={fromJS([
                 { x: 1, y: 1, errorX: [1, 0.5], errorY: 0.1 },
@@ -381,7 +398,8 @@ export default class ImmutableDemo extends React.Component<
 
           <svg height={500} width={500}>
             <VictoryCandlestick
-              style={Object.assign({}, chartStyle, { data: { width: 10 } })}
+              theme={VictoryTheme.clean}
+              style={chartStyle}
               data={fromJS([
                 {
                   x: new Date(2016, 6, 1),
@@ -451,9 +469,10 @@ export default class ImmutableDemo extends React.Component<
                         {
                           mutation: (props) => {
                             return {
-                              style: Object.assign({}, props.style.labels, {
-                                fill: "orange",
-                              }),
+                              style: {
+                                ...props.style,
+                                stroke: themeColors.orange,
+                              },
                             };
                           },
                         },
@@ -469,7 +488,10 @@ export default class ImmutableDemo extends React.Component<
                         {
                           mutation: (props) => {
                             return {
-                              style: Object.assign({}, props.style, { fill: "blue" }),
+                              style: {
+                                ...props.style,
+                                stroke: themeColors.blue,
+                              },
                             };
                           },
                         },
@@ -483,6 +505,7 @@ export default class ImmutableDemo extends React.Component<
           </svg>
 
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             domainPadding={{ x: 30, y: 30 }}
             events={[
@@ -505,7 +528,10 @@ export default class ImmutableDemo extends React.Component<
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { stroke: "lime" }),
+                            style: {
+                              ...props.style,
+                              stroke: themeColors.yellow,
+                            },
                           };
                         },
                       },
@@ -514,7 +540,10 @@ export default class ImmutableDemo extends React.Component<
                         target: "labels",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "green" }),
+                            style: {
+                              ...props.style,
+                              stroke: themeColors.green,
+                            },
                             text: "waddup",
                           };
                         },
@@ -527,7 +556,6 @@ export default class ImmutableDemo extends React.Component<
           >
             <VictoryBar
               name="bar"
-              style={{ data: { width: 15, fill: "green" } }}
               data={fromJS([
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },
@@ -544,14 +572,14 @@ export default class ImmutableDemo extends React.Component<
                 { x: 13, y: 1 },
               ])}
             />
-            <VictoryLine
-              name="line"
-              y={() => 0.5}
-              style={{ data: { stroke: "blue", strokeWidth: 5 } }}
-            />
+            <VictoryLine name="line" y={() => 0.5} />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} domainPadding={20}>
+          <VictoryChart
+            style={chartStyle}
+            domainPadding={20}
+            theme={VictoryTheme.clean}
+          >
             <VictoryStack
               style={{
                 data: { strokeDasharray: "10, 5" },
@@ -559,15 +587,12 @@ export default class ImmutableDemo extends React.Component<
               colorScale="qualitative"
             >
               <VictoryGroup
-                color={"purple"}
+                colorScale="red"
                 data={fromJS([
                   { x: 1, y: 3 },
                   { x: 2, y: 4 },
                   { x: 3, y: 2 },
                 ])}
-                style={{
-                  data: { width: 40, opacity: 0.6 },
-                }}
               >
                 <VictoryBar />
                 <VictoryLine />
@@ -578,30 +603,25 @@ export default class ImmutableDemo extends React.Component<
                   { x: 2, y: 5 },
                   { x: 3, y: 1 },
                 ])}
-                style={{
-                  data: { width: 20, opacity: 0.8 },
-                }}
+                colorScale="blue"
               >
                 <VictoryBar />
                 <VictoryLine />
               </VictoryGroup>
               <VictoryGroup
+                colorScale="green"
                 data={fromJS([
                   { x: 1, y: 3 },
                   { x: 2, y: 2 },
                   { x: 3, y: 5 },
                 ])}
-                style={{
-                  data: { width: 10, opacity: 1 },
-                }}
               >
                 <VictoryBar />
                 <VictoryLine />
                 <VictoryScatter
                   symbol={"plus"}
-                  size={10}
                   style={{
-                    data: { fill: "tomato" },
+                    data: { fill: themeColors.purple },
                   }}
                 />
               </VictoryGroup>
@@ -639,6 +659,7 @@ export default class ImmutableDemo extends React.Component<
           />
 
           <VictoryCandlestick
+            theme={VictoryTheme.clean}
             style={chartStyle}
             labelComponent={<VictoryTooltip />}
             labels={({ datum }) => `hello #${datum.x}`}
@@ -653,10 +674,8 @@ export default class ImmutableDemo extends React.Component<
 
           <VictoryChart
             style={chartStyle}
-            height={400}
-            padding={{ top: 80, bottom: 50, left: 50, right: 50 }}
             containerComponent={<VictoryZoomContainer />}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             events={[
               {
                 childName: "area-1",
@@ -668,7 +687,10 @@ export default class ImmutableDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "gold" }),
+                          style: {
+                            ...props.style,
+                            fill: themeColors.yellow,
+                          },
                         };
                       },
                     },
@@ -677,7 +699,10 @@ export default class ImmutableDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "orange" }),
+                          style: {
+                            ...props.style,
+                            fill: themeColors.orange,
+                          },
                         };
                       },
                     },
@@ -686,7 +711,10 @@ export default class ImmutableDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "red" }),
+                          style: {
+                            ...props.style,
+                            fill: themeColors.red,
+                          },
                         };
                       },
                     },
@@ -695,20 +723,6 @@ export default class ImmutableDemo extends React.Component<
               },
             ]}
           >
-            <VictoryLegend
-              x={83}
-              y={10}
-              title="Legend"
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
-              data={[
-                { name: "One", symbol: { fill: "tomato" } },
-                { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } },
-              ]}
-            />
             <VictoryAxis />
             <VictoryStack>
               <VictoryArea
@@ -757,7 +771,7 @@ export default class ImmutableDemo extends React.Component<
 
           <VictoryChart
             style={chartStyle}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             domainPadding={{ y: 2 }}
             containerComponent={
               <VictoryVoronoiContainer
@@ -782,10 +796,10 @@ export default class ImmutableDemo extends React.Component<
               ])}
               style={{
                 data: {
-                  stroke: "tomato",
-                  strokeWidth: ({ active }) => (active ? 4 : 2),
+                  stroke: themeColors.red,
+                  strokeWidth: ({ active }) => (active ? 2 : 1),
                 },
-                labels: { fill: "tomato" },
+                labels: { fill: themeColors.red },
               }}
             />
             <VictoryLine
@@ -796,10 +810,10 @@ export default class ImmutableDemo extends React.Component<
               ])}
               style={{
                 data: {
-                  stroke: "blue",
-                  strokeWidth: ({ active }) => (active ? 4 : 2),
+                  stroke: themeColors.blue,
+                  strokeWidth: ({ active }) => (active ? 2 : 1),
                 },
-                labels: { fill: "blue" },
+                labels: { fill: themeColors.blue },
               }}
             />
             <VictoryLine
@@ -810,19 +824,17 @@ export default class ImmutableDemo extends React.Component<
               ])}
               style={{
                 data: {
-                  stroke: "black",
-                  strokeWidth: ({ active }) => (active ? 4 : 2),
+                  stroke: themeColors.green,
+                  strokeWidth: ({ active }) => (active ? 2 : 1),
                 },
-                labels: { fill: "black" },
+                labels: { fill: themeColors.green },
               }}
             />
           </VictoryChart>
 
           <VictoryChart
             style={chartStyle}
-            theme={VictoryTheme.material}
-            height={400}
-            padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
+            theme={VictoryTheme.clean}
             containerComponent={
               <VictoryCursorContainer
                 cursorLabel={({ datum }) =>
@@ -831,20 +843,6 @@ export default class ImmutableDemo extends React.Component<
               />
             }
           >
-            <VictoryLegend
-              x={90}
-              y={10}
-              title="Legend"
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
-              data={[
-                { name: "One", symbol: { fill: "tomato" } },
-                { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } },
-              ]}
-            />
             <VictoryLine
               data={fromJS(
                 range(1500).map((x) => ({ x, y: x + 10 * Math.random() })),
@@ -854,6 +852,7 @@ export default class ImmutableDemo extends React.Component<
 
           <div>
             <VictoryChart
+              theme={VictoryTheme.clean}
               width={800}
               height={500}
               scale={{ x: "time" }}
@@ -869,9 +868,6 @@ export default class ImmutableDemo extends React.Component<
               }
             >
               <VictoryLine
-                style={{
-                  data: { stroke: "tomato" },
-                }}
                 data={fromJS([
                   { x: new Date(1982, 1, 1), y: 125 },
                   { x: new Date(1987, 1, 1), y: 257 },
@@ -886,6 +882,7 @@ export default class ImmutableDemo extends React.Component<
             </VictoryChart>
 
             <VictoryChart
+              theme={VictoryTheme.clean}
               padding={{ top: 0, left: 50, right: 50, bottom: 30 }}
               width={800}
               height={100}
@@ -913,9 +910,6 @@ export default class ImmutableDemo extends React.Component<
                 tickFormat={(x) => new Date(x).getFullYear()}
               />
               <VictoryLine
-                style={{
-                  data: { stroke: "tomato" },
-                }}
                 data={fromJS([
                   { x: new Date(1982, 1, 1), y: 125 },
                   { x: new Date(1987, 1, 1), y: 257 },
@@ -930,11 +924,7 @@ export default class ImmutableDemo extends React.Component<
             </VictoryChart>
           </div>
 
-          <VictoryChart
-            style={chartStyle}
-            animate
-            theme={VictoryTheme.material}
-          >
+          <VictoryChart style={chartStyle} animate theme={VictoryTheme.clean}>
             <VictoryStack colorScale={"warm"}>
               {this.state.multiTransitionAreaData.map((data, index) => {
                 return (
@@ -949,6 +939,7 @@ export default class ImmutableDemo extends React.Component<
           </VictoryChart>
 
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             containerComponent={<VictorySelectionContainer />}
           >
@@ -959,11 +950,9 @@ export default class ImmutableDemo extends React.Component<
                 { x: 3, y: -2 },
               ])}
             >
-              <VictoryLine style={{ data: { stroke: "tomato" } }} />
+              <VictoryLine style={{ data: { stroke: themeColors.purple } }} />
               <VictoryScatter
-                style={{
-                  data: { fill: ({ active }) => (active ? "tomato" : "gray") },
-                }}
+                style={scatterFillStyle}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -975,11 +964,9 @@ export default class ImmutableDemo extends React.Component<
                 { x: 3, y: 3 },
               ])}
             >
-              <VictoryLine style={{ data: { stroke: "blue" } }} />
+              <VictoryLine style={{ data: { stroke: themeColors.green } }} />
               <VictoryScatter
-                style={{
-                  data: { fill: ({ active }) => (active ? "blue" : "gray") },
-                }}
+                style={scatterFillStyle}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -991,11 +978,9 @@ export default class ImmutableDemo extends React.Component<
                 { x: 3, y: -2 },
               ])}
             >
-              <VictoryLine style={{ data: { stroke: "black" } }} />
+              <VictoryLine style={{ data: { stroke: themeColors.cyan } }} />
               <VictoryScatter
-                style={{
-                  data: { fill: ({ active }) => (active ? "black" : "gray") },
-                }}
+                style={scatterFillStyle}
                 labels={({ datum }) => datum.y}
                 labelComponent={<VictoryTooltip />}
               />
@@ -1013,9 +998,6 @@ export default class ImmutableDemo extends React.Component<
                 <VictoryPolarAxis
                   key={i}
                   dependentAxis
-                  style={{
-                    axisLabel: { padding: 10 },
-                  }}
                   tickLabelComponent={
                     <VictoryLabel labelPlacement="vertical" />
                   }

@@ -65,83 +65,59 @@ export default class VictoryCandlestickDemo extends React.Component<
   any,
   VictoryCandlestickDemoState
 > {
-  setStateInterval?: number = undefined;
-
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      data: props.data,
-    };
-  }
-
-  componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
-    this.setStateInterval = window.setInterval(() => {
-      this.setState({
-        data: getData(),
-      });
-    }, 2000);
-  }
-
-  componentWillUnmount() {
-    window.clearInterval(this.setStateInterval);
-  }
-
   render() {
     return (
       <div className="demo" style={containerStyle}>
-        <svg height={500} width={500}>
-          <VictoryCandlestick
-            style={{ data: { width: 10 }, parent: style.parent }}
-            labels={({ datum }) => `x: ${datum.x.getDate()}`}
-            labelOrientation={{ low: "bottom", high: "top" }}
-            openLabels={({ datum }) => datum.open}
-            closeLabels={({ datum }) => datum.close}
-            lowLabels={({ datum }) => datum.low}
-            highLabels={({ datum }) => datum.high}
-            data={data}
-            size={8}
-            standalone={false}
-            events={[
-              {
-                target: "highLabels",
-                eventHandlers: {
-                  onClick: () => {
-                    return [
-                      {
-                        mutation: (props) => {
-                          return {
-                            style: Object.assign({}, props.style.labels, {
-                              fill: "orange",
-                            }),
-                          };
-                        },
+        <VictoryCandlestick
+          theme={VictoryTheme.clean}
+          style={{ data: { width: 10 }, parent: style.parent }}
+          labels={({ datum }) => `x: ${datum.x.getDate()}`}
+          labelOrientation={{ low: "bottom", high: "top" }}
+          openLabels={({ datum }) => datum.open}
+          closeLabels={({ datum }) => datum.close}
+          lowLabels={({ datum }) => datum.low}
+          highLabels={({ datum }) => datum.high}
+          data={data}
+          size={8}
+          events={[
+            {
+              target: "highLabels",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {
+                          style: Object.assign({}, props.style.labels, {
+                            fill: "orange",
+                          }),
+                        };
                       },
-                    ];
-                  },
+                    },
+                  ];
                 },
               },
-              {
-                target: "data",
-                eventHandlers: {
-                  onClick: () => {
-                    return [
-                      {
-                        mutation: (props) => {
-                          return {
-                            style: Object.assign({}, props.style, {
-                              fill: "blue",
-                            }),
-                          };
-                        },
+            },
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {
+                          style: Object.assign({}, props.style, {
+                            fill: "blue",
+                          }),
+                        };
                       },
-                    ];
-                  },
+                    },
+                  ];
                 },
               },
-            ]}
-          />
-        </svg>
+            },
+          ]}
+        />
 
         <VictoryCandlestick
           horizontal
@@ -199,36 +175,30 @@ export default class VictoryCandlestickDemo extends React.Component<
           scale={{ x: "time" }}
           style={style}
           domainPadding={{ x: [20, 50] }}
+          theme={VictoryTheme.clean}
         >
           <VictoryCandlestick
-            candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
+            candleColors={{
+              positive: VictoryTheme.clean?.palette?.colors?.green,
+              negative: VictoryTheme.clean?.palette?.colors?.red,
+            }}
             data={data}
             style={{ data: { stroke: "none" } }}
             size={8}
           />
         </VictoryChart>
 
-        <VictoryCandlestick
-          animate={{ duration: 2000 }}
-          data={this.state.data}
-          candleWidth={50}
-          style={{
-            data: {
-              stroke: "transparent",
-              fill: ({ datum }) => datum.fill,
-              opacity: ({ datum }) => datum.opacity,
-            },
-            parent: style.parent,
-          }}
-        />
-
         <VictoryChart
           scale={{ x: "time" }}
           style={style}
           domainPadding={{ x: [20, 50] }}
+          theme={VictoryTheme.clean}
         >
           <VictoryCandlestick
-            candleColors={{ positive: "#8BC34A", negative: "#C62828" }}
+            candleColors={{
+              positive: VictoryTheme.clean?.palette?.colors?.green,
+              negative: VictoryTheme.clean?.palette?.colors?.red,
+            }}
             data={data}
             style={{ data: { stroke: "none" }, closeLabels: { fill: "blue" } }}
             size={8}
@@ -240,11 +210,7 @@ export default class VictoryCandlestickDemo extends React.Component<
           />
         </VictoryChart>
 
-        <VictoryCandlestick style={style} size={1} theme={VictoryTheme.clean}/>
-
-        <VictoryChart style={style}>
-          <VictoryCandlestick />
-        </VictoryChart>
+        <VictoryCandlestick style={style} size={1} theme={VictoryTheme.clean} />
       </div>
     );
   }

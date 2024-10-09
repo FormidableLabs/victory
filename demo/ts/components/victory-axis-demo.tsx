@@ -3,7 +3,6 @@ import { random, range } from "lodash";
 import { DomainPropType } from "victory-core";
 import { VictoryAxis, VictoryAxisProps } from "victory-axis";
 import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
-import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
 interface VictoryAxisDemoState {
   tickValues: number[];
@@ -54,22 +53,15 @@ export default class VictoryAxisDemo extends React.Component<
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
+    const blue = VictoryTheme.clean.palette?.colors?.blue || "blue";
+
     const styleOverrides: VictoryAxisProps["style"] = {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
-      axis: {
-        stroke: "black",
-      },
-      axisLabel: {
-        padding: 60,
-        fontWeight: "bold",
-        fontSize: 16,
-      },
       grid: {
-        strokeWidth: 2,
-        stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? "red" : "grey"),
+        stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? blue : "grey"),
       },
       ticks: {
-        stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? "red" : "grey"),
+        stroke: ({ tick }: any) => (tick === "Mariners\nSEA" ? blue : "grey"),
       },
       tickLabels: {
         fontWeight: ({ tick }: any) =>
@@ -91,13 +83,10 @@ export default class VictoryAxisDemo extends React.Component<
           <VictoryAxis
             style={{
               parent: styleOverrides.parent,
-              grid: { stroke: "#CFD8DC" },
+              grid: { stroke: "#CFD8DC", strokeDasharray: "10, 5" },
             }}
-            padding={60}
-            label={"animation\nwow!"}
-            axisLabelComponent={<VictoryLabel />}
             tickValues={this.state.tickValues}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             tickFormat={["first", "second", "third", "fourth", "fifth"]}
             animate={{ duration: 2000 }}
             containerComponent={
@@ -107,15 +96,13 @@ export default class VictoryAxisDemo extends React.Component<
               />
             }
           />
-
           <VictoryAxis
             scale="time"
             theme={VictoryTheme.clean}
             style={{
               parent: style.parent,
-              axis: { strokeWidth: 3 },
               tickLabels: { angle: 45 },
-              grid: { stroke: "#F82B60", strokeWidth: 2 },
+              grid: { stroke: VictoryTheme.clean.palette?.colors?.blue },
             }}
             containerComponent={
               <VictoryContainer title="Time Scale Axis Example" />
@@ -157,14 +144,13 @@ export default class VictoryAxisDemo extends React.Component<
             ]}
             tickFormat={(x) => x.getFullYear()}
           />
-
           <svg width={500} height={400}>
             <VictoryAxis
               crossAxis
               width={500}
               height={400}
               domain={this.state.domain}
-              theme={VictoryTheme.material}
+              theme={VictoryTheme.clean}
               offsetY={200}
               standalone={false}
             />
@@ -174,7 +160,7 @@ export default class VictoryAxisDemo extends React.Component<
               width={500}
               height={400}
               domain={this.state.domain}
-              theme={VictoryTheme.material}
+              theme={VictoryTheme.clean}
               offsetX={250}
               standalone={false}
             />
@@ -182,20 +168,27 @@ export default class VictoryAxisDemo extends React.Component<
 
           <svg width={500} height={400}>
             <VictoryAxis
+              theme={VictoryTheme.clean}
+              style={{
+                parent: style.parent,
+                axisLabel: { padding: 45 },
+              }}
               crossAxis
               domain={this.state.domain}
-              theme={XYTheme}
               standalone={false}
             />
             <VictoryAxis
+              theme={VictoryTheme.clean}
+              style={{
+                parent: style.parent,
+                axisLabel: { padding: 45 },
+              }}
               dependentAxis
               crossAxis
               domain={this.state.domain}
-              theme={XYTheme}
               standalone={false}
             />
           </svg>
-
           <VictoryAxis
             style={{
               parent: style.parent,
@@ -209,6 +202,7 @@ export default class VictoryAxisDemo extends React.Component<
             domain={[1, 5]}
           />
           <VictoryAxis
+            theme={VictoryTheme.clean}
             style={{
               parent: style.parent,
               axisLabel: { padding: 45 },
@@ -219,7 +213,6 @@ export default class VictoryAxisDemo extends React.Component<
             scale={"log"}
             domain={[1, 5]}
           />
-
           <VictoryAxis
             label="TEAMS"
             padding={{ top: 90, bottom: 40, left: 40, right: 40 }}
@@ -235,6 +228,7 @@ export default class VictoryAxisDemo extends React.Component<
             ]}
           />
           <VictoryAxis
+            theme={VictoryTheme.clean}
             label="TEAMS"
             padding={{ top: 40, bottom: 40, left: 40, right: 90 }}
             orientation="right"
@@ -248,6 +242,7 @@ export default class VictoryAxisDemo extends React.Component<
             ]}
           />
           <VictoryAxis
+            theme={VictoryTheme.clean}
             label="TEAMS"
             orientation="bottom"
             padding={{ top: 40, bottom: 90, left: 40, right: 40 }}
@@ -260,8 +255,8 @@ export default class VictoryAxisDemo extends React.Component<
               "Mariners\nSEA",
             ]}
           />
-
           <VictoryAxis
+            theme={VictoryTheme.clean}
             label="TEAMS"
             padding={{ top: 40, bottom: 40, left: 90, right: 40 }}
             orientation="left"
@@ -274,8 +269,8 @@ export default class VictoryAxisDemo extends React.Component<
               "Mariners\nSEA",
             ]}
           />
-
           <VictoryAxis
+            theme={VictoryTheme.clean}
             label="Empty Values"
             padding={{ top: 40, bottom: 40, left: 40, right: 90 }}
             orientation="right"

@@ -1,3 +1,8 @@
+import {
+  VictoryTheme,
+  VictoryThemeDefinition,
+} from "../victory-theme/victory-theme";
+
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
@@ -33,29 +38,39 @@ export const toTransformString = function (obj, ...more) {
  * of 5 hex string values in that color scale. If no 'name' parameter
  * is given, it will return the Victory default grayscale.
  * @param {String} name The name of the color scale to return (optional).
+ * @param {Object} theme The theme object to retrieve the color scale from (optional).
  * @returns {Array} An array of 5 hex string values composing a color scale.
  */
-export function getColorScale(name) {
-  const scales = {
-    grayscale: ["#cccccc", "#969696", "#636363", "#252525"],
-    qualitative: [
-      "#334D5C",
-      "#45B29D",
-      "#EFC94C",
-      "#E27A3F",
-      "#DF5A49",
-      "#4F7DA1",
-      "#55DBC1",
-      "#EFDA97",
-      "#E2A37F",
-      "#DF948A",
-    ],
-    heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
-    warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
-    cool: ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"],
-    red: ["#FCAE91", "#FB6A4A", "#DE2D26", "#A50F15", "#750B0E"],
-    blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
-    green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"],
+export function getColorScale(
+  name?: string,
+  theme: VictoryThemeDefinition = VictoryTheme.material,
+) {
+  const {
+    palette: {
+      grayscale = ["#cccccc", "#969696", "#636363", "#252525"],
+      qualitative = [],
+      heatmap = [],
+      warm = [],
+      cool = [],
+      red = [],
+      blue = [],
+      green = [],
+    } = {},
+  } = theme;
+
+  const scales: Record<string, string[]> = {
+    grayscale,
+    qualitative,
+    heatmap,
+    warm,
+    cool,
+    red,
+    blue,
+    green,
   };
-  return name ? scales[name] : scales.grayscale;
+
+  const selectedScale =
+    name && scales[name]?.length ? scales[name] : scales.grayscale;
+
+  return selectedScale;
 }

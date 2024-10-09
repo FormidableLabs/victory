@@ -13,6 +13,7 @@ import {
   VictoryTheme,
   VictoryClipContainer,
   VictoryThemeDefinition,
+  VictoryThemePalette,
 } from "victory-core";
 
 const UPDATE_INTERVAL = 3000;
@@ -201,10 +202,16 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
   }
 
   getStyles(): React.CSSProperties {
-    const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
+    const colors = VictoryTheme.clean.palette?.qualitative || [
+      "red",
+      "orange",
+      "cyan",
+      "green",
+      "blue",
+      "purple",
+    ];
     return {
-      stroke: colors[random(0, 5)],
-      strokeWidth: random(1, 3),
+      stroke: colors[random(0, colors.length - 1)],
     };
   }
 
@@ -221,16 +228,8 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
       parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
     };
 
-    const axisStyle: { [key: string]: React.CSSProperties } = {
-      grid: { stroke: "grey", strokeWidth: 1 },
-      axis: { stroke: "transparent" },
-      ticks: { stroke: "transparent" },
-      tickLabels: { fill: "none" },
-    };
-
-    const bgStyle: { [key: string]: React.CSSProperties } = {
-      background: { fill: "#e6e6ff" },
-    };
+    const themeColors: VictoryThemePalette =
+      VictoryTheme.clean.palette?.colors || {};
 
     return (
       <div className="demo">
@@ -247,10 +246,12 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
           </VictoryChart>
 
           <VictoryChart
-            style={Object.assign({}, chartStyle, bgStyle)}
+            theme={VictoryTheme.clean}
+            style={Object.assign({}, chartStyle)}
             title="Victory Scatter Chart"
           >
             <VictoryScatter
+              style={{ data: { fill: themeColors.cyan } }}
               data={[
                 { x: -3, y: -3 },
                 { x: -2, y: 2 },
@@ -259,17 +260,18 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} theme={dependentAxisTheme}>
-            <VictoryScatter />
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
+            <VictoryScatter style={{ data: { fill: themeColors.pink } }} />
           </VictoryChart>
 
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
-            domainPadding={{ x: [0, 20] }}
+            domainPadding={20}
             title="Victory Bar Chart"
           >
-            <VictoryAxis dependentAxis style={axisStyle} />
-            <VictoryAxis style={axisStyle} tickCount={6} />
+            <VictoryAxis dependentAxis />
+            <VictoryAxis tickCount={6} />
             <VictoryBar
               data={[
                 { x: 1, y: 1 },
@@ -285,11 +287,10 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart theme={VictoryTheme.clean} style={chartStyle}>
             <VictoryAxis tickFormat={(t, i, ts) => `${t}s ${i} ${ts[0]}`} />
             <VictoryBar
               groupComponent={<VictoryClipContainer />}
-              style={{ data: { fill: "tomato" } }}
               data={[
                 { x: "one", y: 1 },
                 { x: "two", y: 2 },
@@ -298,12 +299,12 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
             <VictoryGroup
               labels={["a", "b", "c"]}
               horizontal
               offset={20}
-              colorScale={"qualitative"}
+              colorScale="warm"
             >
               <VictoryBar
                 data={[
@@ -329,8 +330,8 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             </VictoryGroup>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
-            <VictoryGroup offset={20} colorScale={"qualitative"}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
+            <VictoryGroup offset={20} colorScale="cool">
               <VictoryBar
                 data={[
                   { x: 1, y: 1 },
@@ -355,8 +356,12 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             </VictoryGroup>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
-            <VictoryStack colorScale={"qualitative"}>
+          <VictoryChart
+            style={chartStyle}
+            theme={VictoryTheme.clean}
+            domainPadding={20}
+          >
+            <VictoryStack colorScale="heatmap">
               <VictoryBar
                 data={[
                   { x: 1, y: 1 },
@@ -380,7 +385,11 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
               />
             </VictoryStack>
           </VictoryChart>
-          <VictoryChart style={chartStyle}>
+          <VictoryChart
+            style={chartStyle}
+            theme={VictoryTheme.clean}
+            domainPadding={20}
+          >
             <VictoryStack
               horizontal
               labels={["a", "b", "c"]}
@@ -410,15 +419,27 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 1500 }}
+            theme={VictoryTheme.clean}
+          >
             <VictoryLine data={this.state.barTransitionData} />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 1500 }}
+            theme={VictoryTheme.clean}
+          >
             <VictoryBar data={this.state.barTransitionData} />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{ duration: 1000 }}>
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 1000 }}
+            theme={VictoryTheme.clean}
+          >
             <VictoryStack colorScale={"warm"}>
               {this.state.multiBarTransitionData.map((data, index) => {
                 return <VictoryBar key={index} data={data} />;
@@ -426,21 +447,22 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} />
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean} />
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
             <Wrapper>
               <VictoryLabel text={"WOW"} x={150} y={150} />
               <VictoryScatter />
             </Wrapper>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
             <VictoryLine />
           </VictoryChart>
 
           <VictoryChart
             style={chartStyle}
+            theme={VictoryTheme.clean}
             events={[
               {
                 childName: "bar",
@@ -481,33 +503,28 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             <VictoryAxis tickFormat={["one", "two", "three", "four"]} />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} scale={"linear"}>
-            <VictoryAxis label={"A LABEL"} />
-            <VictoryAxis
-              label={"A LABEL"}
-              dependentAxis
-              crossAxis={false}
-              offsetX={30}
-            />
-
+          <VictoryChart
+            style={chartStyle}
+            scale={"linear"}
+            theme={VictoryTheme.clean}
+          >
             <VictoryLine
-              style={{ data: { stroke: "red", strokeWidth: 4 } }}
+              style={{ data: { stroke: themeColors.pink } }}
               y={(data) => Math.sin(2 * Math.PI * data.x)}
             />
 
             <VictoryLine
-              style={{ data: { stroke: "blue", strokeWidth: 4 } }}
+              style={{ data: { stroke: themeColors.purple } }}
               y={(data) => Math.cos(2 * Math.PI * data.x)}
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
-            <VictoryAxis
-              label={"A LABEL"}
-              dependentAxis
-              orientation="left"
-              style={{ grid: { strokeWidth: 1 } }}
-            />
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 2000 }}
+            theme={VictoryTheme.clean}
+          >
+            <VictoryAxis dependentAxis orientation="left" />
             <VictoryLine
               data={this.state.lineData}
               style={{ data: this.state.lineStyle }}
@@ -519,10 +536,10 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             scale={{
               x: "time",
             }}
+            theme={VictoryTheme.clean}
           >
             <VictoryAxis
               orientation="bottom"
-              label={"A LABEL"}
               tickValues={[
                 new Date(1980, 1, 1),
                 new Date(1990, 1, 1),
@@ -533,10 +550,6 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
               tickFormat={(x) => new Date(x).getFullYear()}
             />
             <VictoryLine
-              style={{
-                data: { stroke: "red", strokeWidth: 5 },
-                labels: { fontSize: 12 },
-              }}
               data={[
                 { x: new Date(1982, 1, 1), y: 125 },
                 { x: new Date(1987, 1, 1), y: 257 },
@@ -550,7 +563,11 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 2000 }}
+            theme={VictoryTheme.clean}
+          >
             <VictoryScatter
               groupComponent={<VictoryClipContainer />}
               data={this.state.scatterData}
@@ -574,23 +591,18 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
             <VictoryAxis label={"A LABEL"} dependentAxis orientation="right" />
             <VictoryAxis label={"A LABEL"} orientation="top" />
-            <VictoryLine
-              y={(d) => 0.5 * d.x + 0.5}
-              style={{ data: { stroke: "red" } }}
-            />
-            <VictoryScatter
-              y={(d) => d.x * d.x}
-              style={{ data: { stroke: "red" } }}
-            />
+            <VictoryLine y={(d) => 0.5 * d.x + 0.5} />
+            <VictoryScatter y={(d) => d.x * d.x} />
           </VictoryChart>
 
           <VictoryChart
             style={chartStyle}
             animate={{ duration: 2000 }}
             domainPadding={{ x: 100 }}
+            theme={VictoryTheme.clean}
           >
             <VictoryAxis tickFormat={["one", "two", "three"]} />
             <VictoryStack>
@@ -605,6 +617,7 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
           </VictoryChart>
           <VictoryChart
             style={chartStyle}
+            theme={VictoryTheme.clean}
             domainPadding={{ x: 30, y: 30 }}
             events={[
               {
@@ -625,7 +638,9 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
                         eventKey: "all",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { stroke: "lime" }),
+                            style: Object.assign({}, props.style, {
+                              stroke: "lime",
+                            }),
                           };
                         },
                       },
@@ -635,7 +650,9 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
                         eventKey: "all",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "green" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "green",
+                            }),
                             text: "waddup",
                           };
                         },
@@ -648,7 +665,7 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
           >
             <VictoryBar
               name="bar"
-              style={{ data: { fill: "green" } }}
+              style={{ data: { fill: themeColors.green } }}
               labels={() => null}
               data={[
                 { x: 1, y: 1 },
@@ -669,13 +686,14 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             <VictoryLine
               name="line"
               y={() => 0.5}
-              style={{ data: { stroke: "blue", strokeWidth: 5 } }}
+              style={{ data: { stroke: themeColors.purple, strokeWidth: 2 } }}
             />
           </VictoryChart>
           <VictoryChart
             style={chartStyle}
             domainPadding={{ x: 50 }}
             animate={{ duration: 2000 }}
+            theme={VictoryTheme.clean}
           >
             <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
               <VictoryStack colorScale={"red"}>
@@ -697,7 +715,7 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
           </VictoryChart>
           <VictoryChart
             style={chartStyle}
-            theme={VictoryTheme.material}
+            theme={VictoryTheme.clean}
             categories={{ x: ["e", "a", "c", "b", "d"] }}
             events={[
               {
@@ -711,7 +729,9 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "gold" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "gold",
+                            }),
                           };
                         },
                       },
@@ -720,7 +740,9 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "orange" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "orange",
+                            }),
                           };
                         },
                       },
@@ -729,7 +751,9 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
                         target: "data",
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "red" }),
+                            style: Object.assign({}, props.style, {
+                              fill: "red",
+                            }),
                           };
                         },
                       },
