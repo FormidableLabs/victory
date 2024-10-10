@@ -330,15 +330,16 @@ export const clean: VictoryThemeDefinition = {
   label: baseLabelStyles,
   legend: {
     colorScale,
-    gutter: 10,
+    gutter: 24,
+    borderPadding: 10,
     orientation: "vertical",
     titleOrientation: "top",
     style: {
       data: {
         type: "circle",
       },
-      labels: { ...baseLabelStyles, fontSize: 14 },
-      title: Object.assign({}, baseLabelStyles, { padding, fontSize: 20 }),
+      labels: { ...baseLabelStyles, fontSize: 12 },
+      title: Object.assign({}, baseLabelStyles, { padding, fontSize: 16 }),
       border: { stroke: gray["200"], strokeWidth: 2, padding: 16 },
     },
   },
