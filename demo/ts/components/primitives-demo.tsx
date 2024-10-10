@@ -8,6 +8,8 @@ import { VictoryPolarAxis } from "victory-polar-axis";
 import { Arc, LineSegment, VictoryTheme, Whisker } from "victory-core";
 import { range, random } from "lodash";
 
+const themeColors = VictoryTheme.clean.palette?.colors || {};
+
 interface PrimitivesDemoState {
   axisBackgroundColor: string;
   whiskersActive: boolean;
@@ -20,7 +22,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      axisBackgroundColor: "mediumseagreen",
+      axisBackgroundColor: themeColors.green || "mediumseagreen",
       whiskersActive: true,
     };
   }
@@ -44,9 +46,10 @@ class App extends React.Component<any, PrimitivesDemoState> {
 
   handleClick() {
     const newBackgroundColor =
-      this.state.axisBackgroundColor === "mediumseagreen"
-        ? "paleturquoise"
-        : "mediumseagreen";
+      this.state.axisBackgroundColor === "mediumseagreen" ||
+      this.state.axisBackgroundColor === themeColors.green
+        ? themeColors.cyan || "paleturquoise"
+        : themeColors.green || "mediumseagreen";
 
     this.setState({ axisBackgroundColor: newBackgroundColor });
   }
@@ -86,7 +89,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryChart polar style={chartStyle}>
+          <VictoryChart polar style={chartStyle} theme={VictoryTheme.clean}>
             <VictoryPolarAxis
               circularAxisComponent={
                 <Arc
@@ -95,7 +98,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
                   cy={0}
                   startAngle={0}
                   endAngle={180}
-                  style={{ fill: "tomato", stroke: "none" }}
+                  style={{ fill: themeColors.red }}
                 />
               }
             />
@@ -108,13 +111,13 @@ class App extends React.Component<any, PrimitivesDemoState> {
                   cy={0}
                   startAngle={180}
                   endAngle={360}
-                  style={{ fill: "salmon", stroke: "none" }}
+                  style={{ fill: themeColors.pink }}
                 />
               }
             />
           </VictoryChart>
 
-          <VictoryChart style={axisChartStyle}>
+          <VictoryChart style={axisChartStyle} theme={VictoryTheme.clean}>
             <VictoryAxis
               crossAxis
               axisComponent={
@@ -123,8 +126,6 @@ class App extends React.Component<any, PrimitivesDemoState> {
                   style={lineSegmentStyle}
                 />
               }
-              width={400}
-              height={400}
               domain={[-10, 10]}
               offsetY={200}
               standalone={false}
@@ -138,17 +139,18 @@ class App extends React.Component<any, PrimitivesDemoState> {
                   style={lineSegmentStyle}
                 />
               }
-              width={400}
-              height={400}
               domain={[-10, 10]}
               offsetX={200}
               standalone={false}
             />
           </VictoryChart>
 
-          <VictoryChart domainPadding={20} theme={VictoryTheme.clean}>
+          <VictoryChart
+            domainPadding={20}
+            theme={VictoryTheme.clean}
+            style={chartStyle}
+          >
             <VictoryBoxPlot
-              boxWidth={20}
               data={this.state.boxPlotData}
               maxComponent={<Whisker active={this.state.whiskersActive} />}
               minComponent={<Whisker active={this.state.whiskersActive} />}
