@@ -5,7 +5,7 @@ import { VictoryTooltip } from "victory-tooltip";
 import { VictoryChart } from "victory-chart";
 import { VictoryScatter } from "victory-scatter";
 import { range, random } from "lodash";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
 
 type dataType = {
   x: number;
@@ -65,21 +65,17 @@ class VoronoiDemo extends React.Component<any, VoronoiDemoStateProps> {
       maxWidth: "40%",
     };
 
-    const visible: React.CSSProperties = {
-      fill: "gray",
-      opacity: 0.1,
-      stroke: "black",
-      strokeWidth: 2,
-    };
-
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryVoronoi theme={VictoryTheme.clean} style={{ parent: parentStyle, data: visible }} />
+          <VictoryVoronoi
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
+          />
 
           <VictoryVoronoi
             theme={VictoryTheme.clean}
-            style={{ parent: parentStyle, data: visible }}
+            style={{ parent: parentStyle }}
             data={[
               { x: 1, y: 1 },
               { x: 2, y: 2 },
@@ -95,7 +91,11 @@ class VoronoiDemo extends React.Component<any, VoronoiDemoStateProps> {
                     return [
                       {
                         mutation: () => {
-                          return { style: { fill: "orange" } };
+                          return {
+                            style: {
+                              fill: VictoryTheme.clean.palette?.colors?.orange,
+                            },
+                          };
                         },
                       },
                     ];
@@ -106,7 +106,8 @@ class VoronoiDemo extends React.Component<any, VoronoiDemoStateProps> {
           />
 
           <VictoryVoronoi
-            style={{ parent: parentStyle, data: visible }}
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
             size={40}
             data={[
               { x: 1, y: 1 },
@@ -118,30 +119,39 @@ class VoronoiDemo extends React.Component<any, VoronoiDemoStateProps> {
           />
 
           <VictoryVoronoi
+            theme={VictoryTheme.clean}
             labels={({ datum }) => `#${datum.i}`}
             labelComponent={<VictoryTooltip />}
             animate={{ duration: 2000 }}
-            style={{ parent: parentStyle, data: visible }}
+            style={{ parent: parentStyle }}
             size={20}
             data={this.state.data}
           />
 
-          <VictoryChart horizontal style={{ parent: parentStyle }}  theme={VictoryTheme.clean} >
+          <VictoryChart
+            horizontal
+            style={{ parent: parentStyle }}
+            theme={VictoryTheme.clean}
+          >
             <VictoryVoronoi
               labels={({ datum }) => `#${datum.i}`}
               labelComponent={<VictoryTooltip />}
               size={20}
-              style={{ parent: parentStyle, data: visible }}
+              style={{ parent: parentStyle }}
               data={this.state.data}
             />
             <VictoryScatter data={this.state.data} />
           </VictoryChart>
 
-          <VictoryChart horizontal style={{ parent: parentStyle }}>
+          <VictoryChart
+            horizontal
+            style={{ parent: parentStyle }}
+            theme={VictoryTheme.clean}
+          >
             <VictoryVoronoi
               labels={({ datum }) => `#${datum.i}`}
               labelComponent={<VictoryTooltip />}
-              style={{ parent: parentStyle, data: visible }}
+              style={{ parent: parentStyle }}
               data={this.state.data}
             />
             <VictoryScatter data={this.state.data} />

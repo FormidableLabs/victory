@@ -424,9 +424,10 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: red["100"],
-          stroke: red["500"],
+          fill: blue["100"],
+          stroke: blue["500"],
           strokeWidth: 2,
+          opacity: 0.4,
         },
         labels: Object.assign({}, baseLabelStyles, {
           padding: 5,
