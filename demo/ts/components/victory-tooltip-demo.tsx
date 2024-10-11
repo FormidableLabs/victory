@@ -30,15 +30,9 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryBar
+            theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}
-            labelComponent={
-              <VictoryTooltip
-                constrainToVisibleArea
-                flyoutStyle={{ stroke: "red" }}
-                cornerRadius={0}
-                pointerLength={20}
-              />
-            }
+            labelComponent={<VictoryTooltip constrainToVisibleArea />}
             labels={({ datum }) => `hello0000000000 #${datum.x}`}
             data={[
               { x: 1, y: 1 },
@@ -50,6 +44,7 @@ class App extends React.Component {
           />
 
           <VictoryScatter
+            theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}
             labelComponent={
               <VictoryTooltip
@@ -73,11 +68,7 @@ class App extends React.Component {
             theme={VictoryTheme.clean}
             horizontal
             style={{ parent: parentStyle }}
-            highLabelComponent={
-              <VictoryTooltip
-                active dy={-3}
-              />
-            }
+            highLabelComponent={<VictoryTooltip active dy={-3} />}
             highLabels={({ datum }) => `hello #${datum.x}`}
             data={[
               { x: 1, open: 5, close: 10, high: 15, low: 0 },
@@ -102,7 +93,10 @@ class App extends React.Component {
             ]}
           />
 
-          <VictoryChart style={{ parent: parentStyle }}>
+          <VictoryChart
+            style={{ parent: parentStyle }}
+            theme={VictoryTheme.clean}
+          >
             <VictoryGroup
               labels={["a", "b", "c"]}
               labelComponent={<VictoryTooltip />}
