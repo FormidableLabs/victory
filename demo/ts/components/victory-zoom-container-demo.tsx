@@ -25,6 +25,18 @@ const allData = range(0, 10, 0.001).map((x) => ({
   y: (Math.sin((Math.PI * x) / 2) * x) / 10,
 }));
 
+const themeColors = VictoryTheme.clean.palette?.colors || {};
+const {
+  red = "red",
+  orange = "orange",
+  yellow = "yellow",
+  blue = "blue",
+  teal = "teal",
+  pink = "pink",
+  purple = "purple",
+  green = "green",
+} = themeColors;
+
 interface CustomChartState {
   zoomedXDomain: DomainTuple;
 }
@@ -87,6 +99,7 @@ class CustomChart extends React.Component<any, CustomChartState> {
     const renderedData = this.getData();
     return (
       <VictoryChart
+        theme={VictoryTheme.clean}
         style={this.props.style}
         domain={this.entireDomain}
         containerComponent={
@@ -113,7 +126,6 @@ interface VictoryZoomContainerDemoState {
     a: number;
     b: number;
   }[];
-  style: React.CSSProperties;
   transitionData: {
     x: number;
     y: number;
@@ -153,10 +165,6 @@ export default class VictoryZoomContainerDemo extends React.Component<
       data: this.getData(),
       transitionData: this.getTransitionData(),
       arrayData: this.getArrayData(),
-      style: {
-        stroke: "blue",
-        strokeWidth: 2,
-      },
       zoomDomain: this.getZoomDomain(),
     };
   }
@@ -167,7 +175,6 @@ export default class VictoryZoomContainerDemo extends React.Component<
       this.setState({
         data: this.getData(),
         transitionData: this.getTransitionData(),
-        style: this.getStyles(),
       });
     }, 3000);
   }
@@ -225,13 +232,11 @@ export default class VictoryZoomContainerDemo extends React.Component<
           style={{ parent: parentStyle }}
           data={this.state.transitionData}
         >
-          <VictoryLine
-            animate={{ duration: 1500 }}
-            style={{ data: this.state.style }}
-          />
+          <VictoryLine animate={{ duration: 1500 }} />
         </VictoryGroup>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           containerComponent={
             <VictoryZoomContainer
@@ -247,7 +252,9 @@ export default class VictoryZoomContainerDemo extends React.Component<
           <VictoryAxis tickFormat={(x) => new Date(x).getFullYear()} />
           <VictoryLine
             style={{
-              data: { stroke: "red", strokeWidth: 5 },
+              data: {
+                stroke: yellow,
+              },
             }}
             data={[
               { x: new Date(1982, 1, 1), y: 125 },
@@ -280,8 +287,13 @@ export default class VictoryZoomContainerDemo extends React.Component<
         >
           <VictoryPortal>
             <VictoryScatter
-              style={{ parent: parentStyle, data: { fill: "orange" } }}
-              size={15}
+              theme={VictoryTheme.clean}
+              style={{
+                parent: parentStyle,
+                data: {
+                  fill: green,
+                },
+              }}
               data={this.state.data}
               x="a"
               y="b"
@@ -290,6 +302,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           animate={{ duration: 1500 }}
           domainPadding={{ x: 20, y: 0 }}
@@ -305,8 +318,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
           }
         >
           <VictoryScatter
-            style={{ parent: parentStyle, data: { fill: "orange" } }}
-            size={15}
+            style={{ parent: parentStyle }}
             data={this.state.data}
             x="a"
             y="b"
@@ -316,13 +328,13 @@ export default class VictoryZoomContainerDemo extends React.Component<
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           containerComponent={<VictoryZoomContainer />}
         >
           <VictoryLine
             style={{
               parent: parentStyle,
-              data: { stroke: "red", strokeWidth: 6 },
             }}
             events={[
               {
@@ -333,7 +345,9 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       {
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { stroke: "orange" }),
+                            style: Object.assign({}, props.style, {
+                              stroke: "orange",
+                            }),
                           };
                         },
                       },
@@ -354,13 +368,16 @@ export default class VictoryZoomContainerDemo extends React.Component<
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           containerComponent={<VictoryZoomContainer />}
         >
           <VictoryArea
             style={{
               parent: parentStyle,
-              data: { stroke: "#333", fill: "#888", opacity: 0.4 },
+              data: {
+                fill: pink,
+              },
             }}
             data={this.state.data}
             x="a"
@@ -369,6 +386,12 @@ export default class VictoryZoomContainerDemo extends React.Component<
           />
           <VictoryAxis />
           <VictoryLine
+            style={{
+              parent: parentStyle,
+              data: {
+                stroke: pink,
+              },
+            }}
             data={this.state.data}
             x="a"
             y="b"
@@ -384,6 +407,8 @@ export default class VictoryZoomContainerDemo extends React.Component<
         </button>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
+          height={400}
           containerComponent={
             <VictoryZoomContainer
               zoomDimension="x"
@@ -395,18 +420,18 @@ export default class VictoryZoomContainerDemo extends React.Component<
         >
           <VictoryLine
             name="line"
-            style={{ parent: parentStyle, data: { stroke: "blue" } }}
+            style={{ parent: parentStyle }}
             y={(d) => Math.sin(2 * Math.PI * d.x)}
             samples={25}
           />
         </VictoryChart>
 
         <VictoryChart
+          theme={VictoryTheme.clean}
           style={{ parent: parentStyle }}
           height={400}
           padding={{ top: 80, bottom: 50, left: 50, right: 50 }}
           containerComponent={<VictoryZoomContainer />}
-          theme={VictoryTheme.material}
           events={[
             {
               childName: "area-1",
@@ -419,7 +444,9 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "gold" }),
+                          style: Object.assign({}, props.style, {
+                            fill: yellow,
+                          }),
                         };
                       },
                     },
@@ -428,7 +455,9 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "orange" }),
+                          style: Object.assign({}, props.style, {
+                            fill: orange,
+                          }),
                         };
                       },
                     },
@@ -437,7 +466,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
                       target: "data",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "red" }),
+                          style: Object.assign({}, props.style, { fill: red }),
                         };
                       },
                     },
@@ -451,14 +480,12 @@ export default class VictoryZoomContainerDemo extends React.Component<
             x={83}
             y={10}
             title="Legend"
-            centerTitle
             orientation="horizontal"
-            gutter={20}
-            style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
             data={[
-              { name: "One", symbol: { fill: "tomato" } },
-              { name: "Two", symbol: { fill: "orange" } },
-              { name: "Three", symbol: { fill: "gold" } },
+              { name: "One", symbol: { fill: teal } },
+              { name: "Two", symbol: { fill: pink } },
+              { name: "Three", symbol: { fill: purple } },
+              { name: "Four", symbol: { fill: blue } },
             ]}
           />
           <VictoryAxis />
@@ -507,15 +534,20 @@ export default class VictoryZoomContainerDemo extends React.Component<
           <VictoryAxis dependentAxis />
         </VictoryChart>
         <VictoryChart
+          theme={VictoryTheme.clean}
           horizontal
           style={{ parent: parentStyle }}
           containerComponent={<VictoryZoomContainer zoomDimension="x" />}
         >
           <VictoryBar
-            style={{ data: { stroke: "#333", fill: "#888", opacity: 0.4 } }}
             data={this.state.data}
             x="a"
             y="b"
+            style={{
+              data: {
+                fill: orange,
+              },
+            }}
           />
           <VictoryAxis />
           <VictoryAxis dependentAxis />
