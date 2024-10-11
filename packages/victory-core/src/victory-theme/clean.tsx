@@ -332,8 +332,9 @@ export const clean: VictoryThemeDefinition = {
     colorScale,
     gutter: 24,
     borderPadding: 10,
-    orientation: "vertical",
+    orientation: "horizontal",
     titleOrientation: "top",
+    centerTitle: true,
     style: {
       data: {
         type: "circle",

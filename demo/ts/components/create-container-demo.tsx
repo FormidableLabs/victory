@@ -11,7 +11,9 @@ import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryLegend } from "victory-legend";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
+
+const themeColors = VictoryTheme.clean.palette?.colors || {};
 
 const Charts = ({ behaviors }) => {
   const containerStyle: React.CSSProperties = {
@@ -34,6 +36,7 @@ const Charts = ({ behaviors }) => {
         {/* A */}
         <VictoryChart
           style={chartStyle}
+          theme={VictoryTheme.clean}
           height={400}
           padding={{ top: 100, bottom: 50, left: 50, right: 50 }}
           domainPadding={{ y: 2 }}
@@ -58,11 +61,10 @@ const Charts = ({ behaviors }) => {
             centerTitle
             orientation="horizontal"
             gutter={20}
-            style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
             data={[
-              { name: "One", symbol: { fill: "tomato" } },
-              { name: "Two", symbol: { fill: "orange" } },
-              { name: "Three", symbol: { fill: "gold" } },
+              { name: "One", symbol: { fill: themeColors.red } },
+              { name: "Two", symbol: { fill: themeColors.orange } },
+              { name: "Three", symbol: { fill: themeColors.yellow } },
             ]}
           />
           <VictoryLine
@@ -74,10 +76,10 @@ const Charts = ({ behaviors }) => {
             ]}
             style={{
               data: {
-                stroke: "tomato",
+                stroke: themeColors.red,
                 strokeWidth: ({ active }) => (active ? 4 : 2),
               },
-              labels: { fill: "tomato" },
+              labels: { fill: themeColors.red },
             }}
           />
 
@@ -89,10 +91,10 @@ const Charts = ({ behaviors }) => {
             ]}
             style={{
               data: {
-                stroke: "blue",
+                stroke: themeColors.orange,
                 strokeWidth: ({ active }) => (active ? 4 : 2),
               },
-              labels: { fill: "blue" },
+              labels: { fill: themeColors.orange },
             }}
           />
 
@@ -104,10 +106,10 @@ const Charts = ({ behaviors }) => {
             ]}
             style={{
               data: {
-                stroke: "black",
+                stroke: themeColors.yellow,
                 strokeWidth: ({ active }) => (active ? 4 : 2),
               },
-              labels: { fill: "black" },
+              labels: { fill: themeColors.yellow },
             }}
           />
         </VictoryChart>
@@ -120,9 +122,9 @@ const Charts = ({ behaviors }) => {
               labels={({ datum }) => round(datum.x, 2)}
               cursorLabel={({ datum }) => round(datum.x, 2)}
               selectionStyle={{
-                stroke: "tomato",
+                stroke: themeColors.red,
                 strokeWidth: 2,
-                fill: "tomato",
+                fill: themeColors.red,
                 fillOpacity: 0.1,
               }}
               selectedDomain={{ x: [0.4, 0.95], y: [0.5, 0.8] }}
@@ -133,7 +135,10 @@ const Charts = ({ behaviors }) => {
           <VictoryScatter
             style={{
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black"),
+                fill: ({ active }) =>
+                  active
+                    ? themeColors.red || "tomato"
+                    : themeColors.yellow || "yellow",
               },
             }}
             size={({ active }) => (active ? 5 : 3)}
@@ -151,7 +156,7 @@ const Charts = ({ behaviors }) => {
           <VictoryGroup style={chartStyle}>
             <VictoryScatter
               style={{
-                data: { fill: "tomato" },
+                data: { fill: themeColors.blue },
               }}
               size={({ active }) => (active ? 5 : 3)}
               labels={({ datum }) => datum.y}
@@ -160,11 +165,6 @@ const Charts = ({ behaviors }) => {
                   pointerLength={4}
                   flyoutPadding={{ top: 8, bottom: 8, left: 16, right: 16 }}
                   cornerRadius={1}
-                  flyoutStyle={{
-                    stroke: "#757575",
-                    strokeWidth: 2,
-                    fill: "white",
-                  }}
                 />
               }
               data={[
@@ -179,7 +179,7 @@ const Charts = ({ behaviors }) => {
             />
             <VictoryScatter
               style={{
-                data: { fill: "blue" },
+                data: { fill: themeColors.purple },
               }}
               size={({ active }) => (active ? 5 : 3)}
               labels={({ datum }) => datum.y}
@@ -188,11 +188,6 @@ const Charts = ({ behaviors }) => {
                   pointerLength={4}
                   flyoutPadding={{ top: 8, bottom: 8, left: 16, right: 16 }}
                   cornerRadius={1}
-                  flyoutStyle={{
-                    stroke: "#757575",
-                    strokeWidth: 2,
-                    fill: "white",
-                  }}
                 />
               }
               data={[
@@ -206,6 +201,9 @@ const Charts = ({ behaviors }) => {
               ]}
             />
             <VictoryScatter
+              style={{
+                data: { fill: themeColors.green },
+              }}
               data={[
                 { x: 1, y: 5 },
                 { x: 2, y: -4 },
@@ -221,11 +219,6 @@ const Charts = ({ behaviors }) => {
                   pointerLength={4}
                   flyoutPadding={{ top: 8, bottom: 8, left: 16, right: 16 }}
                   cornerRadius={1}
-                  flyoutStyle={{
-                    stroke: "#757575",
-                    strokeWidth: 2,
-                    fill: "white",
-                  }}
                 />
               }
               size={({ active }) => (active ? 5 : 3)}
@@ -234,20 +227,14 @@ const Charts = ({ behaviors }) => {
         </VictoryChart>
         {/* D */}
         <VictoryStack
+          theme={VictoryTheme.clean}
           style={chartStyle}
           containerComponent={
             <CustomContainer selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }} />
           }
         >
           <VictoryBar
-            style={{
-              data: {
-                fill: "tomato",
-                stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2,
-              },
-            }}
-            barWidth={({ active }) => (active ? 5 : 3)}
+            barWidth={({ active }) => (active ? 10 : 8)}
             data={[
               { x: 1, y: -5 },
               { x: 2, y: 4 },
@@ -259,14 +246,7 @@ const Charts = ({ behaviors }) => {
             ]}
           />
           <VictoryBar
-            style={{
-              data: {
-                fill: "orange",
-                stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2,
-              },
-            }}
-            barWidth={({ active }) => (active ? 5 : 3)}
+            barWidth={({ active }) => (active ? 10 : 8)}
             data={[
               { x: 1, y: -3 },
               { x: 2, y: 5 },
@@ -278,13 +258,7 @@ const Charts = ({ behaviors }) => {
             ]}
           />
           <VictoryBar
-            style={{
-              data: {
-                fill: "gold",
-                stroke: ({ active }) => (active ? "black" : "none"),
-                strokeWidth: 2,
-              },
-            }}
+            barWidth={({ active }) => (active ? 10 : 8)}
             data={[
               { x: 1, y: 5 },
               { x: 2, y: -4 },
