@@ -1,7 +1,9 @@
 import React from "react";
 import { VictoryBar } from "victory-bar";
+import { VictoryTheme } from "victory-core";
 import { VictorySharedEvents } from "victory-shared-events";
 
+const themeColors = VictoryTheme.clean.palette?.colors || {};
 export default class VictorySharedEventsDemo extends React.Component<any, {}> {
   render() {
     const containerStyle: React.CSSProperties = {
@@ -14,7 +16,7 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
 
     return (
       <div className="demo" style={containerStyle}>
-        <svg width={500} height={300}>
+        <svg width={800} height={500}>
           <VictorySharedEvents
             events={[
               {
@@ -27,7 +29,9 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
                       childName: "secondBar",
                       mutation: (props) => {
                         return {
-                          style: Object.assign({}, props.style, { fill: "blue" }),
+                          style: Object.assign({}, props.style, {
+                            fill: themeColors.blue,
+                          }),
                         };
                       },
                     };
@@ -44,17 +48,21 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
                       {
                         childName: "firstBar",
                         mutation: (props) => {
-                          return props.style.fill === "cyan"
+                          return props.style.fill === themeColors.cyan
                             ? null
                             : {
-                                style: Object.assign({}, props.style, { fill: "cyan" }),
+                                style: Object.assign({}, props.style, {
+                                  fill: themeColors.cyan,
+                                }),
                               };
                         },
                       },
                       {
                         mutation: (props) => {
                           return {
-                            style: Object.assign({}, props.style, { fill: "orange" }),
+                            style: Object.assign({}, props.style, {
+                              fill: themeColors.orange,
+                            }),
                           };
                         },
                       },
@@ -72,9 +80,11 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
             ]}
           >
             <VictoryBar
+              theme={VictoryTheme.clean}
               name="firstBar"
+              standalone={false}
               style={{
-                data: { width: 25, fill: "gold" },
+                data: { width: 25, fill: themeColors.yellow },
               }}
               data={[
                 { x: "a", y: 2 },
@@ -83,7 +93,10 @@ export default class VictorySharedEventsDemo extends React.Component<any, {}> {
               ]}
             />
             <VictoryBar
+              theme={VictoryTheme.clean}
               name={"secondBar"}
+              standalone={false}
+              labels={({ datum }) => datum.y}
               data={[
                 { x: "a", y: 2 },
                 { x: "b", y: 3 },
