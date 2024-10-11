@@ -34,6 +34,8 @@ const data: DataType = [
   { name: "Francis", strength: 2, intelligence: 40, speed: 200, luck: 2 },
 ];
 
+const themeColors = VictoryTheme.clean.palette?.colors || {};
+
 interface BrushLineDemoState {
   maximumValues: number[];
   datasets: DataSet[];
@@ -191,6 +193,7 @@ class App extends React.Component<any, BrushLineDemoState> {
         <div style={containerStyle}>
           <button onClick={this.clearMutation.bind(this)}>reset domain</button>
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={{ parent: { maxWidth: "50%" } }}
             domain={{ y: [0, 1.1] }}
             height={height}
@@ -198,10 +201,6 @@ class App extends React.Component<any, BrushLineDemoState> {
             padding={padding}
           >
             <VictoryAxis
-              style={{
-                tickLabels: { fontSize: 20 },
-                axis: { stroke: "none" },
-              }}
               tickLabelComponent={<VictoryLabel y={padding.top - 40} />}
             />
             {this.state.datasets.map((dataset: DataSet) => (
@@ -210,12 +209,6 @@ class App extends React.Component<any, BrushLineDemoState> {
                 name={dataset.name}
                 data={dataset.data}
                 groupComponent={<g />}
-                style={{
-                  data: {
-                    stroke: "tomato",
-                    opacity: this.isActive(dataset) ? 1 : 0.2,
-                  },
-                }}
               />
             ))}
             {attributes.map((attribute, index) => (
@@ -232,13 +225,6 @@ class App extends React.Component<any, BrushLineDemoState> {
                   />
                 }
                 offsetX={this.getAxisOffset(index)}
-                style={{
-                  tickLabels: {
-                    fontSize: 15,
-                    padding: 15,
-                    pointerEvents: "none",
-                  },
-                }}
                 tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
                 tickFormat={(tick) => Math.round(tick * max[index])}
               />
@@ -260,8 +246,17 @@ class App extends React.Component<any, BrushLineDemoState> {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} domainPadding={{ x: 50 }}>
+          <VictoryChart
+            style={chartStyle}
+            theme={VictoryTheme.clean}
+            domainPadding={{ x: 50 }}
+          >
             <VictoryBar
+              style={{
+                data: {
+                  fill: themeColors.purple,
+                },
+              }}
               data={[
                 { x: "one", y: 4 },
                 { x: "two", y: 5 },
@@ -275,7 +270,7 @@ class App extends React.Component<any, BrushLineDemoState> {
               }
             />
           </VictoryChart>
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
             <VictoryScatter
               data={[
                 { x: "one", y: 0 },
@@ -285,7 +280,7 @@ class App extends React.Component<any, BrushLineDemoState> {
             />
             <VictoryAxis gridComponent={<VictoryBrushLine brushWidth={20} />} />
           </VictoryChart>
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
             <VictoryScatter
               data={[
                 { x: "one", y: 0 },
@@ -302,6 +297,7 @@ class App extends React.Component<any, BrushLineDemoState> {
 
           <VictoryAxis
             style={chartStyle}
+            theme={VictoryTheme.clean}
             gridComponent={
               <VictoryBrushLine brushWidth={20} brushDomain={[0, 10]} />
             }
