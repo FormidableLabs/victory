@@ -200,7 +200,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
                   brushDomain={bar.range}
                   onBrushDomainChange={this.onDomainChange.bind(this)}
                   brushStyle={{
-                    fill: "skyBlue",
+                    fill: VictoryTheme.clean.palette?.colors?.cyan,
                     opacity: ({ active }) => (active ? 1 : 0.5),
                   }}
                 />
@@ -219,7 +219,7 @@ class App extends React.Component<any, DraggableDemoInterface> {
             }
             style={{
               data: {
-                fill: "skyBlue",
+                fill: VictoryTheme.clean.palette?.colors?.cyan,
                 opacity: ({ active }) => (active ? 1 : 0.5),
                 cursor: "move",
               },
@@ -264,14 +264,14 @@ class App extends React.Component<any, DraggableDemoInterface> {
             data={this.state.points}
             size={5}
             style={{
-              data: { fill: "skyBlue" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.cyan },
             }}
             x="name"
             y="date"
           />
           <VictoryBar
             style={{
-              data: { fill: "skyBlue" },
+              data: { fill: VictoryTheme.clean.palette?.colors?.cyan },
             }}
             data={this.state.bars}
             x="name"
