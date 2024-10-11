@@ -9,8 +9,9 @@ import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryCursorContainer } from "victory-cursor-container";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryLegend } from "victory-legend";
 import { VictoryTheme, CoordinatesPropType } from "victory-core";
+
+const themeColors = VictoryTheme.clean.palette?.colors || {};
 
 interface VictoryCursorContainerStateInterface {
   data: { a: number; b: number }[];
@@ -74,29 +75,13 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
         <div style={containerStyle}>
           <VictoryChart
             style={chartStyle}
-            theme={VictoryTheme.material}
-            height={400}
-            padding={{ top: 100, bottom: 40, left: 50, right: 50 }}
+            theme={VictoryTheme.clean}
             containerComponent={
               <VictoryCursorContainer
                 cursorLabel={({ datum }) => round(datum.x, 2)}
               />
             }
           >
-            <VictoryLegend
-              x={90}
-              y={10}
-              title="Legend"
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
-              data={[
-                { name: "One", symbol: { fill: "tomato" } },
-                { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } },
-              ]}
-            />
             <VictoryLine data={this.state.bigData} />
           </VictoryChart>
 
@@ -120,9 +105,6 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                   { x: 2, y: 4, l: "two" },
                   { x: 3, y: -2, l: "three" },
                 ]}
-                style={{
-                  labels: { fill: "tomato" },
-                }}
               />
 
               <VictoryBar
@@ -131,9 +113,6 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                   { x: 2, y: 5, l: "green" },
                   { x: 3, y: 3, l: "blue" },
                 ]}
-                style={{
-                  labels: { fill: "blue" },
-                }}
               />
 
               <VictoryBar
@@ -142,9 +121,6 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
                   { x: 2, y: -4, l: "dog" },
                   { x: 3, y: -2, l: "bird" },
                 ]}
-                style={{
-                  labels: { fill: "black" },
-                }}
               />
             </VictoryGroup>
           </VictoryChart>
@@ -155,7 +131,10 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black"),
+                fill: ({ active }) =>
+                  active
+                    ? themeColors.teal || "teal"
+                    : themeColors.purple || "purple",
               },
             }}
             containerComponent={
@@ -172,8 +151,12 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
           />
 
           <VictoryScatter
+            theme={VictoryTheme.clean}
             style={{
               parent: chartStyle.parent,
+              data: {
+                fill: themeColors.green,
+              },
             }}
             containerComponent={<VictoryCursorContainer />}
             size={({ active }) => (active ? 5 : 3)}
@@ -181,6 +164,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
           />
 
           <VictoryChart
+            theme={VictoryTheme.clean}
             style={chartStyle}
             containerComponent={
               <VictoryCursorContainer
@@ -194,7 +178,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             <VictoryGroup style={chartStyle}>
               <VictoryScatter
                 style={{
-                  data: { fill: "tomato" },
+                  data: { fill: themeColors.pink },
                 }}
                 size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
@@ -211,7 +195,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
               />
               <VictoryScatter
                 style={{
-                  data: { fill: "blue" },
+                  data: { fill: themeColors.yellow },
                 }}
                 size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
@@ -244,17 +228,12 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
           </VictoryChart>
 
           <VictoryStack
+            theme={VictoryTheme.clean}
+            colorScale="warm"
             style={chartStyle}
             containerComponent={<VictoryCursorContainer />}
           >
             <VictoryBar
-              style={{
-                data: {
-                  fill: "tomato",
-                  stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2,
-                },
-              }}
               data={[
                 { x: 1, y: -5 },
                 { x: 2, y: 4 },
@@ -266,13 +245,6 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
               ]}
             />
             <VictoryBar
-              style={{
-                data: {
-                  fill: "orange",
-                  stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2,
-                },
-              }}
               data={[
                 { x: 1, y: -3 },
                 { x: 2, y: 5 },
@@ -284,13 +256,6 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
               ]}
             />
             <VictoryBar
-              style={{
-                data: {
-                  fill: "gold",
-                  stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2,
-                },
-              }}
               data={[
                 { x: 1, y: 5 },
                 { x: 2, y: -4 },
