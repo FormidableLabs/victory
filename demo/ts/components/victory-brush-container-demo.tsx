@@ -12,6 +12,8 @@ import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryBrushContainer } from "victory-brush-container";
 import { DomainTuple, VictoryTheme } from "victory-core";
 
+const themeColors = VictoryTheme.clean.palette?.colors || {};
+
 interface VictoryBrushContainerDemoState {
   zoomDomain: {
     x?: DomainTuple;
@@ -62,9 +64,6 @@ export default class VictoryBrushContainerDemo extends React.Component<
             }
           >
             <VictoryLine
-              style={{
-                data: { stroke: "tomato" },
-              }}
               data={[
                 { x: new Date(1982, 1, 1), y: 125 },
                 { x: new Date(1987, 1, 1), y: 257 },
@@ -78,6 +77,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
             />
           </VictoryChart>
           <VictoryChart
+            theme={VictoryTheme.clean}
             padding={{ top: 0, left: 50, right: 50, bottom: 30 }}
             width={800}
             height={100}
@@ -103,9 +103,6 @@ export default class VictoryBrushContainerDemo extends React.Component<
               tickFormat={(x) => new Date(x).getFullYear()}
             />
             <VictoryLine
-              style={{
-                data: { stroke: "tomato" },
-              }}
               data={[
                 { x: new Date(1982, 1, 1), y: 125 },
                 { x: new Date(1987, 1, 1), y: 257 },
@@ -138,17 +135,15 @@ export default class VictoryBrushContainerDemo extends React.Component<
               title="Legend"
               centerTitle
               orientation="horizontal"
-              gutter={20}
-              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
               data={[
-                { name: "One", symbol: { fill: "tomato" } },
-                { name: "Two", symbol: { fill: "orange" } },
-                { name: "Three", symbol: { fill: "gold" } },
+                { name: "One", symbol: { fill: themeColors.red } },
+                { name: "Two", symbol: { fill: themeColors.orange } },
+                { name: "Three", symbol: { fill: themeColors.yellow } },
               ]}
             />
             <VictoryLine
               style={{
-                data: { stroke: "tomato" },
+                data: { stroke: themeColors.red },
               }}
               data={[
                 { x: 1, y: -5 },
@@ -162,7 +157,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
             />
             <VictoryLine
               style={{
-                data: { stroke: "blue" },
+                data: { stroke: themeColors.orange },
               }}
               data={[
                 { x: 1, y: -3 },
@@ -175,6 +170,9 @@ export default class VictoryBrushContainerDemo extends React.Component<
               ]}
             />
             <VictoryLine
+              style={{
+                data: { stroke: themeColors.yellow },
+              }}
               data={[
                 { x: 1, y: 5 },
                 { x: 2, y: -4 },
@@ -188,10 +186,14 @@ export default class VictoryBrushContainerDemo extends React.Component<
           </VictoryChart>
 
           <VictoryScatter
+            theme={VictoryTheme.clean}
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black"),
+                fill: ({ active }) =>
+                  active
+                    ? themeColors.blue || "blue"
+                    : themeColors.orange || "orange",
               },
             }}
             domain={{ x: [0, 10], y: [-5, 5] }}
@@ -217,7 +219,10 @@ export default class VictoryBrushContainerDemo extends React.Component<
             style={{
               parent: chartStyle.parent,
               data: {
-                fill: ({ active }) => (active ? "tomato" : "black"),
+                fill: ({ active }) =>
+                  active
+                    ? themeColors.blue || "blue"
+                    : themeColors.orange || "orange",
               },
             }}
             containerComponent={
@@ -235,7 +240,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
           >
             <VictoryScatter
               style={{
-                data: { fill: "tomato" },
+                data: { fill: themeColors.red },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -250,7 +255,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
             />
             <VictoryScatter
               style={{
-                data: { fill: "blue" },
+                data: { fill: themeColors.orange },
               }}
               size={({ active }) => (active ? 5 : 3)}
               data={[
@@ -264,6 +269,9 @@ export default class VictoryBrushContainerDemo extends React.Component<
               ]}
             />
             <VictoryScatter
+              style={{
+                data: { fill: themeColors.yellow },
+              }}
               data={[
                 { x: 1, y: 5 },
                 { x: 2, y: -4 },
@@ -278,17 +286,11 @@ export default class VictoryBrushContainerDemo extends React.Component<
           </VictoryGroup>
 
           <VictoryStack
+            theme={VictoryTheme.clean}
             style={chartStyle}
             containerComponent={<VictoryBrushContainer />}
           >
             <VictoryBar
-              style={{
-                data: {
-                  fill: "tomato",
-                  stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2,
-                },
-              }}
               barWidth={({ active }) => (active ? 5 : 3)}
               data={[
                 { x: 1, y: -5 },
@@ -303,9 +305,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
             <VictoryBar
               style={{
                 data: {
-                  fill: "orange",
-                  stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2,
+                  fill: themeColors.purple,
                 },
               }}
               barWidth={({ active }) => (active ? 5 : 3)}
@@ -322,9 +322,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
             <VictoryBar
               style={{
                 data: {
-                  fill: "gold",
-                  stroke: ({ active }) => (active ? "black" : "none"),
-                  strokeWidth: 2,
+                  fill: themeColors.pink,
                 },
               }}
               data={[
@@ -340,13 +338,19 @@ export default class VictoryBrushContainerDemo extends React.Component<
           </VictoryStack>
 
           <VictoryLine
-            style={{ parent: chartStyle.parent, data: { stroke: "teal" } }}
+            theme={VictoryTheme.clean}
+            style={{
+              parent: chartStyle.parent,
+              data: { stroke: themeColors.teal },
+            }}
             containerComponent={
               <VictoryBrushContainer
                 brushDomain={{ y: [-3, 3] }}
-                brushComponent={<rect style={{ fill: "teal" }} />}
+                brushComponent={<rect style={{ fill: themeColors.blue }} />}
                 handleWidth={1}
-                handleStyle={{ stroke: "black", fill: "black" }}
+                handleStyle={{
+                  stroke: themeColors.cyan,
+                }}
               />
             }
             data={[
