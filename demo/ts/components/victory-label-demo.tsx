@@ -13,9 +13,9 @@ const containerStyle: React.CSSProperties = {
 
 const style = {
   parent: { border: "1px solid #ccc", margin: "1%", maxWidth: "25%" },
-  labels: { padding: 0 },
-  data: { fill: "gold" },
 };
+
+const themeColors = VictoryTheme.clean.palette?.colors || {};
 
 const defaultScatterProps: VictoryScatterProps = {
   style,
@@ -31,13 +31,14 @@ export default class App extends React.Component<any, {}> {
     return (
       <div style={containerStyle}>
         <VictoryScatter
-          theme={VictoryTheme.clean}
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={<VictoryLabel />}
         />
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
               transform="translate(50)"
@@ -48,6 +49,7 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
               title={"Victory is awesome. This is a title."}
@@ -59,6 +61,7 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel angle={65} text={"Now with angles!!"} />
           }
@@ -66,11 +69,11 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
               direction="rtl"
               verticalAnchor="start"
-              style={[{ fill: "red", fontSize: 20 }]}
               text={"سلام world"}
             />
           }
@@ -78,11 +81,11 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
               textAnchor="middle"
               verticalAnchor="start"
-              style={{ padding: 15 }}
               text={
                 "Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"
               }
@@ -92,11 +95,12 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
               dx={30}
               dy={30}
-              backgroundStyle={{ fill: "cyan" }}
+              backgroundStyle={{ fill: themeColors.yellow, opacity: 0.4 }}
               text={"such text, wow"}
             />
           }
@@ -104,10 +108,14 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: "pink" }}
-              style={[{ fontSize: 20, fill: "green" }, { fontSize: 10 }]}
+              backgroundStyle={{ fill: themeColors.cyan, opacity: 0.4 }}
+              style={[
+                { fontSize: 20, fill: themeColors.purple },
+                { fontSize: 10 },
+              ]}
               lineHeight={[1, 3, 1]}
               textAnchor="start"
               verticalAnchor="start"
@@ -120,9 +128,10 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: "pink" }}
+              backgroundStyle={{ fill: themeColors.yellow, opacity: 0.4 }}
               textAnchor="end"
               verticalAnchor="end"
               text={"Victory is awesome.\nThis is (end, end) anchoring.\nOK?"}
@@ -132,9 +141,10 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: "pink" }}
+              backgroundStyle={{ fill: themeColors.green, opacity: 0.4 }}
               lineHeight={2}
               textAnchor="middle"
               verticalAnchor="end"
@@ -147,9 +157,10 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: "pink" }}
+              backgroundStyle={{ fill: themeColors.pink, opacity: 0.3 }}
               textAnchor="start"
               verticalAnchor="end"
               text={
@@ -161,9 +172,10 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: "pink" }}
+              backgroundStyle={{ fill: themeColors.pink, opacity: 0.3 }}
               textAnchor="end"
               verticalAnchor="middle"
               text={
@@ -175,12 +187,13 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
               lineHeight={2}
               textAnchor="middle"
               verticalAnchor="middle"
-              backgroundStyle={{ fill: "cyan", opacity: 0.4 }}
+              backgroundStyle={{ fill: themeColors.cyan, opacity: 0.4 }}
               text={
                 "Victory is awesome.\nThis is (middle, middle) anchoring.\nGot it?"
               }
@@ -190,8 +203,10 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
+              backgroundStyle={{ fill: themeColors.cyan, opacity: 0.4 }}
               textAnchor="start"
               verticalAnchor="middle"
               text={
@@ -204,9 +219,10 @@ export default class App extends React.Component<any, {}> {
         {/* examples for inlining VictoryLabel with mutlitple labels */}
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: "lavender" }}
+              backgroundStyle={{ fill: themeColors.purple, opacity: 0.4 }}
               verticalAnchor="middle"
               text={[
                 "Victory is awesome.",
@@ -219,13 +235,17 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: "lavender" }}
+              backgroundStyle={{ fill: themeColors.purple, opacity: 0.4 }}
               textAnchor="start"
               verticalAnchor="middle"
               text={["This is varying styles", "inline."]}
-              style={[{ fill: "#000" }, { fill: "#6128ff", fontSize: 20 }]}
+              style={[
+                { fill: "#FFF" },
+                { fill: themeColors.purple, fontSize: 20 },
+              ]}
               inline
               dx={10}
             />
@@ -234,12 +254,13 @@ export default class App extends React.Component<any, {}> {
 
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           data={[{ x: -10, y: 5 }]}
           labelComponent={
             <VictoryLabel
               textAnchor="start"
               verticalAnchor="start"
-              backgroundStyle={{ fill: "lavender" }}
+              backgroundStyle={{ fill: themeColors.purple, opacity: 0.4 }}
               text={["Use", "dx", "attribute", "to", "shift", "labels"]}
               inline
               dx={10}
@@ -253,13 +274,14 @@ export default class App extends React.Component<any, {}> {
          */}
         <VictoryScatter
           {...defaultScatterProps}
+          theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
               backgroundStyle={[
-                { fill: "pink" },
-                { fill: "blue" },
-                { fill: "purple" },
-                { fill: "red" },
+                { fill: themeColors.pink },
+                { fill: themeColors.blue },
+                { fill: themeColors.purple },
+                { fill: themeColors.red },
               ]}
               text={[
                 "Victory is awesome.",
@@ -267,7 +289,7 @@ export default class App extends React.Component<any, {}> {
                 "lineHeight",
                 "as an array.",
               ]}
-              style={[{ fontSize: 20, fill: "green" }, { fontSize: 30 }]}
+              style={[{ fontSize: 20, fill: "#FFF" }, { fontSize: 30 }]}
               lineHeight={[2, 2, 3, 1]}
               verticalAnchor="start"
             />
@@ -280,7 +302,10 @@ export default class App extends React.Component<any, {}> {
           labelComponent={
             <VictoryLabel
               angle={20}
-              backgroundStyle={[{ fill: "pink" }, { fill: "blue" }]}
+              backgroundStyle={[
+                { fill: themeColors.pink },
+                { fill: themeColors.blue },
+              ]}
               text={[
                 "Victory is awesome.",
                 "Even if we leave blank arrays",

@@ -330,15 +330,17 @@ export const clean: VictoryThemeDefinition = {
   label: baseLabelStyles,
   legend: {
     colorScale,
-    gutter: 10,
-    orientation: "vertical",
+    gutter: 24,
+    borderPadding: 10,
+    orientation: "horizontal",
     titleOrientation: "top",
+    centerTitle: true,
     style: {
       data: {
         type: "circle",
       },
-      labels: { ...baseLabelStyles, fontSize: 14 },
-      title: Object.assign({}, baseLabelStyles, { padding, fontSize: 20 }),
+      labels: { ...baseLabelStyles, fontSize: 12 },
+      title: Object.assign({}, baseLabelStyles, { padding, fontSize: 16 }),
       border: { stroke: gray["200"], strokeWidth: 2, padding: 16 },
     },
   },
@@ -423,9 +425,10 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: red["100"],
-          stroke: red["500"],
+          fill: blue["100"],
+          stroke: blue["500"],
           strokeWidth: 2,
+          opacity: 0.4,
         },
         labels: Object.assign({}, baseLabelStyles, {
           padding: 5,

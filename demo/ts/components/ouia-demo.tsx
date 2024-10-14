@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryLine } from "victory-line";
-import { VictoryContainer } from "victory-core";
+import { VictoryContainer, VictoryTheme } from "victory-core";
 
 class OuiaDemo extends React.Component<any> {
   constructor(props: any) {
@@ -25,6 +25,7 @@ class OuiaDemo extends React.Component<any> {
         <h1>Open UI Automation (OUIA)</h1>
         <div style={containerStyle}>
           <VictoryChart
+            theme={VictoryTheme.clean}
             containerComponent={
               <VictoryContainer
                 ouiaId="victory-container-ouia"

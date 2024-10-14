@@ -17,6 +17,8 @@ const style = {
   parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
 };
 
+const themeColors = VictoryTheme.clean.palette?.colors || {};
+
 type dataType = {
   x?: string | number;
   y?: string | number;
@@ -40,7 +42,7 @@ export default class VictoryErrorBarDemo extends React.Component<
 
     this.state = {
       data: this.getData(),
-      hoverStyle: { stroke: "gold " },
+      hoverStyle: { stroke: themeColors.green || "green" },
     };
   }
 
@@ -85,13 +87,14 @@ export default class VictoryErrorBarDemo extends React.Component<
           <VictoryScatter data={basicData} />
         </VictoryChart>
 
-        <VictoryChart horizontal style={style}>
+        <VictoryChart horizontal style={style} theme={VictoryTheme.clean}>
           <VictoryErrorBar data={basicData} />
           <VictoryScatter data={basicData} />
         </VictoryChart>
 
         <VictoryErrorBar
           style={style}
+          theme={VictoryTheme.clean}
           width={500}
           height={500}
           animate={{ duration: 2000 }}
@@ -100,46 +103,57 @@ export default class VictoryErrorBarDemo extends React.Component<
             <VictoryContainer
               title="ErrorBar Chart"
               desc="This is a errorbar chart with data points!"
-              style={{ border: "1px solid red", margin: "2%", maxWidth: "40%" }}
+              style={{ ...style.parent }}
             />
           }
         />
 
         <VictoryErrorBar
+          theme={VictoryTheme.clean}
           horizontal
           style={style}
           width={500}
           height={500}
           animate={{ duration: 2000 }}
-          borderWidth={30}
           data={this.state.data}
         />
 
         <VictoryErrorBar
+          theme={VictoryTheme.clean}
+          animate={{ duration: 2000 }}
           style={{
             parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
-            data: { fill: ({ datum }) => (datum.y > 0 ? "red" : "blue") },
+            data: {
+              stroke: ({ datum }) =>
+                datum.y > 0
+                  ? themeColors.red || "red"
+                  : themeColors.blue || "blue",
+            },
           }}
           width={500}
           height={500}
         />
 
         <VictoryErrorBar
+          theme={VictoryTheme.clean}
           style={{
             parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
-            data: { stroke: "blue", opacity: 0.7, strokeWidth: 3 },
+            data: {
+              stroke: themeColors.purple,
+            },
           }}
           width={500}
           height={500}
           data={this.state.data}
         />
 
-        <VictoryChart>
+        <VictoryChart style={style} theme={VictoryTheme.clean}>
           <VictoryErrorBar style={style} standalone={false} />
         </VictoryChart>
 
         <VictoryErrorBar
-          style={{ parent: style.parent, data: this.state.hoverStyle }}
+          theme={VictoryTheme.clean}
+          style={{ ...style, data: this.state.hoverStyle }}
           data={this.state.data}
           events={[
             {
@@ -151,7 +165,7 @@ export default class VictoryErrorBarDemo extends React.Component<
                       mutation: (props: any) => {
                         return {
                           style: Object.assign({}, props.style, {
-                            stroke: "orange",
+                            stroke: themeColors.orange || "orange",
                           }),
                         };
                       },
@@ -163,11 +177,11 @@ export default class VictoryErrorBarDemo extends React.Component<
           ]}
         />
 
-        <VictoryChart style={style} theme={VictoryTheme.material}>
+        <VictoryChart style={style} theme={VictoryTheme.clean}>
           <VictoryErrorBar style={style} data={this.state.data} />
         </VictoryChart>
 
-        <VictoryChart style={style} theme={VictoryTheme.material}>
+        <VictoryChart style={style} theme={VictoryTheme.clean}>
           <VictoryErrorBar style={style} data={[]} />
         </VictoryChart>
       </div>

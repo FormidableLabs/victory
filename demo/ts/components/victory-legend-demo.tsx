@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { VictoryLabel, Border, VictoryTheme } from "victory-core";
 import { VictoryLegend } from "victory-legend";
-import { FaMoon, FaSun, FaStar } from 'react-icons/fa'
-
-const legendStyle = {
-  labels: { fontSize: 14, fontFamily: "Palatino" },
-  border: { stroke: "black", strokeWidth: 2 },
-  title: { padding: 5, fill: "red" },
-};
+import { FaMoon, FaSun, FaStar } from "react-icons/fa";
 
 const symbolSize = 5;
 const symbolSpacer = 10;
@@ -95,7 +89,8 @@ const customIconData = [
       size: symbolSize,
       fill: "pink",
     },
-  }]
+  },
+];
 
 const CustomSun = (props) => {
   return <FaSun {...props} x={props.x - 7} y={props.y - 7} size={15} />;
@@ -132,11 +127,10 @@ const CustomMoon = (props) => {
   );
 };
 
-
 const LegendDemo = () => (
   <div className="demo">
     <div>
-      <svg height={200} width={1000}>
+      <svg height={200} width={1500}>
         <VictoryLegend
           theme={VictoryTheme.clean}
           standalone={false}
@@ -146,9 +140,7 @@ const LegendDemo = () => (
           title={["My Legend title", "with some explanatory substitle"]}
           data={data}
           symbolSpacer={symbolSpacer}
-          titleComponent={
-            <VictoryLabel style={[{ fontSize: 20 }, { fontSize: 14 }]} />
-          }
+          titleComponent={<VictoryLabel />}
           events={[
             {
               target: "data",
@@ -169,92 +161,65 @@ const LegendDemo = () => (
     <div>
       <svg height={200} width={1000}>
         <VictoryLegend
-          standalone={false}
-          titleOrientation="right"
-          centerTitle
           title={["TITLE"]}
+          data={data}
+          theme={VictoryTheme.clean}
+          standalone={false}
           x={25}
           y={20}
-          gutter={30}
           symbolSpacer={symbolSpacer}
           itemsPerRow={3}
-          data={data}
-          style={legendStyle}
         />
       </svg>
     </div>
-    <svg height={200} width={1000}>
-      <VictoryLegend
-        orientation="horizontal"
-        titleOrientation="left"
-        title={["TITLE"]}
-        standalone={false}
-        x={25}
-        y={20}
-        symbolSpacer={symbolSpacer}
-        gutter={30}
-        itemsPerRow={3}
-        data={data}
-        style={legendStyle}
-      />
-    </svg>
     <svg height={300} width={1000}>
       <VictoryLegend
+        title={["TITLE", "subtitle", "more"]}
+        data={data}
+        theme={VictoryTheme.clean}
         standalone={false}
         x={25}
         y={20}
-        titleOrientation="bottom"
-        title={["TITLE", "subtitle", "more"]}
         symbolSpacer={symbolSpacer}
-        gutter={30}
-        data={data}
-        style={legendStyle}
       />
     </svg>
-    <svg height={200} width={1000}>
+    <svg height={100} width={1000}>
       <VictoryLegend
+        data={data}
+        theme={VictoryTheme.clean}
         orientation="horizontal"
         standalone={false}
         x={25}
         y={20}
-        gutter={30}
-        data={data}
-        style={legendStyle}
       />
     </svg>
     <svg height={200} width={1000}>
       <VictoryLegend
-        x={25}
-        y={20}
-        standalone={false}
-        orientation="vertical"
-        gutter={{ left: 20, right: 50 }}
-        rowGutter={{ top: 5, bottom: 8 }}
-        style={{ border: { stroke: "black" } }}
         data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
+        theme={VictoryTheme.clean}
+        x={25}
+        y={0}
+        standalone={false}
       />
     </svg>
     <svg height={200} width={1000}>
       <VictoryLegend
-        borderComponent={<Border width={630} height={110} />}
-        centerTitle
+        theme={VictoryTheme.clean}
+        borderComponent={<Border />}
         x={25}
         y={20}
         standalone={false}
         title={["TITLE"]}
-        gutter={30}
         symbolSpacer={symbolSpacer}
         itemsPerRow={3}
         data={data}
-        style={legendStyle}
       />
     </svg>
     {/* CustomIcon */}
     <svg height={200} width={1000}>
       <VictoryLegend
-        centerTitle
+        theme={VictoryTheme.clean}
         title={["TITLE"]}
-        gutter={30}
         x={25}
         y={20}
         standalone={false}
@@ -262,7 +227,6 @@ const LegendDemo = () => (
         itemsPerRow={3}
         dataComponent={<CustomSun />}
         data={customIconData}
-        style={legendStyle}
       />
     </svg>
     {/* CustomIcon with events*/}
