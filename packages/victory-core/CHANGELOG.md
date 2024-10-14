@@ -1,5 +1,17 @@
 # victory-core
 
+## 37.2.0
+
+### Minor Changes
+
+- Minor updates for clean theme ([#2909](https://github.com/FormidableLabs/victory/pull/2909))
+
+* more minor updates to clean theme ([#2915](https://github.com/FormidableLabs/victory/pull/2915))
+
+### Patch Changes
+
+- replace useId for backwards compatibility ([#2916](https://github.com/FormidableLabs/victory/pull/2916))
+
 ## 37.1.2
 
 ### Patch Changes

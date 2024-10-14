@@ -1,5 +1,11 @@
 # victory-voronoi-container
 
+## 37.2.0
+
+### Patch Changes
+
+- Fix: #2369 `<VictoryVoronoiContainer/>` tooltip breaks when mouse moves quickly between different charts ([#2911](https://github.com/FormidableLabs/victory/pull/2911))
+
 ## 37.1.2
 
 ### Patch Changes

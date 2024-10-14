@@ -1,5 +1,11 @@
 # victory-legend
 
+## 37.2.0
+
+### Minor Changes
+
+- Minor updates for clean theme ([#2909](https://github.com/FormidableLabs/victory/pull/2909))
+
 ## 37.1.2
 
 ### Patch Changes

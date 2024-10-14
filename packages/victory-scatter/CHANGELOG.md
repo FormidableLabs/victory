@@ -1,5 +1,7 @@
 # victory-scatter
 
+## 37.2.0
+
 ## 37.1.2
 
 ### Patch Changes
