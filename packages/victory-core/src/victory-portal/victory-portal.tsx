@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults } from "lodash";
+import { defaults, uniqueId } from "lodash";
 import * as Log from "../victory-util/log";
 import * as Helpers from "../victory-util/helpers";
 import { usePortalContext } from "./portal-context";
@@ -15,7 +15,7 @@ const defaultProps: Partial<VictoryPortalProps> = {
 
 export const VictoryPortal = (initialProps: VictoryPortalProps) => {
   const props = { ...defaultProps, ...initialProps };
-  const id = React.useId();
+  const id = uniqueId();
   const portalContext = usePortalContext();
 
   if (!portalContext) {
