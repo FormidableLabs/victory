@@ -202,6 +202,7 @@ class VoronoiHelpersClass {
   }
 
   onMouseLeave = (evt, targetProps) => {
+    this.onMouseMove.cancel();
     const activePoints = targetProps.activePoints || [];
     this.onDeactivated(targetProps, activePoints);
     const inactiveMutations = activePoints.length
