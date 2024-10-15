@@ -285,8 +285,8 @@ export const clean: VictoryThemeDefinition = {
         labels: Object.assign({}, baseLabelStyles, { padding: 5 }),
       },
       candleColors: {
-        positive: teal["500"],
-        negative: orange["500"],
+        positive: green["500"],
+        negative: red["500"],
       },
       wickStrokeWidth: 2,
     },
