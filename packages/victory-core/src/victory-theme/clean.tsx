@@ -131,7 +131,7 @@ const padding = 8;
 const baseProps = {
   width: 450,
   height: 300,
-  padding: 50,
+  padding: 60,
   colorScale,
 };
 // *
@@ -198,7 +198,7 @@ export const clean: VictoryThemeDefinition = {
           strokeLinejoin,
         },
         axisLabel: Object.assign({}, centeredLabelStyles, {
-          padding,
+          padding: 35,
           stroke: "transparent",
         }),
         grid: {

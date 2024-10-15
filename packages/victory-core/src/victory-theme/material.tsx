@@ -67,7 +67,7 @@ const padding = 8;
 const baseProps = {
   width: 350,
   height: 350,
-  padding: 50,
+  padding: 60,
 };
 // *
 // * Labels
@@ -127,7 +127,7 @@ export const material: VictoryThemeDefinition = {
           strokeLinejoin,
         },
         axisLabel: Object.assign({}, centeredLabelStyles, {
-          padding,
+          padding: 35,
           stroke: "transparent",
         }),
         grid: {
