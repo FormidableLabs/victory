@@ -357,8 +357,8 @@ export function getChildStyle(child, index, calculatedProps, theme) {
 }
 
 function getIndependentAxisCategories(categories: string[], axis: "x" | "y") {
-  const dependentAxis = "x";
-  return axis === dependentAxis ? categories : [];
+  const independentAxis = "x";
+  return axis === independentAxis ? categories : [];
 }
 
 export function getStringsFromCategories(childComponents, axis) {
