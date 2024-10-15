@@ -10,7 +10,7 @@ import { VictoryScatter } from "victory-scatter";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
 import { VictorySelectionContainer } from "victory-selection-container";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
 
 export default class App extends React.Component {
   render() {

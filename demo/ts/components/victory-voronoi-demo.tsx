@@ -69,7 +69,7 @@ class VoronoiDemo extends React.Component<any, VoronoiDemoStateProps> {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryVoronoi
-            theme={VictoryTheme.clean}
+            theme={VictoryTheme.material}
             style={{ parent: parentStyle }}
           />
 

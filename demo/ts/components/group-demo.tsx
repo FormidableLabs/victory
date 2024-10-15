@@ -11,7 +11,7 @@ import { VictoryTooltip } from "victory-tooltip";
 import { VictoryVoronoi } from "victory-voronoi";
 import { VictoryBoxPlot } from "victory-box-plot";
 import { range, random } from "lodash";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
 
 const themeColors = VictoryTheme.clean.palette?.colors || {};
 class App extends React.Component {

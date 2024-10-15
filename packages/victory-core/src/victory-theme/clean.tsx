@@ -94,6 +94,8 @@ const redPalette = [red["500"], red["300"], red["100"]];
 const greenPalette = [green["500"], green["300"], green["100"]];
 const bluePalette = [blue["500"], blue["300"], blue["100"]];
 
+const defaultColor = blue["500"];
+
 // *
 // * Typography
 // *
@@ -155,7 +157,7 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: blue["500"],
+          fill: defaultColor,
           strokeWidth: 2,
           fillOpacity: 0.5,
         },
@@ -243,7 +245,7 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: blue["500"],
+          fill: defaultColor,
           padding,
           strokeWidth: 1,
           fillOpacity: 0.5,
@@ -350,7 +352,7 @@ export const clean: VictoryThemeDefinition = {
         data: {
           fill: "transparent",
           opacity: 1,
-          stroke: blue["500"],
+          stroke: defaultColor,
           strokeWidth: 2,
           strokeLinecap,
           strokeLinejoin,
@@ -387,7 +389,7 @@ export const clean: VictoryThemeDefinition = {
     {
       style: {
         data: {
-          fill: purple["500"],
+          fill: defaultColor,
           opacity: 1,
           stroke: "transparent",
           strokeWidth: 0,
@@ -426,9 +428,8 @@ export const clean: VictoryThemeDefinition = {
       style: {
         data: {
           fill: blue["100"],
-          stroke: blue["500"],
+          stroke: defaultColor,
           strokeWidth: 2,
-          opacity: 0.4,
         },
         labels: Object.assign({}, baseLabelStyles, {
           padding: 5,

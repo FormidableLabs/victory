@@ -13,7 +13,7 @@ import {
   CanvasGroup,
   CanvasPoint,
 } from "victory-canvas";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
 
 const populationData = [
   {
