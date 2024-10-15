@@ -75,12 +75,11 @@ const green = {
 
 const colors = {
   blue: blue["500"],
-  pink: pink["500"],
-  teal: teal["500"],
+  cyan: cyan["500"],
   purple: purple["500"],
   green: green["500"],
   orange: orange["500"],
-  cyan: cyan["500"],
+  teal: teal["500"],
   red: red["500"],
   yellow: yellow["500"],
 };
@@ -265,9 +264,9 @@ export const clean: VictoryThemeDefinition = {
         medianLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
         min: { padding, stroke: gray["400"], strokeWidth: 2 },
         minLabels: Object.assign({}, baseLabelStyles, { padding: 3 }),
-        q1: { padding, fill: teal["500"], rx: borderRadius, strokeWidth: 2 },
+        q1: { padding, fill: colorScale[0], rx: borderRadius, strokeWidth: 2 },
         q1Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
-        q3: { padding, fill: cyan["500"], rx: borderRadius },
+        q3: { padding, fill: colorScale[1], rx: borderRadius },
         q3Labels: Object.assign({}, baseLabelStyles, { padding: 3 }),
       },
       boxWidth: 20,
