@@ -96,6 +96,12 @@ describe("helpers/wrapper", () => {
       ).toEqual(["one", "two", "three"]);
       expect(
         Wrapper.getStringsFromCategories(
+          [<MockVictoryLine categories={["one", "z", "three"]} key="1" />],
+          "y",
+        ),
+      ).toEqual([]);
+      expect(
+        Wrapper.getStringsFromCategories(
           [
             <MockVictoryLine
               categories={{ x: ["one", "two", "three"] }}

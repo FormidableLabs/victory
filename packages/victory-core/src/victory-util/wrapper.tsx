@@ -356,6 +356,11 @@ export function getChildStyle(child, index, calculatedProps, theme) {
   };
 }
 
+function getDependentAxisCategories(categories: string[], axis: "x" | "y") {
+  const dependentAxis = "x";
+  return axis === dependentAxis ? categories : [];
+}
+
 export function getStringsFromCategories(childComponents, axis) {
   const iteratee = (child) => {
     const childProps = child.props || {};
@@ -365,7 +370,7 @@ export function getStringsFromCategories(childComponents, axis) {
     const categories =
       childProps.categories && !Array.isArray(childProps.categories)
         ? childProps.categories[axis]
-        : childProps.categories;
+        : getDependentAxisCategories(childProps.categories, axis);
     const categoryStrings =
       categories && categories.filter((val) => typeof val === "string");
     return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
@@ -419,7 +424,7 @@ export function getCategoryAndAxisStringsFromChildren(
 ) {
   const categories = isPlainObject(props.categories)
     ? props.categories[axis]
-    : props.categories;
+    : getDependentAxisCategories(props.categories, axis);
   const axisComponent = Axis.getAxisComponent(childComponents, axis);
   const axisStrings = axisComponent
     ? Data.getStringsFromAxes(axisComponent.props, axis)
