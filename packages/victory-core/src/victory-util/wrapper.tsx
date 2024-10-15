@@ -365,7 +365,7 @@ export function getStringsFromCategories(childComponents, axis) {
     const categories =
       childProps.categories && !Array.isArray(childProps.categories)
         ? childProps.categories[axis]
-        : childProps.props.categories;
+        : childProps.categories;
     const categoryStrings =
       categories && categories.filter((val) => typeof val === "string");
     return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];

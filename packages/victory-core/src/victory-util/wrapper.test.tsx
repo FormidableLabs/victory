@@ -84,4 +84,53 @@ describe("helpers/wrapper", () => {
       expect(Wrapper.getStringsFromData([])).toEqual({ x: [], y: [] });
     });
   });
+
+  describe("getStringsFromCategories", () => {
+    it("gets string from all options", () => {
+      expect(Wrapper.getStringsFromCategories([], "x")).toEqual([]);
+      expect(
+        Wrapper.getStringsFromCategories(
+          [<MockVictoryLine categories={["one", "two", "three"]} key="1" />],
+          "x",
+        ),
+      ).toEqual(["one", "two", "three"]);
+      expect(
+        Wrapper.getStringsFromCategories(
+          [
+            <MockVictoryLine
+              categories={{ x: ["one", "two", "three"] }}
+              key="1"
+            />,
+          ],
+          "x",
+        ),
+      ).toEqual(["one", "two", "three"]);
+      expect(
+        Wrapper.getStringsFromCategories(
+          [
+            <MockVictoryLine
+              categories={{ x: ["one", "two", "three"] }}
+              key="1"
+            />,
+            <MockVictoryLine
+              categories={{ x: ["four", "five", "six"] }}
+              key="2"
+            />,
+          ],
+          "x",
+        ),
+      ).toEqual(["one", "two", "three", "four", "five", "six"]);
+      expect(
+        Wrapper.getStringsFromCategories(
+          [
+            <MockVictoryLine
+              categories={{ y: ["one", "two", "three"] }}
+              key="1"
+            />,
+          ],
+          "x",
+        ),
+      ).toEqual([]);
+    });
+  });
 });
