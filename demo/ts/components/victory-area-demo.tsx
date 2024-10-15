@@ -183,7 +183,7 @@ export default class VictoryAreaDemo extends React.Component<
             data={this.state.data}
             style={{
               data: {
-                fill: VictoryTheme.clean.palette?.colors?.pink,
+                fill: VictoryTheme.clean.palette?.colors?.red,
               },
             }}
           />

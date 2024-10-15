@@ -77,7 +77,7 @@ class EventsDemo extends React.Component {
                           return {
                             style: {
                               ...props.style,
-                              fill: themeColors.pink,
+                              fill: themeColors.red,
                             },
                           };
                         },

@@ -38,12 +38,6 @@ const red = {
   "700": "#D31A3D",
   "900": "#BA1E45",
 };
-const pink = {
-  "100": "#FFDAF6",
-  "300": "#F99DE2",
-  "500": "#FF08C2",
-  "900": "#B2158B",
-};
 const purple = {
   "100": "#EDE3FE",
   "300": "#CDB0FF",
@@ -86,7 +80,6 @@ const colors = {
   red: red["500"],
   purple: purple["500"],
   teal: teal["500"],
-  pink: pink["500"],
 };
 
 const colorScale = Object.values(colors);

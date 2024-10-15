@@ -145,7 +145,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
             ]}
             style={{
               q1: { fill: VictoryTheme.clean.palette?.colors?.yellow },
-              q3: { fill: VictoryTheme.clean.palette?.colors?.pink },
+              q3: { fill: VictoryTheme.clean.palette?.colors?.red },
             }}
           />
         </VictoryChart>
@@ -244,7 +244,7 @@ export default class VictoryBoxPlotDemo extends React.Component<
               median: "bottom",
             }}
             style={{
-              q1: { fill: VictoryTheme.clean.palette?.colors?.pink },
+              q1: { fill: VictoryTheme.clean.palette?.colors?.red },
               q3: { fill: VictoryTheme.clean.palette?.colors?.purple },
             }}
           />

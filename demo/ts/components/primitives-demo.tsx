@@ -111,7 +111,7 @@ class App extends React.Component<any, PrimitivesDemoState> {
                   cy={0}
                   startAngle={180}
                   endAngle={360}
-                  style={{ fill: themeColors.pink }}
+                  style={{ fill: themeColors.red }}
                 />
               }
             />

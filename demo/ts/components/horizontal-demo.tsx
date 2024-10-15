@@ -145,7 +145,7 @@ class App extends React.Component {
           <VictoryBar
             style={{
               data: {
-                fill: themeColors.pink,
+                fill: themeColors.red,
               },
             }}
             horizontal
