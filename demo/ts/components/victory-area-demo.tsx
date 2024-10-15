@@ -133,8 +133,6 @@ export default class VictoryAreaDemo extends React.Component<
       justifyContent: "center",
     };
 
-    const dataStyle = { strokeWidth: 2, fillOpacity: 0.4 };
-
     return (
       <div className="demo" style={containerStyle}>
         <VictoryChart theme={VictoryTheme.clean} style={style}>

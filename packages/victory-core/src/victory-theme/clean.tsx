@@ -28,12 +28,14 @@ const orange = {
   "100": "#FEE2D5",
   "300": "#FFA981",
   "500": "#FF6F2C",
+  "700": "#FF4E1B",
   "900": "#D74D26",
 };
 const red = {
   "100": "#FFDCE5",
   "300": "#FF9EB7",
   "500": "#F82B60",
+  "700": "#D31A3D",
   "900": "#BA1E45",
 };
 const pink = {
@@ -52,6 +54,7 @@ const blue = {
   "100": "#CFDFFF",
   "300": "#9CC7FF",
   "500": "#2D7FF9",
+  "700": "#0056B3",
   "900": "#2750AE",
 };
 const cyan = {
@@ -70,28 +73,54 @@ const green = {
   "100": "#D1F7C4",
   "300": "#93E088",
   "500": "#20C933",
+  "700": "#1B9B2A",
   "900": "#338A17",
 };
 
 const colors = {
   blue: blue["500"],
   cyan: cyan["500"],
-  purple: purple["500"],
   green: green["500"],
-  orange: orange["500"],
-  teal: teal["500"],
-  red: red["500"],
   yellow: yellow["500"],
+  orange: orange["500"],
+  red: red["500"],
+  purple: purple["500"],
+  teal: teal["500"],
+  pink: pink["500"],
 };
 
 const colorScale = Object.values(colors);
-const grayscale = [gray["200"], gray["400"], gray["600"], gray["900"]];
-const warm = [yellow["500"], orange["500"], red["500"], pink["500"]];
-const cool = [cyan["500"], teal["500"], blue["500"], purple["500"]];
-const heatmap = [green["500"], yellow["500"], red["500"]];
-const redPalette = [red["500"], red["300"], red["100"]];
-const greenPalette = [green["500"], green["300"], green["100"]];
-const bluePalette = [blue["500"], blue["300"], blue["100"]];
+const grayscale = [
+  gray["100"],
+  gray["300"],
+  gray["500"],
+  gray["700"],
+  gray["900"],
+];
+const warm = [
+  yellow["300"],
+  yellow["500"],
+  orange["500"],
+  orange["900"],
+  red["500"],
+];
+const cool = [
+  purple["500"],
+  blue["500"],
+  cyan["500"],
+  teal["500"],
+  green["500"],
+];
+const heatmap = [
+  green["900"],
+  green["500"],
+  yellow["500"],
+  orange["500"],
+  red["500"],
+];
+const redPalette = Object.values(red);
+const greenPalette = Object.values(green);
+const bluePalette = Object.values(blue);
 
 const defaultColor = blue["500"];
 
