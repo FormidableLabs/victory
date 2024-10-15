@@ -356,7 +356,7 @@ export function getChildStyle(child, index, calculatedProps, theme) {
   };
 }
 
-function getDependentAxisCategories(categories: string[], axis: "x" | "y") {
+function getIndependentAxisCategories(categories: string[], axis: "x" | "y") {
   const dependentAxis = "x";
   return axis === dependentAxis ? categories : [];
 }
@@ -370,7 +370,7 @@ export function getStringsFromCategories(childComponents, axis) {
     const categories =
       childProps.categories && !Array.isArray(childProps.categories)
         ? childProps.categories[axis]
-        : getDependentAxisCategories(childProps.categories, axis);
+        : getIndependentAxisCategories(childProps.categories, axis);
     const categoryStrings =
       categories && categories.filter((val) => typeof val === "string");
     return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
@@ -424,7 +424,7 @@ export function getCategoryAndAxisStringsFromChildren(
 ) {
   const categories = isPlainObject(props.categories)
     ? props.categories[axis]
-    : getDependentAxisCategories(props.categories, axis);
+    : getIndependentAxisCategories(props.categories, axis);
   const axisComponent = Axis.getAxisComponent(childComponents, axis);
   const axisStrings = axisComponent
     ? Data.getStringsFromAxes(axisComponent.props, axis)
