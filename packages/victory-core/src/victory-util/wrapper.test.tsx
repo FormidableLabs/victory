@@ -87,21 +87,21 @@ describe("helpers/wrapper", () => {
 
   describe("getStringsFromCategories", () => {
     it("gets string from all options", () => {
-      expect(Wrapper.getStringsFromCategories([], "x")).toEqual([]);
+      expect(Wrapper.getStringsFromChildrenCategories([], "x")).toEqual([]);
       expect(
-        Wrapper.getStringsFromCategories(
+        Wrapper.getStringsFromChildrenCategories(
           [<MockVictoryLine categories={["one", "two", "three"]} key="1" />],
           "x",
         ),
       ).toEqual(["one", "two", "three"]);
       expect(
-        Wrapper.getStringsFromCategories(
-          [<MockVictoryLine categories={["one", "z", "three"]} key="1" />],
+        Wrapper.getStringsFromChildrenCategories(
+          [<MockVictoryLine categories={["one", "two", "three"]} key="1" />],
           "y",
         ),
-      ).toEqual([]);
+      ).toEqual(["one", "two", "three"]);
       expect(
-        Wrapper.getStringsFromCategories(
+        Wrapper.getStringsFromChildrenCategories(
           [
             <MockVictoryLine
               categories={{ x: ["one", "two", "three"] }}
@@ -112,7 +112,7 @@ describe("helpers/wrapper", () => {
         ),
       ).toEqual(["one", "two", "three"]);
       expect(
-        Wrapper.getStringsFromCategories(
+        Wrapper.getStringsFromChildrenCategories(
           [
             <MockVictoryLine
               categories={{ x: ["one", "two", "three"] }}
@@ -127,7 +127,7 @@ describe("helpers/wrapper", () => {
         ),
       ).toEqual(["one", "two", "three", "four", "five", "six"]);
       expect(
-        Wrapper.getStringsFromCategories(
+        Wrapper.getStringsFromChildrenCategories(
           [
             <MockVictoryLine
               categories={{ y: ["one", "two", "three"] }}
