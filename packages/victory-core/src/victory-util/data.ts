@@ -311,7 +311,14 @@ export function formatData(
         return dataArr;
       }, []);
 
-  const sortedData = sortData(data, props.sortKey, props.sortOrder);
+  const sortedData = sortData(data, props.sortKey, props.sortOrder).map(
+    (datum, indexz) => {
+      return {
+        ...datum,
+        _x: indexz + 1,
+      };
+    },
+  );
   const cleanedData = cleanData(sortedData, props);
   return addEventKeys(props, cleanedData);
 }
