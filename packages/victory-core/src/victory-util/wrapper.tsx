@@ -356,19 +356,13 @@ export function getChildStyle(child, index, calculatedProps, theme) {
   };
 }
 
-export function getStringsFromCategories(childComponents, axis) {
+export function getStringsFromChildrenCategories(childComponents, axis) {
   const iteratee = (child) => {
-    const childProps = child.props || {};
-    if (!Domain.isDomainComponent(child) || !childProps.categories) {
+    if (!Domain.isDomainComponent(child)) {
       return null;
     }
-    const categories =
-      childProps.categories && !Array.isArray(childProps.categories)
-        ? childProps.categories[axis]
-        : childProps.props.categories;
-    const categoryStrings =
-      categories && categories.filter((val) => typeof val === "string");
-    return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
+    const childProps = child.props || {};
+    return Data.getStringsFromCategories(childProps, axis);
   };
   return Helpers.reduceChildren(childComponents.slice(0), iteratee);
 }
@@ -417,15 +411,14 @@ export function getCategoryAndAxisStringsFromChildren(
   axis,
   childComponents,
 ) {
-  const categories = isPlainObject(props.categories)
-    ? props.categories[axis]
-    : props.categories;
+  const categories = Data.getStringsFromCategories(props, axis);
   const axisComponent = Axis.getAxisComponent(childComponents, axis);
   const axisStrings = axisComponent
     ? Data.getStringsFromAxes(axisComponent.props, axis)
     : [];
-  const categoryStrings =
-    categories || getStringsFromCategories(childComponents, axis);
+  const categoryStrings = categories.length
+    ? categories
+    : getStringsFromChildrenCategories(childComponents, axis);
   return uniq([...categoryStrings, ...axisStrings].flat());
 }
 
@@ -445,15 +438,9 @@ export function getStringsFromChildren(props, childComponents) {
 
 export function getCategories(props, childComponents, allStrings?) {
   const xPropCategories =
-    props.categories && !Array.isArray(props.categories)
-      ? props.categories.x
-      : props.categories;
-
+    props.categories && Data.getStringsFromCategories(props, "x");
   const yPropCategories =
-    props.categories && !Array.isArray(props.categories)
-      ? props.categories.y
-      : props.categories;
-
+    props.categories && Data.getStringsFromCategories(props, "y");
   const fallbackRequired = !xPropCategories || !yPropCategories;
 
   const fallbackProps = fallbackRequired

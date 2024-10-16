@@ -84,4 +84,59 @@ describe("helpers/wrapper", () => {
       expect(Wrapper.getStringsFromData([])).toEqual({ x: [], y: [] });
     });
   });
+
+  describe("getStringsFromCategories", () => {
+    it("gets string from all options", () => {
+      expect(Wrapper.getStringsFromChildrenCategories([], "x")).toEqual([]);
+      expect(
+        Wrapper.getStringsFromChildrenCategories(
+          [<MockVictoryLine categories={["one", "two", "three"]} key="1" />],
+          "x",
+        ),
+      ).toEqual(["one", "two", "three"]);
+      expect(
+        Wrapper.getStringsFromChildrenCategories(
+          [<MockVictoryLine categories={["one", "two", "three"]} key="1" />],
+          "y",
+        ),
+      ).toEqual(["one", "two", "three"]);
+      expect(
+        Wrapper.getStringsFromChildrenCategories(
+          [
+            <MockVictoryLine
+              categories={{ x: ["one", "two", "three"] }}
+              key="1"
+            />,
+          ],
+          "x",
+        ),
+      ).toEqual(["one", "two", "three"]);
+      expect(
+        Wrapper.getStringsFromChildrenCategories(
+          [
+            <MockVictoryLine
+              categories={{ x: ["one", "two", "three"] }}
+              key="1"
+            />,
+            <MockVictoryLine
+              categories={{ x: ["four", "five", "six"] }}
+              key="2"
+            />,
+          ],
+          "x",
+        ),
+      ).toEqual(["one", "two", "three", "four", "five", "six"]);
+      expect(
+        Wrapper.getStringsFromChildrenCategories(
+          [
+            <MockVictoryLine
+              categories={{ y: ["one", "two", "three"] }}
+              key="1"
+            />,
+          ],
+          "x",
+        ),
+      ).toEqual([]);
+    });
+  });
 });
