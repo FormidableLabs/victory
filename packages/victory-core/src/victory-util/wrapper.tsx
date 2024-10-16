@@ -437,8 +437,10 @@ export function getStringsFromChildren(props, childComponents) {
 }
 
 export function getCategories(props, childComponents, allStrings?) {
-  const xPropCategories = Data.getStringsFromCategories(props, "x");
-  const yPropCategories = Data.getStringsFromCategories(props, "y");
+  const xPropCategories =
+    props.categories && Data.getStringsFromCategories(props, "x");
+  const yPropCategories =
+    props.categories && Data.getStringsFromCategories(props, "y");
   const fallbackRequired = !xPropCategories || !yPropCategories;
 
   const fallbackProps = fallbackRequired
