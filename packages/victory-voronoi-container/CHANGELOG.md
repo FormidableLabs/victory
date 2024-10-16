@@ -1,5 +1,7 @@
 # victory-voronoi-container
 
+## 37.3.0
+
 ## 37.2.0
 
 ### Patch Changes
