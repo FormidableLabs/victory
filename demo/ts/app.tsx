@@ -32,6 +32,7 @@ import PrimitivesDemo from "./components/primitives-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import SelectionDemo from "./components/selection-demo";
 import StackDemo from "./components/victory-stack-demo";
+import StackedThemeDemos from "./components/stacked-theme-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import VictoryDemo from "./components/victory-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
@@ -84,6 +85,7 @@ const MAP = {
   "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
   "/selection": { component: SelectionDemo, name: "SelectionDemo" },
   "/stack": { component: StackDemo, name: "StackDemo" },
+  "/stacked-theme": { component: StackedThemeDemos, name: "StackedThemeDemos" },
   "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
   "/victory": { component: VictoryDemo, name: "VictoryDemo" },
   "/victory-selection-container": {

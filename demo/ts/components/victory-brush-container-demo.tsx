@@ -322,7 +322,7 @@ export default class VictoryBrushContainerDemo extends React.Component<
             <VictoryBar
               style={{
                 data: {
-                  fill: themeColors.pink,
+                  fill: themeColors.red,
                 },
               }}
               data={[

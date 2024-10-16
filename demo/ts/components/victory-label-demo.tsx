@@ -160,7 +160,7 @@ export default class App extends React.Component<any, {}> {
           theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: themeColors.pink, opacity: 0.3 }}
+              backgroundStyle={{ fill: themeColors.red, opacity: 0.3 }}
               textAnchor="start"
               verticalAnchor="end"
               text={
@@ -175,7 +175,7 @@ export default class App extends React.Component<any, {}> {
           theme={VictoryTheme.clean}
           labelComponent={
             <VictoryLabel
-              backgroundStyle={{ fill: themeColors.pink, opacity: 0.3 }}
+              backgroundStyle={{ fill: themeColors.red, opacity: 0.3 }}
               textAnchor="end"
               verticalAnchor="middle"
               text={
@@ -278,7 +278,7 @@ export default class App extends React.Component<any, {}> {
           labelComponent={
             <VictoryLabel
               backgroundStyle={[
-                { fill: themeColors.pink },
+                { fill: themeColors.red },
                 { fill: themeColors.blue },
                 { fill: themeColors.purple },
                 { fill: themeColors.red },
@@ -303,7 +303,7 @@ export default class App extends React.Component<any, {}> {
             <VictoryLabel
               angle={20}
               backgroundStyle={[
-                { fill: themeColors.pink },
+                { fill: themeColors.red },
                 { fill: themeColors.blue },
               ]}
               text={[

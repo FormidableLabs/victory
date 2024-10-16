@@ -261,7 +261,7 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} theme={VictoryTheme.clean}>
-            <VictoryScatter style={{ data: { fill: themeColors.pink } }} />
+            <VictoryScatter style={{ data: { fill: themeColors.red } }} />
           </VictoryChart>
 
           <VictoryChart
@@ -509,7 +509,7 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
             theme={VictoryTheme.clean}
           >
             <VictoryLine
-              style={{ data: { stroke: themeColors.pink } }}
+              style={{ data: { stroke: themeColors.red } }}
               y={(data) => Math.sin(2 * Math.PI * data.x)}
             />
 

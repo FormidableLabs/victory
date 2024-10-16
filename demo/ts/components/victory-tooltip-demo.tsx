@@ -8,7 +8,7 @@ import { VictoryScatter } from "victory-scatter";
 import { VictoryTooltip } from "victory-tooltip";
 import { VictoryCandlestick } from "victory-candlestick";
 import { VictoryErrorBar } from "victory-errorbar";
-import { VictoryTheme } from "victory-core/lib";
+import { VictoryTheme } from "victory-core";
 
 class App extends React.Component {
   render() {

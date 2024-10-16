@@ -153,7 +153,7 @@ export default class VictoryBarDemo extends React.Component<
           <VictoryBar
             theme={VictoryTheme.clean}
             style={{
-              data: { fill: VictoryTheme.clean.palette?.colors?.pink },
+              data: { fill: VictoryTheme.clean.palette?.colors?.red },
             }}
             scale={{ y: "log", x: "linear" }}
             horizontal
@@ -509,7 +509,7 @@ export default class VictoryBarDemo extends React.Component<
           style={{
             parent: parentStyle,
             data: {
-              fill: VictoryTheme.clean.palette?.colors?.pink,
+              fill: VictoryTheme.clean.palette?.colors?.red,
             },
           }}
           labels={["a", "b", "c", "d", "e"]}

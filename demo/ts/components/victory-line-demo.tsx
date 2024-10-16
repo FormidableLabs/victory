@@ -205,7 +205,7 @@ export default class VictoryLineDemo extends React.Component<
           theme={VictoryTheme.clean}
           style={{
             parent: parentStyle,
-            data: { stroke: VictoryTheme.clean.palette?.colors?.pink },
+            data: { stroke: VictoryTheme.clean.palette?.colors?.red },
           }}
           data={this.state.arrayData}
           x={0}

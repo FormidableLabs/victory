@@ -327,7 +327,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           style={{
             parent: parentStyle,
             data: {
-              fill: VictoryTheme.clean.palette?.colors?.pink,
+              fill: VictoryTheme.clean.palette?.colors?.red,
             },
           }}
           events={[
@@ -465,7 +465,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
           <VictoryHistogram
             horizontal
             style={{
-              data: { fill: VictoryTheme.clean.palette?.colors?.pink },
+              data: { fill: VictoryTheme.clean.palette?.colors?.red },
             }}
             data={this.dateData}
           />

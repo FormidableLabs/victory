@@ -33,7 +33,7 @@ const themeColors = VictoryTheme.clean.palette?.colors || {};
 const scatterFillStyle: VictoryStyleInterface = {
   data: {
     fill: ({ active }) =>
-      active ? themeColors.pink || "pink" : themeColors.blue || "blue",
+      active ? themeColors.red || "pink" : themeColors.blue || "blue",
   },
 };
 interface WrapperProps {

@@ -178,7 +178,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
             <VictoryGroup style={chartStyle}>
               <VictoryScatter
                 style={{
-                  data: { fill: themeColors.pink },
+                  data: { fill: themeColors.red },
                 }}
                 size={({ active }) => (active ? 5 : 3)}
                 labels={({ datum }) => datum.y}
