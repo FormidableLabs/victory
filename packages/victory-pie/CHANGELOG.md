@@ -1,5 +1,7 @@
 # victory-pie
 
+## 37.3.0
+
 ## 37.2.0
 
 ### Minor Changes
