@@ -1,4 +1,3 @@
-import { orderBy } from "lodash";
 import {
   Collection,
   Data,
@@ -33,28 +32,14 @@ export const getBarPosition = (props, datum) => {
   return Helpers.scalePoint(props, Object.assign({}, datum, { _y0, _x0 }));
 };
 
-function sortData(dataset, sortKey, sortOrder = "ascending") {
-  if (!sortKey) {
-    return dataset;
-  }
-
-  // Ensures previous VictoryLine api for sortKey prop stays consistent
-  let formattedSortKey = sortKey;
-  if (sortKey === "x" || sortKey === "y") {
-    formattedSortKey = `_${sortKey}`;
-  }
-  const order = sortOrder === "ascending" ? "asc" : "desc";
-  return orderBy(dataset, formattedSortKey, order);
-}
-
 const getCalculatedValues = (initialProps) => {
   let data = Data.getData(initialProps);
 
   const props = initialProps.sortKey
     ? {
         ...initialProps,
-        data: data.map((d) => {
-          return { ...d, x: d.x.toString() };
+        data: data.map((d, index) => {
+          return { ...d, x: d.x.toString(), _x: index + 1 };
         }),
       }
     : initialProps;
