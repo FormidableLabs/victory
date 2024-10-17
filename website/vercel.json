@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/open-source/victory/docs/faq", "destination": "/open-source/victory/docs", "permanent": true }
+  ]
+}
