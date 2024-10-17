@@ -48,14 +48,12 @@ function sortData(dataset, sortKey, sortOrder = "ascending") {
 }
 
 const getCalculatedValues = (initialProps) => {
+  let data = Data.getData(initialProps);
+
   const props = initialProps.sortKey
     ? {
         ...initialProps,
-        data: sortData(
-          initialProps.data,
-          initialProps.sortKey,
-          initialProps.sortOrder,
-        ).map((d) => {
+        data: data.map((d) => {
           return { ...d, x: d.x.toString() };
         }),
       }
@@ -86,8 +84,7 @@ const getCalculatedValues = (initialProps) => {
     ? props.origin || Helpers.getPolarOrigin(props)
     : undefined;
 
-  let data = Data.getData(props);
-  data = Data.formatDataFromDomain(data, domain, 0);
+  data = Data.formatDataFromDomain(props.data, domain, 0);
 
   return { style, data, scale, domain, origin };
 };
