@@ -297,8 +297,11 @@ export function formatData(
               if (typeof value === "string" && stringMap[type]) {
                 memo[`${type}Name`] = value;
                 memo[`_${type}`] = stringMap[type][value];
+              } else if (type === "x" && props.sortKey) {
+                memo[`${type}Name`] = value.toString();
+                memo[`_${type}`] = index + 1;
               } else {
-                memo[`_${type}`] = type === "x" ? index + 1 : value;
+                memo[`_${type}`] = value;
               }
             }
             return memo;
