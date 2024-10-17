@@ -282,44 +282,34 @@ export function formatData(
 
   const data = preformattedData
     ? dataset
-    : sortData(dataset, props.sortKey, props.sortOrder).reduce(
-        (dataArr, datum, index) => {
-          // eslint-disable-line complexity
-          const parsedDatum = parseDatum(datum);
-          const fallbackValues = { x: index, y: parsedDatum };
-          const processedValues = expectedKeys!.reduce((memo, type) => {
-            const processedValue = accessor[type](parsedDatum);
-            const value =
-              processedValue !== undefined
-                ? processedValue
-                : fallbackValues[type];
-            if (value !== undefined) {
-              if (typeof value === "string" && stringMap[type]) {
-                memo[`${type}Name`] = value;
-                memo[`_${type}`] = stringMap[type][value];
-              } else if (type === "x" && props.sortKey) {
-                memo[`${type}Name`] = value.toString();
-                memo[`_${type}`] = index + 1;
-              } else {
-                memo[`_${type}`] = value;
-              }
+    : dataset.reduce((dataArr, datum, index) => {
+        // eslint-disable-line complexity
+        const parsedDatum = parseDatum(datum);
+        const fallbackValues = { x: index, y: parsedDatum };
+        const processedValues = expectedKeys!.reduce((memo, type) => {
+          const processedValue = accessor[type](parsedDatum);
+          const value =
+            processedValue !== undefined
+              ? processedValue
+              : fallbackValues[type];
+          if (value !== undefined) {
+            if (typeof value === "string" && stringMap[type]) {
+              memo[`${type}Name`] = value;
+              memo[`_${type}`] = stringMap[type][value];
+            } else {
+              memo[`_${type}`] = value;
             }
-            return memo;
-          }, {});
-
-          const formattedDatum = Object.assign(
-            {},
-            processedValues,
-            parsedDatum,
-          );
-          if (!isEmpty(formattedDatum)) {
-            dataArr.push(formattedDatum);
           }
+          return memo;
+        }, {});
 
-          return dataArr;
-        },
-        [],
-      );
+        const formattedDatum = Object.assign({}, processedValues, parsedDatum);
+        if (!isEmpty(formattedDatum)) {
+          dataArr.push(formattedDatum);
+        }
+
+        return dataArr;
+      }, []);
 
   const sortedData = sortData(data, props.sortKey, props.sortOrder);
   const cleanedData = cleanData(sortedData, props);

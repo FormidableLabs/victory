@@ -7,7 +7,7 @@ import {
   Scale,
 } from "victory-core";
 
-export const getBarPosition = (props, datum) => {
+export const getBarPosition = (props, datum, index) => {
   const getDefaultMin = (axis) => {
     const defaultZero =
       Scale.getType(props.scale[axis]) === "log"
@@ -29,7 +29,16 @@ export const getBarPosition = (props, datum) => {
   };
   const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
   const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
-  return Helpers.scalePoint(props, Object.assign({}, datum, { _y0, _x0 }));
+  const mappedData = {
+    ...datum,
+    _x: props.sortKey ? index + 1 : datum._x,
+  };
+
+  const t = Helpers.scalePoint(
+    props,
+    Object.assign({}, mappedData, { _y0, _x0 }),
+  );
+  return t;
 };
 
 const getCalculatedValues = (props) => {
@@ -115,7 +124,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
-    const { x, y, y0, x0 } = getBarPosition(props, datum);
+    const { x, y, y0, x0 } = getBarPosition(props, datum, index);
 
     const dataProps = {
       alignment,
