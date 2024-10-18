@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { keys } from "lodash";
 
 import AccessibilityDemo from "./components/accessibility-demo";
 import AnimationDemo from "./components/animation-demo";
@@ -41,71 +40,78 @@ import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 import OuiaDemo from "./components/ouia-demo";
+import ThemeBuilder from "./components/theme-builder";
 
-const MAP = {
-  "/accessibility": { component: AccessibilityDemo, name: "AccessibilityDemo" },
-  "/animation": { component: AnimationDemo, name: "AnimationDemo" },
-  "/area": { component: AreaDemo, name: "AreaDemo" },
-  "/axis": { component: AxisDemo, name: "AxisDemo" },
-  "/bar": { component: BarDemo, name: "BarDemo" },
-  "/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
-  "/brush-container": {
+const DEMO_ROUTES = {
+  "/demo/accessibility": {
+    component: AccessibilityDemo,
+    name: "AccessibilityDemo",
+  },
+  "/demo/animation": { component: AnimationDemo, name: "AnimationDemo" },
+  "/demo/area": { component: AreaDemo, name: "AreaDemo" },
+  "/demo/axis": { component: AxisDemo, name: "AxisDemo" },
+  "/demo/bar": { component: BarDemo, name: "BarDemo" },
+  "/demo/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
+  "/demo/brush-container": {
     component: BrushContainerDemo,
     name: "BrushContainerDemo",
   },
-  "/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
-  "/group": { component: GroupDemo, name: "GroupDemo" },
-  "/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
-  "/histogram": { component: HistogramDemo, name: "HistogramDemo" },
-  "/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
-  "/canvas": { component: CanvasDemo, name: "CanvasDemo" },
-  "/chart": { component: ChartDemo, name: "ChartDemo" },
-  "/create-container": {
+  "/demo/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
+  "/demo/group": { component: GroupDemo, name: "GroupDemo" },
+  "/demo/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
+  "/demo/histogram": { component: HistogramDemo, name: "HistogramDemo" },
+  "/demo/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
+  "/demo/canvas": { component: CanvasDemo, name: "CanvasDemo" },
+  "/demo/chart": { component: ChartDemo, name: "ChartDemo" },
+  "/demo/create-container": {
     component: CreateContainerDemo,
     name: "CreateContainerDemo",
   },
-  "/cursor-container": {
+  "/demo/cursor-container": {
     component: CursorContainerDemo,
     name: "CursorContainerDemo",
   },
-  "/draggable": { component: DraggableDemo, name: "DraggableDemo" },
-  "/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
-  "/events": { component: EventsDemo, name: "EventsDemo" },
-  "/external-events": {
+  "/demo/draggable": { component: DraggableDemo, name: "DraggableDemo" },
+  "/demo/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
+  "/demo/events": { component: EventsDemo, name: "EventsDemo" },
+  "/demo/external-events": {
     component: ExternalEventsDemo,
     name: "ExternalEventsDemo",
   },
-  "/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
-  "/label": { component: LabelDemo, name: "LabelDemo" },
-  "/legend": { component: LegendDemo, name: "LegendDemo" },
-  "/line": { component: LineDemo, name: "LineDemo" },
-  "/pie": { component: PieDemo, name: "PieDemo" },
-  "/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
-  "/primitives": { component: PrimitivesDemo, name: "PrimitivesDemo" },
-  "/scatter": { component: ScatterDemo, name: "ScatterDemo" },
-  "/selection": { component: SelectionDemo, name: "SelectionDemo" },
-  "/stack": { component: StackDemo, name: "StackDemo" },
-  "/stacked-theme": { component: StackedThemeDemos, name: "StackedThemeDemos" },
-  "/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
-  "/victory": { component: VictoryDemo, name: "VictoryDemo" },
-  "/victory-selection-container": {
+  "/demo/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
+  "/demo/label": { component: LabelDemo, name: "LabelDemo" },
+  "/demo/legend": { component: LegendDemo, name: "LegendDemo" },
+  "/demo/line": { component: LineDemo, name: "LineDemo" },
+  "/demo/pie": { component: PieDemo, name: "PieDemo" },
+  "/demo/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
+  "/demo/primitives": { component: PrimitivesDemo, name: "PrimitivesDemo" },
+  "/demo/scatter": { component: ScatterDemo, name: "ScatterDemo" },
+  "/demo/selection": { component: SelectionDemo, name: "SelectionDemo" },
+  "/demo/stack": { component: StackDemo, name: "StackDemo" },
+  "/demo/stacked-theme": {
+    component: StackedThemeDemos,
+    name: "StackedThemeDemos",
+  },
+  "/demo/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
+  "/demo/victory": { component: VictoryDemo, name: "VictoryDemo" },
+  "/demo/victory-selection-container": {
     component: VictorySelectionContainerDemo,
     name: "VictorySelectionContainerDemo",
   },
-  "/victory-shared-events": {
+  "/demo/victory-shared-events": {
     component: VictorySharedEventsDemo,
     name: "VictorySharedEventsDemo",
   },
-  "/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
-  "/voronoi-container": {
+  "/demo/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
+  "/demo/voronoi-container": {
     component: VoronoiContainerDemo,
     name: "VoronoiContainerDemo",
   },
-  "/zoom-container": {
+  "/demo/zoom-container": {
     component: ZoomContainerDemo,
     name: "ZoomContainerDemo",
   },
-  "/ouia": { component: OuiaDemo, name: "OuiaDemo" },
+  "/demo/ouia": { component: OuiaDemo, name: "OuiaDemo" },
 };
 
 class Home extends React.Component {
@@ -114,49 +120,82 @@ class Home extends React.Component {
   }
 }
 
+const NAV_ROUTES = {
+  "/demo": { component: Home, name: "Demos" },
+  "/theme-builder": { component: ThemeBuilder, name: "ThemeBuilder" },
+};
+
 interface AppState {
   route: string;
 }
 
-const containerStyle = {
-  fontFamily: "sans-serif",
-  display: "flex",
-  gap: "20px",
-  height: "100vh",
-  overflow: "hidden",
-};
-
-const sidebarStyle = {
-  flexShrink: "0",
-  width: "240px",
-  borderRight: "1px solid #ddd",
-  overflow: "auto",
-  padding: "0 20px 20px",
-};
-
-const mainStyle = {
-  overflow: "auto",
-};
-
-const listStyle = {
+const containerStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  gap: "8px",
+  height: "100vh",
+  fontFamily: "sans-serif",
+};
+
+const navStyle: React.CSSProperties = {
+  display: "flex",
+  gap: "20px",
+  padding: "20px",
+  borderBottom: "1px solid #ddd",
+  fontWeight: "bold",
+  fontSize: "1.1em",
+  width: "100%",
+  height: 62,
+  top: 0,
+  background: "#fff",
+};
+
+const sidebarStyle: React.CSSProperties = {
+  flexShrink: "0",
+  borderRight: "1px solid #ddd",
+  overflow: "auto",
+  padding: "5px",
+};
+
+const contentStyle: React.CSSProperties = {
+  display: "flex",
+  gap: "20px",
+  overflow: "hidden",
+  flex: 1,
+};
+
+const mainStyle: React.CSSProperties = {
+  overflow: "auto",
+};
+
+const listStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
   listStyle: "none",
   padding: "0",
   margin: "0",
-} as const;
+  color: "#666",
+};
 
-const linkStyle = {
-  color: "black",
-  fontSize: "14px",
+const linkStyle: React.CSSProperties = {
+  color: "currentcolor",
   textDecoration: "none",
 };
 
-const activeLinkStyle = {
+const activeLinkStyle: React.CSSProperties = {
   ...linkStyle,
-  fontWeight: "bold",
-  textDecoration: "underline",
+  color: "#2165E3",
+};
+
+const listItemStyle: React.CSSProperties = {
+  padding: "10px 15px",
+  borderRadius: "5px",
+  color: "#666",
+  margin: "5px 0",
+};
+
+const activeListItemStyle: React.CSSProperties = {
+  ...listItemStyle,
+  backgroundColor: "#eee",
 };
 
 class App extends React.Component<any, AppState> {
@@ -166,6 +205,10 @@ class App extends React.Component<any, AppState> {
     this.state = {
       route: window.location.hash.substr(1),
     };
+
+    if (this.state.route === "") {
+      window.location.hash = "#/demo";
+    }
   }
 
   componentDidMount() {
@@ -176,38 +219,72 @@ class App extends React.Component<any, AppState> {
     });
   }
 
-  getDemo() {
-    const item = MAP[this.state.route] || {};
+  getChild() {
+    const item =
+      DEMO_ROUTES[this.state.route] || NAV_ROUTES[this.state.route] || {};
     return item.component || Home;
   }
 
   render() {
-    const Child = this.getDemo();
-    const routes = keys(MAP).sort();
+    const Child = this.getChild();
+    const demoRoutes = Object.keys(DEMO_ROUTES).sort();
+    const navRoutes = Object.keys(NAV_ROUTES);
+
+    const isDemoRoute = this.state.route.startsWith("/demo");
+
     return (
       <div style={containerStyle}>
-        <aside style={sidebarStyle}>
-          <h1>Victory Demos</h1>
-          <ul style={listStyle}>
-            {routes.map((route, index) => {
-              const item = MAP[route] || {};
-              const isActive = this.state.route === route;
-              return (
-                <li key={index}>
-                  <a
-                    href={`#${route}`}
-                    style={isActive ? activeLinkStyle : linkStyle}
-                  >
-                    {item.name}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
-        <main style={mainStyle}>
-          <Child />
-        </main>
+        <nav style={navStyle}>
+          {navRoutes.map((route, index) => {
+            return (
+              <a
+                key={index}
+                href={`#${route}`}
+                style={
+                  this.state.route.startsWith(route)
+                    ? activeLinkStyle
+                    : linkStyle
+                }
+              >
+                {NAV_ROUTES[route]?.name}
+              </a>
+            );
+          })}
+        </nav>
+        <div style={contentStyle}>
+          {isDemoRoute ? (
+            <>
+              <aside style={sidebarStyle}>
+                <ul style={listStyle}>
+                  {demoRoutes.map((route, index) => {
+                    const item = DEMO_ROUTES[route] || {};
+                    const isActive = this.state.route === route;
+                    return (
+                      <li
+                        key={index}
+                        style={isActive ? activeListItemStyle : listItemStyle}
+                      >
+                        <a
+                          href={`#${route}`}
+                          style={isActive ? activeLinkStyle : linkStyle}
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </aside>
+              <main style={mainStyle}>
+                <Child />
+              </main>
+            </>
+          ) : (
+            <main style={mainStyle}>
+              <Child />
+            </main>
+          )}
+        </div>
       </div>
     );
   }
