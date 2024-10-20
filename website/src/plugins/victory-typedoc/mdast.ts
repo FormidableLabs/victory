@@ -10,7 +10,7 @@ const importPath = "@site/src/plugins/victory-typedoc/components/api-property";
 export function extractExamples(root: any): Record<string, any> {
   const examples: Record<string, any> = {};
   visit(root, "code", (node, index, parent) => {
-    const match = node.meta.match(/@example\((.*)\)/);
+    const match = node.meta?.match(/@example\((.*)\)/);
     if (match) {
       examples[match[1]] = node;
       parent.children.splice(index, 1);

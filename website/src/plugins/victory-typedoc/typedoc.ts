@@ -47,11 +47,13 @@ function getDefaultValue(typeInfo: TypeDocType) {
 function getType(type?: TypeDocType["type"]): string {
   switch (type?.type) {
     case "reflection":
-      return type.declaration?.children?.map((x) => x.name).join("|") || "";
+      return type.declaration ? "function" : "";
     case "array":
       return `${getType(type.elementType)}[]`;
     case "union":
       return type.types.map(getType).join("|");
+    case "typeOperator":
+      return `${type.operator} ${getType(type.target)}`;
     case "reference":
     case "intrinsic":
       return type.name;
