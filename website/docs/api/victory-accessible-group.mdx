@@ -1,5 +1,8 @@
 ---
 title: VictoryAccessibleGroup
+auto_generated:
+  component: VictoryAccessibleGroup
+  props: VictoryAccessibleGroupProps
 ---
 
 `VictoryAccessibleGroup` is a specialized group container that enables users to assign `aria-label`s, `desc`s and other props specified below which allow for improved access by screen readers. `VictoryAccessibleGroup` can be used as any `groupComponent` prop value. `VictoryAccessibleGroup` will render its children in a `<g>` element and includes a `desc` tag if provided as a prop.
@@ -43,3 +46,13 @@ _example:_ `desc="Golden retrievers make up 30%, Labs make up 25%, and other dog
 `type: number`
 
 The `tabIndex` will be applied to the `g` element.
+
+```jsx live @example(aria-describedby)
+<VictoryChart
+  groupComponent={
+    <VictoryAccessibleGroup aria-describedby="chart-description" />
+  }
+>
+  <VictoryBar data={sampleData} />
+</VictoryChart>
+```

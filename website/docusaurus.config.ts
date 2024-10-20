@@ -1,5 +1,6 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import { Config } from "@docusaurus/types";
+import { autoGenerateApiDocs } from "./src/plugins/victory-typedoc";
 
 const config: Config = {
   title: "Victory",
@@ -21,16 +22,17 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          sidebarCollapsed: true
+          sidebarCollapsed: true,
+          beforeDefaultRemarkPlugins: [autoGenerateApiDocs],
         },
         theme: {
           customCss: "./src/css/custom.css",
         },
         gtag: {
-          trackingID: 'G-M971D063B9',
+          trackingID: "G-M971D063B9",
         },
         googleTagManager: {
-          containerId: 'GTM-MD32945',
+          containerId: "GTM-MD32945",
         },
       },
     ],
@@ -41,7 +43,7 @@ const config: Config = {
       {
         liveCodeBlock: {
           playgroundPosition: "top",
-        }
+        },
       },
     ],
     [
@@ -54,7 +56,7 @@ const config: Config = {
     ],
   ],
   plugins: [
-    async function myPlugin() {
+    async function tailwindPlugin() {
       return {
         name: "tailwind-plugin",
         configurePostCss(postcssOptions) {
@@ -71,9 +73,9 @@ const config: Config = {
   themeConfig: {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     metadata: [
-      { 
-        name: 'keywords',
-        content: 'victory, documentation, react, charts, charting, data, viz',
+      {
+        name: "keywords",
+        content: "victory, documentation, react, charts, charting, data, viz",
       },
       {
         name: "viewport",
@@ -124,28 +126,28 @@ const config: Config = {
   },
   headTags: [
     {
-      tagName: 'link',
+      tagName: "link",
       attributes: {
-        rel: 'preconnect',
-        href: 'https://fonts.googleapis.com',
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
       },
     },
     {
-      tagName: 'link',
+      tagName: "link",
       attributes: {
-        rel: 'preconnect',
-        href: 'https://fonts.gstatic.com',
-        crossOriginIsolated: 'true',
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOriginIsolated: "true",
       },
     },
     {
-      tagName: 'link',
+      tagName: "link",
       attributes: {
-        rel: 'stylesheet',
+        rel: "stylesheet",
         href: 'https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet',
       },
     },
-  ]
+  ],
 };
 
 export default config;
