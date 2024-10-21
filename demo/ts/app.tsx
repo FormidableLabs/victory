@@ -165,6 +165,7 @@ const contentStyle: React.CSSProperties = {
 
 const mainStyle: React.CSSProperties = {
   overflow: "auto",
+  flex: 1,
 };
 
 const listStyle: React.CSSProperties = {
