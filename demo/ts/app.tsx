@@ -204,7 +204,7 @@ class App extends React.Component<any, AppState> {
     super(props);
 
     this.state = {
-      route: window.location.hash.substr(1),
+      route: window.location.hash.slice(1),
     };
 
     if (this.state.route === "") {
@@ -281,9 +281,7 @@ class App extends React.Component<any, AppState> {
               </main>
             </>
           ) : (
-            <main style={mainStyle}>
-              <Child />
-            </main>
+            <Child />
           )}
         </div>
       </div>
