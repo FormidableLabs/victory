@@ -23,6 +23,10 @@ const cacheFileName = "typeInfo.json";
 const entryPoints = ["../packages/victory/src/index.ts"];
 const tsconfig = "../packages/victory/tsconfig.json";
 
+const SYNTAX = {
+  OR: " | ",
+};
+
 function getBlockTag(comment: JSONOutput.Comment | undefined, tagName: string) {
   if (comment?.blockTags) {
     return comment.blockTags.find((x) => x.tag === tagName);
@@ -44,21 +48,58 @@ function getDefaultValue(typeInfo: TypeDocType) {
   }
 }
 
-function getType(type?: TypeDocType["type"]): string {
+function getSignature(signature) {
+  if(!signature.parameters) {
+    console.log(signature);
+  }
+  const fields = (signature.parameters || []).map((x) => {
+    return `${x.name}: ${getType(x.type)}`;
+  });
+  return `(${fields.join(", ")}) => ${getType(signature.type)}`;
+}
+
+function getReflectionType(type): string {
+  if (type.declaration?.children) {
+    const fields = type.declaration.children.map((x) => {
+      return `${x.name}: ${getType(x.type)}`;
+    });
+    return `{ ${fields.join(", ")} }`;
+  }
+
+  if (type.declaration?.signatures) {
+    return type.declaration.signatures.map(getSignature).join(SYNTAX.OR);
+  }
+
+  return "unknown";
+}
+
+function getLiteralType(type): string {
+  if (type.value === null) {
+    return "null";
+  }
+  if (type.value === undefined) {
+    return "undefined";
+  }
+  return type.value;
+}
+
+function getType(type): string {
   switch (type?.type) {
     case "reflection":
-      return type.declaration ? "function" : "";
+      return getReflectionType(type);
     case "array":
       return `${getType(type.elementType)}[]`;
     case "union":
-      return type.types.map(getType).join("|");
+      return type.types.map(getType).join(SYNTAX.OR);
+    case "literal":
+      return getLiteralType(type);
     case "typeOperator":
       return `${type.operator} ${getType(type.target)}`;
     case "reference":
     case "intrinsic":
       return type.name;
     default:
-      return "";
+      return "unknown";
   }
 }
 
