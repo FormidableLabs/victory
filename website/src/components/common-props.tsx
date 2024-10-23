@@ -1,6 +1,6 @@
 import React from "react";
 
-import { OverriddenBadge } from "./badges";
+import { Badge, OverriddenBadge } from "./badges";
 
 type PropsMeta = {
   name: string;
@@ -159,7 +159,7 @@ const VictoryCommons = [
   VictoryEventProps,
 ];
 
-export function CommonProps({ interfaces, overrides }) {
+export function CommonProps({ interfaces, overrides, notImplemented }) {
   const result = VictoryCommons.filter((x) =>
     (interfaces || []).includes(x.name),
   );
@@ -178,6 +178,9 @@ export function CommonProps({ interfaces, overrides }) {
                   </a>
                   {overrides && overrides.includes(prop.name) && (
                     <OverriddenBadge />
+                  )}
+                  {notImplemented && notImplemented.includes(prop.name) && (
+                    <Badge className="bg-gray-50 text-gray-600 ring-gray-500/10">not-implemented</Badge>
                   )}
                 </div>
               </li>
