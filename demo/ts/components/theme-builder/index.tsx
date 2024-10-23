@@ -4,7 +4,6 @@ import {
   VictoryTheme,
   VictoryThemeDefinition,
 } from "victory-core";
-import ThemePicker from "./theme-picker";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
 import { VictoryStack } from "victory-stack";
@@ -60,30 +59,13 @@ const sidebarStyles: React.CSSProperties = {
   borderRight: "1px solid #ccc",
   padding: "20px",
   width: 300,
-};
-
-const tabContainerStyles: React.CSSProperties = {
-  display: "flex",
-  cursor: "pointer",
-  marginBottom: 20,
-  fontSize: 14,
+  overflowY: "auto",
 };
 
 const previewContainerStyles: React.CSSProperties = {
   flex: 1,
   padding: "0 20px",
 };
-
-const getTabStyles = (isActive): React.CSSProperties => ({
-  padding: "10px 20px",
-  borderBottom: "2px solid lightgray",
-  fontWeight: "bold",
-  color: "gray",
-  ...(isActive && {
-    borderBottom: "2px solid black",
-    color: "#2165E3",
-  }),
-});
 
 const chartsGridStyles: React.CSSProperties = {
   display: "grid",
@@ -102,33 +84,17 @@ const chartStyle: { [key: string]: React.CSSProperties } = {
   },
 };
 
-const tabConfig = [
-  {
-    name: "themes",
-    label: "Default Themes",
-    Children: ThemePicker,
-  },
-  {
-    name: "customize",
-    label: "Customize",
-    Children: CustomOptions,
-  },
-];
-
 const ThemeBuilder = () => {
-  const [activeTheme, setActiveTheme] = React.useState<ThemeOption>(themes[0]);
-  const [activeColorScale] = React.useState<ColorScalePropType | undefined>(
-    "qualitative",
+  const [activeTheme, setActiveTheme] = React.useState<ThemeOption | undefined>(
+    undefined,
   );
-  const [activeTab, setActiveTab] = React.useState(tabConfig[0].name);
+  const [activeColorScale, setActiveColorScale] =
+    React.useState<ColorScalePropType>("qualitative");
 
-  const handleTabChange = (tabName: string) => {
-    setActiveTab(tabName);
-  };
-
-  const handleThemeSelect = (selectedTheme: ThemeOption) => {
-    if (!selectedTheme) return;
-    setActiveTheme(selectedTheme);
+  const handleThemeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const themeName = event.target.value;
+    const theme = themes.find((t) => t.name === themeName);
+    setActiveTheme(theme);
   };
 
   const handleColorChange = ({ event, index, colorScale }) => {
@@ -137,10 +103,10 @@ const ThemeBuilder = () => {
       ...activeTheme,
       name: "Custom",
       config: {
-        ...activeTheme.config,
+        ...activeTheme?.config,
         palette: {
-          ...activeTheme.config?.palette,
-          [colorScale]: activeTheme.config?.palette?.[colorScale]?.map(
+          ...activeTheme?.config?.palette,
+          [colorScale]: activeTheme?.config?.palette?.[colorScale]?.map(
             (color, i) => (i === index ? newColor : color),
           ),
         },
@@ -149,35 +115,50 @@ const ThemeBuilder = () => {
     setActiveTheme(customTheme);
   };
 
+  const handleColorScaleChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setActiveColorScale(event.target.value as ColorScalePropType);
+  };
+
   return (
     <div style={containerStyles}>
       <aside style={sidebarStyles}>
-        <div style={tabContainerStyles}>
-          {tabConfig.map((tab, i) => (
-            <div
-              key={i}
-              onClick={() => handleTabChange(tab.name)}
-              style={getTabStyles(activeTab === tab.name)}
+        <section>
+          <h2>Theme</h2>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <select
+              value={activeTheme?.name || ""}
+              onChange={handleThemeSelect}
+              placeholder="Select a starter theme"
             >
-              {tab.label}
-            </div>
-          ))}
-        </div>
-        <div>
-          {tabConfig.map(({ name, Children }) => (
-            <div key={name}>
-              {activeTab === name && (
-                <Children
-                  key={name}
-                  themes={themes}
-                  activeTheme={activeTheme}
-                  onColorChange={handleColorChange}
-                  onSelect={handleThemeSelect}
-                />
-              )}
-            </div>
-          ))}
-        </div>
+              <option value="" disabled>
+                Select a starter theme
+              </option>
+              {themes.map((theme, i) => (
+                <option key={`${theme.name}-${i}`} value={theme.name}>
+                  {theme.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </section>
+        {activeTheme && (
+          <section>
+            <h2>Customize</h2>
+            <CustomOptions
+              activeColorScale={activeColorScale}
+              activeTheme={activeTheme}
+              onColorChange={handleColorChange}
+              onColorScaleChange={handleColorScaleChange}
+            />
+          </section>
+        )}
       </aside>
       <main style={previewContainerStyles}>
         <h2>Example Charts</h2>
@@ -185,7 +166,7 @@ const ThemeBuilder = () => {
           <div>
             <h3>Bar Chart</h3>
             <VictoryChart
-              theme={activeTheme.config}
+              theme={activeTheme?.config}
               domainPadding={20}
               style={chartStyle}
             >
@@ -204,7 +185,7 @@ const ThemeBuilder = () => {
           <div>
             <h3>Area Chart</h3>
             <VictoryChart
-              theme={activeTheme.config}
+              theme={activeTheme?.config}
               domainPadding={20}
               style={chartStyle}
             >

@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeOption } from ".";
 import ConfigPreview from "./config-preview";
+import { ColorScalePropType } from "victory-core/lib";
 
 type ColorChangeArgs = {
   event: React.ChangeEvent<HTMLInputElement>;
@@ -9,22 +10,61 @@ type ColorChangeArgs = {
 };
 
 type CustomOptionsProps = {
-  activeTheme: ThemeOption;
+  activeTheme?: ThemeOption;
+  activeColorScale: ColorScalePropType;
   onColorChange: (args: ColorChangeArgs) => void;
-};
-
-const colorContainer: React.CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
-  gap: 20,
+  onColorScaleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const colorPickerStyles: React.CSSProperties = {
-  width: 50,
-  height: 50,
+  width: 40,
+  height: 40,
 };
 
-const CustomOptions = ({ activeTheme, onColorChange }: CustomOptionsProps) => {
+const colorScales = ["qualitative", "heatmap", "warm", "cool", "red", "green"];
+
+const config = [
+  {
+    label: "Color Scales",
+    subSections: [
+      {
+        label: "Qualitative",
+        key: "qualitative",
+      },
+      {
+        label: "Heatmap",
+        key: "heatmap",
+      },
+      {
+        label: "Warm",
+        key: "warm",
+      },
+      {
+        label: "Cool",
+        key: "cool",
+      },
+      {
+        label: "Red",
+        key: "red",
+      },
+      {
+        label: "Green",
+        key: "green",
+      },
+      {
+        label: "Blue",
+        key: "blue",
+      },
+    ],
+  },
+];
+
+const CustomOptions = ({
+  activeColorScale,
+  activeTheme,
+  onColorChange,
+  onColorScaleChange,
+}: CustomOptionsProps) => {
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
     React.useState(false);
 
@@ -35,38 +75,42 @@ const CustomOptions = ({ activeTheme, onColorChange }: CustomOptionsProps) => {
   const onThemeConfigPreviewClose = () => {
     setShowThemeConfigPreview(false);
   };
+
   return (
     <>
-      <div>
-        <button onClick={onThemeConfigPreviewOpen}>
-          See Custom Config JSON
-        </button>
-        <section>
-          <h2>Color Scales</h2>
-          <h3>Qualitative</h3>
-          <div style={colorContainer}>
-            {activeTheme.config?.palette?.qualitative?.map((color, index) => (
-              <input
-                key={index}
-                style={colorPickerStyles}
-                type="color"
-                value={color}
-                onChange={(event) =>
-                  onColorChange({
-                    event,
-                    index,
-                    colorScale: "qualitative",
-                  })
-                }
-              />
+      <button onClick={onThemeConfigPreviewOpen}>See Custom Config JSON</button>
+      <section>
+        <div>
+          <select value={activeColorScale} onChange={onColorScaleChange}>
+            {colorScales.map((scale) => (
+              <option key={scale} value={scale}>
+                {scale}
+              </option>
             ))}
-          </div>
-        </section>
-      </div>
+          </select>
+        </div>
+        {activeTheme?.config?.palette?.[activeColorScale as string]?.map(
+          (color, i) => (
+            <input
+              key={i}
+              style={colorPickerStyles}
+              type="color"
+              value={color}
+              onChange={(event) =>
+                onColorChange({
+                  event,
+                  index: i,
+                  colorScale: activeColorScale as string,
+                })
+              }
+            />
+          ),
+        )}
+      </section>
 
-      {showThemeConfigPreview && activeTheme.config && (
+      {showThemeConfigPreview && activeTheme?.config && (
         <ConfigPreview
-          config={activeTheme.config}
+          config={activeTheme?.config}
           onClose={onThemeConfigPreviewClose}
         />
       )}
