@@ -4,9 +4,9 @@ title: VictoryTooltip
 
 `VictoryTooltip` renders a tooltip component with a set of default events. When `VictoryTooltip` is used as a label component for any Victory component that renders data, it will attach events to rendered data components that will activate the tooltip when hovered or focused. `VictoryTooltip` renders text as well as a configurable [Flyout][] container.
 
-*note:* When providing tooltips for `VictoryLine` or `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](/docs/victory-voronoi-container), as these components only render a single element for the entire dataset.
+*note:* When providing tooltips for `VictoryLine` or `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](/docs/api/victory-voronoi-container), as these components only render a single element for the entire dataset.
 
-See the [tooltips guide](/guides/tooltips) for more expanded examples of usage.
+See the [tooltips guide](/docs/guides/tooltips) for more expanded examples of usage.
 
 ```jsx live
 <VictoryChart 
@@ -477,9 +477,9 @@ The `x` prop defines the x coordinate to use as a basis for positioning the tool
 
 The `y` prop defines the y coordinate to use as a basis for positioning the tooltip element.
 
-[flyout]: /docs/victory-primitives#flyout
-[victorylabel]: /docs/victory-label
-[victoryportal]: /docs/victory-portal
-[victorycontainer]: /docs/victory-container
+[flyout]: /docs/api/victory-primitives#flyout
+[victorylabel]: /docs/api/victory-label
+[victoryportal]: /docs/api/victory-portal
+[victorycontainer]: /docs/api/victory-container
 [portal]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-portal/portal.tsx
 [approximate text size]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-util/textsize.ts

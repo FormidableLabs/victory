@@ -9,8 +9,10 @@ const config: Config = {
   favicon: "favicon.ico",
   url: "https://commerce.nearform.com/",
   baseUrl: "/open-source/victory",
+  onBrokenAnchors: "throw",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
+  onDuplicateRoutes: "throw",
   i18n: {
     defaultLocale: "en",
     locales: ["en"],

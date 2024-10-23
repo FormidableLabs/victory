@@ -10,7 +10,7 @@ For examples of `VictoryCandlestick` in action, visit the [Candlestick](/docs/ch
 
 `type: boolean || object`
 
-`VictoryCandlestick` uses the standard `animate` prop. [Read about it here](/docs/api/common-props#animate)
+`VictoryCandlestick` uses the standard `animate` prop. [Read about it here](/docs/api/victory-common-theme-props#animate)
 
 See the [Animations Guide][] for more detail on animations and transitions
 
@@ -79,7 +79,7 @@ It is still possible to define candle width via the style prop with the `width` 
 
 `type: array[string] || { x: array[string], y: array[string] }`
 
-`VictoryCandlestick` uses the standard `categories` prop. [Read about it here](/docs/api/common-props#categories)
+`VictoryCandlestick` uses the standard `categories` prop. [Read about it here](/docs/api/victory-datatable-props#categories)
 
 ```jsx
 categories={{ x: ["dogs", "cats", "mice"] }}
@@ -158,7 +158,7 @@ _examples:_
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `containerComponent` prop. [Read about it here](/docs/api/common-props#containercomponent)
+`VictoryCandlestick` uses the standard `containerComponent` prop. [Read about it here](/docs/api/victory-common-theme-props#containercomponent)
 
 ```jsx
 containerComponent={<VictoryVoronoiContainer/>}
@@ -190,7 +190,7 @@ Specify data via the `data` prop. By default, `VictoryCandlestick` expects data 
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `dataComponent` prop. [Read about it here](/docs/api/common-props#datacomponent)
+`VictoryCandlestick` uses the standard `dataComponent` prop. [Read about it here](/docs/api/victory-datatable-props#datacomponent)
 
 `VictoryCandlestick` supplies the following props to its `dataComponent`: `data`, `datum`, `index`, `padding`, `polar`, `origin`, `scale`, `style`, `candleHeight`, `x1`, `y1`, `y2`, `x2`
 
@@ -206,7 +206,7 @@ dataComponent={<Candle events={{ onClick: handleClick }}/>}
 
 `type: array[low, high] || { x: [low, high], y: [low, high] }`
 
-`VictoryCandlestick` uses the standard `domain` prop. [Read about it here](/docs/api/common-props#domain)
+`VictoryCandlestick` uses the standard `domain` prop. [Read about it here](/docs/api/victory-datatable-props#domain)
 
 ```jsx
 domain={{x: [0, 100], y: [0, 1]}}
@@ -216,7 +216,7 @@ domain={{x: [0, 100], y: [0, 1]}}
 
 `type: number || array[left, right] || { x: [left, right], y: [bottom, top] }`
 
-`VictoryCandlestick` uses the standard `domainPadding` prop. [Read about it here](/docs/api/common-props#domainpadding)
+`VictoryCandlestick` uses the standard `domainPadding` prop. [Read about it here](/docs/api/victory-common-theme-props#domainpadding)
 
 ```jsx
 domainPadding={{x: [10, -10], y: 5}}
@@ -226,7 +226,7 @@ domainPadding={{x: [10, -10], y: 5}}
 
 `type: string || integer || array[string] || function`
 
-`VictoryCandlestick` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/api/common-props#eventkey)
+`VictoryCandlestick` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
 
 ```jsx
 eventKey = "x";
@@ -236,7 +236,7 @@ eventKey = "x";
 
 `type: array[object]`
 
-`VictoryCandlestick` uses the standard `events` prop. [Read about it here](/docs/api/common-props#events)
+`VictoryCandlestick` uses the standard `events` prop. [Read about it here](/docs/guides/events)
 
 See the [Events Guide][] for more information on defining events.
 
@@ -273,7 +273,7 @@ See the [Events Guide][] for more information on defining events.
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `groupComponent` prop. [Read about it here](/docs/api/common-props#groupcomponent)
+`VictoryCandlestick` uses the standard `groupComponent` prop. [Read about it here](/docs/api/victory-common-theme-props#groupcomponent)
 
 _default:_ `<g/>`
 
@@ -289,7 +289,7 @@ groupComponent={<g transform="translate(10, 10)" />}
   <TypeBadge value="number" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `height` prop. [Read about it here](/docs/api/common-props#height)
+`VictoryCandlestick` uses the standard `height` prop. [Read about it here](/docs/api/victory-common-theme-props#height)
 
 _default (provided by default theme):_ `height={300}`
 
@@ -370,7 +370,7 @@ _examples:_
   <TypeBadge value="boolean" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `horizontal` prop. [Read about it in detail](/docs/api/common-props#horizontal)
+`VictoryCandlestick` uses the standard `horizontal` prop. [Read about it in detail](/docs/api/victory-common-theme-props#horizontal)
 
 ```jsx live
 <VictoryCandlestick horizontal
@@ -386,7 +386,7 @@ _examples:_
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `labelComponent` prop. [Read about it here](/docs/api/common-props#labelcomponent)
+`VictoryCandlestick` uses the standard `labelComponent` prop. [Read about it here](/docs/api/victory-labelable-props#datacomponent)
 
 _default:_ `<VictoryLabel/>`
 
@@ -520,7 +520,7 @@ _examples:_
 
 `type: number || { x: number, y: number }`
 
-`VictoryCandlestick` uses the standard `maxDomain` prop. [Read about it in detail](/docs/api/common-props#maxDomain)
+`VictoryCandlestick` uses the standard `maxDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#maxDomain)
 
 ```jsx live
 <VictoryChart
@@ -537,7 +537,7 @@ _examples:_
 
 `type: number || { x: number, y: number }`
 
-`VictoryCandlestick` uses the standard `minDomain` prop. [Read about it in detail](/docs/api/common-props#minDomain)
+`VictoryCandlestick` uses the standard `minDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#minDomain)
 
 ```jsx live
 <VictoryChart
@@ -635,13 +635,13 @@ _examples:_
 
 **The `origin` prop is only used by polar charts, and is usually controlled by `VictoryChart`. It will not typically be necessary to set an `origin` prop manually**
 
-[Read about the `origin` prop in detail](/docs/api/common-props#origin)
+[Read about the `origin` prop in detail](/docs/api/victory-common-theme-props#origin)
 
 ## padding
 
 `type: number || { top: number, bottom: number, left: number, right: number }`
 
-`VictoryCandlestick` uses the standard `padding` prop. [Read about it here](/docs/api/common-props#padding)
+`VictoryCandlestick` uses the standard `padding` prop. [Read about it here](/docs/api/victory-common-theme-props#padding)
 
 _default (provided by default theme):_ `padding={50}`
 
@@ -655,7 +655,7 @@ padding={{ top: 20, bottom: 60 }}
   <TypeBadge value="boolean" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `polar` prop. [Read about it here](/docs/api/common-props#polar)
+`VictoryCandlestick` uses the standard `polar` prop. [Read about it here](/docs/api/victory-common-theme-props#polar)
 
 *note:* Polar Charts are not yet supported for `VictoryCandlestick`
 
@@ -665,7 +665,7 @@ padding={{ top: 20, bottom: 60 }}
 
 **The `range` prop is usually controlled by `VictoryChart`. It will not typically be necessary to set a `range` prop manually**
 
-[Read about the `range` prop in detail](/docs/api/common-props#range)
+[Read about the `range` prop in detail](/docs/api/victory-common-theme-props#range)
 
 ---
 
@@ -675,7 +675,7 @@ padding={{ top: 20, bottom: 60 }}
   <TypeBadge value="number" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `samples` prop. [Read about it here](/docs/api/common-props#samples)
+`VictoryCandlestick` uses the standard `samples` prop. [Read about it here](/docs/api/victory-datatable-props#samples)
 
   <DefaultsBadge value='50}' />
 
@@ -687,7 +687,7 @@ samples={100}
 
 `type: scale || { x: scale, y: scale }`
 
-`VictoryCandlestick` uses the standard `scale` prop. [Read about it here](/docs/api/common-props#scale)
+`VictoryCandlestick` uses the standard `scale` prop. [Read about it here](/docs/api/victory-common-theme-props#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
   <DefaultsBadge value='linear"' />
@@ -704,13 +704,13 @@ scale={{x: "linear", y: "log"}}
 
 `type: boolean || { x: boolean, y: boolean }`
 
-`VictoryCandlestick` uses the standard `singleQuadrantDomainPadding` prop. [Read about it here](/docs/api/common-props#singlequadrantdomainpadding)
+`VictoryCandlestick` uses the standard `singleQuadrantDomainPadding` prop. [Read about it here](/docs/api/victory-common-theme-props#singlequadrantdomainpadding)
 
 ## sortKey
 
 `type: string || integer || array[string] || function`
 
-`VictoryCandlestick` uses the standard `sortKey` prop. [Read about it here](/docs/api/common-props#sortkey)
+`VictoryCandlestick` uses the standard `sortKey` prop. [Read about it here](/docs/api/victory-datatable-props#sortKey)
 
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
@@ -732,7 +732,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
   <TypeBadge value="boolean" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `standalone` prop. [Read about it here](/docs/api/common-props#standalone)
+`VictoryCandlestick` uses the standard `standalone` prop. [Read about it here](/docs/api/victory-common-theme-props#standalone)
 
 *note:* When `VictoryCandlestick` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
@@ -796,7 +796,7 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 
 `type: object`
 
-`VictoryCandlestick` uses the standard `theme` prop. [Read about it here](/docs/api/common-props#theme)
+`VictoryCandlestick` uses the standard `theme` prop. [Read about it here](/docs/api/victory-common-props#theme)
 
 See the [Themes Guide][] for information about creating custom themes.
 
@@ -821,7 +821,7 @@ When the `wickStrokeWidth` prop is set, this value will be used to determine the
   <TypeBadge value="number" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `width` prop. [Read about it here](/docs/api/common-props#width)
+`VictoryCandlestick` uses the standard `width` prop. [Read about it here](/docs/api/victory-common-theme-props#width)
 
 _default (provided by default theme):_ `width={450}`
 
@@ -833,7 +833,7 @@ width={400}
 
 `type: string || integer || array[string] || function`
 
-`VictoryCandlestick` uses the standard `x` data accessor prop. [Read about it here](/docs/api/common-props#x)
+`VictoryCandlestick` uses the standard `x` data accessor prop. [Read about it here](/docs/api/victory-datatable-props#x)
 
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
@@ -841,15 +841,15 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 x={(datum) => new Date(datum.day)}
 ```
 
-[animations guide]: /guides/animations
+[animations guide]: /docs/guides/animations
 [data accessors guide]: /guides/data-accessors
 [custom components guide]: /guides/custom-components
-[events guide]: /guides/events
-[themes guide]: /guides/themes
-[`victorychart`]: /docs/victory-chart
-[`x`]: /docs/victory-candlestick#x
-[`open`]: /docs/victory-candlestick#open
-[`close`]: /docs/victory-candlestick#close
-[`high`]: /docs/victory-candlestick#high
-[`low`]: /docs/victory-candlestick#low
+[events guide]: /docs/guides/events
+[themes guide]: /docs/guides/themes
+[`victorychart`]: /docs/api/victory-chart
+[`x`]: /docs/api/victory-candlestick#x
+[`open`]: /docs/api/victory-candlestick#open
+[`close`]: /docs/api/victory-candlestick#close
+[`high`]: /docs/api/victory-candlestick#high
+[`low`]: /docs/api/victory-candlestick#low
 [grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx

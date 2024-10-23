@@ -76,7 +76,7 @@ The optional `allowDraw` prop accepts a boolean that enables drawing new brush a
   <DefaultsBadge value="true" />
 </Badges>
 
-The optional `allowResize` prop accepts a boolean that enables resizing the highlighted brush area. Dragging will still be enabled when the `allowResize` prop is set to false, but the dimensions of the brush area will be fixed. By default, when `allowResize` is set to false, clicking outside of the brush area will center the brush on the user's mouse position without resizing it. This behavior can be controlled via the [defaultBrushArea prop](/docs/victory-brush-container/#defaultbrusharea).
+The optional `allowResize` prop accepts a boolean that enables resizing the highlighted brush area. Dragging will still be enabled when the `allowResize` prop is set to false, but the dimensions of the brush area will be fixed. By default, when `allowResize` is set to false, clicking outside of the brush area will center the brush on the user's mouse position without resizing it. This behavior can be controlled via the [defaultBrushArea prop](/docs/api/victory-brush-container/#defaultbrusharea).
 
 ```jsx live
 <VictoryChart
@@ -255,4 +255,4 @@ The optional `onBrushDomainChangeEnd` prop accepts a function to be called only 
 _example:_ `onBrushDomainChangeEnd={(domain, props) => handleDomainChangeEnd(domain, props)}`
 
 [brush and zoom guide]: /guides/brush-and-zoom
-[victorycontainer]: /docs/victory-container
+[victorycontainer]: /docs/api/victory-container

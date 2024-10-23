@@ -365,7 +365,7 @@ several tooltips being active at the same time. Provide a `labels` and (optional
 
 `VictoryTooltip` automatically attaches events to data components. When events of the same type are specified for data components, it is necessary to reconcile events so that tooltips still work. For web, the default tooltip events are:
 
-`VictoryTooltip` uses `defaultEvents` which are prepended onto any events array provided in props. When `events` container `onMouseOver` and `onMouseOut` events, they will interfere with the `defaultEvents` on `VictoryTooltip` to correct this, your events prop will need to return the same mutations as `defaultEvents`. [Read about tooltip events here](/guides/tooltips).
+`VictoryTooltip` uses `defaultEvents` which are prepended onto any events array provided in props. When `events` container `onMouseOver` and `onMouseOut` events, they will interfere with the `defaultEvents` on `VictoryTooltip` to correct this, your events prop will need to return the same mutations as `defaultEvents`. [Read about tooltip events here](/docs/guides/tooltips).
 
 ```jsx
 static defaultEvents = [{
@@ -583,6 +583,6 @@ In Victory Native tooltips are much more reliable when using `VictoryVoronoiCont
 </VictoryChart>
 ```
 
-[`victorytooltip`]: /docs/victory-tooltip
-[`victorylabel`]: /docs/victory-label
-[`flyout`]: /docs/victory-primitives#flyout
+[`victorytooltip`]: /docs/api/victory-tooltip
+[`victorylabel`]: /docs/api/victory-label
+[`flyout`]: /docs/api/victory-primitives#flyout

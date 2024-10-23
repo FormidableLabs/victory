@@ -3,7 +3,7 @@ title: VictoryLine
 ---
 
 :::info
-For examples of `VictoryLine` in action, visit the [Line Chart](/docs/charts/line-charts) examples.
+For examples of `VictoryLine` in action, visit the [Line Chart](/docs/charts/line) examples.
 :::
 
 ## Inherited Props
@@ -26,7 +26,7 @@ For examples of `VictoryLine` in action, visit the [Line Chart](/docs/charts/lin
 
 `type: string || integer || array[string] || function`
 
-`VictoryLine` uses the standard `eventKey` prop. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/api/common-props#eventkey)
+`VictoryLine` uses the standard `eventKey` prop. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
 
 *note:* `VictoryLine` only renders one element per dataset, so only one event key will be generated.
 
@@ -40,7 +40,7 @@ eventKey = "x";
 
 `type: array[object]`
 
-`VictoryLine` uses the standard `events` prop. [Read about it here](/docs/api/common-props#events)
+`VictoryLine` uses the standard `events` prop. [Read about it here](/docs/guides/events)
 
 See the [Events Guide][] for more information on defining events.
 
@@ -116,7 +116,7 @@ _default:_ `"linear"`
   <TypeBadge value="{ parent: object, data: object, labels: object }" />
 </Badges>
 
-`VictoryLine` uses the standard `style` prop. [Read about it here](/docs/api/common-props#style)
+`VictoryLine` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
 
 *note:* Since `VictoryLine` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of an individual `datum`. Instead, try using [gradient fills](/docs/faq/#how-can-i-use-gradient-fills-in-victory) for styling continuous data.
 

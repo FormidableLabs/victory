@@ -31,7 +31,7 @@ title: VictoryGroup
 
 `type: boolean || object`
 
-`VictoryGroup` uses the standard `animate` prop. [Read about it here](/docs/api/common-props#animate)
+`VictoryGroup` uses the standard `animate` prop. [Read about it here](/docs/api/victory-common-theme-props#animate)
 
 See the [Animations Guide][] for more detail on animations and transitions
 
@@ -48,7 +48,7 @@ See the [Animations Guide][] for more detail on animations and transitions
 
 `type: array[string] || { x: array[string], y: array[string] }`
 
-`VictoryGroup` uses the standard `categories` prop. [Read about it here](/docs/api/common-props#categories)
+`VictoryGroup` uses the standard `categories` prop. [Read about it here](/docs/api/victory-datatable-props#categories)
 
 *note:* When this prop is set, `VictoryGroup` controls the `categories` prop of its children.
 
@@ -119,7 +119,7 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryGroup` uses the standard `containerComponent` prop. [Read about it in detail here](/docs/api/common-props#containercomponent)
+`VictoryGroup` uses the standard `containerComponent` prop. [Read about it in detail here](/docs/api/victory-common-theme-props#containercomponent)
 
 ```jsx
 containerComponent={<VictoryVoronoiContainer/>}
@@ -129,7 +129,7 @@ containerComponent={<VictoryVoronoiContainer/>}
 
 `type: array[object]`
 
-`VictoryGroup` uses the standard `data` prop. [Read about it here](/docs/api/common-props#data)
+`VictoryGroup` uses the standard `data` prop. [Read about it here](/docs/api/victory-datatable-props#data)
 
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
@@ -149,7 +149,7 @@ When `data` is provided for `VictoryGroup` it will be passed to every child in t
 
 `type: array[low, high] || { x: [low, high], y: [low, high] }`
 
-`VictoryGroup` uses the standard `domain` prop. [Read about it in detail here](/docs/api/common-props#domain)
+`VictoryGroup` uses the standard `domain` prop. [Read about it in detail here](/docs/api/victory-datatable-props#domain)
 
 *note:* `VictoryGroup` controls the `domain` prop of its children.
 
@@ -161,7 +161,7 @@ domain={{x: [0, 100], y: [0, 1]}}
 
 `type: number || array[left, right] || { x: [left, right], y: [bottom, top] }`
 
-`VictoryGroup` uses the standard `domainPadding` prop. [Read about it in detail here](/docs/api/common-props#domainpadding)
+`VictoryGroup` uses the standard `domainPadding` prop. [Read about it in detail here](/docs/api/victory-common-theme-props#domainpadding)
 
 *note:* `VictoryGroup` controls the `domainPadding` prop of its children.
 
@@ -173,7 +173,7 @@ domainPadding={{x: [10, -10], y: 5}}
 
 `type: string || integer || array[string] || function`
 
-`VictoryGroup` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/api/common-props#eventkey)
+`VictoryGroup` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
 
 ```jsx
 eventKey = "x";
@@ -183,7 +183,7 @@ eventKey = "x";
 
 `type: array[object]`
 
-`VictoryGroup` uses the standard `events` prop. [Read about it in more detail here](/docs/api/common-props#events)
+`VictoryGroup` uses the standard `events` prop. [Read about it in more detail here](/docs/guides/events)
 
 See the [Events Guide][] for more information on defining events.
 
@@ -235,7 +235,7 @@ See the [Events Guide][] for more information on defining events.
 
 `type: array[object]`
 
-`VictoryGroup` uses the standard `externalEventMutations` prop. [Read about it in detail](/docs/api/common-props#externalEventsMutations)
+`VictoryGroup` uses the standard `externalEventMutations` prop. [Read about it in detail](/docs/api/victory-common-theme-props#externalEventsMutations)
 
 ---
 
@@ -245,7 +245,7 @@ See the [Events Guide][] for more information on defining events.
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryGroup` uses the standard `groupComponent` prop. [Read about it in detail here](/docs/api/common-props#groupcomponent)
+`VictoryGroup` uses the standard `groupComponent` prop. [Read about it in detail here](/docs/api/victory-common-theme-props#groupcomponent)
 
 _default:_ `<g/>`
 
@@ -261,7 +261,7 @@ groupComponent={<g transform="translate(10, 10)" />}
   <TypeBadge value="number" />
 </Badges>
 
-`VictoryGroup` uses the standard `height` prop. [Read about it here](/docs/api/common-props#height)
+`VictoryGroup` uses the standard `height` prop. [Read about it here](/docs/api/victory-common-theme-props#height)
 
 _default (provided by default theme):_ `height={300}`
 
@@ -275,7 +275,7 @@ height={400}
   <TypeBadge value="boolean" />
 </Badges>
 
-The `horizontal` prop determines whether the children supplied to `VictoryGroup` will be laid out vertically or horizontally. [Read about the horizontal prop in detail](/docs/api/common-props#horizontal)
+The `horizontal` prop determines whether the children supplied to `VictoryGroup` will be laid out vertically or horizontally. [Read about the horizontal prop in detail](/docs/api/victory-common-theme-props#horizontal)
 
 ## labels
 
@@ -307,13 +307,13 @@ labelComponent={<VictoryLabel dy={20}/>}
 
 `type: number || { x: number, y: number }`
 
-`VictoryGroup` uses the standard `maxDomain` prop. [Read about it in detail](/docs/api/common-props#maxDomain)
+`VictoryGroup` uses the standard `maxDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#maxDomain)
 
 ## minDomain
 
 `type: number || { x: number, y: number }`
 
-`VictoryGroup` uses the standard `minDomain` prop. [Read about it in detail](/docs/api/common-props#minDomain)
+`VictoryGroup` uses the standard `minDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#minDomain)
 
 ---
 
@@ -361,13 +361,13 @@ The `offset` prop determines the number of pixels each element in a group should
 
 **The `origin` prop is only used by polar charts, and is usually controlled by `VictoryChart`. It will not typically be necessary to set an `origin` prop manually**
 
-[Read about the `origin` prop in detail](/docs/api/common-props#origin)
+[Read about the `origin` prop in detail](/docs/api/victory-common-theme-props#origin)
 
 ## padding
 
 `type: number || { top: number, bottom: number, left: number, right: number }`
 
-`VictoryGroup` uses the standard `padding` prop. [Read about it here](/docs/api/common-props#padding)
+`VictoryGroup` uses the standard `padding` prop. [Read about it here](/docs/api/victory-common-theme-props#padding)
 
 _default (provided by default theme):_ `padding={50}`
 
@@ -381,7 +381,7 @@ padding={{ top: 20, bottom: 60 }}
   <TypeBadge value="boolean" />
 </Badges>
 
-`VictoryGroup` uses the standard `polar` prop. [Read about it here](/docs/api/common-props#polar)
+`VictoryGroup` uses the standard `polar` prop. [Read about it here](/docs/api/victory-common-theme-props#polar)
 
 ## range
 
@@ -389,13 +389,13 @@ padding={{ top: 20, bottom: 60 }}
 
 **The `range` prop is usually controlled by `VictoryChart`. It will not typically be necessary to set a `range` prop manually**
 
-[Read about the `range` prop in detail](/docs/api/common-props#range)
+[Read about the `range` prop in detail](/docs/api/victory-common-theme-props#range)
 
 ## samples
 
 `type: integer`
 
-`VictoryGroup` uses the standard `samples` prop. [Read about it here](/docs/api/common-props#samples)
+`VictoryGroup` uses the standard `samples` prop. [Read about it here](/docs/api/victory-datatable-props#samples)
 
   <DefaultsBadge value='50}' />
 
@@ -407,7 +407,7 @@ samples={100}
 
 `type: scale || { x: scale, y: scale }`
 
-`VictoryGroup` uses the standard `scale` prop. [Read about it here](/docs/api/common-props#scale)
+`VictoryGroup` uses the standard `scale` prop. [Read about it here](/docs/api/victory-common-theme-props#scale)
 Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
 
 *note:* `VictoryGroup` controls the `scale` prop of its children.
@@ -426,13 +426,13 @@ scale={{x: "linear", y: "log"}}
 
 `type: boolean || { x: boolean, y: boolean }`
 
-`VictoryGroup` uses the standard `singleQuadrantDomainPadding` prop. [Read about it here](/docs/api/common-props#singlequadrantdomainpadding)
+`VictoryGroup` uses the standard `singleQuadrantDomainPadding` prop. [Read about it here](/docs/api/victory-common-theme-props#singlequadrantdomainpadding)
 
 ## sortKey
 
 `type: string || integer || array[string] || function`
 
-`VictoryGroup` uses the standard `sortKey` prop. [Read about it here](/docs/api/common-props#sortkey)
+`VictoryGroup` uses the standard `sortKey` prop. [Read about it here](/docs/api/victory-datatable-props#sortKey)
 
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
@@ -454,7 +454,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
   <TypeBadge value="boolean" />
 </Badges>
 
-`VictoryGroup` uses the standard `standalone` prop. [Read about it here](/docs/api/common-props#standalone)
+`VictoryGroup` uses the standard `standalone` prop. [Read about it here](/docs/api/victory-common-theme-props#standalone)
 
 *note:* When `VictoryGroup` is nested within a component like `VictoryChart`, this prop will be set to `false`
 
@@ -464,7 +464,7 @@ The `sortOrder` prop specifies whether sorted data should be returned in ascendi
 
 `type: { parent: object, data: object, labels: object }`
 
-`VictoryGroup` uses the standard `style` prop. [Read about it here](/docs/api/common-props#style)
+`VictoryGroup` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
 
 Styles on children of `VictoryGroup` will override styles set on the `VictoryGroup` component.
 
@@ -496,7 +496,7 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 
 `type: object`
 
-`VictoryGroup` uses the standard `theme` prop. [Read about it here](/docs/api/common-props#theme)
+`VictoryGroup` uses the standard `theme` prop. [Read about it here](/docs/api/victory-common-props#theme)
 
 See the [Themes Guide][] for information about creating custom themes.
 
@@ -511,7 +511,7 @@ See the [Themes Guide][] for information about creating custom themes.
   <TypeBadge value="number" />
 </Badges>
 
-`VictoryGroup` uses the standard `width` prop. [Read about it here](/docs/api/common-props#width)
+`VictoryGroup` uses the standard `width` prop. [Read about it here](/docs/api/victory-common-theme-props#width)
 
 _default (provided by default theme):_ `width={450}`
 
@@ -523,7 +523,7 @@ width={400}
 
 `type: string || integer || array[string] || function`
 
-`VictoryGroup` uses the standard `x` data accessor prop. [Read about it here](/docs/api/common-props#x)
+`VictoryGroup` uses the standard `x` data accessor prop. [Read about it here](/docs/api/victory-datatable-props#x)
 
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
@@ -535,7 +535,7 @@ x = "employee.name";
 
 `type: string || integer || array[string] || function`
 
-`VictoryGroup` uses the standard `y` data accessor prop. [Read about it here](/docs/api/common-props#y)
+`VictoryGroup` uses the standard `y` data accessor prop. [Read about it here](/docs/api/victory-datatable-props#y)
 
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
@@ -547,7 +547,7 @@ y={(d) => d.value + d.error}
 
 `type: string || integer || array[string] || function`
 
-`VictoryGroup` uses the standard `y0` data accessor prop. [Read about it here](/docs/api/common-props#y0)
+`VictoryGroup` uses the standard `y0` data accessor prop. [Read about it here](/docs/api/victory-datatable-props#y0)
 
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
@@ -555,23 +555,23 @@ See the [Data Accessors Guide][] for more detail on formatting and processing da
 y0={() => 10}
 ```
 
-[animations guide]: /guides/animations
+[animations guide]: /docs/guides/animations
 [data accessors guide]: /guides/data-accessors
-[events guide]: /guides/events
-[themes guide]: /guides/themes
+[events guide]: /docs/guides/events
+[themes guide]: /docs/guides/themes
 [grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
-[victoryarea]: /docs/victory-area
-[victoryaxis]: /docs/victory-axis
-[victorybar]: /docs/victory-bar
-[victoryboxplot]: /docs/victory-boxplot
-[victorycandlestick]: /docs/victory-candlestick
-[victorychart]: /docs/victory-chart
-[victoryerrorbar]: /docs/victory-errorbar
-[victoryline]: /docs/victory-line
-[victoryscatter]: /docs/victory-scatter
-[victoryhistogram]: /docs/victory-histogram
-[victorystack]: /docs/victory-stack
-[victoryvoronoi]: /docs/victory-voronoi
-[victorylabel]: /docs/victory-label
-[x]: /docs/api/common-props#x
-[y]: /docs/api/common-props#y
+[victoryarea]: /docs/api/victory-area
+[victoryaxis]: /docs/api/victory-axis
+[victorybar]: /docs/api/victory-bar
+[victoryboxplot]: /docs/api/victory-boxplot
+[victorycandlestick]: /docs/api/victory-candlestick
+[victorychart]: /docs/api/victory-chart
+[victoryerrorbar]: /docs/api/victory-errorbar
+[victoryline]: /docs/api/victory-line
+[victoryscatter]: /docs/api/victory-scatter
+[victoryhistogram]: /docs/api/victory-histogram
+[victorystack]: /docs/api/victory-stack
+[victoryvoronoi]: /docs/api/victory-voronoi
+[victorylabel]: /docs/api/victory-label
+[x]: /docs/api/victory-datatable-props#x
+[y]: /docs/api/victory-datatable-props#y

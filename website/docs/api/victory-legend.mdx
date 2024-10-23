@@ -79,7 +79,7 @@ The `colorScale` prop defines a color scale to be applied to each data symbol in
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryLegend` uses the standard `containerComponent` prop. [Read about it here](/docs/api/common-props#containercomponent)
+`VictoryLegend` uses the standard `containerComponent` prop. [Read about it here](/docs/api/victory-common-theme-props#containercomponent)
 
 *note:* `VictoryLegend` only works with the `VictoryContainer` component
 
@@ -118,7 +118,7 @@ Specify data via the `data` prop. `VictoryLegend` expects data as an array of ob
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryLegend` uses the standard `dataComponent` prop. [Read about it here](/docs/api/common-props#datacomponent)
+`VictoryLegend` uses the standard `dataComponent` prop. [Read about it here](/docs/api/victory-datatable-props#datacomponent)
 
 `VictoryLegend` supplies the following props to its `dataComponent`: `data`, `datum`, `events`, `index`, `x`, `y`, `size`, `style`, and `symbol`. `VictoryLegend` renders a [Point component][] by default.
 
@@ -227,7 +227,7 @@ render(<App />);
 
 `type: string || integer || array[string] || function`
 
-`VictoryLegend` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/api/common-props#eventkey)
+`VictoryLegend` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
 
 ```jsx
 eventKey = "x";
@@ -237,7 +237,7 @@ eventKey = "x";
 
 `type: array[object]`
 
-`VictoryLegend` uses the standard `events` prop. [Read about it here](/docs/api/common-props#events)
+`VictoryLegend` uses the standard `events` prop. [Read about it here](/docs/guides/events)
 
 See the [Events Guide][] for more information on defining events.
 
@@ -277,7 +277,7 @@ See the [Events Guide][] for more information on defining events.
 
 `type: array[object]`
 
-`VictoryLegend` uses the standard `externalEventMutations` prop. [Read about it in detail](/docs/api/common-props#externalEventsMutations)
+`VictoryLegend` uses the standard `externalEventMutations` prop. [Read about it in detail](/docs/api/victory-common-theme-props#externalEventsMutations)
 
 ---
 
@@ -287,7 +287,7 @@ See the [Events Guide][] for more information on defining events.
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryLegend` uses the standard `groupComponent` prop. [Read about it here](/docs/api/common-props#groupcomponent)
+`VictoryLegend` uses the standard `groupComponent` prop. [Read about it here](/docs/api/victory-common-theme-props#groupcomponent)
 
 _default:_ `<g/>`
 
@@ -322,7 +322,7 @@ The `gutter` prop defines the number of pixels between legend columns. This prop
   <TypeBadge value="number" />
 </Badges>
 
-`VictoryLegend` uses the standard `height` prop. [Read about it here](/docs/api/common-props#height)
+`VictoryLegend` uses the standard `height` prop. [Read about it here](/docs/api/victory-common-theme-props#height)
 
 _default (provided by default theme):_ `height={400}`
 
@@ -360,7 +360,7 @@ The `itemsPerRow` prop determines how many items to render in each row of a hori
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryLegend` uses the standard `labelComponent` prop. [Read about it here](/docs/api/common-props#labelcomponent)
+`VictoryLegend` uses the standard `labelComponent` prop. [Read about it here](/docs/api/victory-labelable-props#datacomponent)
 
 _default:_ `<VictoryLabel/>`
 
@@ -385,7 +385,7 @@ The `orientation` prop takes a string that defines whether legend data are displ
 
 `type: number || { top: number, bottom: number, left: number, right: number }`
 
-`VictoryLegend` uses the standard `padding` prop. [Read about it here](/docs/api/common-props#padding)
+`VictoryLegend` uses the standard `padding` prop. [Read about it here](/docs/api/victory-common-theme-props#padding)
 
 _default (provided by default theme):_ `padding={50}`
 
@@ -558,7 +558,7 @@ _default (provided by default theme):_ `titleOrientation="top"`
   <TypeBadge value="number" />
 </Badges>
 
-`VictoryLegend` uses the standard `width` prop. [Read about it here](/docs/api/common-props#width)
+`VictoryLegend` uses the standard `width` prop. [Read about it here](/docs/api/victory-common-theme-props#width)
 
 _default (provided by default theme):_ `width={400}`
 
@@ -586,10 +586,10 @@ The `x` prop defines the x coordinate corresponding to the upper left corner of 
 
 The `y` prop defines the y coordinate corresponding to the upper left corner of the legend.
 
-[victorylabel]: /docs/victory-label
-[point component]: /docs/victory-primitives#point
-[border component]: /docs/victory-primitives#border
+[victorylabel]: /docs/api/victory-label
+[point component]: /docs/api/victory-primitives#point
+[border component]: /docs/api/victory-primitives#border
 [grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
-[read more about themes here]: /guides/themes
+[read more about themes here]: /docs/guides/themes
 [custom components guide]: /guides/custom-components
-[events guide]: /guides/events
+[events guide]: /docs/guides/events

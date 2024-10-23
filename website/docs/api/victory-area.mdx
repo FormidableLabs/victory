@@ -3,7 +3,7 @@ title: VictoryArea
 ---
 
 :::info
-For examples of `VictoryArea` in action, visit the [Area Chart](/docs/charts/area-charts) examples.
+For examples of `VictoryArea` in action, visit the [Area Chart](/docs/charts/area) examples.
 :::
 
 ## Inherited Props
@@ -35,7 +35,7 @@ For examples of `VictoryArea` in action, visit the [Area Chart](/docs/charts/are
   <DefaultsBadge value="<Area>" />
 </Badges>
 
-`VictoryArea` overrides the standard [`dataComponent`](/docs/api/common-props#datacomponent) prop and supplies the following props to its `dataComponent`:
+`VictoryArea` overrides the standard [`dataComponent`](/docs/api/victory-datatable-props#datacomponent) prop and supplies the following props to its `dataComponent`:
 
 - `data`
 - `events`
@@ -58,7 +58,7 @@ Because `VictoryArea` renders a single element to represent the entire dataset, 
   <TypeBadge value="string | number | string[] | number[] | (args: CallbackArgs) => string | number" />
 </Badges>
 
-`VictoryArea` uses the standard `eventKey` prop. [Read about the `eventKey` prop in more detail here](/docs/api/common-props#eventkey)
+`VictoryArea` uses the standard `eventKey` prop. [Read about the `eventKey` prop in more detail here](/docs/guides/events)
 
 :::note
 `VictoryArea` only renders one element per dataset, so only one event key will be generated.
@@ -72,9 +72,9 @@ Because `VictoryArea` renders a single element to represent the entire dataset, 
   <TypeBadge value="array[object]" />
 </Badges>
 
-`VictoryArea` uses the standard `events` prop. [Read about it in detail](/docs/api/common-props#events)
+`VictoryArea` uses the standard `events` prop. [Read about it in detail](/docs/guides/events)
 
-See the [Events Guide](/open-source/victory/guides/events) for more information on defining events.
+See the [Events Guide](/open-source/victory/docs/guides/events) for more information on defining events.
 
 :::note
 `VictoryArea` uses the special `eventKey` "all" rather than referring to data by index, as it renders only one element for an entire dataset
@@ -126,10 +126,10 @@ See the [Events Guide](/open-source/victory/guides/events) for more information 
   <DefaultsBadge value="<VictoryClipContainer>" />
 </Badges>
 
-`VictoryArea` uses the standard `groupComponent` prop. [Read about it in detail](/docs/api/common-props#groupcomponent)
+`VictoryArea` uses the standard `groupComponent` prop. [Read about it in detail](/docs/api/victory-common-theme-props#groupcomponent)
 
 :::note
-`VictoryArea` uses [`VictoryClipContainer`](/open-source/victory/api/victory-clip-container) as its default `groupComponent` `VictoryClipContainer` renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. 
+`VictoryArea` uses [`VictoryClipContainer`](/docs/api/victory-clip-container) as its default `groupComponent` `VictoryClipContainer` renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. 
 :::
 
 :::warning
@@ -209,10 +209,10 @@ You can also provide a [custom curve function](https://github.com/d3/d3-shape#cu
   <DefaultsBadge value="<VictoryLabel renderInPortal />" />
 </Badges>
 
-`VictoryArea` uses the standard `labelComponent` prop. [Read about it in detail](/docs/api/common-props#labelcomponent)
+`VictoryArea` uses the standard `labelComponent` prop. [Read about it in detail](/docs/api/victory-labelable-props#datacomponent)
 
 :::note
-To enable tooltips on `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](docs/victory-voronoi-container)
+To enable tooltips on `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](docs/api/victory-voronoi-container)
 :::
 
 ```jsx live
