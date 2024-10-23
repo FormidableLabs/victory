@@ -386,7 +386,7 @@ _examples:_
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryCandlestick` uses the standard `labelComponent` prop. [Read about it here](/docs/api/victory-labelable-props#datacomponent)
+`VictoryCandlestick` uses the standard `labelComponent` prop. [Read about it here](/docs/api/victory-datatable-props#datacomponent)
 
 _default:_ `<VictoryLabel/>`
 
@@ -436,7 +436,7 @@ The `labelOrientation` prop determines where a label should be placed in relatio
 
 `type: array || function`
 
-`VictoryCandlestick` uses the standard `labels` prop. [Read about it here](/docs/api/common-props#labels)
+`VictoryCandlestick` uses the standard `labels` prop. [Read about it here](/docs/api/victory-multi-labelable-props#labels)
 
 ```jsx live
 <VictoryCandlestick
@@ -520,7 +520,7 @@ _examples:_
 
 `type: number || { x: number, y: number }`
 
-`VictoryCandlestick` uses the standard `maxDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#maxDomain)
+`VictoryCandlestick` uses the standard `maxDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#maxdomain)
 
 ```jsx live
 <VictoryChart
@@ -537,7 +537,7 @@ _examples:_
 
 `type: number || { x: number, y: number }`
 
-`VictoryCandlestick` uses the standard `minDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#minDomain)
+`VictoryCandlestick` uses the standard `minDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#mindomain)
 
 ```jsx live
 <VictoryChart
@@ -710,7 +710,7 @@ scale={{x: "linear", y: "log"}}
 
 `type: string || integer || array[string] || function`
 
-`VictoryCandlestick` uses the standard `sortKey` prop. [Read about it here](/docs/api/victory-datatable-props#sortKey)
+`VictoryCandlestick` uses the standard `sortKey` prop. [Read about it here](/docs/api/victory-datatable-props#sortkey)
 
 See the [Data Accessors Guide][] for more detail on formatting and processing data.
 
@@ -792,17 +792,6 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 />
 ```
 
-## theme
-
-`type: object`
-
-`VictoryCandlestick` uses the standard `theme` prop. [Read about it here](/docs/api/victory-common-props#theme)
-
-See the [Themes Guide][] for information about creating custom themes.
-
-  <DefaultsBadge value='VictoryTheme.grayscale}' />
-
-
 ---
 
 ### wickStrokeWidth
@@ -842,8 +831,8 @@ x={(datum) => new Date(datum.day)}
 ```
 
 [animations guide]: /docs/guides/animations
-[data accessors guide]: /guides/data-accessors
-[custom components guide]: /guides/custom-components
+[data accessors guide]: /docs/guides/data-accessors
+[custom components guide]: /docs/guides/custom-components
 [events guide]: /docs/guides/events
 [themes guide]: /docs/guides/themes
 [`victorychart`]: /docs/api/victory-chart

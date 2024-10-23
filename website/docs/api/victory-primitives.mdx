@@ -8,6 +8,14 @@ Victory is built around a set of simple, stateless components. Along with [Victo
 
 Each of these primitive components renders SVG elements. The following components are the only Victory components that render SVG elements with the exception of `VictoryContainer` and `VictoryPortal`. These elements are used by other simple components such as `Bar` and `Area`.
 
+### Border
+
+Used by `VictoryLegend`
+
+```jsx
+const Border = (props) => <Rect {...props} />;
+```
+
 ### Circle
 
 Used by `Background`, `VictoryClipContainer`, and `Voronoi`
@@ -480,7 +488,7 @@ _note_ `Box` also exported as `Border`
 [curve]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-line/src/curve.tsx 
 [victoryline]: /docs/api/victory-line
 [errorbar]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-errorbar/src/error-bar.tsx
-[victoryerrorbar]: /docs/api/victory-errorbar
+[victoryerrorbar]: /docs/api/victory-error-bar
 [flyout]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-tooltip/src/flyout.tsx
 [victorytooltip]: /docs/api/victory-tooltip
 [victoryaxis]: /docs/api/victory-axis

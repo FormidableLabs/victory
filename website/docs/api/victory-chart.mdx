@@ -2,22 +2,14 @@
 title: VictoryChart
 ---
 
-## animate
+## Inherited Props
 
-`type: boolean || object`
-
-`VictoryChart` uses the standard `animate` prop. [Read about it here](/docs/api/common-props/#animate)
-
-See the [Animations Guide][] for more detail on animations and transitions
-
-*note:* `VictoryChart` controls the `animate` prop of its children when set. To animate individual children of `VictoryChart`, set the `animate` prop only on children, and not on the `VictoryChart` wrapper.
-
-```jsx
-animate={{
-  duration: 2000,
-  onLoad: { duration: 1000 }
-}}
-```
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryEventProps",
+  ]}
+/>
 
 ---
 
@@ -68,34 +60,26 @@ backgroundComponent={<Background/>}
   <TypeBadge value="ReactElement" />
 </Badges>
 
-`VictoryChart` uses the standard `containerComponent` prop. [Read about it in detail here](/docs/api/common-props/#containercomponent)
+`VictoryChart` uses the standard `containerComponent` prop. [Read about it in detail here](/docs/api/victory-common-theme-props/#containercomponent)
 
 ```jsx
 containerComponent={<VictoryVoronoiContainer/>}
 ```
 
-## domain
+### desc
+### defaultAxes
+### defaultPolarAxes
+
+---
+
+### domain
 
 `type: array[low, high] || { x: [low, high], y: [low, high] }`
-
-`VictoryChart` uses the standard `domain` prop. [Read about it in detail here](/docs/api/common-props/#domain)
 
 *note:* `VictoryChart` controls the `domain` prop of its children.
 
 ```jsx
 domain={{x: [0, 100], y: [0, 1]}}
-```
-
-## domainPadding
-
-`type: number || array[left, right] || { x: [left, right], y: [bottom, top] }`
-
-`VictoryChart` uses the standard `domainPadding` prop. [Read about it in detail here](/docs/api/victory-common-theme-props#domainpadding)
-
-*note: `VictoryChart` controls the `domainPadding` prop of its children.*
-
-```jsx
-domainPadding={{x: [10, -10], y: 5}}
 ```
 
 ---
@@ -157,11 +141,15 @@ The `endAngle` props defines the overall end angle of a polar chart in degrees. 
 </div>
 ```
 
-## events
+---
 
-`type: array[object]`
+### events
 
-`VictoryChart` uses the standard `events` prop. [Read about it in more detail here](/docs/api/common-props/#events)
+<Badges>
+  <TypeBadge value="any[]" />
+</Badges>
+
+`VictoryChart` uses the standard `events` prop. [Read about it in more detail here](/docs/guides/events)
 
 See the [Events Guide][] for more information on defining events.
 
@@ -203,71 +191,6 @@ See the [Events Guide][] for more information on defining events.
 </VictoryChart>
 ```
 
-## externalEventMutations
-
-`type: array[object]`
-
-`VictoryChart` uses the standard `externalEventMutations` prop. [Read about it in detail](/docs/api/common-props/#externalEventsMutations)
-
----
-
-### groupComponent
-
-<Badges>
-  <TypeBadge value="ReactElement" />
-</Badges>
-
-`VictoryChart` uses the standard `groupComponent` prop. [Read about it in detail here](/docs/api/common-props/#groupcomponent)
-
-_default:_ `<g/>`
-
-```jsx
-groupComponent={<g transform="translate(10, 10)" />}
-```
-
----
-
-### height
-
-<Badges>
-  <TypeBadge value="number" />
-</Badges>
-
-`VictoryChart` uses the standard `height` prop. [Read about it in detail here](/docs/api/common-props/#height)
-
-*note:* `VictoryChart` controls the `height` prop of its children.
-
-_default (provided by default theme):_ `height={300}`
-
-```jsx
-height={400}
-```
-
-## horizontal
-
-<Badges>
-  <TypeBadge value="boolean" />
-</Badges>
-
-The horizontal prop determines whether data will be plotted horizontally. When this prop is set to true, the independent variable will be plotted on the y axis and the dependent variable will be plotted on the x axis.
-
-_default:_ horizontal={false}
-
-```jsx live
-<VictoryChart 
-  horizontal
-  domainPadding={{ x: 8 }}
-  theme={VictoryTheme.clean}
->
-  <VictoryBar
-    data={sampleData}
-  />
-  <VictoryScatter
-    data={sampleData}
-  />
-</VictoryChart>
-```
-
 ---
 
 ### innerRadius
@@ -286,127 +209,9 @@ When the `innerRadius` prop is set, polar charts will be hollow rather than circ
 </VictoryChart>
 ```
 
-## maxDomain
+---
 
-`type: number || { x: number, y: number }`
-
-`VictoryChart` uses the standard `maxDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#maxDomain)
-
-```jsx live
-<VictoryChart maxDomain={{ y: 4.5 }}>
-  <VictoryLine data={sampleData}/>
-</VictoryChart>
-```
-
-## minDomain
-
-`type: number || { x: number, y: number }`
-
-`VictoryChart` uses the standard `minDomain` prop. [Read about it in detail](/docs/api/victory-common-theme-props#minDomain)
-
-```jsx live
-<VictoryChart minDomain={{ y: 0 }}>
-  <VictoryLine data={sampleData}/>
-</VictoryChart>
-```
-
-## padding
-
-`type: number || { top: number, bottom: number, left: number, right: number }`
-
-`VictoryChart` uses the standard `padding` prop. [Read about it in detail here](/docs/api/common-props/#padding)
-
-*note:* `VictoryChart` controls the `padding` prop of its children.
-
-_default (provided by default theme):_ `padding={50}`
-
-```jsx
-padding={{ top: 20, bottom: 60 }}
-```
-
-## polar
-
-<Badges>
-  <TypeBadge value="boolean" />
-</Badges>
-
-`VictoryChart` uses the standard `polar` prop. [Read about it in detail here](/docs/api/common-props/#polar)
-
-*Notes:*
-
-- `VictoryChart` controls the `polar` prop of its children
-- Polar charts should use `VictoryPolarAxis` rather than `VictoryAxis`
-
-```jsx live
-<div>
-  <VictoryChart polar theme={VictoryTheme.clean}>
-    <VictoryPolarAxis/>
-    <VictoryBar data={sampleData} />
-  </VictoryChart>
-
-  <VictoryChart theme={VictoryTheme.clean}>
-    <VictoryAxis/>
-    <VictoryBar data={sampleData} />
-  </VictoryChart>
-</div>
-```
-
-## range
-
-`type: array[low, high] || { x: [low, high], y: [low, high] }`
-
-**The `range` prop is usually calculated based on other props. It will not typically be necessary to set a `range` prop manually**
-
-*note:* `VictoryChart` controls the `range` prop of its children.
-
-[Read about the `range` prop in detail](/docs/api/common-props/#range)
-
-## scale
-
-`type: scale || { x: scale, y: scale }`
-
-`VictoryChart` uses the standard `scale` prop. [Read about it here](/docs/api/common-props/#scale)
-Options for scale include "linear", "time", "log", "sqrt" and the `d3-scale` functions that correspond to these options.
-
-*note:* `VictoryChart` controls the `scale` prop of its children.
-
-  <DefaultsBadge value='linear"' />
-
-```jsx
-scale={{x: "linear", y: "log"}}
-```
-
-## sharedEvents
-
-**The `sharedEvents` prop is used internally to coordinate events between components. It should not be set manually.**
-
-## singleQuadrantDomainPadding
-
-`type: boolean || { x: boolean, y: boolean }`
-
-`VictoryChart` uses the standard `singleQuadrantDomainPadding` prop. [Read about it here](/docs/api/victory-common-theme-props#singlequadrantdomainpadding)
-
-## standalone
-
-<Badges>
-  <TypeBadge value="boolean" />
-</Badges>
-
-`VictoryChart` uses the standard `standalone` prop. [Read about it in detail here](/docs/api/common-props/#standalone)
-
-*note:* `VictoryChart` sets `standalone={false} for all of its children.
-
-  <DefaultsBadge value='true}' />
-
-```jsx live
-<svg width={300} height={300}>
-  <circle cx={150} cy={150} r={150} fill="lightblue"/>
-  <VictoryChart
-    standalone={false}
-    width={300} height={300}
-  />
-</svg>
-```
+### prependDefaultAxes
 
 ---
 
@@ -465,11 +270,16 @@ The `startAngle` props defines the overall start angle of a polar chart in degre
 </div>
 ```
 
-## style
+---
 
-`type: { parent: object, background: object }`
+### style
 
-`VictoryChart` uses the standard `style` prop. [Read about it in detail here](/docs/api/common-props/#style)
+<Badges>
+  <TypeBadge value="VictoryStyleInterface" />
+  <DefaultsBadge value="(provided by theme)" />
+</Badges>
+
+Defines the style of the component using [VictoryStyleInterface](/docs/api/victory-style-interface).
 
 note: custom valid svg style properties that are supported may be included in `background` styles.
 
@@ -488,48 +298,6 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 />
 ```
 
-## theme
-
-`type: object`
-
-`VictoryChart` uses the standard `theme` prop. [Read about it in detail here](/docs/api/common-props/#theme)
-
-See the [Themes Guide][] for information about creating custom themes.
-
-  <DefaultsBadge value='VictoryTheme.grayscale}' />
-
-
 ---
 
-### width
-
-<Badges>
-  <TypeBadge value="number" />
-</Badges>
-
-`VictoryChart` uses the standard `width` prop. [Read about it in detail here](/docs/api/common-props/#width)
-
-*note:* `VictoryChart` controls the `width` prop of its children.
-
-_default (provided by default theme):_ `width={450}`
-
-```jsx
-width={400}
-```
-
-[victoryarea]: /docs/api/victory-area
-[victoryaxis]: /docs/api/victory-axis
-[victorypolaraxis]: /docs/api/victory-polar-axis
-[victorybar]: /docs/api/victory-bar
-[victorycandlestick]: /docs/api/victory-candlestick
-[victoryerrorbar]: /docs/api/victory-errorbar
-[victorygroup]: /docs/api/victory-group
-[victoryline]: /docs/api/victory-line
-[victoryscatter]: /docs/api/victory-scatter
-[victoryhistogram]: /docs/api/victory-histogram
-[victorystack]: /docs/api/victory-stack
-[victoryvoronoi]: /docs/api/victory-voronoi
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
-[animations guide]: /docs/guides/animations
-[events guide]: /docs/guides/events
-[themes guide]: /docs/guides/themes
+### title
