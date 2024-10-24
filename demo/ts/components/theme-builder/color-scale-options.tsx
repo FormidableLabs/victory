@@ -12,7 +12,7 @@ type ColorChangeArgs = {
 
 type ColorScaleOptionsProps = {
   activeTheme?: ThemeOption;
-  activeColorScale: ColorScalePropType;
+  activeColorScale?: ColorScalePropType;
   onColorChange: (args: ColorChangeArgs) => void;
   onColorScaleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };

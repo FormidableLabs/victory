@@ -62,6 +62,10 @@ $grey-300: #666;
   justify-content: flex-start;
   width: 100%;
 
+  p {
+    color: $grey-300;
+  }
+
   &__sidebar {
     position: relative;
     display: flex;
@@ -121,15 +125,18 @@ $grey-300: #666;
   right: 0;
   bottom: 0;
   width: 100%;
-  padding: 20px;
+  padding: 40px;
   z-index: 1000;
   background: $white;
+  display: flex;
+  flex-direction: column;
 
   &__copy-container {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-top: 20px;
   }
 
   &__copy-status {
@@ -139,8 +146,8 @@ $grey-300: #666;
   }
 
   &__code {
+    flex: 1;
     overflow: auto;
-    max-height: 600px;
     border: 1px solid $grey-200;
     padding: 10px;
     background-color: $grey-100;

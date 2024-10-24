@@ -25,10 +25,13 @@ const themes: ThemeOption[] = [
   { name: "Grayscale", config: VictoryTheme.grayscale },
 ];
 
-const themeOptions = themes.map((theme) => ({
-  label: theme.name,
-  value: theme.name,
-}));
+const themeOptions = [
+  { label: "Select a theme", value: undefined },
+  ...themes.map((theme) => ({
+    label: theme.name,
+    value: theme.name,
+  })),
+];
 
 const sampleStackData = [
   {
@@ -149,49 +152,51 @@ const ThemeBuilder = () => {
         </footer>
       </aside>
       <main className="theme-builder__preview">
-        <div className="theme-builder__preview-container">
-          <h2>Example Charts</h2>
-          <div className="theme-builder__preview-grid">
-            <div>
-              <h3>Bar Chart</h3>
-              <VictoryChart
-                theme={activeTheme?.config}
-                domainPadding={20}
-                style={chartStyle}
-              >
-                <VictoryAxis label="X Axis" />
-                <VictoryAxis dependentAxis label="Y Axis" />
-                <VictoryStack
-                  colorScale={activeColorScale}
-                  aria-label="Victory Stack Demo"
+        {activeTheme && (
+          <div className="theme-builder__preview-container">
+            <h2>Example Charts</h2>
+            <div className="theme-builder__preview-grid">
+              <div>
+                <h3>Bar Chart</h3>
+                <VictoryChart
+                  theme={activeTheme?.config}
+                  domainPadding={20}
+                  style={chartStyle}
                 >
-                  {[...Array(5)].map((_, i) => (
-                    <VictoryBar data={sampleStackData} key={i} />
-                  ))}
-                </VictoryStack>
-              </VictoryChart>
-            </div>
-            <div>
-              <h3>Area Chart</h3>
-              <VictoryChart
-                theme={activeTheme?.config}
-                domainPadding={20}
-                style={chartStyle}
-              >
-                <VictoryAxis label="X Axis" />
-                <VictoryAxis dependentAxis label="Y Axis" />
-                <VictoryStack
-                  colorScale={activeColorScale}
-                  aria-label="Victory Stack Demo"
+                  <VictoryAxis label="X Axis" />
+                  <VictoryAxis dependentAxis label="Y Axis" />
+                  <VictoryStack
+                    colorScale={activeColorScale}
+                    aria-label="Victory Stack Demo"
+                  >
+                    {[...Array(5)].map((_, i) => (
+                      <VictoryBar data={sampleStackData} key={i} />
+                    ))}
+                  </VictoryStack>
+                </VictoryChart>
+              </div>
+              <div>
+                <h3>Area Chart</h3>
+                <VictoryChart
+                  theme={activeTheme?.config}
+                  domainPadding={20}
+                  style={chartStyle}
                 >
-                  {[...Array(5)].map((_, i) => (
-                    <VictoryArea data={sampleStackData} key={i} />
-                  ))}
-                </VictoryStack>
-              </VictoryChart>
+                  <VictoryAxis label="X Axis" />
+                  <VictoryAxis dependentAxis label="Y Axis" />
+                  <VictoryStack
+                    colorScale={activeColorScale}
+                    aria-label="Victory Stack Demo"
+                  >
+                    {[...Array(5)].map((_, i) => (
+                      <VictoryArea data={sampleStackData} key={i} />
+                    ))}
+                  </VictoryStack>
+                </VictoryChart>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
       {showThemeConfigPreview && activeTheme?.config && (
         <ConfigPreview

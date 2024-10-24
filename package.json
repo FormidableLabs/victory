@@ -639,5 +639,8 @@
         "build:lib:esm"
       ]
     }
+  },
+  "dependencies": {
+    "react-syntax-highlighter": "^15.6.1"
   }
 }

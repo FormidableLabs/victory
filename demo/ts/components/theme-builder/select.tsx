@@ -2,7 +2,7 @@ import React from "react";
 
 export type SelectOption = {
   label: string;
-  value: string;
+  value?: string;
 };
 
 type SelectProps = {
