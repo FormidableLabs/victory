@@ -4,7 +4,18 @@ title: VictorySelectionContainer
 
 `VictorySelectionContainer` uses a superset of props used by [VictoryContainer][]. All props are optional.
 
-## activateSelectedData
+## Inherited Props
+
+<CommonProps
+  interfaces={["VictoryContainerProps"]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### activateSelectedData
 
 <Badges>
   <TypeBadge value="boolean" />
@@ -12,9 +23,11 @@ title: VictorySelectionContainer
 
 When the `activateSelectedData` prop is set to true, the `active` prop will be set to true on all selected data points. When this prop is set to false, the `onSelection` and `onSelectionCleared` callbacks will still fire, but no mutations will occur via Victory's event system.
 
-  <DefaultsBadge value='true}' />
+<DefaultsBadge value="true}" />
 
-## disable
+---
+
+### disable
 
 <Badges>
   <TypeBadge value="boolean" />
@@ -48,9 +61,13 @@ The `onSelectionCleared` prop accepts a function to be called whenever the selec
 
 _example:_ `onSelectionCleared={(props) => handleSelectionCleared(props)}`
 
-## selectionBlacklist
+### selectionBlacklist
 
 `type: array[string]`
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
 
 The `selectionBlacklist` prop is used to exclude data from potential selections. This prop should be given as an array of strings that match the `name` prop of Victory component that should be excluded from selection.
 
@@ -68,11 +85,15 @@ The `selectionComponent` prop specifies the element to be rendered for the selec
 this prop is not specified, a `<rect/>` will be rendered. This component will be supplied with the
 following props: `x`, `y`, `width`, `height`, and `style`.
 
-  <DefaultsBadge value='<rect/>}' />
+<DefaultsBadge value="<rect/>}" />
 
-## selectionDimension
+---
 
-`type: "x" || "y"`
+### selectionDimension
+
+<Badges>
+  <TypeBadge value='"x" | "y"`' />
+</Badges>
 
 When the `selectionDimension` prop is set, the selection will only take the given dimension into account.
 For example, when `dimension` is set to "x", the selected area will cover the entire y domain
@@ -83,41 +104,55 @@ _example:_ `selectionDimension="x"`
 ```jsx live
 <VictoryChart
   containerComponent={
-    <VictorySelectionContainer selectionDimension="x"/>
+    <VictorySelectionContainer selectionDimension="x" />
   }
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
-    style={{ data: { fill: ({ active }) => active ? "tomato" : "gray" } }}
+    style={{
+      data: {
+        fill: ({ active }) =>
+          active ? "tomato" : "gray",
+      },
+    }}
   />
 </VictoryChart>
 ```
 
-## selectionStyle
+---
 
-`type: object`
+### selectionStyle
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
 
 The `selectionStyle` prop should be given as an object of style attributes to be applied to the
 `selectionComponent`
 
-  <DefaultsBadge value='{stroke: "transparent", fill: "black", fillOpacity: 0.1}}' />
+<DefaultsBadge value='{stroke: "transparent", fill: "black", fillOpacity: 0.1}}' />
 
 ```jsx live
 <VictoryChart
   containerComponent={
     <VictorySelectionContainer
       selectionStyle={{
-        fill: "tomato", fillOpacity: 0.5,
-        stroke: "tomato", strokeWidth: 2
+        fill: "tomato",
+        fillOpacity: 0.5,
+        stroke: "tomato",
+        strokeWidth: 2,
       }}
     />
   }
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
-    style={{ data: { fill: ({ active }) => active ? "tomato" : "gray" } }}
+    style={{
+      data: {
+        fill: ({ active }) =>
+          active ? "tomato" : "gray",
+      },
+    }}
   />
 </VictoryChart>
 ```
-
-[victorycontainer]: /docs/api/victory-container
