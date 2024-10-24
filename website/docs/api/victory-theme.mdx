@@ -2,17 +2,26 @@
 title: VictoryTheme
 ---
 
-Implement themes for your Victory charts. `VictoryTheme` allows you to create a consistent look across all of your chart elements, either by using one of the included themes or by creating your own. `VictoryTheme` and custom themes are supported by all Victory components. By default, Victory components use the [grayscale theme][].
+Allows you to create a consistent look across all of your chart elements, either by using one of the included themes or by creating your own. By default, Victory components use the `grayscale` theme.
 
-[See all Victory Themes here][].
+Victory includes several [prebuilt](https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme) themes that can be used.
 
-To create your own theme, create an object with props and styles specified for any combination of the following namespaces:
+:::info
+For more information about themes and styles, see the [themes guide](/docs/guides/themes).
+:::
 
-*Note:* The `dependentAxis` and `independentAxis`, `polarDependentAxis`, and `polarIndependentAxis` will be merged with any props and styles supplied in the `axis` namespace.
+## Types
 
-```js
-{
-  area: {...props},
+This is roughly what the `VictoryTheme` object looks like, see the [source code](https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/types.ts#L90) for the full definition.
+
+:::note
+The `dependentAxis` and `independentAxis`, `polarDependentAxis`, and `polarIndependentAxis` will be merged with any props and styles supplied in the `axis` namespace.
+:::
+
+```ts
+interface VictoryThemeDefinition {
+  palette: {...props};
+  area: {...props}
   axis: {...props},
   dependentAxis: {...props},
   independentAxis: {...props},
@@ -34,5 +43,12 @@ To create your own theme, create an object with props and styles specified for a
 }
 ```
 
-[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
-[See all Victory Themes here]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme
+## Example
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine data={sampleData} />
+</VictoryChart>
+```
