@@ -1,5 +1,17 @@
 # victory-core
 
+## 37.3.0
+
+### Minor Changes
+
+- Clean theme color updates and other minor adjustments ([#2920](https://github.com/FormidableLabs/victory/pull/2920))
+
+* Fix VictoryPortal id changing for every render ([#2929](https://github.com/FormidableLabs/victory/pull/2929))
+
+### Patch Changes
+
+- fix categories array of strings ([#2919](https://github.com/FormidableLabs/victory/pull/2919))
+
 ## 37.2.0
 
 ### Minor Changes
