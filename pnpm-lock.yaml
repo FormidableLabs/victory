@@ -422,7 +422,7 @@ importers:
     dependencies:
       next:
         specifier: 14.1.0
-        version: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.80.3)
+        version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18
         version: 18.2.0
@@ -540,7 +540,7 @@ importers:
         version: 8.1.1(styled-components@6.1.8)
       tailwindcss:
         specifier: ^3.3.0
-        version: 3.4.1(ts-node@10.9.1)
+        version: 3.4.1
       typescript:
         specifier: ^5
         version: 5.3.3
@@ -557,85 +557,85 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-area:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-area
       victory-axis:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-axis
       victory-bar:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-bar
       victory-box-plot:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-box-plot
       victory-brush-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-brush-container
       victory-brush-line:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-brush-line
       victory-candlestick:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-candlestick
       victory-canvas:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-canvas
       victory-chart:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-chart
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-create-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-create-container
       victory-cursor-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-cursor-container
       victory-errorbar:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-errorbar
       victory-group:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-group
       victory-histogram:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-histogram
       victory-legend:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-legend
       victory-line:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-line
       victory-pie:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-pie
       victory-polar-axis:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-polar-axis
       victory-scatter:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-scatter
       victory-selection-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-selection-container
       victory-shared-events:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-shared-events
       victory-stack:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-stack
       victory-tooltip:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-tooltip
       victory-voronoi:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-voronoi
       victory-voronoi-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-voronoi-container
       victory-zoom-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-zoom-container
 
   packages/victory-area:
@@ -647,10 +647,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-vendor
     devDependencies:
       victory-chart:
@@ -666,7 +666,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-bar:
@@ -678,10 +678,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-vendor
     devDependencies:
       victory-chart:
@@ -697,10 +697,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-vendor
     devDependencies:
       victory-chart:
@@ -719,7 +719,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-brush-line:
@@ -734,7 +734,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-candlestick:
@@ -746,7 +746,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
     devDependencies:
       victory-chart:
@@ -765,10 +765,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-bar:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-bar
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-chart:
@@ -783,16 +783,16 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-axis:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-axis
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-polar-axis:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-polar-axis
       victory-shared-events:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-shared-events
 
   packages/victory-core:
@@ -807,7 +807,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-vendor:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-vendor
 
   packages/victory-create-container:
@@ -819,22 +819,22 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-brush-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-brush-container
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-cursor-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-cursor-container
       victory-selection-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-selection-container
       victory-voronoi-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-voronoi-container
       victory-zoom-container:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-zoom-container
 
   packages/victory-cursor-container:
@@ -846,7 +846,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-errorbar:
@@ -858,7 +858,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
     devDependencies:
       victory-vendor:
@@ -877,10 +877,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-shared-events:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-shared-events
     devDependencies:
       victory-bar:
@@ -899,13 +899,13 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-bar:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-bar
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-vendor
 
   packages/victory-legend:
@@ -917,7 +917,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-line:
@@ -929,10 +929,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-vendor
     devDependencies:
       victory-chart:
@@ -954,85 +954,85 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory
       victory-area:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-area
       victory-axis:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-axis
       victory-bar:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-bar
       victory-box-plot:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-box-plot
       victory-brush-container:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-brush-container
       victory-brush-line:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-brush-line
       victory-candlestick:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-candlestick
       victory-chart:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-chart
       victory-core:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-core
       victory-create-container:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-create-container
       victory-cursor-container:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-cursor-container
       victory-errorbar:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-errorbar
       victory-group:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-group
       victory-histogram:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-histogram
       victory-legend:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-legend
       victory-line:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-line
       victory-pie:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-pie
       victory-polar-axis:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-polar-axis
       victory-scatter:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-scatter
       victory-selection-container:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-selection-container
       victory-shared-events:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-shared-events
       victory-stack:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-stack
       victory-tooltip:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-tooltip
       victory-voronoi:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-voronoi
       victory-voronoi-container:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-voronoi-container
       victory-zoom-container:
-        specifier: ^37.2.0
+        specifier: ^37.3.0
         version: link:../victory-zoom-container
     devDependencies:
       '@babel/core':
@@ -1057,10 +1057,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-vendor
 
   packages/victory-polar-axis:
@@ -1072,7 +1072,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-scatter:
@@ -1084,7 +1084,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-selection-container:
@@ -1096,7 +1096,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
     devDependencies:
       victory-bar:
@@ -1121,7 +1121,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-stack:
@@ -1136,10 +1136,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-shared-events:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-shared-events
     devDependencies:
       victory-area:
@@ -1161,7 +1161,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-vendor:
@@ -1246,7 +1246,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
   packages/victory-voronoi-container:
@@ -1264,10 +1264,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
       victory-tooltip:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-tooltip
 
   packages/victory-zoom-container:
@@ -1279,7 +1279,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.2.0
+        specifier: 37.3.0
         version: link:../victory-core
 
 packages:
@@ -1362,7 +1362,7 @@ packages:
       '@babel/traverse': 7.24.0
       '@babel/types': 7.24.0
       convert-source-map: 2.0.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -1493,7 +1493,7 @@ packages:
       '@babel/core': 7.23.9
       '@babel/helper-compilation-targets': 7.23.6
       '@babel/helper-plugin-utils': 7.24.7
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       lodash.debounce: 4.0.8
       resolve: 1.22.8
       semver: 6.3.1
@@ -1508,7 +1508,7 @@ packages:
       '@babel/core': 7.23.9
       '@babel/helper-compilation-targets': 7.23.6
       '@babel/helper-plugin-utils': 7.24.7
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -2910,7 +2910,7 @@ packages:
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.24.0
       '@babel/types': 7.24.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -2927,7 +2927,7 @@ packages:
       '@babel/helper-split-export-declaration': 7.24.7
       '@babel/parser': 7.24.7
       '@babel/types': 7.24.7
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -3455,7 +3455,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       espree: 9.3.3
       globals: 13.17.0
       ignore: 5.2.0
@@ -3508,7 +3508,7 @@ packages:
       chalk: 4.1.2
       ci-info: 3.3.2
       connect: 3.7.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       env-editor: 0.4.2
       find-yarn-workspace-root: 2.0.0
       form-data: 3.0.1
@@ -3584,7 +3584,7 @@ packages:
       '@expo/sdk-runtime-versions': 1.0.0
       '@react-native/normalize-color': 2.1.0
       chalk: 4.1.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       find-up: 5.0.0
       getenv: 1.0.0
       glob: 7.1.6
@@ -3644,7 +3644,7 @@ packages:
     resolution: {integrity: sha512-a+uJ/e6MAVxPVVN/HbXU5qxzdqrqDwNQYxCfxtAufgmd5VZj54e5f3TJA3LEEUW3pTSZR8xK0H0EtVN297AZnw==}
     dependencies:
       chalk: 4.1.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       dotenv: 16.4.5
       dotenv-expand: 11.0.6
       getenv: 1.0.0
@@ -3658,7 +3658,7 @@ packages:
     dependencies:
       '@expo/spawn-async': 1.7.2
       chalk: 4.1.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       find-up: 5.0.0
       minimatch: 3.1.2
       p-limit: 3.1.0
@@ -3708,7 +3708,7 @@ packages:
       '@react-native/babel-preset': 0.74.84(@babel/core@7.23.9)(@babel/preset-env@7.23.9)
       babel-preset-fbjs: 3.4.0(@babel/core@7.23.9)
       chalk: 4.1.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       find-yarn-workspace-root: 2.0.0
       fs-extra: 9.1.0
       getenv: 1.0.0
@@ -3765,7 +3765,7 @@ packages:
       '@expo/config-types': 50.0.1
       '@expo/image-utils': 0.4.2
       '@expo/json-file': 8.3.3
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       expo-modules-autolinking: 1.10.3
       fs-extra: 9.1.0
       resolve-from: 5.0.0
@@ -3882,7 +3882,7 @@ packages:
     engines: {node: '>=10.10.0'}
     dependencies:
       '@humanwhocodes/object-schema': 1.2.1
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -4353,7 +4353,7 @@ packages:
       next: ^13.0.0 || ^14.0.0
       react: ^18.2.0
     dependencies:
-      next: 14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.80.3)
+      next: 14.1.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       third-party-capital: 1.0.20
     dev: true
@@ -4658,6 +4658,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-darwin-arm64@2.4.1:
@@ -4666,6 +4667,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-darwin-x64@2.4.1:
@@ -4674,6 +4676,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-freebsd-x64@2.4.1:
@@ -4682,6 +4685,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-linux-arm-glibc@2.4.1:
@@ -4690,6 +4694,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-linux-arm64-glibc@2.4.1:
@@ -4698,6 +4703,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-linux-arm64-musl@2.4.1:
@@ -4706,6 +4712,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-linux-x64-glibc@2.4.1:
@@ -4714,6 +4721,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-linux-x64-musl@2.4.1:
@@ -4722,6 +4730,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-win32-arm64@2.4.1:
@@ -4730,6 +4739,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-win32-ia32@2.4.1:
@@ -4738,6 +4748,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher-win32-x64@2.4.1:
@@ -4746,6 +4757,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@parcel/watcher@2.4.1:
@@ -4769,6 +4781,7 @@ packages:
       '@parcel/watcher-win32-arm64': 2.4.1
       '@parcel/watcher-win32-ia32': 2.4.1
       '@parcel/watcher-win32-x64': 2.4.1
+    dev: true
 
   /@pkgjs/parseargs@0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -6539,7 +6552,7 @@ packages:
       typescript: '>= 4.x'
       webpack: '>= 4'
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       endent: 2.1.0
       find-cache-dir: 3.3.2
       flat-cache: 3.0.4
@@ -7430,7 +7443,7 @@ packages:
       '@typescript-eslint/scope-manager': 5.32.0
       '@typescript-eslint/type-utils': 5.32.0(eslint@8.21.0)(typescript@4.7.4)
       '@typescript-eslint/utils': 5.32.0(eslint@8.21.0)(typescript@4.7.4)
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       eslint: 8.21.0
       functional-red-black-tree: 1.0.1
       ignore: 5.2.0
@@ -7459,7 +7472,7 @@ packages:
       '@typescript-eslint/type-utils': 6.21.0(eslint@8.21.0)(typescript@5.3.3)
       '@typescript-eslint/utils': 6.21.0(eslint@8.21.0)(typescript@5.3.3)
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       eslint: 8.21.0
       graphemer: 1.4.0
       ignore: 5.3.1
@@ -7484,7 +7497,7 @@ packages:
       '@typescript-eslint/scope-manager': 5.32.0
       '@typescript-eslint/types': 5.32.0
       '@typescript-eslint/typescript-estree': 5.32.0(typescript@4.7.4)
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       eslint: 8.21.0
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -7505,7 +7518,7 @@ packages:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.3.3)
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       eslint: 8.21.0
       typescript: 5.3.3
     transitivePeerDependencies:
@@ -7547,7 +7560,7 @@ packages:
         optional: true
     dependencies:
       '@typescript-eslint/utils': 5.32.0(eslint@8.21.0)(typescript@4.7.4)
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       eslint: 8.21.0
       tsutils: 3.21.0(typescript@4.7.4)
       typescript: 4.7.4
@@ -7567,7 +7580,7 @@ packages:
     dependencies:
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.3.3)
       '@typescript-eslint/utils': 6.21.0(eslint@8.21.0)(typescript@5.3.3)
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       eslint: 8.21.0
       ts-api-utils: 1.2.1(typescript@5.3.3)
       typescript: 5.3.3
@@ -7601,7 +7614,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.32.0
       '@typescript-eslint/visitor-keys': 5.32.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
@@ -7622,7 +7635,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/visitor-keys': 5.62.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
@@ -7643,7 +7656,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
@@ -8026,7 +8039,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
 
@@ -9580,6 +9593,7 @@ packages:
     engines: {node: '>= 14.16.0'}
     dependencies:
       readdirp: 4.0.2
+    dev: true
 
   /chownr@1.1.4:
     resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
@@ -9984,7 +9998,7 @@ packages:
     hasBin: true
     dependencies:
       debounce: 1.2.1
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       duplexer: 0.1.2
       fs-extra: 10.1.0
       glob-gitignore: 1.0.14
@@ -10431,6 +10445,17 @@ packages:
     dependencies:
       ms: 2.1.3
 
+  /debug@4.3.4:
+    resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
+
   /debug@4.3.4(supports-color@5.5.0):
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
     engines: {node: '>=6.0'}
@@ -10442,6 +10467,7 @@ packages:
     dependencies:
       ms: 2.1.2
       supports-color: 5.5.0
+    dev: true
 
   /decamelize-keys@1.1.0:
     resolution: {integrity: sha512-ocLWuYzRPoS9bfiSdDd3cxvrzovVMZnRDVEzAs+hWIVXGDbHxWMECij2OBuyB/An0FFW/nLuq6Kv1i/YC5Qfzg==}
@@ -11127,7 +11153,7 @@ packages:
     peerDependencies:
       esbuild: '>=0.12 <1'
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       esbuild: 0.18.20
     transitivePeerDependencies:
       - supports-color
@@ -11214,7 +11240,7 @@ packages:
       eslint: 8.21.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.21.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.21.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0)(eslint@8.21.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.21.0)
       eslint-plugin-react: 7.33.2(eslint@8.21.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.21.0)
@@ -11259,11 +11285,11 @@ packages:
       eslint: '*'
       eslint-plugin-import: '*'
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       enhanced-resolve: 5.15.1
       eslint: 8.21.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.21.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.21.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0)(eslint@8.21.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.2
       is-core-module: 2.13.1
@@ -11331,6 +11357,35 @@ packages:
       - supports-color
     dev: true
 
+  /eslint-module-utils@2.8.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint@8.21.0):
+    resolution: {integrity: sha512-rXDXR3h7cs7dy9RNpUlQf80nX31XWJEyGq1tRMo+6GsO5VmTe4UTwtmonAD4ZkAsrfMVDA2wlGJ3790Ys+D49Q==}
+    engines: {node: '>=4'}
+    peerDependencies:
+      '@typescript-eslint/parser': '*'
+      eslint: '*'
+      eslint-import-resolver-node: '*'
+      eslint-import-resolver-typescript: '*'
+      eslint-import-resolver-webpack: '*'
+    peerDependenciesMeta:
+      '@typescript-eslint/parser':
+        optional: true
+      eslint:
+        optional: true
+      eslint-import-resolver-node:
+        optional: true
+      eslint-import-resolver-typescript:
+        optional: true
+      eslint-import-resolver-webpack:
+        optional: true
+    dependencies:
+      '@typescript-eslint/parser': 6.21.0(eslint@8.21.0)(typescript@5.3.3)
+      debug: 3.2.7
+      eslint: 8.21.0
+      eslint-import-resolver-node: 0.3.9
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /eslint-plugin-eslint-comments@3.2.0(eslint@8.21.0):
     resolution: {integrity: sha512-0jkOl0hfojIHHmEHgmNdqv4fmh7300NdpA9FFpF7zaoLvB/QeXOGNLIo86oAveJFrfB1p05kC8hpEMHM8DwWVQ==}
     engines: {node: '>=6.5.0'}
@@ -11385,7 +11440,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.21.0):
+  /eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0)(eslint@8.21.0):
     resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
     engines: {node: '>=4'}
     peerDependencies:
@@ -11404,7 +11459,7 @@ packages:
       doctrine: 2.1.0
       eslint: 8.21.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.21.0)
+      eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0)(eslint-import-resolver-node@0.3.9)(eslint@8.21.0)
       hasown: 2.0.1
       is-core-module: 2.13.1
       is-glob: 4.0.3
@@ -11601,7 +11656,7 @@ packages:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.1.1
@@ -13048,7 +13103,7 @@ packages:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -13088,7 +13143,7 @@ packages:
     engines: {node: '>= 6.0.0'}
     dependencies:
       agent-base: 5.1.1
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -13098,7 +13153,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
 
@@ -13169,6 +13224,7 @@ packages:
 
   /immutable@4.3.7:
     resolution: {integrity: sha512-1hqclzwYwjRDFLjcFxOM5AYkkG0rpFPpr1RLPMEuGczoS7YA8gLhy8SWXYRAA/XwfEHpfo3cw5JGioS32fnMRw==}
+    dev: true
 
   /import-fresh@2.0.0:
     resolution: {integrity: sha512-eZ5H8rcgYazHbKC3PG4ClHNykCSxtAhxSSEM+2mb+7evD2CKF5V7c0dNum7AdpDh0ZdICwZY9sRSn8f+KH96sg==}
@@ -13734,7 +13790,7 @@ packages:
     resolution: {integrity: sha512-n3s8EwkdFIJCG3BPKBYvskgXGoy88ARzvegkitk60NxRdwltLOTaH7CUiMRXvwYorl0Q712iEjcWB+fK/MrWVw==}
     engines: {node: '>=10'}
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       istanbul-lib-coverage: 3.2.0
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -15605,7 +15661,7 @@ packages:
     resolution: {integrity: sha512-o/sd0nMof8kYff+TqcDx3VSrgBTcZpSvYcAHIfHhv5VAuNmisCxjhx6YmxS8PFEpb9z5WKWKPdzf0jM23ro3RQ==}
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.0
@@ -15837,7 +15893,7 @@ packages:
     resolution: {integrity: sha512-SrQrok4CATudVzBS7coSz26QRSmlK9TzzoFbeKfcPBUFPjcQM9Rqvr/DlJkOrwI/0KcgvMub1n1g5Jt9EgRn4A==}
     dev: false
 
-  /next@14.1.0(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.80.3):
+  /next@14.1.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-wlzrsbfeSU48YQBjZhDzOwhWhGsy+uQycR8bHAOt1LY1bn3zZEcDyHQOEoN3aWzQ8LHCAJ1nqrWCc9XF2+O45Q==}
     engines: {node: '>=18.17.0'}
     hasBin: true
@@ -15860,8 +15916,7 @@ packages:
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      sass: 1.80.3
-      styled-jsx: 5.1.1(@babel/core@7.23.9)(react@18.2.0)
+      styled-jsx: 5.1.1(react@18.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.1.0
       '@next/swc-darwin-x64': 14.1.0
@@ -15896,6 +15951,7 @@ packages:
 
   /node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
+    dev: true
 
   /node-dir@0.1.17:
     resolution: {integrity: sha512-tmPX422rYgofd4epzrNoOXiE8XFZYOcCq1vD7MAXCDO+O+zndlA2ztdKKMa+EeuBG5tHETpr4ml4RGgpqDCCAg==}
@@ -16671,7 +16727,7 @@ packages:
       postcss: 8.4.33
     dev: true
 
-  /postcss-load-config@4.0.2(postcss@8.4.33)(ts-node@10.9.1):
+  /postcss-load-config@4.0.2(postcss@8.4.33):
     resolution: {integrity: sha512-bSVhyJGL00wMVoPUzAVAnbEoWyqRxkjv64tUl427SKnPrENtq6hJwUojroMz2VB+Q1edmi4IfrAPpami5VVgMQ==}
     engines: {node: '>= 14'}
     peerDependencies:
@@ -16685,7 +16741,6 @@ packages:
     dependencies:
       lilconfig: 3.1.1
       postcss: 8.4.33
-      ts-node: 10.9.1(@swc/core@1.3.106)(@types/node@18.6.1)(typescript@4.7.4)
       yaml: 2.4.0
     dev: true
 
@@ -17043,7 +17098,7 @@ packages:
     engines: {node: '>=8.16.0'}
     dependencies:
       '@types/mime-types': 2.1.4
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       extract-zip: 1.7.0
       https-proxy-agent: 4.0.0
       mime: 2.6.0
@@ -17661,6 +17716,7 @@ packages:
   /readdirp@4.0.2:
     resolution: {integrity: sha512-yDMz9g+VaZkqBYS/ozoBJwaBhTbZo3UNYQHNRw1D3UFQB8oHB4uS/tAODO+ZLjGWmUbKnIlOWO+aaIiAxrUWHA==}
     engines: {node: '>= 14.16.0'}
+    dev: true
 
   /readline-sync@1.4.10:
     resolution: {integrity: sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw==}
@@ -18203,6 +18259,7 @@ packages:
       chokidar: 4.0.1
       immutable: 4.3.7
       source-map-js: 1.0.2
+    dev: true
 
   /sax@1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
@@ -18589,7 +18646,7 @@ packages:
   /spdy-transport@3.0.0:
     resolution: {integrity: sha512-hsLVFE5SjA6TCisWeJXFKniGGOpBgMLmerfO2aCyCU5s7nJ/rpAepqmFifv/GCbSbueEeAJJnmSQ2rKC/g8Fcw==}
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       detect-node: 2.1.0
       hpack.js: 2.1.6
       obuf: 1.1.2
@@ -18603,7 +18660,7 @@ packages:
     resolution: {integrity: sha512-r46gZQZQV+Kl9oItvl1JZZqJKGr+oEkB08A6BzkiR7593/7IbtuncXHd2YoYeTsG4157ZssMu9KYvUHLcjcDoA==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       handle-thing: 2.0.1
       http-deceiver: 1.2.7
       select-hose: 2.0.0
@@ -19016,7 +19073,7 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /styled-jsx@5.1.1(@babel/core@7.23.9)(react@18.2.0):
+  /styled-jsx@5.1.1(react@18.2.0):
     resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -19029,7 +19086,6 @@ packages:
       babel-plugin-macros:
         optional: true
     dependencies:
-      '@babel/core': 7.23.9
       client-only: 0.0.1
       react: 18.2.0
 
@@ -19143,7 +19199,7 @@ packages:
     resolution: {integrity: sha512-k8uzYIkIVwmT+TcglpdN50pS2y1BDcUnBPK9iJeGu0Pl1lOI8pD6wtzgw91Pjpe+RxtTncw32tLxs/R0yNL2Mg==}
     dev: true
 
-  /tailwindcss@3.4.1(ts-node@10.9.1):
+  /tailwindcss@3.4.1:
     resolution: {integrity: sha512-qAYmXRfk3ENzuPBakNK0SRrUDipP8NQnEY6772uDhflcQz5EhRdD7JNZxyrFHVQNCwULPBn6FNPp9brpO7ctcA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
@@ -19165,7 +19221,7 @@ packages:
       postcss: 8.4.33
       postcss-import: 15.1.0(postcss@8.4.33)
       postcss-js: 4.0.1(postcss@8.4.33)
-      postcss-load-config: 4.0.2(postcss@8.4.33)(ts-node@10.9.1)
+      postcss-load-config: 4.0.2(postcss@8.4.33)
       postcss-nested: 6.0.1(postcss@8.4.33)
       postcss-selector-parser: 6.0.15
       resolve: 1.22.8
