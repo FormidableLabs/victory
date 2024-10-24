@@ -4,13 +4,15 @@ import {
   VictoryTheme,
   VictoryThemeDefinition,
 } from "victory-core";
-import ThemePicker from "./theme-picker";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
 import { VictoryStack } from "victory-stack";
 import { VictoryBar } from "victory-bar";
 import { VictoryArea } from "victory-area";
-import CustomOptions from "./custom-options";
+import ColorScaleOptions from "./color-scale-options";
+import Select from "./select";
+import ConfigPreview from "./config-preview";
+import Button from "./button";
 
 export type ThemeOption = {
   name: string;
@@ -21,6 +23,14 @@ const themes: ThemeOption[] = [
   { name: "Clean", config: VictoryTheme.clean },
   { name: "Material", config: VictoryTheme.material },
   { name: "Grayscale", config: VictoryTheme.grayscale },
+];
+
+const themeOptions = [
+  { label: "Select a theme", value: undefined },
+  ...themes.map((theme) => ({
+    label: theme.name,
+    value: theme.name,
+  })),
 ];
 
 const sampleStackData = [
@@ -46,51 +56,6 @@ const sampleStackData = [
   },
 ];
 
-const containerStyles: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  alignItems: "flex-start",
-  justifyContent: "flex-start",
-  width: "100%",
-};
-
-const sidebarStyles: React.CSSProperties = {
-  height: "100%",
-  borderRight: "1px solid #ccc",
-  padding: "20px",
-  width: 300,
-};
-
-const tabContainerStyles: React.CSSProperties = {
-  display: "flex",
-  cursor: "pointer",
-  marginBottom: 20,
-  fontSize: 14,
-};
-
-const previewContainerStyles: React.CSSProperties = {
-  flex: 1,
-  padding: "0 20px",
-};
-
-const getTabStyles = (isActive): React.CSSProperties => ({
-  padding: "10px 20px",
-  borderBottom: "2px solid lightgray",
-  fontWeight: "bold",
-  color: "gray",
-  ...(isActive && {
-    borderBottom: "2px solid black",
-    color: "#2165E3",
-  }),
-});
-
-const chartsGridStyles: React.CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: 20,
-};
-
 const chartStyle: { [key: string]: React.CSSProperties } = {
   parent: {
     border: "1px solid #ccc",
@@ -102,33 +67,19 @@ const chartStyle: { [key: string]: React.CSSProperties } = {
   },
 };
 
-const tabConfig = [
-  {
-    name: "themes",
-    label: "Default Themes",
-    Children: ThemePicker,
-  },
-  {
-    name: "customize",
-    label: "Customize",
-    Children: CustomOptions,
-  },
-];
-
 const ThemeBuilder = () => {
-  const [activeTheme, setActiveTheme] = React.useState<ThemeOption>(themes[0]);
-  const [activeColorScale] = React.useState<ColorScalePropType | undefined>(
-    "qualitative",
+  const [activeTheme, setActiveTheme] = React.useState<ThemeOption | undefined>(
+    undefined,
   );
-  const [activeTab, setActiveTab] = React.useState(tabConfig[0].name);
+  const [activeColorScale, setActiveColorScale] =
+    React.useState<ColorScalePropType>("qualitative");
+  const [showThemeConfigPreview, setShowThemeConfigPreview] =
+    React.useState(false);
 
-  const handleTabChange = (tabName: string) => {
-    setActiveTab(tabName);
-  };
-
-  const handleThemeSelect = (selectedTheme: ThemeOption) => {
-    if (!selectedTheme) return;
-    setActiveTheme(selectedTheme);
+  const handleThemeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const themeName = event.target.value;
+    const theme = themes.find((t) => t.name === themeName);
+    setActiveTheme(theme);
   };
 
   const handleColorChange = ({ event, index, colorScale }) => {
@@ -137,10 +88,10 @@ const ThemeBuilder = () => {
       ...activeTheme,
       name: "Custom",
       config: {
-        ...activeTheme.config,
+        ...activeTheme?.config,
         palette: {
-          ...activeTheme.config?.palette,
-          [colorScale]: activeTheme.config?.palette?.[colorScale]?.map(
+          ...activeTheme?.config?.palette,
+          [colorScale]: activeTheme?.config?.palette?.[colorScale]?.map(
             (color, i) => (i === index ? newColor : color),
           ),
         },
@@ -149,79 +100,110 @@ const ThemeBuilder = () => {
     setActiveTheme(customTheme);
   };
 
+  const handleColorScaleChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setActiveColorScale(event.target.value as ColorScalePropType);
+  };
+
+  const handleThemeConfigPreviewOpen = () => {
+    setShowThemeConfigPreview(true);
+  };
+
+  const handleThemeConfigPreviewClose = () => {
+    setShowThemeConfigPreview(false);
+  };
+
   return (
-    <div style={containerStyles}>
-      <aside style={sidebarStyles}>
-        <div style={tabContainerStyles}>
-          {tabConfig.map((tab, i) => (
-            <div
-              key={i}
-              onClick={() => handleTabChange(tab.name)}
-              style={getTabStyles(activeTab === tab.name)}
-            >
-              {tab.label}
-            </div>
-          ))}
+    <div className="theme-builder">
+      <aside className="theme-builder__sidebar">
+        <div className="theme-builder__content">
+          <h2 className="theme-builder__title">Customize Your Theme</h2>
+          <p className="theme-builder__intro">
+            Select a theme to begin customizing.
+          </p>
+          <Select
+            id="theme-select"
+            value={activeTheme?.name || ""}
+            onChange={handleThemeSelect}
+            options={themeOptions}
+            label="Base Theme"
+          />
+          {activeTheme && (
+            <section>
+              <h2>Customization Options</h2>
+              <ColorScaleOptions
+                activeColorScale={activeColorScale}
+                activeTheme={activeTheme}
+                onColorChange={handleColorChange}
+                onColorScaleChange={handleColorScaleChange}
+              />
+            </section>
+          )}
         </div>
-        <div>
-          {tabConfig.map(({ name, Children }) => (
-            <div key={name}>
-              {activeTab === name && (
-                <Children
-                  key={name}
-                  themes={themes}
-                  activeTheme={activeTheme}
-                  onColorChange={handleColorChange}
-                  onSelect={handleThemeSelect}
-                />
-              )}
-            </div>
-          ))}
-        </div>
+        <footer className="theme-builder__footer">
+          <Button
+            onClick={handleThemeConfigPreviewOpen}
+            ariaLabel="Get Theme Code"
+            disabled={!activeTheme}
+          >
+            Get Theme Code
+          </Button>
+        </footer>
       </aside>
-      <main style={previewContainerStyles}>
-        <h2>Example Charts</h2>
-        <div style={chartsGridStyles}>
-          <div>
-            <h3>Bar Chart</h3>
-            <VictoryChart
-              theme={activeTheme.config}
-              domainPadding={20}
-              style={chartStyle}
-            >
-              <VictoryAxis label="X Axis" />
-              <VictoryAxis dependentAxis label="Y Axis" />
-              <VictoryStack
-                colorScale={activeColorScale}
-                aria-label="Victory Stack Demo"
-              >
-                {[...Array(5)].map((_, i) => (
-                  <VictoryBar data={sampleStackData} key={i} />
-                ))}
-              </VictoryStack>
-            </VictoryChart>
+      <main className="theme-builder__preview">
+        {activeTheme && (
+          <div className="theme-builder__preview-container">
+            <h2>Example Charts</h2>
+            <div className="theme-builder__preview-grid">
+              <div>
+                <h3>Bar Chart</h3>
+                <VictoryChart
+                  theme={activeTheme?.config}
+                  domainPadding={20}
+                  style={chartStyle}
+                >
+                  <VictoryAxis label="X Axis" />
+                  <VictoryAxis dependentAxis label="Y Axis" />
+                  <VictoryStack
+                    colorScale={activeColorScale}
+                    aria-label="Victory Stack Demo"
+                  >
+                    {[...Array(5)].map((_, i) => (
+                      <VictoryBar data={sampleStackData} key={i} />
+                    ))}
+                  </VictoryStack>
+                </VictoryChart>
+              </div>
+              <div>
+                <h3>Area Chart</h3>
+                <VictoryChart
+                  theme={activeTheme?.config}
+                  domainPadding={20}
+                  style={chartStyle}
+                >
+                  <VictoryAxis label="X Axis" />
+                  <VictoryAxis dependentAxis label="Y Axis" />
+                  <VictoryStack
+                    colorScale={activeColorScale}
+                    aria-label="Victory Stack Demo"
+                  >
+                    {[...Array(5)].map((_, i) => (
+                      <VictoryArea data={sampleStackData} key={i} />
+                    ))}
+                  </VictoryStack>
+                </VictoryChart>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3>Area Chart</h3>
-            <VictoryChart
-              theme={activeTheme.config}
-              domainPadding={20}
-              style={chartStyle}
-            >
-              <VictoryAxis label="X Axis" />
-              <VictoryAxis dependentAxis label="Y Axis" />
-              <VictoryStack
-                colorScale={activeColorScale}
-                aria-label="Victory Stack Demo"
-              >
-                {[...Array(5)].map((_, i) => (
-                  <VictoryArea data={sampleStackData} key={i} />
-                ))}
-              </VictoryStack>
-            </VictoryChart>
-          </div>
-        </div>
+        )}
       </main>
+      {showThemeConfigPreview && activeTheme?.config && (
+        <ConfigPreview
+          config={activeTheme?.config}
+          onClose={handleThemeConfigPreviewClose}
+        />
+      )}
     </div>
   );
 };

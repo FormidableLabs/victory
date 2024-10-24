@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import "../styles.scss";
 
 import AccessibilityDemo from "./components/accessibility-demo";
 import AnimationDemo from "./components/animation-demo";
