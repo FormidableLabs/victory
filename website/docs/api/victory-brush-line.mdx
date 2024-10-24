@@ -252,7 +252,7 @@ The `handleWidth` prop is used to specify the width of each handle component.
 
 <Badges>
   <TypeBadge value="ReactElement" />
-<DefaultsBadge value="<Axis/>" />
+  <DefaultsBadge value="<Axis/>" />
 </Badges>
 
 The `lineComponent` prop specifies the component to render for the underlying axis or grid line.
@@ -276,7 +276,9 @@ The `onBrushDomainChange` prop specifies a callback function which will be calle
 
 ### scale
 
-`type: object`
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
 
 This prop specifies `scale` of the parent chart with `domain` and `range` applied. This prop should not be set manually.
 
@@ -284,7 +286,9 @@ This prop specifies `scale` of the parent chart with `domain` and `range` applie
 
 ### style
 
-`type: object`
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
 
 The `style` prop specifies the styles that will be applied to the `lineComponent`. This prop should be given as
 an object of SVG style attributes.
@@ -309,6 +313,3 @@ The `type` is used to specify which event target a particular `VictoryBrushLine`
 </Badges>
 
 The `width` prop specified the width of both the `brush` and `brushArea`. When `brushWidth` or `brushAreaWidth` are specified, this prop will not be used
-
-[`victorybrushcontainer`]: /docs/api/victory-brush-container
-[`box`]: /docs/api/victory-primitives#box
