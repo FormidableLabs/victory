@@ -4,12 +4,23 @@ title: VictoryStack
 
 `VictoryStack` is a wrapper component that renders a given set of children in a stacked layout. Like other wrapper components, `VictoryStack` also reconciles the domain and layout for all its children, and coordinates animations and shared events.
 
-`VictoryStack` works with:
-[VictoryArea][], [VictoryBar][], [VictoryCandlestick][], [VictoryErrorBar][], [VictoryGroup][],[VictoryLine][], [VictoryScatter][], [VictoryHistogram][]
+## Supported Components
 
-`VictoryStack` _should not_ be used with [VictoryAxis][] children.
+- [VictoryArea](/docs/api/victory-area)
+- [VictoryBar](/docs/api/victory-bar)
+- [VictoryCandlestick](/docs/api/victory-candlestick)
+- [VictoryErrorBar](/docs/api/victory-error-bar)
+- [VictoryGroup](/docs/api/victory-group)
+- [VictoryLine](/docs/api/victory-line)
+- [VictoryScatter](/docs/api/victory-scatter)
+- [VictoryHistogram](/docs/api/victory-histogram) - Only with other `VictoryHistogram` components
 
-`VictoryStack` does not support stacking `VictoryHistogram` with other Victory components.
+## Unsupported Components
+
+- [VictoryVoronoi](/docs/api/victory-axis)
+- [VictoryAxis](/docs/api/victory-axis)
+
+## Example
 
 ```jsx live
 <VictoryChart
@@ -78,7 +89,7 @@ categories={["dogs", "cats", "mice"]}
   <TypeBadge value="ReactElement | ReactElement[]" />
 </Badges>
 
-`VictoryStack` works with any combination of the following children: [VictoryArea][], [VictoryBar][], [VictoryCandlestick][], [VictoryErrorBar][], [VictoryGroup][], [VictoryLine][], [VictoryScatter][], [VictoryStack][], and [VictoryVoronoi][]. Children supplied to `VictoryGroup` will be cloned and rendered with new props so that all children share common props such as `domain` and `scale`.
+Children supplied to `VictoryGroup` will be cloned and rendered with new props so that all children share common props such as `domain` and `scale`.
 
 ---
 
@@ -89,10 +100,6 @@ categories={["dogs", "cats", "mice"]}
 </Badges>
 
 `VictoryStack` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
-
-```jsx
-eventKey = "x";
-```
 
 ---
 
@@ -190,8 +197,6 @@ _note:_ `VictoryStack` coordinates events between children using the `VictorySha
 `VictoryStack` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
 
 Styles on children of `VictoryGroup` will override styles set on the `VictoryGroup` component.
-
-_default (provided by default theme):_ See [grayscale theme][] for more detail
 
 ```jsx live
 <VictoryStack
