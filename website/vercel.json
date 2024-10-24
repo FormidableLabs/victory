@@ -11,6 +11,11 @@
       "permanent": true
     },
     {
+      "source": "/open-source/victory/gallery/:slug",
+      "destination": "/open-source/victory/docs",
+      "permanent": true
+    },
+    {
       "source": "/open-source/victory/about",
       "destination": "/open-source/victory",
       "permanent": true

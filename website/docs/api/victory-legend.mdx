@@ -18,6 +18,7 @@ For examples of `VictoryLegend` in action, visit the [Chart Legends](/docs/guide
   overrides={[
     "containerComponent",
     "data",
+    "dataComponent",
     "events",
     "x",
     "y",
@@ -33,11 +34,10 @@ For examples of `VictoryLegend` in action, visit the [Chart Legends](/docs/guide
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Border/>" />
 </Badges>
 
-The `borderComponent` prop takes a component instance which will be responsible for rendering a border around the legend. The new element created from the passed `borderComponent` will be provided with the following properties calculated by `VictoryLegend`: `x`, `y`, `width`, `height`, and `style`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `borderComponent` is not provided, `VictoryLegend` will use its default [Border component][]. Please note that the default width and height calculated for the border component is based on _approximated_ text measurements, and may need to be adjusted.
-
-_default:_ `<Border/>`
+The `borderComponent` prop takes a component instance which will be responsible for rendering a border around the legend. The new element created from the passed `borderComponent` will be provided with the following properties calculated by `VictoryLegend`: `x`, `y`, `width`, `height`, and `style`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `borderComponent` is not provided, `VictoryLegend` will use its default [Border][] component. Please note that the default width and height calculated for the border component is based on _approximated_ text measurements, and may need to be adjusted.
 
 ```jsx
 borderComponent={<Border width={300}/>}
@@ -116,7 +116,7 @@ containerComponent={<VictoryContainer responsive={false}/>}
   <DefaultsBadge value='[{ name: "Series 1" }, { name: "Series 2" }]}' />
 </Badges>
 
-Specify data via the `data` prop. `VictoryLegend` expects data as an array of objects with `name` (required), `symbol`, and `labels` properties. The `data` prop must be given as an array. The symbol rendered may be changed by altering the `type` property of the `symbol` object. Valid types include: circle", "diamond", "plus", "minus", "square", "star", "triangleDown", and "triangleUp". If you want to use SVG icons from a custom component or an SVG based icon library like [react-icons](https://react-icons.github.io/react-icons/) use `dataComponent` property. [Read about it here](#datacomponent)
+Specify data via the `data` prop. `VictoryLegend` expects data as an array of objects with `name` (required), `symbol`, and `labels` properties. The `data` prop must be given as an array. The symbol rendered may be changed by altering the `type` property of the `symbol` object. Valid types include: circle", "diamond", "plus", "minus", "square", "star", "triangleDown", and "triangleUp". If you want to use SVG icons from a custom component or an SVG based icon library like [react-icons](https://react-icons.github.io/react-icons/) use the `dataComponent` property.
 
 ```jsx live
 <VictoryLegend
@@ -154,15 +154,12 @@ Specify data via the `data` prop. `VictoryLegend` expects data as an array of ob
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Point/>" />
 </Badges>
 
 `VictoryLegend` uses the standard `dataComponent` prop. [Read about it here](/docs/api/victory-datatable-props#datacomponent)
 
-`VictoryLegend` supplies the following props to its `dataComponent`: `data`, `datum`, `events`, `index`, `x`, `y`, `size`, `style`, and `symbol`. `VictoryLegend` renders a [Point component][] by default.
-
-See the [Custom Components Guide][] for more detail on creating your own `dataComponents`
-
-_default:_ `<Point/>`
+`VictoryLegend` supplies the following props to its `dataComponent`: `data`, `datum`, `events`, `index`, `x`, `y`, `size`, `style`, and `symbol`. `VictoryLegend` renders a [Point][] component by default.
 
 ```jsx
 dataComponent={<Point events={{ onClick: handleClick }}/>}
@@ -174,63 +171,37 @@ An example of using Custom icons as `dataComponent` in `VictoryLegend`.
 const { FaSun, FaMoon } = reactIconsFa;
 
 const CustomMoon = (props) => {
-  const [iconColor, setIconColor] =
-    React.useState(
-      props?.style?.fill || "green",
-    );
-
-  const [icon, setIcon] =
-    React.useState("moon");
-
-  if (icon === "moon") {
-    return (
-      <FaMoon
-        fill={iconColor}
-        x={props.x - 7}
-        y={props.y - 7}
-        size={15}
-        onClick={() => {
-          setIcon("sun");
-          setIconColor("red");
-        }}
-      />
-    );
-  }
   return (
     <FaSun
-      fill={iconColor}
+      fill={
+        props?.style?.fill || "green"
+      }
       x={props.x - 7}
       y={props.y - 7}
       size={15}
-      onClick={() => {
-        setIcon("moon");
-        setIconColor("blue");
-      }}
     />
   );
 };
 
 function App() {
   return (
-    <VictoryChart>
-      <VictoryLegend
-        orientation={"horizontal"}
-        x={65}
-        y={50}
-        data={[
-          {
-            name: "One",
-            symbol: { fill: "orange" },
-          },
-          {
-            name: "Two",
-            symbol: { fill: "blue" },
-          },
-          { name: "Three" },
-        ]}
-        dataComponent={<CustomMoon />}
-      />
-    </VictoryChart>
+    <VictoryLegend
+      orientation={"horizontal"}
+      x={65}
+      y={50}
+      data={[
+        {
+          name: "One",
+          symbol: { fill: "orange" },
+        },
+        {
+          name: "Two",
+          symbol: { fill: "blue" },
+        },
+        { name: "Three" },
+      ]}
+      dataComponent={<CustomMoon />}
+    />
   );
 }
 
@@ -240,36 +211,13 @@ render(<App />);
 An example of using multiple Custom icons as `dataComponent` in `VictoryLegend`.
 
 ```jsx live noInline
-const { FaSun, FaMoon, FaStar } =
-  reactIconsFa;
-
 const CustomMultipleIcon = (props) => {
   const { x, y, datum } = props;
-  if (datum.name === "One") {
-    return (
-      <FaMoon
-        fill={"red"}
-        x={props.x - 7}
-        y={props.y - 7}
-        size={15}
-      />
-    );
-  }
-  if (datum.name === "Two") {
-    return (
-      <FaSun
-        fill={"orange"}
-        x={props.x - 7}
-        y={props.y - 7}
-        size={15}
-      />
-    );
-  }
+  const Icon = reactIconsFa[datum.icon];
   return (
-    <FaStar
-      fill={"blue"}
-      x={props.x - 7}
-      y={props.y - 7}
+    <Icon
+      x={x - 7}
+      y={y - 7}
       size={15}
     />
   );
@@ -277,21 +225,22 @@ const CustomMultipleIcon = (props) => {
 
 function App() {
   return (
-    <VictoryChart>
-      <VictoryLegend
-        orientation={"horizontal"}
-        x={65}
-        y={50}
-        data={[
-          { name: "One" },
-          { name: "Two" },
-          { name: "Three" },
-        ]}
-        dataComponent={
-          <CustomMultipleIcon />
-        }
-      />
-    </VictoryChart>
+    <VictoryLegend
+      orientation={"horizontal"}
+      x={65}
+      y={50}
+      data={[
+        { name: "One", icon: "FaMoon" },
+        { name: "Two", icon: "FaSun" },
+        {
+          name: "Three",
+          icon: "FaStar",
+        },
+      ]}
+      dataComponent={
+        <CustomMultipleIcon />
+      }
+    />
   );
 }
 
@@ -306,13 +255,7 @@ render(<App />);
   <TypeBadge value="string | integer | string[] | function" />
 </Badges>
 
-`type: `
-
 `VictoryLegend` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
-
-```jsx
-eventKey = "x";
-```
 
 ---
 
@@ -664,8 +607,8 @@ The `x` prop defines the x coordinate corresponding to the upper left corner of 
 The `y` prop defines the y coordinate corresponding to the upper left corner of the legend.
 
 [victorylabel]: /docs/api/victory-label
-[point component]: /docs/api/victory-primitives#point
-[border component]: /docs/api/victory-primitives#border
+[point]: /docs/api/victory-primitives#point
+[border]: /docs/api/victory-primitives#border
 [grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
 [read more about themes here]: /docs/guides/themes
 [custom components guide]: /docs/guides/custom-components

@@ -96,10 +96,18 @@ LogBox.ignoreLogs([
   "Require cycle: node_modules/victory",
 ]);
 ```
+
 as shown below
 
-![Example screenshot](/img/require-cycles.png)
+```diff
++import { AppRegistry, LogBox } from "react-native";
+import App from "./App";
+import { name as appName } from "./app.json";
 
++LogBox.ignoreLogs(['Require cycle: node_modules/victory']);
+
+AppRegistry.registerComponent(appName, () => App);
+```
 
 ### 5. Testing Components that use Victory Native
 

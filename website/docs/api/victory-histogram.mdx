@@ -10,12 +10,13 @@ For examples of `VictoryHistogram` in action, visit the [Histogram Chart](/docs/
 
 <CommonProps
   interfaces={[
-    "VictoryCommonProps", // Omits 'polar'
-    "VictoryDatableProps", // Omits `y` | `y0`
+    "VictoryCommonProps",
+    "VictoryDatableProps",
     "VictoryMultiLabelableProps",
     "VictoryEventProps",
   ]}
   overrides={[]}
+  notImplemented={["polar", "y", "y0"]}
 />
 
 ## Component Props
@@ -27,8 +28,6 @@ For examples of `VictoryHistogram` in action, visit the [Histogram Chart](/docs/
 <Badges>
   <TypeBadge value="number | number[] | Date[]" />
 </Badges>
-
-_default:_ `undefined`
 
 **`VictoryHistogram` uses [`d3.bin`](https://observablehq.com/@d3/d3-bin) to do binning.**
 
