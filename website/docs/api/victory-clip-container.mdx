@@ -2,21 +2,11 @@
 title: VictoryClipContainer
 ---
 
-`VictoryClipContainer` is a specialized group container that enables curtain-style transitions for continuous data types like `VictoryLine` and `VictoryArea`. `VictoryClipContainer` will render its children either in a regular `<g>` element, or in a `<g>` element clipped by a rectangular clip path when a `clipWidth` is supplied.
+Enables curtain-style transitions for continuous data types like `VictoryLine` and `VictoryArea`. `VictoryClipContainer` will render its children either in a regular `<g>` element, or in a `<g>` element clipped by a rectangular clip path when a `clipWidth` is supplied.
 
-```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryLine
-    groupComponent={
-      <VictoryClipContainer
-        clipPadding={{ top: -100 }}
-      />
-    }
-  />
-</VictoryChart>
-```
+:::info
+For examples of `VictoryClipContainer` in action, visit the [containers](/docs/guides/containers) guide.
+:::
 
 ## Component Props
 
@@ -36,11 +26,10 @@ title: VictoryClipContainer
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Circle/>" />
 </Badges>
 
-The `circleComponent` prop specifies the element to use when a `VictoryClipContainer` renders a circular clip path. By default, `VictoryClipContainer` uses the [Circle component][].
-
-_default:_ `<Circle/>`
+The `circleComponent` prop specifies the element to use when a `VictoryClipContainer` renders a circular clip path. By default, `VictoryClipContainer` uses the [Circle](/docs/api/victory-primitives#circle) component.
 
 ---
 
@@ -51,8 +40,6 @@ _default:_ `<Circle/>`
 </Badges>
 
 The `className` prop specifies a class name that will be applied to the rendered element.
-
-_example:_ `className="myClipPath"`
 
 ---
 
@@ -95,11 +82,10 @@ that data or labels are not cut off.
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<ClipPath/>" />
 </Badges>
 
-The `clipPathComponent` prop specifies the clip path to apply to the rendered group when appropriate. By default, `VictoryClipContainer` uses the [ClipPath component][].
-
-_default:_ `<ClipPath/>`
+The `clipPathComponent` prop specifies the clip path to apply to the rendered group when appropriate. By default, `VictoryClipContainer` uses the [ClipPath](/docs/api/victory-primitives#clippath) component.
 
 ---
 
@@ -131,11 +117,10 @@ _examples:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<g/>" />
 </Badges>
 
 `VictoryClipContainer` uses the standard `groupComponent` prop. [Read about it here](/docs/api/victory-common-theme-props#groupcomponent)
-
-_default:_ `<g/>`
 
 ---
 
@@ -175,11 +160,10 @@ of the parent chart.
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Rect/>" />
 </Badges>
 
-The `rectComponent` prop specifies the element to use when a `VictoryClipContainer` renders a rectangular clip path. By default, `VictoryClipContainer` uses the [Rect component][].
-
-_default:_ `<Rect/>`
+The `rectComponent` prop specifies the element to use when a `VictoryClipContainer` renders a rectangular clip path. By default, `VictoryClipContainer` uses the [Rect](/docs/api/victory-primitives) component.
 
 ---
 

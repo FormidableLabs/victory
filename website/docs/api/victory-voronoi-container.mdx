@@ -2,7 +2,11 @@
 title: VictoryVoronoiContainer
 ---
 
-`VictoryVoronoiContainer` uses a superset of props used by [VictoryContainer][]. All props are optional.
+Adds the ability to associate a mouse position with the data point(s) closest to it.
+
+:::info
+For examples of `VictoryVoronoiContainer` in action, visit the [containers](/docs/guides/containers) guide.
+:::
 
 ## Inherited Props
 
@@ -19,11 +23,10 @@ title: VictoryVoronoiContainer
 
 <Badges>
   <TypeBadge value="boolean" />
+  <DefaultsBadge value="true}" />
 </Badges>
 
 When the `activateData` prop is set to true, the `active` prop will be set to true on all data components within a voronoi area. When this prop is set to false, the `onActivated` and `onDeactivated` callbacks will still fire, but no mutations to data components will occur via Victory's event system.
-
-<DefaultsBadge value="true}" />
 
 ---
 
@@ -31,11 +34,10 @@ When the `activateData` prop is set to true, the `active` prop will be set to tr
 
 <Badges>
   <TypeBadge value="boolean" />
+  <DefaultsBadge value="true}" />
 </Badges>
 
 When the `activateLabels` prop is set to true, the `active` prop will be set to true on all labels corresponding to points within a voronoi area. When this prop is set to false, the `onActivated` and `onDeactivated` callbacks will still fire, but no mutations to label components will occur via Victory's event system. Labels defined directly on `VictoryVoronoiContainer` via the `labels` prop will still appear when this prop is set to false.
-
-<DefaultsBadge value="true}" />
 
 ---
 
@@ -67,12 +69,12 @@ _example:_ `labels={({ datum }) => "y: " + datum.y}`
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryTooltip centerOffset={{ x: 5 }} />" />
 </Badges>
 
 The `labelComponent` prop specified the component that will be rendered when `labels` are defined
 on `VictoryVoronoiContainer`. If the `labels` prop is omitted, no label component will be rendered.
 
-<DefaultsBadge value="{ x: 5 }} />}" />
 
 ```jsx live
 <VictoryChart
@@ -199,8 +201,6 @@ _example:_ `onDeactivated={(points, props) => removeFromList(points, props)}`
 When the `radius` prop is set, the voronoi areas associated with each data point will be no larger
 than the given radius. This prop should be given as a number.
 
-_example:_ `radius={25}`
-
 ---
 
 ### voronoiBlacklist
@@ -255,7 +255,7 @@ _example:_ `voronoiBlacklist={["redPoints"]}`
 ### voronoiDimension
 
 <Badges>
-  <TypeBadge value={`"x" | "y"`} />
+  <TypeBadge value='"x" | "y"' />
 </Badges>
 
 When the `voronoiDimension` prop is set, voronoi selection will only take the given dimension into account.
@@ -312,5 +312,3 @@ _example:_ `voronoiDimension="x"`
 When the `voronoiPadding` prop is given, the area of the chart that will trigger voronoi events is
 reduced by the given padding on every side. By default, no padding is applied, and the entire range
 of a given chart may trigger voronoi events. This prop should be given as a number.
-
-_example:_ `voronoiPadding={5}`

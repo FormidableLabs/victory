@@ -2,11 +2,15 @@
 title: VictoryTooltip
 ---
 
-`VictoryTooltip` renders a tooltip component with a set of default events. When `VictoryTooltip` is used as a label component for any Victory component that renders data, it will attach events to rendered data components that will activate the tooltip when hovered or focused. `VictoryTooltip` renders text as well as a configurable [Flyout][] container.
+`VictoryTooltip` renders a tooltip component with a set of default events. When `VictoryTooltip` is used as a label component for any Victory component that renders data, it will attach events to rendered data components that will activate the tooltip when hovered or focused. `VictoryTooltip` renders text as well as a configurable [Flyout](/docs/api/victory-primitives#flyout) container.
 
-_note:_ When providing tooltips for `VictoryLine` or `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](/docs/api/victory-voronoi-container), as these components only render a single element for the entire dataset.
+:::info
+For examples of `VictoryTooltip` in action, visit the [tooltips](/docs/guides/tooltips) guide.
+:::
 
-See the [tooltips guide](/docs/guides/tooltips) for more expanded examples of usage.
+:::note
+When providing tooltips for `VictoryLine` or `VictoryArea`, it is necessary to use [`VictoryVoronoiContainer`](/docs/api/victory-voronoi-container), as these components only render a single element for the entire dataset.
+:::
 
 ```jsx live
 <VictoryChart
@@ -67,11 +71,10 @@ The `active` prop specifies whether the tooltip component should be displayed.
 
 <Badges>
   <TypeBadge value="boolean" />
+  <DefaultsBadge value="false}" />
 </Badges>
 
 When true, tooltip events will set the `active` prop on both data and label elements.
-
-<DefaultsBadge value="false}" />
 
 ---
 
@@ -264,13 +267,12 @@ _examples:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge valuie="<Flyout/>" />
 </Badges>
 
 The `flyoutComponent` prop takes a component instance which will be used to create the flyout path for each tooltip. The new element created from the passed `flyoutComponent` will be supplied with the following properties: x, y, dx, dy, index, datum, cornerRadius, pointerLength, pointerWidth, width, height, orientation, style, and events. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `flyoutComponent` is omitted, a default [Flyout][] component will be created with props described above.
 
 _examples:_ `flyoutComponent={<Flyout x={50} y={50}/>}`, `flyoutComponent={<MyCustomFlyout/>}`
-
-_default:_ `<Flyout/>`
 
 ---
 
@@ -307,11 +309,10 @@ The `flyoutHeight` prop defines the height of the tooltip flyout. This prop may 
 
 <Badges>
   <TypeBadge value="number | Function | { top: number, bottom: number, left: number, right: number}" />
+  <DefaultsBadge value="5" />
 </Badges>
 
 The `flyoutPadding` prop may be used to adjust the spacing between the tooltip label and the edges of the flyout outline. This prop may be given as a single number, an object with values for "top", "bottom", "left" and "right", or as a function that returns one of these.
-
-_default (provided by default theme):_ `flyoutPadding={5}`
 
 ```jsx live
 <VictoryChart
@@ -413,13 +414,10 @@ The `flyoutWidth` prop defines the width of the tooltip flyout. This prop may be
 
 <Badges>
   <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<g/>" />
 </Badges>
 
 The `groupComponent` prop takes a component instance which will be used to create group elements for use within container elements. This prop defaults to a `<g>` tag.
-
-{" "}
-
-<DefaultsBadge value="<g/>}" />
 
 ---
 
@@ -523,11 +521,10 @@ The `pointerWidth` prop determines the width of the base of the triangular point
 
 <Badges>
   <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
 </Badges>
 
 When `renderInPortal` is true, rendered tooltips will be wrapped in [VictoryPortal][] and rendered within the [Portal][] element within [VictoryContainer][]. _Note:_ This prop should be set to _false_ when using a custom container element.
-
-<DefaultsBadge value="true}" />
 
 ---
 
