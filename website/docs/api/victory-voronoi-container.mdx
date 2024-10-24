@@ -4,7 +4,18 @@ title: VictoryVoronoiContainer
 
 `VictoryVoronoiContainer` uses a superset of props used by [VictoryContainer][]. All props are optional.
 
-## activateData
+## Inherited Props
+
+<CommonProps
+  interfaces={["VictoryContainerProps"]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### activateData
 
 <Badges>
   <TypeBadge value="boolean" />
@@ -12,9 +23,11 @@ title: VictoryVoronoiContainer
 
 When the `activateData` prop is set to true, the `active` prop will be set to true on all data components within a voronoi area. When this prop is set to false, the `onActivated` and `onDeactivated` callbacks will still fire, but no mutations to data components will occur via Victory's event system.
 
-  <DefaultsBadge value='true}' />
+<DefaultsBadge value="true}" />
 
-## activateLabels
+---
+
+### activateLabels
 
 <Badges>
   <TypeBadge value="boolean" />
@@ -22,9 +35,11 @@ When the `activateData` prop is set to true, the `active` prop will be set to tr
 
 When the `activateLabels` prop is set to true, the `active` prop will be set to true on all labels corresponding to points within a voronoi area. When this prop is set to false, the `onActivated` and `onDeactivated` callbacks will still fire, but no mutations to label components will occur via Victory's event system. Labels defined directly on `VictoryVoronoiContainer` via the `labels` prop will still appear when this prop is set to false.
 
-  <DefaultsBadge value='true}' />
+<DefaultsBadge value="true}" />
 
-## disable
+---
+
+### disable
 
 <Badges>
   <TypeBadge value="boolean" />
@@ -57,36 +72,52 @@ _example:_ `labels={({ datum }) => "y: " + datum.y}`
 The `labelComponent` prop specified the component that will be rendered when `labels` are defined
 on `VictoryVoronoiContainer`. If the `labels` prop is omitted, no label component will be rendered.
 
-  <DefaultsBadge value='{ x: 5 }} />}' />
+<DefaultsBadge value="{ x: 5 }} />}" />
 
 ```jsx live
-<VictoryChart 
+<VictoryChart
   domain={{ y: [0, 6] }}
   containerComponent={
     <VictoryVoronoiContainer
-      labels={() => "Long, verbose labels"}
+      labels={() =>
+        "Long, verbose labels"
+      }
       labelComponent={
-        <VictoryTooltip  dy={-7} constrainToVisibleArea />
+        <VictoryTooltip
+          dy={-7}
+          constrainToVisibleArea
+        />
       }
     />
   }
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
-  	style={{ data: { fill: "red" }, labels: { fill: "red" } }}
+    style={{
+      data: { fill: "red" },
+      labels: { fill: "red" },
+    }}
     data={[
-      { x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }
+      { x: 0, y: 2 },
+      { x: 2, y: 3 },
+      { x: 4, y: 4 },
+      { x: 6, y: 5 },
     ]}
   />
   <VictoryScatter
     data={[
-      { x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }
+      { x: 2, y: 2 },
+      { x: 4, y: 3 },
+      { x: 6, y: 4 },
+      { x: 8, y: 5 },
     ]}
   />
 </VictoryChart>
 ```
 
-## mouseFollowTooltips
+---
+
+### mouseFollowTooltips
 
 <Badges>
   <TypeBadge value="boolean" />
@@ -95,26 +126,37 @@ on `VictoryVoronoiContainer`. If the `labels` prop is omitted, no label componen
 When the `mouseFollowTooltip` prop is set on `VictoryVoronoiContainer`, The position of the center of the tooltip follows the position of the mouse.
 
 ```jsx live
-<VictoryChart 
+<VictoryChart
   domain={{ y: [0, 6] }}
   containerComponent={
     <VictoryVoronoiContainer
       mouseFollowTooltips
       voronoiDimension="x"
-      labels={({ datum }) => `y: ${datum.y}`}
+      labels={({ datum }) =>
+        `y: ${datum.y}`
+      }
     />
   }
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
-  	style={{ data: { fill: "red" }, labels: { fill: "red" } }}
+    style={{
+      data: { fill: "red" },
+      labels: { fill: "red" },
+    }}
     data={[
-      { x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }
+      { x: 0, y: 2 },
+      { x: 2, y: 3 },
+      { x: 4, y: 4 },
+      { x: 6, y: 5 },
     ]}
   />
   <VictoryScatter
     data={[
-      { x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }
+      { x: 2, y: 2 },
+      { x: 4, y: 3 },
+      { x: 6, y: 4 },
+      { x: 8, y: 5 },
     ]}
   />
 </VictoryChart>
@@ -159,9 +201,13 @@ than the given radius. This prop should be given as a number.
 
 _example:_ `radius={25}`
 
-## voronoiBlacklist
+---
 
-`type: array[string]`
+### voronoiBlacklist
+
+<Badges>
+  <TypeBadge value="string[]" />
+</Badges>
 
 The `voronoiBlacklist` prop is used to specify a list of components to ignore when calculating a shared voronoi diagram. Components with a `name` prop matching an element in the `voronoiBlacklist` array will be ignored by `VictoryVoronoiContainer`. Ignored components will never be flagged as active, and will not contribute data to shared tooltips or labels.
 
@@ -173,28 +219,44 @@ _example:_ `voronoiBlacklist={["redPoints"]}`
   containerComponent={
     <VictoryVoronoiContainer
       voronoiBlacklist={["redPoints"]}
-      labels={({ datum }) => `y: ${datum.y}`}
+      labels={({ datum }) =>
+        `y: ${datum.y}`
+      }
     />
   }
   theme={VictoryTheme.clean}
 >
-  <VictoryScatter name="redPoints"
-  	style={{ data: { fill: "red" }, labels: { fill: "red" } }}
+  <VictoryScatter
+    name="redPoints"
+    style={{
+      data: { fill: "red" },
+      labels: { fill: "red" },
+    }}
     data={[
-      { x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }
+      { x: 0, y: 2 },
+      { x: 2, y: 3 },
+      { x: 4, y: 4 },
+      { x: 6, y: 5 },
     ]}
   />
   <VictoryScatter
     data={[
-      { x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }
+      { x: 2, y: 2 },
+      { x: 4, y: 3 },
+      { x: 6, y: 4 },
+      { x: 8, y: 5 },
     ]}
   />
 </VictoryChart>
 ```
 
-## voronoiDimension
+---
 
-`type: "x" || "y"`
+### voronoiDimension
+
+<Badges>
+  <TypeBadge value={`"x" | "y"`} />
+</Badges>
 
 When the `voronoiDimension` prop is set, voronoi selection will only take the given dimension into account.
 For example, when `dimension` is set to "x", all data points matching a particular x mouse position
@@ -204,25 +266,36 @@ determined by both x and y values.
 _example:_ `voronoiDimension="x"`
 
 ```jsx live
-<VictoryChart 
+<VictoryChart
   domain={{ y: [0, 6] }}
   containerComponent={
     <VictoryVoronoiContainer
       voronoiDimension="x"
-      labels={({ datum }) => `y: ${datum.y}`}
+      labels={({ datum }) =>
+        `y: ${datum.y}`
+      }
     />
   }
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
-  	style={{ data: { fill: "red" }, labels: { fill: "red" } }}
+    style={{
+      data: { fill: "red" },
+      labels: { fill: "red" },
+    }}
     data={[
-      { x: 0, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 4 }, { x: 6, y: 5 }
+      { x: 0, y: 2 },
+      { x: 2, y: 3 },
+      { x: 4, y: 4 },
+      { x: 6, y: 5 },
     ]}
   />
   <VictoryScatter
     data={[
-      { x: 2, y: 2 }, { x: 4, y: 3 }, { x: 6, y: 4 }, { x: 8, y: 5 }
+      { x: 2, y: 2 },
+      { x: 4, y: 3 },
+      { x: 6, y: 4 },
+      { x: 8, y: 5 },
     ]}
   />
 </VictoryChart>
@@ -241,7 +314,3 @@ reduced by the given padding on every side. By default, no padding is applied, a
 of a given chart may trigger voronoi events. This prop should be given as a number.
 
 _example:_ `voronoiPadding={5}`
-
-[victorycontainer]: /docs/api/victory-container
-[voronoi diagram]: https://github.com/d3/d3-voronoi
-[this example]: /gallery/voronoi-tooltips-with-grouped-components

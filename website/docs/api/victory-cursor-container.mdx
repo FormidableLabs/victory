@@ -20,7 +20,7 @@ For examples of `VictoryCursorContainer` in action, visit the [containers](/docs
 
 <Badges>
   <TypeBadge value="ReactElement" />
-  <DefaultsBadge value='<LineSegment/>' />
+  <DefaultsBadge value="<LineSegment/>" />
 </Badges>
 
 The `cursorComponent` prop takes a component instance which will be used to render a cursor element. The new element created will be supplied with `x1`, `y1`, `x2` and `y2` positioning props. If a `cursorComponent` is not supplied, a new [LineSegment][] component will be rendered.
@@ -43,7 +43,12 @@ the cursor will then be a vertical line that will inspect the time value of the 
   containerComponent={
     <VictoryCursorContainer
       cursorDimension="x"
-      cursorLabel={({ datum }) => `${round(datum.x, 2)}, ${round(datum.y, 2)}`}
+      cursorLabel={({ datum }) =>
+        `${round(datum.x, 2)}, ${round(
+          datum.y,
+          2,
+        )}`
+      }
     />
   }
 />
@@ -68,7 +73,7 @@ _example:_ `cursorLabel={(point) => point.x}`
 
 <Badges>
   <TypeBadge value="ReactElement" />
-  <DefaultsBadge value='<VictoryLabel/>' />
+  <DefaultsBadge value="<VictoryLabel/>" />
 </Badges>
 
 The `cursorLabelComponent` prop takes a component instance which will be used to render a label for the cursor. The new element created from the passed `cursorLabelComponent` will be supplied with the following props: `x`, `y`, `active`, `text`. If `cursorLabelComponent` is omitted, a new [VictoryLabel][] will be created with the props described above.
@@ -79,7 +84,7 @@ The `cursorLabelComponent` prop takes a component instance which will be used to
 
 <Badges>
   <TypeBadge value="number | { x: number, y: number }" />
-  <DefaultsBadge value='{ x: 5, y: -10 }' />
+  <DefaultsBadge value="{ x: 5, y: -10 }" />
 </Badges>
 
 The `cursorLabelOffset` prop determines the pixel offset of the cursor label from the cursor point.
@@ -118,7 +123,7 @@ When the `disable` prop is set to `true`, `VictoryCursorContainer` events will n
 
 If provided, the `onCursorChange` function will be called every time the cursor value changes. `onCursorChange` is called with `value` (the updated cursor value) and `props` (the props used by `VictoryCursorContainer`). A common use for `onCursorChange` is to save the cursor value to state and use it in another part of the view.
 
-*example:* `onCursorChange={(value, props) => this.setState({cursorValue: value})}`
+_example:_ `onCursorChange={(value, props) => this.setState({cursorValue: value})}`
 
 [victoryvoronoicontainer]: /docs/api/victory-voronoi-container
 [victorycontainer]: /docs/api/victory-container
