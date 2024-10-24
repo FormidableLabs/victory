@@ -46,11 +46,11 @@ The `cornerRadius` prop specifies the corner radius of the slices rendered in th
 
 <Badges>
   <TypeBadge value="number" />
+  <DefaultsBadge value="360" />
 </Badges>
 
 The `endAngle` props defines the overall end angle of the pie in degrees. This prop is used in conjunction with `startAngle` to create a pie that spans only a segment of a circle, or to change overall rotation of the pie. This prop should be given as a number of degrees. Degrees are defined as starting at the 12 o'clock position, and proceeding clockwise.
 
-<DefaultsBadge value="360" />
 
 ```jsx live
 <div>
@@ -78,10 +78,6 @@ The `endAngle` props defines the overall end angle of the pie in degrees. This p
 </Badges>
 
 `VictoryPie` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
-
-```jsx
-eventKey = "x";
-```
 
 ---
 
@@ -149,7 +145,7 @@ See the [Events Guide][] for more information on defining events.
 ### innerRadius
 
 <Badges>
-  <TypeBadge value="number | Function`" />
+  <TypeBadge value="number | Function" />
 </Badges>
 
 The `innerRadius` prop determines the number of pixels between the center of the chart and the inner edge of a donut chart. When this prop is set to zero a regular pie chart is rendered. When this prop is given as a function, `innerRadius` will be evaluated for each slice of the pie with the props corresponding to that slice
@@ -169,7 +165,7 @@ The `innerRadius` prop determines the number of pixels between the center of the
 ### labelIndicator
 
 <Badges>
-  <TypeBadge value="boolean | Element`" />
+  <TypeBadge value="boolean | ReactElement" />
 </Badges>
 
 The `labelIndicator` prop defines the label indicator line between labels and the pie chart. If this prop is used as a boolean,then the default indicator will be displayed. To customize or pass your own styling `<LineSegment/>` can be passed to labelIndicator. LabelIndicator is functional only when labelPosition = "centroid". To adjust the labelIndicator length, `labelIndicatorInnerOffset` and `labelIndicatorOuterOffset` props can be used alongside labelIndicator.
@@ -370,13 +366,10 @@ The `radius` prop specifies the radius of the pie. When this prop is not given, 
 
 <Badges>
   <TypeBadge value="number" />
+  <DefaultsBadge value="0" />
 </Badges>
 
 The `startAngle` props defines the overall start angle of the pie in degrees. This prop is used in conjunction with `endAngle` to create a pie that spans only a segment of a circle, or to change overall rotation of the pie. This prop should be given as a number of degrees. Degrees are defined as starting at the 12 o'clock position, and proceeding clockwise.
-
-{" "}
-
-<DefaultsBadge value="0" />
 
 ```jsx live
 <div>

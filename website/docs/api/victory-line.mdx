@@ -24,27 +24,29 @@ For examples of `VictoryLine` in action, visit the [Line Chart](/docs/charts/lin
 
 ### eventKey
 
-`type: string || integer || array[string] || function`
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
 
 `VictoryLine` uses the standard `eventKey` prop. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
 
-*note:* `VictoryLine` only renders one element per dataset, so only one event key will be generated.
-
-```jsx
-eventKey = "x";
-```
+:::note
+`VictoryLine` only renders one element per dataset, so only one event key will be generated.
+:::
 
 ---
 
 ### events
 
-`type: array[object]`
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
 
 `VictoryLine` uses the standard `events` prop. [Read about it here](/docs/guides/events)
 
-See the [Events Guide][] for more information on defining events.
-
-*note:* `VictoryLine` will use the special `eventKey` "all" rather than referring to data by index, as it renders only one element for an entire dataset
+:::note
+`VictoryLine` will use the special `eventKey` "all" rather than referring to data by index, as it renders only one element for an entire dataset
+:::
 
 ```jsx live
 <div>
@@ -84,6 +86,7 @@ See the [Events Guide][] for more information on defining events.
 
 <Badges>
   <TypeBadge value="InterpolationPropType | Function" />
+  <DefaultsBadge value='"linear"' />
 </Badges>
 
 The `interpolation` prop determines how data points should be connected when creating a path. Victory uses [d3-shape](https://github.com/d3/d3-shape#curves) for interpolating curves.
@@ -93,10 +96,6 @@ Polar line charts may use the following interpolation options: "basis", "cardina
 Cartesian line charts may use the following interpolation options: "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX", "monotoneY", "natural", "step", "stepAfter", "stepBefore"
 
 You can also provide a function if you need to adjust parameters for d3-shape curves or to use a [custom curve function](https://github.com/d3/d3-shape#custom-curves).
-
-[Explore all the interpolation options][].
-
-_default:_ `"linear"`
 
 ```jsx live
 <VictoryChart
@@ -118,7 +117,9 @@ _default:_ `"linear"`
 
 `VictoryLine` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
 
-*note:* Since `VictoryLine` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of an individual `datum`. Instead, try using [gradient fills](/docs/guides/themes) for styling continuous data.
+:::note
+Since `VictoryLine` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of an individual `datum`. Instead, try using [gradient fills](/docs/guides/themes) for styling continuous data.
+:::
 
 _default (provided by default theme):_ See [grayscale theme][] for more detail
 

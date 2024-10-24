@@ -26,11 +26,11 @@ For examples of `VictoryScatter` in action, visit the [Scatter Chart](/docs/char
 
 <Badges>
   <TypeBadge value="string" />
+  <DefaultsBadge value='"z"' />
 </Badges>
 
 The `bubbleProperty` prop indicates which property of the data object should be used to scale data points in a bubble chart. If a `bubbleProperty` is given, `size` and `symbol` props will be ignored. Bubble charts always render circular points.
 
-<DefaultsBadge value='z"' />
 
 ```jsx live
 <VictoryScatter
@@ -57,10 +57,6 @@ The `bubbleProperty` prop indicates which property of the data object should be 
 </Badges>
 
 `VictoryScatter` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
-
-```jsx
-eventKey = "x";
-```
 
 ---
 
@@ -137,8 +133,6 @@ See the [Events Guide][] for more information on defining events.
 
 The `maxBubbleSize` prop sets an upper limit for scaling data points in a bubble chart. If not given, this prop will be calculated based on the `width`, `height`, and `padding` of the component.
 
-For more information on bubble charts, see [`bubbleProperty`][]
-
 ```jsx
 maxBubbleSize={25}
 ```
@@ -152,8 +146,6 @@ maxBubbleSize={25}
 </Badges>
 
 The `minBubbleSize` prop sets a lower limit for scaling data points in a bubble chart. If not given, this prop will be calculated based on the calculated `maxBubbleSize`.
-
-For more information on bubble charts, see [`bubbleProperty`][]
 
 ```jsx
 minBubbleSize={5}
@@ -227,11 +219,11 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 
 <Badges>
   <TypeBadge value="Function | Options" />
+  <DefaultsBadge value='"circle"' />
 </Badges>
 
 The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp". When this prop is given as a function, it will be evaluated for each point with the props corresponding to that point. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
 
-<DefaultsBadge value='circle"' />
 
 ```jsx live
 <VictoryChart
