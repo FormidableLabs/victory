@@ -18,6 +18,8 @@ title: VictoryClipContainer
 </VictoryChart>
 ```
 
+## Component Props
+
 ---
 
 ### children
@@ -64,7 +66,9 @@ The `clipHeight` prop determines the base height of the rectangular clip path. T
 given as a number. If this prop is not given, it will be calculated based on the height and padding
 of the parent chart.
 
-## clipId
+---
+
+### clipId
 
 <Badges>
   <TypeBadge value="string | number" />
@@ -72,9 +76,13 @@ of the parent chart.
 
 The `clipId` prop may be used to set a deterministic id for the container. When a `containerId` is not manually set, a unique id will be generated. It is usually necessary to set deterministic ids for automated testing.
 
-## clipPadding
+---
 
-`type: { top: number, bottom: number, left: number, right: number }`
+### clipPadding
+
+<Badges>
+  <TypeBadge value="{ top: number, bottom: number, left: number, right: number }" />
+</Badges>
 
 The `clipPadding` prop is used when the clipped area should be larger than the range of a chart.
 This prop should be given as an object with `top`, `bottom`, `left`, and `right` properties. Set
@@ -105,9 +113,13 @@ The `clipWidth` prop determines the base width of the rectangular clip path. Thi
 given as a number. If this prop is not given, it will be calculated based on the width and padding
 of the parent chart.
 
-## events
+---
 
-`type: object`
+### events
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
 
 The `events` prop attaches arbitrary event handlers to the group element. This prop should be given as an object of event names and corresponding event handlers. When events are provided via Victory's event system, event handlers will be called with the event, the props of the component it is attached to, and an `eventKey` when applicable.
 
@@ -125,13 +137,19 @@ _examples:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
 
 _default:_ `<g/>`
 
-## origin
+---
 
-`type: { x: number, y: number }`
+### origin
+
+<Badges>
+  <TypeBadge value="{ x: number, y: number }" />
+</Badges>
 
 Victory components will pass an `origin` prop to define the center point in svg coordinates for polar charts. **This prop should not be set manually.**
 
-## polar
+---
+
+### polar
 
 <Badges>
   <TypeBadge value="boolean" />
@@ -186,7 +204,3 @@ of the parent chart.
 The `translateY` prop determines the offset of the clip path from the base y coordinate. This prop
 should be given as a number. If this prop is not given, it will be calculated based on the padding
 of the parent chart.
-
-[clippath component]: /docs/api/victory-primitives#clippath
-[circle component]: /docs/api/victory-primitives#circle
-[rect component]: /docs/api/victory-primitives#rect
