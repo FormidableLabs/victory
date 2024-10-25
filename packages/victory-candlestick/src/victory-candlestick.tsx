@@ -28,7 +28,7 @@ export interface VictoryCandlestickStyleInterface {
   data?: VictoryStyleObject;
   high?: VictoryStyleObject;
   highLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
-  labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[] | boolean;
   low?: VictoryStyleObject;
   lowLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   open?: VictoryStyleObject;
@@ -271,7 +271,8 @@ class VictoryCandlestickBase extends React.Component<VictoryCandlestickProps> {
           );
           if (
             (labelProps as any).text !== undefined &&
-            (labelProps as any).text !== null
+            (labelProps as any).text !== null &&
+            typeof (labelProps as any).text !== "boolean"
           ) {
             return React.cloneElement(labelComponent, labelProps);
           }
