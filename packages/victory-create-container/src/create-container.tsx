@@ -7,7 +7,7 @@ import {
   useVictorySelectionContainer,
 } from "victory-selection-container";
 import React from "react";
-import { VictoryContainer } from "victory-core";
+import { VictoryContainer, VictoryContainerProps } from "victory-core";
 import { forOwn, groupBy, isEmpty, toPairs } from "lodash";
 import {
   VictoryVoronoiContainer,
@@ -123,17 +123,27 @@ export function makeCreateContainerFunction<
     TContainerComponents[T]
   >;
 
+  // Helper type to support backwards compatibility with old types
+  type CombinedContainerProps<A, B> = A extends ContainerType
+    ? B extends ContainerType
+      ? ContainerProps<A> & ContainerProps<B> // New style: infer from container types
+      : A & B // Old style: expect props as generic types
+    : A & B;
+
   return function combineContainers<
-    TContainerA extends ContainerType,
-    TContainerB extends ContainerType,
-  >(containerA: TContainerA, containerB: TContainerB) {
-    const ContainerA = containerComponents[containerA];
-    const ContainerB = containerComponents[containerB];
-    const useContainerA = CONTAINER_HOOKS[containerA];
-    const useContainerB = CONTAINER_HOOKS[containerB];
+    TContainerA extends ContainerType | VictoryContainerProps,
+    TContainerB extends ContainerType | VictoryContainerProps,
+  >(
+    containerA: TContainerA extends ContainerType ? TContainerA : ContainerType,
+    containerB: TContainerB extends ContainerType ? TContainerB : ContainerType,
+  ) {
+    const ContainerA = containerComponents[containerA as ContainerType];
+    const ContainerB = containerComponents[containerB as ContainerType];
+    const useContainerA = CONTAINER_HOOKS[containerA as ContainerType];
+    const useContainerB = CONTAINER_HOOKS[containerB as ContainerType];
 
     const CombinedContainer = (
-      props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
+      props: CombinedContainerProps<TContainerA, TContainerB>,
     ) => {
       const { children: childrenA, props: propsA } = useContainerA(props);
       const { children: combinedChildren, props: combinedProps } =
@@ -152,7 +162,7 @@ export function makeCreateContainerFunction<
     CombinedContainer.displayName = `Victory${containerA}${containerB}Container`;
     CombinedContainer.role = "container";
     CombinedContainer.defaultEvents = (
-      props: ContainerProps<TContainerA> & ContainerProps<TContainerB>,
+      props: CombinedContainerProps<TContainerA, TContainerB>,
     ) =>
       combineDefaultEvents([
         ...ContainerA.defaultEvents(props),
