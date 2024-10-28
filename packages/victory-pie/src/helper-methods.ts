@@ -59,16 +59,21 @@ const getSlices = (props, data) => {
   return layoutFunction(data);
 };
 
-const sortDataByCategories = (props, data) =>
-  Array.isArray(props?.categories?.x)
-    ? props.categories.x.reduce((newData, category) => {
-        const datum = data.find(({ x }) => x === category);
-        if (datum) {
-          newData.push(datum);
-        }
-        return newData;
-      }, [])
-    : data;
+// sorts data by the categories prop. if all of the data keys aren't included in categories,
+// any remaining data will be appended to the data array.
+const sortDataByCategories = (props, data) => {
+  if (Array.isArray(props?.categories?.x)) {
+    const sorted: string[] = [];
+    props.categories.x.forEach((category) => {
+      const idx = data.findIndex(({ x }) => x === category);
+      const datum = data.splice(idx, 1)[0];
+      sorted.push(datum);
+    });
+    return [...sorted, ...data];
+  }
+
+  return data;
+};
 
 const getCalculatedValues = (props) => {
   const { colorScale, theme } = props;

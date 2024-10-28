@@ -156,6 +156,18 @@ export default class VictoryPieDemo extends React.Component<
           <VictoryPie
             theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}
+            categories={{ x: ["E", "A", "D", "C", "B"] }}
+          />
+
+          <VictoryPie
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
+            categories={{ x: ["E", "A", "C"] }}
+          />
+
+          <VictoryPie
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
           />
 
           <VictoryPie
