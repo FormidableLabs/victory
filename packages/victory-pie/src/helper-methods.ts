@@ -59,6 +59,17 @@ const getSlices = (props, data) => {
   return layoutFunction(data);
 };
 
+const sortDataByCategories = (props, data) =>
+  Array.isArray(props?.categories?.x)
+    ? props.categories.x.reduce((newData, category) => {
+        const datum = data.find(({ x }) => x === category);
+        if (datum) {
+          newData.push(datum);
+        }
+        return newData;
+      }, [])
+    : data;
+
 const getCalculatedValues = (props) => {
   const { colorScale, theme } = props;
   const styleObject = Helpers.getDefaultStyles(props, "pie");
@@ -69,7 +80,7 @@ const getCalculatedValues = (props) => {
   const padding = Helpers.getPadding(props);
   const defaultRadius = getRadius(props, padding);
   const origin = getOrigin(props, padding);
-  const data = Data.getData(props);
+  const data = sortDataByCategories(props, Data.getData(props));
   const slices = getSlices(props, data);
   return Object.assign({}, props, {
     style,
