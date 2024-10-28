@@ -187,6 +187,17 @@ describe("components/victory-candlestick", () => {
       const points = container.querySelectorAll("rect");
       expect(points).toHaveLength(1);
     });
+
+    it("does not render a label when it receives true as the lablels prop", () => {
+      const data = [{ x: 1, open: 10, close: 17, high: 19, low: 8 }];
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const { container } = render(<VictoryCandlestick data={data} labels />);
+      const trueLabel = Array.from(
+        container.querySelectorAll("text[id^=candlestick-labels] > tspan"),
+      ).find((t) => t.textContent === "true");
+      expect(trueLabel).toBe(undefined);
+    });
   });
 
   describe("event handling", () => {
