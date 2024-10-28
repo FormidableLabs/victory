@@ -28,7 +28,7 @@ export interface VictoryCandlestickStyleInterface {
   data?: VictoryStyleObject;
   high?: VictoryStyleObject;
   highLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
-  labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[] | boolean;
+  labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   low?: VictoryStyleObject;
   lowLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   open?: VictoryStyleObject;
