@@ -29,6 +29,21 @@ export const DefaultRendering = () => {
   );
 };
 
+export const Categories = () => {
+  return (
+    <>
+      <VictoryPie
+        style={parentStyle}
+        categories={{ x: ["B", "A", "E", "C", "D"] }}
+      />
+      <VictoryPie
+        style={parentStyle}
+        categories={{ x: ["E", "C", "A", "D", "B"] }}
+      />
+    </>
+  );
+};
+
 export const Data = () => {
   return (
     <>
