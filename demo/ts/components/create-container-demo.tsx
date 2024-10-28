@@ -1,11 +1,10 @@
 /* eslint-disable no-magic-numbers,react/no-multi-comp */
 import React from "react";
-import PropTypes from "prop-types";
 import { round } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";
-import { createContainer } from "victory-create-container";
+import { ContainerType, createContainer } from "victory-create-container";
 import { VictoryBar } from "victory-bar";
 import { VictoryLine } from "victory-line";
 import { VictoryScatter } from "victory-scatter";
@@ -15,7 +14,11 @@ import { VictoryTheme } from "victory-core";
 
 const themeColors = VictoryTheme.clean.palette?.colors || {};
 
-const Charts = ({ behaviors }) => {
+const Charts = ({
+  behaviors,
+}: {
+  behaviors: [ContainerType, ContainerType];
+}) => {
   const containerStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",
@@ -26,7 +29,7 @@ const Charts = ({ behaviors }) => {
   const chartStyle = {
     parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
   };
-  const CustomContainer: any = createContainer(behaviors[0], behaviors[1]);
+  const CustomContainer = createContainer(behaviors[0], behaviors[1]);
   const behaviorsList = behaviors.map((behavior) => `"${behavior}"`).join(", ");
 
   return (
@@ -50,7 +53,6 @@ const Charts = ({ behaviors }) => {
                   flyoutStyle={{ fill: "white" }}
                 />
               }
-              selectedDomain={{ x: [1.5, 2] }}
             />
           }
         >
@@ -119,7 +121,7 @@ const Charts = ({ behaviors }) => {
           style={{ parent: chartStyle.parent }}
           containerComponent={
             <CustomContainer
-              labels={({ datum }) => round(datum.x, 2)}
+              labels={({ datum }) => round(datum.x, 2).toString()}
               cursorLabel={({ datum }) => round(datum.x, 2)}
               selectionStyle={{
                 stroke: themeColors.red,
@@ -127,7 +129,6 @@ const Charts = ({ behaviors }) => {
                 fill: themeColors.red,
                 fillOpacity: 0.1,
               }}
-              selectedDomain={{ x: [0.4, 0.95], y: [0.5, 0.8] }}
               defaultCursorValue={0.99}
             />
           }
@@ -149,9 +150,7 @@ const Charts = ({ behaviors }) => {
         <VictoryChart
           theme={VictoryTheme.clean}
           style={chartStyle}
-          containerComponent={
-            <CustomContainer selectedDomain={{ x: [0, 0] }} />
-          }
+          containerComponent={<CustomContainer />}
         >
           <VictoryGroup style={chartStyle}>
             <VictoryScatter
@@ -229,9 +228,7 @@ const Charts = ({ behaviors }) => {
         <VictoryStack
           theme={VictoryTheme.clean}
           style={chartStyle}
-          containerComponent={
-            <CustomContainer selectedDomain={{ x: [1.5, 2.5], y: [-3, 4] }} />
-          }
+          containerComponent={<CustomContainer />}
         >
           <VictoryBar
             barWidth={({ active }) => (active ? 10 : 8)}
@@ -273,10 +270,6 @@ const Charts = ({ behaviors }) => {
       </div>
     </div>
   );
-};
-
-Charts.propTypes = {
-  behaviors: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 class App extends React.Component {
