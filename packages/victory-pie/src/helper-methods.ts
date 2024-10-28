@@ -66,8 +66,10 @@ const sortDataByCategories = (props, data) => {
     const sorted: string[] = [];
     props.categories.x.forEach((category) => {
       const idx = data.findIndex(({ x }) => x === category);
-      const datum = data.splice(idx, 1)[0];
-      sorted.push(datum);
+      if (idx >= 0) {
+        const datum = data.splice(idx, 1)[0];
+        sorted.push(datum);
+      }
     });
     return [...sorted, ...data];
   }

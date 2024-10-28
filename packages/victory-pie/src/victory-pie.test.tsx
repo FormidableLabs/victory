@@ -151,6 +151,30 @@ describe("components/victory-pie", () => {
       expect(xValues).toEqual(xValuesFromGivenData);
     });
 
+    it("renders data values sorted by categories prop", () => {
+      const { container } = render(
+        <VictoryPie categories={{ x: ["E", "A", "D", "C", "B"] }} />,
+      );
+
+      const xValues = Array.from(
+        container.querySelectorAll("text[id^=pie-labels] > tspan"),
+      ).map((slice) => slice.textContent);
+
+      expect(xValues).toEqual(["E", "A", "D", "C", "B"]);
+    });
+
+    it("renders data values sorted by categories prop, appending any data keys missing from categories and ignoring any categories values that are not valid data keys", () => {
+      const { container } = render(
+        <VictoryPie categories={{ x: ["E", "C", "B", "Z"] }} />,
+      );
+
+      const xValues = Array.from(
+        container.querySelectorAll("text[id^=pie-labels] > tspan"),
+      ).map((slice) => slice.textContent);
+
+      expect(xValues).toEqual(["E", "C", "B", "A", "D"]);
+    });
+
     it("renders data values sorted by sortKey prop", () => {
       const data = Helpers.range(9)
         .map((i) => ({ x: i, y: i }))
