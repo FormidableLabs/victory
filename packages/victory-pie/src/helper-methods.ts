@@ -61,6 +61,8 @@ const getSlices = (props, data) => {
 
 // sorts data by the categories prop. if all of the data keys aren't included in categories,
 // any remaining data will be appended to the data array.
+// if extraneous categories are included in the categories prop, the will be ignored and have no effect
+// on the rendered component.
 const sortDataByCategories = (props, data) => {
   if (Array.isArray(props?.categories?.x)) {
     const sorted: string[] = [];
