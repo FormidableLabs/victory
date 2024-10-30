@@ -41,7 +41,7 @@ export const LandingFeatures = () => (
         </li>
       ))}
     </ul>
-    <LinkButton link="/open-source/victory/docs" className="mx-auto my-6">
+    <LinkButton link="/open-source/victory/docs/introduction" className="mx-auto my-6">
       Documentation
     </LinkButton>
   </div>
