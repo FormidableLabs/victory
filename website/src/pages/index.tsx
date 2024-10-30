@@ -1,5 +1,7 @@
 import React from "react";
+// eslint-disable-next-line import/no-unresolved
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+// eslint-disable-next-line import/no-unresolved
 import Layout from "@theme/Layout";
 
 import { LandingHero } from "./_components/landing-hero";
