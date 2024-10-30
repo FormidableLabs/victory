@@ -2,7 +2,7 @@ import React from "react";
 import { random, range } from "lodash";
 import { VictoryPie } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, LineSegment, Helpers } from "victory-core";
+import { VictoryTheme, Helpers } from "victory-core";
 
 interface VictoryPieDemoState {
   data: {
