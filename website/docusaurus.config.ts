@@ -25,7 +25,7 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
           sidebarCollapsed: true,
-          beforeDefaultRemarkPlugins: [autoGenerateApiDocs],
+          // beforeDefaultRemarkPlugins: [autoGenerateApiDocs],
         },
         theme: {
           customCss: "./src/css/custom.css",

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "pnpm run -C ../ build",
     "docusaurus": "docusaurus",
     "start": "docusaurus start --port 5855 --no-open",
     "build": "docusaurus build --out-dir build/open-source/victory",
@@ -49,7 +48,6 @@
     "d3-scale": "^3.2.1",
     "d3-time": "^1.1.0",
     "find-cache-dir": "5.0.0",
-    "formidable-oss-badges": "^1.3.1",
     "mdast-util-from-markdown": "^2.0.1",
     "postcss": "^8.4.38",
     "prismjs": "^1.29.0",
