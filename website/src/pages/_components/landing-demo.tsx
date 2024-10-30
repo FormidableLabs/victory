@@ -107,9 +107,20 @@ const VoronoiLabel = (props) => {
   );
 };
 
-const lastDate = last(downloads.data).day;
+const lastDate = last(downloads.data)!.day;
 const recentDate = format(subDays(new Date(), 2), "yyyy-MM-dd");
 const oldDownloads = groupDownloadsByWeek(downloads.data);
+
+async function fetchData(url) {
+  try {
+    const result = await axios(url);
+    const freshData = result.data;
+    const allDownloads = downloads.data.concat(freshData.downloads);
+    return groupDownloadsByWeek(allDownloads)
+  } catch (error) {
+    return oldDownloads;
+  }
+}
 
 // eslint-disable-next-line react/no-multi-comp
 export const LandingDemo = () => {
@@ -117,17 +128,7 @@ export const LandingDemo = () => {
   const url = `https://api.npmjs.org/downloads/range/${lastDate}:${recentDate}/victory`;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await axios(url);
-        const freshData = result.data;
-        const allDownloads = downloads.data.concat(freshData.downloads);
-        setData(groupDownloadsByWeek(allDownloads));
-      } catch (error) {
-        setData(oldDownloads);
-      }
-    };
-    fetchData();
+    void fetchData(url).then(setData);
   }, [url]);
 
   return (

@@ -4,13 +4,13 @@ const { execSync } = require("child_process");
 
 const sortByVersion = (a, b) => {
   let i = 0;
-  let aVersionParts = a.version.split(".");
-  let bVersionParts = b.version.split(".");
+  const aVersionParts = a.version.split(".");
+  const bVersionParts = b.version.split(".");
 
   // Compare each part of the version number
   while (i < aVersionParts.length || i < bVersionParts.length) {
-    let aPart = Number(aVersionParts[i] || "0");
-    let bPart = Number(bVersionParts[i] || "0");
+    const aPart = Number(aVersionParts[i] || "0");
+    const bPart = Number(bVersionParts[i] || "0");
 
     if (aPart < bPart) return 1;
     if (aPart > bPart) return -1;
@@ -30,6 +30,7 @@ delete data.created;
 const downloads = Object.keys(data)
   .map((version) => ({
     version,
+    // eslint-disable-next-line no-magic-numbers
     date: data[version].substr(0, 10),
   }))
   .filter((v) => !(v.version.includes("next") || v.version.includes("alpha")))
@@ -44,6 +45,7 @@ export default data;
 `;
 
 fs.writeFileSync(
+  // eslint-disable-next-line no-undef
   path.resolve(__dirname, "versions.js"),
   contents,
   "utf8",
