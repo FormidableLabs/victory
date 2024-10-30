@@ -116,12 +116,10 @@ export type VictoryLineTTargetType = "data" | "labels" | "parent";
 export interface VictoryLineProps
   extends VictoryCommonProps,
     VictoryDatableProps,
-    VictoryLabelableProps,
     VictoryMultiLabelableProps {
   events?: EventPropTypeInterface<VictoryLineTTargetType, number | string>[];
   eventKey?: StringOrNumberOrCallback | string[];
   // eslint-disable-next-line @typescript-eslint/ban-types
   interpolation?: InterpolationPropType | Function;
-  samples?: number;
   style?: VictoryStyleInterface;
 }

@@ -9,7 +9,6 @@ import {
   addEvents,
   Axis,
   UserProps,
-  DomainPropType,
   EventPropTypeInterface,
   OrientationTypes,
   VictoryAxisCommonProps,
@@ -49,7 +48,6 @@ export interface VictoryAxisProps
     VictoryCommonProps,
     VictorySingleLabelableProps {
   crossAxis?: boolean;
-  domain?: DomainPropType;
   events?: EventPropTypeInterface<VictoryAxisTTargetType, number | string>[];
   fixLabelOverlap?: boolean;
   offsetX?: number;

@@ -47,7 +47,6 @@ export interface VictoryAreaProps
   events?: EventPropTypeInterface<VictoryAreaTTargetType, string | number>[];
   // eslint-disable-next-line @typescript-eslint/ban-types
   interpolation?: InterpolationPropType | Function;
-  samples?: number;
   style?: VictoryStyleInterface;
 }
 
