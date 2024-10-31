@@ -1,7 +1,5 @@
 import React from "react";
 // eslint-disable-next-line import/no-unresolved
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-// eslint-disable-next-line import/no-unresolved
 import Layout from "@theme/Layout";
 
 import { LandingHero } from "./_components/landing-hero";
@@ -11,9 +9,8 @@ import { LandingDemo } from "./_components/landing-demo";
 import { LandingShowcase } from "./_components/landing-showcase";
 
 export default function Home(): JSX.Element {
-  const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout title={siteConfig.title} description={siteConfig.tagline}>
+    <Layout>
       <LandingHero />
       <LandingDemo />
       <LandingFeatures />

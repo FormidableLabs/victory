@@ -2,7 +2,11 @@
 import React from "react";
 import { FeaturedBadge } from "formidable-oss-badges";
 
+// eslint-disable-next-line import/no-unresolved
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+
 export const LandingHero = () => {
+  const { siteConfig } = useDocusaurusContext();
   return (
     <div className="hero-pattern w-fill bg-cover bg-no-repeat">
       <div className="py-12 lg:py-24 mx-16 lg:mx-32 xl:mx-64 relative">
@@ -12,10 +16,10 @@ export const LandingHero = () => {
           </div>
           <div className="text-left lg:w-6/12 text-white">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-              Victory
+              {siteConfig.title}
             </h1>
             <p className="mt-6 text-lg leading-8">
-              React components for modular charts and data visualization.
+              {siteConfig.tagline}
             </p>
             <div className="mt-10 flex flex-wrap flex-col xl:flex-row xl:items-center justify-start gap-6">
               <button
@@ -37,19 +41,19 @@ export const LandingHero = () => {
                 <li>
                   <img
                     alt="GitHub Repo stars"
-                    src="https://img.shields.io/github/stars/FormidableLabs/Victory?style=for-the-badge&color=%23ff684f"
+                    src="https://img.shields.io/github/stars/FormidableLabs/Victory?style=for-the-badge&color=%23ffffff"
                   />
                 </li>
                 <li>
                   <img
                     alt="GitHub Repo watchers"
-                    src="https://img.shields.io/github/watchers/FormidableLabs/Victory?style=for-the-badge&color=%23ff684f"
+                    src="https://img.shields.io/github/watchers/FormidableLabs/Victory?style=for-the-badge&color=%23ffffff"
                   />
                 </li>
                 <li>
                   <img
                     alt="GitHub Repo forks"
-                    src="https://img.shields.io/github/forks/FormidableLabs/Victory?style=for-the-badge&color=%23ff684f"
+                    src="https://img.shields.io/github/forks/FormidableLabs/Victory?style=for-the-badge&color=%23ffffff"
                   />
                 </li>
               </ul>

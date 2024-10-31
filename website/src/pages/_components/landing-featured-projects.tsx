@@ -24,10 +24,10 @@ const projects = [
       "Envy will trace the network calls from every application in your stack and allow you to view them in a central place.",
   },
   {
-    name: "victory",
+    name: "urql",
     link: "https://commerce.nearform.com/open-source/victory/",
     description:
-      "React.js components for modular charting and data visualization.",
+      "The highly customizable and versatile GraphQL client with which you add on features like normalized caching as you grow.",
   },
 ];
 

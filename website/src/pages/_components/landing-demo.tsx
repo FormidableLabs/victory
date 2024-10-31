@@ -157,35 +157,35 @@ export const LandingDemo = () => {
         <VictoryLabel
           text="DEC 2015"
           textAnchor="end"
-          style={font()}
+          style={font(theme.color.white)}
           x={190}
           y={190}
         />
         <VictoryLabel
           text="PROJECT START"
           textAnchor="end"
-          style={font()}
+          style={font(theme.color.white)}
           x={190}
           y={215}
         />
         <VictoryLabel
           text="TODAY"
           textAnchor="start"
-          style={font()}
+          style={font(theme.color.white)}
           x={1710}
           y={190}
         />
         <VictoryLabel
           text={`v${latestVersion}`}
           textAnchor="start"
-          style={font()}
+          style={font(theme.color.white)}
           x={1710}
           y={215}
         />
         <VictoryAxis
           tickFormat={() => ""}
           style={{
-            axis: { stroke: theme.color.brown, strokeWidth: 3 },
+            axis: { stroke: theme.color.white, strokeWidth: 3 },
           }}
           scale={{ x: "time" }}
         />

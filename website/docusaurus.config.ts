@@ -5,7 +5,7 @@ import { autoGenerateApiDocs } from "./src/plugins/victory-typedoc";
 const config: Config = {
   title: "Victory",
   tagline:
-    "A collection of composable React components for building interactive data visualizations",
+    "Composable React components for building interactive charts and data visualizations",
   favicon: "favicon.ico",
   url: "https://commerce.nearform.com/",
   baseUrl: "/open-source/victory",
@@ -75,6 +75,14 @@ const config: Config = {
   themeConfig: {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     metadata: [
+      {
+        name: "title",
+        content: "Victory - React Charting Components",
+      },
+      {
+        name: "description",
+        content: "Composable React components for building interactive charts and data visualizations",
+      },
       {
         name: "keywords",
         content: "victory, documentation, react, charts, charting, data, viz",
