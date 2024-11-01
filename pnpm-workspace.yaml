@@ -1,4 +1,4 @@
 packages:
   - 'packages/**'
-  - 'docs'
+  - 'website'
   - 'demo/rn'

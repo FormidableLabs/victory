@@ -1,0 +1,125 @@
+---
+title: VictoryAxis
+---
+
+:::info
+For examples of `VictoryAxis` in action, visit the [Chart Axis](/docs/guides/axis) guide.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryAxisCommonProps",
+    "VictoryCommonProps",
+    "VictorySingleLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### crossAxis
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+The `crossAxis` boolean prop specifies whether a given axis is intended to cross another axis. When this prop is true, zeroes will be removed from the array of ticks so that they do not clutter the origin of the chart.
+
+:::note
+When `VictoryAxis` is nested within `VictoryChart`, `VictoryChart` will determine a value for the `crossAxis` prop based on domain, but this prop may be overridden by supplying a `crossAxis` prop directly to the `VictoryAxis` child component.
+:::
+
+---
+
+### domain
+
+<Badges>
+  <TypeBadge value="array[low, high] || { x: [low, high], y: [low, high] }" />
+</Badges>
+
+The `domain` prop describes the range of data the component will include. This prop can be given as an array of the minimum and maximum expected values of the data or as an object that specifies separate arrays for x and y. If this prop is not provided, a domain will be calculated from data, or other available information.
+
+:::note
+The `x` value supplied to the `domain` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+:::
+
+---
+
+### fixLabelOverlap
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="false" />
+</Badges>
+
+When true, this prop reduces the number of tick labels to fit the length of the axis. Labels are
+removed at approximately even intervals from the original array of labels. This feature only works
+well for labels that are approximately evenly spaced.
+
+---
+
+### offsetX
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `offsetX` prop defines how far from the edge of its permitted area an axis should be offset in the x direction. If this prop is not given, the offset will be calculated based on font size, axis orientation, and label padding. When `VictoryAxis` is used with `VictoryChart`, `VictoryChart` will determine a value for `offsetX` that makes the axes line up correctly, but this value may be overridden by supplying an `offsetX` prop directly to the `VictoryAxis` child component.
+
+:::note
+The `offsetX` prop is relative to the edge corresponding to the orientation of the axis, _e.g._ the left edge when `orientation="left"`.
+:::
+
+```jsx live
+<VictoryAxis
+  dependentAxis
+  offsetX={225}
+/>
+```
+
+---
+
+### offsetY
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `offsetY` prop defines how far from the edge of its permitted area an axis should be offset in the y direction. If this prop is not given, the offset will be calculated based on font size, axis orientation, and label padding. When `VictoryAxis` is used with `VictoryChart`, `VictoryChart` will determine a value for `offsetY` that makes the axes line up correctly, but this value may be overridden by supplying an `offsetY` prop directly to the `VictoryAxis` child component.
+
+:::note
+The `offsetY` prop is relative to the edge corresponding to the orientation of the axis, _e.g._ the bottom edge when `orientation="bottom"`.
+:::
+
+```jsx live
+<VictoryAxis offsetY={150} />
+```
+
+---
+
+### orientation
+
+<Badges>
+  <TypeBadge value='"top" | "bottom" | "left" | "right"' />
+</Badges>
+
+The `orientation` prop specifies the position and orientation of your axis. Options are "top", "bottom", "left", and "right".
+
+```jsx live
+<VictoryAxis orientation="top" />
+```
+
+[animations guide]: /docs/guides/animations
+[events guide]: /docs/guides/events
+[themes guide]: /docs/guides/themes
+[`victorychart`]: /docs/api/victory-chart
+[tickformat]: /docs/api/victory-axis-common-props#tickformat
+[d3scale]: https://github.com/d3/d3-scale
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
+[linesegment component]: /docs/api/victory-primitives#linesegment
+[`victorylabel`]: /docs/api/victory-label

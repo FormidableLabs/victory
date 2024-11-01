@@ -1,0 +1,218 @@
+---
+title: VictoryAxisCommonProps
+---
+
+A set of props available to components that implement an Axis in Victory.
+
+## Props
+
+---
+
+### axisComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value='<LineSegment type={"axis"}/>' />
+</Badges>
+
+The `axisComponent` prop takes a component instance which will be responsible for rendering an axis line. The new element created from the passed `axisComponent` will be provided with the following props calculated by `VictoryAxis`: `x1`, `y1`, `x2`, `y2`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If an `axisComponent` is not provided, `VictoryAxis` will use its default [LineSegment][] component.
+
+```jsx
+axisComponent={<LineSegment events={{ onClick: handleClick }}/>}
+```
+
+---
+
+### axisLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `axisLabelComponent` prop takes a component instance which will be used to render the axis label. The new element created from the passed `axisLabelComponent` will be supplied with the following props: `x`, `y`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `axisLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
+
+```jsx
+axisLabelComponent={<VictoryLabel dy={20}/>}
+```
+
+---
+
+### axisValue
+
+The `axisValue` prop may be used to position the dependent axis. This prop is useful when dependent axes should line up with values on the independent axis.
+
+---
+
+### dependentAxis
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="false" />
+</Badges>
+
+The `dependentAxis` boolean prop specifies whether the axis corresponds to the dependent variable (usually y). This prop is useful when composing `VictoryAxis` with other components to form a chart.
+
+```jsx live
+<VictoryAxis dependentAxis />
+```
+
+---
+
+### gridComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value='<LineSegment type={"grid"}/>' />
+</Badges>
+
+The `gridComponent` prop takes a component instance which will be responsible for rendering a grid element. The new element created from the passed `gridComponent` will be provided with the following props calculated by `VictoryAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `gridComponent` is not provided, `VictoryAxis` will use its default [LineSegment][] component.
+
+```jsx
+gridComponent={<LineSegment events={{ onClick: handleClick }}/>}
+```
+
+---
+
+### invertAxis
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="false" />
+</Badges>
+
+The `invertAxis` boolean prop specifies whether the domain for a given axis should be inverted. By default, axes will be displayed with lower values on the bottom / left, and higher values on the top / right regardless of orientation.
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="provided by default theme" />
+</Badges>
+
+The `style` prop defines the style of the component. The style prop should be given as an object with styles defined for `parent`, `axis`, `axisLabel`, `grid`, `ticks`, and `tickLabels`. Any valid svg styles are supported, but `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in VictoryChart. Functional styles may be defined for `grid`, `tick`, and `tickLabel` style properties, and they will be evaluated with the props corresponding to each of these elements, such as `tick`, `index`, and `text`.
+
+```ts
+style?: {
+  parent?: VictoryStyleObject;
+  axis?: VictoryStyleObject;
+  axisLabel?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+  grid?: VictoryStyleObject;
+  ticks?: VictoryTickStyleObject;
+  tickLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
+};
+```
+
+:::note
+When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+:::
+
+:::note
+custom `angle` and `verticalAnchor` properties may be included in `labels` styles.
+:::
+
+```jsx live
+<VictoryAxis
+  label="Label"
+  style={{
+    axis: { stroke: "#756f6a" },
+    axisLabel: {
+      fontSize: 20,
+      padding: 30,
+    },
+    grid: {
+      stroke: ({ tick }) =>
+        tick > 0.5 ? "red" : "grey",
+    },
+    ticks: { stroke: "grey", size: 5 },
+    tickLabels: {
+      fontSize: 15,
+      padding: 5,
+    },
+  }}
+/>
+```
+
+---
+
+### tickComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value='<LineSegment type={"tick"}/>' />
+</Badges>
+
+The `tickComponent` prop takes a component instance which will be responsible for rendering a tick element. The new element created from the passed `tickComponent` will be provided with the following props calculated by `VictoryAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `tickComponent` is not provided, `VictoryAxis` will use its default [LineSegment][] component.
+
+```jsx
+tickComponent={<LineSegment events={{ onClick: handleClick }}/>}
+```
+
+---
+
+### tickCount
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+Specifies approximately how many ticks should be drawn on the axis. If an array of ticks is supplied in `tickValues` or `tickFormat`, the `tickCount` prop will be used to _downsample_ the provided array to the specified length. If `tickValues` are not explicitly provided, this value is used by [d3Scale][] to calculate an _approximate_ number of ticks. [d3Scale][] prioritizes returning "nice" values and evenly spaced ticks over an exact number of ticks. This prop must be given as a positive integer.
+
+---
+
+### tickFormat
+
+<Badges>
+  <TypeBadge value="any[] | function" />
+</Badges>
+
+Specifies how tick values should be labeled. The `tickFormat` prop can be given as an array of values to display for each tick, or as a function to be applied to every `tickValue`. When given as a function, `tickFormat` will be called with the following arguments: `tick` - the individual tick value, `index` - the index of the tick in the array, and `ticks` - the entire array of ticks.
+
+```jsx live
+<VictoryAxis
+  tickValues={[2.11, 3.9, 6.1, 8.05]}
+  tickFormat={(t) =>
+    `${Math.round(t)}k`
+  }
+/>
+```
+
+---
+
+### tickLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `tickLabelComponent` prop takes a component instance which will be used to render the axis label. The new element created from the passed `tickLabelComponent` will be supplied with the following props: `x`, `y`, `text`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `tickLabelComponent` is omitted, a new [`VictoryLabel`][] will be created with props described above.
+
+```jsx
+tickLabelComponent={<VictoryLabel dy={20}/>}
+```
+
+---
+
+### tickValues
+
+<Badges>
+  <TypeBadge value="any[]" />
+</Badges>
+
+`type: array`
+
+The `tickValues` prop explicitly specifies a set of tick values to draw on the axis. This prop should be given as an array of unique values of the same type (_i.e.,_ all numbers). The `tickValues` prop is used to specify the _values_ of each tick, so numeric values are typically appropriate. An array of strings or dates may be supplied for categorical and time series data respectively. Use the [tickFormat][] prop to specify how ticks should be labeled. _Note:_ `tickValues` should be given as a unique array.
+
+```jsx live
+<VictoryAxis
+  tickValues={[2, 4, 6, 8]}
+/>
+```
+
+[tickformat]: /docs/api/victory-axis-common-props#tickformat
+[d3scale]: https://github.com/d3/d3-scale
+[linesegment]: /docs/api/victory-primitives#linesegment
+[`victorylabel`]: /docs/api/victory-label

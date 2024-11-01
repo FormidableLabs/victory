@@ -1,0 +1,142 @@
+---
+title: VictoryLine
+---
+
+:::info
+For examples of `VictoryLine` in action, visit the [Line Chart](/docs/charts/line) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+`VictoryLine` uses the standard `eventKey` prop. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+:::note
+`VictoryLine` only renders one element per dataset, so only one event key will be generated.
+:::
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryLine` uses the standard `events` prop. [Read about it here](/docs/guides/events)
+
+:::note
+`VictoryLine` will use the special `eventKey` "all" rather than referring to data by index, as it renders only one element for an entire dataset
+:::
+
+```jsx live
+<div>
+  <h3>Click the line below</h3>
+  <VictoryChart
+    theme={VictoryTheme.clean}
+  >
+    <VictoryLine
+      events={[{
+        target: "parent",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                eventKey: "all",
+                mutation: ({ style }) => {
+                  return style.stroke === "black"
+                    ? null
+                    : { style: { stroke: "black", strokeWidth: 5 } };
+                }
+              }
+            ];
+          }
+        }
+      }]}
+      data={sampleData}
+      theme={VictoryTheme.clean}
+    />
+  </VictoryChart>
+</div>
+```
+
+---
+
+### interpolation
+
+<Badges>
+  <TypeBadge value="InterpolationPropType | Function" />
+  <DefaultsBadge value='"linear"' />
+</Badges>
+
+The `interpolation` prop determines how data points should be connected when creating a path. Victory uses [d3-shape](https://github.com/d3/d3-shape#curves) for interpolating curves.
+
+Polar line charts may use the following interpolation options: "basis", "cardinal", "catmullRom", "linear"
+
+Cartesian line charts may use the following interpolation options: "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX", "monotoneY", "natural", "step", "stepAfter", "stepBefore"
+
+You can also provide a function if you need to adjust parameters for d3-shape curves or to use a [custom curve function](https://github.com/d3/d3-shape#custom-curves).
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine
+    interpolation="natural"
+    data={sampleData}
+  />
+</VictoryChart>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ parent: object, data: object, labels: object }" />
+</Badges>
+
+`VictoryLine` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
+
+:::note
+Since `VictoryLine` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of an individual `datum`. Instead, try using [gradient fills](/docs/guides/themes) for styling continuous data.
+:::
+
+_default (provided by default theme):_ See [grayscale theme][] for more detail
+
+```jsx live
+<VictoryLine
+  style={{
+    data: {
+      stroke: "#c43a31",
+      strokeWidth: ({ data }) => data.length
+    },
+    labels: {
+      fontSize: 15,
+      fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31"
+    }
+  }}
+  data={sampleData}
+  labels={({ datum }) => datum.x}
+/>
+```

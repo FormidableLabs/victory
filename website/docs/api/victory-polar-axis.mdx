@@ -1,0 +1,226 @@
+---
+title: VictoryPolarAxis
+---
+
+Renders a circular axis which can be used on its own or composed with [`VictoryChart`](/docs/api/victory-chart).
+
+:::info
+For examples of `VictoryPolarAxis` in action, visit the [Chart Axis](/docs/guides/axis) guide.
+:::
+
+## Example
+
+```jsx live
+<svg width={400} height={400}>
+  <VictoryPolarAxis
+    width={400}
+    height={400}
+    theme={VictoryTheme.clean}
+    standalone={false}
+  />
+  <VictoryPolarAxis
+    dependentAxis
+    width={400}
+    height={400}
+    domain={[0, 10]}
+    theme={VictoryTheme.clean}
+    standalone={false}
+  />
+</svg>
+```
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryAxisCommonProps",
+    "VictoryCommonProps",
+    "VictorySingleLabelableProps",
+  ]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### axisAngle
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="0" />
+</Badges>
+
+The `axisAngle` prop is used to position the dependent axis. This prop should be given in degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise. This prop only affects the dependent axis.
+
+```jsx live
+<VictoryPolarAxis
+  dependentAxis
+  theme={VictoryTheme.clean}
+  axisAngle={45}
+/>
+```
+
+---
+
+### circularAxisComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Arc/>" />
+</Badges>
+
+The `circularAxisComponent` prop takes a component instance which will be responsible for rendering an axis arc for the independent axis. The dependent axis renders an `axisComponent`. The new element created from the passed `circularAxisComponent` will be provided with the following props calculated by `VictoryPolarAxis`: `style`, `events`,
+`cx`, `cy`, `r`, `startAngle`, and `endAngle`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `circularAxisComponent` is not provided, `VictoryPolarAxis` will use its default [Arc component][].
+
+```jsx
+circularAxisComponent={<Arc r={300}/>}
+```
+
+---
+
+### circularGridComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<Arc />" />
+</Badges>
+
+The `circularGridComponent` prop takes a component instance which will be responsible for rendering a grid element. The new element created from the passed `circularGridComponent` will be provided with the following props calculated by `VictoryPolarAxis`: `x1`, `y1`, `x2`, `y2`, `tick`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `circularGridComponent` is not provided, `VictoryPolarAxis` will use its default [Arc component][].
+
+```jsx
+circularGridComponent={<Arc r={300}/>}
+```
+
+---
+
+### endAngle
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="360" />
+</Badges>
+
+The `endAngle` props defines the overall end angle of the axis in degrees. This prop is used in conjunction with `startAngle` to create an axis that spans only a segment of a circle, or to change overall rotation of the axis. This prop should be given as a number of degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise.
+
+```jsx live
+<div style={{ display: "flex" }}>
+  <VictoryPolarAxis
+    startAngle={90}
+    endAngle={450}
+    tickValues={[0, 90, 180, 270]}
+    labelPlacement="vertical"
+  />
+  <VictoryPolarAxis
+    startAngle={0}
+    endAngle={180}
+    tickValues={[0, 45, 90, 135, 180]}
+  />
+</div>
+```
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryPolarAxis` uses the standard `events` prop.
+
+See the [Events Guide](/docs/guides/events) for more information on defining events.
+
+:::note
+Valid event targets for `VictoryPolarAxis` are "axis", "axisLabel", "grid", "ticks", and "tickLabels".
+Targets that correspond to only one element ("axis" and "axisLabel") should use the special eventKey "all".
+:::
+
+---
+
+### innerRadius
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+When the `innerRadius` prop is set, polar axes will be hollow rather than circular.
+
+```jsx live
+<VictoryPolarAxis
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### labelPlacement
+
+<Badges>
+  <TypeBadge
+    value={`"parallel" | "perpendicular" | "vertical"`}
+  />
+  <DefaultsBadge value='"parallel"' />
+</Badges>
+
+The `labelPlacement` prop specifies how tick labels should be placed relative to the angular tick values. Options for this prop are "vertical", "parallel", and "perpendicular".
+
+```jsx live
+<VictoryPolarAxis
+  labelPlacement="perpendicular"
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### startAngle
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="0" />
+</Badges>
+
+The `startAngle` props defines the overall end angle of the axis in degrees. This prop is used in conjunction with `endAngle` to create an axis that spans only a segment of a circle, or to change overall rotation of the axis. This prop should be given as a number of degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise.
+
+```jsx live
+<div style={{ display: "flex" }}>
+  <VictoryPolarAxis
+    startAngle={90}
+    endAngle={450}
+    tickValues={[0, 90, 180, 270]}
+    labelPlacement="vertical"
+  />
+  <VictoryPolarAxis
+    startAngle={0}
+    endAngle={180}
+    tickValues={[0, 45, 90, 135, 180]}
+  />
+</div>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ axis: object, axisLabel: object, grid: object, ticks: object, tickLabels: object }" />
+</Badges>
+
+The `style` prop defines the style of the component. The style prop should be given as an object with styles defined for `parent`, `axis`, `axisLabel`, `grid`, `ticks`, and `tickLabels`. Any valid svg styles are supported, but `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in VictoryChart. Functional styles may be defined for `grid`, `tick`, and `tickLabel` style properties, and they will be evaluated with the props corresponding to each axis element, such as `tick` and `index`.
+
+```jsx live
+<VictoryPolarAxis
+  style={{
+    axis: { stroke: "black" },
+    grid: {
+      stroke: ({ tick }) =>
+        tick > 0.5 ? "red" : "blue",
+    },
+    tickLabels: {
+      fontSize: 15,
+      padding: 15,
+    },
+  }}
+/>
+```

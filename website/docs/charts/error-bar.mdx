@@ -1,0 +1,340 @@
+---
+title: Error Bar
+---
+
+Error Bars are used to represent the variability or uncertainty in a set of data and are often used with bar, line, and scatter plots. Error bars can be used to show standard deviation, standard error, confidence intervals, or any other statistical measure.
+
+## Basics
+
+See the [full API here](/docs/api/victory-error-bar). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryChart
+  domainPadding={15}
+  theme={VictoryTheme.clean}
+>
+  <VictoryErrorBar
+    data={[
+      {
+        x: 15,
+        y: 35,
+        errorX: 1,
+        errorY: 3,
+      },
+      {
+        x: 20,
+        y: 42,
+        errorX: 3,
+        errorY: 2,
+      },
+      {
+        x: 25,
+        y: 30,
+        errorX: 5,
+        errorY: 5,
+      },
+      {
+        x: 30,
+        y: 35,
+        errorX: 5,
+        errorY: 3,
+      },
+      {
+        x: 35,
+        y: 22,
+        errorX: 8,
+        errorY: 2,
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Error Bars - Horizontal
+
+Error Bars can be rendered horizontally by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryBoxPlot`.
+
+```jsx live
+<VictoryChart
+  horizontal
+  domainPadding={15}
+  theme={VictoryTheme.clean}
+>
+  <VictoryErrorBar
+    data={[
+      {
+        x: 15,
+        y: 35,
+        errorX: 1,
+        errorY: 3,
+      },
+      {
+        x: 20,
+        y: 42,
+        errorX: 3,
+        errorY: 2,
+      },
+      {
+        x: 25,
+        y: 30,
+        errorX: 5,
+        errorY: 5,
+      },
+      {
+        x: 30,
+        y: 35,
+        errorX: 5,
+        errorY: 3,
+      },
+      {
+        x: 35,
+        y: 22,
+        errorX: 8,
+        errorY: 2,
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Error Bars - Error Formats
+
+Error bars can be customized by providing functions to the `errorX` and `errorY` props. These functions should return the error value for each data point.
+
+```jsx live
+<VictoryChart
+  domainPadding={15}
+  theme={VictoryTheme.clean}
+>
+  <VictoryErrorBar
+    data={[
+      { x: 15, y: 350, error: 0.2 },
+      { x: 20, y: 420, error: 0.05 },
+      { x: 25, y: 300, error: 0.1 },
+      { x: 30, y: 350, error: 0.2 },
+      { x: 35, y: 220, error: 0.15 },
+    ]}
+    errorX={(datum) =>
+      datum.error * datum.x
+    }
+    errorY={(datum) =>
+      datum.error * datum.y
+    }
+  />
+</VictoryChart>
+```
+
+## Error Bars - Labels
+
+Error Bars can be labeled by setting the `labels` prop to a function that returns a string.
+
+```jsx live
+<VictoryChart
+  domainPadding={15}
+  theme={VictoryTheme.clean}
+>
+  <VictoryErrorBar
+    labels={({ datum }) => datum.y}
+    data={[
+      { x: 15, y: 350, error: 0.2 },
+      { x: 20, y: 420, error: 0.05 },
+      { x: 25, y: 300, error: 0.1 },
+      { x: 30, y: 350, error: 0.2 },
+      { x: 35, y: 220, error: 0.15 },
+    ]}
+    errorX={(datum) =>
+      datum.error * datum.x
+    }
+    errorY={(datum) =>
+      datum.error * datum.y
+    }
+  />
+</VictoryChart>
+```
+
+## Error Bars - Tooltips
+
+Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
+
+```jsx live
+<VictoryChart
+  domainPadding={15}
+  theme={VictoryTheme.clean}
+>
+  <VictoryErrorBar
+    labels={({ datum }) => datum.y}
+    data={[
+      { x: 15, y: 350, error: 0.2 },
+      { x: 20, y: 420, error: 0.05 },
+      { x: 25, y: 300, error: 0.1 },
+      { x: 30, y: 350, error: 0.2 },
+      { x: 35, y: 220, error: 0.15 },
+    ]}
+    errorX={(datum) =>
+      datum.error * datum.x
+    }
+    errorY={(datum) =>
+      datum.error * datum.y
+    }
+    labelComponent={<VictoryTooltip />}
+  />
+</VictoryChart>
+```
+
+## Error Bars - Styles
+
+Chart styling can be customized by using the theme or overriding the style prop on the component.
+
+```jsx live
+<VictoryChart
+  domainPadding={15}
+  theme={VictoryTheme.clean}
+>
+  <VictoryErrorBar
+    labels={({ datum }) => datum.y}
+    data={[
+      { x: 15, y: 350, error: 0.2 },
+      { x: 20, y: 420, error: 0.05 },
+      { x: 25, y: 300, error: 0.1 },
+      { x: 30, y: 350, error: 0.2 },
+      { x: 35, y: 220, error: 0.15 },
+    ]}
+    errorX={(datum) =>
+      datum.error * datum.x
+    }
+    errorY={(datum) =>
+      datum.error * datum.y
+    }
+    style={{
+      data: {
+        stroke: "#c43a31",
+        strokeWidth: 5,
+      },
+      labels: {
+        fontSize: 15,
+        fill: "#c43a31",
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+## Error Bars - Events
+
+Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
+
+```jsx live
+<VictoryChart
+  domainPadding={15}
+  theme={VictoryTheme.clean}
+>
+  <VictoryErrorBar
+    labels={({ datum }) => datum.y}
+    data={[
+      { x: 15, y: 350, error: 0.2 },
+      { x: 20, y: 420, error: 0.05 },
+      { x: 25, y: 300, error: 0.1 },
+      { x: 30, y: 350, error: 0.2 },
+      { x: 35, y: 220, error: 0.15 },
+    ]}
+    errorX={(datum) =>
+      datum.error * datum.x
+    }
+    errorY={(datum) =>
+      datum.error * datum.y
+    }
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const stroke =
+                    props.style &&
+                    props.style.stroke;
+                  return stroke ===
+                    "#c43a31"
+                    ? null
+                    : {
+                        style: {
+                          stroke:
+                            "#c43a31",
+                          strokeWidth: 7,
+                        },
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Standalone Rendering
+
+Error Bars can be rendered outside a VictoryChart.
+
+```jsx live
+<VictoryErrorBar
+  theme={VictoryTheme.clean}
+  data={[
+    { x: 15, y: 350, error: 0.2 },
+    { x: 20, y: 420, error: 0.05 },
+    { x: 25, y: 300, error: 0.1 },
+    { x: 30, y: 350, error: 0.2 },
+    { x: 35, y: 220, error: 0.15 },
+  ]}
+  errorX={(datum) =>
+    datum.error * datum.x
+  }
+  errorY={(datum) =>
+    datum.error * datum.y
+  }
+/>
+```
+
+They can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<svg
+  width={300}
+  height={300}
+  style={{
+    display: "block",
+    margin: "0 auto",
+  }}
+>
+  <circle
+    cx={150}
+    cy={150}
+    r={150}
+    fill="#9ded91"
+  />
+  <VictoryErrorBar
+    standalone={false}
+    theme={VictoryTheme.clean}
+    width={300}
+    height={300}
+    padding={{ left: 10, right: 10 }}
+    data={[
+      { x: 15, y: 350, error: 0.2 },
+      { x: 20, y: 420, error: 0.05 },
+      { x: 25, y: 300, error: 0.1 },
+      { x: 30, y: 350, error: 0.2 },
+      { x: 35, y: 220, error: 0.15 },
+    ]}
+    errorX={(datum) =>
+      datum.error * datum.x
+    }
+    errorY={(datum) =>
+      datum.error * datum.y
+    }
+  />
+</svg>
+```

@@ -1,0 +1,1285 @@
+---
+title: Getting Started
+sidebar_position: 1
+hide_table_of_contents: true
+---
+
+# Getting Started with Victory
+
+Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. The following tutorial explains how to set up a basic chart.
+
+```jsx live noInline
+const series = [
+  {
+    name: "Canada",
+    data: [
+      3.9670002, 5.2650003, 6.201,
+      7.8010006, 9.694, 11.214001,
+      11.973001, 12.250001, 12.816001,
+      13.413001, 13.626961, 14.30356,
+      15.295461,
+    ],
+  },
+  {
+    name: "Germany",
+    data: [
+      26.903002, 28.712002, 30.979002,
+      33.477, 38.614002, 44.58, 49.435,
+      55.58, 58.721004, 60.742004,
+      62.201004, 63.833004, 66.315,
+    ],
+  },
+  {
+    name: "India",
+    data: [
+      13.184001, 16.179, 17.2997,
+      18.4204, 22.465302, 25.08819,
+      28.700441, 32.84846, 35.288105,
+      37.50518, 38.558605, 40.06727,
+      41.929783,
+    ],
+  },
+  {
+    name: "United States",
+    data: [
+      39.349697, 45.79497, 59.453304,
+      60.198166, 64.43019, 72.767235,
+      81.502365, 87.83079, 94.66619,
+      103.835556, 118.66354, 133.01929,
+      140.86162,
+    ],
+  },
+  {
+    name: "Italy",
+    data: [
+      5.794, 6.918, 8.102, 8.542001,
+      8.683001, 9.137, 9.384001,
+      9.736579, 10.230247, 10.679461,
+      10.870623, 11.253734, 11.779734,
+    ],
+  },
+  {
+    name: "Japan",
+    data: [
+      2.2940001, 2.4190001, 2.562,
+      2.6460001, 2.753, 2.808,
+      3.2470002, 3.4830003, 3.4980001,
+      3.9540002, 4.367, 4.467, 4.577,
+    ],
+  },
+  {
+    name: "Spain",
+    data: [
+      20.693, 21.529001, 22.789001,
+      22.958, 22.925001, 22.943,
+      22.990002, 23.12448, 23.405056,
+      25.590076, 26.819191, 27.907652,
+      29.307837,
+    ],
+  },
+];
+
+const symbols = [
+  "circle",
+  "diamond",
+  "plus",
+  "square",
+  "triangleUp",
+];
+
+function App() {
+  return (
+    <VictoryChart
+      padding={{
+        top: 50,
+        left: 70,
+        right: 50,
+        bottom: 100,
+      }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryLabel
+        text="Installed Wind Capacity (GW)"
+        style={{
+          ...VictoryTheme.clean.label,
+          fontSize: 10,
+        }}
+        dx={28}
+        dy={18}
+      />
+      <VictoryLabel
+        text="International Renewable Energy Agency (2023)"
+        style={{
+          ...VictoryTheme.clean.label,
+          fontSize: 8,
+        }}
+        dx={28}
+        dy={30}
+      />
+      <VictoryAxis
+        tickValues={_.range(
+          2010,
+          2024,
+          2,
+        )}
+        style={{
+          tickLabels: {
+            fontSize: 8,
+          },
+          ticks: {
+            stroke: "#757575",
+            size: 5,
+          },
+        }}
+      />
+      <VictoryAxis
+        dependentAxis
+        label="Total Capacity"
+        tickValues={_.range(0, 200, 40)}
+        tickFormat={(value) =>
+          `${value} GW`
+        }
+        style={{
+          axis: {
+            stroke: "transparent",
+          },
+          axisLabel: {
+            fontSize: 8,
+            padding: 50,
+          },
+          tickLabels: {
+            fontSize: 8,
+          },
+          grid: {
+            stroke: "#d9d9d9",
+            size: 5,
+          },
+        }}
+      />
+      {series.map((s, i) => (
+        <VictoryGroup
+          data={s.data.map((d, i) => ({
+            x: i + 2010,
+            y: d,
+          }))}
+          key={s.name}
+        >
+          <VictoryLine
+            style={{
+              data: {
+                stroke:
+                  VictoryTheme.clean
+                    .palette
+                    .qualitative[i],
+                strokeWidth: 1,
+              },
+            }}
+          />
+          <VictoryScatter
+            size={2}
+            symbol={symbols[i]}
+            style={{
+              data: {
+                fill: VictoryTheme.clean
+                  .palette.qualitative[
+                  i
+                ],
+              },
+            }}
+          />
+        </VictoryGroup>
+      ))}
+      <VictoryLegend
+        itemsPerRow={4}
+        x={50}
+        y={220}
+        data={series.map((s) => ({
+          name: s.name,
+          symbol: {
+            fill: VictoryTheme.clean
+              .palette.qualitative[
+              series.indexOf(s)
+            ],
+            type: symbols[
+              series.indexOf(s)
+            ],
+          },
+        }))}
+        style={{
+          data: {
+            fill: ({ datum }) =>
+              datum.symbol.fill,
+          },
+          labels: {
+            fontSize: 8,
+          },
+          border: {
+            stroke: "transparent",
+          },
+        }}
+      />
+      <Line
+        x1={25}
+        x2={425}
+        y1={270}
+        y2={270}
+        style={{
+          stroke: "#d9d9d9",
+        }}
+      />
+      <VictoryLabel
+        text={[
+          "Hannah Ritchie, Max Roser and Pablo Rosado (2020) - “Renewable Energy”",
+          "https://ourworldindata.org/renewable-energy",
+        ]}
+        style={{
+          fontSize: 8,
+          fontWeight: 300,
+          fontFamily: "Inter",
+        }}
+        dx={30}
+        dy={285}
+        theme={VictoryTheme.clean}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+## Tutorial
+
+In this guide, we’ll show you how to get started with Victory and walk you through the creation and customization of a composed chart.
+
+### 1. Import Victory
+
+Add Victory to your project with the command `npm install victory`, then import it into your component. For now, let's start with a simple Line Chart.
+
+```jsx
+import React from "react";
+import {
+  VictoryChart,
+  VictoryLine,
+} from "victory";
+```
+
+### 2. Start with a basic chart
+
+Components include sensible defaults, so even without data the chart will render with samples. To add some basic styling, we will use our built in `clean` theme. When a theme is applied to [`VictoryChart`](/docs/api/victory-chart), it will be inherited by all child components.
+
+```jsx live noInline
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryLine />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+### 3. Add your data
+
+Let's add some data. Victory cartesian charts look for `x` and `y` values in data points, which our data doesn't have. We can work around this by adding accessor props to our [`VictoryLine`](/docs/api/victory-line) component. Our data contains the country name, and an array of values from 2010 to 2022.
+
+```ts
+type Data = {
+  name: string;
+  data: number[];
+};
+```
+
+```jsx live noInline
+const series = [
+  {
+    name: "Canada",
+    data: [
+      3.9670002, 5.2650003, 6.201,
+      7.8010006, 9.694, 11.214001,
+      11.973001, 12.250001, 12.816001,
+      13.413001, 13.626961, 14.30356,
+      15.295461,
+    ],
+  },
+];
+
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryLine
+        data={series[0].data.map(
+          (d, i) => ({
+            x: i + 2010,
+            y: d,
+          }),
+        )}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+### 4. Customize the X axis
+
+[`VictoryChart`](/docs/api/victory-chart) is a wrapper component that plots all of its children on the same scale. The default axes may not always be what you need, but they can be customized with [`VictoryAxis`](/docs/api/victory-axis) components.
+
+We will start by adding a dependent axis to our chart. This axis will be the vertical axis, and we will customize it with a label and tick values.
+
+```jsx
+<VictoryAxis
+  dependentAxis
+  tickValues={_.range(0, 200, 40)}
+  tickFormat={(value) => `${value} GW`}
+/>
+```
+
+Our data is an array of values from the year 2010 to 2022, so we will also add a horizontal axis with tick values.
+
+```tsx
+<VictoryAxis
+  tickValues={_.range(2010, 2024, 2)}
+/>
+```
+
+Finally, we will customize the axis styles to make it more readable. We will adjust the font size of the tick labels and the axis ticks, and add grid lines to the dependent axis.
+
+```jsx live noInline
+const series = [
+  {
+    name: "Canada",
+    data: [
+      3.9670002, 5.2650003, 6.201,
+      7.8010006, 9.694, 11.214001,
+      11.973001, 12.250001, 12.816001,
+      13.413001, 13.626961, 14.30356,
+      15.295461,
+    ],
+  },
+];
+
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryAxis
+        tickValues={_.range(
+          2010,
+          2024,
+          2,
+        )}
+        style={{
+          tickLabels: {
+            fontSize: 8,
+          },
+          ticks: {
+            stroke: "#757575",
+            size: 5,
+          },
+        }}
+      />
+      <VictoryAxis
+        dependentAxis
+        tickValues={_.range(0, 200, 40)}
+        tickFormat={(value) =>
+          `${value} GW`
+        }
+        style={{
+          axis: {
+            stroke: "transparent",
+          },
+          axisLabel: {
+            fontSize: 8,
+            padding: 50,
+          },
+          tickLabels: {
+            fontSize: 8,
+          },
+          grid: {
+            stroke: "#d9d9d9",
+            size: 5,
+          },
+        }}
+      />
+      <VictoryLine
+        data={series[0].data.map(
+          (d, i) => ({
+            x: i + 2010,
+            y: d,
+          }),
+        )}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+### 5. Multiple Series
+
+Lets expand our data to include multiple countries by iterating over the `series` array and adding a [`VictoryLine`](/docs/api/victory-line) component for each country. Since we need to identify the unique trend lines, we will also adjust the stroke color of each line.
+
+```jsx
+{
+  series.map((s, i) => (
+    <VictoryLine
+      key={s.name}
+      data={s.data.map((d, i) => ({
+        x: i + 2010,
+        y: d,
+      }))}
+      style={{
+        data: {
+          stroke:
+            VictoryTheme.clean.palette
+              .qualitative[i],
+          strokeWidth: 1,
+        },
+      }}
+    />
+  ));
+}
+```
+
+```jsx live noInline
+const series = [
+  {
+    name: "Canada",
+    data: [
+      3.9670002, 5.2650003, 6.201,
+      7.8010006, 9.694, 11.214001,
+      11.973001, 12.250001, 12.816001,
+      13.413001, 13.626961, 14.30356,
+      15.295461,
+    ],
+  },
+  {
+    name: "Germany",
+    data: [
+      26.903002, 28.712002, 30.979002,
+      33.477, 38.614002, 44.58, 49.435,
+      55.58, 58.721004, 60.742004,
+      62.201004, 63.833004, 66.315,
+    ],
+  },
+  {
+    name: "India",
+    data: [
+      13.184001, 16.179, 17.2997,
+      18.4204, 22.465302, 25.08819,
+      28.700441, 32.84846, 35.288105,
+      37.50518, 38.558605, 40.06727,
+      41.929783,
+    ],
+  },
+  {
+    name: "United States",
+    data: [
+      39.349697, 45.79497, 59.453304,
+      60.198166, 64.43019, 72.767235,
+      81.502365, 87.83079, 94.66619,
+      103.835556, 118.66354, 133.01929,
+      140.86162,
+    ],
+  },
+  {
+    name: "Italy",
+    data: [
+      5.794, 6.918, 8.102, 8.542001,
+      8.683001, 9.137, 9.384001,
+      9.736579, 10.230247, 10.679461,
+      10.870623, 11.253734, 11.779734,
+    ],
+  },
+  {
+    name: "Japan",
+    data: [
+      2.2940001, 2.4190001, 2.562,
+      2.6460001, 2.753, 2.808,
+      3.2470002, 3.4830003, 3.4980001,
+      3.9540002, 4.367, 4.467, 4.577,
+    ],
+  },
+  {
+    name: "Spain",
+    data: [
+      20.693, 21.529001, 22.789001,
+      22.958, 22.925001, 22.943,
+      22.990002, 23.12448, 23.405056,
+      25.590076, 26.819191, 27.907652,
+      29.307837,
+    ],
+  },
+];
+
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryAxis
+        tickValues={_.range(
+          2010,
+          2024,
+          2,
+        )}
+        style={{
+          tickLabels: {
+            fontSize: 8,
+          },
+          ticks: {
+            stroke: "#757575",
+            size: 5,
+          },
+        }}
+      />
+      <VictoryAxis
+        dependentAxis
+        tickValues={_.range(0, 200, 40)}
+        tickFormat={(value) =>
+          `${value} GW`
+        }
+        style={{
+          axis: {
+            stroke: "transparent",
+          },
+          axisLabel: {
+            fontSize: 8,
+            padding: 50,
+          },
+          tickLabels: {
+            fontSize: 8,
+          },
+          grid: {
+            stroke: "#d9d9d9",
+            size: 5,
+          },
+        }}
+      />
+      {series.map((s, i) => (
+        <VictoryLine
+          style={{
+            data: {
+              stroke:
+                VictoryTheme.clean
+                  .palette.qualitative[
+                  i
+                ],
+              strokeWidth: 1,
+            },
+          }}
+          data={s.data.map((d, i) => ({
+            x: i + 2010,
+            y: d,
+          }))}
+          key={s.name}
+        />
+      ))}
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+### 6. Combining Chart Types
+
+To make each data point stand out more, we can combine our [`VictoryLine`](/docs/api/victory-line) chart with a [`VictoryScatter`](/docs/api/victory-scatter) chart. Victory provides a specialized wrapper component [`VictoryGroup`](/docs/api/victory-group) that helps us apply properties to multiple components at once.
+
+```jsx
+{
+  series.map((s, i) => (
+    <VictoryGroup
+      data={s.data.map((d, i) => ({
+        x: i + 2010,
+        y: d,
+      }))}
+      key={s.name}
+    >
+      <VictoryLine
+        style={{
+          data: {
+            stroke:
+              VictoryTheme.clean.palette
+                .qualitative[i],
+            strokeWidth: 1,
+          },
+        }}
+      />
+      <VictoryScatter
+        size={2}
+        symbol={symbols[i]}
+        style={{
+          data: {
+            fill: VictoryTheme.clean
+              .palette.qualitative[i],
+          },
+        }}
+      />
+    </VictoryGroup>
+  ));
+}
+```
+
+```jsx live noInline
+const series = [
+  {
+    name: "Canada",
+    data: [
+      3.9670002, 5.2650003, 6.201,
+      7.8010006, 9.694, 11.214001,
+      11.973001, 12.250001, 12.816001,
+      13.413001, 13.626961, 14.30356,
+      15.295461,
+    ],
+  },
+  {
+    name: "Germany",
+    data: [
+      26.903002, 28.712002, 30.979002,
+      33.477, 38.614002, 44.58, 49.435,
+      55.58, 58.721004, 60.742004,
+      62.201004, 63.833004, 66.315,
+    ],
+  },
+  {
+    name: "India",
+    data: [
+      13.184001, 16.179, 17.2997,
+      18.4204, 22.465302, 25.08819,
+      28.700441, 32.84846, 35.288105,
+      37.50518, 38.558605, 40.06727,
+      41.929783,
+    ],
+  },
+  {
+    name: "United States",
+    data: [
+      39.349697, 45.79497, 59.453304,
+      60.198166, 64.43019, 72.767235,
+      81.502365, 87.83079, 94.66619,
+      103.835556, 118.66354, 133.01929,
+      140.86162,
+    ],
+  },
+  {
+    name: "Italy",
+    data: [
+      5.794, 6.918, 8.102, 8.542001,
+      8.683001, 9.137, 9.384001,
+      9.736579, 10.230247, 10.679461,
+      10.870623, 11.253734, 11.779734,
+    ],
+  },
+  {
+    name: "Japan",
+    data: [
+      2.2940001, 2.4190001, 2.562,
+      2.6460001, 2.753, 2.808,
+      3.2470002, 3.4830003, 3.4980001,
+      3.9540002, 4.367, 4.467, 4.577,
+    ],
+  },
+  {
+    name: "Spain",
+    data: [
+      20.693, 21.529001, 22.789001,
+      22.958, 22.925001, 22.943,
+      22.990002, 23.12448, 23.405056,
+      25.590076, 26.819191, 27.907652,
+      29.307837,
+    ],
+  },
+];
+
+const symbols = [
+  "circle",
+  "diamond",
+  "plus",
+  "square",
+  "triangleUp",
+];
+
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryAxis
+        tickValues={_.range(
+          2010,
+          2024,
+          2,
+        )}
+        style={{
+          tickLabels: {
+            fontSize: 8,
+          },
+          ticks: {
+            stroke: "#757575",
+            size: 5,
+          },
+        }}
+      />
+      <VictoryAxis
+        dependentAxis
+        tickValues={_.range(0, 200, 40)}
+        tickFormat={(value) =>
+          `${value} GW`
+        }
+        style={{
+          axis: {
+            stroke: "transparent",
+          },
+          axisLabel: {
+            fontSize: 8,
+            padding: 50,
+          },
+          tickLabels: {
+            fontSize: 8,
+          },
+          grid: {
+            stroke: "#d9d9d9",
+            size: 5,
+          },
+        }}
+      />
+      {series.map((s, i) => (
+        <VictoryGroup
+          data={s.data.map((d, i) => ({
+            x: i + 2010,
+            y: d,
+          }))}
+          key={s.name}
+        >
+          <VictoryLine
+            style={{
+              data: {
+                stroke:
+                  VictoryTheme.clean
+                    .palette
+                    .qualitative[i],
+                strokeWidth: 1,
+              },
+            }}
+          />
+          <VictoryScatter
+            size={2}
+            symbol={symbols[i]}
+            style={{
+              data: {
+                fill: VictoryTheme.clean
+                  .palette.qualitative[
+                  i
+                ],
+              },
+            }}
+          />
+        </VictoryGroup>
+      ))}
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+### 7. Adding a Legend
+
+To make it easier to identify each country, we can add a legend to our chart. Victory provides a [`VictoryLegend`](/docs/api/victory-legend) component that can be used to display a legend for the chart.
+
+```jsx
+<VictoryLegend
+  itemsPerRow={4}
+  x={50}
+  y={220}
+  data={series.map((s, i) => ({
+    name: s.name,
+    symbol: {
+      fill: VictoryTheme.clean.palette
+        .qualitative[i],
+      type: symbols[i],
+    },
+  }))}
+/>
+```
+
+Since our Legend is going to take up some space in our chart, we also need to adjust the padding to provide enough space for the legend.
+
+```jsx
+<VictoryChart
+  padding={{
+    top: 50,
+    left: 70,
+    right: 50,
+    bottom: 100,
+  }}
+/>
+```
+
+```jsx live noInline
+const series = [
+  {
+    name: "Canada",
+    data: [
+      3.9670002, 5.2650003, 6.201,
+      7.8010006, 9.694, 11.214001,
+      11.973001, 12.250001, 12.816001,
+      13.413001, 13.626961, 14.30356,
+      15.295461,
+    ],
+  },
+  {
+    name: "Germany",
+    data: [
+      26.903002, 28.712002, 30.979002,
+      33.477, 38.614002, 44.58, 49.435,
+      55.58, 58.721004, 60.742004,
+      62.201004, 63.833004, 66.315,
+    ],
+  },
+  {
+    name: "India",
+    data: [
+      13.184001, 16.179, 17.2997,
+      18.4204, 22.465302, 25.08819,
+      28.700441, 32.84846, 35.288105,
+      37.50518, 38.558605, 40.06727,
+      41.929783,
+    ],
+  },
+  {
+    name: "United States",
+    data: [
+      39.349697, 45.79497, 59.453304,
+      60.198166, 64.43019, 72.767235,
+      81.502365, 87.83079, 94.66619,
+      103.835556, 118.66354, 133.01929,
+      140.86162,
+    ],
+  },
+  {
+    name: "Italy",
+    data: [
+      5.794, 6.918, 8.102, 8.542001,
+      8.683001, 9.137, 9.384001,
+      9.736579, 10.230247, 10.679461,
+      10.870623, 11.253734, 11.779734,
+    ],
+  },
+  {
+    name: "Japan",
+    data: [
+      2.2940001, 2.4190001, 2.562,
+      2.6460001, 2.753, 2.808,
+      3.2470002, 3.4830003, 3.4980001,
+      3.9540002, 4.367, 4.467, 4.577,
+    ],
+  },
+  {
+    name: "Spain",
+    data: [
+      20.693, 21.529001, 22.789001,
+      22.958, 22.925001, 22.943,
+      22.990002, 23.12448, 23.405056,
+      25.590076, 26.819191, 27.907652,
+      29.307837,
+    ],
+  },
+];
+
+const symbols = [
+  "circle",
+  "diamond",
+  "plus",
+  "square",
+  "triangleUp",
+];
+
+function App() {
+  return (
+    <VictoryChart
+      padding={{
+        top: 50,
+        left: 70,
+        right: 50,
+        bottom: 100,
+      }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryAxis
+        tickValues={_.range(
+          2010,
+          2024,
+          2,
+        )}
+        style={{
+          tickLabels: {
+            fontSize: 8,
+          },
+          ticks: {
+            stroke: "#757575",
+            size: 5,
+          },
+        }}
+      />
+      <VictoryAxis
+        dependentAxis
+        tickValues={_.range(0, 200, 40)}
+        tickFormat={(value) =>
+          `${value} GW`
+        }
+        style={{
+          axis: {
+            stroke: "transparent",
+          },
+          axisLabel: {
+            fontSize: 8,
+            padding: 50,
+          },
+          tickLabels: {
+            fontSize: 8,
+          },
+          grid: {
+            stroke: "#d9d9d9",
+            size: 5,
+          },
+        }}
+      />
+      {series.map((s, i) => (
+        <VictoryGroup
+          data={s.data.map((d, i) => ({
+            x: i + 2010,
+            y: d,
+          }))}
+          key={s.name}
+        >
+          <VictoryLine
+            style={{
+              data: {
+                stroke:
+                  VictoryTheme.clean
+                    .palette
+                    .qualitative[i],
+                strokeWidth: 1,
+              },
+            }}
+          />
+          <VictoryScatter
+            size={2}
+            symbol={symbols[i]}
+            style={{
+              data: {
+                fill: VictoryTheme.clean
+                  .palette.qualitative[
+                  i
+                ],
+              },
+            }}
+          />
+        </VictoryGroup>
+      ))}
+      <VictoryLegend
+        itemsPerRow={4}
+        x={50}
+        y={220}
+        data={series.map((s) => ({
+          name: s.name,
+          symbol: {
+            fill: VictoryTheme.clean
+              .palette.qualitative[
+              series.indexOf(s)
+            ],
+            type: symbols[
+              series.indexOf(s)
+            ],
+          },
+        }))}
+        style={{
+          data: {
+            fill: ({ datum }) =>
+              datum.symbol.fill,
+          },
+          labels: {
+            fontSize: 8,
+          },
+          border: {
+            stroke: "transparent",
+          },
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+### 8. Adding Labels
+
+Finally, we can add labels to our chart to provide more context. We will add a title and a source link to our chart as well as axes labels.
+
+```jsx
+<VictoryLabel
+  text="Installed Wind Capacity (GW)"
+  dx={28}
+  dy={18}
+/>
+```
+
+```jsx live noInline
+const series = [
+  {
+    name: "Canada",
+    data: [
+      3.9670002, 5.2650003, 6.201,
+      7.8010006, 9.694, 11.214001,
+      11.973001, 12.250001, 12.816001,
+      13.413001, 13.626961, 14.30356,
+      15.295461,
+    ],
+  },
+  {
+    name: "Germany",
+    data: [
+      26.903002, 28.712002, 30.979002,
+      33.477, 38.614002, 44.58, 49.435,
+      55.58, 58.721004, 60.742004,
+      62.201004, 63.833004, 66.315,
+    ],
+  },
+  {
+    name: "India",
+    data: [
+      13.184001, 16.179, 17.2997,
+      18.4204, 22.465302, 25.08819,
+      28.700441, 32.84846, 35.288105,
+      37.50518, 38.558605, 40.06727,
+      41.929783,
+    ],
+  },
+  {
+    name: "United States",
+    data: [
+      39.349697, 45.79497, 59.453304,
+      60.198166, 64.43019, 72.767235,
+      81.502365, 87.83079, 94.66619,
+      103.835556, 118.66354, 133.01929,
+      140.86162,
+    ],
+  },
+  {
+    name: "Italy",
+    data: [
+      5.794, 6.918, 8.102, 8.542001,
+      8.683001, 9.137, 9.384001,
+      9.736579, 10.230247, 10.679461,
+      10.870623, 11.253734, 11.779734,
+    ],
+  },
+  {
+    name: "Japan",
+    data: [
+      2.2940001, 2.4190001, 2.562,
+      2.6460001, 2.753, 2.808,
+      3.2470002, 3.4830003, 3.4980001,
+      3.9540002, 4.367, 4.467, 4.577,
+    ],
+  },
+  {
+    name: "Spain",
+    data: [
+      20.693, 21.529001, 22.789001,
+      22.958, 22.925001, 22.943,
+      22.990002, 23.12448, 23.405056,
+      25.590076, 26.819191, 27.907652,
+      29.307837,
+    ],
+  },
+];
+
+const symbols = [
+  "circle",
+  "diamond",
+  "plus",
+  "square",
+  "triangleUp",
+];
+
+function App() {
+  return (
+    <VictoryChart
+      padding={{
+        top: 50,
+        left: 70,
+        right: 50,
+        bottom: 100,
+      }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryLabel
+        text="Installed Wind Capacity (GW)"
+        style={{
+          ...VictoryTheme.clean.label,
+          fontSize: 10,
+        }}
+        dx={28}
+        dy={18}
+      />
+      <VictoryLabel
+        text="International Renewable Energy Agency (2023)"
+        style={{
+          ...VictoryTheme.clean.label,
+          fontSize: 8,
+        }}
+        dx={28}
+        dy={30}
+      />
+      <VictoryAxis
+        tickValues={_.range(
+          2010,
+          2024,
+          2,
+        )}
+        style={{
+          tickLabels: {
+            fontSize: 8,
+          },
+          ticks: {
+            stroke: "#757575",
+            size: 5,
+          },
+        }}
+      />
+      <VictoryAxis
+        dependentAxis
+        label="Total Capacity"
+        tickValues={_.range(0, 200, 40)}
+        tickFormat={(value) =>
+          `${value} GW`
+        }
+        style={{
+          axis: {
+            stroke: "transparent",
+          },
+          axisLabel: {
+            fontSize: 8,
+            padding: 50,
+          },
+          tickLabels: {
+            fontSize: 8,
+          },
+          grid: {
+            stroke: "#d9d9d9",
+            size: 5,
+          },
+        }}
+      />
+      {series.map((s, i) => (
+        <VictoryGroup
+          data={s.data.map((d, i) => ({
+            x: i + 2010,
+            y: d,
+          }))}
+          key={s.name}
+        >
+          <VictoryLine
+            style={{
+              data: {
+                stroke:
+                  VictoryTheme.clean
+                    .palette
+                    .qualitative[i],
+                strokeWidth: 1,
+              },
+            }}
+          />
+          <VictoryScatter
+            size={2}
+            symbol={symbols[i]}
+            style={{
+              data: {
+                fill: VictoryTheme.clean
+                  .palette.qualitative[
+                  i
+                ],
+              },
+            }}
+          />
+        </VictoryGroup>
+      ))}
+      <VictoryLegend
+        itemsPerRow={4}
+        x={50}
+        y={220}
+        data={series.map((s) => ({
+          name: s.name,
+          symbol: {
+            fill: VictoryTheme.clean
+              .palette.qualitative[
+              series.indexOf(s)
+            ],
+            type: symbols[
+              series.indexOf(s)
+            ],
+          },
+        }))}
+        style={{
+          data: {
+            fill: ({ datum }) =>
+              datum.symbol.fill,
+          },
+          labels: {
+            fontSize: 8,
+          },
+          border: {
+            stroke: "transparent",
+          },
+        }}
+      />
+      <Line
+        x1={25}
+        x2={425}
+        y1={270}
+        y2={270}
+        style={{
+          stroke: "#d9d9d9",
+        }}
+      />
+      <VictoryLabel
+        text={[
+          "Hannah Ritchie, Max Roser and Pablo Rosado (2020) - “Renewable Energy”",
+          "https://ourworldindata.org/renewable-energy",
+        ]}
+        style={{
+          fontSize: 8,
+          fontWeight: 300,
+          fontFamily: "Inter",
+        }}
+        dx={30}
+        dy={285}
+        theme={VictoryTheme.clean}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+## Next Steps
+
+Congratulations! You’ve created your first chart with Victory. Happy charting.
+
+## Documentation, Contributing, and Source
+
+For more information about Victory and its components, check out the docs - see [VictoryChart](/docs/api/victory-chart) to get started. Interested in helping out or seeing what's happening under the hood? Victory is maintained at [github.com/FormidableLabs/victory](https://github.com/FormidableLabs/victory), and you can [start contributing here](https://github.com/FormidableLabs/victory/#contributing).

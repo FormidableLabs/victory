@@ -1,0 +1,441 @@
+---
+title: VictoryDatatableProps
+---
+
+A set of props available to components that implement data visualization in Victory. These props are used to define the data that will be visualized, as well as the appearance and behavior of the visualization.
+
+## Props
+
+---
+
+### categories
+
+<Badges>
+  <TypeBadge value="string[] | { x: string[], y: string[] }" />
+</Badges>
+
+Specifies how categorical data for a chart should be ordered. This prop should be given as an array of string values, or an object with these arrays of values specified for x and y. If this prop is not set, categorical data will be plotted in the order it was given in the data array.
+
+:::note
+The `x` value supplied to the `categories` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+:::
+
+```jsx live
+<VictoryChart
+  domainPadding={25}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    categories={{
+      x: [
+        "birds",
+        "cats",
+        "dogs",
+        "fish",
+        "frogs",
+      ],
+    }}
+    data={[
+      { x: "cats", y: 1 },
+      { x: "dogs", y: 2 },
+      { x: "birds", y: 3 },
+      { x: "fish", y: 2 },
+      { x: "frogs", y: 1 },
+    ]}
+  />
+</VictoryChart>
+```
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="any[]" />
+</Badges>
+
+By default, Victory components expect data as an array of objects with `x` and `y` properties. Use the [x][] and [y][] data accessor props to define a custom data format. Data objects may also include information about ~~styles~~, labels, and props that may be applied to individual data components.
+
+:::note
+All values stored on the data object will be interpolated during animation. Do not store functions on data objects.
+:::
+
+```jsx live
+<VictoryScatter
+  size={7}
+  data={[
+    {
+      x: 1,
+      y: 1,
+      label: "first",
+      symbol: "star",
+      opacity: 0.5,
+      fill: "blue",
+    },
+    {
+      x: 2,
+      y: 2,
+      label: "second",
+      symbol: "circle",
+      opacity: 0.8,
+      fill: "red",
+    },
+    {
+      x: 3,
+      y: 3,
+      label: "third",
+      symbol: "square",
+      fill: "gold",
+    },
+    {
+      x: 4,
+      y: 4,
+      label: "fourth",
+      symbol: "diamond",
+      fill: "green",
+    },
+  ]}
+  style={{
+    data: {
+      fill: ({ datum }) => datum.fill,
+      opacity: ({ datum }) =>
+        datum.opacity,
+    },
+  }}
+/>
+```
+
+---
+
+### dataComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+</Badges>
+
+A component instance which will be responsible for rendering a data element. The new element created from the passed `dataComponent` will be provided with all the props it needs to render. These props will always include `data`, `events`, `scale` and `style`. Individual components will supply additional props expected by their default `dataComponents`. See individual api docs for complete props lists. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If a `dataComponent` is not provided, each component will use its own default `dataComponent`.
+
+See the [Custom Components Guide][] for more detail on creating your own `dataComponents`
+
+```jsx live noInline
+function CatPoint(props) {
+  const { x, y, datum } = props; // VictoryScatter supplies x, y and datum
+  const cat =
+    datum._y >= 0 ? "😻" : "😹";
+
+  return (
+    <text x={x} y={y} fontSize={30}>
+      {cat}
+    </text>
+  );
+}
+
+function App() {
+  return (
+    <VictoryChart>
+      <VictoryScatter
+        dataComponent={<CatPoint />}
+        y={(d) =>
+          Math.sin(2 * Math.PI * d.x)
+        }
+        samples={15}
+      />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+---
+
+### domain
+
+<Badges>
+  <TypeBadge value="array[low, high] || { x: [low, high], y: [low, high] }" />
+</Badges>
+
+The `domain` prop describes the range of data the component will include. This prop can be given as an array of the minimum and maximum expected values of the data or as an object that specifies separate arrays for x and y. If this prop is not provided, a domain will be calculated from data, or other available information.
+
+:::note
+The `x` value supplied to the `domain` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+:::
+
+#### Common Usage
+
+- `domain={[-1, 1]}`
+- `domain={{x: [0, 100], y: [0, 1]}}`
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0.5, 5.5], y: [0, 10] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar data={sampleData} />
+</VictoryChart>
+```
+
+---
+
+### domainPadding
+
+<Badges>
+  <TypeBadge value="number | array[left, right] | { x: [left, right], y: [bottom, top] }" />
+</Badges>
+
+The `domainPadding` prop specifies a number of pixels of padding to add to the beginning or end of a domain. This prop is useful for explicitly spacing data elements farther from the beginning or end of a domain to prevent axis crowding. When given as a single number, `domainPadding` will be applied to the upper and lower bound of both the x and y domains. This prop may also be given as an object with numbers or two-element arrays specified for x and y. When specifying arrays for `domainPadding`, the first element of the array will specify the padding to be applied to domain minimum, and the second element will specify padding the be applied to domain maximum.
+
+:::note
+The `x` value supplied to the `domainPadding` prop refers to the _independent_ variable, and the `y` value refers to the _dependent_ variable. This may cause confusion in horizontal charts, as the independent variable will corresponds to the y axis.
+:::
+
+#### Common Usage
+
+- `domainPadding={20}`
+- `domainPadding={{ x: [20, 0] }}`
+
+:::note
+Values supplied for `domainPadding` will be coerced so that padding a domain will never result in charts including an additional quadrant. For example, if an original domain included only positive values, `domainPadding` will be coerced so that the resulted padded domain will not include negative values.
+:::
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 100 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar data={sampleData} />
+</VictoryChart>
+```
+
+---
+
+### samples
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+Specifies how many individual points to plot when plotting
+y as a function of x. The `samples` prop is ignored if `data` is supplied in props.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine
+    samples={25}
+    y={(d) =>
+      Math.sin(5 * Math.PI * d.x)
+    }
+  />
+  <VictoryLine
+    samples={100}
+    style={{ data: { stroke: "red" } }}
+    y={(d) =>
+      Math.cos(5 * Math.PI * d.x)
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### sortKey
+
+<Badges>
+  <TypeBadge value="string | number | string[] | function" />
+</Badges>
+
+Indicates how data should be sorted. This prop is
+given directly to the lodash [sortBy][] function to be executed on the final
+dataset.
+
+:::note
+Sorting only applies to categorical axis data. Linear data will not be sorted.
+:::
+
+#### Common Usage
+
+`string` - specify which property in a data object to sort the data array by
+
+```jsx
+sortKey = "x";
+```
+
+`function` - use a function to determine how to sort data elements in an array
+
+```jsx
+sortKey={(datum) => datum.xValue + datum.error}
+```
+
+`number` - specify which index of an array should be used to sort data when data is given as an array of arrays
+
+```jsx
+sortKey={0}
+```
+
+`array` - specify multiple properties to sort by
+
+```jsx
+sortKey={["age", "height"]}
+```
+
+```jsx live
+<VictoryLine
+  data={_.range(0, 2 * Math.PI, 0.01).map(
+    (t) => ({ t }),
+  )}
+  sortKey="t"
+  x={(d) =>
+    Math.sin(3 * d.t + 2 * Math.PI)
+  }
+  y={(d) => Math.sin(2 * d.t)}
+/>
+```
+
+---
+
+### sortOrder
+
+<Badges>
+  <TypeBadge value='"ascending" | "descending"' />
+  <DefaultsBadge value='"ascending"' />
+</Badges>
+
+The `sortOrder` prop specifies whether sorted data should be returned in ascending or descending order.
+
+---
+
+### x
+
+<Badges>
+  <TypeBadge value="string | string[] | number | function" />
+</Badges>
+
+Use the `x` data accessor prop to determine how the component defines data in the x dimension.
+
+`string` - specify which property in an array of data objects should be used as the x value. This string may reference a nested property using dot notation.
+
+```jsx
+x="name";
+x="employees.name"
+```
+
+`string[]` - specify which property in an array of nested data objects should be used as an x value
+
+```jsx
+x={["employees", "name"]}
+```
+
+`number` - specify which index of an array should be used as an x value when data is given as an array of arrays
+
+```jsx
+x={0}
+```
+
+`function` - use a function to translate each element in a data array into an x value
+
+```jsx
+x={(datum) => datum.xValue + datum.error}
+```
+
+See the [Data Accessors Guide][] for more detail on formatting and processing data.
+
+---
+
+### y
+
+<Badges>
+  <TypeBadge value="string | string[] | number | function" />
+</Badges>
+
+Use the `y` data accessor prop to determine how the component defines data in the x dimension.
+
+`string` - specify which property in an array of data objects should be used as the x value. This string may reference a nested property using dot notation.
+
+```jsx
+y="salary";
+y="employees.salary"
+```
+
+`string[]` - specify which property in an array of nested data objects should be used as an x value
+
+```jsx
+y={["employees", "salary"]}
+```
+
+`number` - specify which index of an array should be used as an x value when data is given as an array of arrays
+
+```jsx
+y={0}
+```
+
+`function` - use a function to translate each element in a data array into an x value
+
+```jsx
+y={(datum) => Math.sin(2 * Math.PI * datum.x)}
+```
+
+See the [Data Accessors Guide][] for more detail on formatting and processing data.
+
+### y0
+
+---
+
+<Badges>
+  <TypeBadge value="string | string[] | number | function" />
+</Badges>
+
+Use the `y0` data accessor prop to determine how the component defines the baseline of `y` data.
+
+`string` - specify which property in an array of data objects should be used as the `y0` value. This string may reference a nested property using dot notation.
+
+```jsx
+y0="last_quarter_profit";
+y0="sales.last_quarter_profit"
+```
+
+`string[]` - specify which property in an array of nested data objects should be used as a `y0` value
+
+```jsx
+y0={["sales", "last_quarter_profit"]}
+```
+
+`number` - specify which index of an array should be used as an `y0` value when data is given as an array of arrays
+
+```jsx
+y0={1}
+```
+
+`function` - use a function to translate each element in a data array into an `y0` value
+
+```jsx
+y0={() => 10}
+```
+
+See the [Data Accessors Guide][] for more detail on formatting and processing data.
+
+[x]: #x
+[y]: #y
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
+[width]: #width
+[height]: #height
+[victorylabel]: /docs/api/victory-label
+[victorytooltip]: /docs/api/victory-tooltip
+[victoryportal]: /docs/api/victory-portal
+[victoryboxplot]: /docs/api/victory-box-plot
+[victoryclipcontainer]: /docs/api/victory-clip-container
+[victorybrushcontainer]: /docs/api/victory-brush-container
+[victorycursorcontainer]: /docs/api/victory-cursor-container
+[victoryselectioncontainer]: /docs/api/victory-selection-container
+[victoryvoronoicontainer]: /docs/api/victory-voronoi-container
+[victoryzoomcontainer]: /docs/api/victory-zoom-container
+[createcontainer]: /docs/guides/containers
+[victoryanimation]: /docs/api/victory-animation
+[victorytransition]: /docs/api/victory-transition
+[sortby]: https://lodash.com/docs/4.17.4#sortBy
+[animations guide]: /docs/guides/animations
+[data accessors guide]: /docs/guides/data-accessors
+[custom components guide]: /docs/guides/custom-components
+[events guide]: /docs/guides/events
+[themes guide]: /docs/guides/themes
