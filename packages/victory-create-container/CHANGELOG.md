@@ -1,5 +1,11 @@
 # victory-create-container
 
+## 37.3.1
+
+### Patch Changes
+
+- update createContainer types to be backwards compatibile ([#2933](https://github.com/FormidableLabs/victory/pull/2933))
+
 ## 37.3.0
 
 ## 37.2.0

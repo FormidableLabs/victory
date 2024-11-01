@@ -1,5 +1,11 @@
 # victory-errorbar
 
+## 37.3.1
+
+### Patch Changes
+
+- Remove duplicate types from interfaces ([#2940](https://github.com/FormidableLabs/victory/pull/2940))
+
 ## 37.3.0
 
 ## 37.2.0

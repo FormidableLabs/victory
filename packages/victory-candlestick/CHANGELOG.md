@@ -1,5 +1,13 @@
 # victory-candlestick
 
+## 37.3.1
+
+### Patch Changes
+
+- Remove duplicate types from interfaces ([#2940](https://github.com/FormidableLabs/victory/pull/2940))
+
+* Prevents boolean passed to candlestick labels prop from rendering ([#2931](https://github.com/FormidableLabs/victory/pull/2931))
+
 ## 37.3.0
 
 ## 37.2.0
