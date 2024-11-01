@@ -14,6 +14,8 @@ import Select from "./select";
 import ConfigPreview from "./config-preview";
 import Button from "./button";
 
+import "./tailwind.css";
+
 export type ThemeOption = {
   name: string;
   config?: VictoryThemeDefinition;
@@ -115,11 +117,11 @@ const ThemeBuilder = () => {
   };
 
   return (
-    <div className="theme-builder">
-      <aside className="theme-builder__sidebar">
-        <div className="theme-builder__content">
-          <h2 className="theme-builder__title">Customize Your Theme</h2>
-          <p className="theme-builder__intro">
+    <div className="flex flex-row flex-wrap items-start justify-start w-full">
+      <aside className="relative flex flex-col h-lvh w-[300px] border-r border-gray-200">
+        <div className="grow overflow-y-auto p-4">
+          <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
+          <p className="text-sm mb-4 text-gray-300">
             Select a theme to begin customizing.
           </p>
           <Select
@@ -131,7 +133,7 @@ const ThemeBuilder = () => {
           />
           {activeTheme && (
             <section>
-              <h2>Customization Options</h2>
+              <h2 className="text-lg font-bold mb-4">Customization Options</h2>
               <ColorScaleOptions
                 activeColorScale={activeColorScale}
                 activeTheme={activeTheme}
@@ -141,7 +143,7 @@ const ThemeBuilder = () => {
             </section>
           )}
         </div>
-        <footer className="theme-builder__footer">
+        <footer className="p-4 border-t border-gray-200 sticky bottom-0 flex justify-end">
           <Button
             onClick={handleThemeConfigPreviewOpen}
             ariaLabel="Get Theme Code"
@@ -151,13 +153,13 @@ const ThemeBuilder = () => {
           </Button>
         </footer>
       </aside>
-      <main className="theme-builder__preview">
+      <main className="flex-1 flex flex-col items-center">
         {activeTheme && (
-          <div className="theme-builder__preview-container">
-            <h2>Example Charts</h2>
-            <div className="theme-builder__preview-grid">
+          <div className="max-w-screen-xl w-full py-4 px-10">
+            <h2 className="text-xl font-bold mb-4">Example Charts</h2>
+            <div className="grid grid-cols-2 gap-10">
               <div>
-                <h3>Bar Chart</h3>
+                <h3 className="text-base font-bold mb-3">Bar Chart</h3>
                 <VictoryChart
                   theme={activeTheme?.config}
                   domainPadding={20}
@@ -176,7 +178,7 @@ const ThemeBuilder = () => {
                 </VictoryChart>
               </div>
               <div>
-                <h3>Area Chart</h3>
+                <h3 className="text-base font-bold mb-3">Area Chart</h3>
                 <VictoryChart
                   theme={activeTheme?.config}
                   domainPadding={20}
