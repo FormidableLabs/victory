@@ -10,7 +10,7 @@ import {
   scaleDiscontinuous,
   discontinuitySkipWeekends,
 } from "@d3fc/d3fc-discontinuous-scale";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaStar, FaSun } from "react-icons/fa";
 import * as Victory from "victory";
 
 import Slider from "../../components/slider";
@@ -26,6 +26,7 @@ const scopeMap = {
   Slider,
   reactIconsFa: {
     FaMoon,
+    FaStar,
     FaSun,
   },
   sampleData: [

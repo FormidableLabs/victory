@@ -282,7 +282,7 @@ sortKey={["age", "height"]}
 
 ```jsx live
 <VictoryLine
-  data={range(0, 2 * Math.PI, 0.01).map(
+  data={_.range(0, 2 * Math.PI, 0.01).map(
     (t) => ({ t }),
   )}
   sortKey="t"

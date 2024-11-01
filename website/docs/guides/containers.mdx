@@ -285,7 +285,7 @@ If you would like to instead highlight only the data points, consider using [Vic
   containerComponent={
     <VictoryCursorContainer
       cursorLabel={({ datum }) =>
-        `${round(datum.x, 2)}, ${round(
+        `${_.round(datum.x, 2)}, ${_.round(
           datum.y,
           2,
         )}`
@@ -376,7 +376,7 @@ However, the component that uses it must be standalone
   containerComponent={
     <VictoryVoronoiContainer
       labels={({ datum }) =>
-        `${round(datum.x, 2)}, ${round(
+        `${_.round(datum.x, 2)}, ${_.round(
           datum.y,
           2,
         )}`

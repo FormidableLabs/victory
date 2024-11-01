@@ -46,7 +46,7 @@ the cursor will then be a vertical line that will inspect the time value of the 
     <VictoryCursorContainer
       cursorDimension="x"
       cursorLabel={({ datum }) =>
-        `${round(datum.x, 2)}, ${round(
+        `${_.round(datum.x, 2)}, ${_.round(
           datum.y,
           2,
         )}`
