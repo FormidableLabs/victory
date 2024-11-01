@@ -2,10 +2,13 @@ import { themes as prismThemes } from "prism-react-renderer";
 import { Config } from "@docusaurus/types";
 import { autoGenerateApiDocs } from "./src/plugins/victory-typedoc";
 
+const title = "Victory";
+const tagline =
+  "Intuitive React components for advanced charting and data visualization.";
+
 const config: Config = {
-  title: "Victory",
-  tagline:
-    "Composable React components for building interactive charts and data visualizations",
+  title,
+  tagline,
   favicon: "favicon.ico",
   url: "https://commerce.nearform.com/",
   baseUrl: "/open-source/victory",
@@ -77,19 +80,53 @@ const config: Config = {
     metadata: [
       {
         name: "title",
-        content: "Victory - React Charting Components",
+        content: `${title} - React Charting Components`,
       },
       {
         name: "description",
-        content: "Composable React components for building interactive charts and data visualizations",
-      },
-      {
-        name: "keywords",
-        content: "victory, documentation, react, charts, charting, data, viz",
+        content: tagline,
       },
       {
         name: "viewport",
         content: "width=device-width, initial-scale=1, maximum-scale=1",
+      },
+      {
+        name: "keywords",
+        content:
+          "victory, documentation, react, charts, charting, data, viz, d3",
+      },
+      { name: "og:type", content: "website" },
+      {
+        name: "og:url",
+        content: "https://commerce.nearform.com/open-source/victory/",
+      },
+      { name: "og:title", content: `${title} - React Charting Components` },
+      {
+        name: "og:description",
+        content: tagline,
+      },
+      {
+        name: "og:image",
+        content:
+          "https://commerce.nearform.com/open-source/victory/open-graph.png",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:url",
+        content: "https://commerce.nearform.com/open-source/victory/",
+      },
+      {
+        name: "twitter:title",
+        content: `${title} - React Charting Components`,
+      },
+      {
+        name: "twitter:description",
+        content: tagline,
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://commerce.nearform.com/open-source/victory/open-graph.png",
       },
     ],
     docs: {
