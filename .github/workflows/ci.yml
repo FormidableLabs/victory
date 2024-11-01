@@ -16,13 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-
-      - name: Checkout branch
-        uses: actions/checkout@v4
         with:
           ref: "main"
           path: br-base
+      - uses: ./.github/actions/setup
 
       - name: Bundle size report
         uses: nejcm/bundle-size-reporter-action@v1.2.1
