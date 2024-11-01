@@ -44,7 +44,6 @@ export type VictoryCandlestickLabelsType =
 export interface VictoryCandlestickProps
   extends Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
-    VictoryLabelableProps,
     VictoryMultiLabelableProps {
   candleColors?: {
     positive?: string;

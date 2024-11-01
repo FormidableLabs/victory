@@ -46,7 +46,6 @@ export interface VictoryHistogramProps
     number | string | number[] | string[]
   >[];
   eventKey?: StringOrNumberOrCallback;
-  horizontal?: boolean;
   style?: VictoryStyleInterface;
 }
 

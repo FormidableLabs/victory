@@ -41,7 +41,6 @@ export type ErrorType =
 export interface VictoryErrorBarProps
   extends Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
-    VictoryLabelableProps,
     VictoryMultiLabelableProps {
   borderWidth?: number;
   errorX?: ErrorType;

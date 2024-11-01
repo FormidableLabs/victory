@@ -33,9 +33,7 @@ import {
 export interface VictoryPieProps
   extends Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
-    VictoryLabelableProps,
     VictoryMultiLabelableProps {
-  colorScale?: ColorScalePropType;
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;
   endAngle?: number;
   events?: EventPropTypeInterface<
@@ -56,7 +54,6 @@ export interface VictoryPieProps
 
   labelIndicatorComponent?: React.ReactElement;
   labelRadius?: number | ((props: SliceProps) => number);
-  origin?: OriginType;
   padAngle?: NumberOrCallback;
   radius?: NumberOrCallback;
   startAngle?: number;
