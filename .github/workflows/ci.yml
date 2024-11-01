@@ -15,7 +15,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - uses: ./.github/actions/setup
 
       - name: Check all package.json's and tsconfig.json's are in sync.
