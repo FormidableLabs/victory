@@ -20,7 +20,7 @@ jobs:
         with:
           ref: "test" # branch to compare to
           path: br-base # required
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ./.github/actions/setup
 
