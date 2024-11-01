@@ -1,5 +1,13 @@
 # victory-pie
 
+## 37.3.1
+
+### Patch Changes
+
+- Added logic to sort pie chart slices by categories prop ([#2934](https://github.com/FormidableLabs/victory/pull/2934))
+
+* Remove duplicate types from interfaces ([#2940](https://github.com/FormidableLabs/victory/pull/2940))
+
 ## 37.3.0
 
 ## 37.2.0
