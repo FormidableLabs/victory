@@ -95,36 +95,36 @@ const config: Config = {
         content:
           "victory, documentation, react, charts, charting, data, viz, d3",
       },
-      { name: "og:type", content: "website" },
+      { property: "og:type", content: "website" },
       {
-        name: "og:url",
+        property: "og:url",
         content: "https://commerce.nearform.com/open-source/victory/",
       },
-      { name: "og:title", content: `${title} - React Charting Components` },
+      { property: "og:title", content: `${title} - React Charting Components` },
       {
-        name: "og:description",
+        property: "og:description",
         content: tagline,
       },
       {
-        name: "og:image",
+        property: "og:image",
         content:
           "https://commerce.nearform.com/open-source/victory/open-graph.png",
       },
-      { name: "twitter:card", content: "summary_large_image" },
+      { property: "twitter:card", content: "summary_large_image" },
       {
-        name: "twitter:url",
+        property: "twitter:url",
         content: "https://commerce.nearform.com/open-source/victory/",
       },
       {
-        name: "twitter:title",
+        property: "twitter:title",
         content: `${title} - React Charting Components`,
       },
       {
-        name: "twitter:description",
+        property: "twitter:description",
         content: tagline,
       },
       {
-        name: "twitter:image",
+        property: "twitter:image",
         content:
           "https://commerce.nearform.com/open-source/victory/open-graph.png",
       },
