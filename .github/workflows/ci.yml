@@ -15,20 +15,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: "test" # branch to compare to
-          path: br-base # required
-
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-
-      - name: Bundle size report
-        uses: nejcm/bundle-size-reporter-action@v1.2.1
-        with:
-          paths: "packages/*"
-          onlyDiff: "true"
-          filter: '.*\\.min\\.js'
 
       - name: Check all package.json's and tsconfig.json's are in sync.
         run: |
