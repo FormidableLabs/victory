@@ -17,6 +17,7 @@ import { VictoryTooltip } from "../packages/victory-tooltip";
 import { getData, getDataWithBaseline, getMixedData } from "./data";
 import { storyContainer } from "./decorators";
 
+// TODO: refactor to use storybook controls
 const meta: Meta<typeof VictoryBar> = {
   title: "Victory Charts/Canvas Container/Bar",
   component: VictoryBar,
