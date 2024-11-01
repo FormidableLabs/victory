@@ -15,9 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
 
       - name: Check all package.json's and tsconfig.json's are in sync.
@@ -30,6 +28,15 @@ jobs:
 
       - name: Types
         run: pnpm types:check
+
+      - name: 📄 Bundle size report
+        uses: ./.github/actions/bundle-size # path to composite action
+        with:
+          paths: "reports/**/*.json"
+          onlyDiff: "true"
+          branch: "develop" # branch to compare to
+          header: "Bundle size report" # PR comment header
+          # ghToken: ${{ secrets.GITHUB_TOKEN }} # github token
 
   format:
     needs: [build]
