@@ -46,7 +46,7 @@ runs:
       uses: actions/checkout@v3
       with:
         ref: "feat/bundle-size-analysis"
-        ref: "main"
+        # ref: "main"
         # ref: ${{ inputs.branch }}
         path: br-base
         # token: ${{ inputs.ghToken }}
