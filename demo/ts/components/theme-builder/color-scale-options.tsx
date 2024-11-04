@@ -1,17 +1,16 @@
 import React from "react";
-import { ThemeOption } from ".";
-import { ColorScalePropType } from "victory-core";
+import { ColorScalePropType, VictoryThemeDefinition } from "victory-core";
 import Select from "./select";
-import { TiPencil } from "react-icons/ti";
+import ColorPicker from "./color-picker";
 
-type ColorChangeArgs = {
+export type ColorChangeArgs = {
   event: React.ChangeEvent<HTMLInputElement>;
   index: number;
   colorScale: string;
 };
 
 type ColorScaleOptionsProps = {
-  activeTheme?: ThemeOption;
+  palette?: VictoryThemeDefinition["palette"];
   activeColorScale?: ColorScalePropType;
   onColorChange: (args: ColorChangeArgs) => void;
   onColorScaleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -44,49 +43,9 @@ const colorScales = [
   },
 ];
 
-type ColorPickerProps = {
-  color: string;
-  index: number;
-  onColorChange: (args: ColorChangeArgs) => void;
-  colorScale: string;
-};
-
-const ColorPicker = ({
-  color,
-  index,
-  onColorChange,
-  colorScale,
-}: ColorPickerProps) => {
-  const [isPickerOpen, setIsPickerOpen] = React.useState(false);
-
-  return (
-    <div className={`color-picker ${isPickerOpen ? "open" : ""}`}>
-      <label
-        htmlFor={`color-${index}`}
-        className="color-picker__label"
-        style={{
-          color,
-        }}
-      />
-      <input
-        id={`color-${index}`}
-        className="color-picker__input"
-        type="color"
-        value={color}
-        onChange={(event) => onColorChange({ event, index, colorScale })}
-        onFocus={() => setIsPickerOpen(true)}
-        onBlur={() => setIsPickerOpen(false)}
-      />
-      <div className="color-picker__icon">
-        <TiPencil />
-      </div>
-    </div>
-  );
-};
-
 const ColorScaleOptions = ({
   activeColorScale,
-  activeTheme,
+  palette,
   onColorChange,
   onColorScaleChange,
 }: ColorScaleOptionsProps) => {
@@ -99,18 +58,21 @@ const ColorScaleOptions = ({
         options={colorScales}
         label="Color Scale"
       />
-      <div className="color-scale__colors">
-        {activeTheme?.config?.palette?.[activeColorScale as string]?.map(
-          (color, i) => (
-            <ColorPicker
-              key={i}
-              color={color}
-              index={i}
-              onColorChange={onColorChange}
-              colorScale={activeColorScale as string}
-            />
-          ),
-        )}
+      <div className="flex flex-wrap gap-3 mb-5">
+        {palette?.[activeColorScale as string]?.map((color, i) => (
+          <ColorPicker
+            key={i}
+            color={color}
+            id={`color-${i}`}
+            onColorChange={(event) =>
+              onColorChange({
+                event,
+                index: i,
+                colorScale: activeColorScale as string,
+              })
+            }
+          />
+        ))}
       </div>
     </section>
   );
