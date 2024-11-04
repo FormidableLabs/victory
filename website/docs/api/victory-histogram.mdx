@@ -1,0 +1,256 @@
+---
+title: VictoryHistogram
+---
+
+:::info
+For examples of `VictoryHistogram` in action, visit the [Histogram Chart](/docs/charts/histogram) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={["data"]}
+  notImplemented={["polar", "y", "y0"]}
+/>
+
+## Component Props
+
+---
+
+### bins
+
+<Badges>
+  <TypeBadge value="number | number[] | Date[]" />
+</Badges>
+
+**`VictoryHistogram` uses [`d3.bin`](https://observablehq.com/@d3/d3-bin) to do binning.**
+
+The `bins` prop is used to specify how the data will be binned. There are a few options for this, the first being passing no value, ie the default behavior, which is letting `d3.bin` generate the buckets based on the data. The second is passing a number, which specifies _approximately_ the number of bins to generate, this is not a guarantee (see `d3.bin` for more details). The last options are passing an array of numbers or dates (depending on the data), this array represents an array of thresholds. So for example if the bin prop provided is `[0, 10, 20, 35]`, this would result in 3 bins, that would look like [0, 10) , [10, 20), \[20, 35\].
+
+This prop allows for a lot of flexibility in how the data is displayed. For example it is possible to have uneven sized bins if so desired. It is also possible to group the data by days, weeks, or years.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    data={sampleHistogramData}
+    bins={[0, 3, 7, 10]}
+  />
+</VictoryChart>
+```
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    data={sampleHistogramDateData}
+    bins={[
+      new Date(2020, 1, 1),
+      new Date(2020, 4, 1),
+      new Date(2020, 8, 1),
+      new Date(2020, 11, 1),
+    ]}
+  />
+</VictoryChart>
+```
+
+```jsx live noInline
+const App = () => {
+  const niceTimeScale = d3Scale
+    .scaleTime()
+    .domain(
+      d3Array.extent(
+        sampleHistogramDateData,
+        ({ x }) => x,
+      ),
+    )
+    .nice();
+
+  // get thresholds to bin data by months
+  const bins = niceTimeScale.ticks(
+    d3Time.utcMonth,
+  ); // try utcDay
+
+  return (
+    <VictoryChart
+      domainPadding={{ x: 20 }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryHistogram
+        data={sampleHistogramDateData}
+        bins={bins}
+      />
+    </VictoryChart>
+  );
+};
+
+render(<App />);
+```
+
+---
+
+### binSpacing
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `binSpacing` prop is used to specify space between each bin. `binSpacing` represents the number of pixels that will be between each bin (including at the beginning and end of the bins). By default, bins are rendered with no spacing.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    binSpacing={20}
+    data={sampleHistogramData}
+  />
+</VictoryChart>
+```
+
+---
+
+### cornerRadius
+
+<Badges>
+  <TypeBadge value="Function | number | { top, bottom, topLeft, topRight, bottomLeft, bottomRight }" />
+</Badges>
+
+The `cornerRadius` prop specifies a radius to apply to each bar. If this prop is given as a single number, the radius will only be applied to the _top_ of each bar. When this prop is given as a function, it will be evaluated for each bar with the props object corresponding to that bar.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 15 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    cornerRadius={{
+      topLeft: ({ datum }) =>
+        datum.y * 4,
+    }}
+    data={sampleHistogramData}
+  />
+</VictoryChart>
+```
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="any[]" />
+</Badges>
+
+`VictoryHistogram` uses the standard data prop, except for it only expects each object within the array to have an `x` property. The `x` data accessor prop can be used to define a custom data property.
+
+Because each bar represents a bin rather than a particular data point (like with `VictoryScatter` for example), when accessing `datum` via a prop that passes `datum` such as style, `datum` will have properties `x`, `x0`, `x1`, `y`, and `binnedData`. `x` is the midpoint between the bin, `x0` is the beginning of the bin, `x1` is the end of the bin, `y` is the aggregate amount of data points within that bin, and `binnedData` is an array of the original data points that were grouped into this bin.
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+`VictoryHistogram` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryHistogram` uses the standard `events` prop. [Read about it here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+```jsx live
+<div>
+  <h3>Click a bar below</h3>
+  <VictoryHistogram
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const fill =
+                    props.style &&
+                    props.style.fill;
+                  return fill ===
+                    "black"
+                    ? null
+                    : {
+                        style: {
+                          fill: "black",
+                        },
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={sampleHistogramData}
+    theme={VictoryTheme.clean}
+  />
+</div>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ parent: object, data: object, labels: object }" />
+</Badges>
+
+`VictoryHistogram` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
+
+_default (provided by default theme):_ See [grayscale theme][] for more detail
+
+```jsx live
+<VictoryHistogram
+  style={{
+    data: {
+      fill: ({ datum }) =>
+        datum.y === 3
+          ? "#000000"
+          : "lightblue",
+      stroke: ({ index }) =>
+        +index % 2 === 0
+          ? "#000000"
+          : "lightblue",
+      fillOpacity: 0.7,
+      strokeWidth: 3,
+    },
+    labels: {
+      fontSize: 15,
+      fill: ({ datum }) =>
+        datum.y === 3
+          ? "#000000"
+          : "lightblue",
+    },
+  }}
+  data={sampleHistogramData}
+  labels={({ datum }) => datum.y}
+/>
+```

@@ -2,7 +2,7 @@ import React from "react";
 import { random, range } from "lodash";
 import { VictoryPie } from "victory-pie";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, LineSegment, Helpers } from "victory-core";
+import { VictoryTheme, Helpers } from "victory-core";
 
 interface VictoryPieDemoState {
   data: {
@@ -153,6 +153,18 @@ export default class VictoryPieDemo extends React.Component<
             style={{ parent: parentStyle }}
             labelPosition="startAngle"
           />
+          <VictoryPie
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
+            categories={{ x: ["E", "A", "D", "C", "B"] }}
+          />
+
+          <VictoryPie
+            theme={VictoryTheme.clean}
+            style={{ parent: parentStyle }}
+            categories={{ x: ["E", "A", "C"] }}
+          />
+
           <VictoryPie
             theme={VictoryTheme.clean}
             style={{ parent: parentStyle }}

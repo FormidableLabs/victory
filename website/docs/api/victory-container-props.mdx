@@ -1,0 +1,380 @@
+---
+title: VictoryContainerProps
+---
+
+A set of props available to Victory [container](/docs/guides/containers) components.
+
+## Props
+
+---
+
+### aria-describedby
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `aria-describedby` prop applies to the `svg` element rendered by `VictoryContainer`. This prop should be given as a string corresponding to the id of an element that describes the chart. If the `desc` prop is set on `VictoryContainer`, the `aria-describedby` prop applied to `VictoryContainer`'s `svg` will correspond to the id of the `desc` tag `VictoryContainer` renders.
+
+---
+
+### aria-labelledby
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `aria-labelledby` prop applies to the `svg` element rendered by `VictoryContainer`. This prop should be given as a string corresponding to the id of an element that labels the chart. If the `title` prop is set on `VictoryContainer`, the `aria-labelledby` prop applied to `VictoryContainer`'s `svg` will correspond to the id of the `title` tag `VictoryContainer` renders.
+
+---
+
+### children
+
+<Badges>
+  <TypeBadge value="ReactElement | ReactElement[]" />
+</Badges>
+
+The `children` prop specifies the child or children that will be rendered within the container. This prop should not be set manually. It will be set by whatever Victory component is rendering the container.
+
+---
+
+### className
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `className` prop specifies a className that will be applied to the outer-most div rendered by `VictoryContainer` if this prop is not set, the className will default to "VictoryContainer"
+
+---
+
+### containerId
+
+<Badges>
+  <TypeBadge value="number | string" />
+</Badges>
+
+The `containerId` prop may be used to set a deterministic id for the container. When a `containerId` is not manually set, a unique id will be generated. It is usually necessary to set deterministic ids for automated testing.
+
+---
+
+### containerRef
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+The `containerRef` prop may be used to attach a ref to the outermost element rendered by the container. This prop should be given as a function.
+
+_example:_ `containerRef={(ref) => { this.chartRef = ref; }}`
+
+---
+
+### desc
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `desc` prop specifies the description of the chart/SVG to assist with accessibility for screen readers. The more descriptive this title is, the more useful it will be for people using screen readers.
+
+_example:_ `desc="Golden retrievers make up 30%, Labs make up 25%, and other dog breeds are not represented above 5% each."`
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object" />
+</Badges>
+
+The `events` prop attaches arbitrary event handlers to the container element. This prop should be
+given as an object of event names and corresponding [React event handlers][]. Events defined directly
+via this prop will be masked by `defaultEvents` on `VictorySelectionContainer` (`onMouseDown`,
+`onMouseUp`, and `onMouseMove`), and by any events defined through Victory's event
+system that target parent elements.
+
+_example:_ `events={{onClick: (evt) => alert("x: " + evt.clientX)}}`
+
+---
+
+### height
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `height` prop determines the height of the containing `<svg>`. By default VictoryContainer renders responsive containers with the `viewBox` attribute set to `viewBox="0, 0, width, height"` and `width="100%"`, `height="100%"`. In responsive containers, the `width` and `height` props affect the _aspect ratio_ of the rendered component, while the absolute width and height are determined by the container. To render a static container, set `responsive={false}`
+
+_example:_ `height={350}`
+
+---
+
+### name
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `name` prop is used to reference a component instance when defining shared events.
+
+---
+
+### origin
+
+<Badges>
+  <TypeBadge value="{ x: number, y: number }" />
+</Badges>
+
+The origin prop is used to define the center point in svg coordinates for polar charts.
+
+:::note
+This prop is typically not set by external consumers.
+:::
+
+---
+
+### ouiaId
+
+<Badges>
+  <TypeBadge value="number | string" />
+</Badges>
+
+The `ouiaId` prop outputs an id attribute called `data-ouia-component-id`, which must be unique within the surrounding context of the component.
+
+This prop is used by the Open UI Automation 1.0-RC spec to help maintain automated testing environments. Components that are OUIA compliant must provide the following props; `ouiaId`, `ouiaSafe`, and `ouiaType`.
+
+---
+
+### ouiaSafe
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+The `ouiaSafe` outputs an attribute called `data-ouia-safe`, which indicates that the component is in a static state.
+
+This prop is used by the Open UI Automation 1.0-RC spec to help maintain automated testing environments. Components that are OUIA compliant must provide the following props; `ouiaId`, `ouiaSafe`, and `ouiaType`.
+
+  <DefaultsBadge value='true}' />
+
+---
+
+### ouiaType
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `ouiaType` prop outputs an attribute called `data-ouia-component-type`, which specifies a unique name identifying the root level HTML element.
+
+This prop is used by the Open UI Automation 1.0-RC spec to help maintain automated testing environments. Components that are OUIA compliant must provide the following props; `ouiaId`, `ouiaSafe`, and `ouiaType`.
+
+_example:_ A page that has a special container could choose to name that container as `FrameworkA/CustomContainer`.
+
+---
+
+### polar
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="false" />
+</Badges>
+
+Specifies whether a chart should be plotted on a polar coordinate system.
+
+:::note
+This prop is typically not set by external consumers on containers
+:::
+
+---
+
+### portalComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+</Badges>
+
+The `portalComponent` prop takes a component instance which will be used as a container for children that should render inside a top-level container so that they will always appear above other elements. [VictoryTooltip][] renders inside a portal so that tooltips always render above data. [VictoryPortal][] is used to define elements that should render in the portal container. This prop defaults to [Portal][], and should only be overridden when changing rendered elements from SVG to another type of element _e.g.,_ [react-native-svg][] elements.
+
+  <DefaultsBadge value='<Portal/>}' />
+
+---
+
+### portalZIndex
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `portalZIndex` prop determines the z-index of the div enclosing the portal component. If a `portalZIndex` prop is not set, the z-index of the enclosing div will be set to 99.
+
+---
+
+### preserveAspectRatio
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `preserveAspectRatio` prop applies to the `svg` elements rendered by `VictoryContainer` to give users more control over how responsive svgs are positioned and scaled. When the `responsive` prop on `VictoryContainer` is set to `false`, this prop has no effect.
+
+```jsx live
+<div style={{ width: "400px", height: "400px"}}>
+  <VictoryChart
+    height={300}
+    width={400}
+    style={{ parent: { border: "1px solid black" } }}
+    containerComponent={
+      <VictoryContainer
+        preserveAspectRatio="none"
+      />
+    }
+    theme={VictoryTheme.clean}
+  >
+    <VictoryLine/>
+  </VictoryChart>
+</div>
+```
+
+---
+
+### responsive
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+The `responsive` prop specifies whether the rendered container should be a responsive container with a `viewBox` attribute, or a static container with absolute width and height.
+
+---
+
+### role
+
+<Badges>
+  <TypeBadge value="string" />
+  <DefaultsBadge value="img" />
+</Badges>
+
+The `role` prop specifies the role attribute that will be applied to the `svg` element rendered by `VictoryContainer`
+
+---
+
+### scale
+
+<Badges>
+  <TypeBadge value="scale | { x: scale, y: scale }" />
+</Badges>
+
+Specifies the scale for a container.
+
+:::note
+This prop is typically not set by external consumers on containers
+:::
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="React.CSSProperties" />
+  <DefaultsBadge value="provided by theme" />
+</Badges>
+
+The `style` prop defines the style of the container, and should be given as an object of style attributes.
+The `width` and `height` should be specified via props instead of style attributes as they determine
+relative layout for components.
+
+_example:_ `style={{border: "1px solid #ccc"}}`
+
+---
+
+### tabIndex
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `tabIndex` prop applies to the `svg` element rendered by `VictoryContainer` to allow users to focus on the chart container via keyboard navigation. This prop should be given as a number.
+
+---
+
+### theme
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="VictoryTheme.grayscale" />
+</Badges>
+
+The `theme` prop specifies a theme to use for determining styles and layout props for a
+component. Any styles or props defined in `theme` may be overridden by props specified on the
+component instance.
+
+---
+
+### title
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `title` prop specifies the title to be applied to the SVG to assist with accessibility for screen readers. The more descriptive this title is, the more useful it will be for people using screen readers
+
+---
+
+### width
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `width` prop determines the width of the containing `<svg>`. By default VictoryContainer renders responsive containers with the `viewBox` attribute set to `viewBox="0, 0, width, height"` and `width="100%"`, `height="auto"`. In responsive containers, the `width` and `height` props affect the _aspect ratio_ of the rendered component, while the absolute width and height are determined by the container. To render a static container, set `responsive={false}`
+
+## Native-Only Props
+
+### onTouchStart
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+The optional `onTouchStart` prop takes a function that is called on every touch event on the chart (when using `victory-native`). The most common use of `onTouchStart` is to prevent the chart's parent `ScrollView` from scrolling, so that the chart and container can be interacted with unencumbered. The function accepts a single parameter, `event`, a React Native [Synthetic Event][]. Also see `onTouchEnd`.
+
+```jsx
+<ScrollView scrollEnabled={this.state.scrollEnabled}>
+  <VictoryChart
+    containerComponent={
+      <VictoryContainer
+        onTouchStart={() => this.setState({ scrollEnabled: false })}
+        onTouchEnd={() => this.setState({ scrollEnabled: true })}
+      />
+    }
+    theme={VictoryTheme.clean}
+  >
+    <VictoryBar />
+  </VictoryChart>
+</ScrollView>
+```
+
+---
+
+### onTouchEnd
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+The optional `onTouchEnd` prop takes a function that is called at the conclusion of every touch event on the chart (when using `victory-native`). The most common use of `onTouchEnd` is to prevent the chart's parent `ScrollView` from scrolling, so that the chart and container can be interacted with unencumbered. The function accepts a single parameter, `event`, a React Native [Synthetic Event][]. Also see `onTouchStart`.
+
+---
+
+[victoryportal]: /docs/api/victory-portal
+[portal]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-portal/portal.tsx
+[react-native-svg]: https://github.com/react-native-community/react-native-svg
+[victorytheme]: /docs/api/victory-theme
+[victorytooltip]: /docs/api/victory-tooltip
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
+[read more about themes here]: /docs/guides/themes
+[synthetic event]: https://facebook.github.io/react-native/docs/gesture-responder-system.html#responder-lifecycle
+[react event handlers]: https://reactjs.org/docs/handling-events.html

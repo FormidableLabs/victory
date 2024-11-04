@@ -1,5 +1,7 @@
 # victory-cursor-container
 
+## 37.3.1
+
 ## 37.3.0
 
 ## 37.2.0

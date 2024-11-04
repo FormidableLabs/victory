@@ -9,6 +9,7 @@ import {
   PaddingOrCallback,
   StringOrNumberOrCallback,
 } from "../types/callbacks";
+import { DomainPropType } from "../types/prop-types";
 
 export type BlockProps = {
   top?: number;
@@ -49,7 +50,7 @@ export interface VictoryAxisCommonProps {
   axisLabelComponent?: React.ReactElement;
   axisValue?: number | string | object | Date;
   dependentAxis?: boolean;
-  disableInlineStyles?: boolean;
+  domain?: DomainPropType;
   gridComponent?: React.ReactElement;
   invertAxis?: boolean;
   style?: {

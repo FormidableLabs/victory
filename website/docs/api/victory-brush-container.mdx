@@ -1,0 +1,258 @@
+---
+title: VictoryBrushContainer
+---
+
+Adds the ability to highlight a region of a chart, and interact with highlighted regions.
+
+:::info
+For examples of `VictoryBrushContainer` in action, visit the [containers](/docs/guides/containers) guide.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={["VictoryContainerProps"]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### allowDrag
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+The optional `allowDrag` prop accepts a boolean that enables dragging behavior for the highlighted brush area. Resizing will still be enabled when the `allowDrag` prop is set to false.
+
+```jsx live
+<VictoryChart
+  containerComponent={
+    <VictoryBrushContainer
+      allowDrag={false}
+      brushDomain={{ x: [0.1, 0.3] }}
+    />
+  }
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine />
+</VictoryChart>
+```
+
+---
+
+### allowDraw
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+The optional `allowDraw` prop accepts a boolean that enables drawing new brush areas. When this prop is set to false, existing brush areas may still be resized or dragged, but clicking outside of existing brush areas will not trigger the creation of new brush areas.
+
+```jsx live
+<VictoryChart
+  containerComponent={
+    <VictoryBrushContainer
+      allowDraw={false}
+      brushDomain={{ x: [0.1, 0.3] }}
+    />
+  }
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine />
+</VictoryChart>
+```
+
+---
+
+### allowResize
+
+<Badges>
+  <TypeBadge value="boolean" />
+  <DefaultsBadge value="true" />
+</Badges>
+
+The optional `allowResize` prop accepts a boolean that enables resizing the highlighted brush area. Dragging will still be enabled when the `allowResize` prop is set to false, but the dimensions of the brush area will be fixed. By default, when `allowResize` is set to false, clicking outside of the brush area will center the brush on the user's mouse position without resizing it. This behavior can be controlled via the [defaultBrushArea prop](/docs/api/victory-brush-container/#defaultbrusharea).
+
+```jsx live
+<VictoryChart
+  containerComponent={
+    <VictoryBrushContainer
+      allowResize={false}
+      brushDomain={{ x: [0.1, 0.3] }}
+    />
+  }
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine />
+</VictoryChart>
+```
+
+---
+
+### brushComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<rect/>" />
+</Badges>
+
+The `brushComponent` prop specifies the component to be rendered for the highlighted area.
+This component will be supplied with the following props: x, y, width, height, and style.
+When this prop is not specified, a `<rect/>` will be rendered.
+
+---
+
+### brushDimension
+
+<Badges>
+  <TypeBadge value='"x" || "y"' />
+  <DefaultsBadge value='"x"' />
+</Badges>
+
+When the `brushDimension` prop is set, brushing will only be specific to the given dimension
+(either "x" or "y"), and the entire domain of the other dimension will be highlighted. When this prop
+is not specified, highlighting will occur along both dimensions.
+
+---
+
+### brushDomain
+
+<Badges>
+  <TypeBadge value="{ x: [low, high], y: [low, high] }" />
+</Badges>
+
+The optional `brushDomain` prop describes the highlighted state. This prop is an object that
+specifies separate arrays for `x` and `y`. Each array is a tuple that describes the minimum and maximum
+values to render. If this prop is not provided initially, the chart will render with the entire
+domain highlighted. When this prop changes, the chart will render with a new highlighted domain.
+
+_example:_ `brushDomain={{x: [50, 100], y: [0, 100]}`
+
+---
+
+### brushStyle
+
+<Badges>
+  <TypeBadge value="React.CSSProperties" />
+  <DefaultsBadge value='{stroke: "transparent", fill: "black", fillOpacity: 0.1}' />
+</Badges>
+
+The `brushStyle` adds custom styles to the `brushComponent`.
+
+---
+
+### defaultBrushArea
+
+<Badges>
+  <TypeBadge value='"all" | "none" | "disable" | "move"' />
+</Badges>
+
+The `defaultBrushArea` prop specifies how the container will behave when a region outside the active brush is clicked without selecting a new area. When the prop is set to "all", the entire domain will be selected. When the prop is set to "none", no new region will be selected, and any existing active brush will be cleared. When the prop is set to "disable" the new selected region will default to the current active brush. When this prop is set to "move", the active brush will be moved so that it is centered over the location of the click event.
+
+```jsx live
+<VictoryChart
+  containerComponent={
+    <VictoryBrushContainer
+      defaultBrushArea="disable"
+      brushDomain={{ x: [0.1, 0.3] }}
+    />
+  }
+>
+  <VictoryLine />
+</VictoryChart>
+```
+
+---
+
+### disable
+
+<Badges>
+  <TypeBadge value="boolean" />
+</Badges>
+
+When the `disable` prop is set to `true`, `VictoryBrushContainer` events will not fire.
+
+---
+
+### handleComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<rect/>" />
+</Badges>
+
+The `handleComponent` prop specifies the component to be rendered for each handle for the highlighted
+area. This component will be supplied with the following props: `x`, `y`, `width`, `height`, `cursor`, and `style`.
+When this prop is not specified, a `<rect/>` will be rendered.
+
+---
+
+### handleStyle
+
+<Badges>
+  <TypeBadge value="React.CSSProperties" />
+  <DefaultsBadge value='{stroke: "transparent", fill: "transparent"}' />
+</Badges>
+
+The `handleStyle` adds custom styles to the `handleComponents`. This prop should be given as
+an object of SVG style attributes.
+
+Handles refer to the region on each highlighted area where the area may be
+expanded. Only handles relevant to the given `dimension` will be rendered. For example, when
+`brushDimension="x"` only "left" and "right" handles will be rendered. Handles are automatically styled
+with cursors appropriate to their orientation.
+
+---
+
+### handleWidth
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="8" />
+</Badges>
+
+The `handleWidth` prop specifies the size of the rendered handle component in pixels. This prop will determine the width of "left" and "right" handles and the height of "top" and "bottom" handles.
+
+---
+
+### onBrushCleared
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+The optional `onBrushCleared` prop accepts a function to be called when the active brush area is cleared. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
+
+_example:_ `onBrushCleared={(domain, props) => handleBrushCleared(domain, props)}`
+
+---
+
+### onBrushDomainChange
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+The optional `onBrushDomainChange` prop accepts a function to be called on each update to the highlighted domain. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
+
+_example:_ `onBrushDomainChange={(domain, props) => handleDomainChange(domain, props)}`
+
+---
+
+### onBrushDomainChangeEnd
+
+<Badges>
+  <TypeBadge value="function" />
+</Badges>
+
+The optional `onBrushDomainChangeEnd` prop accepts a function to be called only on mouse up events. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
+
+_example:_ `onBrushDomainChangeEnd={(domain, props) => handleDomainChangeEnd(domain, props)}`
+
+[brush and zoom guide]: /guides/brush-and-zoom
+[victorycontainer]: /docs/api/victory-container

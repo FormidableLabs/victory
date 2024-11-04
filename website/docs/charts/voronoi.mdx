@@ -1,0 +1,244 @@
+---
+title: Voronoi
+---
+
+Voronoi charts are used for visualizing proximity and influence by dividing space into distinct regions based on the distance to a set of points.
+
+## Basic
+
+See the [full API here](/docs/api/victory-voronoi). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryVoronoi
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Voronoi - Labels
+
+Voronoi charts can be used to display labels using a `label` property in the dataset or by specifying a function to the `labels` prop.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryVoronoi
+    data={[
+      { x: 1, y: 2, label: "Dogs" },
+      { x: 2, y: 3, label: "Cats" },
+      { x: 3, y: 5, label: "Snakes" },
+      { x: 4, y: 4, label: "Rabbits" },
+      { x: 5, y: 7, label: "Birds" },
+    ]}
+  />
+</VictoryChart>
+```
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryVoronoi
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    labels={({ datum }) =>
+      `y: ${datum.y}`
+    }
+  />
+</VictoryChart>
+```
+
+## Voronoi - Tooltips
+
+Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryVoronoi
+    data={[
+      { x: 1, y: 2, label: "Dogs" },
+      { x: 2, y: 3, label: "Cats" },
+      { x: 3, y: 5, label: "Snakes" },
+      { x: 4, y: 4, label: "Rabbits" },
+      { x: 5, y: 7, label: "Birds" },
+    ]}
+    labels={({ datum }) => datum.y}
+    labelComponent={<VictoryTooltip />}
+  />
+</VictoryChart>
+```
+
+## Voronoi - Circles
+
+Voronoi charts can also be used to display circles around data points.
+
+```jsx live noInline
+const data = [
+  { x: 1, y: 2 },
+  { x: 2, y: 3 },
+  { x: 3, y: 5 },
+  { x: 4, y: 4 },
+  { x: 5, y: 7 },
+];
+
+function App() {
+  return (
+    <VictoryChart
+      domain={{ x: [0, 5], y: [0, 7] }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryVoronoi
+        data={data}
+        size={50}
+      />
+      <VictoryLine data={data} />
+      <VictoryScatter data={data} />
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+## Voronoi - Styles
+
+Chart styling can be customized by using the theme or overriding the style prop on the component.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryVoronoi
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    style={{
+      data: {
+        stroke: "#ffffff",
+        strokeWidth: 2,
+        fill: "#2299ff",
+        fillOpacity: 0.7,
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+## Voronoi - Events
+
+Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryVoronoi
+    
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const fill =
+                    props.style &&
+                    props.style.fill;
+                  return fill ===
+                    "white"
+                    ? null
+                    : {
+                        style: {
+                          fill: "white",
+                        },
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={sampleData}
+  />
+</VictoryChart>
+```
+
+## Standalone Rendering
+
+Area charts can be rendered outside a VictoryChart.
+
+```jsx live
+<VictoryVoronoi
+  theme={VictoryTheme.clean}
+  data={[
+    { x: 1, y: 2 },
+    { x: 2, y: 3 },
+    { x: 3, y: 5 },
+    { x: 4, y: 4 },
+    { x: 5, y: 7 },
+  ]}
+/>
+```
+
+They can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<svg
+  width={300}
+  height={300}
+  style={{
+    display: "block",
+    margin: "0 auto",
+  }}
+>
+  <circle
+    cx={150}
+    cy={150}
+    r={150}
+    fill="#9ded91"
+  />
+  <VictoryVoronoi
+    standalone={false}
+    theme={VictoryTheme.clean}
+    width={300}
+    height={300}
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+  />
+</svg>
+```

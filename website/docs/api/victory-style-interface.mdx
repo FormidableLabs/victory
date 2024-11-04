@@ -1,0 +1,101 @@
+---
+title: VictoryStyleInterface
+---
+
+Defines the style of the component using valid svg styles. However, `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in [VictoryChart](/docs/api/victory-chart).
+
+:::info
+For more information about themes and styles, see the [themes guide](/docs/guides/themes).
+:::
+
+## Example
+
+Style attributes can be defined as an object of `CSSProperties`.
+
+```jsx
+style={{
+  data: { fill: "tomato", opacity: 0.7 },
+  labels: { fontSize: 12 },
+  parent: { border: "1px solid #ccc" }
+}}
+```
+
+Or they may be defined as a function of the props for whatever element it applies to.
+
+```jsx
+style={{
+  data: { fill: ({ datum }) => datum.y > 0 ? "green" : "red" },
+  labels: { fontSize: ({ text }) => text.length > 10 ? 8 : 12 },
+  parent: { border: "1px solid #ccc" }
+}}
+```
+
+```jsx live
+<VictoryScatter
+  style={{
+    parent: {
+      border: "1px solid #ccc",
+    },
+    data: {
+      fill: "#c43a31",
+      fillOpacity: 0.6,
+      stroke: "#c43a31",
+      strokeWidth: 3,
+    },
+    labels: {
+      fontSize: 15,
+      fill: "#c43a31",
+      padding: 15,
+    },
+  }}
+  size={9}
+  data={sampleData}
+  labels={({ datum }) => datum.x}
+/>
+```
+
+## Type Signature
+
+```ts
+type StringOrNumberOrCallback =
+  | string
+  | number
+  | ((props: any) => string | number);
+
+type VictoryStyleObject = {
+  [K in keyof React.CSSProperties]: StringOrNumberOrCallback;
+};
+
+type LabelProps =
+  React.CSSProperties & {
+    angle?: number;
+    verticalAnchor?: VerticalAnchorType;
+  };
+
+type VictoryLabelStyleObject = {
+  [K in keyof LabelProps]: StringOrNumberOrCallback;
+};
+
+interface VictoryStyleInterface {
+  parent?: VictoryStyleObject;
+  data?: VictoryStyleObject;
+  labels?:
+    | VictoryLabelStyleObject
+    | VictoryLabelStyleObject[];
+  border?: VictoryStyleObject;
+}
+```
+
+## Caveats
+
+:::note
+When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}`, parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+:::
+
+:::note
+The `style` prop used by `VictoryAxis` has a different format than the standard `style` prop.
+:::
+
+:::note
+custom `angle` and `verticalAnchor` properties may be included in labels styles.
+:::

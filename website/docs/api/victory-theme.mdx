@@ -1,0 +1,54 @@
+---
+title: VictoryTheme
+---
+
+Allows you to create a consistent look across all of your chart elements, either by using one of the included themes or by creating your own. By default, Victory components use the `grayscale` theme.
+
+Victory includes several [prebuilt](https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme) themes that can be used.
+
+:::info
+For more information about themes and styles, see the [themes guide](/docs/guides/themes).
+:::
+
+## Types
+
+This is roughly what the `VictoryTheme` object looks like, see the [source code](https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/types.ts#L90) for the full definition.
+
+:::note
+The `dependentAxis` and `independentAxis`, `polarDependentAxis`, and `polarIndependentAxis` will be merged with any props and styles supplied in the `axis` namespace.
+:::
+
+```ts
+interface VictoryThemeDefinition {
+  palette: {...props};
+  area: {...props}
+  axis: {...props},
+  dependentAxis: {...props},
+  independentAxis: {...props},
+  polarDependentAxis: {...props},
+  polarIndependentAxis: {...props},
+  bar: {...props},
+  candlestick: {...props},
+  chart: {...props},
+  errorbar: {...props},
+  histogram: {...props},
+  group: {...props},
+  legend: {...props},
+  line: {...props},
+  pie: {...props},
+  scatter: {...props},
+  stack: {...props},
+  tooltip: {...props},
+  voronoi: {...props}
+}
+```
+
+## Example
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryLine data={sampleData} />
+</VictoryChart>
+```

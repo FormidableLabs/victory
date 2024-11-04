@@ -1,0 +1,245 @@
+---
+title: VictoryStack
+---
+
+`VictoryStack` is a wrapper component that renders a given set of children in a stacked layout. Like other wrapper components, `VictoryStack` also reconciles the domain and layout for all its children, and coordinates animations and shared events.
+
+## Supported Components
+
+- [VictoryArea](/docs/api/victory-area)
+- [VictoryBar](/docs/api/victory-bar)
+- [VictoryCandlestick](/docs/api/victory-candlestick)
+- [VictoryErrorBar](/docs/api/victory-error-bar)
+- [VictoryGroup](/docs/api/victory-group)
+- [VictoryLine](/docs/api/victory-line)
+- [VictoryScatter](/docs/api/victory-scatter)
+- [VictoryHistogram](/docs/api/victory-histogram) - Only with other `VictoryHistogram` components
+
+## Unsupported Components
+
+- [VictoryVoronoi](/docs/api/victory-axis)
+- [VictoryAxis](/docs/api/victory-axis)
+
+## Example
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryStack>
+    <VictoryArea
+      data={[
+        { x: "a", y: 2 },
+        { x: "b", y: 3 },
+        { x: "c", y: 5 },
+      ]}
+    />
+    <VictoryArea
+      data={[
+        { x: "a", y: 1 },
+        { x: "b", y: 4 },
+        { x: "c", y: 5 },
+      ]}
+    />
+    <VictoryArea
+      data={[
+        { x: "a", y: 3 },
+        { x: "b", y: 2 },
+        { x: "c", y: 6 },
+      ]}
+    />
+  </VictoryStack>
+</VictoryChart>
+```
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### categories
+
+<Badges>
+  <TypeBadge value="string[] | { x: string[], y: string[]" />
+</Badges>
+
+`VictoryStack` uses the standard `categories` prop. [Read about it here](/docs/api/victory-datatable-props#categories)
+
+_note:_ When this prop is set, `VictoryGroup` controls the `categories` prop of its children.
+
+```jsx
+categories={["dogs", "cats", "mice"]}
+```
+
+---
+
+### children
+
+<Badges>
+  <TypeBadge value="ReactElement | ReactElement[]" />
+</Badges>
+
+Children supplied to `VictoryGroup` will be cloned and rendered with new props so that all children share common props such as `domain` and `scale`.
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | integer | strin[] | Function" />
+</Badges>
+
+`VictoryStack` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryStack` uses the standard `events` prop. [Read about it in more detail here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+_note:_ `VictoryStack` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryStack
+    events={[
+      {
+        childName: "all",
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                childName: "area-2",
+                target: "data",
+                mutation: (props) => ({
+                  style: Object.assign(
+                    {},
+                    props.style,
+                    { fill: "gold" },
+                  ),
+                }),
+              },
+              {
+                childName: "area-3",
+                target: "data",
+                mutation: (props) => ({
+                  style: Object.assign(
+                    {},
+                    props.style,
+                    { fill: "orange" },
+                  ),
+                }),
+              },
+              {
+                childName: "area-4",
+                target: "data",
+                mutation: (props) => ({
+                  style: Object.assign(
+                    {},
+                    props.style,
+                    { fill: "red" },
+                  ),
+                }),
+              },
+            ];
+          },
+        },
+      },
+    ]}
+  >
+    <VictoryArea
+      name="area-1"
+      data={sampleData}
+    />
+    <VictoryArea
+      name="area-2"
+      data={sampleData}
+    />
+    <VictoryArea
+      name="area-3"
+      data={sampleData}
+    />
+    <VictoryArea
+      name="area-4"
+      data={sampleData}
+    />
+  </VictoryStack>
+</VictoryChart>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ parent: object, data: object, labels: object }" />
+</Badges>
+
+`VictoryStack` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
+
+Styles on children of `VictoryGroup` will override styles set on the `VictoryGroup` component.
+
+```jsx live
+<VictoryStack
+  style={{
+    data: {
+      stroke: "black",
+      strokeWidth: 3,
+    },
+  }}
+>
+  <VictoryBar
+    style={{
+      data: { fill: "#c43a31" },
+    }}
+    data={[
+      { x: "a", y: 2 },
+      { x: "b", y: 3 },
+      { x: "c", y: 5 },
+    ]}
+  />
+  <VictoryBar
+    data={[
+      { x: "a", y: 1 },
+      { x: "b", y: 4 },
+      { x: "c", y: 5 },
+    ]}
+  />
+  <VictoryBar
+    data={[
+      { x: "a", y: 3 },
+      { x: "b", y: 2 },
+      { x: "c", y: 6 },
+    ]}
+  />
+</VictoryStack>
+```
+
+---
+
+### xOffset
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `xOffset` prop is used for grouping stacks of bars. This prop will be set by the `VictoryGroup` component wrapper, or can be set manually.

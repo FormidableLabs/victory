@@ -1,0 +1,313 @@
+---
+title: Box Plot
+---
+
+Box plots are used to show the distribution of a dataset. The box represents the interquartile range, the line in the middle is the median, and the whiskers represent the range of the data.
+
+## Basic
+
+See the [full API here](/docs/api/victory-boxplot). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    boxWidth={15}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Box Plot - Horizontal
+
+Bar charts can be rendered horizontally by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryBoxPlot`.
+
+```jsx live
+<VictoryChart
+  horizontal
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    boxWidth={10}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Box Plot - Labels
+
+Box plots can be labeled by setting the `labels` prop to `true`. By default this will show all labels. For more granular label control, use the individual `minLabels`, `maxLabels`, `medianLabels`, `q1Labels`, and `q3Labels` props.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    labels
+    labelOrientation="right"
+    boxWidth={10}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+    ]}
+  />
+</VictoryChart>
+```
+
+Specific labels can be chosen by using the appropriate label prop. In this example, the `minLabels` prop is set to `true` to show only the minimum value of each box.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    minLabels
+    boxWidth={10}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Box Plot - Animation
+
+Charts can be animated by setting the `animate` prop. See the [animations](/docs/guides/animations) guide for more information.
+
+```jsx live noInline
+function App() {
+  const [data, setData] =
+    React.useState(getData());
+
+  React.useState(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setData(getData());
+      }, 4000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryChart
+      animate={{ duration: 1000 }}
+      theme={VictoryTheme.clean}
+      domainPadding={{ x: 20 }}
+    >
+      <VictoryBoxPlot
+        data={data}
+        boxWidth={10}
+      />
+    </VictoryChart>
+  );
+}
+
+function rr(start, end, count) {
+  return _.range(count).map(() =>
+    _.random(start, end),
+  );
+}
+
+function getData() {
+  return [
+    { x: 1, y: rr(1, 10, 4) },
+    { x: 2, y: rr(1, 10, 4) },
+    { x: 3, y: rr(1, 10, 4) },
+    { x: 4, y: rr(1, 10, 4) },
+    { x: 5, y: rr(1, 10, 4) },
+    { x: 6, y: rr(1, 10, 4) },
+    { x: 7, y: rr(1, 10, 4) },
+    { x: 8, y: rr(1, 10, 4) },
+    { x: 9, y: rr(1, 10, 4) },
+  ];
+}
+
+render(<App />);
+```
+
+## Box Plot - Styles
+
+Chart styling can be customized by using the theme or overriding the style prop on the component.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    labels
+    labelOrientation="right"
+    boxWidth={10}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+    ]}
+    style={{
+      min: { stroke: "tomato" },
+      max: { stroke: "orange" },
+      q1: { fill: "tomato" },
+      q3: { fill: "orange" },
+      median: {
+        stroke: "white",
+        strokeWidth: 2,
+      },
+      minLabels: { fill: "tomato" },
+      maxLabels: { fill: "orange" },
+    }}
+  />
+</VictoryChart>
+```
+
+## Box Plot - Events
+
+Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBoxPlot
+    labels
+    labelOrientation="right"
+    boxWidth={10}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+    ]}
+    events={[
+      {
+        target: "q3",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                mutation: (props) => {
+                  return {
+                    style:
+                      Object.assign(
+                        props.style,
+                        {
+                          fill: "tomato",
+                        },
+                      ),
+                  };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Standalone Rendering
+
+Box Plot charts can be rendered outside a VictoryChart.
+
+```jsx live
+<VictoryBoxPlot
+  boxWidth={15}
+  data={[
+    { x: 1, y: ["2", "3", "5", "8"] },
+    { x: 2, y: ["1", "3", "5", "8"] },
+    { x: 3, y: ["2", "5", "7", "9"] },
+    { x: 4, y: ["4", "6", "7", "9"] },
+    { x: 5, y: ["1", "2", "4", "5"] },
+    { x: 6, y: ["1", "2", "6", "8"] },
+    { x: 7, y: ["2", "4", "5", "8"] },
+    { x: 8, y: ["1", "4", "4", "7"] },
+    { x: 9, y: ["2", "5", "7", "9"] },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+They can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<svg
+  width={300}
+  height={300}
+  style={{
+    display: "block",
+    margin: "0 auto",
+  }}
+>
+  <circle
+    cx={150}
+    cy={150}
+    r={150}
+    fill="#9ded91"
+  />
+  <VictoryBoxPlot
+    standalone={false}
+    theme={VictoryTheme.clean}
+    width={300}
+    height={300}
+    padding={{ left: 10, right: 10 }}
+    data={[
+      { x: 1, y: ["2", "3", "5", "8"] },
+      { x: 2, y: ["1", "3", "5", "8"] },
+      { x: 3, y: ["2", "5", "7", "9"] },
+      { x: 4, y: ["4", "6", "7", "9"] },
+      { x: 5, y: ["1", "2", "4", "5"] },
+      { x: 6, y: ["1", "2", "6", "8"] },
+      { x: 7, y: ["2", "4", "5", "8"] },
+      { x: 8, y: ["1", "4", "4", "7"] },
+      { x: 9, y: ["2", "5", "7", "9"] },
+    ]}
+  />
+</svg>
+```

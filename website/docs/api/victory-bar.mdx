@@ -1,0 +1,154 @@
+---
+title: VictoryBar
+---
+
+:::info
+For examples of `VictoryBar` in action, visit the [Bar Chart](/docs/charts/bar) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={[]}
+/>
+
+## Component Props
+
+---
+
+### alignment
+
+<Badges>
+  <TypeBadge value='"start" | "middle" | "end"' />
+</Badges>
+
+The `alignment` prop specifies how bars should be aligned relative to their data points. This prop may be given as "start", "middle" or "end". When this prop is not specified, bars will have "middle" alignment relative to their data points.
+
+```jsx live
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryBar alignment="start" />
+</VictoryChart>
+```
+
+---
+
+### barRatio
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `barRatio` prop specifies an _approximate_ ratio between bar widths and spaces between bars. When width is not specified via the `barWidth` prop or in bar styles, the `barRatio` prop will be used to calculate a default width for each bar given the total number of bars in the data series and the overall width of the chart.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  domainPadding={{ x: 30 }}
+>
+  <VictoryBar
+    barRatio={0.8}
+  />
+</VictoryChart>
+```
+
+---
+
+### barWidth
+
+<Badges>
+  <TypeBadge value="number | (args: CallbackArgs) => number" />
+</Badges>
+
+The `barWidth` prop is used to specify the width of each bar. This prop may be given as a number of pixels or as a function that returns a number. When this prop is given as a function, it will be evaluated for each bar with the props object corresponding to that bar. When this value is not given, a default value will be calculated based on the overall dimensions of the chart, and the number of bars.
+
+:::note
+It is still possible to define bar width via the style prop with the `width` attribute, but `barWidth` will take precedence.
+:::
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  domainPadding={{ x: 20 }}
+>
+  <VictoryBar
+    barWidth={({ datum }) => datum.x * 7}
+  />
+</VictoryChart>
+```
+
+---
+
+### cornerRadius
+
+<Badges>
+  <TypeBadge value="number | (args: CallbackArgs) => number | { top, bottom, topLeft, topRight, bottomLeft, bottomRight }" />
+</Badges>
+
+The `cornerRadius` prop specifies a radius to apply to each bar. If this prop is given as a single number, the radius will only be applied to the _top_ of each bar. When this prop is given as a function, it will be evaluated for each bar with the props object corresponding to that bar.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  domainPadding={{ x: 20 }}
+>
+  <VictoryBar
+    cornerRadius={{ topLeft: ({ datum }) => datum.x * 4 }}
+  />
+</VictoryChart>
+```
+
+---
+
+### getPath
+
+<Badges>
+  <TypeBadge value="(props: VictoryBarProps) => string" />
+</Badges>
+
+The `getPath` prop is used to customize the path of the bar. This prop should be given as a function that takes an object of props and returns a string. The `getPath` function will be called with the props object for each bar.
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="VictoryStyleInterface" />
+  <DefaultsBadge value="(provided by theme)" />
+</Badges>
+
+Defines the style of the component using [VictoryStyleInterface](/docs/api/victory-style-interface).
+
+```jsx live
+<VictoryChart domainPadding={{ x: 30 }}>
+  <VictoryBar
+    style={{
+      data: {
+        fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31",
+        stroke: ({ index }) => +index % 2 === 0  ? "#000000" : "#c43a31",
+        fillOpacity: 0.7,
+        strokeWidth: 3
+      },
+      labels: {
+        fontSize: 15,
+        fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31"
+      }
+    }}
+    data={sampleData}
+    labels={({ datum }) => datum.x}
+  />
+</VictoryChart>
+```
+
+[animations guide]: /docs/guides/animations
+[data accessors guide]: /docs/guides/data-accessors
+[custom components guide]: /docs/guides/custom-components
+[events guide]: /docs/guides/events
+[themes guide]: /docs/guides/themes
+[`victorychart`]: /docs/api/victory-chart
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx

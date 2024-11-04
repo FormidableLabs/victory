@@ -3,6 +3,8 @@ import { defaults, isPlainObject } from "lodash";
 import * as d3Shape from "victory-vendor/d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
+import { VictoryPieProps } from "./victory-pie";
+import { getCategories } from "victory-core/lib/victory-util/data";
 
 const checkForValidText = (text) => {
   if (text === undefined || text === null || Helpers.isFunction(text)) {
@@ -59,6 +61,29 @@ const getSlices = (props, data) => {
   return layoutFunction(data);
 };
 
+const getCategoriesFromProps = (props: VictoryPieProps) =>
+  Array.isArray(props.categories)
+    ? props.categories
+    : (props?.categories as { x: string[] })?.x ?? [];
+
+/**
+ * Sorts data by props.categories or props.categories.x. If all of the data keys aren't
+ * included in categories, any remaining data will be appended to the data array.
+ * If extraneous categories are included in the categories prop, the will be ignored and
+ * have no effect on the rendered component.
+ */
+const getDataSortedByCategories = (props: VictoryPieProps, data) => {
+  const sorted: string[] = [];
+  getCategoriesFromProps(props).forEach((category) => {
+    const idx = data.findIndex(({ x }) => x === category);
+    if (idx >= 0) {
+      const datum = data.splice(idx, 1)[0];
+      sorted.push(datum);
+    }
+  });
+  return [...sorted, ...data];
+};
+
 const getCalculatedValues = (props) => {
   const { colorScale, theme } = props;
   const styleObject = Helpers.getDefaultStyles(props, "pie");
@@ -69,7 +94,7 @@ const getCalculatedValues = (props) => {
   const padding = Helpers.getPadding(props);
   const defaultRadius = getRadius(props, padding);
   const origin = getOrigin(props, padding);
-  const data = Data.getData(props);
+  const data = getDataSortedByCategories(props, Data.getData(props));
   const slices = getSlices(props, data);
   return Object.assign({}, props, {
     style,

@@ -1,0 +1,314 @@
+---
+title: VictoryGroup
+---
+
+`VictoryGroup` is a wrapper component that renders a given set of children with some shared props. `VictoryGroup` reconciles the domain and layout for all its children, and coordinates animations and shared events. `VictoryGroup` may also be used to supply common data and styles to all its children. This is especially useful when adding markers to a line, or adding voronoi tooltips to data. `VictoryGroup` may also be used to apply an offset to a group of children, as with grouped bar charts, or may be used to stack several components on the same level, _e.g.,_ stacked area charts with data markers.
+
+`VictoryGroup` works with:
+[VictoryArea][], [VictoryBar][], [VictoryBoxPlot][], [VictoryCandlestick][], [VictoryErrorBar][], [VictoryLine][], [VictoryScatter][], [VictoryHistogram][], [VictoryStack][], and [VictoryVoronoi][].
+
+:::note
+`VictoryGroup` _should not_ be used with [VictoryAxis][] children. Use [VictoryChart][] instead.
+:::
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryGroup
+    offset={20}
+    colorScale={"qualitative"}
+  >
+    <VictoryBar
+      data={[
+        { x: 1, y: 1 },
+        { x: 2, y: 2 },
+        { x: 3, y: 5 },
+      ]}
+    />
+    <VictoryBar
+      data={[
+        { x: 1, y: 2 },
+        { x: 2, y: 1 },
+        { x: 3, y: 7 },
+      ]}
+    />
+    <VictoryBar
+      data={[
+        { x: 1, y: 3 },
+        { x: 2, y: 4 },
+        { x: 3, y: 9 },
+      ]}
+    />
+  </VictoryGroup>
+</VictoryChart>
+```
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={["animate"]}
+/>
+
+## Component Props
+
+---
+
+### children
+
+<Badges>
+  <TypeBadge value="ReactElement | ReactElement[]" />
+</Badges>
+
+`VictoryGroup` works with any combination of the following children: [VictoryArea][], [VictoryBar][], [VictoryCandlestick][], [VictoryErrorBar][], [VictoryLine][], [VictoryScatter][], [VictoryHistogram][], [VictoryStack][], and [VictoryVoronoi][]. Children supplied to `VictoryGroup` will be cloned and rendered with new props so that all children share common props such as `domain` and `scale`.
+
+---
+
+### color
+
+<Badges>
+  <TypeBadge value="string" />
+</Badges>
+
+The `color` prop is an optional prop that defines a single color to be applied to the children of `VictoryGroup`. The `color` prop will override colors specified via `colorScale`.
+
+```jsx live
+<VictoryGroup
+  data={sampleData}
+  color="blue"
+>
+  <VictoryLine />
+  <VictoryScatter
+    size={6}
+    symbol="star"
+  />
+</VictoryGroup>
+```
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | number | string[] | number[] | (args: CallbackArgs) => string | number" />
+</Badges>
+
+`VictoryGroup` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+```jsx
+eventKey = "x";
+```
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="array[object]" />
+</Badges>
+
+`VictoryGroup` uses the standard `events` prop. [Read about it in more detail here](/docs/guides/events)
+
+:::note
+`VictoryGroup` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop
+:::
+
+```jsx live
+<VictoryGroup
+  offset={20}
+  events={[
+    {
+      childName: "all",
+      target: "data",
+      eventHandlers: {
+        onClick: () => {
+          return [
+            {
+              childName: "bar-2",
+              target: "data",
+              mutation: (props) => ({
+                style: Object.assign(
+                  {},
+                  props.style,
+                  { fill: "gold" },
+                ),
+              }),
+            },
+            {
+              childName: "bar-3",
+              target: "data",
+              mutation: (props) => ({
+                style: Object.assign(
+                  {},
+                  props.style,
+                  { fill: "orange" },
+                ),
+              }),
+            },
+            {
+              childName: "bar-4",
+              target: "data",
+              mutation: (props) => ({
+                style: Object.assign(
+                  {},
+                  props.style,
+                  { fill: "red" },
+                ),
+              }),
+            },
+          ];
+        },
+      },
+    },
+  ]}
+>
+  <VictoryBar
+    name="bar-1"
+    data={[
+      { x: "a", y: 2 },
+      { x: "b", y: 3 },
+      { x: "c", y: 5 },
+    ]}
+  />
+  <VictoryBar
+    name="bar-2"
+    data={[
+      { x: "a", y: 1 },
+      { x: "b", y: 4 },
+      { x: "c", y: 5 },
+    ]}
+  />
+  <VictoryBar
+    name="bar-3"
+    data={[
+      { x: "a", y: 3 },
+      { x: "b", y: 2 },
+      { x: "c", y: 6 },
+    ]}
+  />
+  <VictoryBar
+    name="bar-4"
+    data={[
+      { x: "a", y: 2 },
+      { x: "b", y: 3 },
+      { x: "c", y: 3 },
+    ]}
+  />
+</VictoryGroup>
+```
+
+---
+
+### offset
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `offset` prop determines the number of pixels each element in a group should be offset from its original position on the independent axis. In the case of groups of bars, this number should be equal to the width of the bar plus the desired spacing between bars.
+
+```jsx live
+<VictoryGroup offset={25}>
+  <VictoryBar
+    data={[
+      { x: "a", y: 2 },
+      { x: "b", y: 3 },
+      { x: "c", y: 5 },
+    ]}
+  />
+  <VictoryBar
+    data={[
+      { x: "a", y: 1 },
+      { x: "b", y: 4 },
+      { x: "c", y: 5 },
+    ]}
+  />
+  <VictoryBar
+    data={[
+      { x: "a", y: 3 },
+      { x: "b", y: 2 },
+      { x: "c", y: 6 },
+    ]}
+  />
+</VictoryGroup>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="VictoryStyleInterface" />
+  <DefaultsBadge value="(provided by theme)" />
+</Badges>
+
+Defines the style of the component using [VictoryStyleInterface](/docs/api/victory-style-interface).
+
+Styles on children of `VictoryGroup` will override styles set on the `VictoryGroup` component.
+
+_default (provided by default theme):_ See [grayscale theme][] for more detail
+
+```jsx live
+<VictoryGroup
+  offset={25}
+  style={{
+    data: {
+      fillOpacity: 0.7,
+      stroke: "black",
+      strokeWidth: 3,
+    },
+  }}
+>
+  <VictoryBar
+    style={{
+      data: { stroke: "#c43a31" },
+    }}
+    data={[
+      { x: "a", y: 2 },
+      { x: "b", y: 3 },
+      { x: "c", y: 5 },
+    ]}
+  />
+  <VictoryBar
+    data={[
+      { x: "a", y: 1 },
+      { x: "b", y: 4 },
+      { x: "c", y: 5 },
+    ]}
+  />
+  <VictoryBar
+    data={[
+      { x: "a", y: 3 },
+      { x: "b", y: 2 },
+      { x: "c", y: 6 },
+    ]}
+  />
+</VictoryGroup>
+```
+
+[animations guide]: /docs/guides/animations
+[data accessors guide]: /docs/guides/data-accessors
+[events guide]: /docs/guides/events
+[themes guide]: /docs/guides/themes
+[grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
+[victoryarea]: /docs/api/victory-area
+[victoryaxis]: /docs/api/victory-axis
+[victorybar]: /docs/api/victory-bar
+[victoryboxplot]: /docs/api/victory-boxplot
+[victorycandlestick]: /docs/api/victory-candlestick
+[victorychart]: /docs/api/victory-chart
+[victoryerrorbar]: /docs/api/victory-error-bar
+[victoryline]: /docs/api/victory-line
+[victoryscatter]: /docs/api/victory-scatter
+[victoryhistogram]: /docs/api/victory-histogram
+[victorystack]: /docs/api/victory-stack
+[victoryvoronoi]: /docs/api/victory-voronoi
+[victorylabel]: /docs/api/victory-label
+[x]: /docs/api/victory-datatable-props#x
+[y]: /docs/api/victory-datatable-props#y

@@ -1,0 +1,600 @@
+---
+title: VictoryCandlestick
+---
+
+:::info
+For examples of `VictoryCandlestick` in action, visit the [Candlestick](/docs/charts/candlestick) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps",
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={["labels"]}
+  notImplemented={["polar"]}
+/>
+
+## Component Props
+
+---
+
+### candleColors
+
+<Badges>
+  <TypeBadge value="{ positive: string, negative: string }" />
+  <DefaultsBadge value="provided by theme" />
+</Badges>
+
+Candle colors are significant in candlestick charts, with colors indicating whether a market closed higher than it opened (positive), or closed lower than it opened (negative). The `candleColors` prop should be given as an object with color strings specified for positive and negative.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  domainPadding={{ x: 25 }}
+>
+  <VictoryCandlestick
+    candleColors={{
+      positive: "#5f5c5b",
+      negative: "#c43a31",
+    }}
+    data={sampleDataDates}
+  />
+</VictoryChart>
+```
+
+---
+
+### candleRatio
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `candleRatio` prop specifies an _approximate_ ratio between candle widths and spaces between candles. When width is not specified via the `candleWidth` prop or in candle styles, the `candleRatio` prop will be used to calculate a default width for each candle given the total number of candles in the data series and the overall width of the chart.
+
+```jsx live
+<VictoryCandlestick
+  candleRatio={0.8}
+  data={sampleDataDates}
+/>
+```
+
+---
+
+### candleWidth
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `candleWidth` prop is used to specify the width of each candle. This prop may be given as a number of pixels or as a function that returns a number. When this prop is given as a function, it will be evaluated with a single argument: an object containing all the props passed to the `Candle` component. When this value is not given, a default value will be calculated based on the overall dimensions of the chart, and the number of candles.
+
+:::note
+It is still possible to define candle width via the style prop with the `width` attribute, but `candleWidth` will take precedence.
+:::
+
+```jsx live
+<VictoryCandlestick
+  candleWidth={55}
+  data={sampleDataDates}
+/>
+```
+
+---
+
+### close
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+Use `close` data accessor prop to define the close value of a candle.
+
+**string:** specify which property in an array of data objects should be used as the close value
+
+_examples:_ `close="closing_value"`
+
+**function:** use a function to translate each element in a data array into a close value
+
+_examples:_ `close={() => 10}`
+
+**array index:** specify which index of an array should be used as a close value when data is given as an array of arrays
+
+_examples:_ `close={1}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as a close value
+
+_examples:_ `close="bonds.close"`, `close={["bonds", "close"]}`
+
+---
+
+### closeLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `closeLabelComponent` prop takes a component instance which will be used to render the label corresponding to the close value for each candle. The new element created from the passed `closeLabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `closeLabelComponent` is omitted, a new [`VictoryLabel`](/docs/api/victory-label) will be created with props described above.
+
+```jsx live
+<VictoryCandlestick
+  data={sampleDataDates}
+  closeLabels
+  closeLabelComponent={
+    <VictoryLabel
+      dx={-30}
+      textAnchor="middle"
+    />
+  }
+/>
+```
+
+---
+
+### closeLabels
+
+<Badges>
+  <TypeBadge value="array | Function | boolean" />
+</Badges>
+
+The `closeLabels` prop defines the labels that will correspond to the close value for each candle. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the max value of each datum will be used for the label.
+
+_examples:_
+
+- `closeLabels`
+- `closeLabels={["first", "second", "third"]}`
+- `closeLabels={({ datum }) => Math.round(datum.close)}`
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="any[]" />
+</Badges>
+
+:::caution
+This property is not currently typed, but requires a specific data format. We are working on adding more specific types to this prop.
+:::
+
+Specify data via the data prop. By default, `VictoryCandlestick` expects data as an array of objects with `x`, `open`, `close`, `high`, and `low` keys. Use the `x`, `open`, `close`, `high`, and `low` data accessor props to specify custom data formats.
+
+```jsx live
+<VictoryCandlestick
+  data={[
+    {
+      x: new Date(2016, 6, 1),
+      open: 5,
+      close: 10,
+      high: 15,
+      low: 0,
+    },
+    {
+      x: new Date(2016, 6, 2),
+      open: 10,
+      close: 15,
+      high: 20,
+      low: 5,
+    },
+    {
+      x: new Date(2016, 6, 3),
+      open: 15,
+      close: 20,
+      high: 22,
+      low: 10,
+    },
+    {
+      x: new Date(2016, 6, 4),
+      open: 20,
+      close: 10,
+      high: 25,
+      low: 7,
+    },
+    {
+      x: new Date(2016, 6, 5),
+      open: 10,
+      close: 8,
+      high: 15,
+      low: 5,
+    },
+  ]}
+/>
+```
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+`VictoryCandlestick` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryCandlestick` uses the standard `events` prop. [Read about it here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+```jsx live
+<div>
+  <h3>Click Me</h3>
+  <VictoryCandlestick
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const fill =
+                    props.style &&
+                    props.style.fill;
+                  return fill ===
+                    "#c43a31"
+                    ? null
+                    : {
+                        style: {
+                          fill: "#c43a31",
+                        },
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={sampleDataDates}
+  />
+</div>
+```
+
+---
+
+### high
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+Use `high` data accessor prop to define the high value of a candle.
+
+**string:** specify which property in an array of data objects should be used as the high value
+
+_examples:_ `high="highest_value"`
+
+**function:** use a function to translate each element in a data array into a high value
+
+_examples:_ `high={() => 10}`
+
+**array index:** specify which index of an array should be used as a high value when data is given as an array of arrays
+
+_examples:_ `high={1}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as a high value
+
+_examples:_ `high="bonds.high"`, `high={["bonds", "high"]}`
+
+---
+
+### highLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `highLabelComponent` prop takes a component instance which will be used to render the label corresponding to the highest value for each candle. The new element created from the passed `highLabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `highLabelComponent` is omitted, a new [`VictoryLabel`](/docs/api/victory-label) will be created with props described above.
+
+See the [Custom Components Guide][] for more detail on creating your own components
+
+```jsx
+highLabelComponent={<VictoryLabel dy={20}/>}
+```
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryCandlestick
+    data={sampleDataDates}
+    highLabels
+    highLabelComponent={
+      <VictoryLabel
+        dx={-10}
+        textAnchor="middle"
+      />
+    }
+  />
+</VictoryChart>
+```
+
+---
+
+### highLabels
+
+<Badges>
+  <TypeBadge value="array | Function | boolean" />
+</Badges>
+
+The `highLabels` prop defines the labels that will correspond to the high value for each candle. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the max value of each datum will be used for the label.
+
+_examples:_
+
+- `highLabels`
+- `highLabels={["first", "second", "third"]}`
+- `highLabels={({ datum }) => Math.round(datum.high)}`
+
+---
+
+### labelOrientation
+
+<Badges>
+  <TypeBadge value='"top" | "bottom" | "left" | "right" | { open, close, low, high }' />
+</Badges>
+
+The `labelOrientation` prop determines where a label should be placed in relation to the candle it corresponds to. This prop may be given as "top", "bottom", "left", "right", or as an object with an option defined for some or all of the labels.
+
+```jsx live
+<VictoryCandlestick
+  data={sampleDataDates}
+  closeLabels={() => "close"}
+  highLabels={() => "high"}
+  lowLabels={() => "low"}
+  openLabels={() => "open"}
+  style={{ labels: { padding: 4 } }}
+  labelOrientation={{
+    close: "right",
+    open: "right",
+    high: "top",
+    low: "bottom",
+  }}
+/>
+```
+
+---
+
+### labels
+
+<Badges>
+  <TypeBadge value="array | Function" />
+</Badges>
+
+The `labels` prop defines the label associated with the candle. This prop is typically given as a function.
+
+```jsx live
+<VictoryCandlestick
+  data={sampleDataDates}
+  labels={({ datum }) =>
+    `open: ${datum.open}`
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### low
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+Use `low` data accessor prop to define the low value of a candle.
+
+**string:** specify which property in an array of data objects should be used as the low value
+
+_examples:_ `low="lowest_value"`
+
+**function:** use a function to translate each element in a data array into a low value
+
+_examples:_ `low={() => 10}`
+
+**array index:** specify which index of an array should be used as a low value when data is given as an array of arrays
+
+_examples:_ `low={1}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as a low value
+
+_examples:_ `low="bonds.low"`, `low={["bonds", "low"]}`
+
+---
+
+### lowLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `lowLabelComponent` prop takes a component instance which will be used to render the label corresponding to the lowest value for each candle. The new element created from the passed `lowLabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `lowLabelComponent` is omitted, a new [`VictoryLabel`](/docs/api/victory-label) will be created with props described above.
+
+```jsx live
+<VictoryCandlestick
+  data={sampleDataDates}
+  lowLabels
+  lowLabelComponent={
+    <VictoryTooltip pointerLength={0} />
+  }
+  events={[
+    {
+      target: "data",
+      eventHandlers: {
+        onMouseOver: () => ({
+          target: "lowLabels",
+          mutation: () => ({
+            active: true,
+          }),
+        }),
+        onMouseOut: () => ({
+          target: "lowLabels",
+          mutation: () => ({
+            active: false,
+          }),
+        }),
+      },
+    },
+  ]}
+/>
+```
+
+---
+
+### lowLabels
+
+<Badges>
+  <TypeBadge value="array | Function | boolean" />
+</Badges>
+
+The `lowLabels` prop defines the labels that will correspond to the low value for each candle. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the max value of each datum will be used for the label.
+
+_examples:_
+
+- `lowLabels`
+- `lowLabels={["first", "second", "third"]}`
+- `lowLabels={({ datum }) => Math.round(datum.low)}`
+
+---
+
+### open
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+Use `open` data accessor prop to define the open value of a candle.
+
+**string:** specify which property in an array of data objects should be used as the open value
+
+_examples:_ `open="opening_value"`
+
+**function:** use a function to translate each element in a data array into an open value
+
+_examples:_ `open={() => 10}`
+
+**array index:** specify which index of an array should be used as an open value when data is given as an array of arrays
+
+_examples:_ `open={1}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as an open value
+
+_examples:_ `open="bonds.open"`, `open={["bonds", "open"]}`
+
+---
+
+### openLabelComponent
+
+<Badges>
+  <TypeBadge value="ReactElement" />
+  <DefaultsBadge value="<VictoryLabel/>" />
+</Badges>
+
+The `openLabelComponent` prop takes a component instance which will be used to render the label corresponding to the open value for each candle. The new element created from the passed `openLabelComponent` will be supplied with the following props: `x`, `y`, `datum`, `index`, `scale`, `verticalAnchor`, `textAnchor`, `angle`, `transform`, `style` and `events`. Any of these props may be overridden by passing in props to the supplied component, or modified or ignored within the custom component itself. If `openLabelComponent` is omitted, a new [`VictoryLabel`](/docs/api/victory-label) will be created with props described above.
+
+```jsx live
+<VictoryCandlestick
+  data={sampleDataDates}
+  openLabels
+  openLabelComponent={
+    <VictoryLabel
+      dx={-30}
+      textAnchor="middle"
+    />
+  }
+/>
+```
+
+---
+
+### openLabels
+
+<Badges>
+  <TypeBadge value="array | Function | boolean" />
+</Badges>
+
+The `openLabels` prop defines the labels that will correspond to the open value for each candle. This prop should be given as a boolean, an array or as a function of the props corresponding to that label. When given as a boolean value, the max value of each datum will be used for the label.
+
+_examples:_
+
+- `openLabels`
+- `openLabels={["first", "second", "third"]}`
+- `openLabels={({ datum }) => Math.round(datum.open)}`
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="VictoryCandlestickStyleInterface" />
+</Badges>
+
+The `style` prop defines the style of the component. The style prop should be given as an object with styles defined for `parent`, `data`, `labels`, `closeLabels`, `highLabels`,`lowLabels`, and `openLabels`. Any valid svg styles are supported, but `width`, `height`, and `padding` should be specified via props as they determine relative layout for components in VictoryChart. Functional styles may be defined for style properties, and they will be evaluated with the props corresponding to each element.
+
+:::note
+When a component is rendered as a child of another Victory component, or within a custom `<svg>` element with `standalone={false}` parent styles will be applied to the enclosing `<g>` tag. Many styles that can be applied to a parent `<svg>` will not be expressed when applied to a `<g>`.
+:::
+
+```jsx live
+<VictoryCandlestick
+  data={sampleDataDates}
+  labels={() => "labels"}
+  closeLabels={() => "close"}
+  highLabels={() => "high"}
+  lowLabels={() => "low"}
+  openLabels={() => "open"}
+  style={{
+    data: {
+      fill: "#c43a31",
+      fillOpacity: 0.7,
+      stroke: "#c43a31",
+      strokeWidth: 3,
+    },
+    labels: {
+      fill: "tomato",
+      padding: 2,
+    },
+    closeLabels: {
+      fill: "orange",
+      padding: 2,
+    },
+    highLabels: {
+      fill: "blue",
+      padding: 2,
+    },
+    lowLabels: {
+      fill: "teal",
+      padding: 2,
+    },
+    openLabels: {
+      fill: "green",
+      padding: 2,
+    },
+  }}
+/>
+```
+
+---
+
+### wickStrokeWidth
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+When the `wickStrokeWidth` prop is set, this value will be used to determine the stroke width for the candle wick. When this prop is not set, the `strokeWidth` set by the `style` prop will apply to both the candle and the wick.

@@ -1,0 +1,509 @@
+---
+title: Candlestick
+---
+
+Candlesticks are used to visualize the movement of data over a time period by plotting the open, close, high, and low values of a dataset.
+
+## Basic
+
+See the [full API here](/docs/api/victory-candlestick). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 25 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryCandlestick
+    data={[
+      {
+        x: "3/1/23",
+        open: 5,
+        close: 10,
+        high: 15,
+        low: 0,
+      },
+      {
+        x: "3/2/23",
+        open: 10,
+        close: 15,
+        high: 20,
+        low: 5,
+      },
+      {
+        x: "3/3/23",
+        open: 15,
+        close: 20,
+        high: 22,
+        low: 10,
+      },
+      {
+        x: "3/4/23",
+        open: 20,
+        close: 10,
+        high: 25,
+        low: 7,
+      },
+      {
+        x: "3/5/23",
+        open: 10,
+        close: 8,
+        high: 15,
+        low: 5,
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Candlestick - Horizontal
+
+Candlestick charts can be rendered horizontally by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryBoxPlot`.
+
+```jsx live
+<VictoryChart
+  horizontal
+  domainPadding={{ x: 25 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryCandlestick
+    data={[
+      {
+        x: "3/1/23",
+        open: 5,
+        close: 10,
+        high: 15,
+        low: 0,
+      },
+      {
+        x: "3/2/23",
+        open: 10,
+        close: 15,
+        high: 20,
+        low: 5,
+      },
+      {
+        x: "3/3/23",
+        open: 15,
+        close: 20,
+        high: 22,
+        low: 10,
+      },
+      {
+        x: "3/4/23",
+        open: 20,
+        close: 10,
+        high: 25,
+        low: 7,
+      },
+      {
+        x: "3/5/23",
+        open: 10,
+        close: 8,
+        high: 15,
+        low: 5,
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Candlestick - Labels
+
+Candlestick charts can be labeled by setting the `labels` prop to `true`. By default this will show all labels.
+
+It's also possible to control each label individually by using the specific label properties defined in the [VictoryCandlestick](/docs/api/victory-candlestick) API.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 25 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryCandlestick
+    labels
+    data={[
+      {
+        x: "3/1/23",
+        open: 5,
+        close: 10,
+        high: 15,
+        low: 0,
+      },
+      {
+        x: "3/2/23",
+        open: 10,
+        close: 15,
+        high: 20,
+        low: 5,
+      },
+      {
+        x: "3/3/23",
+        open: 15,
+        close: 20,
+        high: 22,
+        low: 10,
+      },
+      {
+        x: "3/4/23",
+        open: 20,
+        close: 10,
+        high: 25,
+        low: 7,
+      },
+      {
+        x: "3/5/23",
+        open: 10,
+        close: 8,
+        high: 15,
+        low: 5,
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Candlestick - Label Functions
+
+The labels prop can also accept a function to customize the candlestick label. When using a function, the other labels will need to be set using their specific props in the [VictoryCandlestick](/docs/api/victory-candlestick) API.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 25 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryCandlestick
+    labels={({ datum }) => datum.close}
+    data={[
+      {
+        x: "3/1/23",
+        open: 5,
+        close: 10,
+        high: 15,
+        low: 0,
+      },
+      {
+        x: "3/2/23",
+        open: 10,
+        close: 15,
+        high: 20,
+        low: 5,
+      },
+      {
+        x: "3/3/23",
+        open: 15,
+        close: 20,
+        high: 22,
+        low: 10,
+      },
+      {
+        x: "3/4/23",
+        open: 20,
+        close: 10,
+        high: 25,
+        low: 7,
+      },
+      {
+        x: "3/5/23",
+        open: 10,
+        close: 8,
+        high: 15,
+        low: 5,
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Candlestick - Time Scales
+
+Candlestick charts can leverage d3-scale to handle time scales. The `x` prop can be set to a Date Object.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 25 }}
+  theme={VictoryTheme.clean}
+  scale={{ x: "time" }}
+>
+  <VictoryAxis
+    tickFormat={(t) =>
+      `${t.getDate()}/${t.getMonth()}`
+    }
+  />
+  <VictoryAxis dependentAxis />
+  <VictoryCandlestick
+    data={[
+      {
+        x: new Date(2016, 6, 1),
+        open: 5,
+        close: 10,
+        high: 15,
+        low: 0,
+      },
+      {
+        x: new Date(2016, 6, 2),
+        open: 10,
+        close: 15,
+        high: 20,
+        low: 5,
+      },
+      {
+        x: new Date(2016, 6, 3),
+        open: 15,
+        close: 20,
+        high: 22,
+        low: 10,
+      },
+      {
+        x: new Date(2016, 6, 4),
+        open: 20,
+        close: 10,
+        high: 25,
+        low: 7,
+      },
+      {
+        x: new Date(2016, 6, 5),
+        open: 10,
+        close: 8,
+        high: 15,
+        low: 5,
+      },
+    ]}
+  />
+</VictoryChart>
+```
+
+## Candlestick - Styles
+
+Chart styling can be customized by using the theme or overriding the style prop on the component.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 25 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryCandlestick
+    labels={() => "labels"}
+    closeLabels={() => "close"}
+    highLabels={() => "high"}
+    lowLabels={() => "low"}
+    openLabels={() => "open"}
+    data={[
+      {
+        x: "3/1/23",
+        open: 5,
+        close: 10,
+        high: 15,
+        low: 0,
+      },
+      {
+        x: "3/2/23",
+        open: 10,
+        close: 15,
+        high: 20,
+        low: 5,
+      },
+      {
+        x: "3/3/23",
+        open: 15,
+        close: 20,
+        high: 22,
+        low: 10,
+      },
+      {
+        x: "3/4/23",
+        open: 20,
+        close: 10,
+        high: 25,
+        low: 7,
+      },
+      {
+        x: "3/5/23",
+        open: 10,
+        close: 8,
+        high: 15,
+        low: 5,
+      },
+    ]}
+    style={{
+      data: {
+        fill: "#c43a31",
+        fillOpacity: 0.7,
+        stroke: "#c43a31",
+        strokeWidth: 3,
+      },
+      labels: {
+        fill: "tomato",
+        padding: 2,
+      },
+      closeLabels: {
+        fill: "orange",
+        padding: 2,
+      },
+      highLabels: {
+        fill: "blue",
+        padding: 2,
+      },
+      lowLabels: {
+        fill: "teal",
+        padding: 2,
+      },
+      openLabels: {
+        fill: "green",
+        padding: 2,
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+## Candlestick - Events
+
+Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 25 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryCandlestick
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const fill =
+                    props.style &&
+                    props.style.fill;
+                  return fill ===
+                    "#c43a31"
+                    ? null
+                    : {
+                        style: {
+                          fill: "#c43a31",
+                        },
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={sampleDataDates}
+  />
+</VictoryChart>
+```
+
+## Standalone Rendering
+
+Box Plot charts can be rendered outside a VictoryChart.
+
+```jsx live
+<VictoryCandlestick
+  data={[
+    {
+      x: "3/1/23",
+      open: 5,
+      close: 10,
+      high: 15,
+      low: 0,
+    },
+    {
+      x: "3/2/23",
+      open: 10,
+      close: 15,
+      high: 20,
+      low: 5,
+    },
+    {
+      x: "3/3/23",
+      open: 15,
+      close: 20,
+      high: 22,
+      low: 10,
+    },
+    {
+      x: "3/4/23",
+      open: 20,
+      close: 10,
+      high: 25,
+      low: 7,
+    },
+    {
+      x: "3/5/23",
+      open: 10,
+      close: 8,
+      high: 15,
+      low: 5,
+    },
+  ]}
+  theme={VictoryTheme.clean}
+/>
+```
+
+They can also be embeded in other SVG components by using the `standalone` prop.
+
+```jsx live
+<svg
+  width={300}
+  height={300}
+  style={{
+    display: "block",
+    margin: "0 auto",
+  }}
+>
+  <circle
+    cx={150}
+    cy={150}
+    r={150}
+    fill="#9ded91"
+  />
+  <VictoryCandlestick
+    standalone={false}
+    width={300}
+    height={300}
+    padding={{ left: 10, right: 10 }}
+    data={[
+      {
+        x: "3/1/23",
+        open: 5,
+        close: 10,
+        high: 15,
+        low: 0,
+      },
+      {
+        x: "3/2/23",
+        open: 10,
+        close: 15,
+        high: 20,
+        low: 5,
+      },
+      {
+        x: "3/3/23",
+        open: 15,
+        close: 20,
+        high: 22,
+        low: 10,
+      },
+      {
+        x: "3/4/23",
+        open: 20,
+        close: 10,
+        high: 25,
+        low: 7,
+      },
+      {
+        x: "3/5/23",
+        open: 10,
+        close: 8,
+        high: 15,
+        low: 5,
+      },
+    ]}
+    theme={VictoryTheme.clean}
+  />
+</svg>
+```

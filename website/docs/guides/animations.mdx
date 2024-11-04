@@ -1,0 +1,130 @@
+---
+title: Animations
+---
+
+Victory is able to animate changes in props using [d3-interpolate][]. Victory components define their animations via the `animate` prop. `duration`, `delay`, `easing` and `onEnd` functions may all be specified via the `animate` prop. An `animationWhitelist` may also be specified on the `animate` prop. When given, only props specified in the whitelist will animate.
+
+```jsx live noInline
+function App() {
+  const [state, setState] = React.useState({
+    scatterData: getScatterData()
+  });
+
+  React.useState(() => {
+    const setStateInterval = window.setInterval(() => {
+      setState({
+        scatterData: getScatterData()
+      });
+    }, 3000);
+
+    return () => {
+      window.clearInterval(setStateInterval);
+    }
+  }, []);
+
+  return (
+    <VictoryChart 
+      animate={{ duration: 2000, easing: "bounce" }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryScatter
+        data={state.scatterData}
+        style={{
+          data: {
+            fill: ({ datum }) => datum.fill,
+            opacity: ({ datum }) => datum.opacity
+          }
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+function getScatterData() {
+  const colors =[
+    "violet", "cornflowerblue", "gold", "orange",
+    "turquoise", "tomato", "greenyellow"
+  ];
+  const symbols = [
+    "circle", "star", "square", "triangleUp",
+    "triangleDown", "diamond", "plus"
+  ];
+  return _.range(25).map((index) => {
+    const scaledIndex = Math.floor(index % 7);
+    return {
+      x: _.random(10, 50),
+      y: _.random(2, 100),
+      size: _.random(8) + 3,
+      symbol: symbols[scaledIndex],
+      fill: colors[_.random(0, 6)],
+      opacity: 0.6
+    };
+  });
+}
+
+render(<App/>);
+```
+
+
+## Transitions
+
+Victory components define default transitions for entering and exiting nodes, but these may be overridden with the `onEnter` and `onExit` properties of the `animate` object. The `before` and `after` properties take functions whose return values alter the datum of the transitioning node before or after the transition. These functions are called with the original datum of the transitioning node, the index of that datum, and the entire data array.
+
+*note:* Use private variables `_x`, `_y`, `_y0` and `_y1` when altering position data during transitions.
+
+```jsx live noInline
+function App() {
+  const [state, setState] = React.useState({
+    data: getData()
+  });
+
+  React.useState(() => {
+    const setStateInterval = window.setInterval(() => {
+      setState({
+        data: getData()
+      });
+    }, 3000);
+
+    return () => {
+      window.clearInterval(setStateInterval);
+    }
+  }, []);
+
+  return (
+    <VictoryChart
+      animate={{duration: 500}}
+      domainPadding={{ x: 20 }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryBar
+        data={state.data}
+        style={{
+          data: { fill: "tomato", width: 12 }
+        }}
+        animate={{
+          onExit: {
+            duration: 500,
+            before: () => ({
+              _y: 0,
+              fill: "orange",
+              label: "BYE"
+            })
+          }
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+function getData() {
+  const bars = _.random(6, 10);
+  return _.range(bars).map((bar) => {
+    return {x: bar + 1, y: _.random(2, 10)};
+  });
+}
+
+render(<App/>);
+```
+
+
+[d3-interpolate]: https://github.com/d3/d3-interpolate

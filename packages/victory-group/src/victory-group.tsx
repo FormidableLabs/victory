@@ -35,18 +35,13 @@ export interface VictoryGroupProps
   extends VictoryCommonProps,
     VictoryDatableProps,
     VictoryMultiLabelableProps {
-  categories?: CategoryPropType;
   children?: React.ReactNode;
   color?: string;
-  colorScale?: ColorScalePropType;
-  domain?: DomainPropType;
-  domainPadding?: DomainPaddingPropType;
   events?: EventPropTypeInterface<
     VictoryGroupTTargetType,
     StringOrNumberOrCallback
   >[];
   eventKey?: StringOrNumberOrCallback;
-  horizontal?: boolean;
   offset?: number;
   style?: VictoryStyleInterface;
   displayName?: string;

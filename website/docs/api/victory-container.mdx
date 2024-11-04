@@ -1,0 +1,21 @@
+---
+title: VictoryContainer
+---
+
+`VictoryContainer` provides a top-level `<svg>` element for other Victory components to render within.
+By default, `VictoryContainer` renders responsive SVGs. `VictoryContainer` also provides a [Portal][]
+container that can be accessed via [VictoryPortal][] in order to render specified children above others. All other Victory containers extend `VictoryContainer`. Check out documentation for [common container props][] for more information about customizing container props.
+
+:::info
+For examples of `VictoryContainer` in action, visit the [containers](/docs/guides/containers) guide.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={["VictoryContainerProps"]}
+/>
+
+[victoryportal]: /docs/api/victory-portal
+[portal]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-portal/portal.tsx
+[common container props]: /docs/api/victory-container-props

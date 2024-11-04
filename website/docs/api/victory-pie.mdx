@@ -1,0 +1,419 @@
+---
+title: VictoryPie
+---
+
+:::info
+For examples of `VictoryPie` in action, visit the [Pie Chart](/docs/charts/pie) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps", // Omits 'polar'
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={[]}
+  notImplemented={["polar"]}
+/>
+
+## Component Props
+
+---
+
+### cornerRadius
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `cornerRadius` prop specifies the corner radius of the slices rendered in the pie chart. When given as a function, `cornerRadius` will be evaluated for each slice of the pie with an object corresponding to the props for that slice.
+
+```jsx live
+<VictoryPie
+  cornerRadius={({ datum }) =>
+    datum.y * 5
+  }
+  data={sampleData}
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### endAngle
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="360" />
+</Badges>
+
+The `endAngle` props defines the overall end angle of the pie in degrees. This prop is used in conjunction with `startAngle` to create a pie that spans only a segment of a circle, or to change overall rotation of the pie. This prop should be given as a number of degrees. Degrees are defined as starting at the 12 o'clock position, and proceeding clockwise.
+
+
+```jsx live
+<div>
+  <VictoryPie
+    startAngle={90}
+    endAngle={450}
+    data={sampleData}
+    theme={VictoryTheme.clean}
+  />
+  <VictoryPie
+    startAngle={90}
+    endAngle={-90}
+    data={sampleData}
+    theme={VictoryTheme.clean}
+  />
+</div>
+```
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+`VictoryPie` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryPie` uses the standard `events` prop. [Read about it here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+```jsx live
+<div>
+  <h3>Click a pie slice below</h3>
+  <VictoryPie
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: ({
+                  style,
+                }) => {
+                  return style.fill ===
+                    "#c43a31"
+                    ? null
+                    : {
+                        style: {
+                          fill: "#c43a31",
+                        },
+                      };
+                },
+              },
+              {
+                target: "labels",
+                mutation: ({
+                  text,
+                }) => {
+                  return text ===
+                    "clicked"
+                    ? null
+                    : {
+                        text: "clicked",
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={sampleData}
+    theme={VictoryTheme.clean}
+  />
+</div>
+```
+
+---
+
+### innerRadius
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `innerRadius` prop determines the number of pixels between the center of the chart and the inner edge of a donut chart. When this prop is set to zero a regular pie chart is rendered. When this prop is given as a function, `innerRadius` will be evaluated for each slice of the pie with the props corresponding to that slice
+
+```jsx live
+<VictoryPie
+  innerRadius={({ datum }) =>
+    datum.y * 20
+  }
+  data={sampleData}
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### labelIndicator
+
+<Badges>
+  <TypeBadge value="boolean | ReactElement" />
+</Badges>
+
+The `labelIndicator` prop defines the label indicator line between labels and the pie chart. If this prop is used as a boolean,then the default indicator will be displayed. To customize or pass your own styling `<LineSegment/>` can be passed to labelIndicator. LabelIndicator is functional only when labelPosition = "centroid". To adjust the labelIndicator length, `labelIndicatorInnerOffset` and `labelIndicatorOuterOffset` props can be used alongside labelIndicator.
+
+```jsx live
+<VictoryGroup
+  theme={VictoryTheme.clean}
+>
+  <VictoryPie
+    data={sampleData}
+    labelIndicator
+  />
+  <VictoryPie
+    data={sampleData}
+    labelIndicator={
+      <LineSegment
+        style={{
+          stroke: "red",
+          strokeDasharray: 1,
+          fill: "none",
+        }}
+      />
+    }
+  />
+  <VictoryPie
+    data={sampleData}
+    labelIndicator={
+      <LineSegment
+        style={{
+          stroke: "red",
+          strokeDasharray: 1,
+          fill: "none",
+        }}
+      />
+    }
+    labelIndicatorInnerOffset={10}
+    labelIndicatorOuterOffset={5}
+  />
+</VictoryGroup>
+```
+
+---
+
+### labelIndicatorInnerOffset
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `labelIndicatorInnerOffset` prop defines the offset by which the indicator length inside pie chart is being drawn. Higher the number shorter the length.
+
+```jsx live
+<VictoryPie
+  data={sampleData}
+  labelIndicator
+  labelIndicatorInnerOffset={10}
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### labelIndicatorOuterOffset
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `labelIndicatorOuterOffset` prop defines the offset by which the indicator length outside the pie chart is being drawn. Higher the number shorter the length.
+
+```jsx live
+<VictoryPie
+  data={sampleData}
+  labelIndicator
+  labelIndicatorOuterOffset={5}
+/>
+```
+
+---
+
+### labelPlacement
+
+<Badges>
+  <TypeBadge value='"parallel" | "perpendicular" | "vertical" | Function' />
+</Badges>
+
+The `labelPlacement` prop specifies the angular placement of each label relative to the angle of its corresponding slice. This prop should be given as "parallel", "perpendicular", "vertical", or as a function that returns one of these values. When this prop is not given, the label will be placed vertically.
+
+```jsx live
+<VictoryPie
+  data={sampleData}
+  labels={({ datum }) =>
+    `y: ${datum.y}`
+  }
+  labelPosition={({ index }) =>
+    index ? "centroid" : "startAngle"
+  }
+  labelPlacement={({ index }) =>
+    index ? "parallel" : "vertical"
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### labelPosition
+
+<Badges>
+  <TypeBadge value='"startAngle" | "endAngle" | "centroid" | Function' />
+</Badges>
+
+The `labelPosition` prop specifies the position of each label relative to its corresponding slice. This prop should be given as "startAngle", "endAngle", "centroid", or as a function that returns one of these values. When this prop is not given, the label will be positioned at the centroid of each slice.
+
+```jsx live
+<VictoryPie
+  data={sampleData}
+  labels={({ datum }) => datum.y}
+  labelPosition={({ index }) =>
+    index ? "centroid" : "startAngle"
+  }
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### labelRadius
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `labelRadius` prop defines the radius of the arc that will be used for positioning each slice label. If this prop is not set, the label radius will default to the radius of the pie + label padding. If this prop is given as a function, it will be evaluated for each label `VictoryPie` renders, and will be evaluated with the props that correspond to that label, as well as the radius and innerRadius of the corresponding slice. If `labelIndicator` prop is being used, passed `labelRadius`(> radius) is used to calculate the co-ordinates of the outer indicator line. If no specific value for labelRadius is passed , default values will be considered. The outer indicator line length is the difference between `labelRadius` and `labelIndicatorOuterOffset`.
+
+```jsx live
+<VictoryPie
+  data={sampleData}
+  labelRadius={({ innerRadius }) =>
+    innerRadius + 5
+  }
+  radius={({ datum }) =>
+    50 + datum.y * 20
+  }
+  innerRadius={50}
+  style={{
+    labels: {
+      fill: "white",
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+  }}
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### padAngle
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `padAngle` prop defines the amount of separation between adjacent data slices in number of degrees. When this prop is given as a function it will be evaluated for each slice, and will be evaluated with the props that correspond to that slice.
+
+```jsx live
+<VictoryPie
+  padAngle={({ datum }) => datum.y}
+  innerRadius={100}
+  data={sampleData}
+/>
+```
+
+---
+
+### radius
+
+<Badges>
+  <TypeBadge value="number | Function" />
+</Badges>
+
+The `radius` prop specifies the radius of the pie. When this prop is not given, it will be calculated based on the `width`, `height`, and `padding` props. When this prop is given as a function it will be evaluated for each slice with the props corresponding to that slice.
+
+```jsx live
+<VictoryPie
+  radius={({ datum }) =>
+    20 + datum.y * 20
+  }
+  data={sampleData}
+  theme={VictoryTheme.clean}
+/>
+```
+
+---
+
+### startAngle
+
+<Badges>
+  <TypeBadge value="number" />
+  <DefaultsBadge value="0" />
+</Badges>
+
+The `startAngle` props defines the overall start angle of the pie in degrees. This prop is used in conjunction with `endAngle` to create a pie that spans only a segment of a circle, or to change overall rotation of the pie. This prop should be given as a number of degrees. Degrees are defined as starting at the 12 o'clock position, and proceeding clockwise.
+
+```jsx live
+<div>
+  <VictoryPie
+    startAngle={90}
+    endAngle={450}
+    data={sampleData}
+    theme={VictoryTheme.clean}
+  />
+  <VictoryPie
+    startAngle={90}
+    endAngle={-90}
+    data={sampleData}
+    theme={VictoryTheme.clean}
+  />
+</div>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ parent: object, data: object, labels: object }" />
+</Badges>
+
+`VictoryPie` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
+
+_default (provided by default theme):_ See [grayscale theme][] for more detail
+
+```jsx live
+<VictoryPie
+  style={{
+    data: {
+      fillOpacity: 0.9,
+      stroke: "#c43a31",
+      strokeWidth: 3,
+    },
+    labels: {
+      fontSize: 25,
+      fill: "#c43a31",
+    },
+  }}
+  data={sampleData}
+/>
+```

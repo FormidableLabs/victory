@@ -1,0 +1,225 @@
+---
+title: VictoryErrorBar
+---
+
+:::info
+For examples of `VictoryErrorBar` in action, visit the [Error Bar](/docs/charts/error-bar) examples.
+:::
+
+## Inherited Props
+
+<CommonProps
+  interfaces={[
+    "VictoryCommonProps", // omits 'polar'
+    "VictoryDatableProps",
+    "VictoryMultiLabelableProps",
+    "VictoryEventProps",
+  ]}
+  overrides={["data"]}
+  notImplemented={["polar"]}
+/>
+
+## Component Props
+
+---
+
+### borderWidth
+
+<Badges>
+  <TypeBadge value="number" />
+</Badges>
+
+The `borderWidth` prop sets the border width of the error bars. `borderWidth` will set both x and y error bar width.
+
+```jsx
+borderWidth={10}
+```
+
+---
+
+### data
+
+<Badges>
+  <TypeBadge value="{x: number, y: number, errorX: number, errorY: number}[]" />
+</Badges>
+
+Specify data via the data prop. By default, `VictoryErrorBar` expects data as an array of objects with `x`, `y`, `errorX` and `errorY` keys. Use the `x`, `y`, `errorX` and `errorY` data accessor props to specify custom data formats.
+
+---
+
+### errorX
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+Use `errorX` data accessor prop to define the x error bar.
+
+**string:** specify which property in an array of data objects should be used as the errorX value
+
+_examples:_ `errorX="uncertainty"`
+
+**function:** use a function to translate each element in a data array into a errorX value
+
+_examples:_ `errorX={() => 10}`
+
+**array index:** specify which index of an array should be used as a errorX value when data is given as an array of arrays
+
+_examples:_ `errorX={1}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as an errorX value
+
+_examples:_ `errorX="measurement.uncertainty"`, `errorX={["measurement", "uncertainty"]}`
+
+---
+
+### errorY
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+Use `errorY` data accessor prop to define the y error bar.
+
+**string:** specify which property in an array of data objects should be used as the errorY value
+
+_examples:_ `errorY="uncertainty"`
+
+**function:** use a function to translate each element in a data array into an errorY value
+
+_examples:_ `errorY={() => 10}`
+
+**array index:** specify which index of an array should be used as an errorY value when data is given as an array of arrays
+
+_examples:_ `errorY={1}`
+
+**path string or path array:** specify which property in an array of nested data objects should be used as an errorY value
+
+_examples:_ `errorY="measurement.uncertainty"`, `errorY={["measurement", "uncertainty"]}`
+
+---
+
+### eventKey
+
+<Badges>
+  <TypeBadge value="string | integer | string[] | Function" />
+</Badges>
+
+`VictoryErrorBar` uses the standard `eventKey` prop to specify how event targets are addressed. **This prop is not commonly used.** [Read about the `eventKey` prop in more detail here](/docs/guides/events)
+
+```jsx
+eventKey = "x";
+```
+
+---
+
+### events
+
+<Badges>
+  <TypeBadge value="object[]" />
+</Badges>
+
+`VictoryErrorBar` uses the standard `events` prop. [Read about it here](/docs/guides/events)
+
+See the [Events Guide][] for more information on defining events.
+
+```jsx live
+<div>
+  <h3>Click an error bar below</h3>
+  <VictoryErrorBar
+    style={{
+      data: { strokeWidth: 5 },
+    }}
+    events={[
+      {
+        target: "data",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "data",
+                mutation: (props) => {
+                  const stroke =
+                    props.style &&
+                    props.style.stroke;
+                  return stroke ===
+                    "#c43a31"
+                    ? null
+                    : {
+                        style: {
+                          stroke:
+                            "#c43a31",
+                          strokeWidth: 7,
+                        },
+                      };
+                },
+              },
+            ];
+          },
+        },
+      },
+    ]}
+    data={[
+      {
+        x: 15,
+        y: 35,
+        errorX: 1,
+        errorY: 3,
+      },
+      {
+        x: 20,
+        y: 42,
+        errorX: 3,
+        errorY: 2,
+      },
+      {
+        x: 25,
+        y: 30,
+        errorX: 5,
+        errorY: 5,
+      },
+      {
+        x: 30,
+        y: 35,
+        errorX: 5,
+        errorY: 3,
+      },
+      {
+        x: 35,
+        y: 22,
+        errorX: 8,
+        errorY: 2,
+      },
+    ]}
+  />
+</div>
+```
+
+---
+
+### style
+
+<Badges>
+  <TypeBadge value="{ parent: object, data: object, labels: object }" />
+</Badges>
+
+`VictoryErrorBar` uses the standard `style` prop. [Read about it here](/docs/guides/themes)
+
+_default (provided by default theme):_ See [grayscale theme][] for more detail
+
+```jsx live
+<VictoryErrorBar
+  style={{
+    data: {
+      stroke: "#c43a31",
+      strokeWidth: 5,
+    },
+    labels: {
+      fontSize: 15,
+      fill: "#c43a31",
+    },
+  }}
+  data={sampleErrorData}
+  labels={({ datum }) => datum.x}
+/>
+```

@@ -13,17 +13,13 @@
     "url": "https://github.com/formidablelabs/victory.git"
   },
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
   "author": "Formidable",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/formidablelabs/victory/issues"
   },
   "homepage": "https://commerce.nearform.com/open-source/victory",
+  "packageManager": "pnpm@7.33.7",
   "devDependencies": {
     "@babel/cli": "7.23.9",
     "@babel/core": "7.23.9",
@@ -34,10 +30,12 @@
     "@babel/preset-react": "7.23.3",
     "@babel/preset-typescript": "7.23.3",
     "@changesets/cli": "^2.24.1",
-    "@storybook/addon-essentials": "^7.6.10",
-    "@storybook/addon-storysource": "^7.6.10",
-    "@storybook/react": "^7.6.7",
-    "@storybook/react-webpack5": "^7.6.7",
+    "@chromatic-com/storybook": "^3.2.2",
+    "@storybook/addon-essentials": "^8.4.1",
+    "@storybook/addon-storysource": "^8.4.1",
+    "@storybook/addon-webpack5-compiler-swc": "1.0.5",
+    "@storybook/react": "^8.4.1",
+    "@storybook/react-webpack5": "^8.4.1",
     "@svitejs/changesets-changelog-github-compact": "^0.1.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -59,8 +57,8 @@
     "babel-plugin-lodash": "3.3.4",
     "babel-plugin-module-resolver": "5.0.0",
     "babel-preset-react-native": "4.0.1",
-    "chromatic": "^6.7.1",
-    "concurrently": "^7.3.0",
+    "chromatic": "^11.16.3",
+    "concurrently": "^9.0.1",
     "cpx2": "^4.2.0",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
@@ -74,7 +72,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.0.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-storybook": "^0.10.2",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "fs-extra": "^10.0.0",
     "glob": "8.0.3",
@@ -102,7 +100,7 @@
     "rimraf": "^3.0.2",
     "sass": "^1.80.3",
     "seedrandom": "^3.0.5",
-    "storybook": "^7.6.7",
+    "storybook": "^8.4.1",
     "style-loader": "^4.0.0",
     "styled-components": "^5.3.5",
     "tailwindcss": "^3.3.0",
@@ -638,7 +636,7 @@
       ]
     },
     "start:docs": {
-      "command": "pnpm run --filter victory-docs dev",
+      "command": "pnpm run --filter victory-docs start",
       "dependencies": [
         "build:lib:esm"
       ]
