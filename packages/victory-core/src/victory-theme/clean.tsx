@@ -350,7 +350,6 @@ export const clean: VictoryThemeDefinition = {
     },
     baseProps,
   ),
-  label: baseLabelStyles,
   legend: {
     colorScale,
     gutter: 24,

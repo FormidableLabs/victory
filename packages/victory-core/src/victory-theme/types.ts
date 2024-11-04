@@ -193,7 +193,6 @@ export interface VictoryThemeDefinition {
     offsetY?: number;
     orientation?: OrientationTypes;
   } & VictoryCommonThemeProps;
-  label?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   legend?: {
     gutter?: number | BlockProps;
     rowGutter?: number | BlockProps;

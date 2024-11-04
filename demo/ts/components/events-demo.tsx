@@ -204,7 +204,10 @@ class EventsDemo extends React.Component {
               text="Parent Events"
               y={50}
               x={150}
-              style={{ ...VictoryTheme.clean.label, fontSize: 18 }}
+              style={{
+                ...VictoryTheme.clean.axis?.style?.axisLabel,
+                fontSize: 18,
+              }}
             />
             <VictoryBar name="bar" labels={() => null} />
           </VictoryChart>
