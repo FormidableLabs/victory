@@ -43,12 +43,19 @@ runs:
   steps:
     # Checkout branch to compare to [required]
     - name: Checkout base branch
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: "main"
         # ref: ${{ inputs.branch }}
         path: br-base
         # token: ${{ inputs.ghToken }}
+
+    - name: setup
+      working-directory: pr-base
+      uses: ./.github/actions/setup
+
+    - name: Build main
+      run: pnpm build
 
     # Generate the bundle size difference report [required]
     - name: Generate report
