@@ -57,8 +57,8 @@ runs:
       with:
         paths: ${{ inputs.paths }}
         onlyDiff: ${{ inputs.onlyDiff }}
-        filter: ${{ inputs.filter }}
-        unit: ${{ inputs.unit }}
+        # filter: ${{ inputs.filter }}
+        # unit: ${{ inputs.unit }}
 
     # Post github action summary
     - name: Post summary
