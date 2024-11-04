@@ -51,7 +51,7 @@ runs:
         # token: ${{ inputs.ghToken }}
 
     - name: setup
-      uses: .pr-base/.github/actions/setup
+      uses: ./pr-base/.github/actions/setup
 
     - name: Build main
       working-directory: pr-base
