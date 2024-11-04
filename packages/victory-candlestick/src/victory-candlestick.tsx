@@ -23,6 +23,7 @@ import { Candle } from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
 export const testBundleDiff = () => "test bundle diff";
+export const testBundleDiff2 = () => "test bundle diff 2";
 
 export interface VictoryCandlestickStyleInterface {
   close?: VictoryStyleObject;

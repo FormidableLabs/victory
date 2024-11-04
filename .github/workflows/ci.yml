@@ -10,6 +10,7 @@ on:
   pull_request:
     branches:
       - main
+      - feat/bundle-size-analysis
 
 jobs:
   build:
