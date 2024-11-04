@@ -54,8 +54,7 @@ runs:
       uses: ./pr-base/.github/actions/setup
 
     - name: Build main
-      working-directory: pr-base
-      run: pnpm build
+      run: cd pr-base && pnpm build
 
     # Generate the bundle size difference report [required]
     - name: Generate report
