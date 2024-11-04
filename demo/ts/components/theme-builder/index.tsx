@@ -1,6 +1,7 @@
 import React from "react";
 import {
   ColorScalePropType,
+  LabelProps,
   VictoryTheme,
   VictoryThemeDefinition,
 } from "victory-core";
@@ -9,12 +10,13 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryStack } from "victory-stack";
 import { VictoryBar } from "victory-bar";
 import { VictoryArea } from "victory-area";
-import ColorScaleOptions from "./color-scale-options";
+import ColorScaleOptions, { ColorChangeArgs } from "./color-scale-options";
 import Select from "./select";
 import ConfigPreview from "./config-preview";
 import Button from "./button";
 
 import "./tailwind.css";
+import LabelOptions from "./label-options";
 
 export type ThemeOption = {
   name: string;
@@ -84,7 +86,30 @@ const ThemeBuilder = () => {
     setActiveTheme(theme);
   };
 
-  const handleColorChange = ({ event, index, colorScale }) => {
+  const handleLabelConfigChange = (newLabelConfig: Partial<LabelProps>) => {
+    if (activeTheme) {
+      const updatedTheme = {
+        ...activeTheme,
+        name: "Custom",
+        config: {
+          ...activeTheme.config,
+          axis: {
+            ...activeTheme.config?.axis,
+            style: {
+              ...activeTheme.config?.axis?.style,
+              axisLabel: {
+                ...activeTheme.config?.axis?.style?.axisLabel,
+                ...newLabelConfig,
+              },
+            },
+          },
+        },
+      };
+      setActiveTheme(updatedTheme as ThemeOption);
+    }
+  };
+
+  const handleColorChange = ({ event, index, colorScale }: ColorChangeArgs) => {
     const newColor = event.target.value;
     const customTheme = {
       ...activeTheme,
@@ -139,6 +164,12 @@ const ThemeBuilder = () => {
                 activeTheme={activeTheme}
                 onColorChange={handleColorChange}
                 onColorScaleChange={handleColorScaleChange}
+              />
+              <LabelOptions
+                labelConfig={
+                  activeTheme?.config?.axis?.style?.axisLabel as LabelProps
+                }
+                onLabelConfigChange={handleLabelConfigChange}
               />
             </section>
           )}

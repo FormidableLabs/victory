@@ -643,5 +643,8 @@
         "build:lib:esm"
       ]
     }
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
   }
 }
