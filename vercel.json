@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/open-source/victory/docs",
+      "destination": "/open-source/victory/docs/introduction",
+      "permanent": true
+    },
+    {
       "source": "/open-source/victory/docs/faq",
       "destination": "/open-source/victory/docs/introduction",
       "permanent": true
