@@ -52,10 +52,10 @@ runs:
 
     - name: see what's in pr-base
       shell: bash
-      run:
+      run: ls -al ./br-base
+
     - name: setup
-      working-directory: br-base
-      uses: .github/actions/setup
+      uses: ./br-base/.github/actions/setup
 
     - name: Build main
       shell: bash
