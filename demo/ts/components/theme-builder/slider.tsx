@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Slider = ({ label, id, defaultValue, unit = "px", onChange }) => {
   const [value, setValue] = React.useState(defaultValue);
@@ -9,6 +9,10 @@ const Slider = ({ label, id, defaultValue, unit = "px", onChange }) => {
       onChange(event);
     }
   };
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   return (
     <div className="my-4">
