@@ -72,9 +72,12 @@ const chartStyle: { [key: string]: React.CSSProperties } = {
 };
 
 const ThemeBuilder = () => {
-  const [activeTheme, setActiveTheme] = React.useState<ThemeOption | undefined>(
+  const [baseTheme, setBaseTheme] = React.useState<ThemeOption | undefined>(
     undefined,
   );
+  const [customThemeConfig, setCustomThemeConfig] = React.useState<
+    VictoryThemeDefinition | undefined
+  >(undefined);
   const [activeColorScale, setActiveColorScale] =
     React.useState<ColorScalePropType>("qualitative");
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
@@ -83,48 +86,41 @@ const ThemeBuilder = () => {
   const handleThemeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const themeName = event.target.value;
     const theme = themes.find((t) => t.name === themeName);
-    setActiveTheme(theme);
+    setBaseTheme(theme);
+    setCustomThemeConfig({ ...theme?.config });
   };
 
   const handleLabelConfigChange = (newLabelConfig: Partial<LabelProps>) => {
-    if (activeTheme) {
-      const updatedTheme = {
-        ...activeTheme,
-        name: "Custom",
-        config: {
-          ...activeTheme.config,
-          axis: {
-            ...activeTheme.config?.axis,
-            style: {
-              ...activeTheme.config?.axis?.style,
-              axisLabel: {
-                ...activeTheme.config?.axis?.style?.axisLabel,
-                ...newLabelConfig,
-              },
+    if (customThemeConfig) {
+      const updatedConfig = {
+        ...customThemeConfig,
+        axis: {
+          ...customThemeConfig.axis,
+          style: {
+            ...customThemeConfig.axis?.style,
+            axisLabel: {
+              ...customThemeConfig.axis?.style?.axisLabel,
+              ...newLabelConfig,
             },
           },
         },
       };
-      setActiveTheme(updatedTheme as ThemeOption);
+      setCustomThemeConfig(updatedConfig as VictoryThemeDefinition);
     }
   };
 
   const handleColorChange = ({ event, index, colorScale }: ColorChangeArgs) => {
     const newColor = event.target.value;
-    const customTheme = {
-      ...activeTheme,
-      name: "Custom",
-      config: {
-        ...activeTheme?.config,
-        palette: {
-          ...activeTheme?.config?.palette,
-          [colorScale]: activeTheme?.config?.palette?.[colorScale]?.map(
-            (color, i) => (i === index ? newColor : color),
-          ),
-        },
+    const updatedConfig = {
+      ...customThemeConfig,
+      palette: {
+        ...customThemeConfig?.palette,
+        [colorScale]: customThemeConfig?.palette?.[colorScale]?.map(
+          (color, i) => (i === index ? newColor : color),
+        ),
       },
     };
-    setActiveTheme(customTheme);
+    setCustomThemeConfig(updatedConfig);
   };
 
   const handleColorScaleChange = (
@@ -144,55 +140,55 @@ const ThemeBuilder = () => {
   return (
     <div className="flex flex-row flex-wrap items-start justify-start w-full">
       <aside className="relative flex flex-col h-lvh w-[300px] border-r border-gray-200">
-        <div className="grow overflow-y-auto p-4">
+        <div className="grow overflow-y-auto p-4 pb-[100px]">
           <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
           <p className="text-sm mb-4 text-gray-300">
             Select a theme to begin customizing.
           </p>
           <Select
             id="theme-select"
-            value={activeTheme?.name || ""}
+            value={baseTheme?.name || ""}
             onChange={handleThemeSelect}
             options={themeOptions}
             label="Base Theme"
           />
-          {activeTheme && (
+          {customThemeConfig && (
             <section>
               <h2 className="text-lg font-bold mb-4">Customization Options</h2>
               <ColorScaleOptions
                 activeColorScale={activeColorScale}
-                activeTheme={activeTheme}
+                palette={customThemeConfig.palette}
                 onColorChange={handleColorChange}
                 onColorScaleChange={handleColorScaleChange}
               />
               <LabelOptions
                 labelConfig={
-                  activeTheme?.config?.axis?.style?.axisLabel as LabelProps
+                  customThemeConfig.axis?.style?.axisLabel as LabelProps
                 }
                 onLabelConfigChange={handleLabelConfigChange}
               />
             </section>
           )}
         </div>
-        <footer className="p-4 border-t border-gray-200 sticky bottom-0 flex justify-end">
+        <footer className="p-4 border-t border-gray-200 sticky bottom-0 flex justify-end bg-white">
           <Button
             onClick={handleThemeConfigPreviewOpen}
             ariaLabel="Get Theme Code"
-            disabled={!activeTheme}
+            disabled={!customThemeConfig}
           >
             Get Theme Code
           </Button>
         </footer>
       </aside>
       <main className="flex-1 flex flex-col items-center">
-        {activeTheme && (
+        {customThemeConfig && (
           <div className="max-w-screen-xl w-full py-4 px-10">
             <h2 className="text-xl font-bold mb-4">Example Charts</h2>
             <div className="grid grid-cols-2 gap-10">
               <div>
                 <h3 className="text-base font-bold mb-3">Bar Chart</h3>
                 <VictoryChart
-                  theme={activeTheme?.config}
+                  theme={customThemeConfig}
                   domainPadding={20}
                   style={chartStyle}
                 >
@@ -211,7 +207,7 @@ const ThemeBuilder = () => {
               <div>
                 <h3 className="text-base font-bold mb-3">Area Chart</h3>
                 <VictoryChart
-                  theme={activeTheme?.config}
+                  theme={customThemeConfig}
                   domainPadding={20}
                   style={chartStyle}
                 >
@@ -231,9 +227,9 @@ const ThemeBuilder = () => {
           </div>
         )}
       </main>
-      {showThemeConfigPreview && activeTheme?.config && (
+      {showThemeConfigPreview && customThemeConfig && (
         <ConfigPreview
-          config={activeTheme?.config}
+          config={customThemeConfig}
           onClose={handleThemeConfigPreviewClose}
         />
       )}

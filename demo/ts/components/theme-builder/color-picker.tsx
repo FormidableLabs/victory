@@ -42,8 +42,12 @@ const ColorPicker = ({
           <div className="relative">
             <div
               className={clsx(
-                "block w-[40px] h-[40px] rounded-full border-2 border-transparent cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor",
-                { "w-[30px] h-[30px]": showColorName },
+                "block w-[35px] h-[35px] rounded-full cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor",
+                {
+                  "outline-2 border-2 border-white outline outline-gray-200":
+                    !showColorName,
+                },
+                { "w-[30px] h-[30px] p-0.5": showColorName },
               )}
               style={{
                 color,

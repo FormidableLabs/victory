@@ -1,6 +1,5 @@
 import React from "react";
-import { ThemeOption } from ".";
-import { ColorScalePropType } from "victory-core";
+import { ColorScalePropType, VictoryThemeDefinition } from "victory-core";
 import Select from "./select";
 import ColorPicker from "./color-picker";
 
@@ -11,7 +10,7 @@ export type ColorChangeArgs = {
 };
 
 type ColorScaleOptionsProps = {
-  activeTheme?: ThemeOption;
+  palette?: VictoryThemeDefinition["palette"];
   activeColorScale?: ColorScalePropType;
   onColorChange: (args: ColorChangeArgs) => void;
   onColorScaleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -46,7 +45,7 @@ const colorScales = [
 
 const ColorScaleOptions = ({
   activeColorScale,
-  activeTheme,
+  palette,
   onColorChange,
   onColorScaleChange,
 }: ColorScaleOptionsProps) => {
@@ -60,22 +59,20 @@ const ColorScaleOptions = ({
         label="Color Scale"
       />
       <div className="flex flex-wrap gap-3 mb-5">
-        {activeTheme?.config?.palette?.[activeColorScale as string]?.map(
-          (color, i) => (
-            <ColorPicker
-              key={i}
-              color={color}
-              id={`color-${i}`}
-              onColorChange={(event) =>
-                onColorChange({
-                  event,
-                  index: i,
-                  colorScale: activeColorScale as string,
-                })
-              }
-            />
-          ),
-        )}
+        {palette?.[activeColorScale as string]?.map((color, i) => (
+          <ColorPicker
+            key={i}
+            color={color}
+            id={`color-${i}`}
+            onColorChange={(event) =>
+              onColorChange({
+                event,
+                index: i,
+                colorScale: activeColorScale as string,
+              })
+            }
+          />
+        ))}
       </div>
     </section>
   );
