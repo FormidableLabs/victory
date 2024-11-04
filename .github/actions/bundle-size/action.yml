@@ -54,7 +54,8 @@ runs:
       shell: bash
       run:
     - name: setup
-      uses: ./br-base/.github/actions/setup
+      working-directory: br-base
+      uses: .github/actions/setup
 
     - name: Build main
       shell: bash
