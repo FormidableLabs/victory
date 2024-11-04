@@ -22,6 +22,8 @@ import {
 import { Candle } from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
+export const testBundleDiff = () => "test bundle diff";
+
 export interface VictoryCandlestickStyleInterface {
   close?: VictoryStyleObject;
   closeLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
@@ -43,9 +45,9 @@ export type VictoryCandlestickLabelsType =
 
 export interface VictoryCandlestickProps
   extends Omit<VictoryCommonProps, "polar">,
-    VictoryDatableProps,
-    VictoryLabelableProps,
-    VictoryMultiLabelableProps {
+  VictoryDatableProps,
+  VictoryLabelableProps,
+  VictoryMultiLabelableProps {
   candleColors?: {
     positive?: string;
     negative?: string;
@@ -73,13 +75,13 @@ export interface VictoryCandlestickProps
   highLabelComponent?: React.ReactElement;
   highLabels?: VictoryCandlestickLabelsType;
   labelOrientation?:
-    | OrientationTypes
-    | {
-        open?: OrientationTypes;
-        close?: OrientationTypes;
-        low?: OrientationTypes;
-        high?: OrientationTypes;
-      };
+  | OrientationTypes
+  | {
+    open?: OrientationTypes;
+    close?: OrientationTypes;
+    low?: OrientationTypes;
+    high?: OrientationTypes;
+  };
   low?: StringOrNumberOrCallback | string[];
   lowLabelComponent?: React.ReactElement;
   lowLabels?: VictoryCandlestickLabelsType;
