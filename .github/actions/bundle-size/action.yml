@@ -51,10 +51,10 @@ runs:
         # token: ${{ inputs.ghToken }}
 
     - name: setup
-      uses: ./.github/actions/setup
-      working-directory: pr-base
+      uses: .pr-base/.github/actions/setup
 
     - name: Build main
+      working-directory: pr-base
       run: pnpm build
 
     # Generate the bundle size difference report [required]
