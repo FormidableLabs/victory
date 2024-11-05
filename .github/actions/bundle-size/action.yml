@@ -45,16 +45,12 @@ runs:
     - name: Checkout base branch
       uses: actions/checkout@v4
       with:
-        # ref: "main"
         ref: ${{ inputs.branch }}
         path: br-base
 
-    - name: see what's in pr-base
-      shell: bash
-      run: ls -al ./br-base
-
-    - name: setup
-      uses: ./br-base/.github/actions/setup
+    # main is checked out into ./br-base. It needs to be setup and built
+    # - name: setup
+    #   uses: ./br-base/.github/actions/setup
 
     - name: Build main
       shell: bash

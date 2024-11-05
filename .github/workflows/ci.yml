@@ -29,17 +29,12 @@ jobs:
       - name: Types
         run: pnpm types:check
 
-      # bundle_size:
-      #   runs-on: ubuntu-latest
-      #   steps:
       - name: 📄 Bundle size report
         uses: ./.github/actions/bundle-size # path to composite action
         with:
           paths: "packages/**/dist/*.min.js"
           onlyDiff: "true"
-          # branch: "develop" # branch to compare to
           header: "Bundle size report" # PR comment header
-          # ghToken: ${{ secrets.GITHUB_TOKEN }} # github token
 
   format:
     needs: [build]
