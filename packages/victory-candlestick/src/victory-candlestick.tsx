@@ -22,14 +22,6 @@ import {
 import { Candle } from "./candle";
 import { getDomain, getData, getBaseProps } from "./helper-methods";
 
-export const bundleSizeIsDifferent = () => {
-  const x = "the bundle size should be different";
-  const y = "the bundle size should be different";
-  const z = "the bundle size should be different";
-
-  return { z, y, x };
-}
-
 export interface VictoryCandlestickStyleInterface {
   close?: VictoryStyleObject;
   closeLabels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
