@@ -3,7 +3,6 @@ import type { Meta } from "@storybook/react";
 
 import { Point, VictoryScatter, VictoryChart, VictoryTheme } from "@/victory";
 import { Story, ComponentMeta } from "./config";
-import { getData } from "../../utils/data";
 
 const meta: Meta<typeof VictoryScatter> = {
   ...ComponentMeta,

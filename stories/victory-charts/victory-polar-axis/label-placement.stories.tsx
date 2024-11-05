@@ -1,9 +1,8 @@
 import React from "react";
 import type { Meta } from "@storybook/react";
 
-import { VictoryPolarAxis, VictoryChart, VictoryTheme } from "@/victory";
+import { VictoryPolarAxis, VictoryTheme } from "@/victory";
 import { Story, ComponentMeta } from "./config";
-import { getData } from "../../utils/data";
 
 const meta: Meta<typeof VictoryPolarAxis> = {
   ...ComponentMeta,

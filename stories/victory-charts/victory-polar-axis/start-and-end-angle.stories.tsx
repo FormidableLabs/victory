@@ -1,9 +1,8 @@
 import React from "react";
 import type { Meta } from "@storybook/react";
 
-import { VictoryPolarAxis, VictoryChart, VictoryTheme } from "@/victory";
+import { VictoryPolarAxis, VictoryTheme } from "@/victory";
 import { Story, ComponentMeta } from "./config";
-import { getData } from "../../utils/data";
 
 const meta: Meta<typeof VictoryPolarAxis> = {
   ...ComponentMeta,
@@ -14,17 +13,37 @@ export const StartAndEndAngle: Story = {
   args: {},
   render: (props) => (
     <>
-      <VictoryPolarAxis {...props} theme={VictoryTheme[props.themeKey]}  startAngle={45} />
-      <VictoryPolarAxis {...props} theme={VictoryTheme[props.themeKey]}  dependentAxis startAngle={45} />
-      <VictoryPolarAxis {...props} theme={VictoryTheme[props.themeKey]}  endAngle={90} />
-      <VictoryPolarAxis {...props} theme={VictoryTheme[props.themeKey]}  dependentAxis endAngle={90} />
-      <VictoryPolarAxis {...props} theme={VictoryTheme[props.themeKey]}
-        
+      <VictoryPolarAxis
+        {...props}
+        theme={VictoryTheme[props.themeKey]}
+        startAngle={45}
+      />
+      <VictoryPolarAxis
+        {...props}
+        theme={VictoryTheme[props.themeKey]}
+        dependentAxis
+        startAngle={45}
+      />
+      <VictoryPolarAxis
+        {...props}
+        theme={VictoryTheme[props.themeKey]}
+        endAngle={90}
+      />
+      <VictoryPolarAxis
+        {...props}
+        theme={VictoryTheme[props.themeKey]}
+        dependentAxis
+        endAngle={90}
+      />
+      <VictoryPolarAxis
+        {...props}
+        theme={VictoryTheme[props.themeKey]}
         startAngle={45}
         endAngle={360 + 45}
       />
-      <VictoryPolarAxis {...props} theme={VictoryTheme[props.themeKey]}
-        
+      <VictoryPolarAxis
+        {...props}
+        theme={VictoryTheme[props.themeKey]}
         dependentAxis
         startAngle={45}
         endAngle={360 + 45}

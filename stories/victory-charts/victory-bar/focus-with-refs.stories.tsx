@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useCallback, useRef } from "react";
 import type { Meta } from "@storybook/react";
 
