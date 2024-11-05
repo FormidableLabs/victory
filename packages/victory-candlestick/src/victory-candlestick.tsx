@@ -27,7 +27,7 @@ export const bundleSizeIsDifferent = () => {
   const y = "the bundle size should be different";
   const z = "the bundle size should be different";
 
-  return { x, y, z };
+  return { z, y, x };
 }
 
 export interface VictoryCandlestickStyleInterface {
