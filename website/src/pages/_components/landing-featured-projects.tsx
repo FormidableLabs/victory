@@ -1,9 +1,17 @@
-import React from "react";
+import React, { ComponentProps } from "react";
 import { FeaturedBadge } from "formidable-oss-badges";
 
 import { LinkButton } from "../../components/link-button";
 
-const projects = [
+type ProjectName = ComponentProps<typeof FeaturedBadge>["name"];
+type Projects = {
+  name: ProjectName;
+  link: string;
+  description: string;
+  title?: string;
+};
+
+const projects: Projects[] = [
   {
     name: "spectacle",
     link: "https://commerce.nearform.com/open-source/spectacle",
@@ -41,9 +49,13 @@ export const LandingFeaturedProjects = () => (
         <a
           href={link}
           key={link}
-          className="col-span-2 sm:col-span-1 block grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 align-center items-center text-theme-2 hover:text-theme-2 dark:text-white dark:hover:text-white"
+          className="col-span-2 sm:col-span-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 align-center items-center text-theme-2 hover:text-theme-2 dark:text-white dark:hover:text-white"
         >
-          <FeaturedBadge name={name} isHoverable className="col-span-1" />
+          <FeaturedBadge
+            name={name}
+            isHoverable
+            className="col-span-1 max-w-full"
+          />
           <span className="flex flex-col col-span-1 lg:col-span-2">
             <span className="text-xl font-semibold capitalize">
               {title || name}

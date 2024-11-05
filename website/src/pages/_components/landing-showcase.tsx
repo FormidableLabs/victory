@@ -18,7 +18,7 @@ export function LandingShowcase() {
       <h2 className="my-8 text-4xl font-semibold text-center dark:text-black">
         A Few of Our Fans
       </h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-4">
         <AirbnbLogo className={logoClass} />
         <FiveThirtyEightLogo className={logoClass} />
         <RedfinLogo className={logoClass} />
