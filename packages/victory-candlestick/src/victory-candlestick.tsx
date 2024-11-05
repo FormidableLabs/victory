@@ -13,7 +13,6 @@ import {
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryLabelStyleObject,
-  VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleObject,
   NumberOrCallback,
@@ -43,8 +42,8 @@ export type VictoryCandlestickLabelsType =
 
 export interface VictoryCandlestickProps
   extends Omit<VictoryCommonProps, "polar">,
-  VictoryDatableProps,
-  VictoryMultiLabelableProps {
+    VictoryDatableProps,
+    VictoryMultiLabelableProps {
   candleColors?: {
     positive?: string;
     negative?: string;
@@ -72,13 +71,13 @@ export interface VictoryCandlestickProps
   highLabelComponent?: React.ReactElement;
   highLabels?: VictoryCandlestickLabelsType;
   labelOrientation?:
-  | OrientationTypes
-  | {
-    open?: OrientationTypes;
-    close?: OrientationTypes;
-    low?: OrientationTypes;
-    high?: OrientationTypes;
-  };
+    | OrientationTypes
+    | {
+        open?: OrientationTypes;
+        close?: OrientationTypes;
+        low?: OrientationTypes;
+        high?: OrientationTypes;
+      };
   low?: StringOrNumberOrCallback | string[];
   lowLabelComponent?: React.ReactElement;
   lowLabels?: VictoryCandlestickLabelsType;
@@ -315,4 +314,4 @@ export const bundleSizeIsDifferent = () => {
   const z = "the bundle size should be different";
 
   return { x, y, z };
-}
+};

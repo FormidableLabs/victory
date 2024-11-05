@@ -486,3 +486,6 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     return childProps;
   }, initialChildProps);
 };
+
+// @TODO: remove this before merging, it's just for verifying the analysis and report.
+const fake = () => "fake";
