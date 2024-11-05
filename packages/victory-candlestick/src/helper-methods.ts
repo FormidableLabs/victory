@@ -488,4 +488,12 @@ export const getBaseProps = (initialProps, fallbackProps) => {
 };
 
 // @TODO: remove this before merging, it's just for verifying the analysis and report.
-const fake = () => "fake";
+
+// @TODO: remove this when analyzer diff is confirmed to work.
+export const bundleSizeIsDifferent = () => {
+  const x = "the bundle size should be different";
+  const y = "the bundle size should be different";
+  const z = "the bundle size should be different";
+
+  return { x, y, z };
+};
