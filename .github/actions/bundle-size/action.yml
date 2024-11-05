@@ -1,10 +1,10 @@
 name: "Bundle size reporter"
 description: "Post bundle size difference compared to another branch"
 inputs:
-  # branch:
-  #   description: 'Branch to compare to'
-  #   required: true
-  #   default: 'main'
+  branch:
+    description: 'Branch to compare to'
+    required: true
+    default: 'main'
   paths:
     description: "Paths to json file bundle size report or folder containing bundles"
     required: true
@@ -45,10 +45,9 @@ runs:
     - name: Checkout base branch
       uses: actions/checkout@v4
       with:
-        ref: "main"
-        # ref: ${{ inputs.branch }}
+        # ref: "main"
+        ref: ${{ inputs.branch }}
         path: br-base
-        # token: ${{ inputs.ghToken }}
 
     - name: see what's in pr-base
       shell: bash
@@ -68,8 +67,6 @@ runs:
       with:
         paths: ${{ inputs.paths }}
         onlyDiff: ${{ inputs.onlyDiff }}
-        # filter: ${{ inputs.filter }}
-        # unit: ${{ inputs.unit }}
 
     # Post github action summary
     - name: Post summary
@@ -87,4 +84,3 @@ runs:
         header: ${{ inputs.header }}
         append: ${{ inputs.append }}
         message: "${{ steps.bundleSize.outputs.summary }}"
-        # GITHUB_TOKEN: ${{ inputs.ghToken }}
