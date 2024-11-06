@@ -48,10 +48,7 @@ runs:
         ref: ${{ inputs.branch }}
         path: br-base
 
-    # main is checked out into ./br-base. It needs to be setup and built
-    # - name: setup
-    #   uses: ./br-base/.github/actions/setup
-
+    # build main under it's checkout location, in ./br-base
     - name: Build main
       shell: bash
       run: cd br-base && pnpm install && pnpm build
