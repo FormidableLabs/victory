@@ -6,7 +6,7 @@ type ColorPickerProps = {
   label?: string;
   color: string;
   id: string;
-  onColorChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onColorChange: (color: string) => void;
   showColorName?: boolean;
 };
 
@@ -21,7 +21,7 @@ const ColorPicker = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onColorChange) {
-      onColorChange(event);
+      onColorChange(event.target.value);
     }
   };
 
@@ -33,7 +33,7 @@ const ColorPicker = ({
         </label>
       )}
       <div
-        className={clsx("relative inline-flex rounded-full group", {
+        className={clsx("relative inline-flex rounded-full group/swatch", {
           "border-2 border-gray-200 p-0.5 cursor-pointer justify-between bg-gray-100":
             showColorName,
         })}
@@ -55,7 +55,7 @@ const ColorPicker = ({
             />
             {!showColorName && (
               <div
-                className={`absolute top-0 left-0 w-full h-full text-white flex justify-center items-center text-xl rounded-full opacity-0 group-hover:opacity-100 ${
+                className={`absolute top-0 left-0 w-full h-full text-white flex justify-center items-center text-xl rounded-full opacity-0 group-hover/swatch:opacity-100 ${
                   isPickerOpen ? "opacity-100" : ""
                 }`}
               >
@@ -82,7 +82,7 @@ const ColorPicker = ({
         )}
         <input
           id={id}
-          className={`absolute top-0 left-0 w-full h-full cursor-pointer opacity-0 z-10 group-hover:border-currentColor ${
+          className={`absolute top-0 left-0 w-full h-full cursor-pointer opacity-0 z-10 group-hover/swatch:border-currentColor ${
             isPickerOpen ? "border-currentColor" : ""
           }`}
           type="color"

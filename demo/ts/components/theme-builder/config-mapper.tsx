@@ -4,39 +4,68 @@ import Accordion from "./accordion";
 import Select from "./select";
 import Slider from "./slider";
 import ColorPicker from "./color-picker";
+import ColorScaleOptions from "./color-scale-options";
+import { getConfigValue } from "./utils";
 
 const ConfigMapper = ({
+  themeConfig,
   activeColorScale,
+  updateThemeConfig,
   handleColorScaleChange,
-  handleLabelConfigChange,
 }) => {
+  const handleColorChange = ({ newColor, index, colorScale }) => {
+    const updatedColors = themeConfig?.palette?.[colorScale]?.map((color, i) =>
+      i === index ? newColor : color,
+    );
+    updateThemeConfig(`palette.${colorScale}`, updatedColors);
+  };
+
   return (
     <>
-      {optionsConfig.map((section) => (
-        <Accordion key={section.title} title={section.title} id={section.title}>
+      {optionsConfig.map((section, index) => (
+        <Accordion
+          key={section.title}
+          title={section.title}
+          id={section.title}
+          defaultOpen={index === 0}
+        >
           {section.fields.map((field) => {
             if (field.type === "colorScale") {
               return (
-                <Select
+                <ColorScaleOptions
                   key={field.label}
-                  id="color-scale-select"
-                  value={activeColorScale}
-                  onChange={handleColorScaleChange}
-                  options={field.options}
-                  label={field.label}
+                  activeColorScale={activeColorScale}
+                  palette={themeConfig?.palette}
+                  onColorChange={handleColorChange}
+                  onColorScaleChange={handleColorScaleChange}
                 />
               );
             }
+            const configValue = getConfigValue(themeConfig, field.path);
             if (field.type === "slider") {
               return (
                 <Slider
                   id={field.label}
                   key={field.label}
                   label={field.label}
-                  defaultValue={field.default}
+                  value={configValue as number}
                   unit={field.unit}
-                  onChange={(value) =>
-                    handleLabelConfigChange({ [field.label]: value })
+                  onChange={(newValue) =>
+                    updateThemeConfig(field.path, newValue)
+                  }
+                />
+              );
+            }
+            if (field.type === "select") {
+              return (
+                <Select
+                  id={field.label}
+                  key={field.label}
+                  label={field.label}
+                  value={configValue as string}
+                  options={field.options}
+                  onChange={(newValue) =>
+                    updateThemeConfig(field.path, newValue)
                   }
                 />
               );
@@ -47,10 +76,11 @@ const ConfigMapper = ({
                   id={field.label}
                   key={field.label}
                   label={field.label}
-                  color={field.default}
-                  onColorChange={(color) =>
-                    handleLabelConfigChange({ [field.label]: color })
+                  color={configValue as string}
+                  onColorChange={(newColor) =>
+                    updateThemeConfig(field.path, newColor)
                   }
+                  showColorName
                 />
               );
             }

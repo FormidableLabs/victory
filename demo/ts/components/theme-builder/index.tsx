@@ -1,7 +1,8 @@
 import React from "react";
+import "./tailwind.css";
+
 import {
   ColorScalePropType,
-  LabelProps,
   VictoryTheme,
   VictoryThemeDefinition,
 } from "victory-core";
@@ -10,14 +11,11 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryStack } from "victory-stack";
 import { VictoryBar } from "victory-bar";
 import { VictoryArea } from "victory-area";
-import ColorScaleOptions, { ColorChangeArgs } from "./color-scale-options";
 import Select from "./select";
 import ConfigPreview from "./config-preview";
 import Button from "./button";
-
-import "./tailwind.css";
-import LabelOptions from "./label-options";
 import ConfigMapper from "./config-mapper";
+import { setNestedConfigValue } from "./utils";
 
 export type ThemeOption = {
   name: string;
@@ -84,50 +82,24 @@ const ThemeBuilder = () => {
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
     React.useState(false);
 
-  const handleThemeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const themeName = event.target.value;
+  const handleThemeSelect = (themeName: string) => {
     const theme = themes.find((t) => t.name === themeName);
     setBaseTheme(theme);
     setCustomThemeConfig({ ...theme?.config });
   };
 
-  const handleLabelConfigChange = (newLabelConfig: Partial<LabelProps>) => {
-    if (customThemeConfig) {
-      const updatedConfig = {
-        ...customThemeConfig,
-        axis: {
-          ...customThemeConfig.axis,
-          style: {
-            ...customThemeConfig.axis?.style,
-            axisLabel: {
-              ...customThemeConfig.axis?.style?.axisLabel,
-              ...newLabelConfig,
-            },
-          },
-        },
-      };
-      setCustomThemeConfig(updatedConfig as VictoryThemeDefinition);
-    }
-  };
-
-  const handleColorChange = ({ event, index, colorScale }: ColorChangeArgs) => {
-    const newColor = event.target.value;
-    const updatedConfig = {
-      ...customThemeConfig,
-      palette: {
-        ...customThemeConfig?.palette,
-        [colorScale]: customThemeConfig?.palette?.[colorScale]?.map(
-          (color, i) => (i === index ? newColor : color),
-        ),
-      },
-    };
+  const updateCustomThemeConfig = (path: string, newValue: unknown) => {
+    if (!customThemeConfig) return;
+    const updatedConfig = setNestedConfigValue(
+      customThemeConfig,
+      path,
+      newValue,
+    );
     setCustomThemeConfig(updatedConfig);
   };
 
-  const handleColorScaleChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setActiveColorScale(event.target.value as ColorScalePropType);
+  const handleColorScaleChange = (colorScale: string) => {
+    setActiveColorScale(colorScale as ColorScalePropType);
   };
 
   const handleThemeConfigPreviewOpen = () => {
@@ -155,29 +127,12 @@ const ThemeBuilder = () => {
           />
           {customThemeConfig && (
             <section>
-              <h2 className="text-lg font-bold mb-4">Customization Options</h2>
+              <h2 className="text-lg font-bold my-4">Customization Options</h2>
               <ConfigMapper
+                themeConfig={customThemeConfig}
                 activeColorScale={activeColorScale}
                 handleColorScaleChange={handleColorScaleChange}
-                handleLabelConfigChange={handleLabelConfigChange}
-              />
-            </section>
-          )}
-          {false && (
-            <section>
-              <h2 className="text-lg font-bold mb-4">Customization Options</h2>
-              <h3 className="text-lg font-bold mb-4">Color Options</h3>
-              <ColorScaleOptions
-                activeColorScale={activeColorScale}
-                palette={customThemeConfig?.palette}
-                onColorChange={handleColorChange}
-                onColorScaleChange={handleColorScaleChange}
-              />
-              <LabelOptions
-                labelConfig={
-                  customThemeConfig?.axis?.style?.axisLabel as LabelProps
-                }
-                onLabelConfigChange={handleLabelConfigChange}
+                updateThemeConfig={updateCustomThemeConfig}
               />
             </section>
           )}

@@ -2,8 +2,20 @@ import React from "react";
 import clsx from "clsx";
 import { FaChevronDown } from "react-icons/fa";
 
-const Accordion = ({ id, title, children }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+type AccordionProps = {
+  id: string;
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+};
+
+const Accordion = ({
+  id,
+  title,
+  children,
+  defaultOpen = false,
+}: AccordionProps) => {
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
