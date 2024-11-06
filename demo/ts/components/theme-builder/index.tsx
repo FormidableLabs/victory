@@ -17,6 +17,7 @@ import Button from "./button";
 
 import "./tailwind.css";
 import LabelOptions from "./label-options";
+import ConfigMapper from "./config-mapper";
 
 export type ThemeOption = {
   name: string;
@@ -139,7 +140,7 @@ const ThemeBuilder = () => {
 
   return (
     <div className="flex flex-row flex-wrap items-start justify-start w-full">
-      <aside className="relative flex flex-col h-lvh w-[300px] border-r border-gray-200">
+      <aside className="relative flex flex-col h-lvh w-[350px] border-r border-gray-200">
         <div className="grow overflow-y-auto p-4 pb-[100px]">
           <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
           <p className="text-sm mb-4 text-gray-300">
@@ -155,15 +156,26 @@ const ThemeBuilder = () => {
           {customThemeConfig && (
             <section>
               <h2 className="text-lg font-bold mb-4">Customization Options</h2>
+              <ConfigMapper
+                activeColorScale={activeColorScale}
+                handleColorScaleChange={handleColorScaleChange}
+                handleLabelConfigChange={handleLabelConfigChange}
+              />
+            </section>
+          )}
+          {false && (
+            <section>
+              <h2 className="text-lg font-bold mb-4">Customization Options</h2>
+              <h3 className="text-lg font-bold mb-4">Color Options</h3>
               <ColorScaleOptions
                 activeColorScale={activeColorScale}
-                palette={customThemeConfig.palette}
+                palette={customThemeConfig?.palette}
                 onColorChange={handleColorChange}
                 onColorScaleChange={handleColorScaleChange}
               />
               <LabelOptions
                 labelConfig={
-                  customThemeConfig.axis?.style?.axisLabel as LabelProps
+                  customThemeConfig?.axis?.style?.axisLabel as LabelProps
                 }
                 onLabelConfigChange={handleLabelConfigChange}
               />

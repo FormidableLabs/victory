@@ -15,9 +15,9 @@ type SelectProps = {
 
 const Select = ({ id, label, options, value, onChange }: SelectProps) => {
   return (
-    <div className="relative w-full mb-5">
+    <div className="relative w-full">
       {label && (
-        <label htmlFor={id} className="block mb-1 text-sm font-bold">
+        <label htmlFor={id} className="block mb-1 text-sm">
           {label}
         </label>
       )}
