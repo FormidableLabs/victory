@@ -155,9 +155,9 @@ export const VictoryContainer = (initialProps: VictoryContainerProps) => {
         ...style,
         width: responsive ? style?.width : dimensions.width,
         height: responsive ? style?.height : dimensions.height,
-        pointerEvents: "none",
-        touchAction: "none",
-        position: "relative",
+        pointerEvents: style?.pointerEvents ?? "none",
+        touchAction: style?.touchAction ?? "none",
+        position: style?.position ?? "relative",
       }}
       data-ouia-component-id={ouiaId}
       data-ouia-component-type={ouiaType}
