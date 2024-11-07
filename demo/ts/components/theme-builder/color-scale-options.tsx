@@ -4,7 +4,7 @@ import Select from "./select";
 import ColorPicker from "./color-picker";
 
 export type ColorChangeArgs = {
-  event: React.ChangeEvent<HTMLInputElement>;
+  newColor: string;
   index: number;
   colorScale: string;
 };
@@ -13,7 +13,7 @@ type ColorScaleOptionsProps = {
   palette?: VictoryThemeDefinition["palette"];
   activeColorScale?: ColorScalePropType;
   onColorChange: (args: ColorChangeArgs) => void;
-  onColorScaleChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onColorScaleChange: (colorScale: string) => void;
 };
 
 const colorScales = [
@@ -57,6 +57,7 @@ const ColorScaleOptions = ({
         onChange={onColorScaleChange}
         options={colorScales}
         label="Color Scale"
+        className="mb-5"
       />
       <div className="flex flex-wrap gap-3 mb-5">
         {palette?.[activeColorScale as string]?.map((color, i) => (
@@ -64,9 +65,9 @@ const ColorScaleOptions = ({
             key={i}
             color={color}
             id={`color-${i}`}
-            onColorChange={(event) =>
+            onColorChange={(newColor) =>
               onColorChange({
-                event,
+                newColor,
                 index: i,
                 colorScale: activeColorScale as string,
               })

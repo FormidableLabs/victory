@@ -1,18 +1,30 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-const Slider = ({ label, id, defaultValue, unit = "px", onChange }) => {
-  const [value, setValue] = React.useState(defaultValue);
+type SliderProps = {
+  label: string;
+  id: string;
+  value: number;
+  unit?: string;
+  onChange?: (value: number) => void;
+  min?: number;
+  max?: number;
+};
 
+const Slider = ({
+  label,
+  id,
+  value,
+  unit = "px",
+  onChange,
+  min,
+  max,
+}: SliderProps) => {
   const handleChange = (event) => {
-    setValue(event.target.value);
+    const newValue = event.target.value;
     if (onChange) {
-      onChange(event);
+      onChange(newValue);
     }
   };
-
-  useEffect(() => {
-    setValue(defaultValue);
-  }, [defaultValue]);
 
   return (
     <div className="my-4">
@@ -29,6 +41,8 @@ const Slider = ({ label, id, defaultValue, unit = "px", onChange }) => {
         value={value}
         onChange={handleChange}
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+        min={min}
+        max={max}
       />
     </div>
   );
