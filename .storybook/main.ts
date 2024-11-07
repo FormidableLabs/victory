@@ -34,7 +34,7 @@ const config: StorybookConfig = {
   stories: ["../stories/**/*.stories.tsx"],
 
   typescript: {
-    check: true,
+    check: false,
     checkOptions: {
       typescript: {
         configFile: path.resolve(ROOT, "tsconfig.storybook.json"),
