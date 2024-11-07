@@ -24,12 +24,21 @@ const config: StorybookConfig = {
     "@chromatic-com/storybook",
   ],
 
-  stories: ["../stories/**/*.stories.tsx"],
-
   framework: {
     name: "@storybook/react-webpack5",
     options: {
       builder: {},
+    },
+  },
+
+  stories: ["../stories/**/*.stories.tsx"],
+
+  typescript: {
+    check: true,
+    checkOptions: {
+      typescript: {
+        configFile: path.resolve(ROOT, "tsconfig.storybook.json"),
+      },
     },
   },
 

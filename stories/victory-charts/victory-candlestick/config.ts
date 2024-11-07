@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { VictoryCandlestick } from "@/victory";
+import { VictoryCandlestick, VictoryCandlestickProps } from "@/victory";
 
 import {
   VictoryCommonProps,
@@ -9,7 +9,7 @@ import {
 } from "../../utils/arg-types";
 import { componentContainer } from "../../utils/decorators";
 
-type StoryProps = React.ComponentProps<typeof VictoryCandlestick> & {
+type StoryProps = VictoryCandlestickProps & {
   themeKey: string;
 };
 

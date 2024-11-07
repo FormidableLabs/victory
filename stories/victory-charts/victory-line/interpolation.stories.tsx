@@ -1,9 +1,16 @@
 import React from "react";
 import type { Meta } from "@storybook/react";
 
-import { VictoryLine, VictoryChart, VictoryLabel, VictoryTheme } from "@/victory";
-import { Story, ComponentMeta } from "./config";
+import {
+  InterpolationPropType,
+  VictoryLine,
+  VictoryChart,
+  VictoryLabel,
+  VictoryTheme,
+} from "@/victory";
+
 import { getData } from "../../utils/data";
+import { Story, ComponentMeta } from "./config";
 
 const meta: Meta<typeof VictoryLine> = {
   ...ComponentMeta,
@@ -21,7 +28,11 @@ export const Interpolation: Story = {
           style={{ textAnchor: "middle" }}
           text={interpolation}
         />
-        <VictoryLine {...props} data={getData(8)} interpolation={interpolation} />
+        <VictoryLine
+          {...props}
+          data={getData(8)}
+          interpolation={interpolation as InterpolationPropType}
+        />
       </VictoryChart>
     );
 

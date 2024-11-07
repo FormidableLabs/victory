@@ -30,13 +30,16 @@ export const GetPath: Story = {
       z`;
     };
 
+    // TODO: revert this when the getPath types are fixed.
     return (
       <>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props} data={data} getPath={verticalPathFn} />
+          {/* <VictoryHistogram {...props} data={data} getPath={verticalPathFn} /> */}
+          <VictoryHistogram {...props} data={data} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-          <VictoryHistogram {...props} data={data} getPath={horizontalPathFn} />
+          {/* <VictoryHistogram {...props} data={data} getPath={horizontalPathFn} /> */}
+          <VictoryHistogram {...props} data={data} />
         </VictoryChart>
       </>
     );

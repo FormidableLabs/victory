@@ -27,7 +27,7 @@ export const Data: Story = {
           ]}
           x="series"
           open="start"
-          high={(data) => data.big / 10}
+          high={(data: any) => data.big /10 }
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
@@ -42,7 +42,7 @@ export const Data: Story = {
           ]}
           x="series"
           open="start"
-          high={(data) => data.big / 10}
+          high={(data: any) => data.big / 10}
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>

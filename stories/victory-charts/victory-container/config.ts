@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { VictoryContainer } from "@/victory";
+import { VictoryContainer, VictoryContainerProps } from "@/victory";
 
-import { VictoryContainerProps } from "../../utils/arg-types";
+import { VictoryContainerProps as ContainerArgTypes } from "../../utils/arg-types";
 import { componentContainer } from "../../utils/decorators";
 
-type StoryProps = React.ComponentProps<typeof VictoryContainer> & {
+type StoryProps = VictoryContainerProps & {
   themeKey: string;
 };
 
@@ -14,7 +14,7 @@ export const ComponentMeta: Meta<Omit<StoryProps, "themeKey">> = {
   decorators: [componentContainer],
 
   argTypes: {
-    ...VictoryContainerProps,
+    ...ContainerArgTypes,
   },
 };
 export type Story = StoryObj<StoryProps>;

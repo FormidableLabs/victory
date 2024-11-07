@@ -26,7 +26,6 @@ export const VictoryZoomContainerDefault: Story = {
         containerComponent={
           <VictoryZoomContainer
             zoomDomain={{ x: [new Date(1993, 1, 1), new Date(2005, 1, 1)] }}
-            dimension="x"
           />
         }
       >

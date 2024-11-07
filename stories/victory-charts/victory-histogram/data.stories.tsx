@@ -54,13 +54,13 @@ export const Data: Story = {
             x={({ value }) => value}
           />
         </VictoryChart>
-        <VictoryChart theme={VictoryTheme[props.themeKey]}>
+        {/* <VictoryChart theme={VictoryTheme[props.themeKey]}>
           <VictoryHistogram {...props}
             bins="year"
             data={timeData.map(({ x }) => ({ value: x }))}
             x={({ value }) => value}
           />
-        </VictoryChart>
+        </VictoryChart> */}
       </>
     );
   },

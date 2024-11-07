@@ -16,7 +16,6 @@ export const Style: Story = {
       <VictoryPolarAxis
         {...props}
         theme={VictoryTheme[props.themeKey]}
-        theme={VictoryTheme.material}
         style={{
           axis: { stroke: "#756f6a" },
           axisLabel: { fontSize: 20, padding: 30 },
@@ -29,7 +28,6 @@ export const Style: Story = {
         {...props}
         theme={VictoryTheme[props.themeKey]}
         dependentAxis
-        theme={VictoryTheme.material}
         style={{
           axis: { stroke: "#756f6a" },
           axisLabel: { fontSize: 20, padding: 30 },

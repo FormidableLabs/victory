@@ -33,7 +33,7 @@ export const Origin: Story = {
         {...props}
         theme={VictoryTheme[props.themeKey]}
         style={{ labels: { fill: "magenta" } }}
-        origin={{ y: 0 }}
+        origin={{ x: 200, y: 0 }}
         labelRadius={100}
         startAngle={-270}
         endAngle={-90}

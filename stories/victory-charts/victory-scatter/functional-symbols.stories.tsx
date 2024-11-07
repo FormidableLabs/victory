@@ -1,7 +1,12 @@
 import React from "react";
 import type { Meta } from "@storybook/react";
 
-import { VictoryScatter, VictoryChart, VictoryTheme } from "@/victory";
+import {
+  ScatterSymbolType,
+  VictoryScatter,
+  VictoryChart,
+  VictoryTheme,
+} from "@/victory";
 
 import { getData, getMixedData } from "../../utils/data";
 import { Story, ComponentMeta } from "./config";
@@ -28,7 +33,8 @@ export const FunctionalSymbols: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getMixedData(8)}
           symbol={({ index }) => SYMBOLS[index]}
           labels={({ index }) => SYMBOLS[index]}
@@ -36,7 +42,8 @@ export const FunctionalSymbols: Story = {
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getMixedData(8)}
           symbol={({ index }) => SYMBOLS[index]}
           labels={({ index }) => SYMBOLS[index]}
@@ -44,7 +51,8 @@ export const FunctionalSymbols: Story = {
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={[
             { x: 1, y: 45, symbol: "star" },
             { x: 2, y: 85 },
@@ -56,7 +64,8 @@ export const FunctionalSymbols: Story = {
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} polar innerRadius={30}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getData(8)}
           symbol={({ index }) => SYMBOLS[index]}
           labels={({ index }) => SYMBOLS[index]}

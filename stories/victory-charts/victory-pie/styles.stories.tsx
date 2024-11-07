@@ -41,19 +41,6 @@ export const Styles: Story = {
         theme={VictoryTheme[props.themeKey]}
         style={{
           labels: {
-            fontSize: ({ index }) => (index === 4 ? 25 : 15),
-          },
-          data: {
-            stroke: ({ index }) => (index === 4 ? "red" : undefined),
-            strokeWidth: 3,
-          },
-        }}
-      />
-      <VictoryPie
-        {...props}
-        theme={VictoryTheme[props.themeKey]}
-        style={{
-          labels: {
             fill: "white",
             fontSize: 12,
             fontWeight: "bold",

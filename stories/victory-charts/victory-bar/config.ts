@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { VictoryBar } from "@/victory";
+import { VictoryBar, VictoryBarProps } from "@/victory";
 
 import {
   VictoryCommonProps,
@@ -9,7 +9,7 @@ import {
 } from "../../utils/arg-types";
 import { componentContainer } from "../../utils/decorators";
 
-type StoryProps = React.ComponentProps<typeof VictoryBar> & {
+type StoryProps = VictoryBarProps & {
   themeKey: string;
 };
 

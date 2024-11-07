@@ -35,12 +35,6 @@ export const Labels: Story = {
         labels={({ index }) => `#${index}`}
         labelPosition="endAngle"
       />
-      <VictoryPie
-        {...props}
-        theme={VictoryTheme[props.themeKey]}
-        labels={({ index }) => `#${index}`}
-        labelPosition={({ index }) => (index ? undefined : "startAngle")}
-      />
     </>
   ),
 };

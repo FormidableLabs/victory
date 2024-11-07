@@ -2,6 +2,7 @@ import React from "react";
 import type { Meta } from "@storybook/react";
 
 import {
+  InterpolationPropType,
   VictoryLine,
   VictoryChart,
   VictoryLabel,
@@ -30,7 +31,7 @@ export const PolarInterpolation: Story = {
         <VictoryLine
           {...props}
           data={getData(8)}
-          interpolation={interpolation}
+          interpolation={interpolation as InterpolationPropType}
         />
       </VictoryChart>
     );

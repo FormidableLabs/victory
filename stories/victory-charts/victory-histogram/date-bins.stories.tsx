@@ -17,7 +17,9 @@ const meta: Meta<typeof VictoryHistogram> = {
 export const DateBins: Story = {
   args: {},
   render: (props) => {
-    const niceTimeScale = d3Scale
+    // HACK: d3scale has a scaleTime function but the types
+    // are whack coming through the build
+    const niceTimeScale = (d3Scale as any)
       .scaleTime()
       .domain(d3Array.extent(timeData, ({ x }) => x))
       .nice();

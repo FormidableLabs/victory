@@ -22,7 +22,7 @@ export const Stacked: Story = {
   render: (props) => {
     const stackedData = [
       ...[50, 30, 100, 32, 50, 10, 49, 78, 20].map((count) =>
-        getData(count, count, 100),
+        getData(count, count.toString(), 100),
       ),
       [{ x: 1 }, { x: 3 }, { x: 1 }, { x: 2 }],
     ];

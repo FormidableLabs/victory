@@ -9,6 +9,7 @@ const meta: Meta<typeof VictoryPie> = {
   title: "Victory Charts/VictoryPie",
 };
 
+// TODO: uncomment when Slice props are fixed to include className
 export const DisableInlineStyles: Story = {
   args: {},
   render: (props) => (
@@ -18,11 +19,11 @@ export const DisableInlineStyles: Story = {
         theme={VictoryTheme[props.themeKey]}
         disableInlineStyles
       />
-      <VictoryPie
+      {/* <VictoryPie
         {...props}
         theme={VictoryTheme[props.themeKey]}
         dataComponent={<Slice disableInlineStyles className="fill-purple" />}
-      />
+      /> */}
     </>
   ),
 };

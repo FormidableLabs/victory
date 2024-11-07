@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { VictoryPolarAxis } from "@/victory";
+import { VictoryPolarAxis, VictoryPolarAxisProps } from "@/victory";
 
 import {
   VictoryAxisCommonProps,
@@ -9,7 +9,7 @@ import {
 } from "../../utils/arg-types";
 import { componentContainer } from "../../utils/decorators";
 
-type StoryProps = React.ComponentProps<typeof VictoryPolarAxis> & {
+type StoryProps = VictoryPolarAxisProps & {
   themeKey: string;
 };
 

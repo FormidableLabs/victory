@@ -25,13 +25,6 @@ export const Axes: Story = {
         <VictoryAxis dependentAxis />
         <VictoryAxis dependentAxis orientation="right" />
       </VictoryChart>
-      <VictoryChart
-        {...props}
-        dependentAxis={{ orientation: "right" }}
-        theme={VictoryTheme[props.themeKey]}
-      >
-        <VictoryAxis dependentAxis />
-      </VictoryChart>
     </>
   ),
 };

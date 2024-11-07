@@ -54,7 +54,7 @@ export const StartAndEndAngles: Story = {
           <Slice
             sliceStartAngle={-90}
             sliceEndAngle={({ slice }) =>
-              Helpers.radiansToDegrees(slice.endAngle) - 90
+              Helpers.radiansToDegrees(slice?.endAngle) - 90
             }
           />
         }

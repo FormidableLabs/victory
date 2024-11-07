@@ -13,13 +13,7 @@ export const Default: Story = {
   args: {},
   render: (props) => (
     <>
-      <VictoryChart polar theme={VictoryTheme.material} />
-      <VictoryPolarAxis
-        {...props}
-        theme={VictoryTheme[props.themeKey]}
-        theme={VictoryTheme.material}
-      />
-      <VictoryChart polar />
+      <VictoryChart polar theme={VictoryTheme[props.themeKey]} />
       <VictoryPolarAxis {...props} theme={VictoryTheme[props.themeKey]} />
     </>
   ),

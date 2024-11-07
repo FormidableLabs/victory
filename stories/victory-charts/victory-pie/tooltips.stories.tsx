@@ -42,6 +42,15 @@ export const Tooltips: Story = {
         radius={100}
         labels={({ index }) => `#${index}`}
         labelPosition="endAngle"
+        labelPlacement="perpendicular"
+        labelComponent={<VictoryTooltip active />}
+      />
+      <VictoryPie
+        {...props}
+        theme={VictoryTheme[props.themeKey]}
+        radius={100}
+        labels={({ index }) => `#${index}`}
+        labelPosition="startAngle"
         labelPlacement="parallel"
         labelComponent={<VictoryTooltip active />}
       />
@@ -50,8 +59,8 @@ export const Tooltips: Story = {
         theme={VictoryTheme[props.themeKey]}
         radius={100}
         labels={({ index }) => `#${index}`}
+        labelPosition="endAngle"
         labelPlacement="parallel"
-        labelPosition={({ index }) => (index ? undefined : "startAngle")}
         labelComponent={<VictoryTooltip active />}
       />
     </>

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { VictoryChart } from "@/victory";
+import { VictoryChart, VictoryChartProps } from "@/victory";
 
 import { VictoryCommonProps } from "../../utils/arg-types";
 import { componentContainer } from "../../utils/decorators";
 
-type StoryProps = React.ComponentProps<typeof VictoryChart> & {
+type StoryProps = VictoryChartProps & {
   themeKey: string;
 };
 

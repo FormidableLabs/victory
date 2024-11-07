@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { VictoryTooltip } from "@/victory";
+import { VictoryTooltip, VictoryTooltipProps } from "@/victory";
 
 import { VictoryLabelableProps } from "../../utils/arg-types";
 import { componentContainer } from "../../utils/decorators";
 import { getData, getMixedData } from "../../utils/data";
 
-type StoryProps = React.ComponentProps<typeof VictoryTooltip> & {
+type StoryProps = VictoryTooltipProps & {
   themeKey: string;
 };
 

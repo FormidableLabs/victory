@@ -162,6 +162,7 @@
     "types:check": "wireit",
     "types:create": "wireit",
     "build-storybook": "storybook build",
+    "storybook:typecheck": "tsc -p tsconfig.storybook.json",
     "storybook:build": "wireit",
     "storybook:dev": "concurrently --raw \"pnpm:build:lib:esm --watch\" \"pnpx storybook dev -p 6006\"",
     "storybook:start": "storybook dev -p 6006 --no-open",
