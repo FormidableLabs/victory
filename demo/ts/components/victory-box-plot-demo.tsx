@@ -2,6 +2,7 @@
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryBoxPlot } from "victory-box-plot";
+import { VictoryTooltip } from "victory-tooltip";
 import { VictoryTheme } from "victory-core";
 import { range, random } from "lodash";
 
@@ -271,6 +272,28 @@ export default class VictoryBoxPlotDemo extends React.Component<
           boxWidth={10}
           data={this.state.data}
         />
+        <VictoryChart
+          style={chartStyle}
+          minDomain={0}
+          theme={VictoryTheme.clean}
+        >
+          <VictoryBoxPlot
+            minLabels
+            minLabelComponent={
+              <VictoryTooltip
+                labelTarget="minLabels"
+                dataTargets={["min", "max", "q1", "q3", "median"]}
+              />
+            }
+            data={[
+              { x: "red", y: [5, 10, 9, 2] },
+              { x: "blue", y: [1, 15, 6, 8] },
+              { x: "green", y: [3, 5, 6, 9] },
+              { x: "yellow", y: [5, 20, 8, 12] },
+              { x: "white", y: [2, 11, 12, 13] },
+            ]}
+          />
+        </VictoryChart>
       </div>
     );
   }
