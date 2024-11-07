@@ -3,9 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { VictoryAnimation } from "@/victory";
 import { componentContainer } from "../../utils/decorators";
 
-type StoryProps = React.ComponentProps<typeof VictoryAnimation> & {
-  themeKey: string;
-};
+type StoryProps = React.ComponentProps<typeof VictoryAnimation>;
 
 export const ComponentMeta: Meta<StoryProps> = {
   component: VictoryAnimation,
@@ -14,7 +12,7 @@ export const ComponentMeta: Meta<StoryProps> = {
   argTypes: {
     delay: { control: "number" },
     duration: { control: "number" },
-    easing: { control: "string" },
+    easing: { control: "text" },
   },
 };
 

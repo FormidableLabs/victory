@@ -1,23 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { VictoryLabel } from "@/victory";
+import { VictoryLabel, VictoryScatterProps } from "@/victory";
 import { componentContainer } from "../../utils/decorators";
 
 type StoryProps = React.ComponentProps<typeof VictoryLabel>;
 
-export const ComponentMeta: Meta<StoryProps> = {
+export const ComponentMeta: Meta<Omit<StoryProps, "themeKey">> = {
   component: VictoryLabel,
   decorators: [componentContainer],
 
   argTypes: {
-    active: { control: "boolean" },
     angle: { control: "number" },
     capHeight: { control: "number" },
     className: { control: "text" },
     desc: { control: "text" },
     direction: { control: "select", options: ["inherit", "rtl", "ltr"] },
-    height: { control: "number" },
-    index: { control: "number" },
     id: { control: "text" },
     inline: { control: "boolean" },
     labelPlacement: {
@@ -38,7 +35,6 @@ export const ComponentMeta: Meta<StoryProps> = {
       control: "select",
       options: ["inherit", "start", "middle", "end"],
     },
-    width: { control: "number" },
   },
 };
 

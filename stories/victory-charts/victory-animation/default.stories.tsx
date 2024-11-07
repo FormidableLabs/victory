@@ -49,7 +49,7 @@ export const Default: Story = {
 
       // clean up interval on unmount
       return () => clearInterval(interval);
-    }, [percent]);
+    }, [data, percent]);
 
     return (
       <div>
@@ -72,7 +72,7 @@ export const Default: Story = {
               },
             }}
           />
-          <VictoryAnimation duration={1000} data={{ percent }}>
+          <VictoryAnimation {...props} data={{ percent }}>
             {(newProps) => {
               return (
                 <VictoryLabel

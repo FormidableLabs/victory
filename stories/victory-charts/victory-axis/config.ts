@@ -16,7 +16,7 @@ type StoryProps = React.ComponentProps<typeof VictoryAxis> & {
 
 export type Story = StoryObj<StoryProps>;
 
-export const ComponentMeta: Meta<StoryProps> = {
+export const ComponentMeta: Meta<Omit<StoryProps, "themeKey">> = {
   component: VictoryAxis,
   decorators: [componentContainer],
 

@@ -9,28 +9,28 @@ type StoryProps = React.ComponentProps<typeof VictoryBoxPlot> & {
   themeKey: string;
 };
 
-export const ComponentMeta: Meta<StoryProps> = {
+export const ComponentMeta: Meta<Omit<StoryProps, "themeKey">> = {
   component: VictoryBoxPlot,
   decorators: [componentContainer],
 
   argTypes: {
     ...VictoryCommonProps,
     ...VictoryDatableProps,
-  },
 
-  boxWidth: { control: "number" },
-  labels: { control: "boolean" },
-  max: { control: "string" },
-  maxLabels: { control: "boolean" },
-  median: { control: "string" },
-  medianLabels: { control: "boolean" },
-  min: { control: "string" },
-  minLabels: { control: "boolean" },
-  q1: { control: "string" },
-  q1Labels: { control: "boolean" },
-  q3: { control: "string" },
-  q3Labels: { control: "boolean" },
-  whiskerWidth: { control: "number" },
+    boxWidth: { control: "number" },
+    labels: { control: "boolean" },
+    max: { control: "text" },
+    maxLabels: { control: "boolean" },
+    median: { control: "text" },
+    medianLabels: { control: "boolean" },
+    min: { control: "text" },
+    minLabels: { control: "boolean" },
+    q1: { control: "text" },
+    q1Labels: { control: "boolean" },
+    q3: { control: "text" },
+    q3Labels: { control: "boolean" },
+    whiskerWidth: { control: "number" },
+  },
 };
 
 export type Story = StoryObj<StoryProps>;

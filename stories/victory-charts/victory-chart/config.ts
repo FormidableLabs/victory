@@ -9,19 +9,19 @@ type StoryProps = React.ComponentProps<typeof VictoryChart> & {
   themeKey: string;
 };
 
-export const ComponentMeta: Meta<StoryProps> = {
+export const ComponentMeta: Meta<Omit<StoryProps, "themeKey">> = {
   component: VictoryChart,
   decorators: [componentContainer],
 
   argTypes: {
     ...VictoryCommonProps,
 
-    desc: { control: "string" },
+    desc: { control: "text" },
     endAngle: { control: "number" },
     innerRadius: { control: "number" },
     prependDefaultAxes: { control: "boolean" },
     startAngle: { control: "number" },
-    title: { control: "string" },
+    title: { control: "text" },
   },
 };
 

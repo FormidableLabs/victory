@@ -1,22 +1,24 @@
-import { VictoryTheme } from "@/victory";
+import React from "react";
+
+import { VictoryLabel, VictoryTheme, VictoryTooltip } from "@/victory";
 
 export const VictoryAxisCommonProps = {
   dependentAxis: { control: "boolean" },
   invertAxis: { control: "boolean" },
   tickCount: { control: "number" },
 
-  // NOTE: controls not yet supported, but left for clarity
-  // axisComponent: { control: "text" },
-  // axisLabelComponent: { control: "text" },
-  // axisValue: { control: "text" },
-  // disableInlineStyles: { control: "text" },
-  // gridComponent: { control: "text" },
-  // style: { control: "text" },
-  // tickComponent: { control: "text" },
-  // tickFormat: { control: "text" },
-  // tickLabelComponent: { control: "text" },
-  // tickValues: { control: "text" },
-};
+  // disable changing these values
+  axisComponent: { control: false },
+  axisLabelComponent: { control: false },
+  axisValue: { control: false },
+  disableInlineStyles: { control: false },
+  gridComponent: { control: false },
+  style: { control: false },
+  tickComponent: { control: false },
+  tickFormat: { control: false },
+  tickLabelComponent: { control: false },
+  tickValues: { control: false },
+} as const;
 
 export const VictoryCommonThemeProps = {
   animate: { control: "boolean" },
@@ -40,27 +42,32 @@ export const VictoryCommonThemeProps = {
   padding: { control: "text" },
   polar: { control: "boolean" },
   standalone: { control: "boolean" },
-  theme: { control: "text" },
   width: { control: "number" },
 
-  // NOTE: controls not yet supported, but left for clarity
-  // containerComponent: { control: "text" },
-  // externalEventMutations: { control: "text" },
-  // domainPadding: { control: "text" },
-  // groupComponent: { control: "text" },
-  // maxDomain: { control: "number" },
-  // minDomain: { control: "number" },
-  // origin: { control: "text" },
-  // range: { control: "text" },
-  // scale: { control: "text" },
-  // sharedEvents: { control: "text" },
-  // singleQuadrantDomainPadding: { control: "text" },
-};
+  // disable changing these values
+  containerComponent: { control: false },
+  groupComponent: { control: false },
+  externalEventMutations: { control: false },
+  domainPadding: { control: false },
+  maxDomain: { control: false },
+  minDomain: { control: false },
+  origin: { control: false },
+  range: { control: false },
+  scale: { control: false },
+  sharedEvents: { control: false },
+  singleQuadrantDomainPadding: { control: false },
+} as const;
 
 export const VictoryCommonProps = {
   ...VictoryCommonThemeProps,
+
+  // disable changing these values
+  theme: { control: false },
+
+  // custom control to allow us to hoist the theme to the parent
+  // chart for better control of rendering
   themeKey: { control: "select", options: Object.keys(VictoryTheme) },
-};
+} as const;
 
 export const VictoryContainerProps = {
   "aria-describedby": { control: "text" },
@@ -81,7 +88,7 @@ export const VictoryContainerProps = {
   tabIndex: { control: "number" },
   title: { control: "text" },
   width: { control: "number" },
-};
+} as const;
 
 export const VictoryDatableProps = {
   data: { control: "object" },
@@ -89,31 +96,36 @@ export const VictoryDatableProps = {
   sortKey: { control: "text" },
   sortOrder: { control: "select", options: ["ascending", "descending"] },
 
-  // NOTE: controls not yet supported, but left for clarity
-  // categories: { control: "text" },
-  // dataComponent: { control: "text" },
-  // domain: { control: "text" },
-  // domainPadding: { control: "text" },
-  // x: { control: "text" },
-  // y: { control: "text" },
-  // y0: { control: "text" },
-};
+  // disable changing these values
+  categories: { control: false },
+  dataComponent: { control: false },
+  domain: { control: false },
+  domainPadding: { control: false },
+  x: { control: false },
+  y: { control: false },
+  y0: { control: false },
+} as const;
 
 export const VictoryLabelableProps = {
-  // NOTE: controls not yet supported, but left for clarity
-  // labelComponent: { control: "text" },
-};
+  labelComponent: {
+    options: ["Label", "Tooltip"],
+    mapping: {
+      Label: <VictoryLabel />,
+      Tooltip: <VictoryTooltip />,
+    },
+  },
+} as const;
 
 export const VictoryMultiLabelableProps = {
   ...VictoryLabelableProps,
 
   // NOTE: controls not yet supported, but left for clarity
   // labels: { control: "text" },
-};
+} as const;
 
 export const VictorySingleLabelableProps = {
   ...VictoryLabelableProps,
 
   // NOTE: controls not yet supported, but left for clarity
   // label: { control: "text" },
-};
+} as const;

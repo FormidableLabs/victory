@@ -10,16 +10,6 @@ const preview: Preview = {
   },
   parameters: {
     controls: {
-      // exclude props where we can't render a workable
-      // control for changing the value
-      exclude: [
-        "containerComponent",
-        "dataComponent",
-        "groupComponent",
-        "labelComponent",
-        "labels",
-        "theme"
-      ],
       sort: 'alpha'
     },
   },

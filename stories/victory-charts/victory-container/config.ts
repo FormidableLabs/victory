@@ -9,7 +9,7 @@ type StoryProps = React.ComponentProps<typeof VictoryContainer> & {
   themeKey: string;
 };
 
-export const ComponentMeta: Meta<StoryProps> = {
+export const ComponentMeta: Meta<Omit<StoryProps, "themeKey">> = {
   component: VictoryContainer,
   decorators: [componentContainer],
 

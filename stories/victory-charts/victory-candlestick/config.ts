@@ -13,7 +13,7 @@ type StoryProps = React.ComponentProps<typeof VictoryCandlestick> & {
   themeKey: string;
 };
 
-export const ComponentMeta: Meta<StoryProps> = {
+export const ComponentMeta: Meta<Omit<StoryProps, "themeKey">> = {
   component: VictoryCandlestick,
   decorators: [componentContainer],
 
@@ -24,13 +24,13 @@ export const ComponentMeta: Meta<StoryProps> = {
 
     candleRatio: { control: "boolean" },
     candleWidth: { control: "number" },
-    close: { control: "string" },
+    close: { control: "text" },
     closeLabels: { control: "boolean" },
-    high: { control: "string" },
+    high: { control: "text" },
     highLabels: { control: "boolean" },
-    low: { control: "string" },
+    low: { control: "text" },
     lowLabels: { control: "boolean" },
-    open: { control: "string" },
+    open: { control: "text" },
     openLabels: { control: "boolean" },
     wickStrokeWidth: { control: "number" },
   },

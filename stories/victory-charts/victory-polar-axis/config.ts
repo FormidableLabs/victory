@@ -9,9 +9,11 @@ import {
 } from "../../utils/arg-types";
 import { componentContainer } from "../../utils/decorators";
 
-type StoryProps = React.ComponentProps<typeof VictoryPolarAxis>;
+type StoryProps = React.ComponentProps<typeof VictoryPolarAxis> & {
+  themeKey: string;
+};
 
-export const ComponentMeta: Meta<StoryProps> = {
+export const ComponentMeta: Meta<Omit<StoryProps, "themeKey">> = {
   component: VictoryPolarAxis,
   decorators: [componentContainer],
 
@@ -27,7 +29,6 @@ export const ComponentMeta: Meta<StoryProps> = {
       control: "select",
       options: ["parallel", "perpendicular", "vertical"],
     },
-    radius: { control: "number" },
     startAngle: { control: "number" },
   },
 };
