@@ -311,3 +311,42 @@ They can also be embeded in other SVG components by using the `standalone` prop.
   />
 </svg>
 ```
+
+## Box Plot - Tooltips
+
+```jsx live
+<VictoryBoxPlot
+  minLabels
+  q3Labels
+  q3LabelComponent={
+    <VictoryTooltip
+      labelTarget="q3Labels"
+      dataTargets={["q3"]}
+    />
+  }
+  minLabelComponent={
+    <VictoryTooltip
+      labelTarget="minLabels"
+      dataTargets={[
+        "min",
+        "max",
+        "q1",
+        "median",
+      ]}
+    />
+  }
+  data={[
+    { x: "red", y: [5, 10, 9, 2] },
+    { x: "blue", y: [1, 15, 6, 8] },
+    { x: "green", y: [3, 5, 6, 9] },
+    {
+      x: "yellow",
+      y: [5, 20, 8, 12],
+    },
+    {
+      x: "white",
+      y: [2, 11, 12, 13],
+    },
+  ]}
+/>
+```
