@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryThemeDefinition } from "victory-core/lib";
+import { VictoryThemeDefinition } from "victory-core";
 import Button from "./button";
 import { Prism, SyntaxHighlighterProps } from "react-syntax-highlighter";
 
