@@ -1,0 +1,79 @@
+name: "Bundle size reporter"
+description: "Post bundle size difference compared to another branch"
+inputs:
+  branch:
+    description: 'Branch to compare to'
+    required: true
+    default: 'main'
+  paths:
+    description: "Paths to json file bundle size report or folder containing bundles"
+    required: true
+    default: "/"
+  onlyDiff:
+    description: "Report only different sizes"
+    required: false
+    default: "false"
+  filter:
+    description: "Regex filter based on file path"
+    required: false
+  unit:
+    description: "Size unit"
+    required: false
+    default: "KB"
+
+  # Comment inputs
+  comment:
+    description: "Post comment"
+    required: false
+    default: "true"
+  header:
+    description: "Comment header"
+    required: false
+    default: "Bundle size report"
+  append:
+    description: "Append comment"
+    required: false
+    default: "false"
+  ghToken:
+    description: "Github token"
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    # Checkout branch to compare to [required]
+    - name: Checkout base branch
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch }}
+        path: br-base
+
+    # build main under it's checkout location, in ./br-base
+    - name: Build main
+      shell: bash
+      run: cd br-base && pnpm install && pnpm build
+
+    # Generate the bundle size difference report [required]
+    - name: Generate report
+      id: bundleSize
+      uses: nejcm/bundle-size-reporter-action@v1.4.1
+      with:
+        paths: ${{ inputs.paths }}
+        onlyDiff: ${{ inputs.onlyDiff }}
+
+    # Post github action summary
+    - name: Post summary
+      if: ${{ steps.bundleSize.outputs.hasDifferences == 'true' }} # post only in case of changes
+      run: |
+        echo '${{ steps.bundleSize.outputs.summary }}' >> $GITHUB_STEP_SUMMARY
+      shell: bash
+
+    # Post github action comment
+    - name: Post comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: ${{ steps.bundleSize.outputs.hasDifferences == 'true' }} # post only in case of changes
+      with:
+        number: ${{ github.event.pull_request.number }}
+        header: ${{ inputs.header }}
+        append: ${{ inputs.append }}
+        message: "${{ steps.bundleSize.outputs.summary }}"

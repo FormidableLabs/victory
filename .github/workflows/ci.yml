@@ -29,6 +29,13 @@ jobs:
       - name: Types
         run: pnpm types:check
 
+      - name: 📄 Bundle size report
+        uses: ./.github/actions/bundle-size # path to composite action
+        with:
+          paths: "packages/victory/dist/victory.min.js"
+          onlyDiff: "true"
+          header: "Bundle size report" # PR comment header
+
   format:
     needs: [build]
     runs-on: ubuntu-latest
