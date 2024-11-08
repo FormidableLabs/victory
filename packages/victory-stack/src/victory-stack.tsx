@@ -2,12 +2,10 @@ import { defaults, isEmpty } from "lodash";
 import React from "react";
 import {
   CategoryPropType,
-  ColorScalePropType,
   DomainPropType,
   EventPropTypeInterface,
   StringOrNumberOrCallback,
   VictoryCommonProps,
-  VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface,
   Helpers,

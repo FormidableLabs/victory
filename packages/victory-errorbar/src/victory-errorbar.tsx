@@ -12,7 +12,6 @@ import {
   StringOrNumberOrList,
   VictoryDatableProps,
   VictoryCommonProps,
-  VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleInterface,
   EventsMixinClass,

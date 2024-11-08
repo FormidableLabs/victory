@@ -115,6 +115,7 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ErrorBar = (
   initialProps: ErrorBarProps & typeof ErrorBar.default,
 ) => {

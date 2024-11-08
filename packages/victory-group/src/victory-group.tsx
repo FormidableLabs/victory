@@ -1,10 +1,6 @@
 import { defaults, isEmpty } from "lodash";
 import React from "react";
 import {
-  CategoryPropType,
-  ColorScalePropType,
-  DomainPaddingPropType,
-  DomainPropType,
   EventPropTypeInterface,
   Helpers,
   Hooks,
