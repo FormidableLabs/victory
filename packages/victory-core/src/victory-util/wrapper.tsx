@@ -1,4 +1,4 @@
-import { defaults, uniq, groupBy, uniqBy, isPlainObject } from "lodash";
+import { defaults, uniq, groupBy, uniqBy } from "lodash";
 import React from "react";
 import * as Axis from "./axis";
 import * as Style from "./style";

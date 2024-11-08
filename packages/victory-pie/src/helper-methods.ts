@@ -4,7 +4,6 @@ import * as d3Shape from "victory-vendor/d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
 import { VictoryPieProps } from "./victory-pie";
-import { getCategories } from "victory-core/lib/victory-util/data";
 
 const checkForValidText = (text) => {
   if (text === undefined || text === null || Helpers.isFunction(text)) {

@@ -18,7 +18,6 @@ import {
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
-  VictoryLabelableProps,
   VictoryStyleInterface,
   EventsMixinClass,
 } from "victory-core";

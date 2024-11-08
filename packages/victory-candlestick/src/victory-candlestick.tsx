@@ -13,7 +13,6 @@ import {
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryLabelStyleObject,
-  VictoryLabelableProps,
   VictoryMultiLabelableProps,
   VictoryStyleObject,
   NumberOrCallback,
