@@ -1,0 +1,21 @@
+.VictoryContainer {
+  border: 1px solid #ccc;
+}
+
+/** Custom styles for the visual style tests */
+
+.fill-purple {
+  fill: rgb(87, 4, 143);
+}
+
+.fill-green {
+  fill: rgb(33, 212, 9);
+}
+
+.stroke-purple {
+  stroke: rgb(87, 4, 143);
+}
+
+.stroke-green {
+  stroke: rgb(33, 212, 9);
+}
