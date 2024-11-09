@@ -58,7 +58,7 @@ export default class VictoryPieDemo extends React.Component<
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

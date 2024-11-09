@@ -12,7 +12,6 @@ import {
   VictoryLabel,
   VictoryTheme,
   VictoryClipContainer,
-  VictoryThemeDefinition,
   VictoryThemePalette,
 } from "victory-core";
 
@@ -40,13 +39,6 @@ class Wrapper extends React.Component<WrapperProps> {
     );
   }
 }
-
-const dependentAxisTheme: VictoryThemeDefinition = {
-  ...VictoryTheme.material,
-  dependentAxis: {
-    orientation: "right",
-  },
-};
 
 type XYNumberType = {
   x: number | string;
@@ -87,7 +79,7 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         scatterData: this.getScatterData(),

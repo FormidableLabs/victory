@@ -127,4 +127,15 @@ export default tseslint.config(
       "max-nested-callbacks": "off",
     },
   },
+
+  // Overrides for Demos
+  {
+    files: ["**/demo/**/*.{ts,tsx}"],
+    rules: {
+      "no-magic-numbers": "off",
+      "prettier/prettier": "off",
+      "react/no-multi-comp": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+    },
+  },
 );

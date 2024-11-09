@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers,react/no-multi-comp */
+ 
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { random, range } from "lodash";
@@ -87,17 +87,6 @@ const containerStyle: React.CSSProperties = {
   justifyContent: "center",
 };
 
-const symbolStyle = {
-  parent: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" },
-  data: {
-    fill: "red",
-  },
-  labels: {
-    padding: 15,
-    fontSize: 15,
-    fill: "grey",
-  },
-};
 const CustomSunIcon = (props) => (
   <FaSun x={props.x - 25} y={props.y - 25} {...props} />
 );
@@ -189,7 +178,7 @@ export default class VictoryScatterDemo extends React.Component<
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: getData(),

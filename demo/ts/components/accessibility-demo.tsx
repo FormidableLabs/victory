@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers */
+ 
 import React from "react";
 import { isNumber } from "lodash";
 import { VictoryGroup } from "victory-group";

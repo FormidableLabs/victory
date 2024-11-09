@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers */
+ 
 import React from "react";
 import { random, range } from "lodash";
 import { VictoryBar } from "victory-bar";
