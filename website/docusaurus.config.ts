@@ -1,6 +1,5 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import { Config } from "@docusaurus/types";
-import { autoGenerateApiDocs } from "./src/plugins/victory-typedoc";
 
 const title = "Victory";
 const tagline =
@@ -28,7 +27,6 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
           sidebarCollapsed: true,
-          // beforeDefaultRemarkPlugins: [autoGenerateApiDocs],
         },
         theme: {
           customCss: "./src/css/custom.css",
@@ -66,9 +64,11 @@ const config: Config = {
         name: "tailwind-plugin",
         configurePostCss(postcssOptions) {
           postcssOptions.plugins = [
+            /* eslint-disable @typescript-eslint/no-require-imports */
             require("postcss-import"),
             require("tailwindcss"),
             require("autoprefixer"),
+            /* eslint-enable @typescript-eslint/no-require-imports */
           ];
           return postcssOptions;
         },

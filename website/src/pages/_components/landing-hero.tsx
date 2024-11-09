@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
+ 
 import React from "react";
 import { FeaturedBadge } from "formidable-oss-badges";
 
-// eslint-disable-next-line import/no-unresolved
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 
 export const LandingHero = () => {

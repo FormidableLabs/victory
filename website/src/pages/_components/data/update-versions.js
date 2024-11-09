@@ -45,7 +45,7 @@ export default data;
 `;
 
 fs.writeFileSync(
-  // eslint-disable-next-line no-undef
+   
   path.resolve(__dirname, "versions.js"),
   contents,
   "utf8",

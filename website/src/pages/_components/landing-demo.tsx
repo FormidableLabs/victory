@@ -117,7 +117,7 @@ async function fetchData(url) {
     const freshData = result.data;
     const allDownloads = downloads.data.concat(freshData.downloads);
     return groupDownloadsByWeek(allDownloads)
-  } catch (error) {
+  } catch {
     return oldDownloads;
   }
 }
