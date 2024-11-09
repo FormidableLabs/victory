@@ -118,7 +118,7 @@ describe("components/victory-area", () => {
         interpolation: "linear",
         sortKey: "x",
         data: Helpers.range(5)
-          // eslint-disable-next-line max-nested-callbacks
+
           .map((i) => ({ x: i, y: i, y0: 0 }))
           .reverse(),
       };

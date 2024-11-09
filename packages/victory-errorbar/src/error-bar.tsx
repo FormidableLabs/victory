@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import React from "react";
 import { defaults } from "lodash";
 
@@ -105,7 +104,7 @@ export interface ErrorProps {
   top?: { error: any; errorIndex: number };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface ErrorBar extends EventsMixinClass<ErrorBarProps> {}
 
 const defaultProps = {
@@ -115,7 +114,6 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ErrorBar = (
   initialProps: ErrorBarProps & typeof ErrorBar.default,
 ) => {

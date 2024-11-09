@@ -246,7 +246,7 @@ export const RawZoomHelpers = {
     ];
   },
 
-  // eslint-disable-next-line max-params, max-statements
+  // eslint-disable-next-line max-params
   onMouseMove(evt, targetProps, eventKey, ctx) {
     if (targetProps.panning && targetProps.allowPan) {
       const {

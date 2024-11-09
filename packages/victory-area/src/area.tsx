@@ -178,7 +178,7 @@ export const Area: React.FC<AreaProps> = (initialProps) => {
 export interface AreaProps extends VictoryCommonPrimitiveProps {
   horizontal?: VictoryCommonThemeProps["horizontal"];
   groupComponent?: React.ReactElement;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   interpolation?: string | Function;
   pathComponent?: React.ReactElement;
 }

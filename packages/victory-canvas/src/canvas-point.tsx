@@ -10,9 +10,9 @@ import { useCanvasContext } from "./hooks/use-canvas-context";
 export interface CanvasPointProps extends VictoryCommonPrimitiveProps {
   datum?: any;
   getPath?: (x: number, y: number, size: number) => string;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   size?: number | Function;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   symbol?: ScatterSymbolType | Function;
   x?: number;
   y?: number;
@@ -68,7 +68,7 @@ export const CanvasPoint = (props: CanvasPointProps) => {
       const { style } = modifiedProps;
       const path = getPath(modifiedProps);
       ctx.fillStyle = style.fill;
-      // eslint-disable-next-line no-undef
+
       const path2d = new Path2D(path);
       ctx.fill(path2d);
     },

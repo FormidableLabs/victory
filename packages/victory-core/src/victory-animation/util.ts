@@ -83,7 +83,7 @@ export const interpolateFunction = function (a, b) {
       return b;
     }
     return function (this: unknown) {
-      /* eslint-disable no-invalid-this, prefer-rest-params */
+      /* eslint-disable prefer-rest-params */
       const aval = typeof a === "function" ? a.apply(this, arguments) : a;
       const bval = typeof b === "function" ? b.apply(this, arguments) : b;
       return interpolate(aval, bval)(t);

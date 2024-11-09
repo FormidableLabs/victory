@@ -1,4 +1,3 @@
-/* eslint-disable react/no-multi-comp */
 import React from "react";
 import { defaults, pick } from "lodash";
 import { VictoryTooltip } from "victory-tooltip";

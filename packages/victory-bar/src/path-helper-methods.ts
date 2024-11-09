@@ -119,7 +119,6 @@ const mapPointsToPath = (coords, cornerRadius, direction) => {
 const getVerticalBarPoints = (position, sign, cr) => {
   const { x0, x1, y0, y1 } = position;
 
-  // eslint-disable-next-line max-statements, max-len
   const getHalfPoints = (side) => {
     const isLeft = side === "Left";
     const signL = isLeft ? 1 : -1;
@@ -177,7 +176,6 @@ const getHorizontalBarPoints = (position, sign, cr) => {
   const x0 = position.x0 < position.x1 ? position.x0 : position.x1;
   const x1 = position.x0 < position.x1 ? position.x1 : position.x0;
 
-  // eslint-disable-next-line max-statements, max-len
   const getHalfPoints = (side) => {
     const isTop = side === "top";
     const signL = isTop ? -1 : 1;
@@ -234,7 +232,6 @@ const getHorizontalBarPoints = (position, sign, cr) => {
   ];
 };
 
-// eslint-disable-next-line max-params
 export const getVerticalBarPath = (props, width, cornerRadius) => {
   const position = getPosition(props, width);
 
@@ -244,7 +241,6 @@ export const getVerticalBarPath = (props, width, cornerRadius) => {
   return mapPointsToPath(points, cornerRadius, direction);
 };
 
-// eslint-disable-next-line max-params
 export const getHorizontalBarPath = (props, width, cornerRadius) => {
   const position = getPosition(props, width);
 
@@ -310,7 +306,6 @@ export const getVerticalPolarBarPath = (props: BarProps, cornerRadius) => {
     };
   };
 
-  // eslint-disable-next-line max-statements
   const getTopPath = () => {
     const { topRight, topLeft } = cornerRadius;
     const arcLength = r2 * Math.abs(end - start);
@@ -360,7 +355,6 @@ export const getVerticalPolarBarPath = (props: BarProps, cornerRadius) => {
     }));
   };
 
-  // eslint-disable-next-line max-statements
   const getBottomPath = () => {
     const { bottomRight, bottomLeft } = cornerRadius;
     const arcLength = r1 * Math.abs(end - start);

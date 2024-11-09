@@ -64,7 +64,7 @@ const fallbackProps = {
 
 const defaultLegendData = [{ name: "Series 1" }, { name: "Series 2" }];
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface VictoryLegendBase extends EventsMixinClass<VictoryLegendProps> {}
 
 class VictoryLegendBase extends React.Component<VictoryLegendProps> {

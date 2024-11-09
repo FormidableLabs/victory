@@ -188,7 +188,6 @@ export function getDefaultDomainPadding(props, axis, childComponents) {
 }
 
 export function getDomainFromChildren(props, axis, childComponents) {
-  // eslint-disable-line max-statements, complexity, max-len
   const children = childComponents
     ? childComponents.slice(0)
     : React.Children.toArray(props.children);

@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React from "react";
 import {
   uniq,
@@ -141,7 +140,6 @@ export function formatDataFromDomain(dataset, domain, defaultBaseline?) {
   const isOverMaxX = overMax(maxDomainX);
   const isOverMaxY = overMax(maxDomainY);
 
-  // eslint-disable-next-line complexity
   return dataset.map((datum) => {
     let { _x, _y, _y0, _y1 } = datum;
 
@@ -283,7 +281,6 @@ export function formatData(
   const data = preformattedData
     ? dataset
     : dataset.reduce((dataArr, datum, index) => {
-        // eslint-disable-line complexity
         const parsedDatum = parseDatum(datum);
         const fallbackValues = { x: index, y: parsedDatum };
         const processedValues = expectedKeys!.reduce((memo, type) => {

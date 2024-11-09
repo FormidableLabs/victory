@@ -51,7 +51,7 @@ export interface VictoryErrorBarProps
   style?: VictoryStyleInterface;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface VictoryErrorBarBase extends EventsMixinClass<VictoryErrorBarProps> {}
 
 class VictoryErrorBarBase extends React.Component<VictoryErrorBarProps> {

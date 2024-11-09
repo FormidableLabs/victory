@@ -86,7 +86,7 @@ const datumHasXandY = (datum) => {
   return !Helpers.isNil(datum._x) && !Helpers.isNil(datum._y);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface VictoryPieBase extends EventsMixinClass<VictoryPieProps> {}
 
 class VictoryPieBase extends React.Component<VictoryPieProps> {

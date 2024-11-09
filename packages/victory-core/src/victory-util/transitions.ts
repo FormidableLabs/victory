@@ -156,7 +156,6 @@ function getChildBeforeLoad(animate, child, data, cb): TransitionProps {
   return { animate: newAnimate, data: newData, clipWidth: 0 };
 }
 
-// eslint-disable-next-line max-params
 function getChildOnLoad(animate, data, cb): TransitionProps {
   const newAnimate = Object.assign({}, animate, { onEnd: cb });
   let newData = data;
@@ -174,7 +173,7 @@ function getChildOnLoad(animate, data, cb): TransitionProps {
   return { animate: newAnimate, data: newData };
 }
 
-// eslint-disable-next-line max-params, max-len
+// eslint-disable-next-line max-params
 function getChildPropsOnExit(
   animate,
   child,
@@ -208,7 +207,7 @@ function getChildPropsOnExit(
   return { animate: newAnimate, data: newData };
 }
 
-// eslint-disable-next-line max-params,max-len
+// eslint-disable-next-line max-params
 function getChildPropsBeforeEnter(
   animate,
   child,
@@ -240,7 +239,7 @@ function getChildPropsBeforeEnter(
   return { animate: newAnimate, data: newData };
 }
 
-// eslint-disable-next-line max-params, max-len
+// eslint-disable-next-line max-params
 function getChildPropsOnEnter(
   animate,
   data,
@@ -357,7 +356,6 @@ export function getTransitionPropsFactory(props, state, setState) {
     return {};
   };
 
-  // eslint-disable-next-line max-statements, complexity, max-len
   return function getTransitionProps(child, index): TransitionProps {
     const data = getChildData(child) || [];
     const animate: AnimatePropTypeInterface = defaults(

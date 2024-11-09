@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React, { isValidElement } from "react";
 import { defaults, property, pick } from "lodash";
 import { CallbackArgs } from "../types/callbacks";

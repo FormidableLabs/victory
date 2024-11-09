@@ -162,7 +162,6 @@ const getTitleStyle = (props) => {
     : defaults({}, componentStyle, baseStyle, anchors);
 };
 
-// eslint-disable-next-line complexity
 const getTitleProps = (props, borderProps) => {
   const { title, titleOrientation, centerTitle, borderPadding } = props;
   const { height, width } = borderProps;

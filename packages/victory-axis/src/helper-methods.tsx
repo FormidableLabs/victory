@@ -267,7 +267,6 @@ const isEqual = (a, b) => {
   return a === b;
 };
 
-// eslint-disable-next-line complexity
 const getOffset = (props, calculatedValues) => {
   const { scale, origin, orientation, orientations, domain, padding } =
     calculatedValues;
@@ -318,7 +317,6 @@ const getOffset = (props, calculatedValues) => {
   };
 };
 
-// eslint-disable-next-line complexity
 const getHorizontalOffset = (props, calculatedValues) => {
   const { scale, origin, orientation, orientations, domain, padding } =
     calculatedValues;
@@ -466,7 +464,6 @@ const getOrientation = (props) => {
     : defaultOrientations.independent;
 };
 
-// eslint-disable-next-line complexity
 const getCalculatedValues = (props) => {
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
@@ -604,7 +601,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
         ? { [otherAxis]: props.scale[otherAxis] }
         : undefined,
   };
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+
   return (ticks as number[]).reduce((childProps, tickValue, index) => {
     const tick = stringTicks ? stringTicks[index] : tickValue;
     const text = tickFormat(tickValue, index, ticks);

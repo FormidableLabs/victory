@@ -214,7 +214,6 @@ class VoronoiHelpersClass {
   };
 
   private handleMouseMove = (evt, targetProps) => {
-    // eslint-disable-line max-statements
     const activePoints = targetProps.activePoints || [];
     const parentSVG = targetProps.parentSVG || Selection.getParentSVG(evt);
     const mousePosition = Selection.getSVGEventCoordinates(evt, parentSVG);

@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import React from "react";
 import {
   Helpers,
@@ -101,7 +100,6 @@ export const useVictoryCursorContainer = (
   };
 
   const getCursorElements = () => {
-    // eslint-disable-line max-statements
     const {
       scale,
       cursorLabelComponent,

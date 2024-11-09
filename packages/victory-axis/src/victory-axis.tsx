@@ -55,7 +55,7 @@ export interface VictoryAxisProps
   orientation?: OrientationTypes;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface VictoryAxisBase extends EventsMixinClass<VictoryAxisProps> {}
 
 class VictoryAxisBase extends React.Component<VictoryAxisProps> {

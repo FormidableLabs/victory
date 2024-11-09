@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React from "react";
 import { isPlainObject, sortedUniq, isDate } from "lodash";
 import * as Data from "./data";
@@ -67,7 +66,6 @@ function getExtremeFromData(dataset, axis, type = "min") {
   return containsDate ? new Date(result) : result;
 }
 
-// eslint-disable-next-line max-statements
 function padDomain(domain, props, axis) {
   if (!props.domainPadding) {
     return domain;

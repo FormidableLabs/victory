@@ -57,7 +57,7 @@ export interface VictoryCommonThemeProps {
         x?: ScalePropType | D3Scale;
         y?: ScalePropType | D3Scale;
       };
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   sharedEvents?: { events: any[]; getEventState: Function };
   singleQuadrantDomainPadding?: boolean | { x?: boolean; y?: boolean };
   standalone?: boolean;
@@ -72,11 +72,11 @@ export interface VictoryCommonPrimitiveProps {
   className?: string;
   clipPath?: string;
   data?: any;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   desc?: string | Function;
   disableInlineStyles?: boolean;
   events?: object;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   id?: number | string | Function;
   index?: number | string;
   origin?: OriginType;

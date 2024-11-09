@@ -1,4 +1,5 @@
-/* eslint-disable no-use-before-define */
+import React from "react";
+
 import { isEmpty, pickBy, omitBy, uniq } from "lodash";
 import type { EventMixinCalculatedValues } from "./add-events";
 import { isFunction } from "./helpers";
@@ -72,9 +73,12 @@ export function getEvents(
     const selectedEvents = getSelectedEvents();
     return (
       Array.isArray(selectedEvents) &&
-      selectedEvents.reduce((memo, event) => {
-        return event ? Object.assign(memo, event.eventHandlers) : memo;
-      }, {} as ComponentEvent["eventHandlers"])
+      selectedEvents.reduce(
+        (memo, event) => {
+          return event ? Object.assign(memo, event.eventHandlers) : memo;
+        },
+        {} as ComponentEvent["eventHandlers"],
+      )
     );
   };
 
@@ -84,13 +88,13 @@ export function getEvents(
    */
   const getAllEvents = () => {
     // Mandatory usage: `getEvents.bind(this)`
-    /* eslint-disable no-invalid-this */
+
     if (Array.isArray(this.componentEvents)) {
       return Array.isArray(props.events)
         ? this.componentEvents.concat(...props.events)
         : this.componentEvents;
     }
-    /* eslint-enable no-invalid-this */
+
     return props.events;
   };
 
@@ -127,12 +131,12 @@ export function getScopedEvents(
   }
 
   // Mandatory usage: `getScopedEvents.bind(this)`
-  // eslint-disable-next-line no-invalid-this
+
   const newBaseProps = baseProps || this.baseProps;
   // returns the original base props or base state of a given target element
   const getTargetProps = (identifier, type) => {
     const { childName, target, key } = identifier;
-    // eslint-disable-next-line no-invalid-this
+
     const baseType = type === "props" ? newBaseProps : this.state || {};
     const base =
       childName === undefined || childName === null || !baseType[childName]
@@ -173,7 +177,6 @@ export function getScopedEvents(
 
     // returns the state object with mutated props applied for a single key
     const getMutationObject = (key, childName) => {
-      // eslint-disable-next-line no-invalid-this
       const baseState = this.state || {};
       if (!isFunction(eventReturn.mutation)) {
         return baseState;
@@ -270,11 +273,10 @@ export function getScopedEvents(
   // into a state mutation, and calls setState
   // eslint-disable-next-line max-params
   const onEvent = (evt, childProps, eventKey, eventName) => {
-    // eslint-disable-next-line no-invalid-this
     const eventReturn = events[eventName](evt, childProps, eventKey, this);
     if (!isEmpty(eventReturn)) {
       const callbacks = compileCallbacks(eventReturn);
-      // eslint-disable-next-line no-invalid-this
+
       this.setState(parseEventReturn(eventReturn, eventKey), callbacks);
     }
   };
@@ -319,7 +321,7 @@ export function getEventState(
   childType?: string,
 ) {
   // Mandatory usage: `getEventState.bind(this)`
-  // eslint-disable-next-line no-invalid-this
+
   const state = this.state || {};
   if (!childType) {
     return eventKey === "parent"

@@ -74,37 +74,36 @@ const defaultProps: Partial<BarProps> = {
   shapeRendering: "auto",
 };
 
-// eslint-disable-next-line prefer-arrow-callback
-export const Bar = forwardRef<SVGPathElement, BarProps>(function Bar(
-  initialProps,
-  ref,
-) {
-  const props = evaluateProps(defaults({}, initialProps, defaultProps));
-  const { polar, origin, style, barWidth, cornerRadius } = props;
+export const Bar = forwardRef<SVGPathElement, BarProps>(
+  // eslint-disable-next-line prefer-arrow-callback
+  function Bar(initialProps, ref) {
+    const props = evaluateProps(defaults({}, initialProps, defaultProps));
+    const { polar, origin, style, barWidth, cornerRadius } = props;
 
-  const path = polar
-    ? getPolarBarPath(props, cornerRadius)
-    : getBarPath(props, barWidth, cornerRadius);
-  const defaultTransform =
-    polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
+    const path = polar
+      ? getPolarBarPath(props, cornerRadius)
+      : getBarPath(props, barWidth, cornerRadius);
+    const defaultTransform =
+      polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
 
-  if (!props.pathComponent) {
-    return null;
-  }
+    if (!props.pathComponent) {
+      return null;
+    }
 
-  return React.cloneElement(props.pathComponent, {
-    ...props.events,
-    "aria-label": props.ariaLabel,
-    style,
-    d: path,
-    className: props.className,
-    clipPath: props.clipPath,
-    desc: props.desc,
-    index: props.index,
-    role: props.role,
-    shapeRendering: props.shapeRendering,
-    transform: props.transform || defaultTransform,
-    tabIndex: props.tabIndex,
-    ref,
-  });
-});
+    return React.cloneElement(props.pathComponent, {
+      ...props.events,
+      "aria-label": props.ariaLabel,
+      style,
+      d: path,
+      className: props.className,
+      clipPath: props.clipPath,
+      desc: props.desc,
+      index: props.index,
+      role: props.role,
+      shapeRendering: props.shapeRendering,
+      transform: props.transform || defaultTransform,
+      tabIndex: props.tabIndex,
+      ref,
+    });
+  },
+);

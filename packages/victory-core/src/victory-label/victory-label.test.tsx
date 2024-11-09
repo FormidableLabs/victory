@@ -72,7 +72,7 @@ describe("components/victory-label", () => {
   it("strips px from fontSize", () => {
     // This suppresses the warning about the fontSize being a string.
     // TODO: For some reason this test file doesn't respect the eslint override for this rule.
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     jest.spyOn(console, "warn").mockImplementation(() => {});
     const { container } = render(
       <VictoryLabel
@@ -89,7 +89,7 @@ describe("components/victory-label", () => {
   it("uses a default fontSize when an invalid fontSize is given", () => {
     // This suppresses the console warning for invalid fontSize prop
     // TODO: For some reason this test file doesn't respect the eslint override for this rule.
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     jest.spyOn(Log, "warn").mockImplementation(() => {});
 
     const { container } = render(
