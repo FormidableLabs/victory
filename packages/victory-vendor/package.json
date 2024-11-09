@@ -159,8 +159,7 @@
     "lint": {
       "command": "eslint scripts",
       "files": [
-        "scripts/**",
-        "../../.eslintrc.js"
+        "scripts/**"
       ],
       "output": [],
       "packageLocks": [
@@ -170,8 +169,7 @@
     "lint:fix": {
       "command": "eslint --fix scripts",
       "files": [
-        "scripts/**",
-        "../../.eslintrc.js"
+        "scripts/**"
       ],
       "output": [],
       "packageLocks": [

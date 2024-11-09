@@ -209,8 +209,6 @@ function generateWireitConfig(pkg, rootPkg) {
           "command": key === "lint" ? "eslint src" : "eslint --fix src",
           "files": [
             "src/**",
-            "../../.eslintignore",
-            "../../.eslintrc.js"
           ],
           "output": [],
           "dependencies": [

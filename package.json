@@ -280,7 +280,6 @@
     "format:root": {
       "command": "nps format:root",
       "files": [
-        ".eslintrc.js",
         "*.js",
         "*.json",
         "scripts",
@@ -299,7 +298,6 @@
     "format:root:fix": {
       "command": "pnpm run format:root || nps format:root:fix",
       "files": [
-        ".eslintrc.js",
         "*.js",
         "*.json",
         "scripts",

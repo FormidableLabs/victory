@@ -231,9 +231,7 @@
     "lint": {
       "command": "eslint src",
       "files": [
-        "src/**",
-        "../../.eslintignore",
-        "../../.eslintrc.js"
+        "src/**"
       ],
       "output": [],
       "dependencies": [
@@ -248,9 +246,7 @@
     "lint:fix": {
       "command": "eslint --fix src",
       "files": [
-        "src/**",
-        "../../.eslintignore",
-        "../../.eslintrc.js"
+        "src/**"
       ],
       "output": [],
       "dependencies": [
