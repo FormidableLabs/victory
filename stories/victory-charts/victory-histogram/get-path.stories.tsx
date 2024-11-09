@@ -14,21 +14,21 @@ const meta: Meta<typeof VictoryHistogram> = {
 export const GetPath: Story = {
   args: {},
   render: (props) => {
-    const verticalPathFn = (callbackArgs) => {
-      const { x0, x1, y0, y1 } = callbackArgs;
-      return `M ${x0}, ${y0}
-      L ${(x1 + x0) / 2}, ${y1}
-      L ${x1}, ${y0}
-      z`;
-    };
+    // const verticalPathFn = (callbackArgs) => {
+    //   const { x0, x1, y0, y1 } = callbackArgs;
+    //   return `M ${x0}, ${y0}
+    //   L ${(x1 + x0) / 2}, ${y1}
+    //   L ${x1}, ${y0}
+    //   z`;
+    // };
 
-    const horizontalPathFn = (callbackArgs) => {
-      const { x0, x1, y0, y1 } = callbackArgs;
-      return `M ${x0}, ${y1}
-      L ${x1}, ${(y0 + y1) / 2}
-      L ${x0}, ${y0}
-      z`;
-    };
+    // const horizontalPathFn = (callbackArgs) => {
+    //   const { x0, x1, y0, y1 } = callbackArgs;
+    //   return `M ${x0}, ${y1}
+    //   L ${x1}, ${(y0 + y1) / 2}
+    //   L ${x0}, ${y0}
+    //   z`;
+    // };
 
     // TODO: revert this when the getPath types are fixed.
     return (

@@ -1,7 +1,7 @@
 import React from "react";
 import type { Meta } from "@storybook/react";
 
-import { VictoryPie, VictoryTheme, VictoryTooltip } from "@/victory";
+import { VictoryPie, VictoryTheme } from "@/victory";
 import { Story, ComponentMeta } from "./config";
 
 const meta: Meta<typeof VictoryPie> = {

@@ -138,4 +138,13 @@ export default tseslint.config(
       "@typescript-eslint/no-empty-object-type": "off",
     },
   },
+
+  // Overrides for Storybook
+  {
+    files: ["**/stories/**/*.ts", "**/stories/**/*.stories.tsx"],
+    rules: {
+      "no-magic-numbers": "off",
+      "prettier/prettier": "off",
+    },
+  },
 );
