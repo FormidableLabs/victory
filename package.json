@@ -399,37 +399,15 @@
       ]
     },
     "lint:pkgs": {
+      "command": "eslint --cache --color --ignore-pattern victory-vendor packages",
       "dependencies": [
-        "./packages/victory-native:lint",
-        "./packages/victory-vendor:lint",
-        "./packages/victory:lint",
-        "./packages/victory-area:lint",
-        "./packages/victory-axis:lint",
-        "./packages/victory-bar:lint",
-        "./packages/victory-box-plot:lint",
-        "./packages/victory-brush-container:lint",
-        "./packages/victory-brush-line:lint",
-        "./packages/victory-candlestick:lint",
-        "./packages/victory-canvas:lint",
-        "./packages/victory-chart:lint",
-        "./packages/victory-core:lint",
-        "./packages/victory-create-container:lint",
-        "./packages/victory-cursor-container:lint",
-        "./packages/victory-errorbar:lint",
-        "./packages/victory-group:lint",
-        "./packages/victory-histogram:lint",
-        "./packages/victory-legend:lint",
-        "./packages/victory-line:lint",
-        "./packages/victory-pie:lint",
-        "./packages/victory-polar-axis:lint",
-        "./packages/victory-scatter:lint",
-        "./packages/victory-selection-container:lint",
-        "./packages/victory-shared-events:lint",
-        "./packages/victory-stack:lint",
-        "./packages/victory-tooltip:lint",
-        "./packages/victory-voronoi:lint",
-        "./packages/victory-voronoi-container:lint",
-        "./packages/victory-zoom-container:lint"
+        "build"
+      ]
+    },
+    "lint:pkgs:fix": {
+      "command": "eslint --cache --color --fix --ignore-pattern victory-vendor packages",
+      "dependencies": [
+        "build"
       ]
     },
     "lint:docs": {
@@ -566,40 +544,6 @@
         "./packages/victory-voronoi:types:create",
         "./packages/victory-voronoi-container:types:create",
         "./packages/victory-zoom-container:types:create"
-      ]
-    },
-    "lint:pkgs:fix": {
-      "dependencies": [
-        "./packages/victory-native:lint:fix",
-        "./packages/victory-vendor:lint:fix",
-        "./packages/victory:lint:fix",
-        "./packages/victory-area:lint:fix",
-        "./packages/victory-axis:lint:fix",
-        "./packages/victory-bar:lint:fix",
-        "./packages/victory-box-plot:lint:fix",
-        "./packages/victory-brush-container:lint:fix",
-        "./packages/victory-brush-line:lint:fix",
-        "./packages/victory-candlestick:lint:fix",
-        "./packages/victory-canvas:lint:fix",
-        "./packages/victory-chart:lint:fix",
-        "./packages/victory-core:lint:fix",
-        "./packages/victory-create-container:lint:fix",
-        "./packages/victory-cursor-container:lint:fix",
-        "./packages/victory-errorbar:lint:fix",
-        "./packages/victory-group:lint:fix",
-        "./packages/victory-histogram:lint:fix",
-        "./packages/victory-legend:lint:fix",
-        "./packages/victory-line:lint:fix",
-        "./packages/victory-pie:lint:fix",
-        "./packages/victory-polar-axis:lint:fix",
-        "./packages/victory-scatter:lint:fix",
-        "./packages/victory-selection-container:lint:fix",
-        "./packages/victory-shared-events:lint:fix",
-        "./packages/victory-stack:lint:fix",
-        "./packages/victory-tooltip:lint:fix",
-        "./packages/victory-voronoi:lint:fix",
-        "./packages/victory-voronoi-container:lint:fix",
-        "./packages/victory-zoom-container:lint:fix"
       ]
     },
     "format:pkgs:fix": {

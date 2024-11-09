@@ -235,7 +235,7 @@
       ]
     },
     "lint": {
-      "command": "nps lint:pkg",
+      "command": "eslint src",
       "files": [
         "src/**",
         "../../.eslintignore",
@@ -253,7 +253,7 @@
       ]
     },
     "lint:fix": {
-      "command": "pnpm run lint || nps lint:pkg:fix",
+      "command": "eslint --fix src",
       "files": [
         "src/**",
         "../../.eslintignore",
