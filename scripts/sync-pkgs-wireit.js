@@ -20,12 +20,12 @@
 const fs = require("fs/promises");
 const path = require("path");
 const { generateWireitConfig } = require("./sync-pkgs-wireit-helpers");
-const { log, error } = console; // eslint-disable-line no-undef
+const { log, error } = console;
 
 // ============================================================================
 // Config
 // ============================================================================
-const ROOT = path.resolve(__dirname, ".."); // eslint-disable-line no-undef
+const ROOT = path.resolve(__dirname, "..");
 const PKGS_ROOT = path.join(ROOT, "packages");
 
 // Special packages
@@ -129,7 +129,7 @@ const cli = async () => {
 if (require.main === module) {
   cli().catch((err) => {
     error(err);
-    process.exit(1); // eslint-disable-line no-process-exit
+    process.exit(1);
   });
 }
 

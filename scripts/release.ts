@@ -5,9 +5,9 @@
  */
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable camelcase */
+
 /* eslint-disable no-console */
-/* eslint-disable max-params */
+
 import fs from "fs-extra";
 import path from "path";
 
