@@ -1,5 +1,7 @@
 # victory-candlestick
 
+## 37.3.2
+
 ## 37.3.1
 
 ### Patch Changes

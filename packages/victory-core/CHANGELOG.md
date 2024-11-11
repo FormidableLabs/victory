@@ -1,5 +1,11 @@
 # victory-core
 
+## 37.3.2
+
+### Patch Changes
+
+- Fix regression to touchAction override in VictoryContainer ([#2953](https://github.com/FormidableLabs/victory/pull/2953))
+
 ## 37.3.1
 
 ### Patch Changes
