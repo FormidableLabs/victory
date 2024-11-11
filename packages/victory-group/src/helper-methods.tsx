@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React from "react";
 import { Data, Helpers, Scale, Wrapper } from "victory-core";
 import isEqual from "react-fast-compare";
@@ -10,7 +9,6 @@ const fallbackProps = {
   offset: 0,
 };
 
-// eslint-disable-next-line max-statements
 export function getCalculatedProps(initialProps, childComponents) {
   const role = "group";
   const props = Helpers.modifyProps(initialProps, fallbackProps, role);

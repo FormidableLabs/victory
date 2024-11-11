@@ -3,7 +3,7 @@ import React from "react";
 
 interface ButtonProps {
   className?: string;
-  children: ChildNode | React.ReactNode;
+  children: React.ReactNode;
   link: string;
   screenReaderLabel?: string;
 }

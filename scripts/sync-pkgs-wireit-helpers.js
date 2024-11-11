@@ -206,11 +206,9 @@ function generateWireitConfig(pkg, rootPkg) {
       // Same as above
       ...["lint", "lint:fix"].reduce((wireit, key) => {
         wireit[key] = {
-          "command": key === "lint" ? "nps lint:pkg" : "pnpm run lint || nps lint:pkg:fix",
+          "command": key === "lint" ? "eslint src" : "eslint --fix src",
           "files": [
             "src/**",
-            "../../.eslintignore",
-            "../../.eslintrc.js"
           ],
           "output": [],
           "dependencies": [

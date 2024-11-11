@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers,react/no-multi-comp */
+ 
 
 import React from "react";
 import { VictoryChart } from "victory-chart";
@@ -36,6 +36,7 @@ interface DraggableDemoInterface {
 
 interface TargetPropsInterface {
   scale?: number;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   onPointChange?: Function;
   datum?: {};
 }

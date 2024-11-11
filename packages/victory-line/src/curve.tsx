@@ -66,7 +66,7 @@ export const Curve: React.FC<CurveProps> = (initialProps) => {
 
 export interface CurveProps extends VictoryCommonPrimitiveProps {
   ariaLabel?: StringOrCallback;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   interpolation?: string | Function;
   openCurve?: boolean;
   pathComponent?: React.ReactElement;

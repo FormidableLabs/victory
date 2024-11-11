@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import { orderBy } from "lodash";
 import React from "react";
 import { Helpers, Scale, Wrapper } from "victory-core";
@@ -89,20 +88,20 @@ function addLayoutData(props, datasets, index) {
       _y0: !(datum._y instanceof Date)
         ? yOffset
         : yOffset
-        ? new Date(yOffset)
-        : datum._y,
+          ? new Date(yOffset)
+          : datum._y,
       _y1:
         datum._y === null
           ? null
           : datum._y instanceof Date
-          ? new Date(Number(datum._y) + Number(yOffset))
-          : datum._y + yOffset,
+            ? new Date(Number(datum._y) + Number(yOffset))
+            : datum._y + yOffset,
       _x1:
         datum._x === null
           ? null
           : datum._x instanceof Date
-          ? new Date(Number(datum._x) + Number(xOffset))
-          : datum._x + xOffset,
+            ? new Date(Number(datum._x) + Number(xOffset))
+            : datum._x + xOffset,
     });
   });
 }

@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers, react/no-multi-comp */
+ 
 import React from "react";
 import { keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
@@ -20,7 +20,6 @@ import { VictorySelectionContainer } from "victory-selection-container";
 import { VictoryCursorContainer } from "victory-cursor-container";
 import { VictoryBrushContainer } from "victory-brush-container";
 import { VictoryTooltip } from "victory-tooltip";
-import { VictoryLegend } from "victory-legend";
 import {
   DomainTuple,
   VictoryClipContainer,
@@ -105,7 +104,7 @@ export default class ImmutableDemo extends React.Component<
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         scatterData: this.getScatterData(),

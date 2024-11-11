@@ -52,11 +52,6 @@ module.exports = {
     "format:root:fix":
       'prettier --write "./*.js*" "./{scripts,config,demo,docs,stories,test}/*.{js,jsx,json,ts,tsx}"',
 
-    // - Lint
-    "lint:base": "eslint --cache --color",
-    "lint:pkg": 'nps "lint:base src"',
-    "lint:pkg:fix": 'nps "lint:base --fix src"',
-
     // - TypeScript
     // TODO(2375): Can we cache / incremental?
     // https://github.com/FormidableLabs/victory/issues/2375

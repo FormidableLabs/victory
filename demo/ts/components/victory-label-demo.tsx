@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers*/
+ 
 import React from "react";
 import { VictoryLabel, VictoryTheme } from "victory-core";
 import { VictoryScatter, VictoryScatterProps } from "victory-scatter";

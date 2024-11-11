@@ -1,5 +1,5 @@
-/* eslint-disable no-magic-numbers */
-/* eslint-disable no-shadow */
+ 
+ 
 
 import React from "react";
 import { VictoryChart } from "victory-chart";

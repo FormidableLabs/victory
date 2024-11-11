@@ -63,7 +63,7 @@ const getSlices = (props, data) => {
 const getCategoriesFromProps = (props: VictoryPieProps) =>
   Array.isArray(props.categories)
     ? props.categories
-    : (props?.categories as { x: string[] })?.x ?? [];
+    : ((props?.categories as { x: string[] })?.x ?? []);
 
 /**
  * Sorts data by props.categories or props.categories.x. If all of the data keys aren't

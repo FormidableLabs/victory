@@ -127,7 +127,7 @@ export function addEvents<
   TBase extends WrappedComponentClass<TProps>,
   TProps extends EventMixinCommonProps,
 >(WrappedComponent: TBase, options: MixinOptions = {}) {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface AddEventsMixin extends EventMixinCalculatedValues {}
 
   // @ts-expect-error "TS2545: A mixin class must have a constructor with a single rest parameter of type 'any[]'."

@@ -389,7 +389,6 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
     };
   }
 
-  // eslint-disable-next-line complexity
   getFlyoutCenter(props, dimensions) {
     const {
       x,

@@ -37,7 +37,7 @@ const options = {
   ],
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface VictoryLineBase extends EventsMixinClass<VictoryLineProps> {}
 
 class VictoryLineBase extends React.Component<VictoryLineProps> {
@@ -118,7 +118,7 @@ export interface VictoryLineProps
     VictoryMultiLabelableProps {
   events?: EventPropTypeInterface<VictoryLineTTargetType, number | string>[];
   eventKey?: StringOrNumberOrCallback | string[];
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   interpolation?: InterpolationPropType | Function;
   style?: VictoryStyleInterface;
 }

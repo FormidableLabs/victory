@@ -54,7 +54,7 @@ class App extends React.Component<any, VictoryPolarAxisState> {
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

@@ -122,7 +122,7 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       const randomValue = random(300);
 

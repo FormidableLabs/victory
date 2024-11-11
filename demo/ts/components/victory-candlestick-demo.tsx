@@ -1,6 +1,4 @@
-/* eslint-disable no-magic-numbers */
 import React from "react";
-import { random, range } from "lodash";
 import { VictoryChart } from "victory-chart";
 import { VictoryCandlestick } from "victory-candlestick";
 import { VictoryTheme } from "victory-core";
@@ -17,30 +15,6 @@ interface VictoryCandlestickDemoState {
     opacity?: number;
   }[];
 }
-
-const getData = () => {
-  const colors = [
-    "violet",
-    "cornflowerblue",
-    "gold",
-    "orange",
-    "turquoise",
-    "tomato",
-    "greenyellow",
-  ];
-  return range(50).map(() => {
-    return {
-      x: random(600),
-      open: random(600),
-      close: random(600),
-      high: random(450, 600),
-      low: random(0, 150),
-      size: random(15) + 3,
-      fill: colors[random(0, 6)],
-      opacity: random(0.3, 1),
-    };
-  });
-};
 
 const containerStyle: React.CSSProperties = {
   display: "flex",

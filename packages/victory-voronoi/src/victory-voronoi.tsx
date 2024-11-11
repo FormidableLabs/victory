@@ -43,7 +43,7 @@ const fallbackProps = {
   padding: 50,
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface VictoryVoronoiBase extends EventsMixinClass<VictoryVoronoiProps> {}
 
 class VictoryVoronoiBase extends React.Component<VictoryVoronoiProps> {

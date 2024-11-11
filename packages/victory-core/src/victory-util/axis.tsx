@@ -313,7 +313,7 @@ export function getTicks(props, scale: D3Scale, filterZero = false) {
  * @param {String} axis: either x or y
  * @returns {Array} returns a domain from tickValues
  */
-// eslint-disable-next-line max-statements
+
 function getDomainFromData(props, axis) {
   const { polar, startAngle = 0, endAngle = 360 } = props;
   const tickArray = getTickArray(props);

@@ -127,7 +127,7 @@ const getStyles = (
 };
 
 // This method will edit or remove candlestick data points that fall outside of the desired domain
-// eslint-disable-next-line complexity
+
 const formatDataFromDomain = (datum, domain) => {
   const minDomainX = Collection.getMinValue(domain.x);
   const maxDomainX = Collection.getMaxValue(domain.x);
@@ -245,7 +245,6 @@ const getOrientation = (labelOrientation, type = "labels") => {
     : labelOrientation;
 };
 
-/* eslint-disable complexity*/
 const calculatePlotValues = (props) => {
   const {
     positions,
@@ -292,7 +291,6 @@ const calculatePlotValues = (props) => {
 
   return { yValue, xValue, dx, dy };
 };
-/* eslint-enable complexity*/
 
 /* eslint-disable max-params*/
 const getLabelProps = (props, text, style, type?: string) => {
@@ -374,7 +372,6 @@ const getLabelProps = (props, text, style, type?: string) => {
 /* eslint-enable max-params*/
 
 export const getBaseProps = (initialProps, fallbackProps) => {
-  // eslint-disable-line max-statements
   const props = Helpers.modifyProps(initialProps, fallbackProps, "candlestick");
   const calculatedValues = getCalculatedValues(props);
   const { data, style, scale, domain, origin, labelOrientation } =
@@ -415,7 +412,6 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     },
   };
 
-  // eslint-disable-next-line complexity
   return data.reduce((childProps, datum, index) => {
     const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
     const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);

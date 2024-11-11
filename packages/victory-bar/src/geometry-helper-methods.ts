@@ -66,7 +66,6 @@ export const circle = (center: Center, radius: number) => ({
   // Left-most point is returned as 0th element of array
   // Right-most point is returned as 1st elemennt of array
   intersection(circle1: { center: Center; radius: number }) {
-    // eslint-disable-line max-statements
     const P0 = this.center;
     const P1 = circle1.center;
     const r0 = this.radius;

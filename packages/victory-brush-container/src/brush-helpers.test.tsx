@@ -1,7 +1,6 @@
 import { BrushHelpers } from "./brush-helpers";
 
 describe("containers/brush-helpers", () => {
-  // eslint-disable-next-line @typescript-eslint/unbound-method
   const { withinBounds, constrainBox } = BrushHelpers;
   describe("withinBounds", () => {
     it("returns true when within bounds", () => {

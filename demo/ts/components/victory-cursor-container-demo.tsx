@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers */
+ 
 import React from "react";
 import { random, range, round } from "lodash";
 import { VictoryChart } from "victory-chart";
@@ -38,7 +38,7 @@ class App extends React.Component<any, VictoryCursorContainerStateInterface> {
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

@@ -289,4 +289,5 @@ class App extends React.Component<any, AppState> {
   }
 }
 
+// eslint-disable-next-line react/no-deprecated
 ReactDOM.render(<App />, document.getElementById("content"));

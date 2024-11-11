@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import { VictoryLabelProps } from "../victory-label/victory-label";
 import * as Helpers from "./helpers";
 import { defaults } from "lodash";

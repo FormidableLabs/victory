@@ -104,7 +104,7 @@ describe("victory-util/scale", () => {
   describe("getType", () => {
     it("returns undefined on unknown function type", () => {
       // TODO: For some reason this test file doesn't respect the eslint override for this rule.
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
+
       const scaleType = Scale.getType(() => {});
       expect(scaleType).toBeUndefined();
     });

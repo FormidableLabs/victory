@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-empty-function */
 
 import { render } from "@testing-library/react";
 import React from "react";

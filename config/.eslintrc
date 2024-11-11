@@ -1,5 +1,0 @@
-{
-  "extends": ["../.eslintrc.js"],
-  "rules": { "strict":  "off" },
-  "globals": {}
-}

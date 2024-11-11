@@ -5,7 +5,7 @@ const glob = require("glob");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-const ROOT = path.resolve(__dirname, "../../.."); // eslint-disable-line no-undef
+const ROOT = path.resolve(__dirname, "../../..");
 const PKGS = path.join(ROOT, "packages");
 const VICTORY_GLOB = path
   .join(PKGS, "victory*/package.json")
@@ -50,7 +50,7 @@ module.exports = {
         include: [DEMO],
         use: {
           loader: "babel-loader",
-          // eslint-disable-next-line global-require
+
           options: require("../../../.babelrc.js"),
         },
       },

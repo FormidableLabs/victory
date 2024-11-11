@@ -157,10 +157,9 @@
       ]
     },
     "lint": {
-      "command": "nps \"lint:base scripts\"",
+      "command": "eslint scripts",
       "files": [
-        "scripts/**",
-        "../../.eslintrc.js"
+        "scripts/**"
       ],
       "output": [],
       "packageLocks": [
@@ -168,10 +167,9 @@
       ]
     },
     "lint:fix": {
-      "command": "pnpm run lint || nps \"lint:base --fix scripts\"",
+      "command": "eslint --fix scripts",
       "files": [
-        "scripts/**",
-        "../../.eslintrc.js"
+        "scripts/**"
       ],
       "output": [],
       "packageLocks": [

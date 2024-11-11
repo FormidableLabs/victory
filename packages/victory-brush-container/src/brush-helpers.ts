@@ -222,7 +222,6 @@ const Helpers = {
     }
   },
 
-  // eslint-disable-next-line max-statements, complexity
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
     const {
@@ -324,7 +323,6 @@ const Helpers = {
       : {};
   },
 
-  // eslint-disable-next-line max-statements, complexity
   onGlobalMouseMove(evt, targetProps) {
     const {
       scale,
@@ -416,13 +414,12 @@ const Helpers = {
     return {};
   },
 
-  // eslint-disable-next-line complexity
   onGlobalMouseUp(evt, targetProps) {
     // if a panning or selection has not been started, ignore the event
     if (!targetProps.isPanning && !targetProps.isSelecting) {
       return {};
     }
-    // eslint-disable-line max-statements, complexity
+
     const {
       x1,
       y1,

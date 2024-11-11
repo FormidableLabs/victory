@@ -27,7 +27,7 @@ export const Default: Story = {
               labels: { fontSize: 20, fill: "tomato" },
             }}
             labelComponent={
-              <VictoryPortal>
+              <VictoryPortal {...props}>
                 <VictoryLabel />
               </VictoryPortal>
             }

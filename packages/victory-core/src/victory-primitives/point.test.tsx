@@ -28,7 +28,7 @@ describe("victory-primitives/point", () => {
     it(`should render the appropriate symbol for "${symbol}"`, () => {
       const stub = jest
         .spyOn(PointPathHelpers, symbol)
-        // eslint-disable-next-line max-nested-callbacks
+
         .mockImplementation(() => `${symbol} symbol`);
       const props = Object.assign({}, baseProps, { symbol });
       const { container } = render(<Point {...props} />, {

@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import { isPlainObject } from "lodash";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";

@@ -238,7 +238,6 @@ const getCalculatedValues = (props) => {
   return { data, horizontal, domain, scale, style, labelOrientation, boxWidth };
 };
 
-// eslint-disable-next-line complexity
 const getWhiskerProps = (props, type) => {
   const {
     horizontal,

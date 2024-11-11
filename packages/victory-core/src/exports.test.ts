@@ -1,7 +1,6 @@
 import * as VictoryCore from "./index";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable import/named */ // We don't need eslint to validate imports; TypeScript handles that for us.
 
 // Import EVERYTHING from 'victory-core' to ensure it's getting exported correctly:
 import {

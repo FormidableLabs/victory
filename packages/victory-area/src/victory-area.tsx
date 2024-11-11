@@ -45,12 +45,12 @@ export interface VictoryAreaProps
     VictoryMultiLabelableProps {
   eventKey?: string[] | number[] | StringOrNumberOrCallback;
   events?: EventPropTypeInterface<VictoryAreaTTargetType, string | number>[];
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   interpolation?: InterpolationPropType | Function;
   style?: VictoryStyleInterface;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface VictoryAreaBase extends EventsMixinClass<VictoryAreaProps> {}
 
 /**

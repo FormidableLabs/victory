@@ -52,7 +52,6 @@ const defaultProps = {
 };
 
 const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
-  // eslint-disable-next-line no-use-before-define
   const role = VictoryGroup?.role;
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();

@@ -14,7 +14,7 @@ export const Orientations: Story = {
   render: (props) => (
     <>
       <VictoryChart
-       
+        {...props}
         padding={{ left: 20, right: 30, top: 15, bottom: 40 }}
       >
         <VictoryAxis tickValues={[1, 2, 3, 4, 5]} />

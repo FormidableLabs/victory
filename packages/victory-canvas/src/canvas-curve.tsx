@@ -10,7 +10,7 @@ import { LineRadial } from "../../victory-vendor/d3-shape";
 
 export interface CanvasCurveProps extends VictoryCommonPrimitiveProps {
   ariaLabel?: StringOrCallback;
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   interpolation?: string | Function;
   openCurve?: boolean;
   tabIndex?: NumberOrCallback;

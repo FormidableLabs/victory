@@ -23,7 +23,6 @@
   "devDependencies": {
     "@babel/cli": "7.23.9",
     "@babel/core": "7.23.9",
-    "@babel/eslint-parser": "7.23.9",
     "@babel/plugin-transform-export-namespace-from": "7.23.4",
     "@babel/plugin-transform-modules-commonjs": "7.23.3",
     "@babel/preset-env": "7.23.9",
@@ -31,6 +30,7 @@
     "@babel/preset-typescript": "7.23.3",
     "@changesets/cli": "^2.24.1",
     "@chromatic-com/storybook": "^3.2.2",
+    "@eslint/js": "^9.14.0",
     "@storybook/addon-essentials": "^8.4.1",
     "@storybook/addon-storysource": "^8.4.1",
     "@storybook/addon-webpack5-compiler-swc": "1.0.5",
@@ -62,20 +62,17 @@
     "cpx2": "^4.2.0",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
-    "eslint": "^8.21.0",
-    "eslint-config-formidable": "^4.0.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-filenames": "^1.2.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jest": "^26.7.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.0.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-storybook": "^0.10.2",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^28.9.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-promise": "^7.1.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react": "^7.37.2",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "fs-extra": "^10.0.0",
     "glob": "8.0.3",
+    "globals": "^15.12.0",
     "immutable": "^3.8.2",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
@@ -87,7 +84,7 @@
     "octokit": "^3.1.1",
     "postcss": "^8",
     "postcss-loader": "^8.1.1",
-    "prettier": "^2.6.2",
+    "prettier": "^3.3.3",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -107,6 +104,7 @@
     "ts-loader": "^9.3.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.7.3",
+    "typescript-eslint": "^8.13.0",
     "unified": "^8.3.2",
     "victory-vendor": "*",
     "victory-voronoi": "*",
@@ -282,7 +280,6 @@
     "format:root": {
       "command": "nps format:root",
       "files": [
-        ".eslintrc.js",
         "*.js",
         "*.json",
         "scripts",
@@ -301,7 +298,6 @@
     "format:root:fix": {
       "command": "pnpm run format:root || nps format:root:fix",
       "files": [
-        ".eslintrc.js",
         "*.js",
         "*.json",
         "scripts",
@@ -365,9 +361,8 @@
       ]
     },
     "lint:root": {
-      "command": "nps \"lint:base *.js scripts config demo stories test\"",
+      "command": "eslint --color *.js scripts config demo stories test",
       "files": [
-        ".eslintrc.js",
         "*.js",
         "scripts",
         "config",
@@ -382,9 +377,8 @@
       ]
     },
     "lint:root:fix": {
-      "command": "pnpm run lint:root || nps \"lint:base --fix *.js scripts config demo stories test\"",
+      "command": "eslint --color --fix *.js scripts config demo stories test",
       "files": [
-        ".eslintrc.js",
         "*.js",
         "scripts",
         "config",
@@ -399,37 +393,15 @@
       ]
     },
     "lint:pkgs": {
+      "command": "eslint --color packages",
       "dependencies": [
-        "./packages/victory-native:lint",
-        "./packages/victory-vendor:lint",
-        "./packages/victory:lint",
-        "./packages/victory-area:lint",
-        "./packages/victory-axis:lint",
-        "./packages/victory-bar:lint",
-        "./packages/victory-box-plot:lint",
-        "./packages/victory-brush-container:lint",
-        "./packages/victory-brush-line:lint",
-        "./packages/victory-candlestick:lint",
-        "./packages/victory-canvas:lint",
-        "./packages/victory-chart:lint",
-        "./packages/victory-core:lint",
-        "./packages/victory-create-container:lint",
-        "./packages/victory-cursor-container:lint",
-        "./packages/victory-errorbar:lint",
-        "./packages/victory-group:lint",
-        "./packages/victory-histogram:lint",
-        "./packages/victory-legend:lint",
-        "./packages/victory-line:lint",
-        "./packages/victory-pie:lint",
-        "./packages/victory-polar-axis:lint",
-        "./packages/victory-scatter:lint",
-        "./packages/victory-selection-container:lint",
-        "./packages/victory-shared-events:lint",
-        "./packages/victory-stack:lint",
-        "./packages/victory-tooltip:lint",
-        "./packages/victory-voronoi:lint",
-        "./packages/victory-voronoi-container:lint",
-        "./packages/victory-zoom-container:lint"
+        "build"
+      ]
+    },
+    "lint:pkgs:fix": {
+      "command": "eslint --color --fix packages",
+      "dependencies": [
+        "build"
       ]
     },
     "lint:docs": {
@@ -566,40 +538,6 @@
         "./packages/victory-voronoi:types:create",
         "./packages/victory-voronoi-container:types:create",
         "./packages/victory-zoom-container:types:create"
-      ]
-    },
-    "lint:pkgs:fix": {
-      "dependencies": [
-        "./packages/victory-native:lint:fix",
-        "./packages/victory-vendor:lint:fix",
-        "./packages/victory:lint:fix",
-        "./packages/victory-area:lint:fix",
-        "./packages/victory-axis:lint:fix",
-        "./packages/victory-bar:lint:fix",
-        "./packages/victory-box-plot:lint:fix",
-        "./packages/victory-brush-container:lint:fix",
-        "./packages/victory-brush-line:lint:fix",
-        "./packages/victory-candlestick:lint:fix",
-        "./packages/victory-canvas:lint:fix",
-        "./packages/victory-chart:lint:fix",
-        "./packages/victory-core:lint:fix",
-        "./packages/victory-create-container:lint:fix",
-        "./packages/victory-cursor-container:lint:fix",
-        "./packages/victory-errorbar:lint:fix",
-        "./packages/victory-group:lint:fix",
-        "./packages/victory-histogram:lint:fix",
-        "./packages/victory-legend:lint:fix",
-        "./packages/victory-line:lint:fix",
-        "./packages/victory-pie:lint:fix",
-        "./packages/victory-polar-axis:lint:fix",
-        "./packages/victory-scatter:lint:fix",
-        "./packages/victory-selection-container:lint:fix",
-        "./packages/victory-shared-events:lint:fix",
-        "./packages/victory-stack:lint:fix",
-        "./packages/victory-tooltip:lint:fix",
-        "./packages/victory-voronoi:lint:fix",
-        "./packages/victory-voronoi-container:lint:fix",
-        "./packages/victory-zoom-container:lint:fix"
       ]
     },
     "format:pkgs:fix": {

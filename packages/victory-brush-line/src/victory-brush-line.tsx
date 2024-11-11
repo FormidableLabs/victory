@@ -306,7 +306,7 @@ export class VictoryBrushLine<
                     ]
                   : [];
               },
-              // eslint-disable-next-line max-statements, complexity
+
               onMouseMove: (evt, targetProps) => {
                 const {
                   isPanning,

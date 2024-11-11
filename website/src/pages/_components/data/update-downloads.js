@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-// eslint-disable-next-line no-use-before-define
+ 
 const data = d().victory;
 
 const downloads = Object.keys(data).map((day) => ({
@@ -18,7 +18,7 @@ export default data;
 `;
 
 fs.writeFileSync(
-  // eslint-disable-next-line no-undef
+   
   path.resolve(__dirname, "..", "downloads.js"),
   contents,
   "utf8",

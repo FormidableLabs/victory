@@ -2,7 +2,7 @@ import * as Immutable from "./immutable";
 
 describe("victory-util/immutable", () => {
   it("should have valid type guards", () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function noop(arg: unknown) {}
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     function typeChecks() {

@@ -18,7 +18,7 @@ const rimrafP = promisify(rimraf);
 const vendorPkg = require("../package.json");
 const VENDOR_PKGS = new Set(Object.keys(vendorPkg.dependencies));
 
-const { log, error } = console; // eslint-disable-line no-undef
+const { log, error } = console;
 
 // Templates.
 const getEsmIndex = (pkg) => `

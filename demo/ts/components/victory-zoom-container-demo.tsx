@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers,react/no-multi-comp */
+ 
 import React from "react";
 import { range, random, minBy, maxBy, last } from "lodash";
 import { VictoryChart } from "victory-chart";
@@ -170,7 +170,7 @@ export default class VictoryZoomContainerDemo extends React.Component<
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

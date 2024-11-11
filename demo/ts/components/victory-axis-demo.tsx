@@ -24,7 +24,7 @@ export default class VictoryAxisDemo extends React.Component<
   }
 
   componentDidMount() {
-    /* eslint-disable react/no-did-mount-set-state */
+     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         tickValues: this.getTickValues(),

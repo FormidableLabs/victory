@@ -66,7 +66,7 @@ const defaultData = [
   { x: 4, y: 4 },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface VictoryBarBase extends EventsMixinClass<VictoryBarProps> {}
 
 /**
