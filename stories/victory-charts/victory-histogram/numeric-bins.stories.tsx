@@ -16,40 +16,40 @@ export const NumericBins: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} bins={2}  />
+        <VictoryHistogram {...props} data={data} bins={2} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data} bins={2}  />
+        <VictoryHistogram {...props} data={data} bins={2} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} bins={8}  />
+        <VictoryHistogram {...props} data={data} bins={8} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data} bins={8}  />
+        <VictoryHistogram {...props} data={data} bins={8} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} bins={48}  />
+        <VictoryHistogram {...props} data={data} bins={48} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data} bins={48}  />
+        <VictoryHistogram {...props} data={data} bins={48} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} bins={[0, 30, 50]}  />
+        <VictoryHistogram {...props} data={data} bins={[0, 30, 50]} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data} bins={[0, 30, 50]}  />
+        <VictoryHistogram {...props} data={data} bins={[0, 30, 50]} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} bins={[0, 30, 50, 100]}  />
+        <VictoryHistogram {...props} data={data} bins={[0, 30, 50, 100]} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data} bins={[0, 30, 50, 100]}  />
+        <VictoryHistogram {...props} data={data} bins={[0, 30, 50, 100]} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} bins={[0, 10, 30, 70, 150]}  />
+        <VictoryHistogram {...props} data={data} bins={[0, 10, 30, 70, 150]} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data} bins={[0, 10, 30, 70, 150]}  />
+        <VictoryHistogram {...props} data={data} bins={[0, 10, 30, 70, 150]} />
       </VictoryChart>
     </>
   ),

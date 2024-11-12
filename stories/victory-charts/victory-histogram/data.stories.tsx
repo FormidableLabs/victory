@@ -37,19 +37,20 @@ export const Data: Story = {
     return (
       <>
         <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-          <VictoryHistogram {...props} data={timeData}  />
+          <VictoryHistogram {...props} data={timeData} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props} data={oneYear}  />
+          <VictoryHistogram {...props} data={oneYear} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props} data={fourMonths}  />
+          <VictoryHistogram {...props} data={fourMonths} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-          <VictoryHistogram {...props} data={oneMonth}  />
+          <VictoryHistogram {...props} data={oneMonth} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props}
+          <VictoryHistogram
+            {...props}
             data={data.map(({ x }) => ({ value: x }))}
             x={({ value }) => value}
           />

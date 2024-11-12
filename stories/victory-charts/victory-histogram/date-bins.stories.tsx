@@ -27,7 +27,8 @@ export const DateBins: Story = {
     return (
       <>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props}
+          <VictoryHistogram
+            {...props}
             data={timeData}
             bins={[
               new Date(2010, 0, 1),
@@ -37,7 +38,8 @@ export const DateBins: Story = {
           />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-          <VictoryHistogram {...props}
+          <VictoryHistogram
+            {...props}
             data={timeData}
             bins={[
               new Date(2010, 0, 1),
@@ -47,31 +49,34 @@ export const DateBins: Story = {
           />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props} data={timeData} bins={2}  />
+          <VictoryHistogram {...props} data={timeData} bins={2} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-          <VictoryHistogram {...props} data={timeData} bins={2}  />
+          <VictoryHistogram {...props} data={timeData} bins={2} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props} data={timeData} bins={10}  />
+          <VictoryHistogram {...props} data={timeData} bins={10} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-          <VictoryHistogram {...props} data={timeData} bins={10}  />
+          <VictoryHistogram {...props} data={timeData} bins={10} />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props}
+          <VictoryHistogram
+            {...props}
             data={timeData}
             bins={niceTimeScale.ticks(d3Time.utcDay)}
           />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props}
+          <VictoryHistogram
+            {...props}
             data={timeData}
             bins={niceTimeScale.ticks(d3Time.utcMonth)}
           />
         </VictoryChart>
         <VictoryChart theme={VictoryTheme[props.themeKey]}>
-          <VictoryHistogram {...props}
+          <VictoryHistogram
+            {...props}
             data={timeData}
             bins={niceTimeScale.ticks(d3Time.utcYear)}
           />

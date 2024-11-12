@@ -16,7 +16,8 @@ export const Inline: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             backgroundStyle={{ fill: "lavender" }}
             verticalAnchor="middle"
             text={["Victory is awesome.", "This is inline styling for labels."]}
@@ -27,7 +28,8 @@ export const Inline: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             inline
             backgroundStyle={[
               { fill: "pink" },
@@ -48,7 +50,8 @@ export const Inline: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             inline
             angle={70}
             backgroundStyle={[

@@ -16,7 +16,8 @@ export const Angles: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={45}
             verticalAnchor="middle"
             text={["middle", "middle", "anchors"]}
@@ -27,7 +28,8 @@ export const Angles: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={45}
             textAnchor="start"
             text={["start", "end", "anchors"]}
@@ -38,7 +40,8 @@ export const Angles: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={45}
             textAnchor="end"
             verticalAnchor="start"
@@ -50,7 +53,8 @@ export const Angles: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={-45}
             verticalAnchor="middle"
             text={["middle", "middle", "anchors"]}
@@ -61,7 +65,8 @@ export const Angles: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={-45}
             textAnchor="start"
             text={["start", "end", "anchors"]}
@@ -72,7 +77,8 @@ export const Angles: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={-45}
             textAnchor="end"
             verticalAnchor="start"

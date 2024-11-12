@@ -1,7 +1,12 @@
 import React from "react";
 import type { Meta } from "@storybook/react";
 
-import { VictoryScatter, VictoryChart, VictoryStack, VictoryTheme } from "@/victory";
+import {
+  VictoryScatter,
+  VictoryChart,
+  VictoryStack,
+  VictoryTheme,
+} from "@/victory";
 
 import { getData, getMixedData } from "../../utils/data";
 import { Story, ComponentMeta } from "./config";
@@ -16,7 +21,8 @@ export const Theme: Story = {
   render: (props) => (
     <>
       <VictoryChart>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getMixedData(8)}
           labels={({ datum }) => datum.x}
         />
@@ -31,7 +37,8 @@ export const Theme: Story = {
         </VictoryStack>
       </VictoryChart>
       <VictoryChart theme={VictoryTheme.material}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getMixedData(8)}
           labels={({ datum }) => datum.x}
         />
@@ -46,7 +53,8 @@ export const Theme: Story = {
         </VictoryStack>
       </VictoryChart>
       <VictoryChart theme={VictoryTheme.clean}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getMixedData(8)}
           labels={({ datum }) => datum.x}
         />

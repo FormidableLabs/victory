@@ -22,7 +22,7 @@ export const MixedCharts: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data}  />
+        <VictoryHistogram {...props} data={data} />
         <VictoryLine
           data={[
             { x: 0, y: 5 },
@@ -37,7 +37,7 @@ export const MixedCharts: Story = {
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data}  />
+        <VictoryHistogram {...props} data={data} />
         <VictoryScatter
           data={[
             { x: 0, y: 5 },

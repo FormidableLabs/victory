@@ -15,19 +15,22 @@ export const Labels: Story = {
   render: (props) => (
     <>
       <VictoryChart>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getData(7)}
           labels={({ datum }) => `x: ${datum.x}`}
         />
       </VictoryChart>
       <VictoryChart>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getData(7)}
           labels={["", "", "three", "four", "5", "six"]}
         />
       </VictoryChart>
       <VictoryChart>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={[
             { x: 1, y: 2, label: "cat" },
             { x: 2, y: 5, label: "dog" },

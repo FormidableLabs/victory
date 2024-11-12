@@ -16,25 +16,27 @@ export const CornerRadius: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} cornerRadius={1}  />
+        <VictoryHistogram {...props} data={data} cornerRadius={1} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data} cornerRadius={1}  />
+        <VictoryHistogram {...props} data={data} cornerRadius={1} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} cornerRadius={10}  />
+        <VictoryHistogram {...props} data={data} cornerRadius={10} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props} data={data} cornerRadius={10}  />
+        <VictoryHistogram {...props} data={data} cornerRadius={10} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props}
+        <VictoryHistogram
+          {...props}
           data={data}
           cornerRadius={{ topLeft: 15, bottomRight: 30 }}
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props}
+        <VictoryHistogram
+          {...props}
           data={data}
           cornerRadius={{ topLeft: 15, bottomRight: 22 }}
         />
