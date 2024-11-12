@@ -17,5 +17,5 @@ export const theme = {
     darkestGray: "#4d4d4d",
     nearBlack: "#242121",
     black: "#1f1f1f",
-  }
+  },
 };

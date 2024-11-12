@@ -12,7 +12,6 @@
     "serve": "docusaurus serve --dir build/open-source/victory",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "lint": "eslint src",
     "typecheck": "tsc"
   },
   "dependencies": {

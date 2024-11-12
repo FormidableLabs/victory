@@ -44,9 +44,4 @@ const data = {
 export default data;
 `;
 
-fs.writeFileSync(
-   
-  path.resolve(__dirname, "versions.js"),
-  contents,
-  "utf8",
-);
+fs.writeFileSync(path.resolve(__dirname, "versions.js"), contents, "utf8");

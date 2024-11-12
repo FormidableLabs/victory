@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { FeaturedBadge } from "formidable-oss-badges";
 
@@ -17,9 +16,7 @@ export const LandingHero = () => {
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
               {siteConfig.title}
             </h1>
-            <p className="mt-6 text-lg leading-8">
-              {siteConfig.tagline}
-            </p>
+            <p className="mt-6 text-lg leading-8">{siteConfig.tagline}</p>
             <div className="mt-10 flex flex-wrap flex-col xl:flex-row xl:items-center justify-start gap-6">
               <button
                 className="overflow-hidden grid-rows-2 md:grid-rows-1 lg:max-w-fit grid lg:grid-cols-6 align-center rounded-md shadow-sm border-none bg-white my-0 py-0 px-0 text-sm font-semibold text-theme-2  cursor-pointer"
