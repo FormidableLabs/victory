@@ -20,7 +20,7 @@ runs:
         cache: 'pnpm'
 
     # Wireit cache
-    - uses: google/wireit@setup-github-actions-caching/v2
+    - uses: google/wireit@setup-github-actions-caching/v1
 
     - name: Install dependencies
       shell: bash
