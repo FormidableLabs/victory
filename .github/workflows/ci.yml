@@ -36,16 +36,6 @@ jobs:
           onlyDiff: "true"
           header: "Bundle size report" # PR comment header
 
-  format:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-
-      - name: Format
-        run: pnpm format
-
   lint:
     needs: [build]
     runs-on: ubuntu-latest

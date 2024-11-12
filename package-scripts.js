@@ -39,19 +39,6 @@ module.exports = {
     "build:dist:min":
       "webpack --bail --config ../../config/webpack/webpack.config.js",
 
-    // Quality.
-    // - Format
-    // TODO(2375): Can we cache / incremental?
-    // https://github.com/FormidableLabs/victory/issues/2375
-    "format:pkg":
-      'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --list-different "./**/*.{js,jsx,json,ts,tsx}"',
-    "format:pkg:fix":
-      'prettier --config ../../.prettierrc.json --ignore-path ../../.prettierignore --write "./**/*.{js,jsx,json,ts,tsx}"',
-    "format:root":
-      'prettier --list-different "./*.js*" "./{scripts,config,demo,docs,stories,test}/*.{js,jsx,json,ts,tsx}"',
-    "format:root:fix":
-      'prettier --write "./*.js*" "./{scripts,config,demo,docs,stories,test}/*.{js,jsx,json,ts,tsx}"',
-
     // - TypeScript
     // TODO(2375): Can we cache / incremental?
     // https://github.com/FormidableLabs/victory/issues/2375

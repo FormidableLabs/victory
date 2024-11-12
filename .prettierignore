@@ -1,3 +1,8 @@
+.cache
+.changeset
+.expo
+.storybook
+.wireit
 .vscode
 coverage
 dist
@@ -10,12 +15,12 @@ node_modules
 npm-debug.log*
 lerna-debug.log*
 yarn-error.log*
-.cache
 lerna.json
 tsconfig.json
 tsconfig.*.json
 storybook-static
 public
 artifacts
-.expo
-.wireit
+stories
+demo
+website

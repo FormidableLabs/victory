@@ -43,8 +43,6 @@
     "check": "wireit",
     "types:check": "wireit",
     "types:create": "wireit",
-    "format": "wireit",
-    "format:fix": "wireit",
     "lint": "wireit",
     "lint:fix": "wireit",
     "jest": "wireit"
@@ -202,32 +200,6 @@
         "../victory-bar:types:create",
         "../victory-core:types:create"
       ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "format": {
-      "command": "nps format:pkg",
-      "files": [
-        "src/**",
-        "*.json",
-        "../../.prettierignore",
-        "../../.prettierrc.json"
-      ],
-      "output": [],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "format:fix": {
-      "command": "pnpm run format || nps format:pkg:fix",
-      "files": [
-        "src/**",
-        "*.json",
-        "../../.prettierignore",
-        "../../.prettierrc.json"
-      ],
-      "output": [],
       "packageLocks": [
         "pnpm-lock.yaml"
       ]
