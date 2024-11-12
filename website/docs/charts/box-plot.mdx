@@ -252,6 +252,111 @@ Events can be handled by passing an array of event objects to the `events` prop 
 </VictoryChart>
 ```
 
+## Box Plot - Tooltips
+
+Tooltips are not displayed by default on VictoryBoxPlot; to enable tooltips, use a custom events prop to handle interactions.
+
+```jsx live noInline
+function App() {
+  const activate =
+    (label: string) => () =>
+      [
+        {
+          target: label,
+          mutation: () => ({
+            active: true,
+          }),
+        },
+      ];
+
+  const deactivate =
+    (label: string) => () =>
+      [
+        {
+          target: label,
+          mutation: () => ({
+            active: undefined,
+          }),
+        },
+      ];
+
+  const dataTypes = [
+    "min",
+    "max",
+    "q1",
+    "q3",
+    "median",
+  ];
+
+  const events = dataTypes.map(
+    (dataType) => ({
+      target: dataType,
+      eventHandlers: {
+        onMouseOver: activate(
+          `${dataType}Labels`,
+        ),
+        onFocus: activate(
+          `${dataType}Labels`,
+        ),
+        onTouchStart: activate(
+          `${dataType}Labels`,
+        ),
+        onMouseOut: deactivate(
+          `${dataType}Labels`,
+        ),
+        onBlur: deactivate(
+          `${dataType}Labels`,
+        ),
+        onTouchEnd: deactivate(
+          `${dataType}Labels`,
+        ),
+      },
+    }),
+  );
+
+  return (
+    <VictoryBoxPlot
+      minLabels
+      maxLabels
+      q1Labels
+      q3Labels
+      medianLabels
+      events={events}
+      minLabelComponent={
+        <VictoryTooltip />
+      }
+      maxLabelComponent={
+        <VictoryTooltip />
+      }
+      q1LabelComponent={
+        <VictoryTooltip />
+      }
+      q3LabelComponent={
+        <VictoryTooltip />
+      }
+      medianLabelComponent={
+        <VictoryTooltip />
+      }
+      data={[
+        { x: "red", y: [5, 10, 9, 2] },
+        { x: "blue", y: [1, 15, 6, 8] },
+        { x: "green", y: [3, 5, 6, 9] },
+        {
+          x: "yellow",
+          y: [5, 20, 8, 12],
+        },
+        {
+          x: "white",
+          y: [2, 11, 12, 13],
+        },
+      ]}
+    />
+  );
+}
+
+render(<App />);
+```
+
 ## Standalone Rendering
 
 Box Plot charts can be rendered outside a VictoryChart.
