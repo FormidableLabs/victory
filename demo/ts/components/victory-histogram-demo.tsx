@@ -122,7 +122,6 @@ export default class App extends React.Component<{}, VictoryBarDemoState> {
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       const randomValue = random(300);
 

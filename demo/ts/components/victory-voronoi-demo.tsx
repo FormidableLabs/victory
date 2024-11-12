@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { VictoryVoronoi } from "victory-voronoi";
 import { VictoryTooltip } from "victory-tooltip";
@@ -38,7 +37,6 @@ class VoronoiDemo extends React.Component<any, VoronoiDemoStateProps> {
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

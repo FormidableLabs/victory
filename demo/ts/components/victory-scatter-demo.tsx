@@ -1,4 +1,3 @@
- 
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { random, range } from "lodash";
@@ -11,11 +10,7 @@ import {
 } from "victory-core";
 import bubbleData from "./bubble-data";
 import symbolData from "./symbol-data";
-import {
-  FaMoon,
-  FaFootballBall,
-  FaSun,
-} from "react-icons/fa";
+import { FaMoon, FaFootballBall, FaSun } from "react-icons/fa";
 
 type DataType = {
   x?: string | number;
@@ -122,7 +117,6 @@ const CustomCustomIconWithEvents = (props) => {
   );
 };
 
-
 class CatPoint extends React.Component<any, CatPointInterface> {
   static propTypes = {
     symbol: PropTypes.string,
@@ -178,7 +172,6 @@ export default class VictoryScatterDemo extends React.Component<
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: getData(),
@@ -229,8 +222,8 @@ export default class VictoryScatterDemo extends React.Component<
             data: {
               fill: ({ datum }) =>
                 datum.y > 0
-                  ? VictoryTheme.clean.palette?.colors?.red ?? "red"
-                  : VictoryTheme.clean.palette?.colors?.blue ?? "blue",
+                  ? (VictoryTheme.clean.palette?.colors?.red ?? "red")
+                  : (VictoryTheme.clean.palette?.colors?.blue ?? "blue"),
             },
           }}
           symbol={({ datum }) => (datum.y > 0 ? "triangleUp" : "triangleDown")}
@@ -332,20 +325,20 @@ export default class VictoryScatterDemo extends React.Component<
         {/* custom icons */}
         <VictoryScatter
           style={{
-            parent: style.parent
+            parent: style.parent,
           }}
           data={[
             { x: 1, y: 45 },
             { x: 2, y: 85 },
             { x: 3, y: 55 },
             { x: 4, y: 25 },
-            { x: 5, y: 65 }
+            { x: 5, y: 65 },
           ]}
           dataComponent={<CustomCustomIconWithEvents />}
         />
         <VictoryScatter
           style={{
-            parent: style.parent
+            parent: style.parent,
           }}
           dataComponent={<CustomSunIcon />}
           size={25}

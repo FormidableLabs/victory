@@ -15,9 +15,8 @@ import viewStyles from "../styles/view-styles";
 import { getTransitionData } from "../data";
 
 export const ChartScreen: React.FC = () => {
-  const [transitionData, setTransitionData] = React.useState(
-    getTransitionData(),
-  );
+  const [transitionData, setTransitionData] =
+    React.useState(getTransitionData());
 
   React.useEffect(() => {
     const updateDataHandle = setInterval(() => {

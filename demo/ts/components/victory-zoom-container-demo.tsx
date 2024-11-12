@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { range, random, minBy, maxBy, last } from "lodash";
 import { VictoryChart } from "victory-chart";
@@ -170,7 +169,6 @@ export default class VictoryZoomContainerDemo extends React.Component<
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

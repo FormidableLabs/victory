@@ -54,7 +54,6 @@ class App extends React.Component<any, VictoryPolarAxisState> {
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

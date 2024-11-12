@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { isNumber } from "lodash";
 import { VictoryGroup } from "victory-group";
@@ -87,7 +86,10 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
             data-testid="bar-accessibility-chart"
           >
             <h3 style={chartHeadingStyle}>Bar chart</h3>
-            <VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 40, y: 40 }}>
+            <VictoryChart
+              theme={VictoryTheme.clean}
+              domainPadding={{ x: 40, y: 40 }}
+            >
               <VictoryBar
                 data={accessibilityBarData}
                 dataComponent={
@@ -103,7 +105,10 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           {/** BOXPLOT */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>BoxPlot</h3>
-            <VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 40, y: 40 }}>
+            <VictoryChart
+              theme={VictoryTheme.clean}
+              domainPadding={{ x: 40, y: 40 }}
+            >
               <VictoryBoxPlot
                 minLabels
                 maxLabels
@@ -186,7 +191,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                     />
                   }
                 />
-                <VictoryArea 
+                <VictoryArea
                   style={{ data: { fill: "#77D1F3" } }}
                   data={accessibilityAreaData.b}
                   dataComponent={
@@ -202,11 +207,11 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
                   style={{ data: { fill: "#18BFFF" } }}
                   data={accessibilityAreaData.c}
                   dataComponent={
-                      <Area
+                    <Area
                       ariaLabel={({ data }) =>
                         `area chart stack ${data?.[0]._stack}`
-                    }
-                    tabIndex={20.2}
+                      }
+                      tabIndex={20.2}
                     />
                   }
                 />
@@ -229,7 +234,10 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           {/** LINE */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Line</h3>
-            <VictoryChart theme={VictoryTheme.clean} domain={{ x: [0, 6], y: [1, 7] }}>
+            <VictoryChart
+              theme={VictoryTheme.clean}
+              domain={{ x: [0, 6], y: [1, 7] }}
+            >
               <VictoryLine
                 data={accessibilityLineData}
                 labels={({ datum }) => datum.y}
@@ -280,7 +288,10 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           {/** SCATTER */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Scatter</h3>
-            <VictoryChart theme={VictoryTheme.clean} domain={{ x: [0, 6], y: [0, 8] }}>
+            <VictoryChart
+              theme={VictoryTheme.clean}
+              domain={{ x: [0, 6], y: [0, 8] }}
+            >
               <VictoryScatter
                 size={7}
                 data={accessibilityScatterData}
@@ -299,7 +310,7 @@ export default class VictoryAccessibilityDemo extends React.Component<any> {
           {/** VORONOI */}
           <div style={chartContainerStyle}>
             <h3 style={chartHeadingStyle}>Voronoi</h3>
-            <VictoryChart theme={VictoryTheme.clean} >
+            <VictoryChart theme={VictoryTheme.clean}>
               <VictoryVoronoi
                 data={accessibilityVoronoiData}
                 dataComponent={

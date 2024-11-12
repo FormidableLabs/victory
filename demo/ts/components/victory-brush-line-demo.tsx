@@ -1,6 +1,3 @@
- 
- 
-
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryAxis } from "victory-axis";
