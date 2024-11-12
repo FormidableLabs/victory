@@ -144,7 +144,6 @@ export default tseslint.config(
     files: ["**/stories/**/*.ts", "**/stories/**/*.stories.tsx"],
     rules: {
       "no-magic-numbers": "off",
-      "prettier/prettier": "off",
     },
   },
 );

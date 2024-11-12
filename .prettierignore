@@ -1,11 +1,13 @@
 .cache
 .changeset
+.docusaurus
 .expo
 .storybook
 .wireit
 .vscode
 coverage
 dist
+build
 lib
 lib-vendor
 es
@@ -21,5 +23,4 @@ tsconfig.*.json
 storybook-static
 public
 artifacts
-stories
 demo
