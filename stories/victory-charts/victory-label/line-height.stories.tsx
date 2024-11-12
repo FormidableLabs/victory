@@ -16,7 +16,8 @@ export const LineHeight: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             lineHeight={2}
             text={["single", "lineHeight", "value"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -26,7 +27,8 @@ export const LineHeight: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             lineHeight={[2]}
             text={["single array", "lineHeight", "value"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -36,7 +38,8 @@ export const LineHeight: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             lineHeight={[2, 1, 3]}
             text={["multi array", "lineHeight", "value"]}
             backgroundStyle={{ stroke: "blue", fill: "none" }}
@@ -46,7 +49,8 @@ export const LineHeight: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             lineHeight={2}
             text={["single", "lineHeight", "value"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -56,7 +60,8 @@ export const LineHeight: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             lineHeight={[2]}
             text={["single array", "lineHeight", "value"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -66,7 +71,8 @@ export const LineHeight: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             lineHeight={[2, 1, 3]}
             text={["multi array", "lineHeight", "value"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -76,7 +82,8 @@ export const LineHeight: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             lineHeight={[2, 1, 3]}
             text={["测试汉字", "不在正常的 ASCII 范围内", "最后一行"]}
             backgroundStyle={[{ stroke: "blue", fill: "none" }]}
@@ -86,7 +93,8 @@ export const LineHeight: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             lineHeight={[2, 1, 3]}
             text={[
               "اختبار اللغات التي تُقرأ من اليمين إلى اليسار",

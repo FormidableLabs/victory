@@ -21,28 +21,32 @@ export const Tooltips: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
       <VictoryChart horizontal theme={VictoryTheme[props.themeKey]}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getMixedData(5)}
           labels={({ datum }) => `x: ${datum.x}`}
           labelComponent={<VictoryTooltip active />}
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryScatter {...props}
+        <VictoryScatter
+          {...props}
           data={getData(5)}
           labels={["one", "two", "3", "wow, four tooltips", "five"]}
           labelComponent={<VictoryTooltip active />}

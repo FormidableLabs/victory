@@ -14,9 +14,9 @@ export const Domain: Story = {
   args: {},
   render: (props) => (
     <>
-      <VictoryScatter {...props}
+      <VictoryScatter
+        {...props}
         data={getData(5)}
-       
         domain={{ x: [0, 4], y: [5, 10] }}
       />
       <VictoryChart minDomain={{ x: 3 }}>

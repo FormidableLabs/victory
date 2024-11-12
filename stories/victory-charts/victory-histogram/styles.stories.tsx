@@ -16,7 +16,8 @@ export const Styles: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props}
+        <VictoryHistogram
+          {...props}
           data={data}
           style={{
             data: { transform: "translate(0px, -20px) skew(2deg, 2deg)" },
@@ -24,7 +25,8 @@ export const Styles: Story = {
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} horizontal>
-        <VictoryHistogram {...props}
+        <VictoryHistogram
+          {...props}
           data={data}
           style={{
             data: {

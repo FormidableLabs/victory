@@ -16,7 +16,8 @@ export const BackgroundPadding: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             backgroundStyle={[
               { fill: "pink" },
               { fill: "lavender" },
@@ -36,7 +37,8 @@ export const BackgroundPadding: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             backgroundStyle={[
               { fill: "pink" },
               { fill: "lavender" },
@@ -56,7 +58,8 @@ export const BackgroundPadding: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             backgroundStyle={[
               { fill: "pink" },
               { fill: "lavender" },
@@ -81,7 +84,8 @@ export const BackgroundPadding: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={45}
             backgroundStyle={[
               { fill: "pink" },
@@ -102,7 +106,8 @@ export const BackgroundPadding: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={45}
             backgroundStyle={[
               { fill: "pink" },
@@ -123,7 +128,8 @@ export const BackgroundPadding: Story = {
       <VictoryScatter
         {...defaultScatterProps}
         labelComponent={
-          <VictoryLabel {...props}
+          <VictoryLabel
+            {...props}
             angle={45}
             backgroundStyle={[
               { fill: "pink" },

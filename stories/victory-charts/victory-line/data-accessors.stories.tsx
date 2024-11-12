@@ -15,7 +15,8 @@ export const DataAccessors: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryLine {...props}
+        <VictoryLine
+          {...props}
           data={[
             { animal: "Cat", pet: 45, wild: 17 },
             { animal: "Dog", pet: 85, wild: 6 },
@@ -28,7 +29,8 @@ export const DataAccessors: Story = {
         />
       </VictoryChart>
       <VictoryChart horizontal theme={VictoryTheme[props.themeKey]}>
-        <VictoryLine {...props}
+        <VictoryLine
+          {...props}
           data={[
             { animal: "Cat", pet: 45, wild: 17 },
             { animal: "Dog", pet: 85, wild: 6 },
@@ -41,7 +43,8 @@ export const DataAccessors: Story = {
         />
       </VictoryChart>
       <VictoryChart polar theme={VictoryTheme[props.themeKey]} innerRadius={30}>
-        <VictoryLine {...props}
+        <VictoryLine
+          {...props}
           data={[
             { animal: "Cat", pet: 45, wild: 17 },
             { animal: "Dog", pet: 85, wild: 6 },
@@ -60,7 +63,8 @@ export const DataAccessors: Story = {
         <VictoryLine {...props} data={getData(8)} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryLine {...props}
+        <VictoryLine
+          {...props}
           data={[
             { a: { b: { c: 1, d: 1 } } },
             { a: { b: { c: 2, d: 3 } } },
@@ -71,7 +75,8 @@ export const DataAccessors: Story = {
         />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryLine {...props}
+        <VictoryLine
+          {...props}
           data={[
             { x: "Cat", y: 45, y0: 17 },
             { x: "Dog", y: 85, y0: 6 },

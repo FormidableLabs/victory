@@ -14,7 +14,8 @@ export const Events: Story = {
   args: {},
   render: (props) => (
     <VictoryChart theme={VictoryTheme[props.themeKey]}>
-      <VictoryLine {...props}
+      <VictoryLine
+        {...props}
         style={{
           data: { stroke: "#c43a31" },
         }}

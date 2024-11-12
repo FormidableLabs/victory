@@ -13,7 +13,7 @@ const meta: Meta<typeof VictoryErrorBar> = {
 
 export const Theme: Story = {
   args: {
-    data: getErrorBarData(5)
+    data: getErrorBarData(5),
   },
   render: (props) => (
     <>

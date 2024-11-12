@@ -16,10 +16,11 @@ export const DisableInlineStyles: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props} data={data} disableInlineStyles  />
+        <VictoryHistogram {...props} data={data} disableInlineStyles />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryHistogram {...props}
+        <VictoryHistogram
+          {...props}
           data={data}
           dataComponent={<Bar disableInlineStyles className="fill-purple" />}
         />

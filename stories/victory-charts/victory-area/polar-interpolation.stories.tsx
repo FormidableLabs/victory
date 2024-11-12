@@ -35,7 +35,10 @@ export const PolarInterpolation: Story = {
             style={{ textAnchor: "middle" }}
             text={interpolation}
           />
-          <VictoryArea {...props} interpolation={interpolation as InterpolationPropType} />
+          <VictoryArea
+            {...props}
+            interpolation={interpolation as InterpolationPropType}
+          />
         </VictoryChart>
       ))}
     </>

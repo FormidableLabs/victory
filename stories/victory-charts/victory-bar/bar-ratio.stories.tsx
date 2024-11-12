@@ -15,52 +15,52 @@ export const BarRatio: Story = {
   render: (props) => (
     <>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(2)} barRatio={0.01}  />
+        <VictoryBar {...props} data={getData(2)} barRatio={0.01} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(50)} barRatio={0.01}  />
+        <VictoryBar {...props} data={getData(50)} barRatio={0.01} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(7)} barRatio={0.01}  />
+        <VictoryBar {...props} data={getData(7)} barRatio={0.01} />
       </VictoryChart>
       <VictoryChart horizontal theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(7)} barRatio={0.01}  />
+        <VictoryBar {...props} data={getData(7)} barRatio={0.01} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(2)} barRatio={0.5}  />
+        <VictoryBar {...props} data={getData(2)} barRatio={0.5} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(50)} barRatio={0.5}  />
+        <VictoryBar {...props} data={getData(50)} barRatio={0.5} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(7)} barRatio={0.5}  />
+        <VictoryBar {...props} data={getData(7)} barRatio={0.5} />
       </VictoryChart>
       <VictoryChart horizontal theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(7)} barRatio={0.5}  />
+        <VictoryBar {...props} data={getData(7)} barRatio={0.5} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(2)} barRatio={1}  />
+        <VictoryBar {...props} data={getData(2)} barRatio={1} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(50)} barRatio={1}  />
+        <VictoryBar {...props} data={getData(50)} barRatio={1} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(7)} barRatio={1}  />
+        <VictoryBar {...props} data={getData(7)} barRatio={1} />
       </VictoryChart>
       <VictoryChart horizontal theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(7)} barRatio={1}  />
+        <VictoryBar {...props} data={getData(7)} barRatio={1} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(2)} barRatio={1.5}  />
+        <VictoryBar {...props} data={getData(2)} barRatio={1.5} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(50)} barRatio={1.5}  />
+        <VictoryBar {...props} data={getData(50)} barRatio={1.5} />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(7)} barRatio={1.5}  />
+        <VictoryBar {...props} data={getData(7)} barRatio={1.5} />
       </VictoryChart>
       <VictoryChart horizontal theme={VictoryTheme[props.themeKey]}>
-        <VictoryBar {...props} data={getData(7)} barRatio={1.5}  />
+        <VictoryBar {...props} data={getData(7)} barRatio={1.5} />
       </VictoryChart>
     </>
   ),
