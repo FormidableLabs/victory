@@ -1,5 +1,7 @@
 # victory-selection-container
 
+## 37.3.2
+
 ## 37.3.1
 
 ## 37.3.0
