@@ -143,10 +143,6 @@
     "build:docs": "wireit",
     "format": "wireit",
     "format:fix": "wireit",
-    "format:root": "wireit",
-    "format:root:fix": "wireit",
-    "format:pkgs": "wireit",
-    "format:pkgs:fix": "wireit",
     "lint": "wireit",
     "lint:fix": "wireit",
     "lint:root": "wireit",
@@ -266,86 +262,10 @@
       ]
     },
     "format": {
-      "dependencies": [
-        "format:root",
-        "format:pkgs"
-      ]
+      "command": "prettier --config .prettierrc.json --ignore-path .prettierignore --check \"./**/*.{js,jsx,json,ts,tsx}\""
     },
     "format:fix": {
-      "dependencies": [
-        "format:root:fix",
-        "format:pkgs:fix"
-      ]
-    },
-    "format:root": {
-      "command": "nps format:root",
-      "files": [
-        "*.js",
-        "*.json",
-        "scripts",
-        "config",
-        "demo",
-        "docs",
-        "stories",
-        "test",
-        "!**/node_modules/**"
-      ],
-      "output": [],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "format:root:fix": {
-      "command": "pnpm run format:root || nps format:root:fix",
-      "files": [
-        "*.js",
-        "*.json",
-        "scripts",
-        "config",
-        "demo",
-        "docs",
-        "stories",
-        "test",
-        "!**/node_modules/**"
-      ],
-      "output": [],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "format:pkgs": {
-      "dependencies": [
-        "./packages/victory-native:format",
-        "./packages/victory-vendor:format",
-        "./packages/victory:format",
-        "./packages/victory-area:format",
-        "./packages/victory-axis:format",
-        "./packages/victory-bar:format",
-        "./packages/victory-box-plot:format",
-        "./packages/victory-brush-container:format",
-        "./packages/victory-brush-line:format",
-        "./packages/victory-candlestick:format",
-        "./packages/victory-canvas:format",
-        "./packages/victory-chart:format",
-        "./packages/victory-core:format",
-        "./packages/victory-create-container:format",
-        "./packages/victory-cursor-container:format",
-        "./packages/victory-errorbar:format",
-        "./packages/victory-group:format",
-        "./packages/victory-histogram:format",
-        "./packages/victory-legend:format",
-        "./packages/victory-line:format",
-        "./packages/victory-pie:format",
-        "./packages/victory-polar-axis:format",
-        "./packages/victory-scatter:format",
-        "./packages/victory-selection-container:format",
-        "./packages/victory-shared-events:format",
-        "./packages/victory-stack:format",
-        "./packages/victory-tooltip:format",
-        "./packages/victory-voronoi:format",
-        "./packages/victory-voronoi-container:format",
-        "./packages/victory-zoom-container:format"
-      ]
+      "command": "prettier --config .prettierrc.json --ignore-path .prettierignore --write \"./**/*.{js,jsx,json,ts,tsx}\""
     },
     "lint": {
       "dependencies": [
@@ -578,6 +498,40 @@
       "command": "pnpm run --filter victory-docs start",
       "dependencies": [
         "build:lib:esm"
+      ]
+    },
+    "format:pkgs": {
+      "dependencies": [
+        "./packages/victory-native:format",
+        "./packages/victory-vendor:format",
+        "./packages/victory:format",
+        "./packages/victory-area:format",
+        "./packages/victory-axis:format",
+        "./packages/victory-bar:format",
+        "./packages/victory-box-plot:format",
+        "./packages/victory-brush-container:format",
+        "./packages/victory-brush-line:format",
+        "./packages/victory-candlestick:format",
+        "./packages/victory-canvas:format",
+        "./packages/victory-chart:format",
+        "./packages/victory-core:format",
+        "./packages/victory-create-container:format",
+        "./packages/victory-cursor-container:format",
+        "./packages/victory-errorbar:format",
+        "./packages/victory-group:format",
+        "./packages/victory-histogram:format",
+        "./packages/victory-legend:format",
+        "./packages/victory-line:format",
+        "./packages/victory-pie:format",
+        "./packages/victory-polar-axis:format",
+        "./packages/victory-scatter:format",
+        "./packages/victory-selection-container:format",
+        "./packages/victory-shared-events:format",
+        "./packages/victory-stack:format",
+        "./packages/victory-tooltip:format",
+        "./packages/victory-voronoi:format",
+        "./packages/victory-voronoi-container:format",
+        "./packages/victory-zoom-container:format"
       ]
     }
   },

@@ -38,8 +38,6 @@ function generateWireitConfig(pkg, rootPkg) {
       "check": "wireit",
       "types:check": "wireit",
       "types:create": "wireit",
-      "format": "wireit",
-      "format:fix": "wireit",
       "lint": "wireit",
       "lint:fix": "wireit",
       "jest": "wireit",
@@ -186,23 +184,6 @@ function generateWireitConfig(pkg, rootPkg) {
         ],
         "packageLocks": ["pnpm-lock.yaml"]
       },
-
-      // For the "fix" task, we first run the normal check that may fail so that
-      // we get caching for packages without changed files:
-      ...["format", "format:fix"].reduce((wireit, key) => {
-        wireit[key] = {
-          "command": key === "format" ? "nps format:pkg" : "pnpm run format || nps format:pkg:fix",
-          "files": [
-            "src/**",
-            "*.json",
-            "../../.prettierignore",
-            "../../.prettierrc.json",
-          ],
-          "output": [],
-          "packageLocks": ["pnpm-lock.yaml"]
-        };
-        return wireit;
-      }, {}),
       // Same as above
       ...["lint", "lint:fix"].reduce((wireit, key) => {
         wireit[key] = {
