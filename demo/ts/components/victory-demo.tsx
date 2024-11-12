@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { VictoryAxis } from "victory-axis";
 import { VictoryArea } from "victory-area";

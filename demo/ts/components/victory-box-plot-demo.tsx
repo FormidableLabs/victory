@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryBoxPlot } from "victory-box-plot";

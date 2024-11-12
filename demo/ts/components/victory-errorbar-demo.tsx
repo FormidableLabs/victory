@@ -47,7 +47,6 @@ export default class VictoryErrorBarDemo extends React.Component<
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

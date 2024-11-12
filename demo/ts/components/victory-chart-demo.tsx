@@ -79,7 +79,6 @@ class VictoryChartDemo extends React.Component<any, VictoryChartDemoState> {
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         scatterData: this.getScatterData(),

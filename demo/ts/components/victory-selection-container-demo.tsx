@@ -53,7 +53,6 @@ class VictorySelectionContainerDemo extends React.Component<any, any> {
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

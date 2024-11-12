@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { keys, random, range, round } from "lodash";
 import { fromJS } from "immutable";
@@ -104,7 +103,6 @@ export default class ImmutableDemo extends React.Component<
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         scatterData: this.getScatterData(),

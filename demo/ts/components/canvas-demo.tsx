@@ -1,4 +1,3 @@
- 
 import React from "react";
 
 import { range, random } from "lodash";

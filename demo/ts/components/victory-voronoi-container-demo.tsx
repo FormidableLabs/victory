@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { random, range } from "lodash";
 import { VictoryChart } from "victory-chart";
@@ -55,7 +54,6 @@ export default class VictoryVoronoiContainerDemo extends React.Component<
   }
 
   componentDidMount() {
-     
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),

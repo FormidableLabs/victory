@@ -1,4 +1,3 @@
- 
 import React from "react";
 import { round } from "lodash";
 import { VictoryChart } from "victory-chart";
