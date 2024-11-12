@@ -73,12 +73,9 @@ export function getEvents(
     const selectedEvents = getSelectedEvents();
     return (
       Array.isArray(selectedEvents) &&
-      selectedEvents.reduce(
-        (memo, event) => {
-          return event ? Object.assign(memo, event.eventHandlers) : memo;
-        },
-        {} as ComponentEvent["eventHandlers"],
-      )
+      selectedEvents.reduce((memo, event) => {
+        return event ? Object.assign(memo, event.eventHandlers) : memo;
+      }, {} as ComponentEvent["eventHandlers"])
     );
   };
 

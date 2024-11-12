@@ -73,8 +73,8 @@ const getVerticalPath = (props: FlyoutPathProps) => {
   const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
   return `M ${centerX - pointerWidth / 2}, ${pointerEdge}
     L ${pointerLength ? x : centerX + pointerWidth / 2}, ${
-      pointerLength ? y : pointerEdge
-    }
+    pointerLength ? y : pointerEdge
+  }
     L ${centerX + pointerWidth / 2}, ${pointerEdge}
     L ${rightEdge - cornerRadius}, ${pointerEdge}
     A ${arc} ${rightEdge}, ${pointerEdge - sign * cornerRadius}
@@ -104,8 +104,8 @@ const getHorizontalPath = (props: FlyoutPathProps) => {
   const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
   return `M ${pointerEdge}, ${centerY - pointerWidth / 2}
     L ${pointerLength ? x : pointerEdge}, ${
-      pointerLength ? y : centerY + pointerWidth / 2
-    }
+    pointerLength ? y : centerY + pointerWidth / 2
+  }
     L ${pointerEdge}, ${centerY + pointerWidth / 2}
     L ${pointerEdge}, ${bottomEdge - cornerRadius}
     A ${arc} ${pointerEdge + sign * cornerRadius}, ${bottomEdge}
