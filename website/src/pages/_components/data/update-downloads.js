@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 
- 
 const data = d().victory;
 
 const downloads = Object.keys(data).map((day) => ({
@@ -18,7 +17,6 @@ export default data;
 `;
 
 fs.writeFileSync(
-   
   path.resolve(__dirname, "..", "downloads.js"),
   contents,
   "utf8",

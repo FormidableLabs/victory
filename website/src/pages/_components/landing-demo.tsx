@@ -116,7 +116,7 @@ async function fetchData(url) {
     const result = await axios(url);
     const freshData = result.data;
     const allDownloads = downloads.data.concat(freshData.downloads);
-    return groupDownloadsByWeek(allDownloads)
+    return groupDownloadsByWeek(allDownloads);
   } catch {
     return oldDownloads;
   }

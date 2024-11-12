@@ -1,12 +1,14 @@
-import siteConfig from '@generated/docusaurus.config';
-import * as PrismNamespace from 'prismjs';
-import { Optional } from 'utility-types';
-import { diffHighlight } from './prism-diff-highlight';
-import './prism-diff-highlight.css';
+import siteConfig from "@generated/docusaurus.config";
+import * as PrismNamespace from "prismjs";
+import { Optional } from "utility-types";
+import { diffHighlight } from "./prism-diff-highlight";
+import "./prism-diff-highlight.css";
 
 const DIFF_LANGUAGE_REGEX = /^diff-([\w-]+)/i;
 
-export default function prismIncludeLanguages(PrismObject: typeof PrismNamespace): void {
+export default function prismIncludeLanguages(
+  PrismObject: typeof PrismNamespace,
+): void {
   const {
     themeConfig: { prism },
   } = siteConfig;
@@ -20,14 +22,14 @@ export default function prismIncludeLanguages(PrismObject: typeof PrismNamespace
   // long as you don't re-assign it
   globalThis.Prism = PrismObject;
 
-  additionalLanguages.forEach(lang => {
+  additionalLanguages.forEach((lang) => {
     const langMatch = DIFF_LANGUAGE_REGEX.exec(lang);
     if (langMatch) {
       // eslint-disable-next-line global-require
       if (!PrismObject.languages.diff) {
         console.error(
-          'prism-include-languages:',
-          "You need to import 'diff' language first to use 'diff-xxxx' languages"
+          "prism-include-languages:",
+          "You need to import 'diff' language first to use 'diff-xxxx' languages",
         );
       }
       PrismObject.languages[lang] = PrismObject.languages.diff;
@@ -39,5 +41,5 @@ export default function prismIncludeLanguages(PrismObject: typeof PrismNamespace
 
   diffHighlight(PrismObject);
 
-  delete (globalThis as Optional<typeof globalThis, 'Prism'>).Prism;
+  delete (globalThis as Optional<typeof globalThis, "Prism">).Prism;
 }

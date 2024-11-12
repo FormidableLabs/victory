@@ -1,5 +1,5 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 100] }]*/
- 
+
 import React, { useLayoutEffect, useState, useRef, useCallback } from "react";
 import clamp from "lodash/clamp";
 
