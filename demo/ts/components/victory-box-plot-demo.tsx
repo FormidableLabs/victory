@@ -2,7 +2,6 @@
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { VictoryBoxPlot } from "victory-box-plot";
-import { VictoryTooltip } from "victory-tooltip";
 import { VictoryTheme } from "victory-core";
 import { range, random } from "lodash";
 
