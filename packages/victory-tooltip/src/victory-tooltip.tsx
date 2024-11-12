@@ -39,7 +39,6 @@ export interface VictoryTooltipProps
   };
   constrainToVisibleArea?: boolean;
   cornerRadius?: NumberOrCallback;
-  dataTargets: string[];
   events?: any;
   height?: number;
   horizontal?: boolean;
@@ -50,7 +49,6 @@ export interface VictoryTooltipProps
   flyoutWidth?: NumberOrCallback;
   id?: number | string;
   index?: number | string;
-  labelTarget: string;
   orientation?: OrientationTypes | ((...args: any[]) => OrientationTypes);
   pointerLength?: NumberOrCallback;
   pointerOrientation?:
@@ -106,8 +104,6 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
     labelComponent: <VictoryLabel />,
     flyoutComponent: <Flyout />,
     groupComponent: <g />,
-    labelTarget: "labels",
-    dataTargets: ["data"],
   };
 
   static defaultEvents(props: VictoryTooltipProps): {
@@ -116,35 +112,29 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
   }[] {
     const activate = props.activateData
       ? [
-          { target: props.labelTarget, mutation: () => ({ active: true }) },
+          { target: "labels", mutation: () => ({ active: true }) },
           { target: "data", mutation: () => ({ active: true }) },
         ]
-      : [{ target: props.labelTarget, mutation: () => ({ active: true }) }];
+      : [{ target: "labels", mutation: () => ({ active: true }) }];
     const deactivate = props.activateData
       ? [
-          {
-            target: props.labelTarget,
-            mutation: () => ({ active: undefined }),
-          },
+          { target: "labels", mutation: () => ({ active: undefined }) },
           { target: "data", mutation: () => ({ active: undefined }) },
         ]
-      : [
-          {
-            target: props.labelTarget,
-            mutation: () => ({ active: undefined }),
-          },
-        ];
-    return props.dataTargets.map((dataTarget) => ({
-      target: dataTarget,
-      eventHandlers: {
-        onMouseOver: () => activate,
-        onFocus: () => activate,
-        onTouchStart: () => activate,
-        onMouseOut: () => deactivate,
-        onBlur: () => deactivate,
-        onTouchEnd: () => deactivate,
+      : [{ target: "labels", mutation: () => ({ active: undefined }) }];
+    return [
+      {
+        target: "data",
+        eventHandlers: {
+          onMouseOver: () => activate,
+          onFocus: () => activate,
+          onTouchStart: () => activate,
+          onMouseOut: () => deactivate,
+          onBlur: () => deactivate,
+          onTouchEnd: () => deactivate,
+        },
       },
-    }));
+    ];
   }
 
   id: string | number;
