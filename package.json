@@ -152,7 +152,6 @@
     "lint:root:fix": "wireit",
     "lint:pkgs": "wireit",
     "lint:pkgs:fix": "wireit",
-    "lint:docs": "wireit",
     "jest": "wireit",
     "jest:root": "wireit",
     "jest:pkgs": "wireit",
@@ -273,8 +272,7 @@
     "lint": {
       "dependencies": [
         "lint:root",
-        "lint:pkgs",
-        "lint:docs"
+        "lint:pkgs"
       ]
     },
     "lint:fix": {
@@ -284,7 +282,7 @@
       ]
     },
     "lint:root": {
-      "command": "eslint --color *.js scripts config demo stories test",
+      "command": "eslint --color *.js scripts config demo stories test website",
       "files": [
         "*.js",
         "scripts",
@@ -292,6 +290,7 @@
         "demo",
         "stories",
         "test",
+        "website",
         "!**/node_modules/**"
       ],
       "output": [],
@@ -300,7 +299,7 @@
       ]
     },
     "lint:root:fix": {
-      "command": "eslint --color --fix *.js scripts config demo stories test",
+      "command": "eslint --color --fix *.js scripts config demo stories test website",
       "files": [
         "*.js",
         "scripts",
@@ -308,6 +307,7 @@
         "demo",
         "stories",
         "test",
+        "website",
         "!**/node_modules/**"
       ],
       "output": [],
@@ -325,12 +325,6 @@
       "command": "eslint --color --fix packages",
       "dependencies": [
         "build"
-      ]
-    },
-    "lint:docs": {
-      "command": "pnpm run --filter victory-docs lint",
-      "dependencies": [
-        "build:lib:esm"
       ]
     },
     "jest": {

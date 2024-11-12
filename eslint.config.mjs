@@ -147,12 +147,4 @@ export default tseslint.config(
       "prettier/prettier": "off",
     },
   },
-
-  // Overrides for Website
-  {
-    files: ["**/website/**/*.{js,ts,tsx}"],
-    rules: {
-      "prettier/prettier": "off",
-    },
-  },
 );
