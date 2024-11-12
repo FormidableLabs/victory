@@ -20,6 +20,9 @@
   },
   "homepage": "https://commerce.nearform.com/open-source/victory",
   "packageManager": "pnpm@7.33.7",
+  "dependencies": {
+    "clsx": "^2.1.1"
+  },
   "devDependencies": {
     "@babel/cli": "7.23.9",
     "@babel/core": "7.23.9",
@@ -460,82 +463,11 @@
         "./packages/victory-zoom-container:types:create"
       ]
     },
-    "format:pkgs:fix": {
-      "dependencies": [
-        "./packages/victory-native:format:fix",
-        "./packages/victory-vendor:format:fix",
-        "./packages/victory:format:fix",
-        "./packages/victory-area:format:fix",
-        "./packages/victory-axis:format:fix",
-        "./packages/victory-bar:format:fix",
-        "./packages/victory-box-plot:format:fix",
-        "./packages/victory-brush-container:format:fix",
-        "./packages/victory-brush-line:format:fix",
-        "./packages/victory-candlestick:format:fix",
-        "./packages/victory-canvas:format:fix",
-        "./packages/victory-chart:format:fix",
-        "./packages/victory-core:format:fix",
-        "./packages/victory-create-container:format:fix",
-        "./packages/victory-cursor-container:format:fix",
-        "./packages/victory-errorbar:format:fix",
-        "./packages/victory-group:format:fix",
-        "./packages/victory-histogram:format:fix",
-        "./packages/victory-legend:format:fix",
-        "./packages/victory-line:format:fix",
-        "./packages/victory-pie:format:fix",
-        "./packages/victory-polar-axis:format:fix",
-        "./packages/victory-scatter:format:fix",
-        "./packages/victory-selection-container:format:fix",
-        "./packages/victory-shared-events:format:fix",
-        "./packages/victory-stack:format:fix",
-        "./packages/victory-tooltip:format:fix",
-        "./packages/victory-voronoi:format:fix",
-        "./packages/victory-voronoi-container:format:fix",
-        "./packages/victory-zoom-container:format:fix"
-      ]
-    },
     "start:docs": {
       "command": "pnpm run --filter victory-docs start",
       "dependencies": [
         "build:lib:esm"
       ]
-    },
-    "format:pkgs": {
-      "dependencies": [
-        "./packages/victory-native:format",
-        "./packages/victory-vendor:format",
-        "./packages/victory:format",
-        "./packages/victory-area:format",
-        "./packages/victory-axis:format",
-        "./packages/victory-bar:format",
-        "./packages/victory-box-plot:format",
-        "./packages/victory-brush-container:format",
-        "./packages/victory-brush-line:format",
-        "./packages/victory-candlestick:format",
-        "./packages/victory-canvas:format",
-        "./packages/victory-chart:format",
-        "./packages/victory-core:format",
-        "./packages/victory-create-container:format",
-        "./packages/victory-cursor-container:format",
-        "./packages/victory-errorbar:format",
-        "./packages/victory-group:format",
-        "./packages/victory-histogram:format",
-        "./packages/victory-legend:format",
-        "./packages/victory-line:format",
-        "./packages/victory-pie:format",
-        "./packages/victory-polar-axis:format",
-        "./packages/victory-scatter:format",
-        "./packages/victory-selection-container:format",
-        "./packages/victory-shared-events:format",
-        "./packages/victory-stack:format",
-        "./packages/victory-tooltip:format",
-        "./packages/victory-voronoi:format",
-        "./packages/victory-voronoi-container:format",
-        "./packages/victory-zoom-container:format"
-      ]
     }
-  },
-  "dependencies": {
-    "clsx": "^2.1.1"
   }
 }
