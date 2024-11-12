@@ -37,7 +37,6 @@ jobs:
           header: "Bundle size report" # PR comment header
 
   format:
-    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
