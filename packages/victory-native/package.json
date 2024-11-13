@@ -324,7 +324,7 @@
       ]
     },
     "jest": {
-      "command": "echo victory-native (legacy) has no tests",
+      "command": "echo \"victory-native (legacy) has no tests\"",
       "files": [],
       "output": []
     }
