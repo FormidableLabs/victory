@@ -7,6 +7,11 @@ settings:
 overrides:
   '@types/eslint': 8.4.3
 
+patchedDependencies:
+  '@changesets/cli@2.24.1':
+    hash: qqliudy6wxj3j6nb75jjyej32u
+    path: patches/@changesets__cli@2.24.1.patch
+
 importers:
 
   .:
@@ -38,7 +43,7 @@ importers:
         version: 7.23.3(@babel/core@7.23.9)
       '@changesets/cli':
         specifier: ^2.24.1
-        version: 2.24.1
+        version: 2.24.1(patch_hash=qqliudy6wxj3j6nb75jjyej32u)
       '@chromatic-com/storybook':
         specifier: ^3.2.2
         version: 3.2.2(react@18.2.0)(storybook@8.4.1)
@@ -4789,7 +4794,7 @@ packages:
       '@changesets/types': 5.1.0
     dev: true
 
-  /@changesets/cli@2.24.1:
+  /@changesets/cli@2.24.1(patch_hash=qqliudy6wxj3j6nb75jjyej32u):
     resolution: {integrity: sha512-7Lz1inqGQjBrXgnXlENtzQ7EmO/9c+09d9oi8XoK4ARqlJe8GpafjqKRobcjcA/TTI7Fn2+cke4CrXFZfVF8Rw==}
     hasBin: true
     dependencies:
@@ -4827,6 +4832,7 @@ packages:
       term-size: 2.2.1
       tty-table: 4.1.6
     dev: true
+    patched: true
 
   /@changesets/config@2.1.0:
     resolution: {integrity: sha512-43potf+DwYHmH7EY19vxtCq6fqj7UUIrZ4DTwM3pVBqCKxFIytm7GPy7wNAsH06UvMw7NRuOu4QK5HN02GsIrw==}

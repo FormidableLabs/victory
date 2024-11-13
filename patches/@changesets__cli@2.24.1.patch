@@ -1,0 +1,118 @@
+diff --git a/dist/cli.cjs.dev.js b/dist/cli.cjs.dev.js
+index 55665d53b92288d89b71aab0c231b82bb8cb5ff1..a24dc555b52e95a2cb1232d8c8a0a37e7dbd3fcf 100644
+--- a/dist/cli.cjs.dev.js
++++ b/dist/cli.cjs.dev.js
+@@ -807,7 +807,6 @@ async function internalPublish(pkgName, opts, twoFactorState) {
+   } // Due to a super annoying issue in yarn, we have to manually override this env variable
+   // See: https://github.com/yarnpkg/yarn/issues/2935#issuecomment-355292633
+ 
+-
+   const envOverride = {
+     npm_config_registry: getCorrectRegistry()
+   };
+@@ -921,8 +920,9 @@ async function publishPackages({
+   }
+ 
+   return Promise.all(unpublishedPackagesInfo.map(pkgInfo => {
+-    let pkg = packagesByName.get(pkgInfo.name);
+-    return publishAPackage(pkg, access, twoFactorState, getReleaseTag(pkgInfo, preState, tag));
++    const pkg = packagesByName.get(pkgInfo.name);
++    const publishTag = (pkg.packageJson.publishConfig && pkg.packageJson.publishConfig.tag) || tag;
++    return publishAPackage(pkg, access, twoFactorState, getReleaseTag(pkgInfo, preState, publishTag));
+   }));
+ }
+ 
+@@ -933,7 +933,7 @@ async function publishAPackage(pkg, access, twoFactorState, tag) {
+     publishConfig
+   } = pkg.packageJson;
+   const localAccess = publishConfig === null || publishConfig === void 0 ? void 0 : publishConfig.access;
+-  logger.info(`Publishing ${chalk__default['default'].cyan(`"${name}"`)} at ${chalk__default['default'].green(`"${version}"`)}`);
++  logger.info(`Publishing ${chalk__default['default'].cyan(`"${name}"`)} at ${chalk__default['default'].green(`"${version}@${tag}"`)}`);
+   const publishDir = (publishConfig === null || publishConfig === void 0 ? void 0 : publishConfig.directory) ? path.join(pkg.dir, publishConfig.directory) : pkg.dir;
+   const publishConfirmation = await publish(name, {
+     cwd: publishDir,
+@@ -1221,6 +1221,7 @@ async function run$1(cwd) {
+ }
+ 
+ async function run$2(input, flags, cwd) {
++  logger.warn("This is a patched version of @changesets/cli");
+   if (input[0] === "init") {
+     await init(cwd);
+     return;
+diff --git a/dist/cli.cjs.prod.js b/dist/cli.cjs.prod.js
+index fa6dd7c6365b814e44a253c4868b315de481d691..05f6f8beb9d2e26730bdb9450a6e68abedee7633 100644
+--- a/dist/cli.cjs.prod.js
++++ b/dist/cli.cjs.prod.js
+@@ -508,13 +508,20 @@ async function publishPackages({packages: packages, access: access, otp: otp, pr
+     otp: otp,
+     publicPackages: publicPackages
+   }), unpublishedPackagesInfo = await getUnpublishedPackages(publicPackages, preState);
+-  return 0 === unpublishedPackagesInfo.length && logger.warn("No unpublished packages to publish"), 
+-  Promise.all(unpublishedPackagesInfo.map((pkgInfo => publishAPackage(packagesByName.get(pkgInfo.name), access, twoFactorState, getReleaseTag(pkgInfo, preState, tag)))));
++  if (unpublishedPackagesInfo.length === 0) {
++    warn("No unpublished packages to publish");
++  }
++
++  return Promise.all(unpublishedPackagesInfo.map(pkgInfo => {
++    const pkg = packagesByName.get(pkgInfo.name);
++    const publishTag = (pkg.packageJson.publishConfig && pkg.packageJson.publishConfig.tag) || tag;
++    return publishAPackage(pkg, access, twoFactorState, getReleaseTag(pkgInfo, preState, publishTag));
++  }));
+ }
+ 
+ async function publishAPackage(pkg, access, twoFactorState, tag) {
+   const {name: name, version: version, publishConfig: publishConfig} = pkg.packageJson, localAccess = null == publishConfig ? void 0 : publishConfig.access;
+-  logger.info(`Publishing ${chalk__default.default.cyan(`"${name}"`)} at ${chalk__default.default.green(`"${version}"`)}`);
++  logger.info(`Publishing ${chalk__default['default'].cyan(`"${name}"`)} at ${chalk__default['default'].green(`"${version}@${tag}"`)}`);
+   const publishDir = (null == publishConfig ? void 0 : publishConfig.directory) ? path.join(pkg.dir, publishConfig.directory) : pkg.dir;
+   return {
+     name: name,
+@@ -661,6 +668,7 @@ async function run$1(cwd) {
+ }
+ 
+ async function run$2(input, flags, cwd) {
++  logger.warn("This is a patched version of @changesets/cli");
+   if ("init" === input[0]) return void await init(cwd);
+   if (!fs__default.default.existsSync(path__default.default.resolve(cwd, ".changeset"))) throw logger.error("There is no .changeset folder. "), 
+   logger.error("If this is the first time `changesets` have been used in this project, run `yarn changeset init` to get set up."), 
+diff --git a/dist/cli.esm.js b/dist/cli.esm.js
+index 4e319be77ee8a563803649324b7fc364bc05be6b..cb2a2bef5c4f75a2cfe59ce7f402078d89f1f778 100644
+--- a/dist/cli.esm.js
++++ b/dist/cli.esm.js
+@@ -784,7 +784,6 @@ async function internalPublish(pkgName, opts, twoFactorState) {
+   } // Due to a super annoying issue in yarn, we have to manually override this env variable
+   // See: https://github.com/yarnpkg/yarn/issues/2935#issuecomment-355292633
+ 
+-
+   const envOverride = {
+     npm_config_registry: getCorrectRegistry()
+   };
+@@ -898,8 +897,9 @@ async function publishPackages({
+   }
+ 
+   return Promise.all(unpublishedPackagesInfo.map(pkgInfo => {
+-    let pkg = packagesByName.get(pkgInfo.name);
+-    return publishAPackage(pkg, access, twoFactorState, getReleaseTag(pkgInfo, preState, tag));
++    const pkg = packagesByName.get(pkgInfo.name);
++    const publishTag = (pkg.packageJson.publishConfig && pkg.packageJson.publishConfig.tag) || tag;
++    return publishAPackage(pkg, access, twoFactorState, getReleaseTag(pkgInfo, preState, publishTag));
+   }));
+ }
+ 
+@@ -910,7 +910,7 @@ async function publishAPackage(pkg, access, twoFactorState, tag) {
+     publishConfig
+   } = pkg.packageJson;
+   const localAccess = publishConfig === null || publishConfig === void 0 ? void 0 : publishConfig.access;
+-  info(`Publishing ${chalk.cyan(`"${name}"`)} at ${chalk.green(`"${version}"`)}`);
++  info(`Publishing ${chalk.cyan(`"${name}"`)} at ${chalk.green(`"${version}@${tag}"`)}`);
+   const publishDir = (publishConfig === null || publishConfig === void 0 ? void 0 : publishConfig.directory) ? join(pkg.dir, publishConfig.directory) : pkg.dir;
+   const publishConfirmation = await publish(name, {
+     cwd: publishDir,
+@@ -1198,6 +1198,7 @@ async function run$1(cwd) {
+ }
+ 
+ async function run$2(input, flags, cwd) {
++  logger.warn("This is a patched version of @changesets/cli");
+   if (input[0] === "init") {
+     await init(cwd);
+     return;

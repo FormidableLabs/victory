@@ -1,6 +1,6 @@
 {
   "name": "rn-demo",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "sideEffects": false,
   "main": "App.tsx",
   "scripts": {
