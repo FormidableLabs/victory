@@ -70,8 +70,8 @@
     "eslint-plugin-jest": "^28.9.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-promise": "^7.1.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "fs-extra": "^10.0.0",
     "glob": "8.0.3",
@@ -119,6 +119,9 @@
   "pnpm": {
     "overrides": {
       "@types/eslint": "8.4.3"
+    },
+    "patchedDependencies": {
+      "@changesets/cli@2.24.1": "patches/@changesets__cli@2.24.1.patch"
     }
   },
   "browserslist": [
