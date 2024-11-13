@@ -3,5 +3,6 @@
   "changelog": ["../scripts/changelog.js", { "repo": "FormidableLabs/victory" }],
   "access": "public",
   "baseBranch": "main",
-  "fixed": [["victory*"]]
+  "fixed": [["victory*"]],
+  "ignore": ["rn-demo", "victory-docs"]
 }
