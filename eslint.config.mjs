@@ -16,10 +16,12 @@ export default tseslint.config(
     ignores: [
       "**/*.d.ts",
       "**/.wireit/",
+      "**/.docusaurus/",
       "**/artifacts/",
       "**/coverage/",
       "**/demo/rn/",
       "**/dist/",
+      "**/build/",
       "**/es/",
       "**/lib/",
       "**/lib-vendor/",
@@ -140,6 +142,7 @@ export default tseslint.config(
     files: ["**/demo/**/*.{ts,tsx}"],
     rules: {
       "no-magic-numbers": "off",
+      "no-restricted-imports": "off",
       "react/no-multi-comp": "off",
       "@typescript-eslint/no-empty-object-type": "off",
     },
