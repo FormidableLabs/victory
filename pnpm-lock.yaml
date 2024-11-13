@@ -119,9 +119,6 @@ importers:
       babel-loader:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.23.9)(webpack@5.74.0)
-      babel-plugin-lodash:
-        specifier: 3.3.4
-        version: 3.3.4
       babel-plugin-module-resolver:
         specifier: 5.0.0
         version: 5.0.0
@@ -4721,15 +4718,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
-
-  /@babel/types@7.23.6:
-    resolution: {integrity: sha512-+uarb83brBzPKN38NX1MkB6vb6+mwvR6amUulqAE7ccQw1pEl+bCia9TbdG1lsnFP7lZySvUn37CHyXQdfTwzg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.24.7
-      '@babel/helper-validator-identifier': 7.24.7
-      to-fast-properties: 2.0.0
-    dev: true
 
   /@babel/types@7.24.0:
     resolution: {integrity: sha512-+j7a5c253RfKh8iABBhywc8NSfP5LURe7Uh4qpsh6jc+aLJguvmIUBdjSdEMQv2bENrCR5MfRdjGo7vzS/ob7w==}
@@ -10918,16 +10906,6 @@ packages:
       '@babel/types': 7.24.7
       '@types/babel__core': 7.20.5
       '@types/babel__traverse': 7.20.5
-    dev: true
-
-  /babel-plugin-lodash@3.3.4:
-    resolution: {integrity: sha512-yDZLjK7TCkWl1gpBeBGmuaDIFhZKmkoL+Cu2MUUjv5VxUZx/z7tBGBCBcQs5RI1Bkz5LLmNdjx7paOyQtMovyg==}
-    dependencies:
-      '@babel/helper-module-imports': 7.22.15
-      '@babel/types': 7.23.6
-      glob: 7.2.3
-      lodash: 4.17.21
-      require-package-name: 2.0.1
     dev: true
 
   /babel-plugin-module-resolver@5.0.0:
@@ -21318,10 +21296,6 @@ packages:
 
   /require-main-filename@2.0.0:
     resolution: {integrity: sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==}
-
-  /require-package-name@2.0.1:
-    resolution: {integrity: sha512-uuoJ1hU/k6M0779t3VMVIYpb2VMJk05cehCaABFhXaibcbvfgR8wKiozLjVFSzJPmQMRqIcO0HMyTFqfV09V6Q==}
-    dev: true
 
   /requireg@0.2.2:
     resolution: {integrity: sha512-nYzyjnFcPNGR3lx9lwPPPnuQxv6JWEZd2Ci0u9opN7N5zUEPIhY/GbL3vMGOr2UXwEg9WwSyV9X9Y/kLFgPsOg==}

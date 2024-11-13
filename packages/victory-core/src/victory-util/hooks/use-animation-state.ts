@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 
 import * as Collection from "../collection";
 import * as Transitions from "../transitions";

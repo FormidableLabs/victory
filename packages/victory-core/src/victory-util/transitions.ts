@@ -1,5 +1,7 @@
-import { defaults, identity } from "lodash";
 import React from "react";
+import defaults from "lodash/defaults";
+import identity from "lodash/identity";
+
 import { AnimatePropTypeInterface } from "../types/prop-types";
 
 function getDatumKey(datum, idx) {

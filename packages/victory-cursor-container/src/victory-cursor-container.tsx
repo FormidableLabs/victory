@@ -12,7 +12,8 @@ import {
   DomainTuple,
   PaddingProps,
 } from "victory-core";
-import { defaults, isObject } from "lodash";
+import defaults from "lodash/defaults";
+import isObject from "lodash/isObject";
 import { CursorHelpers } from "./cursor-helpers";
 
 export type CursorCoordinatesPropType = CoordinatesPropType | number;

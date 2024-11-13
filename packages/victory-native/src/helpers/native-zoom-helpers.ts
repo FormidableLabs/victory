@@ -1,4 +1,5 @@
-import { throttle, defaults } from "lodash";
+import defaults from "lodash/defaults";
+import throttle from "lodash/throttle";
 import { Dimensions } from "react-native";
 import isEqual from "react-fast-compare";
 import { Collection, Helpers as CoreHelpers } from "victory-core";

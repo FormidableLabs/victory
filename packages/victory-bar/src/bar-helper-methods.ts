@@ -1,4 +1,4 @@
-import { isPlainObject } from "lodash";
+import isPlainObject from "lodash/isPlainObject";
 import { Helpers, VictoryStyleObject } from "victory-core";
 import { BarProps } from "./bar";
 import {

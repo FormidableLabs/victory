@@ -1,5 +1,6 @@
 import React from "react";
-import { defaults, pick } from "lodash";
+import defaults from "lodash/defaults";
+import pick from "lodash/pick";
 import { VictoryTooltip } from "victory-tooltip";
 import {
   Helpers,

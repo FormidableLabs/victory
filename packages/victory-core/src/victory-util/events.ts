@@ -1,6 +1,9 @@
 import React from "react";
+import isEmpty from "lodash/isEmpty";
+import pickBy from "lodash/pickBy";
+import omitBy from "lodash/omitBy";
+import uniq from "lodash/uniq";
 
-import { isEmpty, pickBy, omitBy, uniq } from "lodash";
 import type { EventMixinCalculatedValues } from "./add-events";
 import { isFunction } from "./helpers";
 

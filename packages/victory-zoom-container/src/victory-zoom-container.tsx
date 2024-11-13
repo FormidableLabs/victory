@@ -8,7 +8,7 @@ import {
   Data,
   VictoryEventHandler,
 } from "victory-core";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 
 const DEFAULT_DOWNSAMPLE = 150;
 

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { defaults, uniqueId } from "lodash";
+import defaults from "lodash/defaults";
+import uniqueId from "lodash/uniqueId";
+
 import * as Log from "../victory-util/log";
 import * as Helpers from "../victory-util/helpers";
 import { usePortalContext } from "./portal-context";

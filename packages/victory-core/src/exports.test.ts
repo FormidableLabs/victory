@@ -142,7 +142,7 @@ import {
   mergeRefs,
   usePortalContext,
 } from "./index";
-import { pick } from "lodash";
+import pick from "lodash/pick";
 
 describe("victory-core", () => {
   it("exports addEvents", () => {

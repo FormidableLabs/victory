@@ -1,5 +1,9 @@
 import React from "react";
-import { defaults, isObject, uniq, orderBy } from "lodash";
+import defaults from "lodash/defaults";
+import isObject from "lodash/isObject";
+import uniq from "lodash/uniq";
+import orderBy from "lodash/orderBy";
+
 import * as Collection from "./collection";
 import * as Domain from "./domain";
 import * as Helpers from "./helpers";

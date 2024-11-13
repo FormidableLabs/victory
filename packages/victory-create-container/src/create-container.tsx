@@ -1,22 +1,31 @@
+import React from "react";
+import forOwn from "lodash/forOwn";
+import groupBy from "lodash/groupBy";
+import isEmpty from "lodash/isEmpty";
+import toPairs from "lodash/toPairs";
+
 import {
   VictoryZoomContainer,
   useVictoryZoomContainer,
 } from "victory-zoom-container";
+
 import {
   VictorySelectionContainer,
   useVictorySelectionContainer,
 } from "victory-selection-container";
-import React from "react";
+
 import { VictoryContainer, VictoryContainerProps } from "victory-core";
-import { forOwn, groupBy, isEmpty, toPairs } from "lodash";
+
 import {
   VictoryVoronoiContainer,
   useVictoryVoronoiContainer,
 } from "victory-voronoi-container";
+
 import {
   VictoryCursorContainer,
   useVictoryCursorContainer,
 } from "victory-cursor-container";
+
 import {
   VictoryBrushContainer,
   useVictoryBrushContainer,

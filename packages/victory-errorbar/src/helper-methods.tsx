@@ -1,4 +1,5 @@
-import { defaults, assign } from "lodash";
+import assign from "lodash/assign";
+import defaults from "lodash/defaults";
 import {
   Helpers,
   LabelHelpers,

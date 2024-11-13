@@ -1,4 +1,6 @@
-import { defaults, isPlainObject } from "lodash";
+import defaults from "lodash/defaults";
+import isPlainObject from "lodash/isPlainObject";
+
 import {
   Helpers,
   Scale,

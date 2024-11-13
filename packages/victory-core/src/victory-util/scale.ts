@@ -1,4 +1,4 @@
-import { isPlainObject } from "lodash";
+import isPlainObject from "lodash/isPlainObject";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
 import * as d3Scale from "victory-vendor/d3-scale";

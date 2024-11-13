@@ -1,14 +1,13 @@
 import React from "react";
-import {
-  uniq,
-  isPlainObject,
-  property,
-  orderBy,
-  isEmpty,
-  isEqual,
-  isUndefined,
-  omitBy,
-} from "lodash";
+import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
+import isPlainObject from "lodash/isPlainObject";
+import isUndefined from "lodash/isUndefined";
+import omitBy from "lodash/omitBy";
+import orderBy from "lodash/orderBy";
+import property from "lodash/property";
+import uniq from "lodash/uniq";
+
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
 import * as Scale from "./scale";

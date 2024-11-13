@@ -18,7 +18,6 @@ module.exports = {
     "@babel/preset-react",
     "@babel/preset-typescript",
   ],
-  plugins: ["lodash"],
   ignore: ["**/*.d.ts"],
   env: {
     commonjs: {

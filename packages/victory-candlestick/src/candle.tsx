@@ -7,7 +7,7 @@ import {
   VictoryCommonPrimitiveProps,
   VictoryStyleObject,
 } from "victory-core";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 
 export interface CandleProps extends VictoryCommonPrimitiveProps {
   candleRatio?: number;

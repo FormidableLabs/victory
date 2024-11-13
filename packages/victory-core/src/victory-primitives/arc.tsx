@@ -1,6 +1,6 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
 import React from "react";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 
 import * as Helpers from "../victory-util/helpers";
 import { VictoryCommonPrimitiveProps } from "../victory-util/common-props";

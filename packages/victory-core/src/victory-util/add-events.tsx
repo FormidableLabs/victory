@@ -1,5 +1,8 @@
 import React from "react";
-import { defaults, isEmpty, pick } from "lodash";
+import defaults from "lodash/defaults";
+import isEmpty from "lodash/isEmpty";
+import pick from "lodash/pick";
+
 import isEqual from "react-fast-compare";
 
 import { VictoryLabelableProps } from "../types/prop-types";

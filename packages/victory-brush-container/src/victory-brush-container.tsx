@@ -8,7 +8,7 @@ import {
   VictoryEventHandler,
 } from "victory-core";
 import { BrushHelpers } from "./brush-helpers";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 import isEqual from "react-fast-compare";
 
 export interface VictoryBrushContainerProps extends VictoryContainerProps {

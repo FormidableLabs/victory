@@ -1,6 +1,7 @@
 // http://www.pearsonified.com/2012/01/characters-per-line.php
 /* eslint-disable no-magic-numbers */
-import { defaults, memoize } from "lodash";
+import defaults from "lodash/defaults";
+import memoize from "lodash/memoize";
 
 // Based on measuring specific character widths
 // as in the following example https://bl.ocks.org/tophtucker/62f93a4658387bb61e4510c37e2e97cf

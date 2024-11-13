@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 
 import {
   Helpers,

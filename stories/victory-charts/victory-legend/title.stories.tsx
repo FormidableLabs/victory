@@ -1,6 +1,6 @@
 import React from "react";
 import type { Meta } from "@storybook/react";
-import { range } from "lodash";
+import range from "lodash/range";
 
 import {
   VictoryAxis,

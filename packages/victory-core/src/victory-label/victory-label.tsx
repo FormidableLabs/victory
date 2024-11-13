@@ -1,6 +1,8 @@
 /* eslint no-magic-numbers: ["error", { "ignore": [-0.5, 0.5, 0, 1, 2] }]*/
-import { defaults, isEmpty } from "lodash";
 import React from "react";
+import defaults from "lodash/defaults";
+import isEmpty from "lodash/isEmpty";
+
 import { VictoryPortal } from "../victory-portal/victory-portal";
 import { Rect } from "../victory-primitives/rect";
 import { Text } from "../victory-primitives/text";

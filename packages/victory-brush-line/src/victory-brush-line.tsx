@@ -1,4 +1,7 @@
 import React from "react";
+import defaults from "lodash/defaults";
+import pick from "lodash/pick";
+
 import {
   Selection,
   Helpers,
@@ -10,7 +13,6 @@ import {
   DomainTuple,
   VictoryStyleObject,
 } from "victory-core";
-import { defaults, pick } from "lodash";
 import isEqual from "react-fast-compare";
 
 export type VictoryBrushLineTargetType = "data" | "labels" | "parent";

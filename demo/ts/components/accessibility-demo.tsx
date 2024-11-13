@@ -1,5 +1,5 @@
 import React from "react";
-import { isNumber } from "lodash";
+import isNumber from "lodash/isNumber";
 import { VictoryGroup } from "victory-group";
 import { VictoryStack } from "victory-stack";
 import { VictoryChart } from "victory-chart";

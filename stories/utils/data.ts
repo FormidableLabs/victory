@@ -1,4 +1,4 @@
-import { range } from "lodash";
+import range from "lodash/range";
 import seedrandom from "seedrandom";
 
 export const getArrayData = (num: number, samples = 10) => {

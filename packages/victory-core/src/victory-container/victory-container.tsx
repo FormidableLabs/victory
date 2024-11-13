@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { uniqueId } from "lodash";
+import uniqueId from "lodash/uniqueId";
 import { Portal } from "../victory-portal/portal";
 import * as UserProps from "../victory-util/user-props";
 import { OriginType } from "../victory-label/victory-label";

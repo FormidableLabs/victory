@@ -1,5 +1,10 @@
-import { defaults, isEmpty, fromPairs } from "lodash";
 import React from "react";
+import defaults from "lodash/defaults";
+import isEmpty from "lodash/isEmpty";
+import fromPairs from "lodash/fromPairs";
+import isEqual from "react-fast-compare";
+import stringify from "json-stringify-safe";
+
 import {
   Collection,
   EventCallbackInterface,
@@ -10,8 +15,6 @@ import {
   StringOrNumberOrCallback,
   TimerContext,
 } from "victory-core";
-import isEqual from "react-fast-compare";
-import stringify from "json-stringify-safe";
 
 export type VictorySharedEventsProps = {
   children?: React.ReactElement | React.ReactElement[];

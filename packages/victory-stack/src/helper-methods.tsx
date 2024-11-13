@@ -1,4 +1,4 @@
-import { orderBy } from "lodash";
+import orderBy from "lodash/orderBy";
 import React from "react";
 import { Helpers, Scale, Wrapper } from "victory-core";
 import isEqual from "react-fast-compare";

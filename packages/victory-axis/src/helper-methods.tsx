@@ -1,4 +1,4 @@
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 import { Helpers, Scale, Axis } from "victory-core";
 import { VictoryAxisProps } from "./victory-axis";
 
