@@ -1,6 +1,6 @@
 import React from "react";
 import { Helpers, Scale, Axis, Wrapper } from "victory-core";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 
 const fallbackProps = {
   width: 450,

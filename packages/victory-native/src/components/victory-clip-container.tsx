@@ -4,7 +4,7 @@ import { Circle } from "./victory-primitives/circle";
 import { Rect } from "./victory-primitives/rect";
 import { ClipPath } from "./victory-primitives/clip-path";
 import { VictoryClipContainer as VictoryClipContainerBase } from "victory-core/es";
-import { uniqueId } from "lodash";
+import uniqueId from "lodash/uniqueId";
 
 export class VictoryClipContainer extends VictoryClipContainerBase {
   static defaultProps = {

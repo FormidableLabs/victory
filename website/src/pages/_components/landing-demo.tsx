@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
-import { last } from "lodash";
+import last from "lodash/last";
 import { format, startOfWeek, parse, subDays } from "date-fns";
 
 import {

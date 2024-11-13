@@ -1,5 +1,9 @@
-import { defaults, uniq, groupBy, uniqBy } from "lodash";
 import React from "react";
+import defaults from "lodash/defaults";
+import uniq from "lodash/uniq";
+import groupBy from "lodash/groupBy";
+import uniqBy from "lodash/uniqBy";
+
 import * as Axis from "./axis";
 import * as Style from "./style";
 import * as Data from "./data";

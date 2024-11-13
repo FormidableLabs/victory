@@ -1,5 +1,7 @@
 import { Collection, Selection, Data, Helpers } from "victory-core";
-import { isEmpty, isRegExp, throttle } from "lodash";
+import isEmpty from "lodash/isEmpty";
+import isRegExp from "lodash/isRegExp";
+import throttle from "lodash/throttle";
 import isEqual from "react-fast-compare";
 import Delaunay from "delaunay-find/lib/index.js";
 import React from "react";

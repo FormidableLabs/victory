@@ -1,5 +1,5 @@
 import React from "react";
-import { round } from "lodash";
+import round from "lodash/round";
 import { VictoryChart } from "victory-chart";
 import { VictoryStack } from "victory-stack";
 import { VictoryGroup } from "victory-group";

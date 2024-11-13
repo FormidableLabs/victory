@@ -1,4 +1,5 @@
-import { defaults, isEmpty } from "lodash";
+import defaults from "lodash/defaults";
+import isEmpty from "lodash/isEmpty";
 import React from "react";
 import {
   EventPropTypeInterface,

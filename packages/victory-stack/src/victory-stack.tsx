@@ -1,5 +1,7 @@
-import { defaults, isEmpty } from "lodash";
 import React from "react";
+import defaults from "lodash/defaults";
+import isEmpty from "lodash/isEmpty";
+
 import {
   CategoryPropType,
   DomainPropType,

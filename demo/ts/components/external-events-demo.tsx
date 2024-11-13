@@ -6,7 +6,7 @@ import { VictoryBar } from "victory-bar";
 import { VictoryLine } from "victory-line";
 import { VictoryZoomContainer } from "victory-zoom-container";
 import { VictoryVoronoiContainer } from "victory-voronoi-container";
-import { range } from "lodash";
+import range from "lodash/range";
 import { VictoryTheme, VictoryThemePalette } from "victory-core";
 
 const themeColors: VictoryThemePalette =

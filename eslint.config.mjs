@@ -77,6 +77,13 @@ export default tseslint.config(
       "no-restricted-imports": [
         "error",
         {
+          paths: [
+            {
+              name: "lodash",
+              message:
+                "Be sure to import specific lodash functions, not the entire library!",
+            },
+          ],
           patterns: [
             {
               group: ["victory*/src", "victory*/src/**"],

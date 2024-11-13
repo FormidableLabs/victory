@@ -1,4 +1,8 @@
-import { orderBy, defaults, uniq, groupBy } from "lodash";
+import defaults from "lodash/defaults";
+import groupBy from "lodash/groupBy";
+import orderBy from "lodash/orderBy";
+import uniq from "lodash/uniq";
+
 import { Helpers, Scale, Domain, Data, Collection } from "victory-core";
 import {
   min as d3Min,

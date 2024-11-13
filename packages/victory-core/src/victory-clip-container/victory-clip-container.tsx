@@ -1,7 +1,10 @@
 import React from "react";
+import defaults from "lodash/defaults";
+import isObject from "lodash/isObject";
+import uniqueId from "lodash/uniqueId";
+
 import * as Helpers from "../victory-util/helpers";
 import * as UserProps from "../victory-util/user-props";
-import { defaults, isObject, uniqueId } from "lodash";
 import { ClipPath } from "../victory-primitives/clip-path";
 import { Circle } from "../victory-primitives/circle";
 import { Rect } from "../victory-primitives/rect";

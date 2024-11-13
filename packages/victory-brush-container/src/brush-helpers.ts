@@ -1,5 +1,7 @@
+import defaults from "lodash/defaults";
+import throttle from "lodash/throttle";
+
 import { Helpers as CoreHelpers, Selection } from "victory-core";
-import { throttle, defaults } from "lodash";
 import isEqual from "react-fast-compare";
 
 const Helpers = {

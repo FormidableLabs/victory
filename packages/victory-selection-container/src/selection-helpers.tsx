@@ -1,5 +1,6 @@
 import { Selection, Data, Helpers, Datum } from "victory-core";
-import { defaults, throttle } from "lodash";
+import defaults from "lodash/defaults";
+import throttle from "lodash/throttle";
 import React from "react";
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 16;

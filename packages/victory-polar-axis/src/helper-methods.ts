@@ -1,4 +1,5 @@
-import { uniqBy, defaults } from "lodash";
+import defaults from "lodash/defaults";
+import uniqBy from "lodash/uniqBy";
 import { Helpers, LabelHelpers, Scale, Axis } from "victory-core";
 import { VictoryPolarAxisProps } from "./types";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { PanResponder } from "react-native";
 import { G, Rect } from "react-native-svg";
-import { get } from "lodash";
+import get from "lodash/get";
 import { VictoryEventHandler } from "victory-core";
 import {
   VictoryBrushLine as VictoryBrushLineBase,

@@ -1,11 +1,13 @@
 import React from "react";
+import defaults from "lodash/defaults";
+import pick from "lodash/pick";
+import isEqual from "react-fast-compare";
+
 import { VictoryAnimation } from "../victory-animation/victory-animation";
 import * as Collection from "../victory-util/collection";
 import * as Helpers from "../victory-util/helpers";
 import TimerContext from "../victory-util/timer-context";
 import * as Transitions from "../victory-util/transitions";
-import { defaults, pick } from "lodash";
-import isEqual from "react-fast-compare";
 import Timer from "../victory-util/timer";
 
 type VictoryTransitionChild = React.ReactElement<

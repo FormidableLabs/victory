@@ -1,6 +1,6 @@
 import React, { RefObject } from "react";
 import Svg, { Rect } from "react-native-svg";
-import { get } from "lodash";
+import get from "lodash/get";
 import { View, PanResponder } from "react-native";
 import {
   VictoryContainerProps,

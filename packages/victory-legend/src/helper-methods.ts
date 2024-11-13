@@ -1,4 +1,6 @@
-import { defaults, groupBy, range } from "lodash";
+import defaults from "lodash/defaults";
+import groupBy from "lodash/groupBy";
+import range from "lodash/range";
 import { Helpers, Style, TextSize } from "victory-core";
 import { VictoryLegendProps } from "./victory-legend";
 

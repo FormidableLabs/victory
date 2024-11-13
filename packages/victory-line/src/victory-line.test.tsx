@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { random } from "lodash";
+import random from "lodash/random";
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { Helpers } from "victory-core";

@@ -1,6 +1,6 @@
 import { VictoryLabelProps } from "../victory-label/victory-label";
 import * as Helpers from "./helpers";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 
 // Private Functions
 

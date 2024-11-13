@@ -15,7 +15,11 @@ import {
   OrientationTypes,
   VictoryThemeDefinition,
 } from "victory-core";
-import { defaults, uniqueId, isPlainObject, orderBy } from "lodash";
+
+import defaults from "lodash/defaults";
+import uniqueId from "lodash/uniqueId";
+import isPlainObject from "lodash/isPlainObject";
+import orderBy from "lodash/orderBy";
 
 import { Flyout } from "./flyout";
 

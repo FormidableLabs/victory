@@ -1,5 +1,5 @@
 import React from "react";
-import { defaults } from "lodash";
+import defaults from "lodash/defaults";
 
 import * as Helpers from "../victory-util/helpers";
 import * as pathHelpers from "../victory-util/point-path-helpers";

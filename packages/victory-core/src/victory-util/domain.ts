@@ -1,5 +1,8 @@
 import React from "react";
-import { isPlainObject, sortedUniq, isDate } from "lodash";
+import isDate from "lodash/isDate";
+import isPlainObject from "lodash/isPlainObject";
+import sortedUniq from "lodash/sortedUniq";
+
 import * as Data from "./data";
 import * as Scale from "./scale";
 import * as Helpers from "./helpers";
