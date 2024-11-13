@@ -324,22 +324,9 @@
       ]
     },
     "jest": {
-      "command": "jest",
-      "files": [
-        "src/**/*.test.*",
-        "../../.babelrc.js",
-        "./jest.config.ts",
-        "./jest-native-setup.tsx"
-      ],
-      "output": [],
-      "dependencies": [
-        "build:lib:cjs",
-        "../victory-vendor:build:lib:cjs",
-        "../victory-voronoi:build:lib:cjs"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
+      "command": "echo victory-native (legacy) has no tests",
+      "files": [],
+      "output": []
     }
   }
 }

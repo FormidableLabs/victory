@@ -22,14 +22,20 @@ describe("components/victory-tooltip", () => {
 
   it("renders nothing when not active", () => {
     render(<VictoryTooltip {...baseProps} active={false} />, {
-      wrapper: VictoryContainer,
+      wrapper: VictoryContainer as React.JSXElementConstructor<{
+        children: React.ReactNode;
+      }>,
     });
     const output = screen.queryByTestId(labelId);
     expect(output).not.toBeInTheDocument();
   });
 
   it("renders the expected text", () => {
-    render(<VictoryTooltip {...baseProps} />, { wrapper: VictoryContainer });
+    render(<VictoryTooltip {...baseProps} />, {
+      wrapper: VictoryContainer as React.JSXElementConstructor<{
+        children: React.ReactNode;
+      }>,
+    });
     const output = screen.getByTestId(labelId);
     expect(output).toBeInTheDocument();
     expect(output).toBeVisible();
@@ -37,7 +43,11 @@ describe("components/victory-tooltip", () => {
   });
 
   it("renders a flyout and a label", () => {
-    render(<VictoryTooltip {...baseProps} />, { wrapper: VictoryContainer });
+    render(<VictoryTooltip {...baseProps} />, {
+      wrapper: VictoryContainer as React.JSXElementConstructor<{
+        children: React.ReactNode;
+      }>,
+    });
     const label = screen.getByTestId(labelId);
     const flyout = screen.getByTestId(flyoutId);
     expect(label).toBeInTheDocument();
@@ -49,7 +59,11 @@ describe("components/victory-tooltip", () => {
       const clickHandler = jest.fn();
       render(
         <VictoryTooltip {...baseProps} events={{ onClick: clickHandler }} />,
-        { wrapper: VictoryContainer },
+        {
+          wrapper: VictoryContainer as React.JSXElementConstructor<{
+            children: React.ReactNode;
+          }>,
+        },
       );
       fireEvent.click(screen.getByTestId(flyoutId));
       expect(clickHandler).toBeCalled();
