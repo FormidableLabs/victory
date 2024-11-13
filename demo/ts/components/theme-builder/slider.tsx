@@ -8,16 +8,20 @@ type SliderProps = {
   onChange?: (value: number) => void;
   min?: number;
   max?: number;
+  step?: number;
+  className?: string;
 };
 
 const Slider = ({
   label,
   id,
   value,
-  unit = "px",
+  unit,
   onChange,
   min,
   max,
+  step = 1,
+  className,
 }: SliderProps) => {
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -27,7 +31,7 @@ const Slider = ({
   };
 
   return (
-    <div className="my-4">
+    <div className={className}>
       <label
         htmlFor={id}
         className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
@@ -43,6 +47,7 @@ const Slider = ({
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
         min={min}
         max={max}
+        step={step}
       />
     </div>
   );

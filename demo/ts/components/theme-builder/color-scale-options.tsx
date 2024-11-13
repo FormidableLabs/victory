@@ -59,7 +59,7 @@ const ColorScaleOptions = ({
         label="Color Scale"
         className="mb-5"
       />
-      <div className="flex flex-wrap gap-3 mb-5">
+      <div className="flex flex-wrap gap-3">
         {palette?.[activeColorScale as string]?.map((color, i) => (
           <ColorPicker
             key={i}
