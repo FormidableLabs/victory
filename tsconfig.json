@@ -14,8 +14,14 @@
     "skipLibCheck": true,                 
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "lib": [
+      "dom", 
+      "dom.iterable", 
+      "esnext"
+    ],
     "paths": {
       "@/*": ["packages/*"]
-    }
+    },
+    "types": ["@testing-library/jest-dom"],
   },
 }
