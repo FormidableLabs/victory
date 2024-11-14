@@ -23,6 +23,7 @@ export const getConfigValue = (
   config: VictoryThemeDefinition,
   path: string,
 ) => {
+  if (!path) return undefined;
   const pathArray = path.split(".");
   return pathArray.reduce((acc, key) => acc[key], config);
 };

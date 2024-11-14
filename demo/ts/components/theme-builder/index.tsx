@@ -112,7 +112,7 @@ const ThemeBuilder = () => {
 
   return (
     <div className="flex flex-row flex-wrap items-start justify-start w-full">
-      <aside className="relative flex flex-col h-lvh w-[350px] border-r border-gray-200">
+      <aside className="relative flex flex-col h-full w-[380px] border-r border-gray-200">
         <div className="grow overflow-y-auto p-4 pb-[100px]">
           <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
           <p className="text-sm mb-4 text-gray-300">
@@ -147,7 +147,7 @@ const ThemeBuilder = () => {
           </Button>
         </footer>
       </aside>
-      <main className="flex-1 flex flex-col items-center">
+      <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
         {customThemeConfig && (
           <div className="max-w-screen-xl w-full py-4 px-10">
             <h2 className="text-xl font-bold mb-4">Example Charts</h2>
@@ -188,6 +188,21 @@ const ThemeBuilder = () => {
                       <VictoryArea data={sampleStackData} key={i} />
                     ))}
                   </VictoryStack>
+                </VictoryChart>
+              </div>
+              <div>
+                <h3 className="text-base font-bold mb-3">Area Chart</h3>
+                <VictoryChart
+                  theme={customThemeConfig}
+                  domainPadding={20}
+                  style={chartStyle}
+                >
+                  <VictoryAxis label="X Axis" />
+                  <VictoryAxis dependentAxis label="Y Axis" />
+                  <VictoryArea
+                    data={sampleStackData}
+                    labels={({ datum }) => datum.y}
+                  />
                 </VictoryChart>
               </div>
             </div>

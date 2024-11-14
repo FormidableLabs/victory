@@ -8,6 +8,7 @@ type ColorPickerProps = {
   id: string;
   onColorChange: (color: string) => void;
   showColorName?: boolean;
+  className?: string;
 };
 
 const ColorPicker = ({
@@ -16,6 +17,7 @@ const ColorPicker = ({
   id,
   onColorChange,
   showColorName = false,
+  className,
 }: ColorPickerProps) => {
   const [isPickerOpen, setIsPickerOpen] = React.useState(false);
 
@@ -26,7 +28,7 @@ const ColorPicker = ({
   };
 
   return (
-    <fieldset>
+    <fieldset className={className}>
       {label && (
         <label className="block mb-1 text-sm text-gray-900 dark:text-white font-bold">
           {label}
