@@ -38,8 +38,8 @@ export type VictoryBarAlignmentType = "start" | "middle" | "end";
 
 export interface VictoryBarProps
   extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictoryMultiLabelableProps {
+  VictoryDatableProps,
+  VictoryMultiLabelableProps {
   alignment?: VictoryBarAlignmentType;
   barRatio?: number;
   barWidth?: NumberOrCallback;
@@ -141,7 +141,12 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
       return this.animateComponent(props, animationWhitelist);
     }
 
-    const children = this.renderData(props);
+    let children;
+    if (props.groupComponent.type.displayName === 'VictoryClipContainer') {
+      children = this.renderData(props, () => true);
+    } else {
+      children = this.renderData(props);
+    }
 
     const component = props.standalone
       ? this.renderContainer(props.containerComponent, children)

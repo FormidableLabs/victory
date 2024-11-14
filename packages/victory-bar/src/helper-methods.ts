@@ -61,6 +61,14 @@ const getCalculatedValues = (props) => {
   let data = Data.getData(props);
   data = Data.formatDataFromDomain(data, domain, 0);
 
+  if (props.groupComponent.type.displayName === 'VictoryClipContainer') {
+    data = data.map((datum) => {
+      datum._x = datum.x;
+      datum._y = datum.y;
+      return datum;
+    });
+  }
+
   return { style, data, scale, domain, origin };
 };
 
