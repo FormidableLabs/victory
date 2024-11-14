@@ -20,11 +20,7 @@ Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and 
 ### Requirements
 
 - [Node.js](https://nodejs.org/) 18 or higher.
-- [pnpm](https://pnpm.io/) 7.
-
-> [!Note]
-> If you have a different pnpm version installed locally you can still use version 7 by prefixing the commands with `npx pnpm@7`.
-> For example, `npx pnpm@7 install`.
+- [pnpm](https://pnpm.io/) version specified by [corepack](https://github.com/nodejs/corepack) in the `package.json`.
 
 ### Setup
 
@@ -35,11 +31,15 @@ $ git clone https://github.com/FormidableLabs/victory.git
 $ cd victory
 ```
 
+Enable corepack (if not already):
+
+```sh
+$ corepack enable
+```
+
 Use [pnpm](https://pnpm.io/) to install dependencies:
 
 ```sh
-# ... if you need pnpm
-$ npm install -g pnpm
 $ pnpm install
 ```
 
@@ -49,12 +49,15 @@ $ pnpm install
 
 We have some dev servers available for a sample development environment.
 
-```sh
-# TypeScript demo app
-$ pnpm start
-```
+> Note: The demo app is deprecated, all development should occur in storybook or the docs
 
-These run appropriate file watchers, so you can just start developing source files and wait for the webpack dev server to pick up the new changes.
+```sh
+# watch mode / HMR
+$ pnpm storybook:dev
+
+# storybook standalone
+$ pnpm storybook:start
+```
 
 ### Running Docs locally
 
