@@ -46,10 +46,15 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
 
   constructor(props: VictoryClipContainerProps) {
     super(props);
-    this.clipId =
-      !isObject(props) || props.clipId === undefined
-        ? uniqueId("victory-clip-")
-        : props.clipId;
+    this.state = {
+      clipId: props?.clipId,
+    };
+  }
+
+  componentDidMount() {
+    if (!this.state.clipId) {
+      this.setState({ clipId: uniqueId("victory-clip-") });
+    }
   }
 
   calculateAttributes(props) {
@@ -204,6 +209,6 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       translateX,
       translateY,
     });
-    return this.renderClippedGroup(clipProps, this.clipId);
+    return this.renderClippedGroup(clipProps, this.state.clipId);
   }
 }
