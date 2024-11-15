@@ -57,6 +57,9 @@ export class VictoryClipContainer extends React.Component<
     };
   }
 
+  // The clipId state is used to prevent hydration mismatches between the server and client (issue #2941).
+  // A better alternative would be to utilize React 18's useId hook instead of uniqueId, which would avoid needing state for this purpose.
+  // However, this component currently supports React 16 at the time of writing, so this workaround is necessary.
   componentDidMount() {
     if (!this.state.clipId) {
       this.setState({ clipId: uniqueId("victory-clip-") });
