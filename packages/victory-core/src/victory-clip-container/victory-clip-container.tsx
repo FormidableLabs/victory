@@ -31,7 +31,14 @@ export interface VictoryClipContainerProps {
   translateY?: number;
 }
 
-export class VictoryClipContainer extends React.Component<VictoryClipContainerProps> {
+interface VictoryClipContainerState {
+  clipId?: number | string;
+}
+
+export class VictoryClipContainer extends React.Component<
+  VictoryClipContainerProps,
+  VictoryClipContainerState
+> {
   static displayName = "VictoryClipContainer";
   static role = "container";
 
