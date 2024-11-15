@@ -19,7 +19,7 @@
     "url": "https://github.com/formidablelabs/victory/issues"
   },
   "homepage": "https://commerce.nearform.com/open-source/victory",
-  "packageManager": "pnpm@7.33.7",
+  "packageManager": "pnpm@9.13.0",
   "dependencies": {
     "clsx": "^2.1.1"
   },
