@@ -1,6 +1,5 @@
 import React from "react";
 import defaults from "lodash/defaults";
-import isObject from "lodash/isObject";
 import uniqueId from "lodash/uniqueId";
 
 import * as Helpers from "../victory-util/helpers";
