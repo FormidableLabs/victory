@@ -3,7 +3,7 @@ import React from "react";
 type SliderProps = {
   label: string;
   id: string;
-  value: number;
+  value?: number;
   unit?: string;
   onChange?: (value: number) => void;
   min?: number;
@@ -24,7 +24,7 @@ const Slider = ({
   className,
 }: SliderProps) => {
   const handleChange = (event) => {
-    const newValue = event.target.value;
+    const newValue = event.target.valueAsNumber;
     if (onChange) {
       onChange(newValue);
     }

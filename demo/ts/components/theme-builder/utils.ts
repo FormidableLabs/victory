@@ -22,8 +22,11 @@ export const setNestedConfigValue = (
 export const getConfigValue = (
   config: VictoryThemeDefinition,
   path: string,
+  defaultValue?: unknown,
 ) => {
   if (!path) return undefined;
   const pathArray = path.split(".");
-  return pathArray.reduce((acc, key) => acc[key], config);
+  return pathArray.reduce((acc, key) => {
+    return acc && acc[key] ? acc[key] : defaultValue || undefined;
+  }, config);
 };
