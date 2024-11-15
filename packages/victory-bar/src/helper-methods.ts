@@ -5,6 +5,7 @@ import {
   Helpers,
   LabelHelpers,
   Scale,
+  VictoryClipContainer
 } from "victory-core";
 
 export const getBarPosition = (props, datum) => {
@@ -61,7 +62,7 @@ const getCalculatedValues = (props) => {
   let data = Data.getData(props);
   data = Data.formatDataFromDomain(data, domain, 0);
 
-  if (props.groupComponent.type.displayName === 'VictoryClipContainer') {
+  if (props.groupComponent.type === VictoryClipContainer) {
     data = data.map((datum) => {
       datum._x = datum.x;
       datum._y = datum.y;

@@ -13,6 +13,7 @@ import {
   EventPropTypeInterface,
   NumberOrCallback,
   StringOrNumberOrCallback,
+  VictoryClipContainer,
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
@@ -142,7 +143,7 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
     }
 
     let children;
-    if (props.groupComponent.type.displayName === 'VictoryClipContainer') {
+    if (props.groupComponent.type === VictoryClipContainer) {
       children = this.renderData(props, () => true);
     } else {
       children = this.renderData(props);
