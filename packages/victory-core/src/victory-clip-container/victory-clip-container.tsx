@@ -43,12 +43,14 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
     groupComponent: <g />,
   };
   public clipId: VictoryClipContainerProps["clipId"];
+  private uniqueClipId: string;
 
   constructor(props: VictoryClipContainerProps) {
     super(props);
+    this.uniqueClipId = uniqueId("victory-clip-");
     this.clipId =
       !isObject(props) || props.clipId === undefined
-        ? uniqueId("victory-clip-")
+        ? this.uniqueClipId
         : props.clipId;
   }
 
