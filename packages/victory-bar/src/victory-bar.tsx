@@ -39,8 +39,8 @@ export type VictoryBarAlignmentType = "start" | "middle" | "end";
 
 export interface VictoryBarProps
   extends VictoryCommonProps,
-  VictoryDatableProps,
-  VictoryMultiLabelableProps {
+    VictoryDatableProps,
+    VictoryMultiLabelableProps {
   alignment?: VictoryBarAlignmentType;
   barRatio?: number;
   barWidth?: NumberOrCallback;

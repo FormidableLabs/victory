@@ -5,7 +5,7 @@ import {
   Helpers,
   LabelHelpers,
   Scale,
-  VictoryClipContainer
+  VictoryClipContainer,
 } from "victory-core";
 
 export const getBarPosition = (props, datum) => {
