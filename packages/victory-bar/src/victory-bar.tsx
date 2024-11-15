@@ -128,7 +128,9 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
     "groupComponent",
     "containerComponent",
   ];
-
+  // passed to addEvents.renderData to prevent data props with undefined _x or _y from excluding data from render.
+  // used when inside of VictoryZoomContainer
+  static shouldRenderDatum = () => true;
   // Overridden in native versions
   shouldAnimate() {
     return !!this.props.animate;
@@ -144,7 +146,7 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
 
     let children;
     if (props.groupComponent.type === VictoryClipContainer) {
-      children = this.renderData(props, () => true);
+      children = this.renderData(props, VictoryBarBase.shouldRenderDatum);
     } else {
       children = this.renderData(props);
     }
