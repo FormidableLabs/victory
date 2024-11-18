@@ -23,6 +23,21 @@ See the [full API here](/docs/api/victory-histogram). Typically composed with [`
 </VictoryChart>
 ```
 
+## Histogram - Date Bins
+
+Histograms can be used to visualize the distribution of data over time. `VictoryHistogram` will automatically bin data by date if the `x` prop is a date. Internally it uses `d3` to bin the data, so the behaviour reflects that of the [`d3.bin`](https://observablehq.com/@d3/d3-bin) function.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryHistogram
+    data={sampleHistogramDateData}
+  />
+</VictoryChart>
+```
+
 ## Histogram - Labels
 
 Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-histogram) prop.
@@ -34,7 +49,9 @@ Add labels to charts by setting the `labels` prop to the name of a property in t
 >
   <VictoryHistogram
     data={sampleHistogramData}
-    labels={({ datum }) => `Bin count:\n ${datum.y}`}
+    labels={({ datum }) =>
+      `Bin count:\n ${datum.y}`
+    }
   />
 </VictoryChart>
 ```
@@ -50,7 +67,9 @@ Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) c
 >
   <VictoryHistogram
     data={sampleHistogramData}
-    labels={({ datum }) => `Bin count:\n ${datum.y}`}
+    labels={({ datum }) =>
+      `Bin count:\n ${datum.y}`
+    }
     labelComponent={<VictoryTooltip />}
   />
 </VictoryChart>
@@ -67,6 +86,39 @@ Histograms can be rendered horizontally by setting the `horizontal` prop to `tru
 >
   <VictoryHistogram
     horizontal
+    data={sampleHistogramData}
+  />
+</VictoryChart>
+```
+
+## Histogram - Combination
+
+Histograms can be composed with other Victory components to create more complex visualizations.
+
+```jsx live
+<VictoryChart
+  domainPadding={20}
+  theme={VictoryTheme.clean}
+>
+  <VictoryGroup
+    data={[
+      { x: 0, y: 0 },
+      { x: 1, y: 1 },
+      { x: 2, y: 3 },
+      { x: 3, y: 2 },
+      { x: 4, y: 5 },
+      { x: 5, y: 5 },
+      { x: 6, y: 4 },
+      { x: 7, y: 8 },
+      { x: 8, y: 6 },
+      { x: 9, y: 3 },
+      { x: 10, y: 7 },
+    ]}
+  >
+    <VictoryLine />
+    <VictoryScatter />
+  </VictoryGroup>
+  <VictoryHistogram
     data={sampleHistogramData}
   />
 </VictoryChart>
@@ -199,6 +251,62 @@ const App = () => {
     </VictoryChart>
   );
 };
+
+render(<App />);
+```
+
+## Histogram - Animation
+
+Histogram charts can be animated by setting the `animate` prop.
+
+```jsx live noInline
+function App() {
+  const [data, setData] =
+    React.useState(getData());
+  const [bins, setBins] =
+    React.useState(getBins());
+
+  React.useState(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setData(getData());
+        setBins(getBins());
+      }, 4000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+      domainPadding={{ x: 20 }}
+    >
+      <VictoryHistogram
+        animate={{ duration: 1000 }}
+        bins={bins}
+        data={data}
+      />
+    </VictoryChart>
+  );
+}
+
+function getData() {
+  return _.range(100).map(() => ({
+    x: _.random(0, 300),
+  }));
+}
+
+function getBins() {
+  return _.range(
+    0,
+    _.random(100, 300),
+    10,
+  );
+}
 
 render(<App />);
 ```

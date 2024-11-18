@@ -61,6 +61,44 @@ The `crossAxis` prop can be used to render a horizontal axis, and the `dependent
 </VictoryChart>
 ```
 
+### Axis - Gridlines
+
+Gridlines can be shown by styling the axis component.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryAxis
+    crossAxis
+    style={{
+      grid: {
+        stroke: "#CFD8DC",
+        strokeDasharray: "10, 5",
+      },
+    }}
+  />
+  <VictoryAxis
+    dependentAxis
+    style={{
+      grid: {
+        stroke: ({ tick }) => (tick === 5 ? "#2d7ff9" : "#CFD8DC"),
+        strokeDasharray: "10, 5",
+      },
+    }}
+  />
+  <VictoryLine
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+  />
+</VictoryChart>
+```
+
 ---
 
 ### Axis - Tick Values
@@ -106,6 +144,33 @@ Use the `tickFormat` prop to customize axis labels. This prop can be given as an
     tickFormat={(tick) =>
       `$${Math.round(tick)}M`
     }
+  />
+  <VictoryLine
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+  />
+</VictoryChart>
+```
+
+#### Multiline Label Support
+
+You can also return an array of strings to create multiline labels.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryAxis
+    crossAxis
+    tickFormat={(tick) => [
+      `$${Math.round(tick)}`,
+      "Million",
+    ]}
   />
   <VictoryLine
     data={[

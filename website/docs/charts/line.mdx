@@ -343,6 +343,53 @@ Add labels to charts by setting the `labels` prop to the name of a property in t
 </VictoryChart>
 ```
 
+## Line Charts - Animation
+
+Charts can be animated by setting the `animate` prop. See the [animations](/docs/guides/animations) guide for more information.
+
+```jsx live noInline
+function App() {
+  const [data, setData] =
+    React.useState(getData());
+
+  React.useState(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setData(getData());
+      }, 4000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryLine
+        data={data}
+        interpolation="basis"
+        animate={{
+          duration: 1000,
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+function getData() {
+  return _.range(1, 30).map((i) => ({
+    x: i,
+    y: _.random(1, 50),
+  }));
+}
+
+render(<App />);
+```
+
 ## Line Charts - Styles
 
 Chart styling can be customized by using the theme or overriding the style prop on the component.

@@ -131,11 +131,11 @@ function App() {
 
   return (
     <VictoryChart
-      animate={{ duration: 1000 }}
       theme={VictoryTheme.clean}
       domainPadding={{ x: 20 }}
     >
       <VictoryBoxPlot
+        animate={{ duration: 1000 }}
         data={data}
         boxWidth={10}
       />
@@ -225,6 +225,21 @@ Events can be handled by passing an array of event objects to the `events` prop 
       { x: 6, y: ["1", "2", "6", "8"] },
     ]}
     events={[
+      {
+        target: "q1",
+        eventHandlers: {
+          onClick: () => {
+            return [
+              {
+                target: "q1Labels",
+                mutation: () => ({
+                  text: "LABEL!",
+                }),
+              },
+            ];
+          },
+        },
+      },
       {
         target: "q3",
         eventHandlers: {
