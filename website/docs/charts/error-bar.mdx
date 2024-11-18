@@ -181,6 +181,118 @@ Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) c
 </VictoryChart>
 ```
 
+## Error Bars - Combination
+
+Error Bars can be combined with other Victory components to create more complex visualizations.
+
+```jsx live noInline
+const data = [
+  {
+    x: 10,
+    y1: 250,
+    y2: 300,
+    ey1: 0.1,
+    ey2: 0.1,
+  },
+  {
+    x: 15,
+    y1: 350,
+    y2: 500,
+    ey1: 0.1,
+    ey2: 0.08,
+  },
+  {
+    x: 20,
+    y1: 420,
+    y2: 640,
+    ey1: 0.05,
+    ey2: 0.1,
+  },
+  {
+    x: 25,
+    y1: 300,
+    y2: 450,
+    ey1: 0.1,
+    ey2: 0.1,
+  },
+  {
+    x: 30,
+    y1: 350,
+    y2: 500,
+    ey1: 0.1,
+    ey2: 0.1,
+  },
+  {
+    x: 35,
+    y1: 220,
+    y2: 350,
+    ey1: 0.15,
+    ey2: 0.05,
+  },
+  {
+    x: 40,
+    y1: 250,
+    y2: 290,
+    ey1: 0.1,
+    ey2: 0.1,
+  },
+];
+
+const segments = ["y1", "y2"];
+const colors = {
+  y1: VictoryTheme.clean.palette.qualitative[1],
+  y2: VictoryTheme.clean.palette.qualitative[4],
+};
+
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      {segments.map((y) => (
+        <VictoryGroup>
+          <VictoryLine
+            data={data}
+            y={y}
+            style={{
+              data: {
+                stroke: colors[y],
+              },
+            }}
+            interpolation="natural"
+          />
+
+          <VictoryScatter
+            data={data}
+            y={y}
+            style={{
+              data: {
+                fill: colors[y],
+              },
+            }}
+          />
+
+          <VictoryErrorBar
+            data={data}
+            y={y}
+            errorY={(datum) =>
+              datum[y] * datum[`e${y}`]
+            }
+            style={{
+              data: {
+                stroke: colors[y],
+              },
+            }}
+          />
+        </VictoryGroup>
+      ))}
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
 ## Error Bars - Styles
 
 Chart styling can be customized by using the theme or overriding the style prop on the component.

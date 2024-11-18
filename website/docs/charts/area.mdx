@@ -109,6 +109,22 @@ function App() {
 render(<App />);
 ```
 
+## Area Charts - Plotting
+
+Area charts can render math functions as data by supplying a function to the `y` prop.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryArea
+    interpolation="basis"
+    data={_.range(0, 100)}
+    y={(d) => Math.sin(d)}
+  />
+</VictoryChart>
+```
+
 ## Area Charts - Combined
 
 Area charts can be combined into the same chart. Note that the order of the components will determine the rendering order.
@@ -278,7 +294,6 @@ function App() {
   return (
     <VictoryChart
       theme={VictoryTheme.clean}
-      animate={{ duration: 1000 }}
     >
       <VictoryStack colorScale={"blue"}>
         {state.data.map((data, i) => {
@@ -286,7 +301,10 @@ function App() {
             <VictoryArea
               key={i}
               data={data}
-              interpolation={"basis"}
+              interpolation="basis"
+              animate={{
+                duration: 1000,
+              }}
             />
           );
         })}

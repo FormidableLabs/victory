@@ -205,6 +205,52 @@ Pie chart labels can be positioned at different points along each slice by using
 />
 ```
 
+## Pie Chart - Label Indicator
+
+Pie charts can show a label indicator by setting the `labelIndicator` prop.
+
+```jsx live
+<VictoryPie
+  theme={VictoryTheme.clean}
+  radius={100}
+  labelPlacement="perpendicular"
+  labelIndicator
+  labels
+  data={[
+    { x: "Cats", y: 30 },
+    { x: "Dogs", y: 35 },
+    { x: "Birds", y: 25 },
+    { x: "Rabbits", y: 10 },
+  ]}
+/>
+```
+
+## Pie Chart - Custom Label Indicator
+
+Pie charts can show a custom label indicator by setting the `labelIndicator` prop to a custom component.
+
+```jsx live
+<VictoryPie
+  theme={VictoryTheme.clean}
+  radius={100}
+  labelIndicator={
+    <LineSegment
+      style={{
+        stroke: "blue",
+        strokeDasharray: 8,
+      }}
+    />
+  }
+  labels
+  data={[
+    { x: "Cats", y: 30 },
+    { x: "Dogs", y: 35 },
+    { x: "Birds", y: 25 },
+    { x: "Rabbits", y: 10 },
+  ]}
+/>
+```
+
 ## Pie Chart - Tooltips
 
 Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
@@ -228,6 +274,56 @@ Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) c
     { x: 8, y: 1, l: 315 },
   ]}
 />
+```
+
+## Pie Chart - Animation
+
+Charts can be animated by setting the `animate` prop. See the [animations](/docs/guides/animations) guide for more information.
+
+```jsx live noInline
+function App() {
+  const [data, setData] =
+    React.useState(getData());
+
+  React.useState(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setData(getData());
+      }, 4000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryPie
+      theme={VictoryTheme.clean}
+      animate={{ duration: 1000 }}
+      data={data}
+    />
+  );
+}
+
+function getData() {
+  const rand = () =>
+    Math.max(
+      Math.floor(Math.random() * 10000),
+      1000,
+    );
+  return [
+    { x: "5-13", y: rand() },
+    { x: "14-17", y: rand() },
+    { x: "18-24", y: rand() },
+    { x: "25-44", y: rand() },
+    { x: "45-64", y: rand() },
+    { x: "≥65", y: rand() },
+  ];
+}
+
+render(<App />);
 ```
 
 ## Pie Chart - Styles

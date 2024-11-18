@@ -75,6 +75,35 @@ Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) c
 </VictoryChart>
 ```
 
+## Scatter Charts - Axis
+
+Scatter charts support all four quadrants by default. You can customize the domain of the chart by setting the `domain` prop on `VictoryChart` or `VictoryScatter`.
+
+```jsx live
+<VictoryChart
+  domain={{
+    x: [-10, 10],
+    y: [-10, 10],
+  }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: -3, y: 2 },
+      { x: 0, y: -2 },
+      { x: -8, y: 1 },
+      { x: -2, y: -3 },
+      { x: 7, y: 5 },
+      { x: -8, y: 6 },
+      { x: -1, y: 3 },
+      { x: -4, y: -5 },
+      { x: -6, y: -5 },
+    ]}
+  />
+</VictoryChart>
+```
+
 ## Scatter Charts - Horizontal
 
 Scatter charts can be rendered with a flipped axis by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryLine`.
@@ -219,6 +248,109 @@ function App() {
 render(<App />);
 ```
 
+## Scatter Charts - Animation
+
+Scatter charts support all four quadrants by default. You can customize the domain of the chart by setting the `domain` prop on `VictoryChart` or `VictoryScatter`.
+
+```jsx live noInline
+function App() {
+  const [data, setData] =
+    React.useState(getData());
+
+  React.useState(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setData(getData());
+      }, 4000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryScatter
+        animate={{ duration: 2000 }}
+        groupComponent={
+          <VictoryClipContainer />
+        }
+        data={data}
+        style={{
+          data: {
+            fill: ({ datum }) =>
+              datum.fill,
+            opacity: ({ datum }) =>
+              datum.opacity,
+          },
+        }}
+        animate={{
+          onExit: {
+            duration: 500,
+            before: () => ({
+              opacity: 0.3,
+            }),
+          },
+          onEnter: {
+            duration: 500,
+            before: () => ({
+              opacity: 0.3,
+            }),
+            after: (datum) => ({
+              opacity:
+                datum.opacity || 1,
+            }),
+          },
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+function getData() {
+  const colors = [
+    "violet",
+    "cornflowerblue",
+    "gold",
+    "orange",
+    "turquoise",
+    "tomato",
+    "greenyellow",
+  ];
+  const symbols = [
+    "circle",
+    "star",
+    "square",
+    "triangleUp",
+    "triangleDown",
+    "diamond",
+    "plus",
+  ];
+  const elementNum = _.random(10, 40);
+  return _.range(elementNum).map(
+    (index) => {
+      const scaledIndex = Math.floor(
+        index % 7,
+      );
+      return {
+        x: _.random(10, 50),
+        y: _.random(2, 100),
+        size: _.random(8) + 3,
+        symbol: symbols[scaledIndex],
+        fill: colors[_.random(0, 6)],
+        opacity: 1,
+      };
+    },
+  );
+}
+
+render(<App />);
+```
+
 ## Scatter Charts - Styles
 
 Chart styling can be customized by using the theme or overriding the style prop on the component.
@@ -325,10 +457,7 @@ Line charts can be rendered in polar coordinates by setting the `polar` prop to 
     tickFormat={() => null}
   />
   <VictoryPolarAxis />
-  <VictoryScatter
-    data={sampleData}
-    size={5}
-  />
+  <VictoryScatter size={5} />
 </VictoryChart>
 ```
 

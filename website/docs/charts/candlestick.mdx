@@ -171,7 +171,10 @@ The labels prop can also accept a function to customize the candlestick label. W
   theme={VictoryTheme.clean}
 >
   <VictoryCandlestick
-    labels={({ datum }) => datum.close}
+    labels={({ datum }) => datum.x}
+    openLabels={({ datum }) =>
+      `->${datum.open}`
+    }
     data={[
       {
         x: "3/1/23",
@@ -203,7 +206,7 @@ The labels prop can also accept a function to customize the candlestick label. W
       },
       {
         x: "3/5/23",
-        open: 10,
+        open: 15,
         close: 8,
         high: 15,
         low: 5,
@@ -211,6 +214,58 @@ The labels prop can also accept a function to customize the candlestick label. W
     ]}
   />
 </VictoryChart>
+```
+
+## Candlestick - Label Orientation
+
+The `labelOrientation` prop can be used to control the orientation of the labels.
+
+```jsx live
+<VictoryCandlestick
+  theme={VictoryTheme.clean}
+  labels
+  labelOrientation={{
+    low: "bottom",
+    high: "top",
+  }}
+  data={[
+    {
+      x: "3/1/23",
+      open: 5,
+      close: 10,
+      high: 15,
+      low: 0,
+    },
+    {
+      x: "3/2/23",
+      open: 10,
+      close: 15,
+      high: 20,
+      low: 5,
+    },
+    {
+      x: "3/3/23",
+      open: 15,
+      close: 20,
+      high: 22,
+      low: 10,
+    },
+    {
+      x: "3/4/23",
+      open: 20,
+      close: 10,
+      high: 25,
+      low: 7,
+    },
+    {
+      x: "3/5/23",
+      open: 10,
+      close: 8,
+      high: 15,
+      low: 5,
+    },
+  ]}
+/>
 ```
 
 ## Candlestick - Time Scales
@@ -269,6 +324,56 @@ Candlestick charts can leverage d3-scale to handle time scales. The `x` prop can
     ]}
   />
 </VictoryChart>
+```
+
+## Candlestick - Animation
+
+Candlestick charts can be animated with the `animate` prop.
+
+```jsx live noInline
+function App() {
+  const [data, setData] =
+    React.useState(getData());
+
+  React.useState(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setData(getData());
+      }, 4000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryChart
+      domainPadding={{ x: 25 }}
+      theme={VictoryTheme.clean}
+    >
+      <VictoryCandlestick
+        animate={{ duration: 1000 }}
+        data={data}
+      />
+    </VictoryChart>
+  );
+}
+
+function getData() {
+  return _.range(5).map((i) => {
+    return {
+      x: `3/${i + 1}/23`,
+      open: _.random(5, 10),
+      close: _.random(10, 20),
+      high: _.random(20, 25),
+      low: _.random(1, 5),
+    };
+  });
+}
+
+render(<App />);
 ```
 
 ## Candlestick - Styles

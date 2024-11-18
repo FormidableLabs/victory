@@ -76,6 +76,39 @@ Bar charts can be rendered horizontally by setting the `horizontal` prop to `tru
 </VictoryChart>
 ```
 
+## Bar Charts - Labels
+
+Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-area#labelcomponent) prop.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labels={({ datum }) => datum.y}
+  />
+</VictoryChart>
+```
+
+## Bar Charts - Tooltips
+
+Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
+
+```jsx live
+<VictoryChart
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={sampleData}
+    labelComponent={<VictoryTooltip />}
+    labels={({ datum }) => datum.y}
+  />
+</VictoryChart>
+```
+
 ## Bar Charts - Grouped
 
 Bar charts can be grouped to show how different subcategories compare to each other.
@@ -124,37 +157,61 @@ function App() {
 render(<App />);
 ```
 
-## Bar Charts - Labels
+## Bar Charts - Grouped Labels
 
-Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-area#labelcomponent) prop.
+Bar chart labels for grouped bars can be rendered by setting the `labels` prop to the name of a property in the dataset, an array, or a function that returns the label value.
 
-```jsx live
-<VictoryChart
-  domainPadding={{ x: 20 }}
-  theme={VictoryTheme.clean}
->
-  <VictoryBar
-    data={sampleData}
-    labels={({ datum }) => datum.y}
-  />
-</VictoryChart>
-```
+```jsx live noInline
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+      domain={{ y: [0.5, 5.5] }}
+      domainPadding={{ x: 40 }}
+    >
+      <VictoryGroup
+        offset={20}
+        style={{ data: { width: 15 } }}
+      >
+        <VictoryBar
+          data={[
+            { x: "2023 Q1", y: 1 },
+            { x: "2023 Q2", y: 2 },
+            { x: "2023 Q3", y: 3 },
+            { x: "2023 Q4", y: 2 },
+          ]}
+          labels={({ datum }) =>
+            datum.y
+          }
+        />
+        <VictoryBar
+          data={[
+            { x: "2023 Q1", y: 2 },
+            { x: "2023 Q2", y: 3 },
+            { x: "2023 Q3", y: 4 },
+            { x: "2023 Q4", y: 5 },
+          ]}
+          labels={({ datum }) =>
+            datum.y
+          }
+        />
+        <VictoryBar
+          data={[
+            { x: "2023 Q1", y: 1 },
+            { x: "2023 Q2", y: 2 },
+            { x: "2023 Q3", y: 3 },
+            { x: "2023 Q4", y: 4 },
+          ]}
+          labels={({ datum }) =>
+            datum.y
+          }
+        />
+      </VictoryGroup>
+    </VictoryChart>
+  );
+}
 
-## Bar Charts - Tooltips
-
-Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
-
-```jsx live
-<VictoryChart
-  domainPadding={{ x: 20 }}
-  theme={VictoryTheme.clean}
->
-  <VictoryBar
-    data={sampleData}
-    labelComponent={<VictoryTooltip />}
-    labels={({ datum }) => datum.y}
-  />
-</VictoryChart>
+render(<App />);
 ```
 
 ## Bar Charts - Combination
@@ -196,11 +253,13 @@ function App() {
 
   return (
     <VictoryChart
-      animate={{ duration: 1000 }}
       theme={VictoryTheme.clean}
       domainPadding={{ x: 20 }}
     >
-      <VictoryBar data={data} />
+      <VictoryBar
+        animate={{ duration: 1000 }}
+        data={data}
+      />
     </VictoryChart>
   );
 }
@@ -218,6 +277,39 @@ function getData() {
 }
 
 render(<App />);
+```
+
+## Bar Charts - Zoom & Pan
+
+Bar charts support zoom and pan behavior by using the `VictoryZoomContainer` component. See the [Brush & Zoom](/docs/guides/brush-and-zoom) guide for more information.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 10] }}
+  theme={VictoryTheme.clean}
+  containerComponent={
+    <VictoryZoomContainer
+      zoomDimension="x"
+      zoomDomain={{ x: [0, 5] }}
+      minimumZoom={{ x: 1 }}
+    />
+  }
+>
+  <VictoryBar
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+      { x: 6, y: 6 },
+      { x: 7, y: 8 },
+      { x: 8, y: 9 },
+      { x: 9, y: 10 },
+      { x: 10, y: 12 },
+    ]}
+  />
+</VictoryChart>
 ```
 
 ## Bar Charts - Styles

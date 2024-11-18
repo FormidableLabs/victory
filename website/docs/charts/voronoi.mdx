@@ -121,6 +121,59 @@ function App() {
 render(<App />);
 ```
 
+## Voronoi - Animation
+
+Charts can be animated by setting the `animate` prop. See the [animations](/docs/guides/animations) guide for more information.
+
+```jsx live noInline
+function App() {
+  const [data, setData] =
+    React.useState(getData());
+
+  React.useState(() => {
+    const setStateInterval =
+      window.setInterval(() => {
+        setData(getData());
+      }, 4000);
+
+    return () => {
+      window.clearInterval(
+        setStateInterval,
+      );
+    };
+  }, []);
+
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+    >
+      <VictoryVoronoi
+        theme={VictoryTheme.clean}
+        animate={{ duration: 1000 }}
+        data={data}
+      />
+      <VictoryScatter
+        theme={VictoryTheme.clean}
+        animate={{ duration: 1000 }}
+        data={data}
+      />
+    </VictoryChart>
+  );
+}
+
+function getData() {
+  return _.range(20).map((i: number) => {
+    return {
+      x: _.random(600),
+      y: _.random(600),
+      i,
+    };
+  });
+}
+
+render(<App />);
+```
+
 ## Voronoi - Styles
 
 Chart styling can be customized by using the theme or overriding the style prop on the component.
@@ -160,7 +213,6 @@ Events can be handled by passing an array of event objects to the `events` prop 
   theme={VictoryTheme.clean}
 >
   <VictoryVoronoi
-    
     events={[
       {
         target: "data",
