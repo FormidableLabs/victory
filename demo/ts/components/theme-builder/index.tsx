@@ -154,26 +154,7 @@ const ThemeBuilder = () => {
             <h2 className="text-xl font-bold mb-4">Example Charts</h2>
             <div className="grid grid-cols-2 gap-10">
               <div>
-                <h3 className="text-base font-bold mb-3">Bar Chart</h3>
-                <VictoryChart
-                  theme={customThemeConfig}
-                  domainPadding={20}
-                  style={chartStyle}
-                >
-                  <VictoryAxis label="X Axis" />
-                  <VictoryAxis dependentAxis label="Y Axis" />
-                  <VictoryStack
-                    colorScale={activeColorScale}
-                    aria-label="Victory Stack Demo"
-                  >
-                    {[...Array(5)].map((_, i) => (
-                      <VictoryBar data={sampleStackData} key={i} />
-                    ))}
-                  </VictoryStack>
-                </VictoryChart>
-              </div>
-              <div>
-                <h3 className="text-base font-bold mb-3">Area Chart</h3>
+                <h3 className="text-base font-bold mb-3">Stacked Area Chart</h3>
                 <VictoryChart
                   theme={customThemeConfig}
                   domainPadding={20}
@@ -187,6 +168,25 @@ const ThemeBuilder = () => {
                   >
                     {[...Array(5)].map((_, i) => (
                       <VictoryArea data={sampleStackData} key={i} />
+                    ))}
+                  </VictoryStack>
+                </VictoryChart>
+              </div>
+              <div>
+                <h3 className="text-base font-bold mb-3">Stacked Bar Chart</h3>
+                <VictoryChart
+                  theme={customThemeConfig}
+                  domainPadding={20}
+                  style={chartStyle}
+                >
+                  <VictoryAxis label="X Axis" />
+                  <VictoryAxis dependentAxis label="Y Axis" />
+                  <VictoryStack
+                    colorScale={activeColorScale}
+                    aria-label="Victory Stack Demo"
+                  >
+                    {[...Array(5)].map((_, i) => (
+                      <VictoryBar data={sampleStackData} key={i} />
                     ))}
                   </VictoryStack>
                 </VictoryChart>

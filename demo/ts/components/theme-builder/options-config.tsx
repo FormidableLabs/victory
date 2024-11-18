@@ -5,8 +5,36 @@ import { VictoryBar } from "victory-bar";
 import { VictoryCandlestick } from "victory-candlestick";
 import { VictoryErrorBar } from "victory-errorbar";
 import { VictoryHistogram } from "victory-histogram";
+import { VictoryLegend } from "victory-legend";
 
-const getBaseLabelsConfig = (basePath: string) => [
+type ThemeBuilderFieldConfig =
+  | {
+      type: "section" | "colorScale";
+      label: string;
+      fields?: ThemeBuilderFieldConfig[];
+    }
+  | {
+      type: "slider" | "select" | "colorPicker";
+      label: string;
+      path: string;
+      min?: number;
+      max?: number;
+      step?: number;
+      unit?: string;
+      default: number | string;
+      options?: { label: string; value: string }[];
+    };
+
+type ThemeBuilderOptionsConfig = {
+  type: "section";
+  title: string;
+  content?: (props: any) => React.ReactNode;
+  fields: ThemeBuilderFieldConfig[];
+}[];
+
+const getBaseLabelsConfig: (basePath: string) => ThemeBuilderFieldConfig[] = (
+  basePath: string,
+) => [
   {
     type: "slider",
     label: "Font Size",
@@ -30,7 +58,7 @@ const getBaseLabelsConfig = (basePath: string) => [
   },
 ];
 
-const optionsConfig = [
+const optionsConfig: ThemeBuilderOptionsConfig = [
   {
     type: "section",
     title: "Palette",
@@ -390,6 +418,150 @@ const optionsConfig = [
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig("histogram.style.labels"),
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Legend",
+    content: (props) => [
+      <VictoryLegend
+        {...props}
+        key="legend"
+        x={125}
+        y={20}
+        title="Pets"
+        data={[
+          {
+            name: "Dogs",
+            symbol: { fill: "tomato" },
+          },
+          {
+            name: "Cats",
+            symbol: { fill: "orange" },
+          },
+          {
+            name: "Rabbits",
+            symbol: { fill: "gold" },
+          },
+        ]}
+      />,
+      <VictoryBar
+        key="legend-chart"
+        data={[
+          {
+            x: "Dogs",
+            y: 6,
+            fill: "tomato",
+          },
+          {
+            x: "Cats",
+            y: 4,
+            fill: "orange",
+          },
+          {
+            x: "Rabbits",
+            y: 2,
+            fill: "gold",
+          },
+        ]}
+        style={{
+          data: {
+            fill: ({ datum }) => datum.fill,
+          },
+        }}
+      />,
+    ],
+    fields: [
+      {
+        type: "section",
+        label: "General",
+        fields: [
+          {
+            type: "slider",
+            label: "Gutter",
+            min: 0,
+            max: 50,
+            unit: "px",
+            path: "legend.gutter",
+          },
+          {
+            type: "slider",
+            label: "Border Padding",
+            min: 0,
+            max: 50,
+            unit: "px",
+            path: "legend.borderPadding",
+          },
+          {
+            type: "select",
+            label: "Orientation",
+            options: [
+              { label: "Horizontal", value: "horizontal" },
+              { label: "Vertical", value: "vertical" },
+            ],
+            path: "legend.orientation",
+          },
+          {
+            type: "select",
+            label: "Title Orientation",
+            options: [
+              { label: "Top", value: "top" },
+              { label: "Bottom", value: "bottom" },
+              { label: "Left", value: "left" },
+              { label: "Right", value: "right" },
+            ],
+            path: "legend.titleOrientation",
+          },
+          {
+            type: "select",
+            label: "Data Type",
+            options: [
+              { label: "Circle", value: "circle" },
+              { label: "Square", value: "square" },
+              { label: "Diamond", value: "diamond" },
+              { label: "Star", value: "star" },
+            ],
+            path: "legend.style.data.type",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("legend.style.labels"),
+      },
+      {
+        type: "section",
+        label: "Title",
+        fields: getBaseLabelsConfig("legend.style.title"),
+      },
+      {
+        type: "section",
+        label: "Border",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            path: "legend.style.border.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            path: "legend.style.border.strokeWidth",
+          },
+          {
+            type: "slider",
+            label: "Padding",
+            min: 0,
+            max: 50,
+            unit: "px",
+            path: "legend.style.border.padding",
+          },
+        ],
       },
     ],
   },
