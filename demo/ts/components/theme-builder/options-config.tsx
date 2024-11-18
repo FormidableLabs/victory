@@ -6,6 +6,7 @@ import { VictoryCandlestick } from "victory-candlestick";
 import { VictoryErrorBar } from "victory-errorbar";
 import { VictoryHistogram } from "victory-histogram";
 import { VictoryLegend } from "victory-legend";
+import { VictoryLine } from "victory-line";
 
 type ThemeBuilderFieldConfig =
   | {
@@ -581,6 +582,77 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             default: 2,
           },
         ],
+      },
+    ],
+  },
+  // line
+  {
+    type: "section",
+    title: "Line Chart",
+    content: (props) => [
+      <VictoryAxis key="x-axis" label="X Axis" />,
+      <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
+      <VictoryLine
+        key="line-chart"
+        {...props}
+        data={[
+          { x: 1, y: 2 },
+          { x: 2, y: 3 },
+          { x: 3, y: 5 },
+          { x: 4, y: 4 },
+          { x: 5, y: 7 },
+        ]}
+        labels={({ datum }) => datum.y}
+      />,
+    ],
+    fields: [
+      {
+        type: "section",
+        label: "Data",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "line.style.data.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 2,
+            path: "line.style.data.strokeWidth",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Cap",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Square", value: "square" },
+              { label: "Butt", value: "butt" },
+            ],
+            default: "round",
+            path: "line.style.data.strokeLinecap",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Join",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Bevel", value: "bevel" },
+              { label: "Miter", value: "miter" },
+            ],
+            default: "round",
+            path: "line.style.data.strokeLinejoin",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("line.style.labels"),
       },
     ],
   },

@@ -85,6 +85,11 @@ const ThemeBuilder = () => {
 
   const handleThemeSelect = (themeName: string) => {
     const theme = themes.find((t) => t.name === themeName);
+    if (!theme) {
+      setBaseTheme(undefined);
+      setCustomThemeConfig(undefined);
+      return;
+    }
     setBaseTheme(theme);
     setCustomThemeConfig({ ...theme?.config });
   };
