@@ -550,6 +550,21 @@ export default class VictoryZoomContainerDemo extends React.Component<
           <VictoryAxis />
           <VictoryAxis dependentAxis />
         </VictoryChart>
+
+        <VictoryChart
+          containerComponent={<VictoryZoomContainer />}
+          style={{ parent: parentStyle }}
+        >
+          <VictoryBar />
+        </VictoryChart>
+
+        <VictoryChart
+          containerComponent={<VictoryZoomContainer />}
+          style={{ parent: parentStyle }}
+          horizontal
+        >
+          <VictoryBar />
+        </VictoryChart>
       </div>
     );
   }

@@ -13,6 +13,7 @@ import {
   EventPropTypeInterface,
   NumberOrCallback,
   StringOrNumberOrCallback,
+  VictoryClipContainer,
   VictoryCommonProps,
   VictoryDatableProps,
   VictoryMultiLabelableProps,
@@ -127,7 +128,9 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
     "groupComponent",
     "containerComponent",
   ];
-
+  // passed to addEvents.renderData to prevent data props with undefined _x or _y from excluding data from render.
+  // used when inside of VictoryZoomContainer
+  static shouldRenderDatum = () => true;
   // Overridden in native versions
   shouldAnimate() {
     return !!this.props.animate;
@@ -141,7 +144,15 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
       return this.animateComponent(props, animationWhitelist);
     }
 
-    const children = this.renderData(props);
+    let children;
+    // when inside a zoom container (the only place VictoryClipContainer is used), all data
+    // should be renderable so bars won't dissappear before they've fully exited the container's bounds
+    // see https://github.com/FormidableLabs/victory/pull/2970
+    if (props.groupComponent.type === VictoryClipContainer) {
+      children = this.renderData(props, VictoryBarBase.shouldRenderDatum);
+    } else {
+      children = this.renderData(props);
+    }
 
     const component = props.standalone
       ? this.renderContainer(props.containerComponent, children)

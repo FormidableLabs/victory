@@ -5,6 +5,7 @@ import {
   Helpers,
   LabelHelpers,
   Scale,
+  VictoryClipContainer,
 } from "victory-core";
 
 export const getBarPosition = (props, datum) => {
@@ -60,6 +61,12 @@ const getCalculatedValues = (props) => {
 
   let data = Data.getData(props);
   data = Data.formatDataFromDomain(data, domain, 0);
+
+  // when inside a zoom container, reset the _x and _y properties of each datum to the original
+  // x and y property values so they will not be clipped. See https://github.com/FormidableLabs/victory/pull/2970
+  if (props.groupComponent.type === VictoryClipContainer) {
+    data = data.map((datum) => ({ ...datum, _x: datum.x, _y: datum.y }));
+  }
 
   return { style, data, scale, domain, origin };
 };
