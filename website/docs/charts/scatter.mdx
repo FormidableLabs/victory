@@ -49,6 +49,36 @@ Add labels to charts by setting the `labels` prop to the name of a property in t
 </VictoryChart>
 ```
 
+#### Custom Labels
+
+Custom labels can be rendered by using the `labelComponent` prop. See the [VictoryLabel](/docs/api/victory-label) API for more information.
+
+```jsx live
+<VictoryChart
+  domain={{ x: [0, 5], y: [0, 7] }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    size={7}
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    labels={({ datum }) => datum.y}
+    labelComponent={
+      <VictoryLabel
+        angle={15}
+        lineHeight={1.2}
+        style={{ fontSize: 20, fill: "#2d7ff9" }}
+      />
+    }
+  />
+</VictoryChart>
+```
+
 ## Scatter Charts - Tooltips
 
 Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
