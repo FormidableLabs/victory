@@ -27,7 +27,7 @@ const ControlComponent = ({
     updateThemeConfig(field.path, newValue);
   };
 
-  const configValue = getConfigValue(themeConfig, field.path);
+  const configValue = getConfigValue(themeConfig, field.path, field.default);
   switch (type) {
     case "colorScale":
       return (

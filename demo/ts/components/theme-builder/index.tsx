@@ -16,6 +16,7 @@ import ConfigPreview from "./config-preview";
 import Button from "./button";
 import ConfigMapper from "./config-mapper";
 import { setNestedConfigValue } from "./utils";
+import optionsConfig from "./options-config";
 
 export type ThemeOption = {
   name: string;
@@ -190,21 +191,21 @@ const ThemeBuilder = () => {
                   </VictoryStack>
                 </VictoryChart>
               </div>
-              <div>
-                <h3 className="text-base font-bold mb-3">Area Chart</h3>
-                <VictoryChart
-                  theme={customThemeConfig}
-                  domainPadding={20}
-                  style={chartStyle}
-                >
-                  <VictoryAxis label="X Axis" />
-                  <VictoryAxis dependentAxis label="Y Axis" />
-                  <VictoryArea
-                    data={sampleStackData}
-                    labels={({ datum }) => datum.y}
-                  />
-                </VictoryChart>
-              </div>
+              {optionsConfig.map(
+                ({ title, content: Content }, i) =>
+                  Content && (
+                    <div key={i}>
+                      <h3 className="text-base font-bold mb-3">{title}</h3>
+                      <VictoryChart
+                        theme={customThemeConfig}
+                        domainPadding={20}
+                        style={chartStyle}
+                      >
+                        {Content({ labels: ({ datum }) => datum.y })}
+                      </VictoryChart>
+                    </div>
+                  ),
+              )}
             </div>
           </div>
         )}

@@ -10,7 +10,7 @@ type SelectProps = {
   id: string;
   label?: string;
   options: SelectOption[];
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
   className?: string;
 };
@@ -19,7 +19,7 @@ const Select = ({
   id,
   label,
   options,
-  value,
+  value = "",
   onChange,
   className,
 }: SelectProps) => {
