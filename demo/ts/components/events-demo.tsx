@@ -1,10 +1,10 @@
 import React from "react";
-import { VictoryChart } from "victory-chart";
-import { VictoryStack } from "victory-stack";
-import { VictoryArea } from "victory-area";
-import { VictoryBar, VictoryBarTTargetType } from "victory-bar";
-import { VictoryLine } from "victory-line";
-import { VictoryTheme, VictoryLabel, VictoryThemePalette } from "victory-core";
+import { VictoryChart } from "victory";
+import { VictoryStack } from "victory";
+import { VictoryArea } from "victory";
+import { VictoryBar, VictoryBarTTargetType } from "victory";
+import { VictoryLine } from "victory";
+import { VictoryTheme, VictoryLabel, VictoryThemePalette } from "victory";
 
 class EventsDemo extends React.Component {
   render() {

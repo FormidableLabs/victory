@@ -1,6 +1,6 @@
 import React from "react";
-import { VictoryLabel, VictoryTheme } from "victory-core";
-import { VictoryScatter, VictoryScatterProps } from "victory-scatter";
+import { VictoryLabel, VictoryTheme } from "victory";
+import { VictoryScatter, VictoryScatterProps } from "victory";
 
 const containerStyle: React.CSSProperties = {
   display: "flex",

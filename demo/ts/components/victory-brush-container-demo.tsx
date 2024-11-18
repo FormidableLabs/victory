@@ -1,15 +1,15 @@
 import React from "react";
-import { VictoryChart } from "victory-chart";
-import { VictoryStack } from "victory-stack";
-import { VictoryGroup } from "victory-group";
-import { VictoryAxis } from "victory-axis";
-import { VictoryBar } from "victory-bar";
-import { VictoryLine } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryLegend } from "victory-legend";
-import { VictoryZoomContainer } from "victory-zoom-container";
-import { VictoryBrushContainer } from "victory-brush-container";
-import { DomainTuple, VictoryTheme } from "victory-core";
+import { VictoryChart } from "victory";
+import { VictoryStack } from "victory";
+import { VictoryGroup } from "victory";
+import { VictoryAxis } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryLine } from "victory";
+import { VictoryScatter } from "victory";
+import { VictoryLegend } from "victory";
+import { VictoryZoomContainer } from "victory";
+import { VictoryBrushContainer } from "victory";
+import { DomainTuple, VictoryTheme } from "victory";
 
 const themeColors = VictoryTheme.clean.palette?.colors || {};
 

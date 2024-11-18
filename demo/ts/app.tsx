@@ -1,45 +1,22 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
 import AccessibilityDemo from "./components/accessibility-demo";
-import AnimationDemo from "./components/animation-demo";
-import AreaDemo from "./components/victory-area-demo";
-import AxisDemo from "./components/victory-axis-demo";
-import BarDemo from "./components/victory-bar-demo";
-import BoxPlotDemo from "./components/victory-box-plot-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import BrushLineDemo from "./components/victory-brush-line-demo";
-import CandlestickDemo from "./components/victory-candlestick-demo";
-import CanvasDemo from "./components/canvas-demo";
-import ChartDemo from "./components/victory-chart-demo";
 import CreateContainerDemo from "./components/create-container-demo";
 import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import DraggableDemo from "./components/draggable-demo";
-import ErrorBarDemo from "./components/victory-errorbar-demo";
 import EventsDemo from "./components/events-demo";
 import ExternalEventsDemo from "./components/external-events-demo";
-import GroupDemo from "./components/group-demo";
-import HistogramDemo from "./components/victory-histogram-demo";
-import HorizontalDemo from "./components/horizontal-demo";
-import ImmutableDemo from "./components/immutable-demo";
 import LabelDemo from "./components/victory-label-demo";
 import LegendDemo from "./components/victory-legend-demo";
-import LineDemo from "./components/victory-line-demo";
-import PieDemo from "./components/victory-pie-demo";
 import PolarAxisDemo from "./components/victory-polar-axis-demo";
-import PrimitivesDemo from "./components/primitives-demo";
-import ScatterDemo from "./components/victory-scatter-demo";
 import SelectionDemo from "./components/selection-demo";
-import StackDemo from "./components/victory-stack-demo";
 import StackedThemeDemos from "./components/stacked-theme-demo";
-import TooltipDemo from "./components/victory-tooltip-demo";
-import VictoryDemo from "./components/victory-demo";
 import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
 import VictorySharedEventsDemo from "./components/victory-shared-events-demo";
 import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
-import VoronoiDemo from "./components/victory-voronoi-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
-import OuiaDemo from "./components/ouia-demo";
 import ThemeBuilder from "./components/theme-builder";
 
 const DEMO_ROUTES = {
@@ -47,22 +24,11 @@ const DEMO_ROUTES = {
     component: AccessibilityDemo,
     name: "AccessibilityDemo",
   },
-  "/demo/animation": { component: AnimationDemo, name: "AnimationDemo" },
-  "/demo/area": { component: AreaDemo, name: "AreaDemo" },
-  "/demo/axis": { component: AxisDemo, name: "AxisDemo" },
-  "/demo/bar": { component: BarDemo, name: "BarDemo" },
-  "/demo/box-plot": { component: BoxPlotDemo, name: "BoxPlotDemo" },
   "/demo/brush-container": {
     component: BrushContainerDemo,
     name: "BrushContainerDemo",
   },
   "/demo/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
-  "/demo/group": { component: GroupDemo, name: "GroupDemo" },
-  "/demo/horizontal": { component: HorizontalDemo, name: "HorizontalDemo" },
-  "/demo/histogram": { component: HistogramDemo, name: "HistogramDemo" },
-  "/demo/candlestick": { component: CandlestickDemo, name: "CandlestickDemo" },
-  "/demo/canvas": { component: CanvasDemo, name: "CanvasDemo" },
-  "/demo/chart": { component: ChartDemo, name: "ChartDemo" },
   "/demo/create-container": {
     component: CreateContainerDemo,
     name: "CreateContainerDemo",
@@ -72,28 +38,19 @@ const DEMO_ROUTES = {
     name: "CursorContainerDemo",
   },
   "/demo/draggable": { component: DraggableDemo, name: "DraggableDemo" },
-  "/demo/error-bar": { component: ErrorBarDemo, name: "ErrorBarDemo" },
   "/demo/events": { component: EventsDemo, name: "EventsDemo" },
   "/demo/external-events": {
     component: ExternalEventsDemo,
     name: "ExternalEventsDemo",
   },
-  "/demo/immutable": { component: ImmutableDemo, name: "ImmutableDemo" },
   "/demo/label": { component: LabelDemo, name: "LabelDemo" },
   "/demo/legend": { component: LegendDemo, name: "LegendDemo" },
-  "/demo/line": { component: LineDemo, name: "LineDemo" },
-  "/demo/pie": { component: PieDemo, name: "PieDemo" },
   "/demo/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
-  "/demo/primitives": { component: PrimitivesDemo, name: "PrimitivesDemo" },
-  "/demo/scatter": { component: ScatterDemo, name: "ScatterDemo" },
   "/demo/selection": { component: SelectionDemo, name: "SelectionDemo" },
-  "/demo/stack": { component: StackDemo, name: "StackDemo" },
   "/demo/stacked-theme": {
     component: StackedThemeDemos,
     name: "StackedThemeDemos",
   },
-  "/demo/tooltip": { component: TooltipDemo, name: "TooltipDemo" },
-  "/demo/victory": { component: VictoryDemo, name: "VictoryDemo" },
   "/demo/victory-selection-container": {
     component: VictorySelectionContainerDemo,
     name: "VictorySelectionContainerDemo",
@@ -102,7 +59,6 @@ const DEMO_ROUTES = {
     component: VictorySharedEventsDemo,
     name: "VictorySharedEventsDemo",
   },
-  "/demo/voronoi": { component: VoronoiDemo, name: "VoronoiDemo" },
   "/demo/voronoi-container": {
     component: VoronoiContainerDemo,
     name: "VoronoiContainerDemo",
@@ -111,7 +67,6 @@ const DEMO_ROUTES = {
     component: ZoomContainerDemo,
     name: "ZoomContainerDemo",
   },
-  "/demo/ouia": { component: OuiaDemo, name: "OuiaDemo" },
 };
 
 class Home extends React.Component {
@@ -199,7 +154,7 @@ const activeListItemStyle: React.CSSProperties = {
   backgroundColor: "#eee",
 };
 
-class App extends React.Component<any, AppState> {
+export class App extends React.Component<any, AppState> {
   constructor(props: any) {
     super(props);
 
@@ -288,6 +243,3 @@ class App extends React.Component<any, AppState> {
     );
   }
 }
-
-// eslint-disable-next-line react/no-deprecated
-ReactDOM.render(<App />, document.getElementById("content"));

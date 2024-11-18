@@ -1,12 +1,12 @@
 import React from "react";
-import { VictoryChart } from "victory-chart";
-import { VictoryAxis } from "victory-axis";
-import { VictoryBar } from "victory-bar";
-import { VictoryBrushLine } from "victory-brush-line";
-import { VictoryLine } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryLabel, VictoryTheme } from "victory-core";
-import { DomainPropType, EventCallbackInterface } from "victory-core";
+import { VictoryChart } from "victory";
+import { VictoryAxis } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryBrushLine } from "victory";
+import { VictoryLine } from "victory";
+import { VictoryScatter } from "victory";
+import { VictoryLabel, VictoryTheme } from "victory";
+import { DomainPropType, EventCallbackInterface } from "victory";
 import _ from "lodash";
 
 type DataType = {

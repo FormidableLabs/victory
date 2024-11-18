@@ -1,13 +1,13 @@
 import React from "react";
-import { VictoryChart } from "victory-chart";
-import { VictoryStack } from "victory-stack";
-import { VictoryArea } from "victory-area";
-import { VictoryBar } from "victory-bar";
-import { VictoryLine } from "victory-line";
-import { VictoryZoomContainer } from "victory-zoom-container";
-import { VictoryVoronoiContainer } from "victory-voronoi-container";
+import { VictoryChart } from "victory";
+import { VictoryStack } from "victory";
+import { VictoryArea } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryLine } from "victory";
+import { VictoryZoomContainer } from "victory";
+import { VictoryVoronoiContainer } from "victory";
 import range from "lodash/range";
-import { VictoryTheme, VictoryThemePalette } from "victory-core";
+import { VictoryTheme, VictoryThemePalette } from "victory";
 
 const themeColors: VictoryThemePalette =
   VictoryTheme.clean.palette?.colors || {};

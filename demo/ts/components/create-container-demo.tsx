@@ -1,15 +1,15 @@
 import React from "react";
 import round from "lodash/round";
-import { VictoryChart } from "victory-chart";
-import { VictoryStack } from "victory-stack";
-import { VictoryGroup } from "victory-group";
-import { ContainerType, createContainer } from "victory-create-container";
-import { VictoryBar } from "victory-bar";
-import { VictoryLine } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryLegend } from "victory-legend";
-import { VictoryTheme } from "victory-core";
+import { VictoryChart } from "victory";
+import { VictoryStack } from "victory";
+import { VictoryGroup } from "victory";
+import { ContainerType, createContainer } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryLine } from "victory";
+import { VictoryScatter } from "victory";
+import { VictoryTooltip } from "victory";
+import { VictoryLegend } from "victory";
+import { VictoryTheme } from "victory";
 
 const themeColors = VictoryTheme.clean.palette?.colors || {};
 

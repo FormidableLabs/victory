@@ -1,14 +1,14 @@
 import React from "react";
-import { VictoryArea } from "victory-area";
-import { VictoryBar } from "victory-bar";
-import { VictoryChart } from "victory-chart";
-import { VictoryStack } from "victory-stack";
+import { VictoryArea } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryChart } from "victory";
+import { VictoryStack } from "victory";
 import {
   ColorScalePropType,
   VictoryTheme,
   VictoryThemeDefinition,
-} from "victory-core";
-import { VictoryAxis } from "victory-axis";
+} from "victory";
+import { VictoryAxis } from "victory";
 
 const data = [
   {

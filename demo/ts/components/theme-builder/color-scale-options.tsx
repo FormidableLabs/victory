@@ -1,5 +1,5 @@
 import React from "react";
-import { ColorScalePropType, VictoryThemeDefinition } from "victory-core";
+import { ColorScalePropType, VictoryThemeDefinition } from "victory";
 import Select from "./select";
 import ColorPicker from "./color-picker";
 

@@ -1,23 +1,23 @@
 import React from "react";
 import { range, random, minBy, maxBy, last } from "lodash";
-import { VictoryChart } from "victory-chart";
-import { VictoryStack } from "victory-stack";
-import { VictoryGroup } from "victory-group";
-import { VictoryAxis } from "victory-axis";
-import { VictoryArea } from "victory-area";
-import { VictoryBar } from "victory-bar";
-import { VictoryLine } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryZoomContainer } from "victory-zoom-container";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryLegend } from "victory-legend";
+import { VictoryChart } from "victory";
+import { VictoryStack } from "victory";
+import { VictoryGroup } from "victory";
+import { VictoryAxis } from "victory";
+import { VictoryArea } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryLine } from "victory";
+import { VictoryScatter } from "victory";
+import { VictoryZoomContainer } from "victory";
+import { VictoryTooltip } from "victory";
+import { VictoryLegend } from "victory";
 import {
   CoordinatesPropType,
   DomainTuple,
   VictoryClipContainer,
   VictoryPortal,
   VictoryTheme,
-} from "victory-core";
+} from "victory";
 
 const allData = range(0, 10, 0.001).map((x) => ({
   x,

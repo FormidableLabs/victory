@@ -1,7 +1,7 @@
 import React from "react";
-import { VictoryBar } from "victory-bar";
-import { VictoryTheme } from "victory-core";
-import { VictorySharedEvents } from "victory-shared-events";
+import { VictoryBar } from "victory";
+import { VictoryTheme } from "victory";
+import { VictorySharedEvents } from "victory";
 
 const themeColors = VictoryTheme.clean.palette?.colors || {};
 export default class VictorySharedEventsDemo extends React.Component<any, {}> {

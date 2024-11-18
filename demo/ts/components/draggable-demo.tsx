@@ -1,18 +1,18 @@
 import React from "react";
-import { VictoryChart } from "victory-chart";
-import { VictoryAxis } from "victory-axis";
-import { VictoryBar } from "victory-bar";
-import { VictoryBrushLine } from "victory-brush-line";
-import { VictoryScatter } from "victory-scatter";
+import { VictoryChart } from "victory";
+import { VictoryAxis } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryBrushLine } from "victory";
+import { VictoryScatter } from "victory";
 import {
   DomainTuple,
   VictoryClipContainer,
   Point,
   Selection,
   VictoryTheme,
-} from "victory-core";
-import { VictoryZoomContainer } from "victory-zoom-container";
-import { VictoryBrushContainer } from "victory-brush-container";
+} from "victory";
+import { VictoryZoomContainer } from "victory";
+import { VictoryBrushContainer } from "victory";
 
 type BarDataType = {
   name: string;

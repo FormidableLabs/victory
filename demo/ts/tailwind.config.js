@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./demo/ts/components/theme-builder/**/*.{ts,tsx}"],
+  content: ["./components/theme-builder/**/*.{ts,tsx}"],
   theme: {
     colors: {
       currentColor: "currentColor",

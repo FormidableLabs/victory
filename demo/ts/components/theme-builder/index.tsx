@@ -5,12 +5,12 @@ import {
   ColorScalePropType,
   VictoryTheme,
   VictoryThemeDefinition,
-} from "victory-core";
-import { VictoryChart } from "victory-chart";
-import { VictoryAxis } from "victory-axis";
-import { VictoryStack } from "victory-stack";
-import { VictoryBar } from "victory-bar";
-import { VictoryArea } from "victory-area";
+} from "victory";
+import { VictoryChart } from "victory";
+import { VictoryAxis } from "victory";
+import { VictoryStack } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryArea } from "victory";
 import Select from "./select";
 import ConfigPreview from "./config-preview";
 import Button from "./button";

@@ -1,19 +1,19 @@
 /* eslint no-magic-numbers:0*/
 import React from "react";
-import { VictoryChart } from "victory-chart";
-import { VictoryPolarAxis } from "victory-polar-axis";
-import { VictoryArea } from "victory-area";
-import { VictoryBar } from "victory-bar";
-import { VictoryLine } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryZoomContainer } from "victory-zoom-container";
-import { VictoryVoronoiContainer } from "victory-voronoi-container";
-import { VictorySelectionContainer } from "victory-selection-container";
-import { VictoryGroup } from "victory-group";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryStack } from "victory-stack";
+import { VictoryChart } from "victory";
+import { VictoryPolarAxis } from "victory";
+import { VictoryArea } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryLine } from "victory";
+import { VictoryScatter } from "victory";
+import { VictoryZoomContainer } from "victory";
+import { VictoryVoronoiContainer } from "victory";
+import { VictorySelectionContainer } from "victory";
+import { VictoryGroup } from "victory";
+import { VictoryTooltip } from "victory";
+import { VictoryStack } from "victory";
 import { random, range, keys } from "lodash";
-import { VictoryTheme, VictoryLabel, VictoryThemePalette } from "victory-core";
+import { VictoryTheme, VictoryLabel, VictoryThemePalette } from "victory";
 
 type multiAxisDataListType = {
   strength?: number;

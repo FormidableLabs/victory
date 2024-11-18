@@ -1,17 +1,17 @@
 import React from "react";
 import isNumber from "lodash/isNumber";
-import { VictoryGroup } from "victory-group";
-import { VictoryStack } from "victory-stack";
-import { VictoryChart } from "victory-chart";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryBoxPlot } from "victory-box-plot";
-import { VictoryBar, Bar } from "victory-bar";
-import { VictoryPie, Slice } from "victory-pie";
-import { VictoryArea, Area } from "victory-area";
-import { VictoryLine, Curve } from "victory-line";
-import { VictoryVoronoi, Voronoi } from "victory-voronoi";
-import { ErrorBar, VictoryErrorBar } from "victory-errorbar";
-import { Candle, VictoryCandlestick } from "victory-candlestick";
+import { VictoryGroup } from "victory";
+import { VictoryStack } from "victory";
+import { VictoryChart } from "victory";
+import { VictoryScatter } from "victory";
+import { VictoryBoxPlot } from "victory";
+import { VictoryBar, Bar } from "victory";
+import { VictoryPie, Slice } from "victory";
+import { VictoryArea, Area } from "victory";
+import { VictoryLine, Curve } from "victory";
+import { VictoryVoronoi, Voronoi } from "victory";
+import { ErrorBar, VictoryErrorBar } from "victory";
+import { Candle, VictoryCandlestick } from "victory";
 import {
   LineSegment,
   Whisker,
@@ -20,7 +20,7 @@ import {
   VictoryLabel,
   VictoryAccessibleGroup,
   VictoryTheme,
-} from "victory-core";
+} from "victory";
 import {
   accessibilityBarData,
   accessibilityBoxData,

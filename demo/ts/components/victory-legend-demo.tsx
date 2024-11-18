@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { VictoryLabel, Border, VictoryTheme } from "victory-core";
-import { VictoryLegend } from "victory-legend";
+import { VictoryLabel, Border, VictoryTheme } from "victory";
+import { VictoryLegend } from "victory";
 import { FaMoon, FaSun, FaStar } from "react-icons/fa";
 
 const symbolSize = 5;

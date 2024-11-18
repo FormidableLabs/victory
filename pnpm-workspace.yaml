@@ -2,3 +2,4 @@ packages:
   - 'packages/**'
   - 'website'
   - 'demo/rn'
+  - 'demo/ts'

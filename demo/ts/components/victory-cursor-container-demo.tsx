@@ -1,14 +1,14 @@
 import React from "react";
 import { random, range, round } from "lodash";
-import { VictoryChart } from "victory-chart";
-import { VictoryStack } from "victory-stack";
-import { VictoryGroup } from "victory-group";
-import { VictoryBar } from "victory-bar";
-import { VictoryLine } from "victory-line";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryCursorContainer } from "victory-cursor-container";
-import { VictoryTooltip } from "victory-tooltip";
-import { VictoryTheme, CoordinatesPropType } from "victory-core";
+import { VictoryChart } from "victory";
+import { VictoryStack } from "victory";
+import { VictoryGroup } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryLine } from "victory";
+import { VictoryScatter } from "victory";
+import { VictoryCursorContainer } from "victory";
+import { VictoryTooltip } from "victory";
+import { VictoryTheme, CoordinatesPropType } from "victory";
 
 const themeColors = VictoryTheme.clean.palette?.colors || {};
 

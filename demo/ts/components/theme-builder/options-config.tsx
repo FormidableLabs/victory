@@ -1,9 +1,9 @@
 import React from "react";
-import { VictoryArea } from "victory-area";
-import { VictoryAxis } from "victory-axis";
-import { VictoryBar } from "victory-bar";
-import { VictoryCandlestick } from "victory-candlestick";
-import { VictoryErrorBar } from "victory-errorbar";
+import { VictoryArea } from "victory";
+import { VictoryAxis } from "victory";
+import { VictoryBar } from "victory";
+import { VictoryCandlestick } from "victory";
+import { VictoryErrorBar } from "victory";
 
 const getBaseLabelsConfig = (basePath: string) => [
   {

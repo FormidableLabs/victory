@@ -1,4 +1,4 @@
-import { VictoryThemeDefinition } from "victory-core";
+import { VictoryThemeDefinition } from "victory";
 
 export const setNestedConfigValue = (
   config: VictoryThemeDefinition,
