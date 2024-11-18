@@ -1,6 +1,5 @@
 import React from "react";
 import defaults from "lodash/defaults";
-import isObject from "lodash/isObject";
 import uniqueId from "lodash/uniqueId";
 
 import * as Helpers from "../victory-util/helpers";
@@ -32,7 +31,14 @@ export interface VictoryClipContainerProps {
   translateY?: number;
 }
 
-export class VictoryClipContainer extends React.Component<VictoryClipContainerProps> {
+interface VictoryClipContainerState {
+  clipId?: number | string;
+}
+
+export class VictoryClipContainer extends React.Component<
+  VictoryClipContainerProps,
+  VictoryClipContainerState
+> {
   static displayName = "VictoryClipContainer";
   static role = "container";
 
@@ -46,10 +52,18 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
 
   constructor(props: VictoryClipContainerProps) {
     super(props);
-    this.clipId =
-      !isObject(props) || props.clipId === undefined
-        ? uniqueId("victory-clip-")
-        : props.clipId;
+    this.state = {
+      clipId: props?.clipId,
+    };
+  }
+
+  // The clipId state is used to prevent hydration mismatches between the server and client (issue #2941).
+  // A better alternative would be to utilize React 18's useId hook instead of uniqueId, which would avoid needing state for this purpose.
+  // However, this component currently supports React 16 at the time of writing, so this workaround is necessary.
+  componentDidMount() {
+    if (!this.state.clipId) {
+      this.setState({ clipId: uniqueId("victory-clip-") });
+    }
   }
 
   calculateAttributes(props) {
@@ -204,6 +218,6 @@ export class VictoryClipContainer extends React.Component<VictoryClipContainerPr
       translateX,
       translateY,
     });
-    return this.renderClippedGroup(clipProps, this.clipId);
+    return this.renderClippedGroup(clipProps, this.state.clipId);
   }
 }
