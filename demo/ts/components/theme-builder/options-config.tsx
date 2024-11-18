@@ -32,6 +32,8 @@ type ThemeBuilderOptionsConfig = {
   fields: ThemeBuilderFieldConfig[];
 }[];
 
+const defaultFill = "#000";
+
 const getBaseLabelsConfig: (basePath: string) => ThemeBuilderFieldConfig[] = (
   basePath: string,
 ) => [
@@ -42,6 +44,7 @@ const getBaseLabelsConfig: (basePath: string) => ThemeBuilderFieldConfig[] = (
     max: 24,
     unit: "px",
     path: `${basePath}.fontSize`,
+    default: 12,
   },
   {
     type: "slider",
@@ -50,11 +53,13 @@ const getBaseLabelsConfig: (basePath: string) => ThemeBuilderFieldConfig[] = (
     max: 50,
     unit: "px",
     path: `${basePath}.padding`,
+    default: 8,
   },
   {
     type: "colorPicker",
     label: "Fill",
     path: `${basePath}.fill`,
+    default: defaultFill,
   },
 ];
 
@@ -113,11 +118,13 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 5,
             unit: "px",
             path: "area.style.data.strokeWidth",
+            default: 2,
           },
           {
             type: "colorPicker",
             label: "Fill",
             path: "area.style.data.fill",
+            default: defaultFill,
           },
         ],
       },
@@ -155,6 +162,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Fill",
             path: "bar.style.data.fill",
+            default: defaultFill,
           },
           {
             type: "slider",
@@ -163,6 +171,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 5,
             unit: "px",
             path: "bar.style.data.strokeWidth",
+            default: 0,
           },
           {
             type: "slider",
@@ -244,6 +253,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Stroke Color",
             path: "candlestick.style.data.stroke",
+            default: defaultFill,
           },
           {
             type: "slider",
@@ -252,6 +262,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 5,
             unit: "px",
             path: "candlestick.style.data.strokeWidth",
+            default: 1,
           },
           {
             type: "slider",
@@ -268,6 +279,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 5,
             unit: "px",
             path: "candlestick.wickStrokeWidth",
+            default: 2,
           },
         ],
       },
@@ -284,11 +296,13 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Positive Color",
             path: "candlestick.candleColors.positive",
+            default: "#ffffff",
           },
           {
             type: "colorPicker",
             label: "Negative Color",
             path: "candlestick.candleColors.negative",
+            default: defaultFill,
           },
         ],
       },
@@ -321,11 +335,13 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 10,
             unit: "px",
             path: "errorbar.borderWidth",
+            default: 8,
           },
           {
             type: "colorPicker",
             label: "Stroke Color",
             path: "errorbar.style.data.stroke",
+            default: defaultFill,
           },
           {
             type: "slider",
@@ -334,6 +350,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 5,
             unit: "px",
             path: "errorbar.style.data.strokeWidth",
+            default: 2,
           },
           {
             type: "select",
@@ -344,6 +361,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
               { label: "Butt", value: "butt" },
             ],
             path: "errorbar.style.data.strokeLinecap",
+            default: "round",
           },
         ],
       },
@@ -386,6 +404,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Fill",
             path: "histogram.style.data.fill",
+            default: defaultFill,
           },
           {
             type: "slider",
@@ -411,6 +430,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 10,
             unit: "px",
             path: "histogram.binSpacing",
+            default: 4,
           },
         ],
       },
@@ -484,6 +504,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 50,
             unit: "px",
             path: "legend.gutter",
+            default: 20,
           },
           {
             type: "slider",
@@ -492,6 +513,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 50,
             unit: "px",
             path: "legend.borderPadding",
+            default: 10,
           },
           {
             type: "select",
@@ -501,6 +523,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
               { label: "Vertical", value: "vertical" },
             ],
             path: "legend.orientation",
+            default: "horizontal",
           },
           {
             type: "select",
@@ -512,6 +535,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
               { label: "Right", value: "right" },
             ],
             path: "legend.titleOrientation",
+            default: "top",
           },
           {
             type: "select",
@@ -523,6 +547,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
               { label: "Star", value: "star" },
             ],
             path: "legend.style.data.type",
+            default: "circle",
           },
         ],
       },
@@ -544,6 +569,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Stroke",
             path: "legend.style.border.stroke",
+            default: defaultFill,
           },
           {
             type: "slider",
@@ -552,14 +578,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 5,
             unit: "px",
             path: "legend.style.border.strokeWidth",
-          },
-          {
-            type: "slider",
-            label: "Padding",
-            min: 0,
-            max: 50,
-            unit: "px",
-            path: "legend.style.border.padding",
+            default: 2,
           },
         ],
       },
