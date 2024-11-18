@@ -188,9 +188,6 @@ importers:
       react-dom:
         specifier: ^18.1.0
         version: 18.2.0(react@18.2.0)
-      react-hot-loader:
-        specifier: 4.13.0
-        version: 4.13.0(@types/react@18.0.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-icons:
         specifier: ^5.3.0
         version: 5.3.0(react@18.2.0)
@@ -8701,10 +8698,6 @@ packages:
   json-stringify-safe@5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
 
-  json5@1.0.2:
-    resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
-    hasBin: true
-
   json5@2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
@@ -8842,10 +8835,6 @@ packages:
   loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
     engines: {node: '>=6.11.5'}
-
-  loader-utils@1.4.0:
-    resolution: {integrity: sha512-qH0WSMBtn/oHuwjy/NucEgbx5dbxxnxup9s4PVXJUDHZBQY+s0NWA9rJf53RBnQZxfch7euUui7hpoAPvALZdA==}
-    engines: {node: '>=4.0.0'}
 
   loader-utils@2.0.4:
     resolution: {integrity: sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==}
@@ -10541,17 +10530,6 @@ packages:
     peerDependencies:
       react: ^16.6.0 || ^17.0.0 || ^18.0.0
 
-  react-hot-loader@4.13.0:
-    resolution: {integrity: sha512-JrLlvUPqh6wIkrK2hZDfOyq/Uh/WeVEr8nc7hkn2/3Ul0sx1Kr5y4kOGNacNRoj7RhwLNcQ3Udf1KJXrqc0ZtA==}
-    engines: {node: '>= 6'}
-    peerDependencies:
-      '@types/react': '^15.0.0 || ^16.0.0 || ^17.0.0 '
-      react: '^15.0.0 || ^16.0.0 || ^17.0.0 '
-      react-dom: '^15.0.0 || ^16.0.0 || ^17.0.0 '
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-
   react-icons@5.3.0:
     resolution: {integrity: sha512-DnUk8aFbTyQPSkCfF8dbX6kQjXA9DktMeJqfjrg6cK9vwQVMxmcA3BfP4QoiztVmEHtwlTgLFsPuH2NskKT6eg==}
     peerDependencies:
@@ -10571,9 +10549,6 @@ packages:
     engines: {node: '>=14'}
     peerDependencies:
       react: ^16.13.1 || ^17.0.0 || ^18.0.0
-
-  react-lifecycles-compat@3.0.4:
-    resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
 
   react-live@4.1.7:
     resolution: {integrity: sha512-NTzl0POOAW3dkp7+QL30duOrIu2Vzf2LHdx4TaQ0BqOAtQcSTKEXujfm9jR2VoCHko0oi35PYp38yKQBXz4mrg==}
@@ -23802,10 +23777,6 @@ snapshots:
 
   json-stringify-safe@5.0.1: {}
 
-  json5@1.0.2:
-    dependencies:
-      minimist: 1.2.6
-
   json5@2.2.3: {}
 
   jsonc-parser@3.0.0: {}
@@ -23941,12 +23912,6 @@ snapshots:
       strip-bom: 3.0.0
 
   loader-runner@4.3.0: {}
-
-  loader-utils@1.4.0:
-    dependencies:
-      big.js: 5.2.2
-      emojis-list: 3.0.0
-      json5: 1.0.2
 
   loader-utils@2.0.4:
     dependencies:
@@ -26065,21 +26030,6 @@ snapshots:
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
 
-  react-hot-loader@4.13.0(@types/react@18.0.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
-    dependencies:
-      fast-levenshtein: 2.0.6
-      global: 4.4.0
-      hoist-non-react-statics: 3.3.2
-      loader-utils: 1.4.0
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-lifecycles-compat: 3.0.4
-      shallowequal: 1.1.0
-      source-map: 0.7.4
-    optionalDependencies:
-      '@types/react': 18.0.15
-
   react-icons@5.3.0(react@18.2.0):
     dependencies:
       react: 18.2.0
@@ -26093,8 +26043,6 @@ snapshots:
   react-json-view-lite@1.5.0(react@18.2.0):
     dependencies:
       react: 18.2.0
-
-  react-lifecycles-compat@3.0.4: {}
 
   react-live@4.1.7(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
