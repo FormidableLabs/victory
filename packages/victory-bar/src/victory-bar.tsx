@@ -39,8 +39,8 @@ export type VictoryBarAlignmentType = "start" | "middle" | "end";
 
 export interface VictoryBarProps
   extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictoryMultiLabelableProps {
+  VictoryDatableProps,
+  VictoryMultiLabelableProps {
   alignment?: VictoryBarAlignmentType;
   barRatio?: number;
   barWidth?: NumberOrCallback;
@@ -145,6 +145,9 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
     }
 
     let children;
+    // when inside a zoom container (the only place VictoryClipContainer is used), all data
+    // should be renderable so bars won't dissappear before they've fully exited the container's bounds
+    // see https://github.com/FormidableLabs/victory/pull/2970
     if (props.groupComponent.type === VictoryClipContainer) {
       children = this.renderData(props, VictoryBarBase.shouldRenderDatum);
     } else {
