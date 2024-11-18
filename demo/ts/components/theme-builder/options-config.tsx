@@ -4,6 +4,7 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryBar } from "victory-bar";
 import { VictoryCandlestick } from "victory-candlestick";
 import { VictoryErrorBar } from "victory-errorbar";
+import { VictoryHistogram } from "victory-histogram";
 
 const getBaseLabelsConfig = (basePath: string) => [
   {
@@ -322,6 +323,73 @@ const optionsConfig = [
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig("errorbar.style.labels"),
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Histogram",
+    content: (props) => (
+      <VictoryHistogram
+        {...props}
+        data={[
+          { x: 0 },
+          { x: 1 },
+          { x: 1 },
+          { x: 1 },
+          { x: 1 },
+          { x: 2 },
+          { x: 2 },
+          { x: 3 },
+          { x: 4 },
+          { x: 7 },
+          { x: 7 },
+          { x: 10 },
+        ]}
+        labels={({ datum }) => `Bin count:\n ${datum.x}`}
+      />
+    ),
+    fields: [
+      {
+        type: "section",
+        label: "Data",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            path: "histogram.style.data.fill",
+          },
+          {
+            type: "slider",
+            label: "Fill Opacity",
+            min: 0,
+            max: 1,
+            step: 0.1,
+            path: "histogram.style.data.fillOpacity",
+            default: 1,
+          },
+          {
+            type: "slider",
+            label: "Top Corner Radius",
+            path: "histogram.cornerRadius.top",
+            max: 10,
+            step: 0.5,
+            default: 0,
+          },
+          {
+            type: "slider",
+            label: "Bin Spacing",
+            min: 0,
+            max: 10,
+            unit: "px",
+            path: "histogram.binSpacing",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("histogram.style.labels"),
       },
     ],
   },
