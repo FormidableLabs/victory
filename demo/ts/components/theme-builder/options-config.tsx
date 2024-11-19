@@ -10,6 +10,7 @@ import { VictoryLine } from "victory-line";
 import { VictoryPie } from "victory-pie";
 import { VictoryScatter } from "victory-scatter";
 import { VictoryVoronoi } from "victory-voronoi";
+import { VictoryPolarAxis } from "victory-polar-axis";
 
 type ThemeBuilderFieldConfig =
   | {
@@ -81,8 +82,114 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
   },
   {
     type: "section",
-    title: "Axis Labels",
-    fields: getBaseLabelsConfig("axis.style.axisLabel"),
+    title: "Axis",
+    fields: [
+      // General
+      {
+        type: "section",
+        label: "General",
+        fields: [
+          // fill, stroke, strokeWidth, strokeLinecap, strokeLinejoin
+          {
+            type: "colorPicker",
+            label: "Fill",
+            default: defaultFill,
+            path: "axis.style.axis.fill",
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "axis.style.axis.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "axis.style.axis.strokeWidth",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Cap",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Square", value: "square" },
+              { label: "Butt", value: "butt" },
+            ],
+            default: "round",
+            path: "axis.style.axis.strokeLinecap",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Join",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Bevel", value: "bevel" },
+              { label: "Miter", value: "miter" },
+            ],
+            default: "round",
+            path: "axis.style.axis.strokeLinejoin",
+          },
+        ],
+      },
+      // grid
+      {
+        type: "section",
+        label: "Grid",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            default: defaultFill,
+            path: "axis.style.grid.fill",
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "axis.style.grid.stroke",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Ticks",
+        fields: [
+          {
+            type: "slider",
+            label: "Size",
+            min: 0,
+            max: 50,
+            unit: "px",
+            default: 5,
+            path: "axis.style.ticks.size",
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "axis.style.ticks.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "axis.style.ticks.strokeWidth",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("axis.style.axisLabel"),
+      },
+    ],
   },
   {
     type: "section",
