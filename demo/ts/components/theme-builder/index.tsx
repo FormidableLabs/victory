@@ -17,6 +17,7 @@ import Button from "./button";
 import ConfigMapper from "./config-mapper";
 import { setNestedConfigValue } from "./utils";
 import optionsConfig from "./options-config";
+import theme from "demo/ts/theme/victory-axis-differential-styling-theme";
 
 export type ThemeOption = {
   name: string;
@@ -197,17 +198,25 @@ const ThemeBuilder = () => {
                 </VictoryChart>
               </div>
               {optionsConfig.map(
-                ({ title, content: Content }, i) =>
+                ({ title, content: Content, hasVictoryChart = true }, i) =>
                   Content && (
                     <div key={i}>
                       <h3 className="text-base font-bold mb-3">{title}</h3>
-                      <VictoryChart
-                        theme={customThemeConfig}
-                        domainPadding={20}
-                        style={chartStyle}
-                      >
-                        {Content({ labels: ({ datum }) => datum.y })}
-                      </VictoryChart>
+                      {hasVictoryChart ? (
+                        <VictoryChart
+                          theme={customThemeConfig}
+                          domainPadding={20}
+                          style={chartStyle}
+                        >
+                          {Content({ labels: ({ datum }) => datum.y })}
+                        </VictoryChart>
+                      ) : (
+                        Content({
+                          labels: ({ datum }) => datum.y,
+                          style: chartStyle,
+                          theme: customThemeConfig,
+                        })
+                      )}
                     </div>
                   ),
               )}

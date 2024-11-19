@@ -7,6 +7,7 @@ import { VictoryErrorBar } from "victory-errorbar";
 import { VictoryHistogram } from "victory-histogram";
 import { VictoryLegend } from "victory-legend";
 import { VictoryLine } from "victory-line";
+import { VictoryPie } from "victory-pie";
 
 type ThemeBuilderFieldConfig =
   | {
@@ -29,6 +30,7 @@ type ThemeBuilderFieldConfig =
 type ThemeBuilderOptionsConfig = {
   type: "section";
   title: string;
+  hasVictoryChart?: boolean;
   content?: (props: any) => React.ReactNode;
   fields: ThemeBuilderFieldConfig[];
 }[];
@@ -653,6 +655,60 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig("line.style.labels"),
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Pie Chart",
+    hasVictoryChart: false,
+    content: (props) => (
+      <VictoryPie
+        {...props}
+        data={[
+          { x: "Cats", y: 35 },
+          { x: "Dogs", y: 40 },
+          { x: "Birds", y: 55 },
+          { x: "Fishes", y: 15 },
+          { x: "Reptiles", y: 10 },
+        ]}
+      />
+    ),
+    fields: [
+      {
+        type: "section",
+        label: "Data",
+        fields: [
+          {
+            type: "slider",
+            label: "Padding",
+            min: 0,
+            max: 50,
+            unit: "px",
+            path: "pie.style.data.padding",
+            default: 0,
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            path: "pie.style.data.stroke",
+            default: defaultFill,
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "pie.style.data.strokeWidth",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("pie.style.labels"),
       },
     ],
   },
