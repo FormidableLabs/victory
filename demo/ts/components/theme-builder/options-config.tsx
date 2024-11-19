@@ -9,6 +9,7 @@ import { VictoryLegend } from "victory-legend";
 import { VictoryLine } from "victory-line";
 import { VictoryPie } from "victory-pie";
 import { VictoryScatter } from "victory-scatter";
+import { VictoryVoronoi } from "victory-voronoi";
 
 type ThemeBuilderFieldConfig =
   | {
@@ -840,6 +841,56 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             path: "tooltip.flyoutStyle.pointerEvents",
           },
         ],
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Voronoi",
+    content: (props) => (
+      <VictoryVoronoi
+        {...props}
+        data={[
+          { x: 1, y: 2 },
+          { x: 2, y: 3 },
+          { x: 3, y: 5 },
+          { x: 4, y: 4 },
+          { x: 5, y: 7 },
+        ]}
+      />
+    ),
+    fields: [
+      {
+        type: "section",
+        label: "General",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            default: "#FFFFFF",
+            path: "voronoi.style.data.fill",
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "voronoi.style.data.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 2,
+            path: "voronoi.style.data.strokeWidth",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("voronoi.style.labels"),
       },
     ],
   },
