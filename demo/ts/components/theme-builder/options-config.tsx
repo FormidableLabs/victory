@@ -8,6 +8,7 @@ import { VictoryHistogram } from "victory-histogram";
 import { VictoryLegend } from "victory-legend";
 import { VictoryLine } from "victory-line";
 import { VictoryPie } from "victory-pie";
+import { VictoryScatter } from "victory-scatter";
 
 type ThemeBuilderFieldConfig =
   | {
@@ -587,7 +588,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       },
     ],
   },
-  // line
   {
     type: "section",
     title: "Line Chart",
@@ -709,6 +709,65 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig("pie.style.labels"),
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Scatter Chart",
+    content: (props) => (
+      <VictoryScatter
+        {...props}
+        data={[
+          { x: 1, y: 2 },
+          { x: 2, y: 3 },
+          { x: 3, y: 5 },
+          { x: 4, y: 4 },
+          { x: 5, y: 7 },
+        ]}
+      />
+    ),
+    fields: [
+      {
+        type: "section",
+        label: "Data",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            default: defaultFill,
+            path: "scatter.style.data.fill",
+          },
+          {
+            type: "slider",
+            label: "Opacity",
+            min: 0,
+            max: 1,
+            step: 0.1,
+            default: 1,
+            path: "scatter.style.data.opacity",
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "scatter.style.data.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 0,
+            path: "scatter.style.data.strokeWidth",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("scatter.style.labels"),
       },
     ],
   },
