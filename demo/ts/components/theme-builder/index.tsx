@@ -11,6 +11,7 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryStack } from "victory-stack";
 import { VictoryBar } from "victory-bar";
 import { VictoryArea } from "victory-area";
+import { VictoryTooltip } from "victory-tooltip";
 import Select from "./select";
 import ConfigPreview from "./config-preview";
 import Button from "./button";
@@ -82,9 +83,15 @@ const ThemeBuilder = () => {
     React.useState<ColorScalePropType>("qualitative");
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
     React.useState(false);
+  const [showTooltips, setShowTooltips] = React.useState(true);
 
   const handleThemeSelect = (themeName: string) => {
     const theme = themes.find((t) => t.name === themeName);
+    if (!theme) {
+      setBaseTheme(undefined);
+      setCustomThemeConfig(undefined);
+      return;
+    }
     setBaseTheme(theme);
     setCustomThemeConfig({ ...theme?.config });
   };
@@ -152,9 +159,23 @@ const ThemeBuilder = () => {
         {customThemeConfig && (
           <div className="max-w-screen-xl w-full py-4 px-10">
             <h2 className="text-xl font-bold mb-4">Example Charts</h2>
+            <fieldset>
+              <div className="flex items-center gap-4 mb-4">
+                <input
+                  type="checkbox"
+                  id="show-tooltips"
+                  className="form-checkbox h-5 w-5 text-primary"
+                  checked={showTooltips}
+                  onChange={() => setShowTooltips(!showTooltips)}
+                />
+                <label htmlFor="show-tooltips">
+                  Show tooltips instead of labels
+                </label>
+              </div>
+            </fieldset>
             <div className="grid grid-cols-2 gap-10">
               <div>
-                <h3 className="text-base font-bold mb-3">Bar Chart</h3>
+                <h3 className="text-base font-bold mb-3">Stacked Area Chart</h3>
                 <VictoryChart
                   theme={customThemeConfig}
                   domainPadding={20}
@@ -167,13 +188,17 @@ const ThemeBuilder = () => {
                     aria-label="Victory Stack Demo"
                   >
                     {[...Array(5)].map((_, i) => (
-                      <VictoryBar data={sampleStackData} key={i} />
+                      <VictoryArea
+                        data={sampleStackData}
+                        key={i}
+                        labels={() => undefined}
+                      />
                     ))}
                   </VictoryStack>
                 </VictoryChart>
               </div>
               <div>
-                <h3 className="text-base font-bold mb-3">Area Chart</h3>
+                <h3 className="text-base font-bold mb-3">Stacked Bar Chart</h3>
                 <VictoryChart
                   theme={customThemeConfig}
                   domainPadding={20}
@@ -186,23 +211,48 @@ const ThemeBuilder = () => {
                     aria-label="Victory Stack Demo"
                   >
                     {[...Array(5)].map((_, i) => (
-                      <VictoryArea data={sampleStackData} key={i} />
+                      <VictoryBar
+                        data={sampleStackData}
+                        key={i}
+                        labels={({ datum }) =>
+                          showTooltips ? datum.y : undefined
+                        }
+                        {...(showTooltips && {
+                          labelComponent: <VictoryTooltip />,
+                        })}
+                      />
                     ))}
                   </VictoryStack>
                 </VictoryChart>
               </div>
               {optionsConfig.map(
-                ({ title, content: Content }, i) =>
+                ({ title, content: Content, hasVictoryChart = true }, i) =>
                   Content && (
                     <div key={i}>
                       <h3 className="text-base font-bold mb-3">{title}</h3>
-                      <VictoryChart
-                        theme={customThemeConfig}
-                        domainPadding={20}
-                        style={chartStyle}
-                      >
-                        {Content({ labels: ({ datum }) => datum.y })}
-                      </VictoryChart>
+                      {hasVictoryChart ? (
+                        <VictoryChart
+                          theme={customThemeConfig}
+                          domainPadding={20}
+                          style={chartStyle}
+                        >
+                          {Content({
+                            labels: ({ datum }) => datum.y || datum.x,
+                            ...(showTooltips && {
+                              labelComponent: <VictoryTooltip />,
+                            }),
+                          })}
+                        </VictoryChart>
+                      ) : (
+                        Content({
+                          labels: ({ datum }) => datum.y || datum.x,
+                          style: chartStyle,
+                          theme: customThemeConfig,
+                          ...(showTooltips && {
+                            labelComponent: <VictoryTooltip />,
+                          }),
+                        })
+                      )}
                     </div>
                   ),
               )}
