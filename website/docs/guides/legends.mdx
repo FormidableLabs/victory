@@ -16,7 +16,6 @@ See the [full API here](/docs/api/victory-legend).
   <VictoryLegend
     x={125}
     y={20}
-    title="Pets"
     data={[
       {
         name: "Dogs",
@@ -57,6 +56,33 @@ See the [full API here](/docs/api/victory-legend).
     }}
   />
 </VictoryChart>
+```
+
+## Legend - Titles
+
+The legend can include multiline title by setting the `title` prop to an array.
+
+```jsx live
+<VictoryLegend
+  x={125}
+  y={20}
+  title={["Legend", "Subtitle"]}
+  data={[
+    {
+      name: "Dogs",
+      symbol: { fill: "tomato" },
+    },
+    {
+      name: "Cats",
+      symbol: { fill: "orange" },
+    },
+    {
+      name: "Rabbits",
+      symbol: { fill: "gold" },
+    },
+  ]}
+  theme={VictoryTheme.clean}
+/>
 ```
 
 ## Legend - Symbols

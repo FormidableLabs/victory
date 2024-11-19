@@ -129,7 +129,7 @@
     "version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
     "publish": "nps git:tag && pnpm changeset publish --no-git-tag",
     "changeset": "changeset",
-    "start": "concurrently --raw \"pnpm:build:typescript --watch\" \"webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app\"",
+    "start": "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
     "start:docs": "wireit",
     "check": "wireit",
     "check:debug": "cross-env WIREIT_PARALLEL=1 pnpm check",

@@ -6,7 +6,7 @@ Victory uses a flexible event system that is agnostic of event type. Browser eve
 
 This guide will demonstrate how to use Victory's event system within a single component, between several components nested within wrapper components like `VictoryChart` or `VictoryGroup`, and between several components using the `VictorySharedEvents` wrapper. This guide will also explain how to bypass Victory's event system entirely, and attach simple events directly to rendered components.
 
-## Single Component Events
+## Component Events
 
 Events within a single component like `VictoryBar` may be defined by the `events` prop of the component. The component will be responsible for storing event-driven mutations on its state object. The `events` prop should be given as an array of event objects. Each object defines an event or set of events to attach to a particular target element, or set of target elements.
 
@@ -51,7 +51,7 @@ Return values from event handlers are used to define mutations affecting rendere
 />
 ```
 
-## Nested Component Events
+## Nested Events
 
 Wrapper components like `VictoryChart`, `VictoryGroup`, and `VictoryStack` may define events for their children. Component events defined by wrappers operate much the same as single component events, except that the events are defined on the parent component, and event-driven mutations are stored in the parent's state. Events on child components are specified with the `childName` property. Components that have a `name` prop specified will be referenced by name. If child components do not have a `name` specified they will be referenced by index. In the example below, clicking on either of the bottom two areas in the stack will change the color of the top area.
 
@@ -126,7 +126,150 @@ Wrapper components like `VictoryChart`, `VictoryGroup`, and `VictoryStack` may d
 </VictoryChart>
 ```
 
-## VictorySharedEvents
+## Target Events
+
+Events can target specific elements within a component by using the `eventKey` property. The `eventKey` is a zero indexed integer that specifies the index of the element to target. The `eventKey` may also be given as an array of integers to target multiple elements. In the example below, clicking on the first bar will change the color of the second bar.
+
+```jsx live
+<VictoryBar
+  theme={VictoryTheme.clean}
+  labels={["a", "b", "c", "d", "e"]}
+  data={[
+    { x: 1, y: 1 },
+    { x: 2, y: 2 },
+    { x: 3, y: 3, label: "click me" },
+    { x: 4, y: 2 },
+    { x: 5, y: 1 },
+  ]}
+  events={[
+    {
+      target: "data",
+      eventKey: [1, 2],
+      eventHandlers: {
+        onClick: (evt) => {
+          evt.stopPropagation();
+          return [
+            {
+              mutation: (props) => {
+                return {
+                  style: {
+                    ...props.style,
+                    fill: VictoryTheme
+                      .clean.palette
+                      ?.colors.teal,
+                  },
+                };
+              },
+            },
+            {
+              target: "labels",
+              eventKey: 3,
+              mutation: (props) => {
+                return {
+                  ...props.style,
+                  text: "now click me",
+                };
+              },
+            },
+          ];
+        },
+      },
+    },
+    {
+      target: "parent",
+      eventHandlers: {
+        onClick: () => {
+          return [
+            {
+              target: "data",
+              mutation: (props) => {
+                return {
+                  style: {
+                    ...props.style,
+                    fill: VictoryTheme
+                      .clean.palette
+                      ?.colors.red,
+                  },
+                };
+              },
+            },
+          ];
+        },
+      },
+    },
+  ]}
+/>
+```
+
+## Parent Events
+
+Wrapper components like `VictoryChart`, `VictoryGroup`, and `VictoryStack` may also define events for themselves which can target child components for mutation.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  domainPadding={20}
+  events={[
+    {
+      childName: "bar",
+      target: "data",
+      eventHandlers: {
+        onClick: (evt) => {
+          evt.stopPropagation();
+          return [
+            {
+              mutation: (props) => {
+                return {
+                  style: {
+                    ...props.style,
+                    fill: VictoryTheme
+                      .clean.palette
+                      ?.colors.yellow,
+                  },
+                };
+              },
+            },
+          ];
+        },
+      },
+    },
+    {
+      target: "parent",
+      eventHandlers: {
+        onClick: () => {
+          return [
+            {
+              childName: "bar",
+              target: "labels",
+              mutation: () => {
+                return {
+                  text: "You Clicked Me!",
+                };
+              },
+            },
+          ];
+        },
+      },
+    },
+  ]}
+>
+  <VictoryLabel
+    text="Click This Label"
+    y={50}
+    x={150}
+    style={{
+      ...VictoryTheme.clean.label,
+      fontSize: 18,
+    }}
+  />
+  <VictoryBar
+    name="bar"
+    labels={() => null}
+  />
+</VictoryChart>
+```
+
+## Shared Events
 
 Components like `VictoryChart` use the `VictorySharedEvents` wrapper automatically, but the wrapper may also be used on its own. Nest child components within the `VictorySharedEvents` wrapper, and reference them as you would when using `VictoryChart`
 
