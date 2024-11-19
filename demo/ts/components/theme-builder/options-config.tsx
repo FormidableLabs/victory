@@ -193,6 +193,151 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
   },
   {
     type: "section",
+    title: "Polar Axis",
+    content: (props) => [
+      <VictoryPolarAxis {...props} key="polar-axis" standalone={false} />,
+      <VictoryPolarAxis
+        {...props}
+        key="polar-axis-dependent"
+        dependentAxis
+        domain={[0, 10]}
+        standalone={false}
+      />,
+    ],
+    fields: [
+      {
+        type: "section",
+        label: "General",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "polarAxis.style.axis.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "polarAxis.style.axis.strokeWidth",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Grid",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "polarAxis.style.grid.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "polarAxis.style.grid.strokeWidth",
+          },
+          {
+            type: "slider",
+            label: "Stroke Dash Array",
+            min: 0,
+            max: 10,
+            default: 0,
+            path: "polarAxis.style.grid.strokeDasharray",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Cap",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Square", value: "square" },
+              { label: "Butt", value: "butt" },
+            ],
+            default: "round",
+            path: "polarAxis.style.grid.strokeLinecap",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Join",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Bevel", value: "bevel" },
+              { label: "Miter", value: "miter" },
+            ],
+            default: "round",
+            path: "polarAxis.style.grid.strokeLinejoin",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Ticks",
+        fields: [
+          {
+            type: "slider",
+            label: "Size",
+            min: 0,
+            max: 50,
+            unit: "px",
+            default: 5,
+            path: "polarAxis.style.ticks.size",
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "polarAxis.style.ticks.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "polarAxis.style.ticks.strokeWidth",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Cap",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Square", value: "square" },
+              { label: "Butt", value: "butt" },
+            ],
+            default: "round",
+            path: "polarAxis.style.ticks.strokeLinecap",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Join",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Bevel", value: "bevel" },
+              { label: "Miter", value: "miter" },
+            ],
+            default: "round",
+            path: "polarAxis.style.ticks.strokeLinejoin",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("polarAxis.style.tickLabels"),
+      },
+    ],
+  },
+  {
+    type: "section",
     title: "Area Chart",
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
