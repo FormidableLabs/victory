@@ -11,13 +11,13 @@ import { VictoryAxis } from "victory-axis";
 import { VictoryStack } from "victory-stack";
 import { VictoryBar } from "victory-bar";
 import { VictoryArea } from "victory-area";
+import { VictoryTooltip } from "victory-tooltip";
 import Select from "./select";
 import ConfigPreview from "./config-preview";
 import Button from "./button";
 import ConfigMapper from "./config-mapper";
 import { setNestedConfigValue } from "./utils";
 import optionsConfig from "./options-config";
-import theme from "demo/ts/theme/victory-axis-differential-styling-theme";
 
 export type ThemeOption = {
   name: string;
@@ -83,6 +83,7 @@ const ThemeBuilder = () => {
     React.useState<ColorScalePropType>("qualitative");
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
     React.useState(false);
+  const [showTooltips, setShowTooltips] = React.useState(true);
 
   const handleThemeSelect = (themeName: string) => {
     const theme = themes.find((t) => t.name === themeName);
@@ -158,6 +159,20 @@ const ThemeBuilder = () => {
         {customThemeConfig && (
           <div className="max-w-screen-xl w-full py-4 px-10">
             <h2 className="text-xl font-bold mb-4">Example Charts</h2>
+            <fieldset>
+              <div className="flex items-center gap-4 mb-4">
+                <input
+                  type="checkbox"
+                  id="show-tooltips"
+                  className="form-checkbox h-5 w-5 text-primary"
+                  checked={showTooltips}
+                  onChange={() => setShowTooltips(!showTooltips)}
+                />
+                <label htmlFor="show-tooltips">
+                  Show tooltips instead of labels
+                </label>
+              </div>
+            </fieldset>
             <div className="grid grid-cols-2 gap-10">
               <div>
                 <h3 className="text-base font-bold mb-3">Stacked Area Chart</h3>
@@ -173,7 +188,11 @@ const ThemeBuilder = () => {
                     aria-label="Victory Stack Demo"
                   >
                     {[...Array(5)].map((_, i) => (
-                      <VictoryArea data={sampleStackData} key={i} />
+                      <VictoryArea
+                        data={sampleStackData}
+                        key={i}
+                        labels={() => undefined}
+                      />
                     ))}
                   </VictoryStack>
                 </VictoryChart>
@@ -192,7 +211,16 @@ const ThemeBuilder = () => {
                     aria-label="Victory Stack Demo"
                   >
                     {[...Array(5)].map((_, i) => (
-                      <VictoryBar data={sampleStackData} key={i} />
+                      <VictoryBar
+                        data={sampleStackData}
+                        key={i}
+                        labels={({ datum }) =>
+                          showTooltips ? datum.y : undefined
+                        }
+                        {...(showTooltips && {
+                          labelComponent: <VictoryTooltip />,
+                        })}
+                      />
                     ))}
                   </VictoryStack>
                 </VictoryChart>
@@ -208,13 +236,21 @@ const ThemeBuilder = () => {
                           domainPadding={20}
                           style={chartStyle}
                         >
-                          {Content({ labels: ({ datum }) => datum.y })}
+                          {Content({
+                            labels: ({ datum }) => datum.y || datum.x,
+                            ...(showTooltips && {
+                              labelComponent: <VictoryTooltip />,
+                            }),
+                          })}
                         </VictoryChart>
                       ) : (
                         Content({
-                          labels: ({ datum }) => datum.y,
+                          labels: ({ datum }) => datum.y || datum.x,
                           style: chartStyle,
                           theme: customThemeConfig,
+                          ...(showTooltips && {
+                            labelComponent: <VictoryTooltip />,
+                          }),
                         })
                       )}
                     </div>

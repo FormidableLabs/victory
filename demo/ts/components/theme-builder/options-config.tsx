@@ -93,11 +93,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         {...props}
         key="area-chart"
         data={[
-          { x: 1, y: 2 },
-          { x: 2, y: 3 },
-          { x: 3, y: 5 },
-          { x: 4, y: 4 },
-          { x: 5, y: 7 },
+          { x: 1, y: 2, label: "A" },
+          { x: 2, y: 3, label: "B" },
+          { x: 3, y: 5, label: "C" },
+          { x: 4, y: 4, label: "D" },
+          { x: 5, y: 7, label: "E" },
         ]}
       />,
     ],
@@ -149,11 +149,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         key="bar-chart"
         {...props}
         data={[
-          { x: 1, y: 2 },
-          { x: 2, y: 3 },
-          { x: 3, y: 5 },
-          { x: 4, y: 4 },
-          { x: 5, y: 7 },
+          { x: 1, y: 2, label: "A" },
+          { x: 2, y: 3, label: "B" },
+          { x: 3, y: 5, label: "C" },
+          { x: 4, y: 4, label: "D" },
+          { x: 5, y: 7, label: "E" },
         ]}
       />,
     ],
@@ -216,6 +216,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             close: 10,
             high: 15,
             low: 0,
+            label: "A",
           },
           {
             x: "3/2/23",
@@ -223,6 +224,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             close: 15,
             high: 20,
             low: 5,
+            label: "B",
           },
           {
             x: "3/3/23",
@@ -230,6 +232,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             close: 20,
             high: 22,
             low: 10,
+            label: "C",
           },
           {
             x: "3/4/23",
@@ -237,6 +240,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             close: 10,
             high: 25,
             low: 7,
+            label: "D",
           },
           {
             x: "3/5/23",
@@ -244,6 +248,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             close: 8,
             high: 15,
             low: 5,
+            label: "E",
           },
         ]}
       />
@@ -768,6 +773,73 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig("scatter.style.labels"),
+      },
+    ],
+  },
+  // tooltip
+  {
+    type: "section",
+    title: "Tooltip",
+    fields: [
+      {
+        type: "section",
+        label: "General",
+        fields: [
+          ...getBaseLabelsConfig("tooltip.style"),
+          {
+            type: "slider",
+            label: "Corner Radius",
+            min: 0,
+            max: 10,
+            default: 0,
+            path: "tooltip.cornerRadius",
+          },
+          {
+            type: "slider",
+            label: "Pointer Length",
+            min: 0,
+            max: 20,
+            default: 10,
+            path: "tooltip.pointerLength",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Flyout",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            default: "#FFFFFF",
+            path: "tooltip.flyoutStyle.fill",
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "tooltip.flyoutStyle.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "tooltip.flyoutStyle.strokeWidth",
+          },
+          {
+            type: "select",
+            label: "Pointer Events",
+            options: [
+              { label: "None", value: "none" },
+              { label: "All", value: "all" },
+            ],
+            default: "none",
+            path: "tooltip.flyoutStyle.pointerEvents",
+          },
+        ],
       },
     ],
   },
