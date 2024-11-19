@@ -338,6 +338,141 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
   },
   {
     type: "section",
+    title: "Polar Dependent Axis",
+    fields: [
+      {
+        type: "section",
+        label: "General",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "polarDependentAxis.style.axis.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "polarDependentAxis.style.axis.strokeWidth",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Grid",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "polarDependentAxis.style.grid.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "polarDependentAxis.style.grid.strokeWidth",
+          },
+          {
+            type: "slider",
+            label: "Stroke Dash Array",
+            min: 0,
+            max: 10,
+            default: 0,
+            path: "polarDependentAxis.style.grid.strokeDasharray",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Cap",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Square", value: "square" },
+              { label: "Butt", value: "butt" },
+            ],
+            default: "round",
+            path: "polarDependentAxis.style.grid.strokeLinecap",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Join",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Bevel", value: "bevel" },
+              { label: "Miter", value: "miter" },
+            ],
+            default: "round",
+            path: "polarDependentAxis.style.grid.strokeLinejoin",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Ticks",
+        fields: [
+          {
+            type: "slider",
+            label: "Size",
+            min: 0,
+            max: 50,
+            unit: "px",
+            default: 5,
+            path: "polarDependentAxis.style.ticks.size",
+          },
+          {
+            type: "colorPicker",
+            label: "Stroke",
+            default: defaultFill,
+            path: "polarDependentAxis.style.ticks.stroke",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "polarDependentAxis.style.ticks.strokeWidth",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Cap",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Square", value: "square" },
+              { label: "Butt", value: "butt" },
+            ],
+            default: "round",
+            path: "polarDependentAxis.style.ticks.strokeLinecap",
+          },
+          {
+            type: "select",
+            label: "Stroke Line Join",
+            options: [
+              { label: "Round", value: "round" },
+              { label: "Bevel", value: "bevel" },
+              { label: "Miter", value: "miter" },
+            ],
+            default: "round",
+            path: "polarDependentAxis.style.ticks.strokeLinejoin",
+          },
+        ],
+      },
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig("polarDependentAxis.style.tickLabels"),
+      },
+    ],
+  },
+  {
+    type: "section",
     title: "Area Chart",
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
