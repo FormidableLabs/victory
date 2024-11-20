@@ -30,6 +30,14 @@ type ThemeBuilderFieldConfig =
       options?: { label: string; value: string }[];
     };
 
+enum StrokeProps {
+  STROKE = "Stroke",
+  STROKE_WIDTH = "Stroke Width",
+  STROKE_DASH_ARRAY = "Stroke Dash Array",
+  STROKE_LINE_CAP = "Stroke Line Cap",
+  STROKE_LINE_JOIN = "Stroke Line Join",
+}
+
 type ThemeBuilderOptionsConfig = {
   type: "section";
   title: string;
@@ -39,6 +47,64 @@ type ThemeBuilderOptionsConfig = {
 }[];
 
 const defaultFill = "#000";
+
+const getBaseStrokeConfig = (
+  basePath: string,
+  includedStrokeProps: StrokeProps[] = [],
+): ThemeBuilderFieldConfig[] => {
+  const config = [
+    {
+      type: "colorPicker",
+      label: StrokeProps.STROKE,
+      default: defaultFill,
+      path: `${basePath}.stroke`,
+    },
+    {
+      type: "slider",
+      label: StrokeProps.STROKE_WIDTH,
+      min: 0,
+      max: 5,
+      unit: "px",
+      default: 1,
+      path: `${basePath}.strokeWidth`,
+    },
+    {
+      type: "slider",
+      label: StrokeProps.STROKE_DASH_ARRAY,
+      min: 0,
+      max: 10,
+      default: 0,
+      path: `${basePath}.strokeDasharray`,
+    },
+    {
+      type: "select",
+      label: StrokeProps.STROKE_LINE_CAP,
+      options: [
+        { label: "Round", value: "round" },
+        { label: "Square", value: "square" },
+        { label: "Butt", value: "butt" },
+      ],
+      default: "round",
+      path: `${basePath}.strokeLinecap`,
+    },
+    {
+      type: "select",
+      label: StrokeProps.STROKE_LINE_JOIN,
+      options: [
+        { label: "Round", value: "round" },
+        { label: "Bevel", value: "bevel" },
+        { label: "Miter", value: "miter" },
+      ],
+      default: "round",
+      path: `${basePath}.strokeLinejoin`,
+    },
+  ] as ThemeBuilderFieldConfig[];
+  return includedStrokeProps.length
+    ? config.filter((field) =>
+        includedStrokeProps.includes(field.label as StrokeProps),
+      )
+    : config;
+};
 
 const getBaseLabelsConfig: (basePath: string) => ThemeBuilderFieldConfig[] = (
   basePath: string,
@@ -84,58 +150,24 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
     type: "section",
     title: "Axis",
     fields: [
-      // General
       {
         type: "section",
         label: "General",
         fields: [
-          // fill, stroke, strokeWidth, strokeLinecap, strokeLinejoin
           {
             type: "colorPicker",
             label: "Fill",
             default: defaultFill,
             path: "axis.style.axis.fill",
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "axis.style.axis.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "axis.style.axis.strokeWidth",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Cap",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Square", value: "square" },
-              { label: "Butt", value: "butt" },
-            ],
-            default: "round",
-            path: "axis.style.axis.strokeLinecap",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Join",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Bevel", value: "bevel" },
-              { label: "Miter", value: "miter" },
-            ],
-            default: "round",
-            path: "axis.style.axis.strokeLinejoin",
-          },
+          ...getBaseStrokeConfig("axis.style.axis", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+            StrokeProps.STROKE_LINE_CAP,
+            StrokeProps.STROKE_LINE_JOIN,
+          ]),
         ],
       },
-      // grid
       {
         type: "section",
         label: "Grid",
@@ -146,12 +178,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             default: defaultFill,
             path: "axis.style.grid.fill",
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "axis.style.grid.stroke",
-          },
+          ...getBaseStrokeConfig("axis.style.grid"),
         ],
       },
       {
@@ -167,21 +194,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             default: 5,
             path: "axis.style.ticks.size",
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "axis.style.ticks.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "axis.style.ticks.strokeWidth",
-          },
+          ...getBaseStrokeConfig("axis.style.ticks", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
         ],
       },
       {
@@ -208,74 +224,15 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "General",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "polarAxis.style.axis.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "polarAxis.style.axis.strokeWidth",
-          },
-        ],
+        fields: getBaseStrokeConfig("polarAxis.style.axis", [
+          StrokeProps.STROKE,
+          StrokeProps.STROKE_WIDTH,
+        ]),
       },
       {
         type: "section",
         label: "Grid",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "polarAxis.style.grid.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "polarAxis.style.grid.strokeWidth",
-          },
-          {
-            type: "slider",
-            label: "Stroke Dash Array",
-            min: 0,
-            max: 10,
-            default: 0,
-            path: "polarAxis.style.grid.strokeDasharray",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Cap",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Square", value: "square" },
-              { label: "Butt", value: "butt" },
-            ],
-            default: "round",
-            path: "polarAxis.style.grid.strokeLinecap",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Join",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Bevel", value: "bevel" },
-              { label: "Miter", value: "miter" },
-            ],
-            default: "round",
-            path: "polarAxis.style.grid.strokeLinejoin",
-          },
-        ],
+        fields: getBaseStrokeConfig("polarAxis.style.grid"),
       },
       {
         type: "section",
@@ -290,43 +247,12 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             default: 5,
             path: "polarAxis.style.ticks.size",
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "polarAxis.style.ticks.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "polarAxis.style.ticks.strokeWidth",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Cap",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Square", value: "square" },
-              { label: "Butt", value: "butt" },
-            ],
-            default: "round",
-            path: "polarAxis.style.ticks.strokeLinecap",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Join",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Bevel", value: "bevel" },
-              { label: "Miter", value: "miter" },
-            ],
-            default: "round",
-            path: "polarAxis.style.ticks.strokeLinejoin",
-          },
+          ...getBaseStrokeConfig("polarAxis.style.ticks", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+            StrokeProps.STROKE_LINE_CAP,
+            StrokeProps.STROKE_LINE_JOIN,
+          ]),
         ],
       },
       {
@@ -343,74 +269,15 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "General",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "polarDependentAxis.style.axis.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "polarDependentAxis.style.axis.strokeWidth",
-          },
-        ],
+        fields: getBaseStrokeConfig("polarDependentAxis.style.axis", [
+          StrokeProps.STROKE,
+          StrokeProps.STROKE_WIDTH,
+        ]),
       },
       {
         type: "section",
         label: "Grid",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "polarDependentAxis.style.grid.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "polarDependentAxis.style.grid.strokeWidth",
-          },
-          {
-            type: "slider",
-            label: "Stroke Dash Array",
-            min: 0,
-            max: 10,
-            default: 0,
-            path: "polarDependentAxis.style.grid.strokeDasharray",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Cap",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Square", value: "square" },
-              { label: "Butt", value: "butt" },
-            ],
-            default: "round",
-            path: "polarDependentAxis.style.grid.strokeLinecap",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Join",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Bevel", value: "bevel" },
-              { label: "Miter", value: "miter" },
-            ],
-            default: "round",
-            path: "polarDependentAxis.style.grid.strokeLinejoin",
-          },
-        ],
+        fields: getBaseStrokeConfig("polarDependentAxis.style.grid"),
       },
       {
         type: "section",
@@ -425,43 +292,12 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             default: 5,
             path: "polarDependentAxis.style.ticks.size",
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "polarDependentAxis.style.ticks.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "polarDependentAxis.style.ticks.strokeWidth",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Cap",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Square", value: "square" },
-              { label: "Butt", value: "butt" },
-            ],
-            default: "round",
-            path: "polarDependentAxis.style.ticks.strokeLinecap",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Join",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Bevel", value: "bevel" },
-              { label: "Miter", value: "miter" },
-            ],
-            default: "round",
-            path: "polarDependentAxis.style.ticks.strokeLinejoin",
-          },
+          ...getBaseStrokeConfig("polarDependentAxis.style.ticks", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+            StrokeProps.STROKE_LINE_CAP,
+            StrokeProps.STROKE_LINE_JOIN,
+          ]),
         ],
       },
       {
@@ -503,15 +339,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             path: "area.style.data.fillOpacity",
             default: 1,
           },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            path: "area.style.data.strokeWidth",
-            default: 2,
-          },
+          ...getBaseStrokeConfig("area.style.data", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
           {
             type: "colorPicker",
             label: "Fill",
@@ -556,15 +387,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             path: "bar.style.data.fill",
             default: defaultFill,
           },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            path: "bar.style.data.strokeWidth",
-            default: 0,
-          },
+          ...getBaseStrokeConfig("bar.style.data", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
           {
             type: "slider",
             label: "Fill Opacity",
@@ -646,21 +472,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Data",
         fields: [
-          {
-            type: "colorPicker",
-            label: "Stroke Color",
-            path: "candlestick.style.data.stroke",
-            default: defaultFill,
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            path: "candlestick.style.data.strokeWidth",
-            default: 1,
-          },
+          ...getBaseStrokeConfig("candlestick.style.data", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
           {
             type: "slider",
             label: "Border Radius",
@@ -734,32 +549,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             path: "errorbar.borderWidth",
             default: 8,
           },
-          {
-            type: "colorPicker",
-            label: "Stroke Color",
-            path: "errorbar.style.data.stroke",
-            default: defaultFill,
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            path: "errorbar.style.data.strokeWidth",
-            default: 2,
-          },
-          {
-            type: "select",
-            label: "Stroke Line Cap",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Square", value: "square" },
-              { label: "Butt", value: "butt" },
-            ],
-            path: "errorbar.style.data.strokeLinecap",
-            default: "round",
-          },
+          ...getBaseStrokeConfig("errorbar.style.data", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+            StrokeProps.STROKE_LINE_CAP,
+          ]),
         ],
       },
       {
@@ -961,23 +755,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Border",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            path: "legend.style.border.stroke",
-            default: defaultFill,
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            path: "legend.style.border.strokeWidth",
-            default: 2,
-          },
-        ],
+        fields: getBaseStrokeConfig("legend.style.border", [
+          StrokeProps.STROKE,
+          StrokeProps.STROKE_WIDTH,
+        ]),
       },
     ],
   },
@@ -1004,45 +785,12 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Data",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "line.style.data.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 2,
-            path: "line.style.data.strokeWidth",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Cap",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Square", value: "square" },
-              { label: "Butt", value: "butt" },
-            ],
-            default: "round",
-            path: "line.style.data.strokeLinecap",
-          },
-          {
-            type: "select",
-            label: "Stroke Line Join",
-            options: [
-              { label: "Round", value: "round" },
-              { label: "Bevel", value: "bevel" },
-              { label: "Miter", value: "miter" },
-            ],
-            default: "round",
-            path: "line.style.data.strokeLinejoin",
-          },
-        ],
+        fields: getBaseStrokeConfig("line.style.data", [
+          StrokeProps.STROKE,
+          StrokeProps.STROKE_WIDTH,
+          StrokeProps.STROKE_LINE_CAP,
+          StrokeProps.STROKE_LINE_JOIN,
+        ]),
       },
       {
         type: "section",
@@ -1081,21 +829,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             path: "pie.style.data.padding",
             default: 0,
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            path: "pie.style.data.stroke",
-            default: defaultFill,
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "pie.style.data.strokeWidth",
-          },
+          ...getBaseStrokeConfig("pie.style.data", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
         ],
       },
       {
@@ -1140,21 +877,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             default: 1,
             path: "scatter.style.data.opacity",
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "scatter.style.data.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 0,
-            path: "scatter.style.data.strokeWidth",
-          },
+          ...getBaseStrokeConfig("scatter.style.data", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
         ],
       },
       {
@@ -1202,21 +928,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             default: "#FFFFFF",
             path: "tooltip.flyoutStyle.fill",
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "tooltip.flyoutStyle.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 1,
-            path: "tooltip.flyoutStyle.strokeWidth",
-          },
+          ...getBaseStrokeConfig("tooltip.flyoutStyle", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
           {
             type: "select",
             label: "Pointer Events",
@@ -1257,21 +972,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             default: "#FFFFFF",
             path: "voronoi.style.data.fill",
           },
-          {
-            type: "colorPicker",
-            label: "Stroke",
-            default: defaultFill,
-            path: "voronoi.style.data.stroke",
-          },
-          {
-            type: "slider",
-            label: "Stroke Width",
-            min: 0,
-            max: 5,
-            unit: "px",
-            default: 2,
-            path: "voronoi.style.data.strokeWidth",
-          },
+          ...getBaseStrokeConfig("voronoi.style.data", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
         ],
       },
       {
