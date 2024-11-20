@@ -1,0 +1,276 @@
+---
+title: Pan and Zoom
+---
+
+Use `VictoryZoomContainer` to add panning and zooming behavior to any Victory components that work with an x-y coordinate system.
+
+See the [full API here](/docs/api/victory-zoom-container).
+
+## Basic
+
+In the example below, an initial domain is set with the `zoomDomain` prop. This prop may also be used to trigger pan and zoom behavior from other components.
+
+```jsx live noInline
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+      domain={{ y: [0, 100] }}
+      containerComponent={
+        <VictoryZoomContainer
+          zoomDomain={{
+            x: [5, 35],
+            y: [0, 100],
+          }}
+        />
+      }
+    >
+      <VictoryScatter
+        data={getScatterData()}
+        style={{
+          data: {
+            opacity: ({ datum }) =>
+              datum.y % 5 === 0
+                ? 1
+                : 0.7,
+            fill: ({ datum }) =>
+              datum.y % 5 === 0
+                ? "lightblue"
+                : "lightgreen",
+          },
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+function getScatterData() {
+  return _.range(50).map((index) => {
+    return {
+      x: _.random(1, 50),
+      y: _.random(10, 90),
+      size: _.random(8) + 3,
+    };
+  });
+}
+
+render(<App />);
+```
+
+## Limits
+
+The `allowZoom` and `allowPan` props may be used to restrict zooming and panning behavior. In the example below, zooming is disabled, but panning is allowed.
+
+```jsx live noInline
+function App() {
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+      domain={{ y: [0, 100] }}
+      containerComponent={
+        <VictoryZoomContainer
+          allowZoom={false}
+          allowPan={true}
+          zoomDomain={{
+            x: [5, 35],
+            y: [0, 100],
+          }}
+        />
+      }
+    >
+      <VictoryScatter
+        data={getScatterData()}
+        style={{
+          data: {
+            opacity: ({ datum }) =>
+              datum.y % 5 === 0
+                ? 1
+                : 0.7,
+            fill: ({ datum }) =>
+              datum.y % 5 === 0
+                ? "lightblue"
+                : "lightgreen",
+          },
+        }}
+      />
+    </VictoryChart>
+  );
+}
+
+function getScatterData() {
+  return _.range(50).map((index) => {
+    return {
+      x: _.random(1, 50),
+      y: _.random(10, 90),
+      size: _.random(8) + 3,
+    };
+  });
+}
+
+render(<App />);
+```
+
+## Combined with Brushing
+
+In the next example, `VictoryZoomContainer` and `VictoryBrushContainer` are used to create a zoomable chart with a mini-map brush control.
+Here, the `onZoomDomainChange` prop on `VictoryZoomContainer` alters the `brushDomain` prop on `VictoryBrushContainer` tying highlighted brush region of the mini-map to the zoom level of the chart.
+The `onBrushDomainChange` prop on `VictoryBrushContainer` alters the `zoomDomain` prop on `VictoryZoomContainer` so that the zoomed level of the chart matches the highlighted region of the mini-map.
+
+:::info
+For more information on brushing, see the [Data Selection](/docs/guides/data-selection) guide.
+:::
+
+```jsx live noInline
+function App() {
+  const [state, setState] =
+    React.useState({});
+
+  function handleZoom(domain) {
+    setState({
+      selectedDomain: domain,
+    });
+  }
+
+  function handleBrush(domain) {
+    setState({ zoomDomain: domain });
+  }
+
+  return (
+    <div>
+      <VictoryChart
+        width={550}
+        height={300}
+        scale={{ x: "time" }}
+        theme={VictoryTheme.clean}
+        containerComponent={
+          <VictoryZoomContainer
+            responsive={false}
+            zoomDimension="x"
+            zoomDomain={
+              state.zoomDomain
+            }
+            onZoomDomainChange={
+              handleZoom
+            }
+          />
+        }
+      >
+        <VictoryLine
+          data={[
+            {
+              x: new Date(1982, 1, 1),
+              y: 125,
+            },
+            {
+              x: new Date(1987, 1, 1),
+              y: 257,
+            },
+            {
+              x: new Date(1993, 1, 1),
+              y: 345,
+            },
+            {
+              x: new Date(1997, 1, 1),
+              y: 515,
+            },
+            {
+              x: new Date(2001, 1, 1),
+              y: 132,
+            },
+            {
+              x: new Date(2005, 1, 1),
+              y: 305,
+            },
+            {
+              x: new Date(2011, 1, 1),
+              y: 270,
+            },
+            {
+              x: new Date(2015, 1, 1),
+              y: 470,
+            },
+          ]}
+        />
+      </VictoryChart>
+
+      <VictoryChart
+        width={550}
+        height={90}
+        scale={{ x: "time" }}
+        theme={VictoryTheme.clean}
+        padding={{
+          top: 0,
+          left: 50,
+          right: 50,
+          bottom: 30,
+        }}
+        containerComponent={
+          <VictoryBrushContainer
+            responsive={false}
+            brushDimension="x"
+            brushDomain={
+              state.selectedDomain
+            }
+            onBrushDomainChange={
+              handleBrush
+            }
+          />
+        }
+      >
+        <VictoryAxis
+          tickValues={[
+            new Date(1985, 1, 1),
+            new Date(1990, 1, 1),
+            new Date(1995, 1, 1),
+            new Date(2000, 1, 1),
+            new Date(2005, 1, 1),
+            new Date(2010, 1, 1),
+            new Date(2015, 1, 1),
+          ]}
+          tickFormat={(x) =>
+            new Date(x).getFullYear()
+          }
+        />
+        <VictoryLine
+          data={[
+            {
+              x: new Date(1982, 1, 1),
+              y: 125,
+            },
+            {
+              x: new Date(1987, 1, 1),
+              y: 257,
+            },
+            {
+              x: new Date(1993, 1, 1),
+              y: 345,
+            },
+            {
+              x: new Date(1997, 1, 1),
+              y: 515,
+            },
+            {
+              x: new Date(2001, 1, 1),
+              y: 132,
+            },
+            {
+              x: new Date(2005, 1, 1),
+              y: 305,
+            },
+            {
+              x: new Date(2011, 1, 1),
+              y: 270,
+            },
+            {
+              x: new Date(2015, 1, 1),
+              y: 470,
+            },
+          ]}
+        />
+      </VictoryChart>
+    </div>
+  );
+}
+
+render(<App />);
+```

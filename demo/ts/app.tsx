@@ -2,15 +2,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import AccessibilityDemo from "./components/accessibility-demo";
-import BrushContainerDemo from "./components/victory-brush-container-demo";
 import BrushLineDemo from "./components/victory-brush-line-demo";
-import CreateContainerDemo from "./components/create-container-demo";
-import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import DraggableDemo from "./components/draggable-demo";
-import SelectionDemo from "./components/selection-demo";
 import StackedThemeDemos from "./components/stacked-theme-demo";
-import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
-import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 import ThemeBuilder from "./components/theme-builder";
 
 const DEMO_ROUTES = {
@@ -18,33 +12,11 @@ const DEMO_ROUTES = {
     component: AccessibilityDemo,
     name: "AccessibilityDemo",
   },
-  "/demo/brush-container": {
-    component: BrushContainerDemo,
-    name: "BrushContainerDemo",
-  },
   "/demo/brush-line": { component: BrushLineDemo, name: "BrushLineDemo" },
-
-  "/demo/create-container": {
-    component: CreateContainerDemo,
-    name: "CreateContainerDemo",
-  },
-  "/demo/cursor-container": {
-    component: CursorContainerDemo,
-    name: "CursorContainerDemo",
-  },
   "/demo/draggable": { component: DraggableDemo, name: "DraggableDemo" },
-  "/demo/selection": { component: SelectionDemo, name: "SelectionDemo" },
   "/demo/stacked-theme": {
     component: StackedThemeDemos,
     name: "StackedThemeDemos",
-  },
-  "/demo/voronoi-container": {
-    component: VoronoiContainerDemo,
-    name: "VoronoiContainerDemo",
-  },
-  "/demo/zoom-container": {
-    component: ZoomContainerDemo,
-    name: "ZoomContainerDemo",
   },
 };
 
