@@ -1,0 +1,412 @@
+---
+title: Data Selection
+---
+
+Victory allows multiple ways to select data points on a chart. `VictorySelectionContainer` is a container component that allows users to select data points within a region of a chart. Use `VictoryBrushContainer` to identify the domain of a selected region.
+
+:::info
+`VictorySelectionContainer` is similar to `VictoryBrushContainer`. `VictoryBrushContainer` may be
+used to identify the domain of a selected region, whereas `VictorySelectionContainer` may be used to
+identify a list of data points within a selected region. `VictoryBrushContainer` will also create
+persistent highlighted regions, whereas regions created by `VictorySelectionContainer`
+disappear after `onMouseUp` events.
+:::
+
+## VictorySelectionContainer
+
+Use `VictorySelectionContainer` to add data selection behavior to any Victory components that work with an x-y coordinate system.
+
+See the [full API here](/docs/api/victory-selection-container).
+
+### Basic
+
+`VictorySelectionContainer` may be used with any Victory component that works with an x-y coordinate
+system, and should be added as the `containerComponent` of the top-level component.
+However, the component that uses it must be standalone
+(`standalone={true}`), which is the default for all top-level Victory components.
+
+```jsx live
+<VictoryChart
+  containerComponent={
+    <VictorySelectionContainer />
+  }
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    style={{
+      data: {
+        fill: ({ active }) =>
+          active ? "tomato" : "gray",
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+### Active Points
+
+The `VictorySelectionContainer` will automatically set an `active` prop on the data points that are within the selected region. This prop can be used to style the selected points differently.
+
+```jsx live
+<VictoryChart
+  horizontal
+  theme={VictoryTheme.clean}
+  containerComponent={
+    <VictorySelectionContainer
+      selectionDimension="x"
+      selectionStyle={{
+        stroke: VictoryTheme.clean.palette?.colors.blue,
+        strokeWidth: 2,
+        fill: VictoryTheme.clean.palette?.colors.blue,
+        fillOpacity: 0.1,
+      }}
+    />
+  }
+>
+  <VictoryStack>
+    <VictoryBar
+      style={{
+        data: {
+          stroke: ({ active }) =>
+            active ? VictoryTheme.clean.palette?.colors.purple : "none",
+          strokeWidth: 2,
+        },
+      }}
+      data={[
+        { x: 1, y: -5 },
+        { x: 2, y: 4 },
+        { x: 3, y: 2 },
+        { x: 4, y: 3 },
+        { x: 5, y: 1 },
+        { x: 6, y: -3 },
+        { x: 7, y: 3 },
+      ]}
+    />
+    <VictoryBar
+      style={{
+        data: {
+          stroke: ({ active }) =>
+            active ? VictoryTheme.clean.palette?.colors.purple : "none",
+          strokeWidth: 2,
+        },
+      }}
+      data={[
+        { x: 1, y: -3 },
+        { x: 2, y: 5 },
+        { x: 3, y: 3 },
+        { x: 4, y: 0 },
+        { x: 5, y: -2 },
+        { x: 6, y: -2 },
+        { x: 7, y: 5 },
+      ]}
+    />
+    <VictoryBar
+      style={{
+        data: {
+          stroke: ({ active }) =>
+            active ? VictoryTheme.clean.palette?.colors.purple : "none",
+          strokeWidth: 2,
+        },
+      }}
+      data={[
+        { x: 1, y: 5 },
+        { x: 2, y: -4 },
+        { x: 3, y: -2 },
+        { x: 4, y: -3 },
+        { x: 5, y: -1 },
+        { x: 6, y: 3 },
+        { x: 7, y: -3 },
+      ]}
+    />
+  </VictoryStack>
+</VictoryChart>
+```
+
+### Selection Limits
+
+The `selectionDimension` prop may be used to limit brushing behavior to a single dimension. In the example below, the `selectionDimension` prop is set to `"y"`, allowing users to select a region of the chart along the y-axis only.
+
+```jsx live
+<VictoryChart
+  containerComponent={
+    <VictorySelectionContainer selectionDimension="y" />
+  }
+  theme={VictoryTheme.clean}
+>
+  <VictoryScatter
+    style={{
+      data: {
+        fill: ({ active }) =>
+          active ? "tomato" : "gray",
+      },
+    }}
+  />
+</VictoryChart>
+```
+
+### Events
+
+Use the `onSelection` prop to define a function that will be called with the selected domain
+when the selection area changes.
+
+```jsx live noInline
+function App() {
+  const [selection, setSelection] =
+    React.useState({});
+
+  const handleSelection = (
+    datasets,
+  ) => {
+    const points = datasets.reduce(
+      (memo, dataset) =>
+        memo.concat(dataset.data),
+      [],
+    );
+    setSelection({ points });
+  };
+
+  return (
+    <VictoryChart
+      theme={VictoryTheme.clean}
+      containerComponent={
+        <VictorySelectionContainer
+          selectionDimension="x"
+          selectionStyle={{
+            stroke:
+              VictoryTheme.clean.palette
+                ?.colors.red,
+            strokeWidth: 2,
+            fill: VictoryTheme.clean
+              .palette?.colors.red,
+            fillOpacity: 0.1,
+          }}
+          onSelection={handleSelection}
+        />
+      }
+    >
+      <VictoryLine
+        style={{
+          data: {
+            stroke:
+              VictoryTheme.clean.palette
+                ?.colors.purple,
+          },
+        }}
+        data={[
+          { x: 1, y: -5 },
+          { x: 2, y: 4 },
+          { x: 3, y: 2 },
+          { x: 4, y: 3 },
+          { x: 5, y: 1 },
+          { x: 6, y: -3 },
+          { x: 7, y: 3 },
+        ]}
+      />
+      <VictoryLine
+        style={{
+          data: {
+            stroke:
+              VictoryTheme.clean.palette
+                ?.colors.green,
+          },
+        }}
+        data={[
+          { x: 1, y: -3 },
+          { x: 2, y: 5 },
+          { x: 3, y: 3 },
+          { x: 4, y: 0 },
+          { x: 5, y: -2 },
+          { x: 6, y: -2 },
+          { x: 7, y: 5 },
+        ]}
+      />
+      <VictoryLine
+        style={{
+          data: {
+            stroke:
+              VictoryTheme.clean.palette
+                ?.colors.blue,
+          },
+        }}
+        data={[
+          { x: 1, y: 5 },
+          { x: 2, y: -4 },
+          { x: 3, y: -2 },
+          { x: 4, y: -3 },
+          { x: 5, y: -1 },
+          { x: 6, y: 3 },
+          { x: 7, y: -3 },
+        ]}
+      />
+      {selection && (
+        <VictoryLabel
+          x={20}
+          y={20}
+          text={JSON.stringify(
+            selection.points?.map(
+              ({ x, y }) => ({ x, y }),
+            ),
+          )}
+        />
+      )}
+    </VictoryChart>
+  );
+}
+
+render(<App />);
+```
+
+## VictoryBrushContainer
+
+Use `VictoryBrushContainer` to add highlighting and selection to any Victory components that work with an x-y coordinate system.
+
+See the [full API here](/docs/api/victory-brush-container).
+
+### Basic
+
+In the example below, the `VictoryBrushContainer` component is used to highlight a region of a line chart. The brush behavior is unconstrained by default, allowing users to click and drag to select a region of the chart.
+
+```jsx live
+<VictoryLine
+  containerComponent={
+    <VictoryBrushContainer
+      brushStyle={{
+        fill: "blue",
+        opacity: 0.2,
+      }}
+    />
+  }
+  style={{
+    data: { stroke: "lightblue" },
+  }}
+  data={[
+    { x: 1, y: -3 },
+    { x: 2, y: 5 },
+    { x: 3, y: -3 },
+    { x: 4, y: 0 },
+    { x: 5, y: -5 },
+    { x: 6, y: 2 },
+    { x: 7, y: 0 },
+  ]}
+/>
+```
+
+### Selection Limits
+
+The `brushDimension` prop may be used to limit brushing behavior to a single dimension. In the example below, the `brushDimension` prop is set to `"y"`, allowing users to select a region of the chart along the y-axis only and the `brushDomain` restricts the highlighted area to the specified range.
+
+```jsx live
+<VictoryLine
+  containerComponent={
+    <VictoryBrushContainer
+      brushDomain={{
+        x: [1, 7],
+        y: [-2, 2],
+      }}
+      brushDimension="y"
+      brushStyle={{
+        fill: "blue",
+        opacity: 0.2,
+      }}
+    />
+  }
+  style={{
+    data: { stroke: "lightblue" },
+  }}
+  data={[
+    { x: 1, y: -3 },
+    { x: 2, y: 5 },
+    { x: 3, y: -3 },
+    { x: 4, y: 0 },
+    { x: 5, y: -5 },
+    { x: 6, y: 2 },
+    { x: 7, y: 0 },
+  ]}
+/>
+```
+
+### Events
+
+`VictoryBrushContainer` exposes several events you can use to access the selection range. In the example below, you can monitor your browser's console to see the events in action.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+  containerComponent={
+    <VictoryBrushContainer
+      onBrushCleared={(domain, props) =>
+        console.log(
+          "[onBrushCleared]",
+          { domain, props },
+        )
+      }
+      onBrushDomainChange={(
+        domain,
+        props,
+      ) =>
+        console.log(
+          "[onBrushDomainChange]",
+          { domain, props },
+        )
+      }
+      onBrushDomainChangeEnd={(
+        domain,
+        props,
+      ) =>
+        console.log(
+          "[onBrushDomainChangeEnd]",
+          { domain, props },
+        )
+      }
+    />
+  }
+>
+  <VictoryGroup>
+    <VictoryScatter
+      style={{
+        data: {
+          fill: VictoryTheme.clean
+            .palette?.colors.red,
+        },
+      }}
+      data={[
+        { x: 1, y: -5 },
+        { x: 2, y: 4 },
+        { x: 3, y: 2 },
+        { x: 4, y: 0 },
+        { x: 5, y: 1 },
+        { x: 6, y: -3 },
+        { x: 7, y: 3 },
+      ]}
+    />
+    <VictoryScatter
+      style={{
+        data: {
+          fill: VictoryTheme.clean
+            .palette?.colors.yellow,
+        },
+      }}
+      data={[
+        { x: 1, y: -3 },
+        { x: 2, y: 5 },
+        { x: 3, y: 3 },
+        { x: 4, y: 0 },
+        { x: 5, y: -2 },
+        { x: 6, y: -2 },
+        { x: 7, y: 5 },
+      ]}
+    />
+    <VictoryScatter
+      data={[
+        { x: 1, y: 5 },
+        { x: 2, y: -4 },
+        { x: 3, y: -2 },
+        { x: 4, y: -3 },
+        { x: 5, y: -1 },
+        { x: 6, y: 3 },
+        { x: 7, y: -3 },
+      ]}
+    />
+  </VictoryGroup>
+</VictoryChart>
+```

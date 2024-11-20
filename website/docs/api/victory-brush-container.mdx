@@ -5,14 +5,13 @@ title: VictoryBrushContainer
 Adds the ability to highlight a region of a chart, and interact with highlighted regions.
 
 :::info
-For examples of `VictoryBrushContainer` in action, visit the [containers](/docs/guides/containers) guide.
+For examples of `VictoryBrushContainer` in action, visit the [Data Selection](/docs/guides/data-selection) guide.
 :::
 
 ## Inherited Props
 
 <CommonProps
   interfaces={["VictoryContainerProps"]}
-  overrides={[]}
 />
 
 ## Component Props
@@ -253,6 +252,3 @@ _example:_ `onBrushDomainChange={(domain, props) => handleDomainChange(domain, p
 The optional `onBrushDomainChangeEnd` prop accepts a function to be called only on mouse up events. The function accepts the parameters of `domain` (the updated domain), and `props` (the props used by `VictoryBrushContainer`).
 
 _example:_ `onBrushDomainChangeEnd={(domain, props) => handleDomainChangeEnd(domain, props)}`
-
-[brush and zoom guide]: /guides/brush-and-zoom
-[victorycontainer]: /docs/api/victory-container
