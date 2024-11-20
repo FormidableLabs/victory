@@ -502,6 +502,100 @@ Events can be handled by passing an array of event objects to the `events` prop 
 </VictoryChart>
 ```
 
+## Candlestick - Brush and Zoom
+
+Candlestick charts support zoom and pan behavior by using the `VictoryZoomContainer` and `VictoryBrushContainer` components. See the [Brush & Zoom](/docs/guides/brush-and-zoom) guide for more information.
+
+```jsx live noInline
+function App() {
+  const sampleData = [
+    {
+      x: 5,
+      open: 5,
+      close: 10,
+      high: 15,
+      low: 0,
+    },
+    {
+      x: 10,
+      open: 10,
+      close: 15,
+      high: 20,
+      low: 5,
+    },
+    {
+      x: 15,
+      open: 15,
+      close: 20,
+      high: 22,
+      low: 10,
+    },
+    {
+      x: 20,
+      open: 20,
+      close: 10,
+      high: 25,
+      low: 7,
+    },
+    {
+      x: 25,
+      open: 10,
+      close: 8,
+      high: 15,
+      low: 5,
+    },
+  ];
+  const [state, setState] = React.useState({});
+
+  const handleZoom = (domain) => {
+    setState({ selectedDomain: domain });
+  };
+
+  const handleBrush = (domain) => {
+    setState({ zoomDomain: domain });
+  };
+
+  return (
+    <div>
+      <VictoryChart
+        theme={VictoryTheme.clean}
+        domainPadding={{ x: 25 }}
+        containerComponent={
+          <VictoryZoomContainer
+            zoomDimension="x"
+            zoomDomain={state.zoomDomain}
+            onZoomDomainChange={handleZoom}
+          />
+        }
+      >
+        <VictoryCandlestick
+          data={sampleData}
+        />
+      </VictoryChart>
+
+      <VictoryChart
+        height={170}
+        theme={VictoryTheme.clean}
+        domainPadding={{ x: 25 }}
+        padding={{top: 0, left: 50, right: 50, bottom: 30}}
+        containerComponent={
+          <VictoryBrushContainer
+            brushDimension="x"
+            brushDomain={state.selectedDomain}
+            onBrushDomainChange={handleBrush}
+          />
+        }
+      >
+        <VictoryAxis />
+        <VictoryCandlestick data={sampleData} />
+      </VictoryChart>
+    </div>
+  )
+}
+
+render(<App />);
+```
+
 ## Standalone Rendering
 
 Box Plot charts can be rendered outside a VictoryChart.
