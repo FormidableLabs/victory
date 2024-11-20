@@ -7,10 +7,8 @@ import BrushLineDemo from "./components/victory-brush-line-demo";
 import CreateContainerDemo from "./components/create-container-demo";
 import CursorContainerDemo from "./components/victory-cursor-container-demo";
 import DraggableDemo from "./components/draggable-demo";
-import PolarAxisDemo from "./components/victory-polar-axis-demo";
 import SelectionDemo from "./components/selection-demo";
 import StackedThemeDemos from "./components/stacked-theme-demo";
-import VictorySelectionContainerDemo from "./components/victory-selection-container-demo";
 import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 import ThemeBuilder from "./components/theme-builder";
@@ -35,15 +33,10 @@ const DEMO_ROUTES = {
     name: "CursorContainerDemo",
   },
   "/demo/draggable": { component: DraggableDemo, name: "DraggableDemo" },
-  "/demo/polar-axis": { component: PolarAxisDemo, name: "PolarAxisDemo" },
   "/demo/selection": { component: SelectionDemo, name: "SelectionDemo" },
   "/demo/stacked-theme": {
     component: StackedThemeDemos,
     name: "StackedThemeDemos",
-  },
-  "/demo/victory-selection-container": {
-    component: VictorySelectionContainerDemo,
-    name: "VictorySelectionContainerDemo",
   },
   "/demo/voronoi-container": {
     component: VoronoiContainerDemo,
