@@ -21,7 +21,7 @@ type ThemeBuilderFieldConfig =
   | {
       type: "slider" | "select" | "colorPicker";
       label: string;
-      path: string;
+      path: string | string[];
       min?: number;
       max?: number;
       step?: number;
@@ -48,8 +48,15 @@ type ThemeBuilderOptionsConfig = {
 
 const defaultFill = "#000";
 
+const getPath = (basePath: string | string[], key: string) => {
+  if (Array.isArray(basePath)) {
+    return basePath.map((p) => `${p}.${key}`);
+  }
+  return `${basePath}.${key}`;
+};
+
 const getBaseStrokeConfig = (
-  basePath: string,
+  basePath: string | string[],
   includedStrokeProps: StrokeProps[] = [],
 ): ThemeBuilderFieldConfig[] => {
   const config = [
@@ -57,7 +64,7 @@ const getBaseStrokeConfig = (
       type: "colorPicker",
       label: StrokeProps.STROKE,
       default: defaultFill,
-      path: `${basePath}.stroke`,
+      path: getPath(basePath, "stroke"),
     },
     {
       type: "slider",
@@ -66,7 +73,7 @@ const getBaseStrokeConfig = (
       max: 5,
       unit: "px",
       default: 1,
-      path: `${basePath}.strokeWidth`,
+      path: getPath(basePath, "strokeWidth"),
     },
     {
       type: "slider",
@@ -74,7 +81,7 @@ const getBaseStrokeConfig = (
       min: 0,
       max: 10,
       default: 0,
-      path: `${basePath}.strokeDasharray`,
+      path: getPath(basePath, "strokeDasharray"),
     },
     {
       type: "select",
@@ -85,7 +92,7 @@ const getBaseStrokeConfig = (
         { label: "Butt", value: "butt" },
       ],
       default: "round",
-      path: `${basePath}.strokeLinecap`,
+      path: getPath(basePath, "strokeLinecap"),
     },
     {
       type: "select",
@@ -96,7 +103,7 @@ const getBaseStrokeConfig = (
         { label: "Miter", value: "miter" },
       ],
       default: "round",
-      path: `${basePath}.strokeLinejoin`,
+      path: getPath(basePath, "strokeLinejoin"),
     },
   ] as ThemeBuilderFieldConfig[];
   return includedStrokeProps.length
@@ -106,16 +113,16 @@ const getBaseStrokeConfig = (
     : config;
 };
 
-const getBaseLabelsConfig: (basePath: string) => ThemeBuilderFieldConfig[] = (
-  basePath: string,
-) => [
+const getBaseLabelsConfig = (
+  basePath: string | string[],
+): ThemeBuilderFieldConfig[] => [
   {
     type: "slider",
     label: "Font Size",
     min: 10,
     max: 24,
     unit: "px",
-    path: `${basePath}.fontSize`,
+    path: getPath(basePath, "fontSize"),
     default: 12,
   },
   {
@@ -124,13 +131,13 @@ const getBaseLabelsConfig: (basePath: string) => ThemeBuilderFieldConfig[] = (
     min: 0,
     max: 50,
     unit: "px",
-    path: `${basePath}.padding`,
+    path: getPath(basePath, "padding"),
     default: 8,
   },
   {
     type: "colorPicker",
     label: "Fill",
-    path: `${basePath}.fill`,
+    path: getPath(basePath, "fill"),
     default: defaultFill,
   },
 ];
@@ -143,6 +150,47 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "colorScale",
         label: "Color Scale",
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Global Overrides",
+    fields: [
+      {
+        type: "section",
+        label: "Labels",
+        fields: getBaseLabelsConfig([
+          "axis.style.axisLabel",
+          "polarAxis.style.tickLabels",
+          "polarDependentAxis.style.tickLabels",
+          "tooltip.style",
+          "area.style.labels",
+          "bar.style.labels",
+          "candlestick.style.labels",
+          "errorbar.style.labels",
+          "histogram.style.labels",
+          "legend.style.labels",
+          "line.style.labels",
+          "pie.style.labels",
+          "scatter.style.labels",
+          "voronoi.style.labels",
+        ]),
+      },
+      {
+        type: "section",
+        label: "Data",
+        fields: getBaseStrokeConfig([
+          "area.style.data",
+          "bar.style.data",
+          "candlestick.style.data",
+          "errorbar.style.data",
+          "histogram.style.data",
+          "line.style.data",
+          "pie.style.data",
+          "scatter.style.data",
+          "voronoi.style.data",
+        ]),
       },
     ],
   },
@@ -890,7 +938,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       },
     ],
   },
-  // tooltip
   {
     type: "section",
     title: "Tooltip",

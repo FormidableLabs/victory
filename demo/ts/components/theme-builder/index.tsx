@@ -83,7 +83,7 @@ const ThemeBuilder = () => {
     React.useState<ColorScalePropType>("qualitative");
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
     React.useState(false);
-  const [showTooltips, setShowTooltips] = React.useState(true);
+  const [showTooltips, setShowTooltips] = React.useState(false);
 
   const handleThemeSelect = (themeName: string) => {
     const theme = themes.find((t) => t.name === themeName);
@@ -96,7 +96,10 @@ const ThemeBuilder = () => {
     setCustomThemeConfig({ ...theme?.config });
   };
 
-  const updateCustomThemeConfig = (path: string, newValue: unknown) => {
+  const updateCustomThemeConfig = (
+    path: string | string[],
+    newValue: unknown,
+  ) => {
     if (!customThemeConfig) return;
     const updatedConfig = setNestedConfigValue(
       customThemeConfig,
