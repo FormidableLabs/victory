@@ -1,9 +1,7 @@
 import React from "react";
 import Button from "./button";
-import { Prism, SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { VictoryThemeDefinition } from "victory";
-
-const SyntaxHighlighter = Prism as any as React.FC<SyntaxHighlighterProps>;
+import { Highlight } from "prism-react-renderer";
 
 type ConfigPreviewProps = {
   config: VictoryThemeDefinition;
@@ -38,12 +36,23 @@ const ConfigPreview = ({ config, onClose }: ConfigPreviewProps) => {
         &times;
       </button>
       <h2>Theme Config Preview</h2>
-      <SyntaxHighlighter
+      <Highlight
+        code={JSON.stringify(config, null, 2)}
         language="json"
         className="flex-1 overflow-auto border border-grayscale-300 p-3 bg-grayscale-100"
       >
-        {JSON.stringify(config, null, 2)}
-      </SyntaxHighlighter>
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <pre className={className} style={style}>
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })} key={i}>
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} key={key} />
+                ))}
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
       <div className="flex items-center justify-end gap-3 mt-5">
         {copyStatus && (
           <span className="text-grayscale-400 text-xs italic">
