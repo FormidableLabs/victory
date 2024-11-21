@@ -155,7 +155,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
   },
   {
     type: "section",
-    title: "Global Overrides",
+    title: "Global Settings",
     fields: [
       {
         type: "section",
