@@ -55,3 +55,7 @@ tmp
 .yarn/*
 .yarnrc*
 .pnp.*
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
