@@ -1,0 +1,100 @@
+---
+title: Accessibility
+---
+
+Victory provides a number of features to make your charts more accessible. This guide will walk you through some of the most important features.
+
+## Basic
+
+Containers like `VictoryChart` set the `role` attribute to `img` and expose the `desc` prop to provide a description of the chart for screen readers.
+
+Chart types like `VictoryLine` and `VictoryBar` expose aria props like `aria-label` to provide additional context for screen readers. Adding a `tabIndex` attribute will make the data components focusable. (click on chart and press TAB key to focus)
+
+```jsx live
+<VictoryChart
+  aria-label="Simple Chart One"
+  desc="Simple Chart One Description"
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    ariaLabel="Bar Chart One"
+    desc="Bar Chart One Description"
+    data={[
+      { x: 1, y: 2 },
+      { x: 2, y: 3 },
+      { x: 3, y: 5 },
+      { x: 4, y: 4 },
+      { x: 5, y: 7 },
+    ]}
+    dataComponent={
+      <Bar
+        ariaLabel={({ datum }) =>
+          `x: ${datum.x}`
+        }
+        tabIndex={0}
+      />
+    }
+  />
+</VictoryChart>
+```
+
+## Groups
+
+Use `VictoryAccessibleGroup` to wrap a group of chart components. This will add a `role="group"` attribute to the SVG element, which will make the chart more accessible to screen readers. Adding a `tabIndex` attribute will make the group focusable. (click on chart and press TAB key to focus)
+
+```jsx live
+<VictoryChart
+  desc="Simple Chart Two"
+  domainPadding={{ x: 20 }}
+  theme={VictoryTheme.clean}
+>
+  <VictoryStack
+    groupComponent={
+      <VictoryAccessibleGroup
+        aria-label="Group Description Two"
+        desc="Group Description Two Description"
+      />
+    }
+  >
+    <VictoryBar
+      ariaLabel="Bar Chart Two"
+      desc="Bar Chart Two Description"
+      data={[
+        { x: 1, y: 2 },
+        { x: 2, y: 3 },
+        { x: 3, y: 5 },
+        { x: 4, y: 4 },
+        { x: 5, y: 7 },
+      ]}
+      dataComponent={
+      <Bar
+        ariaLabel={({ datum }) =>
+          `x: ${datum.x}`
+        }
+        tabIndex={0}
+      />
+      }
+    />
+    <VictoryBar
+      ariaLabel="Bar Chart Three"
+      desc="Bar Chart Three Description"
+      data={[
+        { x: 1, y: 2 },
+        { x: 2, y: 3 },
+        { x: 3, y: 5 },
+        { x: 4, y: 4 },
+        { x: 5, y: 7 },
+      ]}
+      dataComponent={
+      <Bar
+        ariaLabel={({ datum }) =>
+          `x: ${datum.x}`
+        }
+        tabIndex={0}
+      />
+      }
+    />
+  </VictoryGroup>
+</VictoryChart>
+```

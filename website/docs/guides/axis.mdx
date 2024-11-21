@@ -82,7 +82,10 @@ Gridlines can be shown by styling the axis component.
     dependentAxis
     style={{
       grid: {
-        stroke: ({ tick }) => (tick === 5 ? "#2d7ff9" : "#CFD8DC"),
+        stroke: ({ tick }) =>
+          tick === 5
+            ? "#2d7ff9"
+            : "#CFD8DC",
         strokeDasharray: "10, 5",
       },
     }}
@@ -601,6 +604,37 @@ Fixing axis label and tick label overlap using the style prop.
   />
   <VictoryAxis />
   <VictoryLine />
+</VictoryChart>
+```
+
+---
+
+### Axis - Brush Lines
+
+Brush lines can be added to the axis using the `VictoryBrushLine` component for selecting a range of the domain.
+
+:::info
+See the full API for [`VictoryBrushLine`](/docs/api/victory-brush-line) for more details.
+:::
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.clean}
+>
+  <VictoryBar
+    data={[
+      { x: "one", y: 4 },
+      { x: "two", y: 5 },
+      { x: "three", y: 6 },
+    ]}
+  />
+  <VictoryAxis
+    axisComponent={
+      <VictoryBrushLine
+        brushWidth={20}
+      />
+    }
+  />
 </VictoryChart>
 ```
 
