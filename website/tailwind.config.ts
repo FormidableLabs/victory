@@ -25,6 +25,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        currentColor: "currentColor",
         transparent: "transparent",
         white: NearFormColors.White,
         black: NearFormColors.Black,
@@ -54,6 +55,12 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Inter, Helvetica, Arial, sans-serif"],
+      },
+      extend: {
+        backgroundImage: {
+          "select-chevron":
+            'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>\')',
+        },
       },
     },
   },
