@@ -19,6 +19,7 @@ import Button from "./_components/button";
 import ConfigMapper from "./_components/config-mapper";
 import { setNestedConfigValue } from "./_utils";
 import optionsConfig from "./_config";
+import Layout from "@theme/Layout";
 
 export type ThemeOption = {
   name: string;
@@ -125,154 +126,162 @@ const ThemeBuilder = () => {
   };
 
   return (
-    <div className="flex flex-row flex-wrap items-start justify-start w-full h-lvh theme-builder">
-      <aside className="relative flex flex-col h-full w-[380px] border-r border-grayscale-300">
-        <div className="grow overflow-y-auto p-4 pb-[100px]">
-          <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
-          <p className="text-sm mb-4 text-grayscale-400">
-            Select a theme to begin customizing.
-          </p>
-          <Select
-            id="theme-select"
-            value={baseTheme?.name || ""}
-            onChange={handleThemeSelect}
-            options={themeOptions}
-            label="Base Theme"
-          />
-          {customThemeConfig && (
-            <section>
-              <h2 className="text-lg font-bold my-4">Customization Options</h2>
-              <ConfigMapper
-                themeConfig={customThemeConfig}
-                activeColorScale={activeColorScale}
-                handleColorScaleChange={handleColorScaleChange}
-                updateThemeConfig={updateCustomThemeConfig}
-              />
-            </section>
-          )}
-        </div>
-        <footer className="p-4 border-t border-grayscale-300 sticky bottom-0 flex justify-end bg-white">
-          <Button
-            onClick={handleThemeConfigPreviewOpen}
-            ariaLabel="Get Theme Code"
-            disabled={!customThemeConfig}
-          >
-            Get Theme Code
-          </Button>
-        </footer>
-      </aside>
-      <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
-        {customThemeConfig && (
-          <div className="max-w-screen-xl w-full py-4 px-10">
-            <h2 className="text-xl font-bold mb-4">Example Charts</h2>
-            <fieldset>
-              <div className="flex items-center gap-4 mb-4">
-                <input
-                  type="checkbox"
-                  id="show-tooltips"
-                  className="form-checkbox h-5 w-5 text-primary"
-                  checked={showTooltips}
-                  onChange={() => setShowTooltips(!showTooltips)}
+    <Layout>
+      <div className="flex flex-row flex-wrap items-start justify-start w-full h-lvh theme-builder">
+        <aside className="relative flex flex-col h-full w-[380px] border-r border-grayscale-300">
+          <div className="grow overflow-y-auto p-4 pb-[100px]">
+            <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
+            <p className="text-sm mb-4 text-grayscale-400">
+              Select a theme to begin customizing.
+            </p>
+            <Select
+              id="theme-select"
+              value={baseTheme?.name || ""}
+              onChange={handleThemeSelect}
+              options={themeOptions}
+              label="Base Theme"
+            />
+            {customThemeConfig && (
+              <section>
+                <h2 className="text-lg font-bold my-4">
+                  Customization Options
+                </h2>
+                <ConfigMapper
+                  themeConfig={customThemeConfig}
+                  activeColorScale={activeColorScale}
+                  handleColorScaleChange={handleColorScaleChange}
+                  updateThemeConfig={updateCustomThemeConfig}
                 />
-                <label htmlFor="show-tooltips">
-                  Show tooltips instead of labels
-                </label>
-              </div>
-            </fieldset>
-            <div className="grid grid-cols-2 gap-10">
-              <div>
-                <h3 className="text-base font-bold mb-3">Stacked Area Chart</h3>
-                <VictoryChart
-                  theme={customThemeConfig}
-                  domainPadding={20}
-                  style={chartStyle}
-                >
-                  <VictoryAxis label="X Axis" />
-                  <VictoryAxis dependentAxis label="Y Axis" />
-                  <VictoryStack
-                    colorScale={activeColorScale}
-                    aria-label="Victory Stack Demo"
+              </section>
+            )}
+          </div>
+          <footer className="p-4 border-t border-grayscale-300 sticky bottom-0 flex justify-end bg-white">
+            <Button
+              onClick={handleThemeConfigPreviewOpen}
+              ariaLabel="Get Theme Code"
+              disabled={!customThemeConfig}
+            >
+              Get Theme Code
+            </Button>
+          </footer>
+        </aside>
+        <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
+          {customThemeConfig && (
+            <div className="max-w-screen-xl w-full py-4 px-10">
+              <h2 className="text-xl font-bold mb-4">Example Charts</h2>
+              <fieldset>
+                <div className="flex items-center gap-4 mb-4">
+                  <input
+                    type="checkbox"
+                    id="show-tooltips"
+                    className="form-checkbox h-5 w-5 text-primary"
+                    checked={showTooltips}
+                    onChange={() => setShowTooltips(!showTooltips)}
+                  />
+                  <label htmlFor="show-tooltips">
+                    Show tooltips instead of labels
+                  </label>
+                </div>
+              </fieldset>
+              <div className="grid grid-cols-2 gap-10">
+                <div>
+                  <h3 className="text-base font-bold mb-3">
+                    Stacked Area Chart
+                  </h3>
+                  <VictoryChart
+                    theme={customThemeConfig}
+                    domainPadding={20}
+                    style={chartStyle}
                   >
-                    {[...Array(NUM_STACKS)].map((_, i) => (
-                      <VictoryArea
-                        data={sampleStackData}
-                        key={i}
-                        labels={() => undefined}
-                      />
-                    ))}
-                  </VictoryStack>
-                </VictoryChart>
-              </div>
-              <div>
-                <h3 className="text-base font-bold mb-3">Stacked Bar Chart</h3>
-                <VictoryChart
-                  theme={customThemeConfig}
-                  domainPadding={20}
-                  style={chartStyle}
-                >
-                  <VictoryAxis label="X Axis" />
-                  <VictoryAxis dependentAxis label="Y Axis" />
-                  <VictoryStack
-                    colorScale={activeColorScale}
-                    aria-label="Victory Stack Demo"
+                    <VictoryAxis label="X Axis" />
+                    <VictoryAxis dependentAxis label="Y Axis" />
+                    <VictoryStack
+                      colorScale={activeColorScale}
+                      aria-label="Victory Stack Demo"
+                    >
+                      {[...Array(NUM_STACKS)].map((_, i) => (
+                        <VictoryArea
+                          data={sampleStackData}
+                          key={i}
+                          labels={() => undefined}
+                        />
+                      ))}
+                    </VictoryStack>
+                  </VictoryChart>
+                </div>
+                <div>
+                  <h3 className="text-base font-bold mb-3">
+                    Stacked Bar Chart
+                  </h3>
+                  <VictoryChart
+                    theme={customThemeConfig}
+                    domainPadding={20}
+                    style={chartStyle}
                   >
-                    {[...Array(NUM_STACKS)].map((_, i) => (
-                      <VictoryBar
-                        data={sampleStackData}
-                        key={i}
-                        labels={({ datum }) =>
-                          showTooltips ? datum.y : undefined
-                        }
-                        {...(showTooltips && {
-                          labelComponent: <VictoryTooltip />,
-                        })}
-                      />
-                    ))}
-                  </VictoryStack>
-                </VictoryChart>
-              </div>
-              {optionsConfig.map(
-                ({ title, content: Content, hasVictoryChart = true }, i) =>
-                  Content && (
-                    <div key={i}>
-                      <h3 className="text-base font-bold mb-3">{title}</h3>
-                      {hasVictoryChart ? (
-                        <VictoryChart
-                          theme={customThemeConfig}
-                          domainPadding={20}
-                          style={chartStyle}
-                        >
-                          {Content({
+                    <VictoryAxis label="X Axis" />
+                    <VictoryAxis dependentAxis label="Y Axis" />
+                    <VictoryStack
+                      colorScale={activeColorScale}
+                      aria-label="Victory Stack Demo"
+                    >
+                      {[...Array(NUM_STACKS)].map((_, i) => (
+                        <VictoryBar
+                          data={sampleStackData}
+                          key={i}
+                          labels={({ datum }) =>
+                            showTooltips ? datum.y : undefined
+                          }
+                          {...(showTooltips && {
+                            labelComponent: <VictoryTooltip />,
+                          })}
+                        />
+                      ))}
+                    </VictoryStack>
+                  </VictoryChart>
+                </div>
+                {optionsConfig.map(
+                  ({ title, content: Content, hasVictoryChart = true }, i) =>
+                    Content && (
+                      <div key={i}>
+                        <h3 className="text-base font-bold mb-3">{title}</h3>
+                        {hasVictoryChart ? (
+                          <VictoryChart
+                            theme={customThemeConfig}
+                            domainPadding={20}
+                            style={chartStyle}
+                          >
+                            {Content({
+                              labels: ({ datum }) => datum.y || datum.x,
+                              ...(showTooltips && {
+                                labelComponent: <VictoryTooltip />,
+                              }),
+                            })}
+                          </VictoryChart>
+                        ) : (
+                          Content({
                             labels: ({ datum }) => datum.y || datum.x,
+                            style: chartStyle,
+                            theme: customThemeConfig,
                             ...(showTooltips && {
                               labelComponent: <VictoryTooltip />,
                             }),
-                          })}
-                        </VictoryChart>
-                      ) : (
-                        Content({
-                          labels: ({ datum }) => datum.y || datum.x,
-                          style: chartStyle,
-                          theme: customThemeConfig,
-                          ...(showTooltips && {
-                            labelComponent: <VictoryTooltip />,
-                          }),
-                        })
-                      )}
-                    </div>
-                  ),
-              )}
+                          })
+                        )}
+                      </div>
+                    ),
+                )}
+              </div>
             </div>
-          </div>
+          )}
+        </main>
+        {showThemeConfigPreview && customThemeConfig && (
+          <ConfigPreview
+            config={customThemeConfig}
+            onClose={handleThemeConfigPreviewClose}
+          />
         )}
-      </main>
-      {showThemeConfigPreview && customThemeConfig && (
-        <ConfigPreview
-          config={customThemeConfig}
-          onClose={handleThemeConfigPreviewClose}
-        />
-      )}
-    </div>
+      </div>
+    </Layout>
   );
 };
 

@@ -148,6 +148,11 @@ const config: Config = {
           label: "DOCS",
         },
         {
+          to: "/themes",
+          label: "THEMES",
+          position: "left",
+        },
+        {
           href: "https://github.com/FormidableLabs/victory",
           "aria-label": "GitHub Repository",
           className: "header-github-link",
