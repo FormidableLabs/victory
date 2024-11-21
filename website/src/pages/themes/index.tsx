@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./_components/tailwind.css";
+import "../../css/custom.css";
 
 import {
   ColorScalePropType,
@@ -17,8 +17,8 @@ import Select from "./_components/select";
 import ConfigPreview from "./_components/config-preview";
 import Button from "./_components/button";
 import ConfigMapper from "./_components/config-mapper";
-import { setNestedConfigValue } from "./_components/utils";
-import optionsConfig from "./_components/options-config";
+import { setNestedConfigValue } from "./_utils";
+import optionsConfig from "./_config";
 
 export type ThemeOption = {
   name: string;
@@ -125,11 +125,11 @@ const ThemeBuilder = () => {
   };
 
   return (
-    <div className="flex flex-row flex-wrap items-start justify-start w-full h-lvh">
-      <aside className="relative flex flex-col h-full w-[380px] border-r border-gray-200">
+    <div className="flex flex-row flex-wrap items-start justify-start w-full h-lvh theme-builder">
+      <aside className="relative flex flex-col h-full w-[380px] border-r border-grayscale-300">
         <div className="grow overflow-y-auto p-4 pb-[100px]">
           <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
-          <p className="text-sm mb-4 text-gray-300">
+          <p className="text-sm mb-4 text-grayscale-400">
             Select a theme to begin customizing.
           </p>
           <Select
@@ -151,7 +151,7 @@ const ThemeBuilder = () => {
             </section>
           )}
         </div>
-        <footer className="p-4 border-t border-gray-200 sticky bottom-0 flex justify-end bg-white">
+        <footer className="p-4 border-t border-grayscale-300 sticky bottom-0 flex justify-end bg-white">
           <Button
             onClick={handleThemeConfigPreviewOpen}
             ariaLabel="Get Theme Code"

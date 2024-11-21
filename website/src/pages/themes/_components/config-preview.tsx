@@ -40,13 +40,15 @@ const ConfigPreview = ({ config, onClose }: ConfigPreviewProps) => {
       <h2>Theme Config Preview</h2>
       <SyntaxHighlighter
         language="json"
-        className="flex-1 overflow-auto border border-gray-200 p-3 bg-gray-100"
+        className="flex-1 overflow-auto border border-grayscale-300 p-3 bg-grayscale-100"
       >
         {JSON.stringify(config, null, 2)}
       </SyntaxHighlighter>
       <div className="flex items-center justify-end gap-3 mt-5">
         {copyStatus && (
-          <span className="text-gray-300 text-xs italic">{copyStatus}</span>
+          <span className="text-grayscale-400 text-xs italic">
+            {copyStatus}
+          </span>
         )}
         <Button onClick={handleCopyThemeConfig} ariaLabel="Copy to Clipboard">
           Copy to Clipboard

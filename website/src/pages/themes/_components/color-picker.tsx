@@ -30,13 +30,13 @@ const ColorPicker = ({
   return (
     <fieldset className={className}>
       {label && (
-        <label className="block mb-1 text-sm text-gray-900 dark:text-white font-bold">
+        <label className="block mb-1 text-sm text-grayscale-900 dark:text-white font-bold">
           {label}
         </label>
       )}
       <div
         className={clsx("relative inline-flex rounded-full group/swatch", {
-          "border-2 border-gray-200 p-0.5 cursor-pointer justify-between bg-gray-100":
+          "border-2 border-grayscale-300 p-0.5 cursor-pointer justify-between bg-grayscale-100":
             showColorName,
         })}
       >
@@ -46,7 +46,7 @@ const ColorPicker = ({
               className={clsx(
                 "block w-[35px] h-[35px] rounded-full cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor",
                 {
-                  "outline-2 border-2 border-white outline outline-gray-200":
+                  "outline-2 border-2 border-white outline outline-grayscale-300":
                     !showColorName,
                 },
                 { "w-[30px] h-[30px] p-0.5": showColorName },
@@ -68,7 +68,7 @@ const ColorPicker = ({
           {showColorName && (
             <span
               className={
-                "text-sm font-medium text-gray-900 uppercase ml-2 cursor-pointer"
+                "text-sm font-medium text-grayscale-900 uppercase ml-2 cursor-pointer"
               }
             >
               {color}
@@ -77,7 +77,7 @@ const ColorPicker = ({
         </div>
         {showColorName && (
           <div
-            className={`text-gray-300 flex justify-center items-center text-xl rounded-full place-items-end ml-6 mr-1`}
+            className={`text-grayscale-400 flex justify-center items-center text-xl rounded-full place-items-end ml-6 mr-1`}
           >
             <TiPencil />
           </div>

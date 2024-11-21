@@ -39,7 +39,7 @@ const Select = ({
         id={id}
         value={value}
         onChange={handleChange}
-        className="p-2 w-full text-base border border-gray-200 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-[right_8px_center] bg-[length:16px]"
+        className="p-2 w-full text-base border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-[right_8px_center] bg-[length:16px]"
       >
         {options.map((option, i) => (
           <option key={(option.value || "") + i} value={option.value}>

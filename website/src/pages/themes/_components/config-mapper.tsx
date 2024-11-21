@@ -1,11 +1,11 @@
 import React from "react";
-import optionsConfig from "./options-config";
+import optionsConfig from "../_config";
 import Accordion from "./accordion";
 import Select from "./select";
 import Slider from "./slider";
 import ColorPicker from "./color-picker";
 import ColorScaleOptions from "./color-scale-options";
-import { getConfigValue } from "./utils";
+import { getConfigValue } from "../_utils";
 
 const ControlComponent = ({
   type,

@@ -23,11 +23,11 @@ const Accordion = ({
 
   return (
     <div id={id} className="group">
-      <h2 id={`${id}-heading`}>
+      <h2 id={`${id}-heading`} className="mb-0">
         <button
           type="button"
           className={clsx(
-            "flex items-center justify-between w-full px-5 py-3 text-sm font-bold rtl:text-right text-gray-500 border border-b-0 border-gray-200 gap-3 group-last:border-b",
+            "bg-white flex items-center justify-between w-full px-5 py-3 text-sm font-bold rtl:text-right text-grayscale-500 border border-b-0 border-grayscale-300 gap-3 group-last:border-b",
             { "group-last:border-b-0": isOpen },
           )}
           aria-expanded="true"
@@ -45,7 +45,7 @@ const Accordion = ({
         className={isOpen ? "block" : "hidden"}
         aria-labelledby={`${id}-heading`}
       >
-        <div className="p-5 border border-b-0 border-gray-200 group-last:border-b">
+        <div className="p-5 border border-b-0 border-grayscale-300 group-last:border-b">
           {children}
         </div>
       </div>
