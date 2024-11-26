@@ -282,7 +282,6 @@
     },
     "check": {
       "dependencies": [
-        "e2e",
         "types:check",
         "jest",
         "format",
@@ -299,7 +298,6 @@
       "dependencies": [
         "types:create",
         "../victory-area:types:create",
-        "e2e",
         "../victory-axis:types:create",
         "../victory-bar:types:create",
         "../victory-box-plot:types:create",
