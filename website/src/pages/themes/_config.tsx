@@ -4,6 +4,7 @@ import {
   VictoryArea,
   VictoryAxis,
   VictoryBar,
+  VictoryBoxPlot,
   VictoryCandlestick,
   VictoryErrorBar,
   VictoryHistogram,
@@ -130,7 +131,7 @@ const getBaseLabelsConfig = (
   },
   {
     type: "slider",
-    label: "Padding",
+    label: "Text Padding",
     min: 0,
     max: 50,
     unit: "px",
@@ -139,7 +140,7 @@ const getBaseLabelsConfig = (
   },
   {
     type: "colorPicker",
-    label: "Fill",
+    label: "Font Color",
     path: getPath(basePath, "fill"),
     default: defaultFill,
   },
@@ -250,6 +251,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
           "pie.style.labels",
           "scatter.style.labels",
           "voronoi.style.labels",
+          "boxplot.style.maxLabels",
+          "boxplot.style.medianLabels",
+          "boxplot.style.minLabels",
+          "boxplot.style.q1Labels",
+          "boxplot.style.q3Labels",
         ]),
       },
       {
@@ -537,6 +543,112 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig("bar.style.labels"),
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Box Plot",
+    content: (props) => (
+      <VictoryBoxPlot
+        {...props}
+        data={[
+          { x: 1, y: [1, 2, 3, 5, 8] },
+          { x: 2, y: [3, 2, 8, 10, 12] },
+          { x: 3, y: [2, 8, 6, 5, 10] },
+          { x: 4, y: [1, 3, 2, 9, 5] },
+          { x: 5, y: [3, 2, 9, 5, 7] },
+        ]}
+        labels
+        labelOrientation="right"
+      />
+    ),
+    fields: [
+      {
+        type: "section",
+        label: "Max",
+        fields: [
+          ...getBaseStrokeConfig("boxplot.style.max", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
+          ...getBaseLabelsConfig("boxplot.style.maxLabels"),
+        ],
+      },
+      {
+        type: "section",
+        label: "Median",
+        fields: [
+          ...getBaseStrokeConfig("boxplot.style.median", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
+          ...getBaseLabelsConfig("boxplot.style.medianLabels"),
+        ],
+      },
+      {
+        type: "section",
+        label: "Min",
+        fields: [
+          ...getBaseStrokeConfig("boxplot.style.min", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
+          ...getBaseLabelsConfig("boxplot.style.minLabels"),
+        ],
+      },
+      {
+        type: "section",
+        label: "Q1",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            default: defaultFill,
+            path: "boxplot.style.q1.fill",
+          },
+          {
+            type: "slider",
+            label: "Border Radius",
+            min: 0,
+            max: 10,
+            step: 0.5,
+            default: 0,
+            path: "boxplot.q1.rx",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            default: 1,
+            path: "boxplot.style.q1.strokeWidth",
+          },
+          ...getBaseLabelsConfig("boxplot.style.q1Labels"),
+        ],
+      },
+      {
+        type: "section",
+        label: "Q3",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            default: defaultFill,
+            path: "boxplot.style.q3.fill",
+          },
+          {
+            type: "slider",
+            label: "Border Radius",
+            min: 0,
+            max: 10,
+            step: 0.5,
+            default: 0,
+            path: "boxplot.q3.rx",
+          },
+          ...getBaseLabelsConfig("boxplot.style.q3Labels"),
+        ],
       },
     ],
   },
