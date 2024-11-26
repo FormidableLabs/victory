@@ -29,6 +29,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Install Test Dependencies
+        working-directory: ./e2e
         run: pnpm install
       
       - name: Install Playwright
