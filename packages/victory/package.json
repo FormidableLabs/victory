@@ -66,7 +66,6 @@
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
     "check": "wireit",
-    "chromatic": "chromatic --playwright --exit-zero-on-changes",
     "types:check": "wireit",
     "types:create": "wireit",
     "lint": "wireit",

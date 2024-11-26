@@ -135,6 +135,7 @@
     "start:docs": "wireit",
     "check": "wireit",
     "check:debug": "cross-env WIREIT_PARALLEL=1 pnpm check",
+    "chromatic": "chromatic --playwright --exit-zero-on-changes",
     "clean:build": "rimraf coverage \"packages/*/{dist,es,lib}\"",
     "clean:cache": "wireit",
     "clean:cache:lint": "rimraf .eslintcache \"{demo,packages}/*/.eslintcache\"",

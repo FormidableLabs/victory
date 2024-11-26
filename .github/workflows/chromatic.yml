@@ -21,6 +21,8 @@ jobs:
     name: Playwright Tests with Chromatic on ${{ github.event.deployment_status.environment }}
     if: github.event.pull_request.draft == false && github.repository == 'FormidableLabs/victory' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.49.0-jammy
     steps:
       - uses: actions/checkout@v4
         with:
@@ -65,12 +67,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-        
-      - name: Download Playwright test results
-        uses: actions/download-artifact@v4
-        with:
-          name: playwright-results
-          path: ./playwright-report
           
       - name: Run Chromatic
         uses: chromaui/action@latest
@@ -94,6 +90,12 @@ jobs:
 
       - name: Build Victory
         run: pnpm run build:lib:esm
+
+      - name: Download Playwright test results
+        uses: actions/download-artifact@v4
+        with:
+          name: playwright-results
+          path: ./playwright-report
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
