@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         
@@ -46,7 +46,7 @@ jobs:
         if: always()
         with:
           name: playwright-results
-          path: ./e2e/playwright-report
+          path: ./playwright-report
           retention-days: 30
 
   chromatic:
@@ -66,7 +66,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: playwright-results
-          path: ./e2e/playwright-report
+          path: ./playwright-report
       - name: Run Chromatic
         uses: chromaui/action@latest
         with:
