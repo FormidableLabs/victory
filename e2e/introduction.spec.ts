@@ -1,7 +1,7 @@
 import { test, expect } from '@chromatic-com/playwright'
 import { IntroPage } from './pages/IntroductionPage';
 
-test.only('should load intro page', async ({ page }) => {
+test('should load intro page', async ({ page }) => {
   const introPage = new IntroPage(page)
   await introPage.goto()
   await expect(introPage.pageTitle).toBeVisible()

@@ -15,6 +15,6 @@ export class IntroPage {
   }
 
   async goto() {
-    await this.page.goto('http://localhost:5855/open-source/victory/docs/introduction/')
+    await this.page.goto('/open-source/victory/docs/introduction/')
   }
 }

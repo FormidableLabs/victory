@@ -66,6 +66,7 @@
     "build:dist:dev": "wireit",
     "build:dist:min": "wireit",
     "check": "wireit",
+    "chromatic": "chromatic --playwright --exit-zero-on-changes",
     "types:check": "wireit",
     "types:create": "wireit",
     "lint": "wireit",
@@ -282,6 +283,7 @@
     },
     "check": {
       "dependencies": [
+        "e2e",
         "types:check",
         "jest",
         "format",
@@ -298,6 +300,7 @@
       "dependencies": [
         "types:create",
         "../victory-area:types:create",
+        "e2e",
         "../victory-axis:types:create",
         "../victory-bar:types:create",
         "../victory-box-plot:types:create",
