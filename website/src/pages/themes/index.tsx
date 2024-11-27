@@ -118,6 +118,7 @@ const ThemeBuilder = () => {
   };
 
   const handleThemeConfigPreviewOpen = () => {
+    window.scrollTo({ top: 0 });
     setShowThemeConfigPreview(true);
   };
 

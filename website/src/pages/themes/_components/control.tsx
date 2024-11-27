@@ -92,6 +92,7 @@ const Control = ({
           onChange={handleChange}
           options={field.options}
           className={className}
+          includeDefault
         />
       );
     case "colorPicker":

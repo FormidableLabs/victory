@@ -12,6 +12,7 @@ type SelectProps = {
   options: SelectOption[];
   value?: string;
   onChange: (value?: string) => void;
+  includeDefault?: boolean;
   className?: string;
 };
 
@@ -21,6 +22,7 @@ const Select = ({
   options,
   value = "",
   onChange,
+  includeDefault,
   className,
 }: SelectProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -41,6 +43,7 @@ const Select = ({
         onChange={handleChange}
         className="p-2 w-full text-base border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-[right_8px_center] bg-[length:16px]"
       >
+        {includeDefault && <option value="">Default</option>}
         {options.map((option, i) => (
           <option key={(option.value || "") + i} value={option.value}>
             {option.label}

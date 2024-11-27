@@ -44,10 +44,10 @@ const ColorPicker = ({
     setColorOption(value);
     if (value === ColorPickerOptions.NONE) {
       onColorChange(ColorPickerOptions.NONE);
-    } else if (value === DEFAULT_COLOR) {
-      onColorChange(DEFAULT_COLOR);
-    } else {
+    } else if (value === ColorPickerOptions.CUSTOM) {
       onColorChange(PLACEHOLDER_COLOR);
+    } else {
+      onColorChange(DEFAULT_COLOR);
     }
   };
 
@@ -71,11 +71,11 @@ const ColorPicker = ({
               id="color-option"
               value={colorOption}
               options={[
-                { label: "Default", value: DEFAULT_COLOR },
                 { label: "None", value: ColorPickerOptions.NONE },
                 { label: "Custom", value: ColorPickerOptions.CUSTOM },
               ]}
               onChange={handleColorOptionChange}
+              includeDefault
             />
           </div>
         )}
