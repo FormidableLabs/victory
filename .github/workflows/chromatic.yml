@@ -15,6 +15,10 @@ on:
       - "packages/**"
       - "website/**"
   deployment_status:
+permissions:
+  id-token: write
+  contents: read
+
 
 jobs:
   playwright:
