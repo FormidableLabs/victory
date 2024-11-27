@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./button";
 import { VictoryThemeDefinition } from "victory";
-import { Highlight } from "prism-react-renderer";
+import CodeBlock from "./code-block";
 
 type ConfigPreviewProps = {
   config: VictoryThemeDefinition;
@@ -28,40 +28,79 @@ const ConfigPreview = ({ config, onClose }: ConfigPreviewProps) => {
   };
 
   return (
-    <div className="fixed top-[60px] right-0 bottom-0 max-h-screen w-full p-10 z-[100] bg-white flex flex-col">
+    <div className="fixed top-[60px] right-0 w-full py-10 px-20 z-[100] bg-white flex flex-col overflow-y-auto min-h-screen">
       <button
         onClick={handleClose}
         className="absolute top-3 right-3 bg-transparent border-0 text-2xl cursor-pointer"
       >
         &times;
       </button>
-      <h2>Theme Config Preview</h2>
-      <Highlight
-        code={JSON.stringify(config, null, 2)}
-        language="json"
-        className="flex-1 overflow-auto border border-grayscale-300 p-3 bg-grayscale-100"
-      >
-        {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={className} style={style}>
-            {tokens.map((line, i) => (
-              <div {...getLineProps({ line, key: i })} key={i}>
-                {line.map((token, key) => (
-                  <span {...getTokenProps({ token, key })} key={key} />
-                ))}
-              </div>
-            ))}
-          </pre>
-        )}
-      </Highlight>
-      <div className="flex items-center justify-end gap-3 mt-5">
-        {copyStatus && (
-          <span className="text-grayscale-400 text-xs italic">
-            {copyStatus}
-          </span>
-        )}
-        <Button onClick={handleCopyThemeConfig} ariaLabel="Copy to Clipboard">
-          Copy to Clipboard
-        </Button>
+      <div className="flex gap-20">
+        <section className="w-1/3">
+          <h1 className="text-2xl">Using Your Exported Victory Theme Config</h1>
+          <ol>
+            <li>
+              <strong>Copy the Config</strong>
+              <ul>
+                <li>
+                  Click the <em>Copy to Clipboard</em> button to copy the JSON
+                  theme configuration.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Save the Exported Theme as a File</strong>
+              <ul>
+                <li>
+                  Save the copied JSON as a <code>.js</code> or{" "}
+                  <code>.json</code> file in your project, e.g.,{" "}
+                  <code>theme.js</code>.
+                </li>
+                <li>
+                  Import the theme in your app:
+                  <CodeBlock
+                    language="javascript"
+                    code={`import customTheme from './theme.js';`}
+                  />
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong>Apply to Victory Components</strong>
+              <ul>
+                <li>
+                  Use the <code>theme</code> prop on any Victory component:
+                  <CodeBlock
+                    language="javascript"
+                    code={`<VictoryChart theme={customTheme}>
+  {/* Your Victory components */}
+</VictoryChart>`}
+                  />
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </section>
+        <section className="flex-1">
+          <CodeBlock
+            language="json"
+            code={JSON.stringify(config, null, 2)}
+            className="min-h-[500px] max-h-[80vh]"
+          />
+          <div className="flex items-center justify-end gap-3 mt-5">
+            {copyStatus && (
+              <span className="text-grayscale-400 text-xs italic">
+                {copyStatus}
+              </span>
+            )}
+            <Button
+              onClick={handleCopyThemeConfig}
+              ariaLabel="Copy to Clipboard"
+            >
+              Copy to Clipboard
+            </Button>
+          </div>
+        </section>
       </div>
     </div>
   );
