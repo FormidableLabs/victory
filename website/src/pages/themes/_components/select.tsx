@@ -11,7 +11,7 @@ type SelectProps = {
   label?: string;
   options: SelectOption[];
   value?: string;
-  onChange: (value: string) => void;
+  onChange: (value?: string) => void;
   className?: string;
 };
 

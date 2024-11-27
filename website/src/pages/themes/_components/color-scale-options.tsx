@@ -2,12 +2,7 @@ import React from "react";
 import Select from "./select";
 import ColorPicker from "./color-picker";
 import { ColorScalePropType, VictoryThemeDefinition } from "victory";
-
-export type ColorChangeArgs = {
-  newColor: string;
-  index: number;
-  colorScale: string;
-};
+import { ColorChangeArgs } from "./control";
 
 type ColorScaleOptionsProps = {
   palette?: VictoryThemeDefinition["palette"];

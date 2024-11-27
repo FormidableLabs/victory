@@ -28,7 +28,7 @@ const ConfigPreview = ({ config, onClose }: ConfigPreviewProps) => {
   };
 
   return (
-    <div className="fixed top-0 right-0 bottom-0 w-full p-10 z-[100] bg-white flex flex-col">
+    <div className="absolute top-0 right-0 bottom-0 w-full p-10 z-[100] bg-white flex flex-col">
       <button
         onClick={handleClose}
         className="absolute top-3 right-3 bg-transparent border-0 text-xl"

@@ -7,6 +7,7 @@ import {
   VictoryBoxPlot,
   VictoryCandlestick,
   VictoryErrorBar,
+  VictoryGroup,
   VictoryHistogram,
   VictoryLegend,
   VictoryLine,
@@ -50,7 +51,7 @@ type ThemeBuilderOptionsConfig = {
   fields: ThemeBuilderFieldConfig[];
 }[];
 
-const defaultFill = "#000";
+const defaultFill = undefined;
 
 const getPath = (basePath: string | string[], key: string) => {
   if (Array.isArray(basePath)) {
@@ -58,6 +59,25 @@ const getPath = (basePath: string | string[], key: string) => {
   }
   return `${basePath}.${key}`;
 };
+
+const getNestedColorScaleConfig = (
+  basePath: string | string[],
+): ThemeBuilderFieldConfig[] => [
+  {
+    type: "select",
+    label: "Color Scale",
+    options: [
+      { label: "Qualitative", value: "qualitative" },
+      { label: "Heatmap", value: "heatmap" },
+      { label: "Warm", value: "warm" },
+      { label: "Cool", value: "cool" },
+      { label: "Red", value: "red" },
+      { label: "Green", value: "green" },
+    ],
+    default: "qualitative",
+    path: getPath(basePath, "colorScale"),
+  },
+];
 
 const getBaseStrokeConfig = (
   basePath: string | string[],
@@ -67,7 +87,7 @@ const getBaseStrokeConfig = (
     {
       type: "colorPicker",
       label: StrokeProps.STROKE,
-      default: defaultFill,
+      default: undefined,
       path: getPath(basePath, "stroke"),
     },
     {
@@ -282,33 +302,17 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "General",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Fill",
-            default: defaultFill,
-            path: "axis.style.axis.fill",
-          },
-          ...getBaseStrokeConfig("axis.style.axis", [
-            StrokeProps.STROKE,
-            StrokeProps.STROKE_WIDTH,
-            StrokeProps.STROKE_LINE_CAP,
-            StrokeProps.STROKE_LINE_JOIN,
-          ]),
-        ],
+        fields: getBaseStrokeConfig("axis.style.axis", [
+          StrokeProps.STROKE,
+          StrokeProps.STROKE_WIDTH,
+          StrokeProps.STROKE_LINE_CAP,
+          StrokeProps.STROKE_LINE_JOIN,
+        ]),
       },
       {
         type: "section",
         label: "Grid",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Fill",
-            default: defaultFill,
-            path: "axis.style.grid.fill",
-          },
-          ...getBaseStrokeConfig("axis.style.grid"),
-        ],
+        fields: getBaseStrokeConfig("axis.style.grid"),
       },
       {
         type: "section",
@@ -493,17 +497,35 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
-      <VictoryBar
-        key="bar-chart"
-        {...props}
-        data={[
-          { x: 1, y: 2, label: "A" },
-          { x: 2, y: 3, label: "B" },
-          { x: 3, y: 5, label: "C" },
-          { x: 4, y: 4, label: "D" },
-          { x: 5, y: 7, label: "E" },
-        ]}
-      />,
+      <VictoryGroup key="victory-group" domainPadding={{ x: 20 }} offset={20}>
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 1 },
+            { x: "2023 Q2", y: 2 },
+            { x: "2023 Q3", y: 3 },
+            { x: "2023 Q4", y: 2 },
+          ]}
+        />
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 2 },
+            { x: "2023 Q2", y: 3 },
+            { x: "2023 Q3", y: 4 },
+            { x: "2023 Q4", y: 5 },
+          ]}
+        />
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 1 },
+            { x: "2023 Q2", y: 2 },
+            { x: "2023 Q3", y: 3 },
+            { x: "2023 Q4", y: 4 },
+          ]}
+        />
+      </VictoryGroup>,
     ],
     fields: [
       {
@@ -869,6 +891,28 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
   },
   {
     type: "section",
+    title: "Group",
+    fields: [
+      {
+        type: "section",
+        label: "Data",
+        fields: [
+          ...getNestedColorScaleConfig("group"),
+          {
+            type: "slider",
+            label: "Width",
+            min: 0,
+            max: 50,
+            unit: "px",
+            default: 15,
+            path: "group.style.data.width",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: "section",
     title: "Legend",
     content: (props) => [
       <VictoryLegend
@@ -1055,6 +1099,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Data",
         fields: [
+          ...getNestedColorScaleConfig("pie"),
           {
             type: "slider",
             label: "Padding",
