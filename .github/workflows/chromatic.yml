@@ -93,9 +93,6 @@ jobs:
         with:
           node-version: 18.x
 
-      - name: Build Victory
-        run: pnpm run build:lib:esm
-
       - name: Download Playwright test results
         uses: actions/download-artifact@v4
         with:
