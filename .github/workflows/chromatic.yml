@@ -51,7 +51,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-results.zip
+          name: playwright-results
           path: ./playwright-report
           retention-days: 30
 
@@ -72,6 +72,11 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Download Playwright test results
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ github.workspace }}
           
       - name: Run Chromatic
         uses: chromaui/action@latest
@@ -92,12 +97,6 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           node-version: 18.x
-
-      - name: Download Playwright test results
-        uses: actions/download-artifact@v4
-        with:
-          name: playwright-results
-          path: ./playwright-report
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
