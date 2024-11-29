@@ -51,7 +51,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-results
+          name: playwright-results.zip
           path: ./playwright-report
           retention-days: 30
 
