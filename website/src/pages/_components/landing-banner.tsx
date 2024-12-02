@@ -6,7 +6,7 @@ export const LandingBanner = () => (
     <div className="lg:max-w-[90%] flex flex-col sm:flex-row justify-between items-center m-auto">
       <div className="flex flex-col sm:flex-row items-center gap-2.5">
         <p className="m-0 text-sm font-bold text-center sm:text-left">
-          Like this project? You'll love working with us.
+          Like this project? You&apos;ll love working with us.
         </p>
         <p className="m-0 text-sm">
           Contact us to learn more{" "}
