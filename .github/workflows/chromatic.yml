@@ -79,7 +79,7 @@ jobs:
           path: ${{ github.workspace }}
           
       - name: Run Chromatic
-        uses: chromaui/action@latest
+        uses: FormidableLabs/chromaui-action
         with:
           playwright: true
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
