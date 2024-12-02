@@ -7,23 +7,12 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "stories/**"
-      - "packages/**"
-      - "website/**"
   deployment_status:
-permissions:
-  id-token: write
-  contents: read
-
 
 jobs:
   playwright:
     name: Playwright Tests with Chromatic on ${{ github.event.deployment_status.environment }}
-    if: github.event.pull_request.draft == false && github.repository == 'FormidableLabs/victory' && github.event.deployment_status.state == 'success'
+    if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.49.0-jammy
@@ -48,6 +37,7 @@ jobs:
         run: npx playwright test
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -63,6 +53,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - uses: ./.github/actions/setup
         with:
           node-version: 18.x
@@ -84,22 +75,4 @@ jobs:
           playwright: true
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
     
-  storybook:
-    name: Storybook Publish
-    if: github.event.pull_request.draft == false && github.repository == 'FormidableLabs/victory'
-    runs-on: ubuntu-latest
-    steps:
-      # requires all branches and tags to be fetched for chromatic
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: ./.github/actions/setup
-        with:
-          node-version: 18.x
-
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+  
