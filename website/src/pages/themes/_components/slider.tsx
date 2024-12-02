@@ -30,14 +30,15 @@ const Slider = ({
     }
   };
 
+  const valueString = value !== undefined ? `${value}${unit ?? ""}` : "default";
+
   return (
     <div className={className}>
       <label
         htmlFor={id}
         className="block mb-1 text-sm font-medium text-grayscale-900 dark:text-white"
       >
-        <span className="text-sm font-bold">{label}</span>: {value}
-        {unit}
+        <span className="text-sm font-bold">{label}</span>: {valueString}
       </label>
       <input
         id={id}

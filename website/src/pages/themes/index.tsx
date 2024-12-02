@@ -89,7 +89,7 @@ const ThemeBuilder = () => {
     React.useState(false);
   const [showTooltips, setShowTooltips] = React.useState(false);
 
-  const handleThemeSelect = (themeName: string) => {
+  const handleThemeSelect = (themeName?: string) => {
     const theme = themes.find((t) => t.name === themeName);
     if (!theme) {
       setBaseTheme(undefined);
@@ -118,6 +118,7 @@ const ThemeBuilder = () => {
   };
 
   const handleThemeConfigPreviewOpen = () => {
+    window.scrollTo({ top: 0 });
     setShowThemeConfigPreview(true);
   };
 
@@ -127,8 +128,8 @@ const ThemeBuilder = () => {
 
   return (
     <Layout>
-      <div className="flex flex-row flex-wrap items-start justify-start w-full h-lvh theme-builder">
-        <aside className="relative flex flex-col h-full w-[380px] border-r border-grayscale-300">
+      <div className="relative flex flex-row flex-wrap items-start justify-start w-full theme-builder">
+        <aside className="sticky top-0 h-screen flex flex-col w-[380px] border-r border-grayscale-300">
           <div className="grow overflow-y-auto p-4 pb-[100px]">
             <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
             <p className="text-sm mb-4 text-grayscale-400">
@@ -167,22 +168,27 @@ const ThemeBuilder = () => {
         </aside>
         <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
           {customThemeConfig && (
-            <div className="max-w-screen-xl w-full py-4 px-10">
-              <h2 className="text-xl font-bold mb-4">Example Charts</h2>
-              <fieldset>
-                <div className="flex items-center gap-4 mb-4">
-                  <input
-                    type="checkbox"
-                    id="show-tooltips"
-                    className="form-checkbox h-5 w-5 text-primary"
-                    checked={showTooltips}
-                    onChange={() => setShowTooltips(!showTooltips)}
-                  />
-                  <label htmlFor="show-tooltips">
-                    Show tooltips instead of labels
-                  </label>
-                </div>
-              </fieldset>
+            <div className="max-w-screen-xl w-full p-10 pb-20">
+              <div className="flex justify-between items-center mb-4">
+                <h1 className="text-4xl font-bold">Example Charts</h1>
+                <fieldset className="p-0 m-0">
+                  <div className="flex items-center gap-2 mb-4 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      id="show-tooltips"
+                      className="form-checkbox h-4 w-4 text-primary"
+                      checked={showTooltips}
+                      onChange={() => setShowTooltips(!showTooltips)}
+                    />
+                    <label
+                      htmlFor="show-tooltips"
+                      className="text-xs cursor-pointer"
+                    >
+                      Show tooltips instead of labels
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
               <div className="grid grid-cols-2 gap-10">
                 <div>
                   <h3 className="text-base font-bold mb-3">
@@ -200,11 +206,7 @@ const ThemeBuilder = () => {
                       aria-label="Victory Stack Demo"
                     >
                       {[...Array(NUM_STACKS)].map((_, i) => (
-                        <VictoryArea
-                          data={sampleStackData}
-                          key={i}
-                          labels={() => undefined}
-                        />
+                        <VictoryArea data={sampleStackData} key={i} />
                       ))}
                     </VictoryStack>
                   </VictoryChart>
