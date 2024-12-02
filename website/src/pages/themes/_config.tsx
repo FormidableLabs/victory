@@ -16,6 +16,7 @@ import {
   VictoryScatter,
   VictoryVoronoi,
 } from "victory";
+import { colorScaleOptions } from "./_components/color-scale-options";
 
 type ThemeBuilderFieldConfig =
   | {
@@ -63,14 +64,7 @@ const getNestedColorScaleConfig = (
   {
     type: "select",
     label: "Color Scale",
-    options: [
-      { label: "Qualitative", value: "qualitative" },
-      { label: "Heatmap", value: "heatmap" },
-      { label: "Warm", value: "warm" },
-      { label: "Cool", value: "cool" },
-      { label: "Red", value: "red" },
-      { label: "Green", value: "green" },
-    ],
+    options: colorScaleOptions,
     path: getPath(basePath, "colorScale"),
   },
 ];

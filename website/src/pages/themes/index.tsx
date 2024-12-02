@@ -83,8 +83,9 @@ const ThemeBuilder = () => {
   const [customThemeConfig, setCustomThemeConfig] = React.useState<
     VictoryThemeDefinition | undefined
   >(undefined);
-  const [activeColorScale, setActiveColorScale] =
-    React.useState<ColorScalePropType>("qualitative");
+  const [activeColorScale, setActiveColorScale] = React.useState<
+    string | undefined
+  >(undefined);
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
     React.useState(false);
   const [showTooltips, setShowTooltips] = React.useState(false);
@@ -113,8 +114,9 @@ const ThemeBuilder = () => {
     setCustomThemeConfig(updatedConfig);
   };
 
-  const handleColorScaleChange = (colorScale: string) => {
-    setActiveColorScale(colorScale as ColorScalePropType);
+  const handleColorScaleChange = (colorScale?: string) => {
+    const newColorScale = colorScale === "" ? undefined : colorScale;
+    setActiveColorScale(newColorScale);
   };
 
   const handleThemeConfigPreviewOpen = () => {
@@ -202,7 +204,7 @@ const ThemeBuilder = () => {
                     <VictoryAxis label="X Axis" />
                     <VictoryAxis dependentAxis label="Y Axis" />
                     <VictoryStack
-                      colorScale={activeColorScale}
+                      colorScale={activeColorScale as ColorScalePropType}
                       aria-label="Victory Stack Demo"
                     >
                       {[...Array(NUM_STACKS)].map((_, i) => (
