@@ -23,8 +23,9 @@ jobs:
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         id: deployment
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
+          path: "/open-source/victory"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v4
         with:
