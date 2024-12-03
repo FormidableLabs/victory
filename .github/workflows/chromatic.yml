@@ -17,6 +17,9 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.49.0-jammy
     steps:
+      - name: Output Run ID
+        run: echo "RUN_ID=${{ github.run_id }}" >> $GITHUB_OUTPUT
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
