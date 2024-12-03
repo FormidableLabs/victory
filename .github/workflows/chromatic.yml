@@ -42,7 +42,7 @@ jobs:
         if: always()
         with:
           name: playwright-results
-          path: ./playwright-report
+          path: ${{ github.workspace }}
           retention-days: 30
 
   chromatic:
