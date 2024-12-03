@@ -34,16 +34,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: ./.github/actions/setup
-        with:
-          node-version: 18.x
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        
-      - name: Install Test Dependencies
-        run: pnpm install
-      
+      - uses: ./.github/actions/setup
+
       - name: Install Playwright
         run: pnpm playwright install --with-deps
 
@@ -59,8 +52,8 @@ jobs:
           path: ./test-results
           retention-days: 30
 
-  chromatic:
-    name: Run Chromatic
+  upload_playwright:
+    name: Upload Playwright
     needs: playwright
     runs-on: ubuntu-latest
     steps:
@@ -69,14 +62,6 @@ jobs:
           fetch-depth: 0
 
       - uses: ./.github/actions/setup
-        with:
-          node-version: 18.x
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Install dependencies
-        run: pnpm install
 
       - name: Download Playwright test results
         uses: actions/download-artifact@v4
@@ -90,4 +75,20 @@ jobs:
           playwright: true
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
     
-  
+  upload_storybook:
+    name: Upload Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup
+
+      - name: Build Victory
+        run: pnpm run build
+
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
