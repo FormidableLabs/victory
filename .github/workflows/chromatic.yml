@@ -4,18 +4,27 @@ on:
   push:
     branches:
       - main
-  deployment_status:
+  pull_request:
+    branches:
+      - main
+    # paths:
+    #   - "stories/**"
+    #   - "packages/**"
+    #   - "website/**"
 
 jobs:
   playwright:
-    name: Playwright Tests with Chromatic on ${{ github.event.deployment_status.environment }}
-    if: github.event.deployment_status.state == 'success'
+    name: Playwright Tests
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.49.0-jammy
     steps:
-      - name: Output Run Number
-        run: echo "RUN_ID=${{ github.run_number }}" >> $GITHUB_OUTPUT
+      - name: Wait for Deployment
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: deployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
 
       - uses: actions/checkout@v4
         with:
@@ -36,7 +45,7 @@ jobs:
       - name: Run Playwright Tests
         run: npx playwright test
         env:
-          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ steps.deployment.outputs.url }}
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -71,7 +80,8 @@ jobs:
           path: ./playwright-report
           
       - name: Run Chromatic
-        uses: FormidableLabs/chromaui-action@latest
+        env: CHROMATIC_ARCHIVE_LOCATION=./playwright-report
+        uses: chromaui/action@latest
         with:
           playwright: true
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
