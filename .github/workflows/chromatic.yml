@@ -45,7 +45,7 @@ jobs:
         if: always()
         with:
           name: playwright-results
-          path: ${{ github.workspace }}
+          path: ./playwright-report
           retention-days: 30
 
   chromatic:
@@ -70,7 +70,8 @@ jobs:
       - name: Download Playwright test results
         uses: actions/download-artifact@v4
         with:
-          path: ${{ github.workspace }}
+          name: playwright-results
+          path: ./playwright-report
           
       - name: Run Chromatic
         uses: FormidableLabs/chromaui-action@latest
