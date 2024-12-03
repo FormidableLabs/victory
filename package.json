@@ -283,7 +283,7 @@
       ]
     },
     "lint:root": {
-      "command": "eslint --color *.js scripts config demo stories test website",
+      "command": "eslint --color *.js scripts config demo stories test website e2e",
       "files": [
         "*.js",
         "scripts",
@@ -300,7 +300,7 @@
       ]
     },
     "lint:root:fix": {
-      "command": "eslint --color --fix *.js scripts config demo stories test website",
+      "command": "eslint --color --fix *.js scripts config demo stories test website e2e",
       "files": [
         "*.js",
         "scripts",
