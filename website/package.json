@@ -47,6 +47,7 @@
     "d3-scale": "^3.2.1",
     "d3-time": "^1.1.0",
     "find-cache-dir": "5.0.0",
+    "@heroicons/react": "^2.2.0",
     "mdast-util-from-markdown": "^2.0.1",
     "postcss": "^8.4.38",
     "prismjs": "^1.29.0",

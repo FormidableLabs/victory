@@ -49,8 +49,8 @@ const Control = ({
       );
     case "section":
       return (
-        <section className="mb-6">
-          <h3 className="text-lg text-secondary font-bold mb-4">
+        <section className="mb-6 pt-6 border-t border-gray-200">
+          <h3 className="text-md text-secondary font-semibold mb-4">
             {field.label}
           </h3>
           {field.fields.map((subField, i) => (
