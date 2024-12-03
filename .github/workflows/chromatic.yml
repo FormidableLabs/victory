@@ -1,8 +1,5 @@
 name: Chromatic
 
-# Runs chromatic on:
-# - every push to main (to create a chromatic baseline)
-# - every pull request where there are changes in stories/ or packages/ and the PR is not in draft mode
 on:
   push:
     branches:
