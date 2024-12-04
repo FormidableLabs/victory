@@ -1,14 +1,22 @@
 import React from "react";
+import { FaArrowRight } from "react-icons/fa";
 
 export default function SidebarLeadBanner() {
   return (
-    <div style={{ padding: "1rem", borderTop: "1px solid #ddd" }}>
-      <p>
-        <strong>Custom Component:</strong> Add any content here!
+    <aside className="rounded-xl bg-[#f2f2f2] m-3 py-7 px-9 text-[#606770]">
+      <p className="text-base font-bold">
+        Like this project? You&apos;ll love working with us.
       </p>
-      <a href="https://example.com" target="_blank" rel="noopener noreferrer">
-        Visit our site
+      <p className="text-sm">
+        Contact us to learn more about our full range of services and offerings.
+      </p>
+      <a
+        className="text-[#606770] text-sm font-bold flex items-center justify-end min-w-[100px] gap-1.5 underline underline-offset-4 decoration-2 text-[var(--ifm-color-primary)] hover:text-white"
+        href="/"
+      >
+        Learn More
+        <FaArrowRight height={40} width={40} scale={5} />
       </a>
-    </div>
+    </aside>
   );
 }
