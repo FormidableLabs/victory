@@ -35,6 +35,11 @@ const getAngleAccessor = (scale) => {
   };
 };
 
+const formatPathData = (pathData: string) => {
+  // Truncate to 2 decimal places
+  return pathData.replace(/(\d+\.\d{2})\d*/g, "$1");
+};
+
 const getCartesianArea = (props: AreaProps) => {
   const { horizontal, scale } = props;
   const interpolationFunction = LineHelpers.getInterpolationFunction(props);
@@ -147,7 +152,7 @@ export const Area: React.FC<AreaProps> = (initialProps) => {
       {
         key: `${id}-area`,
         style: Object.assign({}, style, { stroke: areaStroke }),
-        d: areaFunction(data),
+        d: formatPathData(areaFunction(data) ?? ""),
         desc,
         tabIndex,
       },
