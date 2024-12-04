@@ -7,7 +7,7 @@ export default function DocItem(props) {
     <>
       <OriginalDocItem {...props} />
       <div className="mt-20 min-[997px]:hidden">
-        <CalloutBanner />
+        <CalloutBanner fullWidth />
       </div>
     </>
   );

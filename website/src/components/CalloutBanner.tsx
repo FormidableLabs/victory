@@ -1,9 +1,11 @@
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 
-const CalloutBanner = () => {
+const CalloutBanner = ({ fullWidth = false }) => {
   return (
-    <div className="rounded-xl bg-[#202020] mb-24 w-[65%] m-auto py-6 px-8 border-solid border-[6px] border-[#8F4438] outline outline-[6px] outline-[#FF684F]">
+    <div
+      className={`rounded-xl bg-[#202020] mb-24 ${!fullWidth ? "w-[65%]" : ""} m-auto py-6 px-8 border-solid border-[6px] border-[#8F4438] outline outline-[6px] outline-[#FF684F]`}
+    >
       <p className="m-0 text-[var(--ifm-color-primary)] text-xl font-bold">
         Like this project? You&apos;ll love working with us.
       </p>
