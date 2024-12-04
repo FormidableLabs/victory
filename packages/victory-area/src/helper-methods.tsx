@@ -19,9 +19,9 @@ export const getDataWithBaseline = (props, scale) => {
     const minY = Collection.getMinValue(domain);
     const maxY = Collection.getMaxValue(domain);
     let defaultMin: typeof minY = defaultZero;
-    if (minY < 0 && maxY <= 0) {
+    if (minY.valueOf() < 0 && maxY.valueOf() <= 0) {
       defaultMin = maxY;
-    } else if (minY >= 0 && maxY > 0) {
+    } else if (minY.valueOf() >= 0 && maxY.valueOf() > 0) {
       defaultMin = minY;
     }
     return Collection.containsDates(domain) ? new Date(defaultMin) : defaultMin;
