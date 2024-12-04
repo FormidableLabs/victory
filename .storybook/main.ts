@@ -5,9 +5,12 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const STORIES = path.resolve(ROOT, "stories");
 
+const getAbsolutePath = (packageName: string): any =>
+  path.dirname(require.resolve(path.join(packageName, 'package.json')));
+
 const config: StorybookConfig = {
   addons: [
-    "@storybook/addon-essentials",
+    getAbsolutePath("@storybook/addon-essentials"),
     {
       name: "@storybook/addon-storysource",
       options: {
@@ -20,12 +23,12 @@ const config: StorybookConfig = {
         },
       },
     },
-    "@storybook/addon-webpack5-compiler-swc",
-    "@chromatic-com/storybook",
+    getAbsolutePath("@storybook/addon-webpack5-compiler-swc"),
+    getAbsolutePath("@chromatic-com/storybook"),
   ],
 
   framework: {
-    name: "@storybook/react-webpack5",
+    name: getAbsolutePath("@storybook/react-webpack5"),
     options: {
       builder: {},
     },
