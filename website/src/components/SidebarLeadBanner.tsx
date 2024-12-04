@@ -11,7 +11,7 @@ export default function SidebarLeadBanner() {
         Contact us to learn more about our full range of services and offerings.
       </p>
       <a
-        className="text-[#606770] text-sm font-bold flex items-center justify-end min-w-[100px] gap-1.5 underline underline-offset-4 decoration-2 text-[var(--ifm-color-primary)] hover:text-white"
+        className="text-[#606770] hover:text-[var(--ifm-color-primary)] text-sm font-bold flex items-center justify-end min-w-[100px] gap-1.5 underline underline-offset-4 decoration-2"
         href="/"
       >
         Learn More
