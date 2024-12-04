@@ -3,7 +3,6 @@ import defaults from "lodash/defaults";
 import property from "lodash/property";
 import pick from "lodash/pick";
 
-import { CallbackArgs } from "../types/callbacks";
 import { ValueOrAccessor } from "../types/prop-types";
 
 // Private Functions
