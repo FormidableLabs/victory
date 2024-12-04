@@ -1,8 +1,5 @@
 name: Chromatic
 
-# Runs chromatic on:
-# - every push to main (to create a chromatic baseline)
-# - every pull request where there are changes in stories/ or packages/ and the PR is not in draft mode
 on:
   push:
     branches:
@@ -10,30 +7,90 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "stories/**"
-      - "packages/**"
+    # paths:
+    #   - "stories/**"
+    #   - "packages/**"
+    #   - "website/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  chromatic:
-    name: Storybook Publish
-    if: github.event.pull_request.draft == false && github.repository == 'FormidableLabs/victory'
+  playwright:
+    name: Playwright Tests
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.49.0-jammy
     steps:
-      # requires all branches and tags to be fetched for chromatic
+      - name: Wait for Deployment
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: deployment
+        with:
+          max_timeout: 600
+          path: "/open-source/victory"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - uses: ./.github/actions/setup
+
+      - name: Install Playwright
+        run: pnpm playwright install --with-deps
+
+      - name: Run Playwright Tests
+        run: npx playwright test
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ steps.deployment.outputs.url }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          node-version: 18.x
+          name: test-results
+          path: ./test-results
+          retention-days: 30
+
+  upload_playwright:
+    name: Upload Playwright
+    needs: playwright
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: ./.github/actions/setup
+
+      - name: Download Playwright test results
+        uses: actions/download-artifact@v4
+        with:
+          name: test-results
+          path: ./test-results
+          
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          playwright: true
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+    
+  upload_storybook:
+    name: Upload Storybook
+    needs: upload_playwright
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup
 
       - name: Build Victory
-        run: pnpm run build:lib:esm
+        run: pnpm run build
 
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
+      - name: Run Chromatic
+        uses: chromaui/action@latest
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
