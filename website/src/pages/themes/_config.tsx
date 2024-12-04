@@ -1,16 +1,22 @@
+/* eslint-disable no-magic-numbers */
 import React from "react";
-import { VictoryArea } from "victory-area";
-import { VictoryAxis } from "victory-axis";
-import { VictoryBar } from "victory-bar";
-import { VictoryCandlestick } from "victory-candlestick";
-import { VictoryErrorBar } from "victory-errorbar";
-import { VictoryHistogram } from "victory-histogram";
-import { VictoryLegend } from "victory-legend";
-import { VictoryLine } from "victory-line";
-import { VictoryPie } from "victory-pie";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryVoronoi } from "victory-voronoi";
-import { VictoryPolarAxis } from "victory-polar-axis";
+import {
+  VictoryArea,
+  VictoryAxis,
+  VictoryBar,
+  VictoryBoxPlot,
+  VictoryCandlestick,
+  VictoryErrorBar,
+  VictoryGroup,
+  VictoryHistogram,
+  VictoryLegend,
+  VictoryLine,
+  VictoryPie,
+  VictoryPolarAxis,
+  VictoryScatter,
+  VictoryVoronoi,
+} from "victory";
+import { colorScaleOptions } from "./_components/color-scale-options";
 
 type ThemeBuilderFieldConfig =
   | {
@@ -26,7 +32,6 @@ type ThemeBuilderFieldConfig =
       max?: number;
       step?: number;
       unit?: string;
-      default: number | string;
       options?: { label: string; value: string }[];
     };
 
@@ -46,14 +51,23 @@ type ThemeBuilderOptionsConfig = {
   fields: ThemeBuilderFieldConfig[];
 }[];
 
-const defaultFill = "#000";
-
 const getPath = (basePath: string | string[], key: string) => {
   if (Array.isArray(basePath)) {
     return basePath.map((p) => `${p}.${key}`);
   }
   return `${basePath}.${key}`;
 };
+
+const getNestedColorScaleConfig = (
+  basePath: string | string[],
+): ThemeBuilderFieldConfig[] => [
+  {
+    type: "select",
+    label: "Color Scale",
+    options: colorScaleOptions,
+    path: getPath(basePath, "colorScale"),
+  },
+];
 
 const getBaseStrokeConfig = (
   basePath: string | string[],
@@ -63,7 +77,6 @@ const getBaseStrokeConfig = (
     {
       type: "colorPicker",
       label: StrokeProps.STROKE,
-      default: defaultFill,
       path: getPath(basePath, "stroke"),
     },
     {
@@ -72,7 +85,6 @@ const getBaseStrokeConfig = (
       min: 0,
       max: 5,
       unit: "px",
-      default: 1,
       path: getPath(basePath, "strokeWidth"),
     },
     {
@@ -80,7 +92,6 @@ const getBaseStrokeConfig = (
       label: StrokeProps.STROKE_DASH_ARRAY,
       min: 0,
       max: 10,
-      default: 0,
       path: getPath(basePath, "strokeDasharray"),
     },
     {
@@ -91,7 +102,6 @@ const getBaseStrokeConfig = (
         { label: "Square", value: "square" },
         { label: "Butt", value: "butt" },
       ],
-      default: "round",
       path: getPath(basePath, "strokeLinecap"),
     },
     {
@@ -102,7 +112,6 @@ const getBaseStrokeConfig = (
         { label: "Bevel", value: "bevel" },
         { label: "Miter", value: "miter" },
       ],
-      default: "round",
       path: getPath(basePath, "strokeLinejoin"),
     },
   ] as ThemeBuilderFieldConfig[];
@@ -123,22 +132,19 @@ const getBaseLabelsConfig = (
     max: 24,
     unit: "px",
     path: getPath(basePath, "fontSize"),
-    default: 12,
   },
   {
     type: "slider",
-    label: "Padding",
+    label: "Text Padding",
     min: 0,
     max: 50,
     unit: "px",
     path: getPath(basePath, "padding"),
-    default: 8,
   },
   {
     type: "colorPicker",
-    label: "Fill",
+    label: "Font Color",
     path: getPath(basePath, "fill"),
-    default: defaultFill,
   },
 ];
 
@@ -158,6 +164,75 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
     title: "Global Settings",
     fields: [
       {
+        type: "slider",
+        label: "Width",
+        min: 0,
+        max: 500,
+        unit: "px",
+        path: [
+          "chart.width",
+          "axis.width",
+          "area.width",
+          "bar.width",
+          "boxplot.width",
+          "candlestick.width",
+          "errorbar.width",
+          "group.width",
+          "histogram.width",
+          "line.width",
+          "pie.width",
+          "scatter.width",
+          "stack.width",
+          "voronoi.width",
+        ],
+      },
+      {
+        type: "slider",
+        label: "Height",
+        min: 0,
+        max: 500,
+        unit: "px",
+        path: [
+          "chart.height",
+          "axis.height",
+          "area.height",
+          "bar.height",
+          "boxplot.height",
+          "candlestick.height",
+          "errorbar.height",
+          "group.height",
+          "histogram.height",
+          "line.height",
+          "pie.height",
+          "scatter.height",
+          "stack.height",
+          "voronoi.height",
+        ],
+      },
+      {
+        type: "slider",
+        label: "Padding",
+        min: 0,
+        max: 100,
+        unit: "px",
+        path: [
+          "chart.padding",
+          "axis.padding",
+          "area.padding",
+          "bar.padding",
+          "boxplot.padding",
+          "candlestick.padding",
+          "errorbar.padding",
+          "group.padding",
+          "histogram.padding",
+          "line.padding",
+          "pie.padding",
+          "scatter.padding",
+          "stack.padding",
+          "voronoi.padding",
+        ],
+      },
+      {
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig([
@@ -175,6 +250,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
           "pie.style.labels",
           "scatter.style.labels",
           "voronoi.style.labels",
+          "boxplot.style.maxLabels",
+          "boxplot.style.medianLabels",
+          "boxplot.style.minLabels",
+          "boxplot.style.q1Labels",
+          "boxplot.style.q3Labels",
         ]),
       },
       {
@@ -201,33 +281,17 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "General",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Fill",
-            default: defaultFill,
-            path: "axis.style.axis.fill",
-          },
-          ...getBaseStrokeConfig("axis.style.axis", [
-            StrokeProps.STROKE,
-            StrokeProps.STROKE_WIDTH,
-            StrokeProps.STROKE_LINE_CAP,
-            StrokeProps.STROKE_LINE_JOIN,
-          ]),
-        ],
+        fields: getBaseStrokeConfig("axis.style.axis", [
+          StrokeProps.STROKE,
+          StrokeProps.STROKE_WIDTH,
+          StrokeProps.STROKE_LINE_CAP,
+          StrokeProps.STROKE_LINE_JOIN,
+        ]),
       },
       {
         type: "section",
         label: "Grid",
-        fields: [
-          {
-            type: "colorPicker",
-            label: "Fill",
-            default: defaultFill,
-            path: "axis.style.grid.fill",
-          },
-          ...getBaseStrokeConfig("axis.style.grid"),
-        ],
+        fields: getBaseStrokeConfig("axis.style.grid"),
       },
       {
         type: "section",
@@ -239,7 +303,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             min: 0,
             max: 50,
             unit: "px",
-            default: 5,
             path: "axis.style.ticks.size",
           },
           ...getBaseStrokeConfig("axis.style.ticks", [
@@ -292,7 +355,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             min: 0,
             max: 50,
             unit: "px",
-            default: 5,
             path: "polarAxis.style.ticks.size",
           },
           ...getBaseStrokeConfig("polarAxis.style.ticks", [
@@ -337,7 +399,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             min: 0,
             max: 50,
             unit: "px",
-            default: 5,
             path: "polarDependentAxis.style.ticks.size",
           },
           ...getBaseStrokeConfig("polarDependentAxis.style.ticks", [
@@ -385,7 +446,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 1,
             step: 0.1,
             path: "area.style.data.fillOpacity",
-            default: 1,
           },
           ...getBaseStrokeConfig("area.style.data", [
             StrokeProps.STROKE,
@@ -395,7 +455,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Fill",
             path: "area.style.data.fill",
-            default: defaultFill,
           },
         ],
       },
@@ -412,17 +471,35 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
-      <VictoryBar
-        key="bar-chart"
-        {...props}
-        data={[
-          { x: 1, y: 2, label: "A" },
-          { x: 2, y: 3, label: "B" },
-          { x: 3, y: 5, label: "C" },
-          { x: 4, y: 4, label: "D" },
-          { x: 5, y: 7, label: "E" },
-        ]}
-      />,
+      <VictoryGroup key="victory-group" domainPadding={{ x: 20 }} offset={20}>
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 1 },
+            { x: "2023 Q2", y: 2 },
+            { x: "2023 Q3", y: 3 },
+            { x: "2023 Q4", y: 2 },
+          ]}
+        />
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 2 },
+            { x: "2023 Q2", y: 3 },
+            { x: "2023 Q3", y: 4 },
+            { x: "2023 Q4", y: 5 },
+          ]}
+        />
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 1 },
+            { x: "2023 Q2", y: 2 },
+            { x: "2023 Q3", y: 3 },
+            { x: "2023 Q4", y: 4 },
+          ]}
+        />
+      </VictoryGroup>,
     ],
     fields: [
       {
@@ -433,7 +510,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Fill",
             path: "bar.style.data.fill",
-            default: defaultFill,
           },
           ...getBaseStrokeConfig("bar.style.data", [
             StrokeProps.STROKE,
@@ -446,7 +522,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 1,
             step: 0.1,
             path: "bar.style.data.fillOpacity",
-            default: 1,
           },
           {
             type: "slider",
@@ -454,7 +529,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             path: "bar.cornerRadius.top",
             max: 2,
             step: 0.5,
-            default: 0,
           },
         ],
       },
@@ -462,6 +536,107 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig("bar.style.labels"),
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Box Plot",
+    content: (props) => (
+      <VictoryBoxPlot
+        {...props}
+        data={[
+          { x: 1, y: [1, 2, 3, 5, 8] },
+          { x: 2, y: [3, 2, 8, 10, 12] },
+          { x: 3, y: [2, 8, 6, 5, 10] },
+          { x: 4, y: [1, 3, 2, 9, 5] },
+          { x: 5, y: [3, 2, 9, 5, 7] },
+        ]}
+        labels
+        labelOrientation="right"
+      />
+    ),
+    fields: [
+      {
+        type: "section",
+        label: "Max",
+        fields: [
+          ...getBaseStrokeConfig("boxplot.style.max", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
+          ...getBaseLabelsConfig("boxplot.style.maxLabels"),
+        ],
+      },
+      {
+        type: "section",
+        label: "Median",
+        fields: [
+          ...getBaseStrokeConfig("boxplot.style.median", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
+          ...getBaseLabelsConfig("boxplot.style.medianLabels"),
+        ],
+      },
+      {
+        type: "section",
+        label: "Min",
+        fields: [
+          ...getBaseStrokeConfig("boxplot.style.min", [
+            StrokeProps.STROKE,
+            StrokeProps.STROKE_WIDTH,
+          ]),
+          ...getBaseLabelsConfig("boxplot.style.minLabels"),
+        ],
+      },
+      {
+        type: "section",
+        label: "Q1",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            path: "boxplot.style.q1.fill",
+          },
+          {
+            type: "slider",
+            label: "Border Radius",
+            min: 0,
+            max: 10,
+            step: 0.5,
+            path: "boxplot.q1.rx",
+          },
+          {
+            type: "slider",
+            label: "Stroke Width",
+            min: 0,
+            max: 5,
+            unit: "px",
+            path: "boxplot.style.q1.strokeWidth",
+          },
+          ...getBaseLabelsConfig("boxplot.style.q1Labels"),
+        ],
+      },
+      {
+        type: "section",
+        label: "Q3",
+        fields: [
+          {
+            type: "colorPicker",
+            label: "Fill",
+            path: "boxplot.style.q3.fill",
+          },
+          {
+            type: "slider",
+            label: "Border Radius",
+            min: 0,
+            max: 10,
+            step: 0.5,
+            path: "boxplot.q3.rx",
+          },
+          ...getBaseLabelsConfig("boxplot.style.q3Labels"),
+        ],
       },
     ],
   },
@@ -529,7 +704,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             label: "Border Radius",
             max: 2,
             step: 0.5,
-            default: 0,
             path: "candlestick.style.data.rx",
           },
           {
@@ -539,7 +713,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 5,
             unit: "px",
             path: "candlestick.wickStrokeWidth",
-            default: 2,
           },
         ],
       },
@@ -556,13 +729,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Positive Color",
             path: "candlestick.candleColors.positive",
-            default: "#ffffff",
           },
           {
             type: "colorPicker",
             label: "Negative Color",
             path: "candlestick.candleColors.negative",
-            default: defaultFill,
           },
         ],
       },
@@ -595,7 +766,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 10,
             unit: "px",
             path: "errorbar.borderWidth",
-            default: 8,
           },
           ...getBaseStrokeConfig("errorbar.style.data", [
             StrokeProps.STROKE,
@@ -643,7 +813,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             type: "colorPicker",
             label: "Fill",
             path: "histogram.style.data.fill",
-            default: defaultFill,
           },
           {
             type: "slider",
@@ -652,7 +821,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 1,
             step: 0.1,
             path: "histogram.style.data.fillOpacity",
-            default: 1,
           },
           {
             type: "slider",
@@ -660,7 +828,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             path: "histogram.cornerRadius.top",
             max: 10,
             step: 0.5,
-            default: 0,
           },
           {
             type: "slider",
@@ -669,7 +836,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 10,
             unit: "px",
             path: "histogram.binSpacing",
-            default: 4,
           },
         ],
       },
@@ -677,6 +843,27 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Labels",
         fields: getBaseLabelsConfig("histogram.style.labels"),
+      },
+    ],
+  },
+  {
+    type: "section",
+    title: "Group",
+    fields: [
+      {
+        type: "section",
+        label: "Data",
+        fields: [
+          ...getNestedColorScaleConfig("group"),
+          {
+            type: "slider",
+            label: "Width",
+            min: 0,
+            max: 50,
+            unit: "px",
+            path: "group.style.data.width",
+          },
+        ],
       },
     ],
   },
@@ -743,7 +930,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 50,
             unit: "px",
             path: "legend.gutter",
-            default: 20,
           },
           {
             type: "slider",
@@ -752,7 +938,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 50,
             unit: "px",
             path: "legend.borderPadding",
-            default: 10,
           },
           {
             type: "select",
@@ -762,7 +947,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
               { label: "Vertical", value: "vertical" },
             ],
             path: "legend.orientation",
-            default: "horizontal",
           },
           {
             type: "select",
@@ -774,7 +958,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
               { label: "Right", value: "right" },
             ],
             path: "legend.titleOrientation",
-            default: "top",
           },
           {
             type: "select",
@@ -786,7 +969,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
               { label: "Star", value: "star" },
             ],
             path: "legend.style.data.type",
-            default: "circle",
           },
         ],
       },
@@ -868,6 +1050,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         type: "section",
         label: "Data",
         fields: [
+          ...getNestedColorScaleConfig("pie"),
           {
             type: "slider",
             label: "Padding",
@@ -875,7 +1058,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             max: 50,
             unit: "px",
             path: "pie.style.data.padding",
-            default: 0,
           },
           ...getBaseStrokeConfig("pie.style.data", [
             StrokeProps.STROKE,
@@ -913,7 +1095,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
           {
             type: "colorPicker",
             label: "Fill",
-            default: defaultFill,
             path: "scatter.style.data.fill",
           },
           {
@@ -922,7 +1103,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             min: 0,
             max: 1,
             step: 0.1,
-            default: 1,
             path: "scatter.style.data.opacity",
           },
           ...getBaseStrokeConfig("scatter.style.data", [
@@ -952,7 +1132,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             label: "Corner Radius",
             min: 0,
             max: 10,
-            default: 0,
             path: "tooltip.cornerRadius",
           },
           {
@@ -960,7 +1139,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
             label: "Pointer Length",
             min: 0,
             max: 20,
-            default: 10,
             path: "tooltip.pointerLength",
           },
         ],
@@ -972,7 +1150,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
           {
             type: "colorPicker",
             label: "Fill",
-            default: "#FFFFFF",
             path: "tooltip.flyoutStyle.fill",
           },
           ...getBaseStrokeConfig("tooltip.flyoutStyle", [
@@ -986,7 +1163,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
               { label: "None", value: "none" },
               { label: "All", value: "all" },
             ],
-            default: "none",
             path: "tooltip.flyoutStyle.pointerEvents",
           },
         ],
@@ -1016,7 +1192,6 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
           {
             type: "colorPicker",
             label: "Fill",
-            default: "#FFFFFF",
             path: "voronoi.style.data.fill",
           },
           ...getBaseStrokeConfig("voronoi.style.data", [

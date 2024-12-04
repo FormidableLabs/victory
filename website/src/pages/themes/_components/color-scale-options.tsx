@@ -1,25 +1,24 @@
 import React from "react";
-import { ColorScalePropType, VictoryThemeDefinition } from "victory-core";
 import Select from "./select";
 import ColorPicker from "./color-picker";
-
-export type ColorChangeArgs = {
-  newColor: string;
-  index: number;
-  colorScale: string;
-};
+import { ColorScalePropType, VictoryThemeDefinition } from "victory";
+import { ColorChangeArgs } from "./control";
 
 type ColorScaleOptionsProps = {
   palette?: VictoryThemeDefinition["palette"];
   activeColorScale?: ColorScalePropType;
   onColorChange: (args: ColorChangeArgs) => void;
-  onColorScaleChange: (colorScale: string) => void;
+  onColorScaleChange: (colorScale?: string) => void;
 };
 
-const colorScales = [
+export const colorScaleOptions = [
   {
     label: "Qualitative",
     value: "qualitative",
+  },
+  {
+    label: "Grayscale",
+    value: "grayscale",
   },
   {
     label: "Heatmap",
@@ -41,6 +40,10 @@ const colorScales = [
     label: "Green",
     value: "green",
   },
+  {
+    label: "Blue",
+    value: "blue",
+  },
 ];
 
 const ColorScaleOptions = ({
@@ -55,26 +58,29 @@ const ColorScaleOptions = ({
         id="color-scale-select"
         value={activeColorScale as string}
         onChange={onColorScaleChange}
-        options={colorScales}
+        options={colorScaleOptions}
         label="Color Scale"
         className="mb-5"
+        includeDefault
       />
-      <div className="flex flex-wrap gap-3">
-        {palette?.[activeColorScale as string]?.map((color, i) => (
-          <ColorPicker
-            key={i}
-            color={color}
-            id={`color-${i}`}
-            onColorChange={(newColor) =>
-              onColorChange({
-                newColor,
-                index: i,
-                colorScale: activeColorScale as string,
-              })
-            }
-          />
-        ))}
-      </div>
+      {!!activeColorScale && (
+        <div className="flex flex-wrap gap-3">
+          {palette?.[activeColorScale as string]?.map((color, i) => (
+            <ColorPicker
+              key={i}
+              color={color}
+              id={`color-${i}`}
+              onColorChange={(newColor) =>
+                onColorChange({
+                  newColor,
+                  index: i,
+                  colorScale: activeColorScale as string,
+                })
+              }
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

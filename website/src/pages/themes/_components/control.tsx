@@ -1,13 +1,17 @@
 import React from "react";
-import optionsConfig from "./options-config";
-import Accordion from "./accordion";
 import Select from "./select";
 import Slider from "./slider";
 import ColorPicker from "./color-picker";
 import ColorScaleOptions from "./color-scale-options";
-import { getConfigValue } from "./utils";
+import { getConfigValue } from "../_utils";
 
-const ControlComponent = ({
+export type ColorChangeArgs = {
+  newColor?: string;
+  index: number;
+  colorScale: string;
+};
+
+const Control = ({
   type,
   field,
   themeConfig,
@@ -16,7 +20,11 @@ const ControlComponent = ({
   handleColorScaleChange,
   className,
 }) => {
-  const handleColorChange = ({ newColor, index, colorScale }) => {
+  const handleColorChange = ({
+    newColor,
+    index,
+    colorScale,
+  }: ColorChangeArgs) => {
     const updatedColors = themeConfig?.palette?.[colorScale]?.map((color, i) =>
       i === index ? newColor : color,
     );
@@ -28,6 +36,7 @@ const ControlComponent = ({
   };
 
   const configValue = getConfigValue(themeConfig, field.path, field.default);
+
   switch (type) {
     case "colorScale":
       return (
@@ -45,7 +54,7 @@ const ControlComponent = ({
             {field.label}
           </h3>
           {field.fields.map((subField, i) => (
-            <ControlComponent
+            <Control
               key={subField.label + i}
               type={subField.type}
               field={subField}
@@ -83,6 +92,7 @@ const ControlComponent = ({
           onChange={handleChange}
           options={field.options}
           className={className}
+          includeDefault
         />
       );
     case "colorPicker":
@@ -102,39 +112,4 @@ const ControlComponent = ({
   }
 };
 
-const ConfigMapper = ({
-  themeConfig,
-  activeColorScale,
-  updateThemeConfig,
-  handleColorScaleChange,
-}) => {
-  return (
-    <>
-      {optionsConfig.map((section, index) => (
-        <Accordion
-          key={section.title}
-          title={section.title}
-          id={section.title}
-          defaultOpen={index === 0}
-        >
-          {section.fields.map((field, i) => {
-            return (
-              <ControlComponent
-                key={field.label + i}
-                type={field.type}
-                field={field}
-                themeConfig={themeConfig}
-                updateThemeConfig={updateThemeConfig}
-                activeColorScale={activeColorScale}
-                handleColorScaleChange={handleColorScaleChange}
-                className="mb-4"
-              />
-            );
-          })}
-        </Accordion>
-      ))}
-    </>
-  );
-};
-
-export default ConfigMapper;
+export default Control;

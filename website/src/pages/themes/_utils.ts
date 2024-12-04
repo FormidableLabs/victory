@@ -32,6 +32,6 @@ export const getConfigValue = (
   if (!pathString) return undefined;
   const pathArray = pathString.split(".");
   return pathArray.reduce((acc, key) => {
-    return acc && acc[key] ? acc[key] : defaultValue || undefined;
+    return acc && acc[key] !== undefined ? acc[key] : defaultValue;
   }, config);
 };

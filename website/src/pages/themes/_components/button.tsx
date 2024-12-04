@@ -17,7 +17,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseClasses =
-    "py-2 px-5 border-0 rounded-md cursor-pointer text-sm bg-primary text-white hover:bg-secondary disabled:bg-gray-200 disabled:cursor-not-allowed";
+    "py-2 px-5 border-none font-bold rounded-md cursor-pointer text-sm bg-button-bg text-button-fg hover:underline disabled:bg-grayscale-300 disabled:text-grayscale-400 disabled:cursor-not-allowed disabled:hover:no-underline";
 
   return (
     <button
