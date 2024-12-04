@@ -13,31 +13,31 @@ body {
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/font/InterRegular.woff2') format('woff2');
+  font-family: "Inter";
+  src: url("/font/InterRegular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/font/InterMedium.woff2') format('woff2');
+  font-family: "Inter";
+  src: url("/font/InterMedium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/font/InterBold.woff2') format('woff2');
+  font-family: "Inter";
+  src: url("/font/InterBold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 .hero-pattern {
-  background-image: url('/img/hero-background.svg');
+  background-image: url("/img/hero-background.svg");
 }
 
 :root {
@@ -57,7 +57,7 @@ body {
   --ifm-footer-padding-vertical: 1rem;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   --ifm-color-primary: #ff684f;
   --ifm-color-primary-dark: #ff4b2e;
   --ifm-color-primary-darker: #ff3d1d;
@@ -73,7 +73,7 @@ body {
 
 /* Nav */
 .header-github-link::before {
-  content: '';
+  content: "";
   width: 24px;
   height: 24px;
   display: flex;
