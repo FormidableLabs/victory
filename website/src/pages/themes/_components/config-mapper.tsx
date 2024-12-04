@@ -26,8 +26,6 @@ const ConfigMapper = ({
                 field={field}
                 themeConfig={themeConfig}
                 updateThemeConfig={updateThemeConfig}
-                activeColorScale={activeColorScale}
-                handleColorScaleChange={handleColorScaleChange}
                 className="mb-4"
               />
             );

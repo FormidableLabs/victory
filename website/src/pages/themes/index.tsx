@@ -9,36 +9,19 @@ import {
   VictoryBar,
   VictoryChart,
   VictoryStack,
-  VictoryTheme,
   VictoryThemeDefinition,
   VictoryTooltip,
 } from "victory";
-import Select from "./_components/select";
 import ConfigPreview from "./_components/config-preview";
-import Button from "./_components/button";
-import ConfigMapper from "./_components/config-mapper";
 import { setNestedConfigValue } from "./_utils";
 import optionsConfig from "./_config";
 import Layout from "@theme/Layout";
-
-export type ThemeOption = {
-  name: string;
-  config?: VictoryThemeDefinition;
-};
-
-const themes: ThemeOption[] = [
-  { name: "Clean", config: VictoryTheme.clean },
-  { name: "Material", config: VictoryTheme.material },
-  { name: "Grayscale", config: VictoryTheme.grayscale },
-];
-
-const themeOptions = [
-  { label: "Select a theme", value: undefined },
-  ...themes.map((theme) => ({
-    label: theme.name,
-    value: theme.name,
-  })),
-];
+import SideNav, { NAV_ITEMS } from "./_components/sidenav";
+import BaseThemePanel, {
+  ThemeOption,
+  themes,
+} from "./_components/base-theme-panel";
+import GlobalPanel from "./_components/global-panel";
 
 const sampleStackData = [
   {
@@ -89,6 +72,9 @@ const ThemeBuilder = () => {
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
     React.useState(false);
   const [showTooltips, setShowTooltips] = React.useState(false);
+  const [activeSidebarItem, setActiveSidebarItem] = React.useState(
+    NAV_ITEMS[0],
+  );
 
   const handleThemeSelect = (themeName?: string) => {
     const theme = themes.find((t) => t.name === themeName);
@@ -128,10 +114,35 @@ const ThemeBuilder = () => {
     setShowThemeConfigPreview(false);
   };
 
+  const panelTitle = activeSidebarItem?.config?.title;
+  const panelDescription = activeSidebarItem?.config?.description;
+
   return (
     <Layout>
       <div className="relative flex flex-row flex-wrap items-start justify-start w-full theme-builder">
-        <aside className="sticky top-0 h-screen flex flex-col w-[380px] border-r border-grayscale-300">
+        <SideNav
+          activeItem={activeSidebarItem}
+          onItemSelect={setActiveSidebarItem}
+          isBaseThemeSelected={!!baseTheme}
+        />
+        <aside className="sticky top-[60px] h-theme-builder w-[380px] overflow-y-auto p-6 bg-gray-50 border-r border-grayscale-300">
+          {activeSidebarItem.panelType === "base" && (
+            <BaseThemePanel
+              onThemeSelect={handleThemeSelect}
+              baseTheme={baseTheme}
+            />
+          )}
+          {activeSidebarItem.panelType === "global" && (
+            <GlobalPanel
+              title={panelTitle}
+              description={panelDescription}
+              fields={activeSidebarItem?.config?.fields}
+              themeConfig={customThemeConfig}
+              updateThemeConfig={updateCustomThemeConfig}
+            />
+          )}
+        </aside>
+        {/* <aside className="sticky top-0 h-screen w-[380px] overflow-y-auto p-6 bg-gray-50">
           <div className="grow overflow-y-auto p-4 pb-[100px]">
             <h2 className="mb-0 text-lg font-bold">Customize Your Theme</h2>
             <p className="text-sm mb-4 text-grayscale-400">
@@ -167,7 +178,7 @@ const ThemeBuilder = () => {
               Get Theme Code
             </Button>
           </footer>
-        </aside>
+        </aside> */}
         <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
           {customThemeConfig && (
             <div className="max-w-screen-xl w-full p-10 pb-20">

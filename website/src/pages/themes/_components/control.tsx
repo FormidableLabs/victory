@@ -16,8 +16,6 @@ const Control = ({
   field,
   themeConfig,
   updateThemeConfig,
-  activeColorScale,
-  handleColorScaleChange,
   className,
 }) => {
   const handleColorChange = ({
@@ -41,18 +39,16 @@ const Control = ({
     case "colorScale":
       return (
         <ColorScaleOptions
+          label={field.label}
           palette={themeConfig?.palette}
-          activeColorScale={activeColorScale}
+          colorScaleType={field.colorScaleType}
           onColorChange={handleColorChange}
-          onColorScaleChange={handleColorScaleChange}
         />
       );
     case "section":
       return (
-        <section className="mb-6 pt-6 border-t border-gray-200">
-          <h3 className="text-md text-secondary font-semibold mb-4">
-            {field.label}
-          </h3>
+        <section className="mt-4 mb-8">
+          <h3 className="text-lg text-secondary mb-4">{field.label}</h3>
           {field.fields.map((subField, i) => (
             <Control
               key={subField.label + i}
@@ -60,8 +56,6 @@ const Control = ({
               field={subField}
               themeConfig={themeConfig}
               updateThemeConfig={updateThemeConfig}
-              activeColorScale={activeColorScale}
-              handleColorScaleChange={handleColorScaleChange}
               className={className}
             />
           ))}

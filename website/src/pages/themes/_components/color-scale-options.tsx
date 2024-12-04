@@ -1,14 +1,13 @@
 import React from "react";
-import Select from "./select";
 import ColorPicker from "./color-picker";
 import { ColorScalePropType, VictoryThemeDefinition } from "victory";
 import { ColorChangeArgs } from "./control";
 
 type ColorScaleOptionsProps = {
+  label?: string;
   palette?: VictoryThemeDefinition["palette"];
-  activeColorScale?: ColorScalePropType;
+  colorScaleType?: ColorScalePropType;
   onColorChange: (args: ColorChangeArgs) => void;
-  onColorScaleChange: (colorScale?: string) => void;
 };
 
 export const colorScaleOptions = [
@@ -47,25 +46,19 @@ export const colorScaleOptions = [
 ];
 
 const ColorScaleOptions = ({
-  activeColorScale,
+  label,
+  colorScaleType,
   palette,
   onColorChange,
-  onColorScaleChange,
 }: ColorScaleOptionsProps) => {
   return (
-    <section>
-      <Select
-        id="color-scale-select"
-        value={activeColorScale as string}
-        onChange={onColorScaleChange}
-        options={colorScaleOptions}
-        label="Color Scale"
-        className="mb-5"
-        includeDefault
-      />
-      {!!activeColorScale && (
+    <fieldset className="p-0 mt-4 mb-8">
+      {label && (
+        <label className="block mb-3 text-base font-bold">{label}</label>
+      )}
+      {!!colorScaleType && (
         <div className="flex flex-wrap gap-3">
-          {palette?.[activeColorScale as string]?.map((color, i) => (
+          {palette?.[colorScaleType as string]?.map((color, i) => (
             <ColorPicker
               key={i}
               color={color}
@@ -74,14 +67,14 @@ const ColorScaleOptions = ({
                 onColorChange({
                   newColor,
                   index: i,
-                  colorScale: activeColorScale as string,
+                  colorScale: colorScaleType as string,
                 })
               }
             />
           ))}
         </div>
       )}
-    </section>
+    </fieldset>
   );
 };
 export default ColorScaleOptions;

@@ -50,6 +50,9 @@ module.exports = {
         "button-border": NearFormColors.Green,
         error: "#FF0000",
       },
+      height: {
+        "theme-builder": "calc(100vh - 60px)",
+      },
       width: {
         prose: "90ch",
       },
