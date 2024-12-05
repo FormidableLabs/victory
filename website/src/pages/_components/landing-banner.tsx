@@ -1,23 +1,21 @@
 import React from "react";
-import { LinkButton } from "../../components/link-button";
-import { LandingDivider } from "./landing-divider";
+import LearnMoreLink from "../../components/LearnMoreLink";
 
-export const LandingBanner = ({
-  body,
-  cta,
-  heading,
-  showDivider,
-}: {
-  body: string;
-  cta: { link: string; text: string };
-  heading: string;
-  showDivider?: boolean;
-}) => (
-  <div className="flex flex-col text-left mx-16 lg:mx-32 xl:mx-64 my-8">
-    {showDivider && <LandingDivider />}
-
-    <h2 className="my-8 text-4xl font-semibold">{heading}</h2>
-    <p className="text-lg">{body}</p>
-    <LinkButton link={cta.link}>{cta.text}</LinkButton>
+export const LandingBanner = () => (
+  <div className="bg-[#4589FF] text-white py-7 px-5 sm:py-2 sm:px-4">
+    <div className="lg:max-w-[90%] flex flex-col sm:flex-row justify-between sm:items-center m-auto">
+      <div className="flex flex-col sm:flex-row gap-2.5">
+        <p className="m-0 text-sm font-bold">
+          Like this project? You&apos;ll love working with us.
+        </p>
+        <p className="m-0 text-sm">
+          Contact us to learn more{" "}
+          <span className="hidden lg:inline">
+            about our full range of services and offerings.
+          </span>
+        </p>
+      </div>
+      <LearnMoreLink className="text-white text-sm font-bold flex items-center justify-end gap-1.5 underline underline-offset-4 decoration-2 hover:text-white mt-2.5 sm:mt-0" />
+    </div>
   </div>
 );

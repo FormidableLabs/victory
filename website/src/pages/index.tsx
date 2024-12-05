@@ -6,6 +6,7 @@ import { LandingFeaturedProjects } from "./_components/landing-featured-projects
 import { LandingFeatures } from "./_components/landing-features";
 import { LandingDemo } from "./_components/landing-demo";
 import { LandingShowcase } from "./_components/landing-showcase";
+import CalloutBanner from "../components/CalloutBanner";
 
 // eslint-disable-next-line no-undef
 export default function Home(): JSX.Element {
@@ -16,6 +17,7 @@ export default function Home(): JSX.Element {
       <LandingFeatures />
       <LandingShowcase />
       <LandingFeaturedProjects />
+      <CalloutBanner />
     </Layout>
   );
 }
