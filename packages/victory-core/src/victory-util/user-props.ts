@@ -78,7 +78,7 @@ export function assert<T>(
  * @returns {Object}: object containing remaining acceptable props
  */
 export const getSafeUserProps = <T>(
-  props: T,
+  props: T extends Record<string, any> ? T : never,
 ): Record<SafeAttribute, string> => {
   const propsToFilter = { ...props };
   return Object.fromEntries(

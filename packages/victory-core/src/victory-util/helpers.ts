@@ -3,7 +3,6 @@ import defaults from "lodash/defaults";
 import property from "lodash/property";
 import pick from "lodash/pick";
 
-import { CallbackArgs } from "../types/callbacks";
 import { ValueOrAccessor } from "../types/prop-types";
 
 // Private Functions
@@ -142,8 +141,8 @@ export function getStyles(style, defaultStyles) {
 }
 
 export function evaluateProp<TValue>(
-  prop: ValueOrAccessor<TValue, CallbackArgs>,
-  props: CallbackArgs,
+  prop: ValueOrAccessor<TValue, Record<string, any>>,
+  props: Record<string, any>,
 ): TValue {
   return isFunction(prop) ? prop(props) : prop;
 }

@@ -111,12 +111,13 @@ function padDomain(domain, props, axis) {
     : props.singleQuadrantDomainPadding;
 
   const addsQuadrants =
-    (min >= 0 && paddedDomain.min <= 0) || (max <= 0 && paddedDomain.max >= 0);
+    (min.valueOf() >= 0 && paddedDomain.min <= 0) ||
+    (max.valueOf() <= 0 && paddedDomain.max >= 0);
 
   const adjust = (val, type) => {
     const coerce =
-      (type === "min" && min >= 0 && val <= 0) ||
-      (type === "max" && max <= 0 && val >= 0);
+      (type === "min" && min.valueOf() >= 0 && val <= 0) ||
+      (type === "max" && max.valueOf() <= 0 && val >= 0);
     return coerce ? 0 : val;
   };
 
