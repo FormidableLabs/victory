@@ -8,6 +8,8 @@ export default function LearnMoreLink(
   return (
     <a
       href="https://commerce.nearform.com/contact?lead_source_2_0=Open%20Source"
+      target="_blank"
+      rel="noreferrer"
       {...props}
     >
       Learn More
