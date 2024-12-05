@@ -7,6 +7,8 @@ import {
 import clsx from "clsx";
 import React from "react";
 import { globalOptionsConfig, paletteOptionsConfig } from "../_config";
+import axisOptionsConfig from "../_config/axis";
+import { useTheme } from "../_providers/themeProvider";
 
 type NavItem = {
   title: string;
@@ -19,7 +21,6 @@ type NavItem = {
 type SideNavProps = {
   activeItem: NavItem;
   onItemSelect: (item: NavItem) => void;
-  isBaseThemeSelected: boolean;
 };
 
 export const NAV_ITEMS: NavItem[] = [
@@ -39,18 +40,20 @@ export const NAV_ITEMS: NavItem[] = [
   {
     title: "Axes",
     icon: AdjustmentsVerticalIcon,
+    panelType: "overrides",
+    config: axisOptionsConfig,
   },
   {
     title: "Charts",
     icon: AdjustmentsVerticalIcon,
+    panelType: "overrides",
   },
 ];
 
-const SideNav = ({
-  activeItem,
-  onItemSelect,
-  isBaseThemeSelected,
-}: SideNavProps) => {
+const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
+  const { baseTheme } = useTheme();
+  const isBaseThemeSelected = !!baseTheme;
+
   return (
     <aside className="sticky top-[60px] h-theme-builder w-32 overflow-y-auto bg-black py-4">
       <div className="w-full flex-1 space-y-1 px-2">

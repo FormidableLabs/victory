@@ -5,17 +5,9 @@ type GlobalPanelProps = {
   title?: string;
   description?: string;
   fields: any[];
-  themeConfig: any;
-  updateThemeConfig: (config: any) => void;
 };
 
-const GlobalPanel = ({
-  title,
-  description,
-  fields,
-  themeConfig,
-  updateThemeConfig,
-}: GlobalPanelProps) => {
+const GlobalPanel = ({ title, description, fields }: GlobalPanelProps) => {
   return (
     <>
       {!!title && <h2 className="mb-0 text-xl font-bold">{title}</h2>}
@@ -28,8 +20,6 @@ const GlobalPanel = ({
             key={field.label + i}
             type={field.type}
             field={field}
-            themeConfig={themeConfig}
-            updateThemeConfig={updateThemeConfig}
             className="mb-4"
           />
         );

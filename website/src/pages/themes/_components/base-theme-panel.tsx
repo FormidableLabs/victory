@@ -1,17 +1,6 @@
 import React from "react";
 import Select from "./select";
-import { VictoryTheme, VictoryThemeDefinition } from "victory";
-
-export type ThemeOption = {
-  name: string;
-  config?: VictoryThemeDefinition;
-};
-
-export const themes: ThemeOption[] = [
-  { name: "Clean", config: VictoryTheme.clean },
-  { name: "Material", config: VictoryTheme.material },
-  { name: "Grayscale", config: VictoryTheme.grayscale },
-];
+import { themes, useTheme } from "../_providers/themeProvider";
 
 const themeOptions = [
   { label: "Select a theme", value: undefined },
@@ -21,7 +10,9 @@ const themeOptions = [
   })),
 ];
 
-const BaseThemePanel = ({ onThemeSelect, baseTheme }) => {
+const BaseThemePanel = () => {
+  const { baseTheme, onBaseThemeSelect } = useTheme();
+
   return (
     <>
       <h2 className="mb-0 text-xl font-bold">Customize Your Theme</h2>
@@ -31,7 +22,7 @@ const BaseThemePanel = ({ onThemeSelect, baseTheme }) => {
       <Select
         id="theme-select"
         value={baseTheme?.name || ""}
-        onChange={onThemeSelect}
+        onChange={onBaseThemeSelect}
         options={themeOptions}
         label="Base Theme"
       />

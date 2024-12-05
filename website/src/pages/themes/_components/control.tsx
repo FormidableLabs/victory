@@ -4,6 +4,7 @@ import Slider from "./slider";
 import ColorPicker from "./color-picker";
 import ColorScaleOptions from "./color-scale-options";
 import { getConfigValue } from "../_utils";
+import { useTheme } from "../_providers/themeProvider";
 
 export type ColorChangeArgs = {
   newColor?: string;
@@ -11,36 +12,35 @@ export type ColorChangeArgs = {
   colorScale: string;
 };
 
-const Control = ({
-  type,
-  field,
-  themeConfig,
-  updateThemeConfig,
-  className,
-}) => {
+const Control = ({ type, field, className }) => {
+  const { customThemeConfig, updateCustomThemeConfig } = useTheme();
   const handleColorChange = ({
     newColor,
     index,
     colorScale,
   }: ColorChangeArgs) => {
-    const updatedColors = themeConfig?.palette?.[colorScale]?.map((color, i) =>
-      i === index ? newColor : color,
+    const updatedColors = customThemeConfig?.palette?.[colorScale]?.map(
+      (color, i) => (i === index ? newColor : color),
     );
-    updateThemeConfig(`palette.${colorScale}`, updatedColors);
+    updateCustomThemeConfig(`palette.${colorScale}`, updatedColors);
   };
 
   const handleChange = (newValue) => {
-    updateThemeConfig(field.path, newValue);
+    updateCustomThemeConfig(field.path, newValue);
   };
 
-  const configValue = getConfigValue(themeConfig, field.path, field.default);
+  const configValue = getConfigValue(
+    customThemeConfig,
+    field.path,
+    field.default,
+  );
 
   switch (type) {
     case "colorScale":
       return (
         <ColorScaleOptions
           label={field.label}
-          palette={themeConfig?.palette}
+          palette={customThemeConfig?.palette}
           colorScaleType={field.colorScaleType}
           onColorChange={handleColorChange}
         />
@@ -54,8 +54,6 @@ const Control = ({
               key={subField.label + i}
               type={subField.type}
               field={subField}
-              themeConfig={themeConfig}
-              updateThemeConfig={updateThemeConfig}
               className={className}
             />
           ))}
