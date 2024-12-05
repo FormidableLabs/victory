@@ -1,5 +1,5 @@
 import React from "react";
-import { FaArrowRight } from "react-icons/fa";
+import LearnMoreLink from "../../components/LearnMoreLink";
 
 export const LandingBanner = () => (
   <div className="bg-[#4589FF] text-white py-7 px-5 sm:py-2 sm:px-4">
@@ -15,13 +15,7 @@ export const LandingBanner = () => (
           </span>
         </p>
       </div>
-      <a
-        className="text-white text-sm font-bold flex items-center justify-end gap-1.5 underline underline-offset-4 decoration-2 hover:text-white mt-2.5 sm:mt-0"
-        href="/"
-      >
-        Learn More
-        <FaArrowRight height={40} width={40} scale={5} />
-      </a>
+      <LearnMoreLink className="text-white text-sm font-bold flex items-center justify-end gap-1.5 underline underline-offset-4 decoration-2 hover:text-white mt-2.5 sm:mt-0" />
     </div>
   </div>
 );
