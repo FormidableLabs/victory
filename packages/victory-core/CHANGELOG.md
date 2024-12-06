@@ -1,5 +1,19 @@
 # victory-core
 
+## 37.3.3
+
+### Patch Changes
+
+- Upgrade typescript to 5.7.2 ([#2997](https://github.com/FormidableLabs/victory/pull/2997))
+
+* Remove deprecated babel-plugin-lodash plugin ([#2965](https://github.com/FormidableLabs/victory/pull/2965))
+
+- Improve types in victory-core helpers ([#2999](https://github.com/FormidableLabs/victory/pull/2999))
+
+* Zoomed bar graph items will no longer be culled from the view when more than 50% of width or height is outside of the clipping parent. Instead they will be clipped once 100% outside" ([#2970](https://github.com/FormidableLabs/victory/pull/2970))
+
+- fix hydration error using victory line with nextjs ([#2973](https://github.com/FormidableLabs/victory/pull/2973))
+
 ## 37.3.2
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # victory-group
 
+## 37.3.3
+
+### Patch Changes
+
+- Remove deprecated babel-plugin-lodash plugin ([#2965](https://github.com/FormidableLabs/victory/pull/2965))
+
+* Improve types in victory-core helpers ([#2999](https://github.com/FormidableLabs/victory/pull/2999))
+
 ## 37.3.2
 
 ## 37.3.1
