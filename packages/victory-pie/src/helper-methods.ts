@@ -91,7 +91,7 @@ const getCalculatedValues = (props) => {
   const colors = Array.isArray(colorScale)
     ? colorScale
     : Style.getColorScale(colorScale, theme);
-  const padding = Helpers.getPadding(props);
+  const padding = Helpers.getPadding(props.padding);
   const defaultRadius = getRadius(props, padding);
   const origin = getOrigin(props, padding);
   const data = getDataSortedByCategories(props, Data.getData(props));

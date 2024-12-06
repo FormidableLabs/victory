@@ -146,11 +146,11 @@ const getBackgroundPadding = (props) => {
   if (props.backgroundPadding && Array.isArray(props.backgroundPadding)) {
     return props.backgroundPadding.map((backgroundPadding) => {
       const padding = Helpers.evaluateProp(backgroundPadding, props);
-      return Helpers.getPadding({ padding });
+      return Helpers.getPadding(padding);
     });
   }
   const padding = Helpers.evaluateProp(props.backgroundPadding, props);
-  return Helpers.getPadding({ padding });
+  return Helpers.getPadding(padding);
 };
 
 const getLineHeight = (props) => {

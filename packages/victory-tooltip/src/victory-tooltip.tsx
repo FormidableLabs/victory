@@ -244,7 +244,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
         }),
       ) || this.getLabelPadding(style);
 
-    const flyoutPadding = Helpers.getPadding({ padding });
+    const flyoutPadding = Helpers.getPadding(padding);
 
     const pointerWidth = Helpers.evaluateProp(
       props.pointerWidth,

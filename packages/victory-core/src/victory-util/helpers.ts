@@ -5,28 +5,72 @@ import pick from "lodash/pick";
 
 import { ValueOrAccessor } from "../types/prop-types";
 
-// Private Functions
+export type ElementPadding = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
 
-function getCartesianRange(props, axis) {
-  // determine how to lay the axis and what direction positive and negative are
-  const vertical = axis !== "x";
-  const padding = getPadding(props);
+export type MaybePointData = {
+  x?: number;
+  x0?: number;
+  x1?: number;
+  y?: number;
+  y0?: number;
+  y1?: number;
+  _x?: number;
+  _x0?: number;
+  _x1?: number;
+  _y?: number;
+  _y0?: number;
+  _y1?: number;
+  _voronoiX?: number;
+  _voronoiY?: number;
+};
+
+/**
+ * Determine the range of a cartesian axis
+ */
+function getCartesianRange(options: {
+  axis: "x" | "y";
+  height: number;
+  width: number;
+  padding: ElementPadding;
+}): [number, number] {
+  const vertical = options.axis !== "x";
   if (vertical) {
-    return [props.height - padding.bottom, padding.top];
+    return [options.height - options.padding.bottom, options.padding.top];
   }
-  return [padding.left, props.width - padding.right];
+  return [options.padding.left, options.width - options.padding.right];
 }
 
-function getPolarRange(props, axis) {
-  if (axis === "x") {
-    const startAngle = degreesToRadians(props.startAngle || 0);
-    const endAngle = degreesToRadians(props.endAngle || 360);
+/**
+ * Determine the range of a polar axis in radians
+ */
+function getPolarRange(options: {
+  axis: "x" | "y";
+  innerRadius?: number;
+  startAngle?: number;
+  endAngle?: number;
+  padding: ElementPadding;
+  height: number;
+  width: number;
+}): [number, number] {
+  if (options.axis === "x") {
+    const startAngle = degreesToRadians(options.startAngle || 0);
+    const endAngle = degreesToRadians(options.endAngle || 360);
     return [startAngle, endAngle];
   }
-  return [props.innerRadius || 0, getRadius(props)];
+  return [
+    options.innerRadius || 0,
+    getRadius({
+      height: options.height,
+      width: options.width,
+      padding: options.padding,
+    }),
+  ];
 }
-
-// Exported Functions
 
 /**
  * Creates an object composed of the inverted keys and values of object.
@@ -65,21 +109,36 @@ export function omit<T, Keys extends keyof T>(
   return newObject;
 }
 
-export function getPoint(datum) {
-  const exists = (val) => val !== undefined;
+/**
+ * Coalesce the x and y values from a data point
+ */
+export function getPoint(datum: MaybePointData): MaybePointData {
   const { _x, _x1, _x0, _voronoiX, _y, _y1, _y0, _voronoiY } = datum;
-  const defaultX = exists(_x1) ? _x1 : _x;
-  const defaultY = exists(_y1) ? _y1 : _y;
+  const defaultX = _x1 ?? _x;
+  const defaultY = _y1 ?? _y;
+
   const point = {
-    x: exists(_voronoiX) ? _voronoiX : defaultX,
-    x0: exists(_x0) ? _x0 : _x,
-    y: exists(_voronoiY) ? _voronoiY : defaultY,
-    y0: exists(_y0) ? _y0 : _y,
+    x: _voronoiX ?? defaultX,
+    x0: _x0 ?? _x,
+    y: _voronoiY ?? defaultY,
+    y0: _y0 ?? _y,
   };
+
   return defaults({}, point, datum);
 }
 
-export function scalePoint(props, datum) {
+/**
+ * Scale a point based on the origin, direction, and given scale function
+ */
+export function scalePoint(
+  props: {
+    scale: { x: (x?: number) => number; y: (y?: number) => number };
+    polar?: boolean;
+    horizontal?: boolean;
+    origin?: { x: number; y: number };
+  },
+  datum: MaybePointData,
+) {
   const { scale, polar, horizontal } = props;
   const d = getPoint(datum);
   const origin = props.origin || { x: 0, y: 0 };
@@ -95,8 +154,12 @@ export function scalePoint(props, datum) {
   };
 }
 
-export function getPadding(props, name = "padding") {
-  const padding = props[name];
+/**
+ * Returns a padding value from a number or partial padding values
+ */
+export function getPadding(
+  padding?: number | Partial<ElementPadding>,
+): ElementPadding {
   const paddingVal = typeof padding === "number" ? padding : 0;
   const paddingObj = typeof padding === "object" ? padding : {};
   return {
@@ -107,7 +170,10 @@ export function getPadding(props, name = "padding") {
   };
 }
 
-export function isTooltip(component) {
+/**
+ * Returns true if the component is defined as a tooltip
+ */
+export function isTooltip(component?: { type?: { role?: string } }) {
   const labelRole = component && component.type && component.type.role;
   return labelRole === "tooltip";
 }
@@ -140,6 +206,9 @@ export function getStyles(style, defaultStyles) {
   };
 }
 
+/**
+ * Returns the value of a prop or accessor function with the given props
+ */
 export function evaluateProp<TValue>(
   prop: ValueOrAccessor<TValue, Record<string, any>>,
   props: Record<string, any>,
@@ -168,15 +237,29 @@ export function radiansToDegrees(radians) {
   return typeof radians === "number" ? radians / (Math.PI / 180) : radians;
 }
 
-export function getRadius(props) {
-  const { left, right, top, bottom } = getPadding(props);
-  const { width, height } = props;
+/**
+ * Get the maximum radius that will fit in the container
+ */
+export function getRadius(options: {
+  height: number;
+  width: number;
+  padding: ElementPadding;
+}) {
+  const { width, height, padding } = options;
+  const { left, right, top, bottom } = padding;
   return Math.min(width - left - right, height - top - bottom) / 2;
 }
 
-export function getPolarOrigin(props) {
+/**
+ * Returns the origin for a polar chart within the padded area
+ */
+export function getPolarOrigin(props: {
+  height: number;
+  width: number;
+  padding: ElementPadding;
+}): { x: number; y: number } {
   const { width, height } = props;
-  const { top, bottom, left, right } = getPadding(props);
+  const { top, bottom, left, right } = getPadding(props.padding);
   const radius = Math.min(width - left - right, height - top - bottom) / 2;
   const offsetWidth = width / 2 + left - right;
   const offsetHeight = height / 2 + top - bottom;
@@ -186,15 +269,43 @@ export function getPolarOrigin(props) {
   };
 }
 
-export function getRange(props, axis) {
+/**
+ * Determine the range of an axis based on the given props
+ */
+export function getRange(
+  props: {
+    range?: [number, number];
+    polar?: boolean;
+    innerRadius?: number;
+    startAngle?: number;
+    endAngle?: number;
+    height: number;
+    width: number;
+    padding: number | Partial<ElementPadding>;
+  },
+  axis: "x" | "y",
+) {
   if (props.range && props.range[axis]) {
     return props.range[axis];
   } else if (props.range && Array.isArray(props.range)) {
     return props.range;
   }
   return props.polar
-    ? getPolarRange(props, axis)
-    : getCartesianRange(props, axis);
+    ? getPolarRange({
+        axis,
+        innerRadius: props.innerRadius,
+        startAngle: props.startAngle,
+        endAngle: props.endAngle,
+        height: props.height,
+        width: props.width,
+        padding: getPadding(props.padding),
+      })
+    : getCartesianRange({
+        axis,
+        height: props.height,
+        width: props.width,
+        padding: getPadding(props.padding),
+      });
 }
 
 /**
@@ -392,7 +503,10 @@ export function reduceChildren<
  * @returns {Boolean} returns true if the props object contains `horizontal: true` of if any
  * children or nested children are horizontal
  */
-export function isHorizontal(props) {
+export function isHorizontal(props: {
+  horizontal?: boolean;
+  children?: React.ReactNode;
+}) {
   if (props.horizontal !== undefined || !props.children) {
     return props.horizontal;
   }
