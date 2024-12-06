@@ -12,413 +12,23 @@ import {
   VictoryLegend,
   VictoryLine,
   VictoryPie,
-  VictoryPolarAxis,
   VictoryScatter,
   VictoryVoronoi,
 } from "victory";
-import { colorScaleOptions } from "./_components/color-scale-options";
+import {
+  getBaseLabelsConfig,
+  getBaseStrokeConfig,
+  getNestedColorScaleConfig,
+  StrokeProps,
+} from "../_utils";
+import { ControlConfig } from ".";
 
-type ThemeBuilderFieldConfig =
-  | {
-      type: "section" | "colorScale";
-      label: string;
-      fields?: ThemeBuilderFieldConfig[];
-    }
-  | {
-      type: "slider" | "select" | "colorPicker";
-      label: string;
-      path: string | string[];
-      min?: number;
-      max?: number;
-      step?: number;
-      unit?: string;
-      options?: { label: string; value: string }[];
-    };
-
-enum StrokeProps {
-  STROKE = "Stroke",
-  STROKE_WIDTH = "Stroke Width",
-  STROKE_DASH_ARRAY = "Stroke Dash Array",
-  STROKE_LINE_CAP = "Stroke Line Cap",
-  STROKE_LINE_JOIN = "Stroke Line Join",
-}
-
-type ThemeBuilderOptionsConfig = {
-  type: "section";
-  title: string;
-  hasVictoryChart?: boolean;
-  content?: (props: any) => React.ReactNode;
-  fields: ThemeBuilderFieldConfig[];
-}[];
-
-const getPath = (basePath: string | string[], key: string) => {
-  if (Array.isArray(basePath)) {
-    return basePath.map((p) => `${p}.${key}`);
-  }
-  return `${basePath}.${key}`;
-};
-
-const getNestedColorScaleConfig = (
-  basePath: string | string[],
-): ThemeBuilderFieldConfig[] => [
-  {
-    type: "select",
-    label: "Color Scale",
-    options: colorScaleOptions,
-    path: getPath(basePath, "colorScale"),
-  },
-];
-
-const getBaseStrokeConfig = (
-  basePath: string | string[],
-  includedStrokeProps: StrokeProps[] = [],
-): ThemeBuilderFieldConfig[] => {
-  const config = [
-    {
-      type: "colorPicker",
-      label: StrokeProps.STROKE,
-      path: getPath(basePath, "stroke"),
-    },
-    {
-      type: "slider",
-      label: StrokeProps.STROKE_WIDTH,
-      min: 0,
-      max: 5,
-      unit: "px",
-      path: getPath(basePath, "strokeWidth"),
-    },
-    {
-      type: "slider",
-      label: StrokeProps.STROKE_DASH_ARRAY,
-      min: 0,
-      max: 10,
-      path: getPath(basePath, "strokeDasharray"),
-    },
-    {
-      type: "select",
-      label: StrokeProps.STROKE_LINE_CAP,
-      options: [
-        { label: "Round", value: "round" },
-        { label: "Square", value: "square" },
-        { label: "Butt", value: "butt" },
-      ],
-      path: getPath(basePath, "strokeLinecap"),
-    },
-    {
-      type: "select",
-      label: StrokeProps.STROKE_LINE_JOIN,
-      options: [
-        { label: "Round", value: "round" },
-        { label: "Bevel", value: "bevel" },
-        { label: "Miter", value: "miter" },
-      ],
-      path: getPath(basePath, "strokeLinejoin"),
-    },
-  ] as ThemeBuilderFieldConfig[];
-  return includedStrokeProps.length
-    ? config.filter((field) =>
-        includedStrokeProps.includes(field.label as StrokeProps),
-      )
-    : config;
-};
-
-const getBaseLabelsConfig = (
-  basePath: string | string[],
-): ThemeBuilderFieldConfig[] => [
-  {
-    type: "slider",
-    label: "Font Size",
-    min: 10,
-    max: 24,
-    unit: "px",
-    path: getPath(basePath, "fontSize"),
-  },
-  {
-    type: "slider",
-    label: "Text Padding",
-    min: 0,
-    max: 50,
-    unit: "px",
-    path: getPath(basePath, "padding"),
-  },
-  {
-    type: "colorPicker",
-    label: "Font Color",
-    path: getPath(basePath, "fill"),
-  },
-];
-
-const optionsConfig: ThemeBuilderOptionsConfig = [
-  {
+const chartOptionsConfig: {
+  [key: string]: ControlConfig;
+} = {
+  area: {
     type: "section",
-    title: "Palette",
-    fields: [
-      {
-        type: "colorScale",
-        label: "Color Scale",
-      },
-    ],
-  },
-  {
-    type: "section",
-    title: "Global Settings",
-    fields: [
-      {
-        type: "slider",
-        label: "Width",
-        min: 0,
-        max: 500,
-        unit: "px",
-        path: [
-          "chart.width",
-          "axis.width",
-          "area.width",
-          "bar.width",
-          "boxplot.width",
-          "candlestick.width",
-          "errorbar.width",
-          "group.width",
-          "histogram.width",
-          "line.width",
-          "pie.width",
-          "scatter.width",
-          "stack.width",
-          "voronoi.width",
-        ],
-      },
-      {
-        type: "slider",
-        label: "Height",
-        min: 0,
-        max: 500,
-        unit: "px",
-        path: [
-          "chart.height",
-          "axis.height",
-          "area.height",
-          "bar.height",
-          "boxplot.height",
-          "candlestick.height",
-          "errorbar.height",
-          "group.height",
-          "histogram.height",
-          "line.height",
-          "pie.height",
-          "scatter.height",
-          "stack.height",
-          "voronoi.height",
-        ],
-      },
-      {
-        type: "slider",
-        label: "Padding",
-        min: 0,
-        max: 100,
-        unit: "px",
-        path: [
-          "chart.padding",
-          "axis.padding",
-          "area.padding",
-          "bar.padding",
-          "boxplot.padding",
-          "candlestick.padding",
-          "errorbar.padding",
-          "group.padding",
-          "histogram.padding",
-          "line.padding",
-          "pie.padding",
-          "scatter.padding",
-          "stack.padding",
-          "voronoi.padding",
-        ],
-      },
-      {
-        type: "section",
-        label: "Labels",
-        fields: getBaseLabelsConfig([
-          "axis.style.axisLabel",
-          "polarAxis.style.tickLabels",
-          "polarDependentAxis.style.tickLabels",
-          "tooltip.style",
-          "area.style.labels",
-          "bar.style.labels",
-          "candlestick.style.labels",
-          "errorbar.style.labels",
-          "histogram.style.labels",
-          "legend.style.labels",
-          "line.style.labels",
-          "pie.style.labels",
-          "scatter.style.labels",
-          "voronoi.style.labels",
-          "boxplot.style.maxLabels",
-          "boxplot.style.medianLabels",
-          "boxplot.style.minLabels",
-          "boxplot.style.q1Labels",
-          "boxplot.style.q3Labels",
-        ]),
-      },
-      {
-        type: "section",
-        label: "Data",
-        fields: getBaseStrokeConfig([
-          "area.style.data",
-          "bar.style.data",
-          "candlestick.style.data",
-          "errorbar.style.data",
-          "histogram.style.data",
-          "line.style.data",
-          "pie.style.data",
-          "scatter.style.data",
-          "voronoi.style.data",
-        ]),
-      },
-    ],
-  },
-  {
-    type: "section",
-    title: "Axis",
-    fields: [
-      {
-        type: "section",
-        label: "General",
-        fields: getBaseStrokeConfig("axis.style.axis", [
-          StrokeProps.STROKE,
-          StrokeProps.STROKE_WIDTH,
-          StrokeProps.STROKE_LINE_CAP,
-          StrokeProps.STROKE_LINE_JOIN,
-        ]),
-      },
-      {
-        type: "section",
-        label: "Grid",
-        fields: getBaseStrokeConfig("axis.style.grid"),
-      },
-      {
-        type: "section",
-        label: "Ticks",
-        fields: [
-          {
-            type: "slider",
-            label: "Size",
-            min: 0,
-            max: 50,
-            unit: "px",
-            path: "axis.style.ticks.size",
-          },
-          ...getBaseStrokeConfig("axis.style.ticks", [
-            StrokeProps.STROKE,
-            StrokeProps.STROKE_WIDTH,
-          ]),
-        ],
-      },
-      {
-        type: "section",
-        label: "Labels",
-        fields: getBaseLabelsConfig("axis.style.axisLabel"),
-      },
-    ],
-  },
-  {
-    type: "section",
-    title: "Polar Axis",
-    content: (props) => [
-      <VictoryPolarAxis {...props} key="polar-axis" standalone={false} />,
-      <VictoryPolarAxis
-        {...props}
-        key="polar-axis-dependent"
-        dependentAxis
-        domain={[0, 10]}
-        standalone={false}
-      />,
-    ],
-    fields: [
-      {
-        type: "section",
-        label: "General",
-        fields: getBaseStrokeConfig("polarAxis.style.axis", [
-          StrokeProps.STROKE,
-          StrokeProps.STROKE_WIDTH,
-        ]),
-      },
-      {
-        type: "section",
-        label: "Grid",
-        fields: getBaseStrokeConfig("polarAxis.style.grid"),
-      },
-      {
-        type: "section",
-        label: "Ticks",
-        fields: [
-          {
-            type: "slider",
-            label: "Size",
-            min: 0,
-            max: 50,
-            unit: "px",
-            path: "polarAxis.style.ticks.size",
-          },
-          ...getBaseStrokeConfig("polarAxis.style.ticks", [
-            StrokeProps.STROKE,
-            StrokeProps.STROKE_WIDTH,
-            StrokeProps.STROKE_LINE_CAP,
-            StrokeProps.STROKE_LINE_JOIN,
-          ]),
-        ],
-      },
-      {
-        type: "section",
-        label: "Labels",
-        fields: getBaseLabelsConfig("polarAxis.style.tickLabels"),
-      },
-    ],
-  },
-  {
-    type: "section",
-    title: "Polar Dependent Axis",
-    fields: [
-      {
-        type: "section",
-        label: "General",
-        fields: getBaseStrokeConfig("polarDependentAxis.style.axis", [
-          StrokeProps.STROKE,
-          StrokeProps.STROKE_WIDTH,
-        ]),
-      },
-      {
-        type: "section",
-        label: "Grid",
-        fields: getBaseStrokeConfig("polarDependentAxis.style.grid"),
-      },
-      {
-        type: "section",
-        label: "Ticks",
-        fields: [
-          {
-            type: "slider",
-            label: "Size",
-            min: 0,
-            max: 50,
-            unit: "px",
-            path: "polarDependentAxis.style.ticks.size",
-          },
-          ...getBaseStrokeConfig("polarDependentAxis.style.ticks", [
-            StrokeProps.STROKE,
-            StrokeProps.STROKE_WIDTH,
-            StrokeProps.STROKE_LINE_CAP,
-            StrokeProps.STROKE_LINE_JOIN,
-          ]),
-        ],
-      },
-      {
-        type: "section",
-        label: "Labels",
-        fields: getBaseLabelsConfig("polarDependentAxis.style.tickLabels"),
-      },
-    ],
-  },
-  {
-    type: "section",
-    title: "Area Chart",
+    label: "Area Chart",
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
@@ -434,11 +44,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         ]}
       />,
     ],
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "slider",
             label: "Fill Opacity",
@@ -461,13 +71,13 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("area.style.labels"),
+        controls: getBaseLabelsConfig("area.style.labels"),
       },
     ],
   },
-  {
+  bar: {
     type: "section",
-    title: "Bar Chart",
+    label: "Bar Chart",
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
@@ -501,11 +111,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         />
       </VictoryGroup>,
     ],
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -535,13 +145,13 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("bar.style.labels"),
+        controls: getBaseLabelsConfig("bar.style.labels"),
       },
     ],
   },
-  {
+  boxPlot: {
     type: "section",
-    title: "Box Plot",
+    label: "Box Plot",
     content: (props) => (
       <VictoryBoxPlot
         {...props}
@@ -556,11 +166,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         labelOrientation="right"
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Max",
-        fields: [
+        controls: [
           ...getBaseStrokeConfig("boxplot.style.max", [
             StrokeProps.STROKE,
             StrokeProps.STROKE_WIDTH,
@@ -571,7 +181,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Median",
-        fields: [
+        controls: [
           ...getBaseStrokeConfig("boxplot.style.median", [
             StrokeProps.STROKE,
             StrokeProps.STROKE_WIDTH,
@@ -582,7 +192,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Min",
-        fields: [
+        controls: [
           ...getBaseStrokeConfig("boxplot.style.min", [
             StrokeProps.STROKE,
             StrokeProps.STROKE_WIDTH,
@@ -593,7 +203,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Q1",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -621,7 +231,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Q3",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -640,9 +250,9 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       },
     ],
   },
-  {
+  candlestick: {
     type: "section",
-    title: "Candlestick Chart",
+    label: "Candlestick Chart",
     content: (props) => (
       <VictoryCandlestick
         {...props}
@@ -690,11 +300,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           ...getBaseStrokeConfig("candlestick.style.data", [
             StrokeProps.STROKE,
             StrokeProps.STROKE_WIDTH,
@@ -719,12 +329,12 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("candlestick.style.labels"),
+        controls: getBaseLabelsConfig("candlestick.style.labels"),
       },
       {
         type: "section",
         label: "Colors",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Positive Color",
@@ -739,9 +349,9 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       },
     ],
   },
-  {
+  errorBar: {
     type: "section",
-    title: "Error Bar",
+    label: "Error Bar",
     content: (props) => (
       <VictoryErrorBar
         {...props}
@@ -754,11 +364,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "slider",
             label: "Border Width",
@@ -777,13 +387,13 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("errorbar.style.labels"),
+        controls: getBaseLabelsConfig("errorbar.style.labels"),
       },
     ],
   },
-  {
+  histogram: {
     type: "section",
-    title: "Histogram",
+    label: "Histogram",
     content: (props) => (
       <VictoryHistogram
         {...props}
@@ -804,11 +414,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         labels={({ datum }) => `Bin count:\n ${datum.x}`}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -842,18 +452,18 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("histogram.style.labels"),
+        controls: getBaseLabelsConfig("histogram.style.labels"),
       },
     ],
   },
-  {
+  group: {
     type: "section",
-    title: "Group",
-    fields: [
+    label: "Group",
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           ...getNestedColorScaleConfig("group"),
           {
             type: "slider",
@@ -867,9 +477,9 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       },
     ],
   },
-  {
+  legend: {
     type: "section",
-    title: "Legend",
+    label: "Legend",
     content: (props) => [
       <VictoryLegend
         {...props}
@@ -918,11 +528,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         }}
       />,
     ],
-    fields: [
+    controls: [
       {
         type: "section",
         label: "General",
-        fields: [
+        controls: [
           {
             type: "slider",
             label: "Gutter",
@@ -975,26 +585,26 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("legend.style.labels"),
+        controls: getBaseLabelsConfig("legend.style.labels"),
       },
       {
         type: "section",
         label: "Title",
-        fields: getBaseLabelsConfig("legend.style.title"),
+        controls: getBaseLabelsConfig("legend.style.title"),
       },
       {
         type: "section",
         label: "Border",
-        fields: getBaseStrokeConfig("legend.style.border", [
+        controls: getBaseStrokeConfig("legend.style.border", [
           StrokeProps.STROKE,
           StrokeProps.STROKE_WIDTH,
         ]),
       },
     ],
   },
-  {
+  line: {
     type: "section",
-    title: "Line Chart",
+    label: "Line Chart",
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
@@ -1011,11 +621,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         labels={({ datum }) => datum.y}
       />,
     ],
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: getBaseStrokeConfig("line.style.data", [
+        controls: getBaseStrokeConfig("line.style.data", [
           StrokeProps.STROKE,
           StrokeProps.STROKE_WIDTH,
           StrokeProps.STROKE_LINE_CAP,
@@ -1025,13 +635,13 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("line.style.labels"),
+        controls: getBaseLabelsConfig("line.style.labels"),
       },
     ],
   },
-  {
+  pie: {
     type: "section",
-    title: "Pie Chart",
+    label: "Pie Chart",
     hasVictoryChart: false,
     content: (props) => (
       <VictoryPie
@@ -1045,11 +655,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           ...getNestedColorScaleConfig("pie"),
           {
             type: "slider",
@@ -1068,13 +678,13 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("pie.style.labels"),
+        controls: getBaseLabelsConfig("pie.style.labels"),
       },
     ],
   },
-  {
+  scatter: {
     type: "section",
-    title: "Scatter Chart",
+    label: "Scatter Chart",
     content: (props) => (
       <VictoryScatter
         {...props}
@@ -1087,11 +697,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -1114,18 +724,18 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("scatter.style.labels"),
+        controls: getBaseLabelsConfig("scatter.style.labels"),
       },
     ],
   },
-  {
+  tooltip: {
     type: "section",
-    title: "Tooltip",
-    fields: [
+    label: "Tooltip",
+    controls: [
       {
         type: "section",
         label: "General",
-        fields: [
+        controls: [
           ...getBaseLabelsConfig("tooltip.style"),
           {
             type: "slider",
@@ -1146,7 +756,7 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Flyout",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -1169,9 +779,9 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       },
     ],
   },
-  {
+  voronoi: {
     type: "section",
-    title: "Voronoi",
+    label: "Voronoi",
     content: (props) => (
       <VictoryVoronoi
         {...props}
@@ -1184,11 +794,11 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "General",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -1203,10 +813,10 @@ const optionsConfig: ThemeBuilderOptionsConfig = [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("voronoi.style.labels"),
+        controls: getBaseLabelsConfig("voronoi.style.labels"),
       },
     ],
   },
-];
+};
 
-export default optionsConfig;
+export default chartOptionsConfig;

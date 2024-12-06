@@ -11,7 +11,7 @@ type SelectProps = {
   label?: string;
   options: SelectOption[];
   value?: string;
-  onChange: (value?: string) => void;
+  onChange: (value: string) => void;
   includeDefault?: boolean;
   className?: string;
 };
@@ -31,7 +31,7 @@ const Select = ({
     }
   };
   return (
-    <div className={clsx("relative w-full", className)}>
+    <div className={clsx("relative", className)}>
       {label && (
         <label htmlFor={id} className="block mb-1 text-sm font-bold">
           {label}

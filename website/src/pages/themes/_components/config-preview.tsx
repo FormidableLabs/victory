@@ -1,14 +1,14 @@
 import React from "react";
 import Button from "./button";
-import { VictoryThemeDefinition } from "victory";
 import CodeBlock from "./code-block";
+import { useTheme } from "../_providers/themeProvider";
 
 type ConfigPreviewProps = {
-  config: VictoryThemeDefinition;
   onClose: () => void;
 };
 
-const ConfigPreview = ({ config, onClose }: ConfigPreviewProps) => {
+const ConfigPreview = ({ onClose }: ConfigPreviewProps) => {
+  const { customThemeConfig: config } = useTheme();
   const [copyStatus, setCopyStatus] = React.useState<string | null>(null);
 
   const handleCopyThemeConfig = () => {

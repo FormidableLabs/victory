@@ -36,9 +36,10 @@ const Slider = ({
     <div className={className}>
       <label
         htmlFor={id}
-        className="block mb-1 text-sm font-medium text-grayscale-900 dark:text-white"
+        className="flex flex-row mb-1 text-sm text-grayscale-900 dark:text-white"
       >
-        <span className="text-sm font-bold">{label}</span>: {valueString}
+        <span className="flex-1 text-sm font-bold ">{label}</span>
+        <span className="">{valueString}</span>
       </label>
       <input
         id={id}
