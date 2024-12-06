@@ -11,7 +11,7 @@ const ON_MOUSE_MOVE_THROTTLE_MS = 32;
 class VoronoiHelpersClass {
   withinBounds(props, point) {
     const { width, height, polar, origin, scale } = props;
-    const padding = Helpers.getPadding(props, "voronoiPadding");
+    const padding = Helpers.getPadding(props.voronoiPadding);
     const { x, y } = point;
     if (polar) {
       const distanceSquared =

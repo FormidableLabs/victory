@@ -63,7 +63,7 @@ const getStyleObject = (props: VictoryPolarAxisProps) => {
 };
 
 const getRadius = (props: VictoryPolarAxisProps) => {
-  const { left, right, top, bottom } = Helpers.getPadding(props);
+  const { left, right, top, bottom } = Helpers.getPadding(props.padding);
   const { width, height } = props;
 
   if (width === undefined || height === undefined) {
@@ -439,7 +439,7 @@ const getCalculatedValues = (initialProps: VictoryPolarAxisProps) => {
   const props = Object.assign({ polar: true }, initialProps);
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
-  const padding = Helpers.getPadding(props);
+  const padding = Helpers.getPadding(props.padding);
   const axis = Axis.getAxis(props);
   const axisType = getAxisType(props);
   const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
@@ -451,7 +451,10 @@ const getCalculatedValues = (initialProps: VictoryPolarAxisProps) => {
     axisType === "angular" ? filterTicks(initialTicks, scale) : initialTicks;
   const tickFormat = Axis.getTickFormat(props, scale);
   const radius = getRadius(props);
+
+  // @ts-expect-error props is not typed but contains width and height
   const origin = Helpers.getPolarOrigin(props);
+
   return {
     axis,
     style,

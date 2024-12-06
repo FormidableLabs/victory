@@ -115,7 +115,7 @@ export function getCalculatedProps(initialProps, childComponents) {
 
   const origin = polar ? Helpers.getPolarOrigin(props) : Axis.getOrigin(domain);
 
-  const padding = Helpers.getPadding(props);
+  const padding = Helpers.getPadding(props.padding);
 
   return {
     categories,

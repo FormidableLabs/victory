@@ -467,7 +467,7 @@ const getOrientation = (props) => {
 const getCalculatedValues = (props) => {
   const defaultStyles = getStyleObject(props);
   const style = getStyles(props, defaultStyles);
-  const padding = Helpers.getPadding(props);
+  const padding = Helpers.getPadding(props.padding);
   const labelPadding = getLabelPadding(props, style);
   const stringTicks = Axis.stringTicks(props) ? props.tickValues : undefined;
   const axis = Axis.getAxis(props);

@@ -211,7 +211,7 @@ export function getChildProps(props, calculatedProps) {
   return {
     height: props.height,
     width: props.width,
-    padding: Helpers.getPadding(props),
+    padding: Helpers.getPadding(props.padding),
     standalone: false,
     theme: props.theme,
     categories,
