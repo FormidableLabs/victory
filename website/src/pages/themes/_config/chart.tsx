@@ -21,11 +21,14 @@ import {
   getNestedColorScaleConfig,
   StrokeProps,
 } from "../_utils";
+import { ControlConfig } from ".";
 
-export default [
-  {
+const chartOptionsConfig: {
+  [key: string]: ControlConfig;
+} = {
+  area: {
     type: "section",
-    title: "Area Chart",
+    label: "Area Chart",
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
@@ -41,11 +44,11 @@ export default [
         ]}
       />,
     ],
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "slider",
             label: "Fill Opacity",
@@ -68,13 +71,13 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("area.style.labels"),
+        controls: getBaseLabelsConfig("area.style.labels"),
       },
     ],
   },
-  {
+  bar: {
     type: "section",
-    title: "Bar Chart",
+    label: "Bar Chart",
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
@@ -108,11 +111,11 @@ export default [
         />
       </VictoryGroup>,
     ],
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -142,13 +145,13 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("bar.style.labels"),
+        controls: getBaseLabelsConfig("bar.style.labels"),
       },
     ],
   },
-  {
+  boxPlot: {
     type: "section",
-    title: "Box Plot",
+    label: "Box Plot",
     content: (props) => (
       <VictoryBoxPlot
         {...props}
@@ -163,11 +166,11 @@ export default [
         labelOrientation="right"
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Max",
-        fields: [
+        controls: [
           ...getBaseStrokeConfig("boxplot.style.max", [
             StrokeProps.STROKE,
             StrokeProps.STROKE_WIDTH,
@@ -178,7 +181,7 @@ export default [
       {
         type: "section",
         label: "Median",
-        fields: [
+        controls: [
           ...getBaseStrokeConfig("boxplot.style.median", [
             StrokeProps.STROKE,
             StrokeProps.STROKE_WIDTH,
@@ -189,7 +192,7 @@ export default [
       {
         type: "section",
         label: "Min",
-        fields: [
+        controls: [
           ...getBaseStrokeConfig("boxplot.style.min", [
             StrokeProps.STROKE,
             StrokeProps.STROKE_WIDTH,
@@ -200,7 +203,7 @@ export default [
       {
         type: "section",
         label: "Q1",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -228,7 +231,7 @@ export default [
       {
         type: "section",
         label: "Q3",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -247,9 +250,9 @@ export default [
       },
     ],
   },
-  {
+  candlestick: {
     type: "section",
-    title: "Candlestick Chart",
+    label: "Candlestick Chart",
     content: (props) => (
       <VictoryCandlestick
         {...props}
@@ -297,11 +300,11 @@ export default [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           ...getBaseStrokeConfig("candlestick.style.data", [
             StrokeProps.STROKE,
             StrokeProps.STROKE_WIDTH,
@@ -326,12 +329,12 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("candlestick.style.labels"),
+        controls: getBaseLabelsConfig("candlestick.style.labels"),
       },
       {
         type: "section",
         label: "Colors",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Positive Color",
@@ -346,9 +349,9 @@ export default [
       },
     ],
   },
-  {
+  errorBar: {
     type: "section",
-    title: "Error Bar",
+    label: "Error Bar",
     content: (props) => (
       <VictoryErrorBar
         {...props}
@@ -361,11 +364,11 @@ export default [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "slider",
             label: "Border Width",
@@ -384,13 +387,13 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("errorbar.style.labels"),
+        controls: getBaseLabelsConfig("errorbar.style.labels"),
       },
     ],
   },
-  {
+  histogram: {
     type: "section",
-    title: "Histogram",
+    label: "Histogram",
     content: (props) => (
       <VictoryHistogram
         {...props}
@@ -411,11 +414,11 @@ export default [
         labels={({ datum }) => `Bin count:\n ${datum.x}`}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -449,18 +452,18 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("histogram.style.labels"),
+        controls: getBaseLabelsConfig("histogram.style.labels"),
       },
     ],
   },
-  {
+  group: {
     type: "section",
-    title: "Group",
-    fields: [
+    label: "Group",
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           ...getNestedColorScaleConfig("group"),
           {
             type: "slider",
@@ -474,9 +477,9 @@ export default [
       },
     ],
   },
-  {
+  legend: {
     type: "section",
-    title: "Legend",
+    label: "Legend",
     content: (props) => [
       <VictoryLegend
         {...props}
@@ -525,11 +528,11 @@ export default [
         }}
       />,
     ],
-    fields: [
+    controls: [
       {
         type: "section",
         label: "General",
-        fields: [
+        controls: [
           {
             type: "slider",
             label: "Gutter",
@@ -582,26 +585,26 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("legend.style.labels"),
+        controls: getBaseLabelsConfig("legend.style.labels"),
       },
       {
         type: "section",
         label: "Title",
-        fields: getBaseLabelsConfig("legend.style.title"),
+        controls: getBaseLabelsConfig("legend.style.title"),
       },
       {
         type: "section",
         label: "Border",
-        fields: getBaseStrokeConfig("legend.style.border", [
+        controls: getBaseStrokeConfig("legend.style.border", [
           StrokeProps.STROKE,
           StrokeProps.STROKE_WIDTH,
         ]),
       },
     ],
   },
-  {
+  line: {
     type: "section",
-    title: "Line Chart",
+    label: "Line Chart",
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
@@ -618,11 +621,11 @@ export default [
         labels={({ datum }) => datum.y}
       />,
     ],
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: getBaseStrokeConfig("line.style.data", [
+        controls: getBaseStrokeConfig("line.style.data", [
           StrokeProps.STROKE,
           StrokeProps.STROKE_WIDTH,
           StrokeProps.STROKE_LINE_CAP,
@@ -632,13 +635,13 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("line.style.labels"),
+        controls: getBaseLabelsConfig("line.style.labels"),
       },
     ],
   },
-  {
+  pie: {
     type: "section",
-    title: "Pie Chart",
+    label: "Pie Chart",
     hasVictoryChart: false,
     content: (props) => (
       <VictoryPie
@@ -652,11 +655,11 @@ export default [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           ...getNestedColorScaleConfig("pie"),
           {
             type: "slider",
@@ -675,13 +678,13 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("pie.style.labels"),
+        controls: getBaseLabelsConfig("pie.style.labels"),
       },
     ],
   },
-  {
+  scatter: {
     type: "section",
-    title: "Scatter Chart",
+    label: "Scatter Chart",
     content: (props) => (
       <VictoryScatter
         {...props}
@@ -694,11 +697,11 @@ export default [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "Data",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -721,18 +724,18 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("scatter.style.labels"),
+        controls: getBaseLabelsConfig("scatter.style.labels"),
       },
     ],
   },
-  {
+  tooltip: {
     type: "section",
-    title: "Tooltip",
-    fields: [
+    label: "Tooltip",
+    controls: [
       {
         type: "section",
         label: "General",
-        fields: [
+        controls: [
           ...getBaseLabelsConfig("tooltip.style"),
           {
             type: "slider",
@@ -753,7 +756,7 @@ export default [
       {
         type: "section",
         label: "Flyout",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -776,9 +779,9 @@ export default [
       },
     ],
   },
-  {
+  voronoi: {
     type: "section",
-    title: "Voronoi",
+    label: "Voronoi",
     content: (props) => (
       <VictoryVoronoi
         {...props}
@@ -791,11 +794,11 @@ export default [
         ]}
       />
     ),
-    fields: [
+    controls: [
       {
         type: "section",
         label: "General",
-        fields: [
+        controls: [
           {
             type: "colorPicker",
             label: "Fill",
@@ -810,8 +813,10 @@ export default [
       {
         type: "section",
         label: "Labels",
-        fields: getBaseLabelsConfig("voronoi.style.labels"),
+        controls: getBaseLabelsConfig("voronoi.style.labels"),
       },
     ],
   },
-];
+};
+
+export default chartOptionsConfig;

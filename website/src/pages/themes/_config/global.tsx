@@ -1,13 +1,14 @@
+import { OptionsPanelConfig } from ".";
 import { getBaseLabelsConfig, getBaseStrokeConfig } from "../_utils";
 
-export default {
+const globalOptionsConfig: OptionsPanelConfig = {
   title: "Global Options",
-  fields: [
+  description: "Customize the appearance of all charts.",
+  controls: [
     {
       type: "section",
       label: "Chart Size",
-      description: "Set the width, height, and padding of the chart.",
-      fields: [
+      controls: [
         {
           type: "slider",
           label: "Width",
@@ -82,7 +83,7 @@ export default {
     {
       type: "section",
       label: "Labels",
-      fields: getBaseLabelsConfig([
+      controls: getBaseLabelsConfig([
         "axis.style.axisLabel",
         "polarAxis.style.tickLabels",
         "polarDependentAxis.style.tickLabels",
@@ -107,7 +108,7 @@ export default {
     {
       type: "section",
       label: "Data",
-      fields: getBaseStrokeConfig([
+      controls: getBaseStrokeConfig([
         "area.style.data",
         "bar.style.data",
         "candlestick.style.data",
@@ -121,3 +122,5 @@ export default {
     },
   ],
 };
+
+export default globalOptionsConfig;

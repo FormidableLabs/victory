@@ -6,17 +6,32 @@ import {
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import React from "react";
-import { globalOptionsConfig, paletteOptionsConfig } from "../_config";
+import {
+  ControlConfig,
+  globalOptionsConfig,
+  OptionsPanelConfig,
+  paletteOptionsConfig,
+} from "../_config";
 import axisOptionsConfig from "../_config/axis";
 import { useTheme } from "../_providers/themeProvider";
+import {
+  defaultExampleConfigs,
+  usePreviewOptions,
+} from "../_providers/previewOptionsProvider";
 
 type NavItem = {
   title: string;
-  description?: string;
   icon: React.ElementType;
-  config?: any;
-  panelType?: "base" | "global" | "overrides";
-};
+} & (
+  | {
+      panelType: "theme" | "chart";
+    }
+  | {
+      panelType: "default";
+      config: OptionsPanelConfig;
+      examples?: ControlConfig[];
+    }
+);
 
 type SideNavProps = {
   activeItem: NavItem;
@@ -24,35 +39,50 @@ type SideNavProps = {
 };
 
 export const NAV_ITEMS: NavItem[] = [
-  { title: "Base Theme", icon: CircleStackIcon, panelType: "base" },
+  {
+    title: "Base Theme",
+    icon: CircleStackIcon,
+    panelType: "theme",
+  },
   {
     title: "Color Palette",
     icon: SwatchIcon,
     config: paletteOptionsConfig,
-    panelType: "global",
+    panelType: "default",
   },
   {
     title: "Global Options",
     icon: GlobeAmericasIcon,
     config: globalOptionsConfig,
-    panelType: "global",
+    panelType: "default",
   },
   {
-    title: "Axes",
+    title: "Axis Options",
     icon: AdjustmentsVerticalIcon,
-    panelType: "global",
+    panelType: "default",
     config: axisOptionsConfig,
+    examples: axisOptionsConfig.controls,
   },
   {
-    title: "Charts",
+    title: "Chart Options",
     icon: AdjustmentsVerticalIcon,
-    panelType: "overrides",
+    panelType: "chart",
   },
 ];
 
 const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
   const { baseTheme } = useTheme();
+  const { setExampleConfigs } = usePreviewOptions();
   const isBaseThemeSelected = !!baseTheme;
+
+  const handleItemSelect = (item: NavItem) => {
+    onItemSelect(item);
+    if (item.panelType === "default" && !!item.examples) {
+      setExampleConfigs(item.examples);
+    } else {
+      setExampleConfigs(defaultExampleConfigs);
+    }
+  };
 
   return (
     <aside className="sticky top-[60px] h-theme-builder w-32 overflow-y-auto bg-black py-4">
@@ -65,7 +95,7 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
             <button
               key={item.title}
               aria-current={isActive ? "page" : undefined}
-              onClick={() => onItemSelect(item)}
+              onClick={() => handleItemSelect(item)}
               disabled={isDisabled}
               className={clsx(
                 "group flex w-full flex-col items-center rounded-md p-3 text-xs font-medium cursor-pointer",

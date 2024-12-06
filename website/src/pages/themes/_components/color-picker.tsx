@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { TiPencil } from "react-icons/ti";
 import clsx from "clsx";
 import Select from "./select";
@@ -6,7 +6,6 @@ import Select from "./select";
 type ColorPickerProps = {
   label?: string;
   color: string;
-  id: string;
   onColorChange: (color?: string) => void;
   showColorName?: boolean;
   className?: string;
@@ -22,7 +21,6 @@ enum ColorPickerOptions {
 const ColorPicker = ({
   label,
   color,
-  id,
   onColorChange,
   showColorName = false,
   className,
@@ -57,6 +55,8 @@ const ColorPicker = ({
     }
   };
 
+  const id = useId();
+
   return (
     <fieldset className={clsx("p-0", className)}>
       {label && (
@@ -68,7 +68,7 @@ const ColorPicker = ({
         {showColorName && (
           <div className="flex items-center my-2 flex-1">
             <Select
-              id="color-option"
+              id={id}
               value={colorOption}
               options={[
                 { label: "None", value: ColorPickerOptions.NONE },

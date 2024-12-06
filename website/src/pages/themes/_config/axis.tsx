@@ -5,16 +5,32 @@ import {
   getBaseStrokeConfig,
   StrokeProps,
 } from "../_utils";
-import { VictoryPolarAxis } from "victory";
+import { VictoryArea, VictoryAxis, VictoryPolarAxis } from "victory";
+import { ControlConfig, OptionsPanelConfig } from ".";
 
-const generalAxisOptionsConfig = {
+const generalAxisOptionsConfig: ControlConfig = {
   type: "accordion",
   label: "Base Axis",
-  fields: [
+  content: (props) => [
+    <VictoryAxis key="x-axis" label="X Axis" />,
+    <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
+    <VictoryArea
+      {...props}
+      key="area-chart"
+      data={[
+        { x: 1, y: 2, label: "A" },
+        { x: 2, y: 3, label: "B" },
+        { x: 3, y: 5, label: "C" },
+        { x: 4, y: 4, label: "D" },
+        { x: 5, y: 7, label: "E" },
+      ]}
+    />,
+  ],
+  controls: [
     {
       type: "section",
       label: "General",
-      fields: getBaseStrokeConfig("axis.style.axis", [
+      controls: getBaseStrokeConfig("axis.style.axis", [
         StrokeProps.STROKE,
         StrokeProps.STROKE_WIDTH,
         StrokeProps.STROKE_LINE_CAP,
@@ -24,12 +40,12 @@ const generalAxisOptionsConfig = {
     {
       type: "section",
       label: "Grid",
-      fields: getBaseStrokeConfig("axis.style.grid"),
+      controls: getBaseStrokeConfig("axis.style.grid"),
     },
     {
       type: "section",
       label: "Ticks",
-      fields: [
+      controls: [
         {
           type: "slider",
           label: "Size",
@@ -47,7 +63,7 @@ const generalAxisOptionsConfig = {
     {
       type: "section",
       label: "Labels",
-      fields: getBaseLabelsConfig("axis.style.axisLabel"),
+      controls: getBaseLabelsConfig("axis.style.axisLabel"),
     },
   ],
 };
@@ -65,11 +81,11 @@ const polarAxisOptionsConfig = {
       standalone={false}
     />,
   ],
-  fields: [
+  controls: [
     {
       type: "section",
       label: "General",
-      fields: getBaseStrokeConfig("polarAxis.style.axis", [
+      controls: getBaseStrokeConfig("polarAxis.style.axis", [
         StrokeProps.STROKE,
         StrokeProps.STROKE_WIDTH,
       ]),
@@ -77,12 +93,12 @@ const polarAxisOptionsConfig = {
     {
       type: "section",
       label: "Grid",
-      fields: getBaseStrokeConfig("polarAxis.style.grid"),
+      controls: getBaseStrokeConfig("polarAxis.style.grid"),
     },
     {
       type: "section",
       label: "Ticks",
-      fields: [
+      controls: [
         {
           type: "slider",
           label: "Size",
@@ -102,19 +118,19 @@ const polarAxisOptionsConfig = {
     {
       type: "section",
       label: "Labels",
-      fields: getBaseLabelsConfig("polarAxis.style.tickLabels"),
+      controls: getBaseLabelsConfig("polarAxis.style.tickLabels"),
     },
   ],
 };
 
-const polarDependentAxisOptionsConfig = {
+const polarDependentAxisOptionsConfig: ControlConfig = {
   type: "accordion",
   label: "Polar Dependent Axis",
-  fields: [
+  controls: [
     {
       type: "section",
       label: "General",
-      fields: getBaseStrokeConfig("polarDependentAxis.style.axis", [
+      controls: getBaseStrokeConfig("polarDependentAxis.style.axis", [
         StrokeProps.STROKE,
         StrokeProps.STROKE_WIDTH,
       ]),
@@ -122,12 +138,12 @@ const polarDependentAxisOptionsConfig = {
     {
       type: "section",
       label: "Grid",
-      fields: getBaseStrokeConfig("polarDependentAxis.style.grid"),
+      controls: getBaseStrokeConfig("polarDependentAxis.style.grid"),
     },
     {
       type: "section",
       label: "Ticks",
-      fields: [
+      controls: [
         {
           type: "slider",
           label: "Size",
@@ -147,17 +163,19 @@ const polarDependentAxisOptionsConfig = {
     {
       type: "section",
       label: "Labels",
-      fields: getBaseLabelsConfig("polarDependentAxis.style.tickLabels"),
+      controls: getBaseLabelsConfig("polarDependentAxis.style.tickLabels"),
     },
   ],
 };
 
-export default {
+const axisOptionsConfig: OptionsPanelConfig = {
   title: "Axis Options",
   description: "Customize the appearance of axes in your charts.",
-  fields: [
+  controls: [
     generalAxisOptionsConfig,
     polarAxisOptionsConfig,
     polarDependentAxisOptionsConfig,
   ],
 };
+
+export default axisOptionsConfig;

@@ -3,16 +3,16 @@ import React, { createContext, useContext } from "react";
 type PreviewOptionsContextType = {
   colorScale?: string;
   updateColorScale: (newColorScale: string) => void;
-  chartType?: string;
-  setChartType: (chartType: string) => void;
   showTooltips: boolean;
   setShowTooltips: (showTooltips: boolean) => void;
   resetPreviewOptions: () => void;
+  exampleConfigs: any[];
+  setExampleConfigs: (exampleConfigs: any[]) => void;
 };
 
 export const defaultColorScale = undefined;
-export const defaultChartType = "";
 export const defaultShowTooltips = false;
+export const defaultExampleConfigs = [];
 
 const PreviewOptionsContext = createContext<
   PreviewOptionsContextType | undefined
@@ -22,8 +22,10 @@ export const PreviewOptionsProvider = ({ children }) => {
   const [colorScale, setColorScale] = React.useState<string | undefined>(
     defaultColorScale,
   );
-  const [chartType, setChartType] = React.useState<string>(defaultChartType);
   const [showTooltips, setShowTooltips] = React.useState(defaultShowTooltips);
+  const [exampleConfigs, setExampleConfigs] = React.useState<any[]>(
+    defaultExampleConfigs,
+  );
 
   const updateColorScale = (newColorScale: string) => {
     const updatedColorScale = newColorScale === "" ? undefined : newColorScale;
@@ -32,7 +34,6 @@ export const PreviewOptionsProvider = ({ children }) => {
 
   const resetPreviewOptions = () => {
     setColorScale(defaultColorScale);
-    setChartType(defaultChartType);
     setShowTooltips(defaultShowTooltips);
   };
 
@@ -41,11 +42,11 @@ export const PreviewOptionsProvider = ({ children }) => {
       value={{
         colorScale,
         updateColorScale,
-        chartType,
-        setChartType,
         showTooltips,
         setShowTooltips,
         resetPreviewOptions,
+        exampleConfigs,
+        setExampleConfigs,
       }}
     >
       {children}

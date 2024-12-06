@@ -1,28 +1,30 @@
 import React from "react";
 
-export type ThemeBuilderFieldConfig =
+export type ControlConfig = {
+  label: string;
+  content?: (props: any) => React.ReactNode;
+  controls?: ControlConfig[];
+} & (
   | {
-      type: "section" | "colorScale";
-      label: string;
-      fields?: ThemeBuilderFieldConfig[];
+      type: "section" | "colorScale" | "accordion";
     }
   | {
       type: "slider" | "select" | "colorPicker";
-      label: string;
       path: string | string[];
       min?: number;
       max?: number;
       step?: number;
       unit?: string;
       options?: { label: string; value: string }[];
-    };
+    }
+);
 
-export type ThemeBuilderOptionsConfig = {
+export type OptionsPanelConfig = {
   title: string;
+  description?: string;
   hasVictoryChart?: boolean;
-  content?: (props: any) => React.ReactNode;
-  fields: ThemeBuilderFieldConfig[];
-}[];
+  controls: ControlConfig[];
+};
 
 export { default as paletteOptionsConfig } from "./palette";
 export { default as globalOptionsConfig } from "./global";

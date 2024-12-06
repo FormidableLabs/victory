@@ -1,5 +1,5 @@
 import { VictoryThemeDefinition } from "victory-core";
-import { ThemeBuilderFieldConfig } from "./_config";
+import { ControlConfig } from "./_config";
 import { colorScaleOptions } from "./_components/color-scale-options";
 
 export const setNestedConfigValue = (
@@ -56,7 +56,7 @@ export const getPath = (basePath: string | string[], key: string) => {
 
 export const getNestedColorScaleConfig = (
   basePath: string | string[],
-): ThemeBuilderFieldConfig[] => [
+): ControlConfig[] => [
   {
     type: "select",
     label: "Color Scale",
@@ -68,7 +68,7 @@ export const getNestedColorScaleConfig = (
 export const getBaseStrokeConfig = (
   basePath: string | string[],
   includedStrokeProps: StrokeProps[] = [],
-): ThemeBuilderFieldConfig[] => {
+): ControlConfig[] => {
   const config = [
     {
       type: "colorPicker",
@@ -110,7 +110,7 @@ export const getBaseStrokeConfig = (
       ],
       path: getPath(basePath, "strokeLinejoin"),
     },
-  ] as ThemeBuilderFieldConfig[];
+  ] as ControlConfig[];
   return includedStrokeProps.length
     ? config.filter((field) =>
         includedStrokeProps.includes(field.label as StrokeProps),
@@ -120,7 +120,7 @@ export const getBaseStrokeConfig = (
 
 export const getBaseLabelsConfig = (
   basePath: string | string[],
-): ThemeBuilderFieldConfig[] => [
+): ControlConfig[] => [
   {
     type: "slider",
     label: "Font Size",

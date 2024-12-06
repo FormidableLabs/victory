@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import Select from "./select";
 import Slider from "./slider";
 import ColorPicker from "./color-picker";
@@ -13,7 +13,7 @@ export type ColorChangeArgs = {
   colorScale: string;
 };
 
-const Control = ({ type, field, className }) => {
+const Control = ({ type, control, className }) => {
   const { customThemeConfig, updateCustomThemeConfig } = useTheme();
   const handleColorChange = ({
     newColor,
@@ -27,29 +27,31 @@ const Control = ({ type, field, className }) => {
   };
 
   const handleChange = (newValue) => {
-    updateCustomThemeConfig(field.path, newValue);
+    updateCustomThemeConfig(control.path, newValue);
   };
 
   const configValue = getConfigValue(
     customThemeConfig,
-    field.path,
-    field.default,
+    control.path,
+    control.default,
   );
+
+  const id = useId();
 
   switch (type) {
     case "accordion":
       return (
         <Accordion
-          key={field.label}
-          title={field.label}
-          id={field.label}
-          defaultOpen={field.defaultOpen}
+          key={control.label}
+          title={control.label}
+          id={id}
+          defaultOpen={control.defaultOpen}
         >
-          {field.fields.map((subField, i) => (
+          {control.controls?.map((nestedControl, i) => (
             <Control
-              key={subField.label + i}
-              type={subField.type}
-              field={subField}
+              key={nestedControl.label + i}
+              type={nestedControl.type}
+              control={nestedControl}
               className={className}
             />
           ))}
@@ -58,21 +60,21 @@ const Control = ({ type, field, className }) => {
     case "colorScale":
       return (
         <ColorScaleOptions
-          label={field.label}
+          label={control.label}
           palette={customThemeConfig?.palette}
-          colorScaleType={field.colorScaleType}
+          colorScaleType={control.colorScaleType}
           onColorChange={handleColorChange}
         />
       );
     case "section":
       return (
         <section className="mb-8">
-          <h3 className="text-lg text-secondary mb-4">{field.label}</h3>
-          {field.fields.map((subField, i) => (
+          <h3 className="text-lg text-secondary mb-4">{control.label}</h3>
+          {control.controls?.map((nestedControl, i) => (
             <Control
-              key={subField.label + i}
-              type={subField.type}
-              field={subField}
+              key={nestedControl.label + i}
+              type={nestedControl.type}
+              control={nestedControl}
               className={className}
             />
           ))}
@@ -81,27 +83,27 @@ const Control = ({ type, field, className }) => {
     case "slider":
       return (
         <Slider
-          id={field.label}
-          key={field.label}
-          label={field.label}
+          id={id}
+          key={control.label}
+          label={control.label}
           value={configValue as number}
-          unit={field.unit}
+          unit={control.unit}
           onChange={handleChange}
-          min={field.min}
-          max={field.max}
-          step={field.step}
+          min={control.min}
+          max={control.max}
+          step={control.step}
           className={className}
         />
       );
     case "select":
       return (
         <Select
-          id={field.label}
-          key={field.label}
-          label={field.label}
+          id={id}
+          key={control.label}
+          label={control.label}
           value={configValue as string}
           onChange={handleChange}
-          options={field.options}
+          options={control.options}
           className={className}
           includeDefault
         />
@@ -109,9 +111,9 @@ const Control = ({ type, field, className }) => {
     case "colorPicker":
       return (
         <ColorPicker
-          id={field.label}
-          key={field.label}
-          label={field.label}
+          id={id}
+          key={control.label}
+          label={control.label}
           color={configValue as string}
           onColorChange={handleChange}
           className={className}
