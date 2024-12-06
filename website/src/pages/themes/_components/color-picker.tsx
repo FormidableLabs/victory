@@ -75,6 +75,7 @@ const ColorPicker = ({
                 { label: "Custom", value: ColorPickerOptions.CUSTOM },
               ]}
               onChange={handleColorOptionChange}
+              className="w-full"
               includeDefault
             />
           </div>

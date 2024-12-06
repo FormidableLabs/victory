@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "./select";
 import { themes, useTheme } from "../_providers/themeProvider";
+import { usePreviewOptions } from "../_providers/previewOptionsProvider";
 
 const themeOptions = [
   { label: "Select a theme", value: undefined },
@@ -12,6 +13,12 @@ const themeOptions = [
 
 const BaseThemePanel = () => {
   const { baseTheme, onBaseThemeSelect } = useTheme();
+  const { resetPreviewOptions } = usePreviewOptions();
+
+  const handleThemeSelect = (themeName?: string) => {
+    onBaseThemeSelect(themeName);
+    resetPreviewOptions();
+  };
 
   return (
     <>
@@ -22,7 +29,7 @@ const BaseThemePanel = () => {
       <Select
         id="theme-select"
         value={baseTheme?.name || ""}
-        onChange={onBaseThemeSelect}
+        onChange={handleThemeSelect}
         options={themeOptions}
         label="Base Theme"
       />

@@ -5,6 +5,7 @@ import ColorPicker from "./color-picker";
 import ColorScaleOptions from "./color-scale-options";
 import { getConfigValue } from "../_utils";
 import { useTheme } from "../_providers/themeProvider";
+import Accordion from "./accordion";
 
 export type ColorChangeArgs = {
   newColor?: string;
@@ -36,6 +37,24 @@ const Control = ({ type, field, className }) => {
   );
 
   switch (type) {
+    case "accordion":
+      return (
+        <Accordion
+          key={field.label}
+          title={field.label}
+          id={field.label}
+          defaultOpen={field.defaultOpen}
+        >
+          {field.fields.map((subField, i) => (
+            <Control
+              key={subField.label + i}
+              type={subField.type}
+              field={subField}
+              className={className}
+            />
+          ))}
+        </Accordion>
+      );
     case "colorScale":
       return (
         <ColorScaleOptions
@@ -47,7 +66,7 @@ const Control = ({ type, field, className }) => {
       );
     case "section":
       return (
-        <section className="mt-4 mb-8">
+        <section className="mb-8">
           <h3 className="text-lg text-secondary mb-4">{field.label}</h3>
           {field.fields.map((subField, i) => (
             <Control

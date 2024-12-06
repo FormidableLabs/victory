@@ -9,6 +9,9 @@ import {
   VictoryTooltip,
 } from "victory";
 import { useTheme } from "../_providers/themeProvider";
+import { usePreviewOptions } from "../_providers/previewOptionsProvider";
+import Select from "./select";
+import { colorScaleOptions } from "./color-scale-options";
 
 const chartStyle: { [key: string]: React.CSSProperties } = {
   parent: {
@@ -47,22 +50,31 @@ const sampleStackData = [
 ];
 
 const Main = () => {
-  const [activeColorScale, setActiveColorScale] = React.useState<
-    string | undefined
-  >(undefined);
   const [showThemeConfigPreview, setShowThemeConfigPreview] =
     React.useState(false);
-  const [showTooltips, setShowTooltips] = React.useState(false);
 
   const { customThemeConfig } = useTheme();
+  const { colorScale, updateColorScale, showTooltips, setShowTooltips } =
+    usePreviewOptions();
+
+  if (!customThemeConfig) return null;
 
   return (
     <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
       <div className="max-w-screen-xl w-full p-10 pb-20">
+        <h1 className="text-4xl font-bold">Example Charts</h1>
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-4xl font-bold">Example Charts</h1>
+          <Select
+            id="color-scale"
+            label="Color Scale"
+            value={colorScale}
+            onChange={updateColorScale}
+            options={colorScaleOptions}
+            includeDefault
+            className="w-1/3"
+          />
           <fieldset className="p-0 m-0">
-            <div className="flex items-center gap-2 mb-4 cursor-pointer">
+            <div className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 id="show-tooltips"
@@ -87,7 +99,7 @@ const Main = () => {
               <VictoryAxis label="X Axis" />
               <VictoryAxis dependentAxis label="Y Axis" />
               <VictoryStack
-                colorScale={activeColorScale as ColorScalePropType}
+                colorScale={colorScale as ColorScalePropType}
                 aria-label="Victory Stack Demo"
               >
                 {[...Array(NUM_STACKS)].map((_, i) => (
@@ -106,7 +118,7 @@ const Main = () => {
               <VictoryAxis label="X Axis" />
               <VictoryAxis dependentAxis label="Y Axis" />
               <VictoryStack
-                colorScale={activeColorScale}
+                colorScale={colorScale as ColorScalePropType}
                 aria-label="Victory Stack Demo"
               >
                 {[...Array(NUM_STACKS)].map((_, i) => (

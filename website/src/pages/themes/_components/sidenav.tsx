@@ -40,7 +40,7 @@ export const NAV_ITEMS: NavItem[] = [
   {
     title: "Axes",
     icon: AdjustmentsVerticalIcon,
-    panelType: "overrides",
+    panelType: "global",
     config: axisOptionsConfig,
   },
   {

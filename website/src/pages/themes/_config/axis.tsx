@@ -8,8 +8,8 @@ import {
 import { VictoryPolarAxis } from "victory";
 
 const generalAxisOptionsConfig = {
-  type: "section",
-  title: "Base Axis",
+  type: "accordion",
+  label: "Base Axis",
   fields: [
     {
       type: "section",
@@ -53,8 +53,8 @@ const generalAxisOptionsConfig = {
 };
 
 const polarAxisOptionsConfig = {
-  type: "section",
-  title: "Polar Axis",
+  type: "accordion",
+  label: "Polar Axis",
   content: (props) => [
     <VictoryPolarAxis {...props} key="polar-axis" standalone={false} />,
     <VictoryPolarAxis
@@ -108,8 +108,8 @@ const polarAxisOptionsConfig = {
 };
 
 const polarDependentAxisOptionsConfig = {
-  type: "section",
-  title: "Polar Dependent Axis",
+  type: "accordion",
+  label: "Polar Dependent Axis",
   fields: [
     {
       type: "section",
@@ -154,9 +154,10 @@ const polarDependentAxisOptionsConfig = {
 
 export default {
   title: "Axis Options",
-  types: {
-    general: generalAxisOptionsConfig,
-    polar: polarAxisOptionsConfig,
-    polarDependent: polarDependentAxisOptionsConfig,
-  },
+  description: "Customize the appearance of axes in your charts.",
+  fields: [
+    generalAxisOptionsConfig,
+    polarAxisOptionsConfig,
+    polarDependentAxisOptionsConfig,
+  ],
 };
