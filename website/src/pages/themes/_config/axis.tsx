@@ -5,26 +5,15 @@ import {
   getBaseStrokeConfig,
   StrokeProps,
 } from "../_utils";
-import { VictoryArea, VictoryAxis, VictoryPolarAxis } from "victory";
+import { VictoryAxis, VictoryPolarAxis } from "victory";
 import { ControlConfig, OptionsPanelConfig } from ".";
 
 const generalAxisOptionsConfig: ControlConfig = {
   type: "accordion",
   label: "Base Axis",
   content: (props) => [
-    <VictoryAxis key="x-axis" label="X Axis" />,
-    <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
-    <VictoryArea
-      {...props}
-      key="area-chart"
-      data={[
-        { x: 1, y: 2, label: "A" },
-        { x: 2, y: 3, label: "B" },
-        { x: 3, y: 5, label: "C" },
-        { x: 4, y: 4, label: "D" },
-        { x: 5, y: 7, label: "E" },
-      ]}
-    />,
+    <VictoryAxis key="x-axis" label="X Axis" {...props} />,
+    <VictoryAxis key="y-axis" dependentAxis label="Y Axis" {...props} />,
   ],
   controls: [
     {
