@@ -1,6 +1,6 @@
 import React from "react";
 import { VictoryBar } from "victory-bar";
-import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Scale from "d3-scale";
 
 import { SelectionHelpers } from "./selection-helpers";
 

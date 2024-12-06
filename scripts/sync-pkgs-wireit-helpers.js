@@ -14,11 +14,7 @@ function generateWireitConfig(pkg, rootPkg) {
   const rootDeps = Object.keys(rootPkg.devDependencies).filter(
     isVictoryPackage,
   );
-  // Lint require victory-vendor (if dependend) to be built
   const lintDeps = [
-    // victory-vendor has nested path accesses, which means it needs
-    // to be built for lint to not error on it if a dependency.
-    ...(deps.includes("victory-vendor") ? ["../victory-vendor:build"] : []),
     ...concat(deps, devDeps, rootDeps).map((dep) => `../${dep}:types:create`),
   ];
 

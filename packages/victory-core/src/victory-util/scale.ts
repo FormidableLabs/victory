@@ -1,7 +1,7 @@
 import isPlainObject from "lodash/isPlainObject";
 import * as Helpers from "./helpers";
 import * as Collection from "./collection";
-import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Scale from "d3-scale";
 import { D3Scale, ScaleName } from "../types/prop-types";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"] as const;
@@ -83,7 +83,6 @@ function getScaleTypeFromData(props, axis): ScaleName {
 export function getScaleFromName(name: ScaleName | string): D3Scale {
   if (validScale(name)) {
     const methodName = toNewName(name as ScaleName);
-    // @ts-expect-error scaleTime is not directly compatible with our D3Scale definition
     return d3Scale[methodName]();
   }
   return d3Scale.scaleLinear();

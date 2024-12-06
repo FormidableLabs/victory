@@ -1,7 +1,7 @@
 import isPlainObject from "lodash/isPlainObject";
 import orderBy from "lodash/orderBy";
 
-import { interpolate } from "victory-vendor/d3-interpolate";
+import { interpolate } from "d3-interpolate";
 
 export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
@@ -203,6 +203,5 @@ export const victoryInterpolator = function <T>(a: T, b: T): (t: number) => T {
   if (typeof a === "string" || typeof b === "string") {
     return interpolateString(a, b);
   }
-  // @ts-expect-error These generics are tough, but they work :)
   return interpolate(a, b);
 };

@@ -60,6 +60,10 @@
     "cpx2": "^4.2.0",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
+    "d3-array": "^3.2.4",
+    "d3-scale": "^4.0.2",
+    "d3-shape": "^3.2.0",
+    "d3-time": "^3.1.0",
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jest": "^28.9.0",
@@ -104,7 +108,6 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.13.0",
     "unified": "^8.3.2",
-    "victory-vendor": "*",
     "victory-voronoi": "*",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.9.2",
@@ -162,7 +165,7 @@
     "storybook:start": "storybook dev -p 6006 --no-open",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
-    "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor --filter !victory-native exec -- cpx ../victory-core/tsconfig.* .",
+    "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-native exec -- cpx ../victory-core/tsconfig.* .",
     "release-notes": "ts-node ./scripts/release.ts"
   },
   "wireit": {
@@ -184,7 +187,6 @@
     "build": {
       "dependencies": [
         "./packages/victory-native:build",
-        "./packages/victory-vendor:build",
         "./packages/victory:build",
         "./packages/victory-area:build",
         "./packages/victory-axis:build",
@@ -218,7 +220,6 @@
     "build:lib:esm": {
       "dependencies": [
         "./packages/victory-native:build:lib:esm",
-        "./packages/victory-vendor:build:lib:esm",
         "./packages/victory:build:lib:esm",
         "./packages/victory-area:build:lib:esm",
         "./packages/victory-axis:build:lib:esm",
@@ -333,7 +334,6 @@
     "jest:pkgs": {
       "dependencies": [
         "./packages/victory-native:jest",
-        "./packages/victory-vendor:jest",
         "./packages/victory:jest",
         "./packages/victory-area:jest",
         "./packages/victory-axis:jest",
@@ -390,7 +390,6 @@
     "types:check": {
       "dependencies": [
         "./packages/victory-native:types:check",
-        "./packages/victory-vendor:types:check",
         "./packages/victory:types:check",
         "./packages/victory-area:types:check",
         "./packages/victory-axis:types:check",
@@ -424,7 +423,6 @@
     "types:create": {
       "dependencies": [
         "./packages/victory-native:types:create",
-        "./packages/victory-vendor:types:create",
         "./packages/victory:types:create",
         "./packages/victory-area:types:create",
         "./packages/victory-axis:types:create",

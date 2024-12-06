@@ -9,7 +9,7 @@ import {
   VictoryStyleInterface,
 } from "victory-core";
 import defaults from "lodash/defaults";
-import * as d3Shape from "victory-vendor/d3-shape";
+import * as d3Shape from "d3-shape";
 
 export type VictorySliceLabelPositionType =
   | "startAngle"

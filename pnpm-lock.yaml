@@ -128,6 +128,18 @@ importers:
       css-loader:
         specifier: ^7.1.2
         version: 7.1.2(webpack@5.74.0)
+      d3-array:
+        specifier: ^3.2.4
+        version: 3.2.4
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
+      d3-shape:
+        specifier: ^3.2.0
+        version: 3.2.0
+      d3-time:
+        specifier: ^3.1.0
+        version: 3.1.0
       eslint:
         specifier: ^9.14.0
         version: 9.14.0(jiti@1.21.0)
@@ -260,9 +272,6 @@ importers:
       unified:
         specifier: ^8.3.2
         version: 8.4.2
-      victory-vendor:
-        specifier: '*'
-        version: link:packages/victory-vendor
       victory-voronoi:
         specifier: '*'
         version: link:packages/victory-voronoi
@@ -507,19 +516,22 @@ importers:
 
   packages/victory-area:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
         specifier: 37.3.2
         version: link:../victory-core
-      victory-vendor:
-        specifier: 37.3.2
-        version: link:../victory-vendor
     devDependencies:
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
+      d3-shape:
+        specifier: ^3.2.0
+        version: 3.2.0
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
@@ -538,38 +550,41 @@ importers:
 
   packages/victory-bar:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
         specifier: 37.3.2
         version: link:../victory-core
-      victory-vendor:
-        specifier: 37.3.2
-        version: link:../victory-vendor
     devDependencies:
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
+      d3-shape:
+        specifier: ^3.2.0
+        version: 3.2.0
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
 
   packages/victory-box-plot:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
         specifier: 37.3.2
         version: link:../victory-core
-      victory-vendor:
-        specifier: 37.3.2
-        version: link:../victory-vendor
     devDependencies:
+      d3-array:
+        specifier: ^3.2.4
+        version: 3.2.4
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
@@ -606,9 +621,6 @@ importers:
 
   packages/victory-candlestick:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -616,18 +628,18 @@ importers:
         specifier: 37.3.2
         version: link:../victory-core
     devDependencies:
-      victory-chart:
-        specifier: '*'
-        version: link:../victory-chart
-      victory-vendor:
-        specifier: '*'
-        version: link:../victory-vendor
-
-  packages/victory-canvas:
-    dependencies:
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
+      victory-chart:
+        specifier: '*'
+        version: link:../victory-chart
+
+  packages/victory-canvas:
+    dependencies:
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -637,6 +649,13 @@ importers:
       victory-core:
         specifier: 37.3.2
         version: link:../victory-core
+    devDependencies:
+      d3-shape:
+        specifier: ^3.2.0
+        version: 3.2.0
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
 
   packages/victory-chart:
     dependencies:
@@ -664,18 +683,31 @@ importers:
 
   packages/victory-core:
     dependencies:
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
-      victory-vendor:
-        specifier: 37.3.2
-        version: link:../victory-vendor
+    devDependencies:
+      d3-ease:
+        specifier: ^3.0.1
+        version: 3.0.1
+      d3-interpolate:
+        specifier: ^3.0.1
+        version: 3.0.1
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
+      d3-shape:
+        specifier: ^3.2.0
+        version: 3.2.0
+      d3-timer:
+        specifier: ^3.0.1
+        version: 3.0.1
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
 
   packages/victory-create-container:
     dependencies:
@@ -718,9 +750,6 @@ importers:
 
   packages/victory-errorbar:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -728,9 +757,12 @@ importers:
         specifier: 37.3.2
         version: link:../victory-core
     devDependencies:
-      victory-vendor:
-        specifier: '*'
-        version: link:../victory-vendor
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
 
   packages/victory-group:
     dependencies:
@@ -756,24 +788,28 @@ importers:
 
   packages/victory-histogram:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
-      react-fast-compare:
-        specifier: ^3.2.0
-        version: 3.2.0
       victory-bar:
         specifier: 37.3.2
         version: link:../victory-bar
       victory-core:
         specifier: 37.3.2
         version: link:../victory-core
-      victory-vendor:
-        specifier: 37.3.2
-        version: link:../victory-vendor
+    devDependencies:
+      d3-array:
+        specifier: ^3.2.4
+        version: 3.2.4
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
+      react-fast-compare:
+        specifier: ^3.2.0
+        version: 3.2.0
 
   packages/victory-legend:
     dependencies:
@@ -789,19 +825,19 @@ importers:
 
   packages/victory-line:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
         specifier: 37.3.2
         version: link:../victory-core
-      victory-vendor:
-        specifier: 37.3.2
-        version: link:../victory-vendor
     devDependencies:
+      d3-scale:
+        specifier: 4.0.2
+        version: 4.0.2
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
@@ -917,18 +953,19 @@ importers:
 
   packages/victory-pie:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
         specifier: 37.3.2
         version: link:../victory-core
-      victory-vendor:
-        specifier: 37.3.2
-        version: link:../victory-vendor
+    devDependencies:
+      d3-shape:
+        specifier: ^3.2.0
+        version: 3.2.0
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
 
   packages/victory-polar-axis:
     dependencies:
@@ -956,9 +993,6 @@ importers:
 
   packages/victory-selection-container:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -966,12 +1000,15 @@ importers:
         specifier: 37.3.2
         version: link:../victory-core
     devDependencies:
+      d3-scale:
+        specifier: ^4.0.2
+        version: 4.0.2
+      lodash:
+        specifier: ^4.17.19
+        version: 4.17.21
       victory-bar:
         specifier: '*'
         version: link:../victory-bar
-      victory-vendor:
-        specifier: '*'
-        version: link:../victory-vendor
 
   packages/victory-shared-events:
     dependencies:
@@ -1030,76 +1067,6 @@ importers:
       victory-core:
         specifier: 37.3.2
         version: link:../victory-core
-
-  packages/victory-vendor:
-    dependencies:
-      '@types/d3-array':
-        specifier: ^3.0.3
-        version: 3.0.3
-      '@types/d3-ease':
-        specifier: ^3.0.0
-        version: 3.0.0
-      '@types/d3-interpolate':
-        specifier: ^3.0.1
-        version: 3.0.1
-      '@types/d3-scale':
-        specifier: ^4.0.2
-        version: 4.0.2
-      '@types/d3-shape':
-        specifier: ^3.1.0
-        version: 3.1.0
-      '@types/d3-time':
-        specifier: ^3.0.0
-        version: 3.0.0
-      '@types/d3-timer':
-        specifier: ^3.0.0
-        version: 3.0.0
-      d3-array:
-        specifier: ^3.1.6
-        version: 3.1.6
-      d3-ease:
-        specifier: ^3.0.1
-        version: 3.0.1
-      d3-interpolate:
-        specifier: ^3.0.1
-        version: 3.0.1
-      d3-scale:
-        specifier: ^4.0.2
-        version: 4.0.2
-      d3-shape:
-        specifier: ^3.1.0
-        version: 3.1.0
-      d3-time:
-        specifier: ^3.0.0
-        version: 3.0.0
-      d3-timer:
-        specifier: ^3.0.1
-        version: 3.0.1
-    devDependencies:
-      d3-color:
-        specifier: ^3.1.0
-        version: 3.1.0
-      d3-format:
-        specifier: ^3.1.0
-        version: 3.1.0
-      d3-path:
-        specifier: ^3.0.1
-        version: 3.0.1
-      d3-time-format:
-        specifier: ^4.1.0
-        version: 4.1.0
-      d3-voronoi:
-        specifier: ^1.1.4
-        version: 1.1.4
-      execa:
-        specifier: ^6.1.0
-        version: 6.1.0
-      internmap:
-        specifier: ^2.0.3
-        version: 2.0.3
-      rimraf:
-        specifier: ^3.0.2
-        version: 3.0.2
 
   packages/victory-voronoi:
     dependencies:
@@ -1214,7 +1181,7 @@ importers:
     devDependencies:
       '@d3fc/d3fc-discontinuous-scale':
         specifier: ^4.1.1
-        version: 4.1.1(d3-scale@3.3.0)(d3-time@1.1.0)
+        version: 4.1.1(d3-scale@4.0.2)(d3-time@3.1.0)
       '@docusaurus/module-type-aliases':
         specifier: ^3.5.2
         version: 3.6.0(@swc/core@1.8.0)(acorn@6.4.2)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(webpack-cli@4.10.0)
@@ -1231,14 +1198,14 @@ importers:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.47)
       d3-array:
-        specifier: ^2.4.0
-        version: 2.12.1
+        specifier: ^3.2.4
+        version: 3.2.4
       d3-scale:
-        specifier: ^3.2.1
-        version: 3.3.0
+        specifier: ^4.0.2
+        version: 4.0.2
       d3-time:
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^3.1.0
+        version: 3.1.0
       find-cache-dir:
         specifier: 5.0.0
         version: 5.0.0
@@ -4464,33 +4431,6 @@ packages:
   '@types/connect@3.4.35':
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
 
-  '@types/d3-array@3.0.3':
-    resolution: {integrity: sha512-Reoy+pKnvsksN0lQUlcH6dOGjRZ/3WRwXR//m+/8lt1BXeI4xyaUZoqULNjyXXRuh0Mj4LNpkCvhUpQlY3X5xQ==}
-
-  '@types/d3-color@3.1.0':
-    resolution: {integrity: sha512-HKuicPHJuvPgCD+np6Se9MQvS6OCbJmOjGvylzMJRlDwUXjKTTXs6Pwgk79O09Vj/ho3u1ofXnhFOaEWWPrlwA==}
-
-  '@types/d3-ease@3.0.0':
-    resolution: {integrity: sha512-aMo4eaAOijJjA6uU+GIeW018dvy9+oH5Y2VPPzjjfxevvGQ/oRDs+tfYC9b50Q4BygRR8yE2QCLsrT0WtAVseA==}
-
-  '@types/d3-interpolate@3.0.1':
-    resolution: {integrity: sha512-jx5leotSeac3jr0RePOH1KdR9rISG91QIE4Q2PYTu4OymLTZfA3SrnURSLzKH48HmXVUru50b8nje4E79oQSQw==}
-
-  '@types/d3-path@3.0.0':
-    resolution: {integrity: sha512-0g/A+mZXgFkQxN3HniRDbXMN79K3CdTpLsevj+PXiTcb2hVyvkZUBg37StmgCQkaD84cUJ4uaDAWq7UJOQy2Tg==}
-
-  '@types/d3-scale@4.0.2':
-    resolution: {integrity: sha512-Yk4htunhPAwN0XGlIwArRomOjdoBFXC3+kCxK2Ubg7I9shQlVSJy/pG/Ht5ASN+gdMIalpk8TJ5xV74jFsetLA==}
-
-  '@types/d3-shape@3.1.0':
-    resolution: {integrity: sha512-jYIYxFFA9vrJ8Hd4Se83YI6XF+gzDL1aC5DCsldai4XYYiVNdhtpGbA/GM6iyQ8ayhSp3a148LY34hy7A4TxZA==}
-
-  '@types/d3-time@3.0.0':
-    resolution: {integrity: sha512-sZLCdHvBUcNby1cB6Fd3ZBrABbjz3v1Vm90nysCQ6Vt7vd6e/h9Lt7SiJUoEX0l4Dzc7P5llKyhqSi1ycSf1Hg==}
-
-  '@types/d3-timer@3.0.0':
-    resolution: {integrity: sha512-HNB/9GHqu7Fo8AQiugyJbv6ZxYz58wef0esl4Mv828w1ZKpAshw/uFWVDUcIB9KKFeFKoxS3cHY07FFgtTRZ1g==}
-
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
 
@@ -6223,19 +6163,12 @@ packages:
     resolution: {integrity: sha512-QTaY0XjjhTQOdguARF0lGKm5/mEq9PD9/VhZZegHDIBq2tQwgNpHc3dneD4mGo2iJs+fTKv5Bp0fZ+BRuY3Z0g==}
     engines: {node: '>= 0.1.90'}
 
-  d3-array@2.12.1:
-    resolution: {integrity: sha512-B0ErZK/66mHtEsR1TkPEEkwdy+WDesimkM5gpZr5Dsg54BiTA5RXtYW5qTLIAcekaS9xfZrzBLF/OAkB3Qn1YQ==}
-
-  d3-array@3.1.6:
-    resolution: {integrity: sha512-DCbBBNuKOeiR9h04ySRBMW52TFVc91O9wJziuyXw6Ztmy8D3oZbmCkOO3UHKC7ceNJsN2Mavo9+vwV8EAEUXzA==}
+  d3-array@3.2.4:
+    resolution: {integrity: sha512-tdQAmyA18i4J7wprpYq8ClcxZy3SC31QMeByyCFyRt7BVHdREQZ5lpzoe5mFEYZUWe+oq8HBvk9JjpibyEV4Jg==}
     engines: {node: '>=12'}
 
   d3-color@2.0.0:
     resolution: {integrity: sha512-SPXi0TSKPD4g9tw0NMZFnR95XVgUZiBH+uUTqQuDu1OsE2zomHU7ho0FISciaPvosimixwHFl3WHLGabv6dDgQ==}
-
-  d3-color@3.1.0:
-    resolution: {integrity: sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA==}
-    engines: {node: '>=12'}
 
   d3-ease@3.0.1:
     resolution: {integrity: sha512-wR/XK3D3XcLIZwpbvQwQ5fK+8Ykds1ip7A2Txe0yxncXSdq1L9skcG7blcedkOX+ZcgxGAmLX1FrRGbADwzi0w==}
@@ -6244,47 +6177,28 @@ packages:
   d3-format@2.0.0:
     resolution: {integrity: sha512-Ab3S6XuE/Q+flY96HXT0jOXcM4EAClYFnRGY5zsjRGNy6qCYrQsMffs7cV5Q9xejb35zxW5hf/guKw34kvIKsA==}
 
-  d3-format@3.1.0:
-    resolution: {integrity: sha512-YyUI6AEuY/Wpt8KWLgZHsIU86atmikuoOmCfommt0LYHiQSPjvX2AcFc38PX0CBpr2RCyZhjex+NS/LPOv6YqA==}
-    engines: {node: '>=12'}
-
-  d3-interpolate@2.0.1:
-    resolution: {integrity: sha512-c5UhwwTs/yybcmTpAVqwSFl6vrQ8JZJoT5F7xNFK9pymv5C0Ymcc9/LIJHtYIggg/yS9YHw8i8O8tgb9pupjeQ==}
-
   d3-interpolate@3.0.1:
     resolution: {integrity: sha512-3bYs1rOD33uo8aqJfKP3JWPAibgw8Zm2+L9vBKEHJ2Rg+viTR7o5Mmv5mZcieN+FRYaAOWX5SJATX6k1PWz72g==}
     engines: {node: '>=12'}
 
-  d3-path@3.0.1:
-    resolution: {integrity: sha512-gq6gZom9AFZby0YLduxT1qmrp4xpBA1YZr19OI717WIdKE2OM5ETq5qrHLb301IgxhLwcuxvGZVLeeWc/k1I6w==}
+  d3-path@3.1.0:
+    resolution: {integrity: sha512-p3KP5HCf/bvjBSSKuXid6Zqijx7wIfNW+J/maPs+iwR35at5JCbLUT0LzF1cnjbCHWhqzQTIN2Jpe8pRebIEFQ==}
     engines: {node: '>=12'}
-
-  d3-scale@3.3.0:
-    resolution: {integrity: sha512-1JGp44NQCt5d1g+Yy+GeOnZP7xHo0ii8zsQp6PGzd+C1/dl0KGsp9A7Mxwp+1D1o4unbTTxVdU/ZOIEBoeZPbQ==}
 
   d3-scale@4.0.2:
     resolution: {integrity: sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==}
     engines: {node: '>=12'}
 
-  d3-shape@3.1.0:
-    resolution: {integrity: sha512-tGDh1Muf8kWjEDT/LswZJ8WF85yDZLvVJpYU9Nq+8+yW1Z5enxrmXOhTArlkaElU+CTn0OTVNli+/i+HP45QEQ==}
+  d3-shape@3.2.0:
+    resolution: {integrity: sha512-SaLBuwGm3MOViRq2ABk3eLoxwZELpH6zhl3FbAoJ7Vm1gofKx6El1Ib5z23NUEhF9AsGl7y+dzLe5Cw2AArGTA==}
     engines: {node: '>=12'}
-
-  d3-time-format@3.0.0:
-    resolution: {integrity: sha512-UXJh6EKsHBTjopVqZBhFysQcoXSv/5yLONZvkQ5Kk3qbwiUYkdX17Xa1PT6U1ZWXGGfB1ey5L8dKMlFq2DO0Ag==}
 
   d3-time-format@4.1.0:
     resolution: {integrity: sha512-dJxPBlzC7NugB2PDLwo9Q8JiTR3M3e4/XANkreKSUxF8vvXKqm1Yfq4Q5dl8budlunRVlUUaDUgFt7eA8D6NLg==}
     engines: {node: '>=12'}
 
-  d3-time@1.1.0:
-    resolution: {integrity: sha512-Xh0isrZ5rPYYdqhAVk8VLnMEidhz5aP7htAADH6MfzgmmicPkTo8LhkLxci61/lCB7n7UmE3bN0leRt+qvkLxA==}
-
-  d3-time@2.1.1:
-    resolution: {integrity: sha512-/eIQe/eR4kCQwq7yxi7z4c6qEXf2IYGcjoWB5OOQy4Tq9Uv39/947qlDcN2TLkiTzQWzvnsuYPB9TrWaNfipKQ==}
-
-  d3-time@3.0.0:
-    resolution: {integrity: sha512-zmV3lRnlaLI08y9IMRXSDshQb5Nj77smnfpnd2LrBa/2K281Jijactokeak14QacHs/kKq0AQ121nidNYlarbQ==}
+  d3-time@3.1.0:
+    resolution: {integrity: sha512-VqKjzBLejbSMT4IgbmVgDjpkYrNWUYJnbCGo874u7MMKIWsILRX+OpX/gTk8MqjpT1A/c6HY2dCA77ZN0lkQ2Q==}
     engines: {node: '>=12'}
 
   d3-timer@3.0.1:
@@ -6954,10 +6868,6 @@ packages:
   execa@5.1.1:
     resolution: {integrity: sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==}
     engines: {node: '>=10'}
-
-  execa@6.1.0:
-    resolution: {integrity: sha512-QVWlX2e50heYJcCPG0iWtf8r0xjEYfz/OYLGDYH+IyjWezzPNxz63qNFOu0l4YftGWuizFVZHHs8PrLU5p2IDA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   exit@0.1.2:
     resolution: {integrity: sha512-Zk/eNKV2zbjpKzrsQ+n1G6poVbErQxJ0LBOJXaKZ1EViLzH+hrLu9cdXI4zw9dBQJslwBEpbQ2P1oS7nDxs6jQ==}
@@ -7731,10 +7641,6 @@ packages:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
 
-  human-signals@3.0.1:
-    resolution: {integrity: sha512-rQLskxnM/5OCldHo+wNXbpVgDn5A17CUoKX+7Sokwaknlq7CdSnphy0W39GU8dw59XiCXmFXDg4fRuckQRKewQ==}
-    engines: {node: '>=12.20.0'}
-
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
     engines: {node: '>=0.10.0'}
@@ -7839,10 +7745,6 @@ packages:
 
   internmap@1.0.1:
     resolution: {integrity: sha512-lDB5YccMydFBtasVtxnZ3MRBHuaoE8GKsppq+EchKL2U4nK/DmEpPHNH8MZe5HkMtpSiTSOZwfN0tzYjO/lJEw==}
-
-  internmap@2.0.3:
-    resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
-    engines: {node: '>=12'}
 
   interpret@1.4.0:
     resolution: {integrity: sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==}
@@ -8100,10 +8002,6 @@ packages:
   is-stream@2.0.1:
     resolution: {integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==}
     engines: {node: '>=8'}
-
-  is-stream@3.0.0:
-    resolution: {integrity: sha512-LnQR4bZ9IADDRSkvpqMGvt/tEJWclzklNgSw48V5EAaAeDd6qGvN8ei6k5p0tvxSR171VmGyHuTiAOfxAbr8kA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   is-string@1.0.7:
     resolution: {integrity: sha512-tE2UXzivje6ofPW7l23cjDOMa09gb7xlAqG6jG5ej6uPV32TlWP3NKPigtaGeHNu9fohccRYvIiZMfOOnOYUtg==}
@@ -9145,10 +9043,6 @@ packages:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
 
-  mimic-fn@4.0.0:
-    resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==}
-    engines: {node: '>=12'}
-
   mimic-response@3.1.0:
     resolution: {integrity: sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==}
     engines: {node: '>=10'}
@@ -9358,10 +9252,6 @@ packages:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
     engines: {node: '>=8'}
 
-  npm-run-path@5.1.0:
-    resolution: {integrity: sha512-sJOdmRGrY2sjNTRMbSvluQqg+8X7ZK61yvzBEIDhz4f8z1TZFYABsqjjCBd/0PUNE9M6QDgHJXQkGUEm7Q+l9Q==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
   nprogress@0.2.0:
     resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
 
@@ -9451,10 +9341,6 @@ packages:
   onetime@5.1.2:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
-
-  onetime@6.0.0:
-    resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
-    engines: {node: '>=12'}
 
   oniguruma-to-js@0.4.3:
     resolution: {integrity: sha512-X0jWUcAlxORhOqqBREgPMgnshB7ZGYszBNspP+tS9hPD3l13CdaXcHbgImoHUHlrvGx/7AvFEkTRhAGYh+jzjQ==}
@@ -9653,10 +9539,6 @@ packages:
   path-key@3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
-
-  path-key@4.0.0:
-    resolution: {integrity: sha512-haREypq7xkM7ErfgIyA0z+Bj4AGKlMSdlQE2jvJo6huWD1EdkKYV+G/T4nq0YEF2vgTT8kqMFKo1uHn950r4SQ==}
-    engines: {node: '>=12'}
 
   path-parse@1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
@@ -11228,10 +11110,6 @@ packages:
   strip-final-newline@2.0.0:
     resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
     engines: {node: '>=6'}
-
-  strip-final-newline@3.0.0:
-    resolution: {integrity: sha512-dOESqjYr96iWYylGObzd39EuNTa5VJxyvVAEm5Jnh7KGo75V43Hk1odPQkNDyXNmUR6k+gEiDVXnjB8HJ3crXw==}
-    engines: {node: '>=12'}
 
   strip-indent@3.0.0:
     resolution: {integrity: sha512-laJTa3Jb+VQpaC6DseHhF7dXVqHTfJPCRDaEbid/drOhgitgYku/letMUqOXFoWV0zIIUbjpdH2t+tYj4bQMRQ==}
@@ -15150,11 +15028,11 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@d3fc/d3fc-discontinuous-scale@4.1.1(d3-scale@3.3.0)(d3-time@1.1.0)':
+  '@d3fc/d3fc-discontinuous-scale@4.1.1(d3-scale@4.0.2)(d3-time@3.1.0)':
     dependencies:
       '@d3fc/d3fc-rebind': 6.0.1
-      d3-scale: 3.3.0
-      d3-time: 1.1.0
+      d3-scale: 4.0.2
+      d3-time: 3.1.0
 
   '@d3fc/d3fc-rebind@6.0.1': {}
 
@@ -18176,30 +18054,6 @@ snapshots:
     dependencies:
       '@types/node': 18.6.1
 
-  '@types/d3-array@3.0.3': {}
-
-  '@types/d3-color@3.1.0': {}
-
-  '@types/d3-ease@3.0.0': {}
-
-  '@types/d3-interpolate@3.0.1':
-    dependencies:
-      '@types/d3-color': 3.1.0
-
-  '@types/d3-path@3.0.0': {}
-
-  '@types/d3-scale@4.0.2':
-    dependencies:
-      '@types/d3-time': 3.0.0
-
-  '@types/d3-shape@3.1.0':
-    dependencies:
-      '@types/d3-path': 3.0.0
-
-  '@types/d3-time@3.0.0': {}
-
-  '@types/d3-timer@3.0.0': {}
-
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 0.7.34
@@ -20468,71 +20322,41 @@ snapshots:
       csv-stringify: 5.6.5
       stream-transform: 2.1.3
 
-  d3-array@2.12.1:
+  d3-array@3.2.4:
     dependencies:
       internmap: 1.0.1
 
-  d3-array@3.1.6:
-    dependencies:
-      internmap: 2.0.3
-
   d3-color@2.0.0: {}
-
-  d3-color@3.1.0: {}
 
   d3-ease@3.0.1: {}
 
   d3-format@2.0.0: {}
 
-  d3-format@3.1.0: {}
-
-  d3-interpolate@2.0.1:
+  d3-interpolate@3.0.1:
     dependencies:
       d3-color: 2.0.0
 
-  d3-interpolate@3.0.1:
-    dependencies:
-      d3-color: 3.1.0
-
-  d3-path@3.0.1: {}
-
-  d3-scale@3.3.0:
-    dependencies:
-      d3-array: 2.12.1
-      d3-format: 2.0.0
-      d3-interpolate: 2.0.1
-      d3-time: 2.1.1
-      d3-time-format: 3.0.0
+  d3-path@3.1.0: {}
 
   d3-scale@4.0.2:
     dependencies:
-      d3-array: 3.1.6
-      d3-format: 3.1.0
+      d3-array: 3.2.4
+      d3-format: 2.0.0
       d3-interpolate: 3.0.1
-      d3-time: 3.0.0
+      d3-time: 3.1.0
       d3-time-format: 4.1.0
 
-  d3-shape@3.1.0:
+  d3-shape@3.2.0:
     dependencies:
-      d3-path: 3.0.1
-
-  d3-time-format@3.0.0:
-    dependencies:
-      d3-time: 1.1.0
+      d3-path: 3.1.0
 
   d3-time-format@4.1.0:
     dependencies:
-      d3-time: 3.0.0
+      d3-time: 3.1.0
 
-  d3-time@1.1.0: {}
-
-  d3-time@2.1.1:
+  d3-time@3.1.0:
     dependencies:
-      d3-array: 2.12.1
-
-  d3-time@3.0.0:
-    dependencies:
-      d3-array: 3.1.6
+      d3-array: 3.2.4
 
   d3-timer@3.0.1: {}
 
@@ -21281,18 +21105,6 @@ snapshots:
       onetime: 5.1.2
       signal-exit: 3.0.7
       strip-final-newline: 2.0.0
-
-  execa@6.1.0:
-    dependencies:
-      cross-spawn: 7.0.3
-      get-stream: 6.0.1
-      human-signals: 3.0.1
-      is-stream: 3.0.0
-      merge-stream: 2.0.0
-      npm-run-path: 5.1.0
-      onetime: 6.0.0
-      signal-exit: 3.0.7
-      strip-final-newline: 3.0.0
 
   exit@0.1.2: {}
 
@@ -22323,8 +22135,6 @@ snapshots:
 
   human-signals@2.1.0: {}
 
-  human-signals@3.0.1: {}
-
   iconv-lite@0.4.24:
     dependencies:
       safer-buffer: 2.1.2
@@ -22407,8 +22217,6 @@ snapshots:
       side-channel: 1.0.6
 
   internmap@1.0.1: {}
-
-  internmap@2.0.3: {}
 
   interpret@1.4.0: {}
 
@@ -22598,8 +22406,6 @@ snapshots:
   is-stream@1.1.0: {}
 
   is-stream@2.0.1: {}
-
-  is-stream@3.0.0: {}
 
   is-string@1.0.7:
     dependencies:
@@ -24319,8 +24125,6 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  mimic-fn@4.0.0: {}
-
   mimic-response@3.1.0: {}
 
   mimic-response@4.0.0: {}
@@ -24501,10 +24305,6 @@ snapshots:
     dependencies:
       path-key: 3.1.1
 
-  npm-run-path@5.1.0:
-    dependencies:
-      path-key: 4.0.0
-
   nprogress@0.2.0: {}
 
   nps@5.10.0:
@@ -24610,10 +24410,6 @@ snapshots:
   onetime@5.1.2:
     dependencies:
       mimic-fn: 2.1.0
-
-  onetime@6.0.0:
-    dependencies:
-      mimic-fn: 4.0.0
 
   oniguruma-to-js@0.4.3:
     dependencies:
@@ -24839,8 +24635,6 @@ snapshots:
   path-key@2.0.1: {}
 
   path-key@3.1.1: {}
-
-  path-key@4.0.0: {}
 
   path-parse@1.0.7: {}
 
@@ -26734,8 +26528,6 @@ snapshots:
   strip-eof@1.0.0: {}
 
   strip-final-newline@2.0.0: {}
-
-  strip-final-newline@3.0.0: {}
 
   strip-indent@3.0.0:
     dependencies:

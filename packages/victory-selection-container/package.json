@@ -19,16 +19,16 @@
   "jsnext:main": "es/index.js",
   "author": "Formidable",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
+    "d3-scale": "^4.0.2",
     "lodash": "^4.17.19",
+    "victory-bar": "*"
+  },
+  "dependencies": {
     "victory-core": "37.3.2"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
-  },
-  "devDependencies": {
-    "victory-bar": "*",
-    "victory-vendor": "*"
   },
   "publishConfig": {
     "provenance": true
@@ -173,7 +173,7 @@
         "types:create",
         "../victory-core:types:create",
         "../victory-bar:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "output": [],
@@ -211,7 +211,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-bar:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -227,7 +227,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-bar:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -246,7 +246,6 @@
       "dependencies": [
         "../victory-core:build",
         "../victory-bar:build",
-        "../victory-vendor:build",
         "../victory-voronoi:build"
       ],
       "packageLocks": [

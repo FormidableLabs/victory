@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import forEach from "lodash/forEach";
 import omit from "lodash/omit";
 import React from "react";
-import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Scale from "d3-scale";
 
 import { ErrorBar } from "./error-bar";
 

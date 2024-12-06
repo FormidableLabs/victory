@@ -4,7 +4,7 @@ import {
   ScaleLogarithmic,
   ScalePower,
   ScaleTime,
-} from "victory-vendor/d3-scale";
+} from "d3-scale";
 import {
   AnimationEasing,
   AnimationStyle,

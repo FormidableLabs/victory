@@ -19,10 +19,12 @@
   "jsnext:main": "es/index.js",
   "author": "Formidable",
   "license": "MIT",
+  "devDependencies": {
+    "d3-shape": "^3.2.0",
+    "lodash": "^4.17.19"
+  },
   "dependencies": {
-    "lodash": "^4.17.19",
-    "victory-core": "37.3.2",
-    "victory-vendor": "37.3.2"
+    "victory-core": "37.3.2"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
@@ -77,8 +79,7 @@
         "es/**/*.js.map"
       ],
       "dependencies": [
-        "../victory-core:build:lib:esm",
-        "../victory-vendor:build:lib:esm"
+        "../victory-core:build:lib:esm"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -98,8 +99,7 @@
         "lib/**/*.js.map"
       ],
       "dependencies": [
-        "../victory-core:build:lib:cjs",
-        "../victory-vendor:build:lib:cjs"
+        "../victory-core:build:lib:cjs"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -127,8 +127,7 @@
         "!dist/victory*.min.js*"
       ],
       "dependencies": [
-        "../victory-core:build:lib:esm",
-        "../victory-vendor:build:lib:esm"
+        "../victory-core:build:lib:esm"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -148,8 +147,7 @@
         "dist/victory*.min.js*"
       ],
       "dependencies": [
-        "../victory-core:build:lib:esm",
-        "../victory-vendor:build:lib:esm"
+        "../victory-core:build:lib:esm"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -173,7 +171,7 @@
       "dependencies": [
         "types:create",
         "../victory-core:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "output": [],
@@ -196,8 +194,7 @@
         "lib/**/*.d.ts.map"
       ],
       "dependencies": [
-        "../victory-core:types:create",
-        "../victory-vendor:types:create"
+        "../victory-core:types:create"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -210,9 +207,7 @@
       ],
       "output": [],
       "dependencies": [
-        "../victory-vendor:build",
         "../victory-core:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -226,9 +221,7 @@
       ],
       "output": [],
       "dependencies": [
-        "../victory-vendor:build",
         "../victory-core:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -246,7 +239,6 @@
       "output": [],
       "dependencies": [
         "../victory-core:build",
-        "../victory-vendor:build",
         "../victory-voronoi:build"
       ],
       "packageLocks": [

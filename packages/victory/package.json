@@ -323,8 +323,7 @@
         "../victory-tooltip:types:create",
         "../victory-voronoi:types:create",
         "../victory-voronoi-container:types:create",
-        "../victory-zoom-container:types:create",
-        "../victory-vendor:types:create"
+        "../victory-zoom-container:types:create"
       ],
       "output": [],
       "packageLocks": [
@@ -411,8 +410,7 @@
         "../victory-tooltip:types:create",
         "../victory-voronoi:types:create",
         "../victory-voronoi-container:types:create",
-        "../victory-zoom-container:types:create",
-        "../victory-vendor:types:create"
+        "../victory-zoom-container:types:create"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -451,8 +449,7 @@
         "../victory-tooltip:types:create",
         "../victory-voronoi:types:create",
         "../victory-voronoi-container:types:create",
-        "../victory-zoom-container:types:create",
-        "../victory-vendor:types:create"
+        "../victory-zoom-container:types:create"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -494,8 +491,7 @@
         "../victory-tooltip:build",
         "../victory-voronoi:build",
         "../victory-voronoi-container:build",
-        "../victory-zoom-container:build",
-        "../victory-vendor:build"
+        "../victory-zoom-container:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"

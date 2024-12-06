@@ -1,4 +1,4 @@
-import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Scale from "d3-scale";
 
 import * as Selection from "./selection";
 

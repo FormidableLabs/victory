@@ -1,4 +1,3 @@
-// victory-vendor note: This module is still CommonJS, so not part of victory-vendor.
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, LabelHelpers, Scale, Domain, Data } from "victory-core";
 

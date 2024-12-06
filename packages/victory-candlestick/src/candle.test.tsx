@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { VictoryContainer } from "victory-core";
-import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Scale from "d3-scale";
 
 import { Candle } from "./candle";
 

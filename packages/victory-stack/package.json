@@ -183,7 +183,7 @@
         "../victory-area:types:create",
         "../victory-bar:types:create",
         "../victory-histogram:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "output": [],
@@ -225,7 +225,7 @@
         "../victory-area:types:create",
         "../victory-bar:types:create",
         "../victory-histogram:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -244,7 +244,7 @@
         "../victory-area:types:create",
         "../victory-bar:types:create",
         "../victory-histogram:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -266,7 +266,6 @@
         "../victory-area:build",
         "../victory-bar:build",
         "../victory-histogram:build",
-        "../victory-vendor:build",
         "../victory-voronoi:build"
       ],
       "packageLocks": [

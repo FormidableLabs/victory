@@ -1,6 +1,6 @@
 /* eslint max-nested-callbacks: 0 */
 import React from "react";
-import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Scale from "d3-scale";
 
 import * as LabelHelpers from "./label-helpers";
 import { VictoryLabel } from "../victory-label/victory-label";

@@ -176,7 +176,7 @@
         "types:create",
         "../victory-core:types:create",
         "../victory-tooltip:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "output": [],
@@ -215,7 +215,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-tooltip:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -231,7 +231,7 @@
       "dependencies": [
         "../victory-core:types:create",
         "../victory-tooltip:types:create",
-        "../victory-vendor:types:create",
+        
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -250,7 +250,6 @@
       "dependencies": [
         "../victory-core:build",
         "../victory-tooltip:build",
-        "../victory-vendor:build",
         "../victory-voronoi:build"
       ],
       "packageLocks": [

@@ -8,7 +8,7 @@ import {
   min as d3Min,
   max as d3Max,
   quantile as d3Quantile,
-} from "victory-vendor/d3-array";
+} from "d3-array";
 import { VictoryBoxPlotProps } from "./victory-box-plot";
 
 const TYPES = ["max", "min", "median", "q1", "q3"];

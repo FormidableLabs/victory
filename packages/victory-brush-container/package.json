@@ -169,7 +169,6 @@
       "dependencies": [
         "types:create",
         "../victory-core:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "output": [],
@@ -206,7 +205,6 @@
       "output": [],
       "dependencies": [
         "../victory-core:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -221,7 +219,6 @@
       "output": [],
       "dependencies": [
         "../victory-core:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -239,7 +236,6 @@
       "output": [],
       "dependencies": [
         "../victory-core:build",
-        "../victory-vendor:build",
         "../victory-voronoi:build"
       ],
       "packageLocks": [

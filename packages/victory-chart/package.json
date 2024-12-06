@@ -187,7 +187,6 @@
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
         "../victory-shared-events:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "output": [],
@@ -230,7 +229,6 @@
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
         "../victory-shared-events:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -248,7 +246,6 @@
         "../victory-core:types:create",
         "../victory-polar-axis:types:create",
         "../victory-shared-events:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -269,7 +266,6 @@
         "../victory-core:build",
         "../victory-polar-axis:build",
         "../victory-shared-events:build",
-        "../victory-vendor:build",
         "../victory-voronoi:build"
       ],
       "packageLocks": [

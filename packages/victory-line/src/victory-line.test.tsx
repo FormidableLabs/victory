@@ -3,7 +3,7 @@ import random from "lodash/random";
 import React from "react";
 import { VictoryChart } from "victory-chart";
 import { Helpers } from "victory-core";
-import { curveCatmullRom } from "victory-vendor/d3-shape";
+import { curveCatmullRom } from "d3-shape";
 
 import { calculateD3Path } from "../../../test/helpers";
 import { Curve } from "./curve";

@@ -198,7 +198,6 @@
         "../victory-selection-container:types:create",
         "../victory-voronoi-container:types:create",
         "../victory-zoom-container:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "output": [],
@@ -245,7 +244,6 @@
         "../victory-selection-container:types:create",
         "../victory-voronoi-container:types:create",
         "../victory-zoom-container:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -265,7 +263,6 @@
         "../victory-selection-container:types:create",
         "../victory-voronoi-container:types:create",
         "../victory-zoom-container:types:create",
-        "../victory-vendor:types:create",
         "../victory-voronoi:types:create"
       ],
       "packageLocks": [
@@ -288,7 +285,6 @@
         "../victory-selection-container:build",
         "../victory-voronoi-container:build",
         "../victory-zoom-container:build",
-        "../victory-vendor:build",
         "../victory-voronoi:build"
       ],
       "packageLocks": [

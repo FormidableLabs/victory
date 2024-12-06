@@ -1,5 +1,5 @@
-import * as d3Scale from "victory-vendor/d3-scale";
-import * as d3Shape from "victory-vendor/d3-shape";
+import * as d3Scale from "d3-scale";
+import * as d3Shape from "d3-shape";
 import { _internalD3Voronoi as d3Voronoi } from "victory-voronoi/lib/helper-methods";
 import without from "lodash/without";
 import min from "lodash/min";
@@ -56,31 +56,22 @@ export const calculateD3Path = (props, pathType, index = 0) => {
 
   switch (pathType) {
     case "line": {
-      return (
-        d3Shape
-          .line()
-          .curve(curveFunction)
-          // @ts-expect-error property x does not exist
-          .x((d) => scaleX(d.x))
-          // @ts-expect-error property y does not exist
-          .y((d) => scaleY(d.y))(data)
-      );
+      return d3Shape
+        .line()
+        .curve(curveFunction)
+        .x((d) => scaleX(d.x))
+        .y((d) => scaleY(d.y))(data);
     }
     case "area": {
       const modifiedData = props.data.map((datum) => {
         return { x: datum.x, y: datum.y, y1: datum.y, y0: datum.y0 };
       });
-      return (
-        d3Shape
-          .area()
-          .curve(curveFunction)
-          // @ts-expect-error property x does not exist
-          .x((d) => scaleX(d.x))
-          // @ts-expect-error property y1 does not exist
-          .y1((d) => scaleY(d.y1))
-          // @ts-expect-error property y0 does not exist
-          .y0((d) => scaleY(d.y0))(modifiedData)
-      );
+      return d3Shape
+        .area()
+        .curve(curveFunction)
+        .x((d) => scaleX(d.x))
+        .y1((d) => scaleY(d.y1))
+        .y0((d) => scaleY(d.y0))(modifiedData);
     }
     case "voronoi": {
       const minRange = [Math.min(...range.x), Math.min(...range.y)];

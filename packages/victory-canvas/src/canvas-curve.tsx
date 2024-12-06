@@ -6,7 +6,7 @@ import {
   VictoryCommonPrimitiveProps,
 } from "victory-core";
 import { useCanvasContext } from "./hooks/use-canvas-context";
-import { LineRadial } from "../../victory-vendor/d3-shape";
+import { LineRadial } from "d3-shape";
 
 export interface CanvasCurveProps extends VictoryCommonPrimitiveProps {
   ariaLabel?: StringOrCallback;

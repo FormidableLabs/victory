@@ -168,8 +168,7 @@
       ],
       "dependencies": [
         "types:create",
-        "../victory-core:types:create",
-        "../victory-vendor:types:create"
+        "../victory-core:types:create"
       ],
       "output": [],
       "packageLocks": [
@@ -204,8 +203,7 @@
       ],
       "output": [],
       "dependencies": [
-        "../victory-core:types:create",
-        "../victory-vendor:types:create"
+        "../victory-core:types:create"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -218,8 +216,7 @@
       ],
       "output": [],
       "dependencies": [
-        "../victory-core:types:create",
-        "../victory-vendor:types:create"
+        "../victory-core:types:create"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
@@ -235,8 +232,7 @@
       ],
       "output": [],
       "dependencies": [
-        "../victory-core:build",
-        "../victory-vendor:build"
+        "../victory-core:build"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
