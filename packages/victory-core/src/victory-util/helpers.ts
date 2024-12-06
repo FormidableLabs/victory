@@ -12,22 +12,21 @@ export type ElementPadding = {
   right: number;
 };
 
-export type InternalPointData = {
-  _x?: number;
-  _x1?: number;
-  _x0?: number;
-  _voronoiX?: number;
-  _y?: number;
-  _y1?: number;
-  _y0?: number;
-  _voronoiY?: number;
-};
-
-export type PointData = {
+export type MaybePointData = {
   x?: number;
   x0?: number;
+  x1?: number;
   y?: number;
   y0?: number;
+  y1?: number;
+  _x?: number;
+  _x0?: number;
+  _x1?: number;
+  _y?: number;
+  _y0?: number;
+  _y1?: number;
+  _voronoiX?: number;
+  _voronoiY?: number;
 };
 
 /**
@@ -113,16 +112,19 @@ export function omit<T, Keys extends keyof T>(
 /**
  * Coalesce the x and y values from a data point
  */
-export function getPoint(datum: InternalPointData): PointData {
+export function getPoint(datum: MaybePointData): MaybePointData {
   const { _x, _x1, _x0, _voronoiX, _y, _y1, _y0, _voronoiY } = datum;
   const defaultX = _x1 ?? _x;
   const defaultY = _y1 ?? _y;
-  return {
+
+  const point = {
     x: _voronoiX ?? defaultX,
     x0: _x0 ?? _x,
     y: _voronoiY ?? defaultY,
     y0: _y0 ?? _y,
   };
+
+  return defaults({}, point, datum);
 }
 
 /**
@@ -135,7 +137,7 @@ export function scalePoint(
     horizontal?: boolean;
     origin?: { x: number; y: number };
   },
-  datum: InternalPointData,
+  datum: MaybePointData,
 ) {
   const { scale, polar, horizontal } = props;
   const d = getPoint(datum);
