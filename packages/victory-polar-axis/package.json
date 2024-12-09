@@ -1,6 +1,6 @@
 {
   "name": "victory-polar-axis",
-  "version": "37.3.3",
+  "version": "37.3.4",
   "description": "Polar Axis Component for Victory",
   "keywords": [
     "data visualization",
@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.19",
-    "victory-core": "37.3.3"
+    "victory-core": "37.3.4"
   },
   "peerDependencies": {
     "react": ">=16.6.0"

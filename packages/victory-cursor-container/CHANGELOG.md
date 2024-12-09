@@ -1,5 +1,11 @@
 # victory-cursor-container
 
+## 37.3.4
+
+### Patch Changes
+
+- Fix regression in cursor rendering caused by #2999 ([#3001](https://github.com/FormidableLabs/victory/pull/3001))
+
 ## 37.3.3
 
 ### Patch Changes
