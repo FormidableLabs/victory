@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "37.3.3",
+  "version": "37.3.4",
   "description": "Chart Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,10 +22,10 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "react-fast-compare": "^3.2.0",
-    "victory-axis": "37.3.3",
-    "victory-core": "37.3.3",
-    "victory-polar-axis": "37.3.3",
-    "victory-shared-events": "37.3.3"
+    "victory-axis": "37.3.4",
+    "victory-core": "37.3.4",
+    "victory-polar-axis": "37.3.4",
+    "victory-shared-events": "37.3.4"
   },
   "peerDependencies": {
     "react": ">=16.6.0"

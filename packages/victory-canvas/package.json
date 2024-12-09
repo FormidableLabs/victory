@@ -1,6 +1,6 @@
 {
   "name": "victory-canvas",
-  "version": "37.3.3",
+  "version": "37.3.4",
   "description": "HTML5 Canvas Components for Victory",
   "keywords": [
     "data visualization",
@@ -21,8 +21,8 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.19",
-    "victory-bar": "37.3.3",
-    "victory-core": "37.3.3"
+    "victory-bar": "37.3.4",
+    "victory-core": "37.3.4"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
