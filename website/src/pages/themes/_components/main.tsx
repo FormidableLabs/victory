@@ -14,12 +14,13 @@ import Select from "./select";
 import { colorScaleOptions } from "./color-scale-options";
 import Button from "./button";
 import ConfigPreview from "./config-preview";
+import clsx from "clsx";
 
 const chartStyle: { [key: string]: React.CSSProperties } = {
   parent: {
     border: "1px solid #ccc",
     width: "100%",
-    height: 400,
+    height: "95%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -109,7 +110,15 @@ const Main = () => {
               </div>
             </fieldset>
           </div>
-          <div className="grid grid-cols-2 gap-10">
+          <div
+            className={clsx(
+              "grid grid-cols-1 gap-10",
+              exampleConfigs.length !== 1 && "xl:grid-cols-2",
+              exampleConfigs.length === 1
+                ? "auto-rows-[500px]"
+                : "auto-rows-[400px] xl:max-2xl:auto-rows-[300px]",
+            )}
+          >
             {exampleConfigs.length === 0 ? (
               <>
                 <div>
