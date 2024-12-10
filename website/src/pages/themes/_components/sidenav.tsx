@@ -91,7 +91,7 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
   };
 
   return (
-    <aside className="sticky top-[60px] h-theme-builder w-32 overflow-y-auto bg-black py-4">
+    <aside className="sticky top-[60px] h-theme-builder w-32 overflow-y-auto bg-black py-4 flex-none">
       <div className="w-full flex-1 space-y-1 px-2">
         {NAV_ITEMS.map((item) => {
           const isActive = item.title === activeItem.title;

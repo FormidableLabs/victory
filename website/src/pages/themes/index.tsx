@@ -40,7 +40,7 @@ const ThemeBuilder = () => {
     <Layout>
       <ThemeProvider>
         <PreviewOptionsProvider>
-          <div className="relative flex flex-row flex-wrap items-start justify-start w-full theme-builder">
+          <div className="relative flex flex-row items-start justify-start w-full theme-builder">
             <SideNav
               activeItem={activeSidebarItem}
               onItemSelect={setActiveSidebarItem}

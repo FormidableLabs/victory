@@ -20,71 +20,68 @@ const ExportPanel = () => {
   };
 
   return (
-    <div className="flex-1 bg-white">
-      <div className="w-full max-w-screen-lg mx-auto py-10">
-        <h1 className="text-3xl">Using Your Exported Victory Theme Config</h1>
-        <ol className="pl-4 space-y-2">
-          <li>
-            <strong>Copy the theme configuration</strong>
-            <ul className="space-y-2">
-              <li>
-                Click the <FiCopy /> button to copy the JSON theme
-                configuration.
-                <div className="relative mt-2">
-                  <div className="flex items-center justify-end gap-3 absolute top-3 right-6">
-                    <button
-                      onClick={handleCopyThemeConfig}
-                      className="bg-transparent text-xl text-grayscale-400 cursor-pointer hover:bg-grayscale-300 flex items-center justify-center p-1 rounded-md"
-                    >
-                      {copyStatus && (
-                        <span className="text-grayscale-400 text-xs italic">
-                          {copyStatus}
-                        </span>
-                      )}
-                      <FiCopy />
-                    </button>
-                  </div>
-                  <CodeBlock
-                    language="json"
-                    code={JSON.stringify(config, null, 2)}
-                    className="h-[500px]"
-                  />
+    <div className="max-w-screen-lg mx-auto p-10 w-export-panel">
+      <h1 className="text-3xl">Using Your Exported Victory Theme Config</h1>
+      <ol className="pl-4 space-y-2">
+        <li>
+          <strong>Copy the theme configuration</strong>
+          <ul className="space-y-2">
+            <li>
+              Click the <FiCopy /> button to copy the JSON theme configuration.
+              <div className="relative mt-2">
+                <div className="flex items-center justify-end gap-3 absolute top-3 right-6">
+                  <button
+                    onClick={handleCopyThemeConfig}
+                    className="bg-transparent text-xl text-grayscale-400 cursor-pointer hover:bg-grayscale-300 flex items-center justify-center p-1 rounded-md"
+                  >
+                    {copyStatus && (
+                      <span className="text-grayscale-400 text-xs italic">
+                        {copyStatus}
+                      </span>
+                    )}
+                    <FiCopy />
+                  </button>
                 </div>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Save the Exported Theme as a File</strong>
-            <ul className="space-y-2">
-              <li>
-                Save the copied JSON as a <code>.js</code> or <code>.json</code>{" "}
-                file in your project, e.g., <code>theme.js</code>.
-              </li>
-              <li>
-                Import the theme in your app:
                 <CodeBlock
-                  language="javascript"
-                  code={`import customTheme from './theme.js';`}
+                  language="json"
+                  code={JSON.stringify(config, null, 2)}
+                  className="h-[500px]"
                 />
-              </li>
-            </ul>
-          </li>
-          <li>
-            <strong>Apply to Victory Components</strong>
-            <ul className="space-y-2">
-              <li>
-                Use the <code>theme</code> prop on any Victory component:
-                <CodeBlock
-                  language="javascript"
-                  code={`<VictoryChart theme={customTheme}>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Save the Exported Theme as a File</strong>
+          <ul className="space-y-2">
+            <li>
+              Save the copied JSON as a <code>.js</code> or <code>.json</code>{" "}
+              file in your project, e.g., <code>theme.js</code>.
+            </li>
+            <li>
+              Import the theme in your app:
+              <CodeBlock
+                language="javascript"
+                code={`import customTheme from './theme.js';`}
+              />
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Apply to Victory Components</strong>
+          <ul className="space-y-2">
+            <li>
+              Use the <code>theme</code> prop on any Victory component:
+              <CodeBlock
+                language="javascript"
+                code={`<VictoryChart theme={customTheme}>
 {/* Your Victory components */}
 </VictoryChart>`}
-                />
-              </li>
-            </ul>
-          </li>
-        </ol>
-      </div>
+              />
+            </li>
+          </ul>
+        </li>
+      </ol>
     </div>
   );
 };
