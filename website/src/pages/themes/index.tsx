@@ -10,13 +10,14 @@ import ChartPanel from "./_components/chart-panel";
 import { ThemeProvider } from "./_providers/themeProvider";
 import Main from "./_components/main";
 import { PreviewOptionsProvider } from "./_providers/previewOptionsProvider";
+import ExportPanel from "./_components/export-panel";
 
 const getPanel = (activeSidebarItem) => {
   switch (activeSidebarItem.panelType) {
     case "theme":
       return <BaseThemePanel />;
     case "chart":
-      return <ChartPanel optionsConfig={activeSidebarItem.config} />;
+      return <ChartPanel />;
     default:
       return (
         <OptionsPanel
@@ -33,6 +34,8 @@ const ThemeBuilder = () => {
     NAV_ITEMS[0],
   );
 
+  const isExportPanel = activeSidebarItem.panelType === "export";
+
   return (
     <Layout>
       <ThemeProvider>
@@ -42,10 +45,16 @@ const ThemeBuilder = () => {
               activeItem={activeSidebarItem}
               onItemSelect={setActiveSidebarItem}
             />
-            <aside className="sticky top-[60px] h-theme-builder w-[380px] overflow-y-scroll p-6 bg-gray-50 border-r border-grayscale-300">
-              {getPanel(activeSidebarItem)}
-            </aside>
-            <Main />
+            {isExportPanel ? (
+              <ExportPanel />
+            ) : (
+              <>
+                <aside className="sticky top-[60px] h-theme-builder p-6 border-r border-grayscale-300 overflow-y-scroll w-[380px] bg-gray-50">
+                  {getPanel(activeSidebarItem)}
+                </aside>
+                <Main />
+              </>
+            )}
           </div>
         </PreviewOptionsProvider>
       </ThemeProvider>

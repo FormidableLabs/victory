@@ -18,13 +18,14 @@ import {
   defaultExampleConfigs,
   usePreviewOptions,
 } from "../_providers/previewOptionsProvider";
+import { TiExportOutline } from "react-icons/ti";
 
 type NavItem = {
   title: string;
   icon: React.ElementType;
 } & (
   | {
-      panelType: "theme" | "chart";
+      panelType: "theme" | "chart" | "export";
     }
   | {
       panelType: "default";
@@ -67,6 +68,11 @@ export const NAV_ITEMS: NavItem[] = [
     title: "Chart Options",
     icon: AdjustmentsVerticalIcon,
     panelType: "chart",
+  },
+  {
+    title: "Export",
+    icon: TiExportOutline,
+    panelType: "export",
   },
 ];
 
