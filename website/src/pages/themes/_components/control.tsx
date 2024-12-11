@@ -65,6 +65,7 @@ const Control = ({ type, control, className }) => {
           palette={customThemeConfig?.palette}
           colorScaleType={control.colorScaleType}
           onColorChange={handleColorChange}
+          className={className}
         />
       );
     case "section":
@@ -115,6 +116,7 @@ const Control = ({ type, control, className }) => {
           label={control.label}
           value={configValue as string}
           onChange={handleChange}
+          className={className}
         />
       );
     case "colorPicker":

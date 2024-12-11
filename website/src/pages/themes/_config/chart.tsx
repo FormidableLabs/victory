@@ -13,6 +13,7 @@ import {
   VictoryLine,
   VictoryPie,
   VictoryScatter,
+  VictoryStack,
   VictoryVoronoi,
 } from "victory";
 import {
@@ -21,7 +22,7 @@ import {
   getNestedColorScaleConfig,
 } from "../_utils";
 import { ControlConfig } from ".";
-import { StrokeProps } from "../_const";
+import { NUM_STACKS, sampleStackData, StrokeProps } from "../_const";
 
 const chartOptionsConfig: {
   [key: string]: ControlConfig;
@@ -81,35 +82,32 @@ const chartOptionsConfig: {
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
-      <VictoryGroup key="victory-group" domainPadding={{ x: 20 }} offset={20}>
-        <VictoryBar
-          {...props}
-          data={[
-            { x: "2023 Q1", y: 1 },
-            { x: "2023 Q2", y: 2 },
-            { x: "2023 Q3", y: 3 },
-            { x: "2023 Q4", y: 2 },
-          ]}
-        />
-        <VictoryBar
-          {...props}
-          data={[
-            { x: "2023 Q1", y: 2 },
-            { x: "2023 Q2", y: 3 },
-            { x: "2023 Q3", y: 4 },
-            { x: "2023 Q4", y: 5 },
-          ]}
-        />
-        <VictoryBar
-          {...props}
-          data={[
-            { x: "2023 Q1", y: 1 },
-            { x: "2023 Q2", y: 2 },
-            { x: "2023 Q3", y: 3 },
-            { x: "2023 Q4", y: 4 },
-          ]}
-        />
-      </VictoryGroup>,
+      <VictoryBar
+        {...props}
+        key="bar-chart"
+        data={[
+          {
+            x: 1,
+            y: 2,
+          },
+          {
+            x: 2,
+            y: 3,
+          },
+          {
+            x: 3,
+            y: 5,
+          },
+          {
+            x: 4,
+            y: 4,
+          },
+          {
+            x: 5,
+            y: 7,
+          },
+        ]}
+      />,
     ],
     controls: [
       {
@@ -459,6 +457,39 @@ const chartOptionsConfig: {
   group: {
     type: "section",
     label: "Group",
+    content: (props) => [
+      <VictoryAxis key="x-axis" label="X Axis" />,
+      <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
+      <VictoryGroup key="victory-group" domainPadding={{ x: 20 }} offset={20}>
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 1 },
+            { x: "2023 Q2", y: 2 },
+            { x: "2023 Q3", y: 3 },
+            { x: "2023 Q4", y: 2 },
+          ]}
+        />
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 2 },
+            { x: "2023 Q2", y: 3 },
+            { x: "2023 Q3", y: 4 },
+            { x: "2023 Q4", y: 5 },
+          ]}
+        />
+        <VictoryBar
+          {...props}
+          data={[
+            { x: "2023 Q1", y: 1 },
+            { x: "2023 Q2", y: 2 },
+            { x: "2023 Q3", y: 3 },
+            { x: "2023 Q4", y: 4 },
+          ]}
+        />
+      </VictoryGroup>,
+    ],
     controls: [
       {
         type: "section",
@@ -725,6 +756,36 @@ const chartOptionsConfig: {
         type: "section",
         label: "Labels",
         controls: getBaseLabelsConfig("scatter.style.labels"),
+      },
+    ],
+  },
+  stack: {
+    type: "section",
+    label: "Stacks",
+    content: (props) => [
+      <VictoryAxis key="x-axis" label="X Axis" />,
+      <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
+      <VictoryStack {...props} key="victory-stack">
+        {[...Array(NUM_STACKS)].map((_, i) => (
+          <VictoryArea data={sampleStackData} key={i} />
+        ))}
+      </VictoryStack>,
+    ],
+    controls: [
+      {
+        type: "section",
+        label: "Data",
+        controls: [
+          ...getNestedColorScaleConfig("group"),
+          {
+            type: "slider",
+            label: "Width",
+            min: 0,
+            max: 50,
+            unit: "px",
+            path: "group.style.data.width",
+          },
+        ],
       },
     ],
   },

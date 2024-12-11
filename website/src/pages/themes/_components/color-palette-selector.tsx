@@ -2,12 +2,14 @@ import React from "react";
 import ColorPicker from "./color-picker";
 import { ColorScalePropType, VictoryThemeDefinition } from "victory";
 import { ColorChangeArgs } from "./control";
+import clsx from "clsx";
 
 type ColorPaletteSelectorProps = {
   label?: string;
   palette?: VictoryThemeDefinition["palette"];
   colorScaleType?: ColorScalePropType;
   onColorChange: (args: ColorChangeArgs) => void;
+  className?: string;
 };
 
 const ColorPaletteSelector = ({
@@ -15,9 +17,10 @@ const ColorPaletteSelector = ({
   colorScaleType,
   palette,
   onColorChange,
+  className,
 }: ColorPaletteSelectorProps) => {
   return (
-    <fieldset className="p-0 m-0 mt-4 mb-8">
+    <fieldset className={clsx("p-0 m-0", className)}>
       {label && (
         <label className="block mb-3 text-base font-bold">{label}</label>
       )}
