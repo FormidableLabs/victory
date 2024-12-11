@@ -55,6 +55,7 @@ module.exports = {
       },
       width: {
         prose: "90ch",
+        "export-panel": "calc(100vw - 100px)",
       },
       fontFamily: {
         sans: ["Inter, Helvetica, Arial, sans-serif"],

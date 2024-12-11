@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Highlight } from "prism-react-renderer";
+import { Highlight, themes } from "prism-react-renderer";
 import React from "react";
 
 type CodeBlockProps = {
@@ -10,7 +10,7 @@ type CodeBlockProps = {
 
 const CodeBlock = ({ code, language, className: classes }: CodeBlockProps) => {
   return (
-    <Highlight code={code} language={language}>
+    <Highlight code={code} language={language} theme={themes.oneLight}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={clsx(classes, className)} style={style}>
           {tokens.map((line, i) => (
