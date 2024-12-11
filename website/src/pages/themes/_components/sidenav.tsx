@@ -69,12 +69,13 @@ export const NAV_ITEMS: NavItem[] = [
     icon: AdjustmentsVerticalIcon,
     panelType: "chart",
   },
-  {
-    title: "Export",
-    icon: TiExportOutline,
-    panelType: "export",
-  },
 ];
+
+const exportItem: NavItem = {
+  title: "Export",
+  icon: TiExportOutline,
+  panelType: "export",
+};
 
 const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
   const { baseTheme } = useTheme();
@@ -90,9 +91,11 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
     }
   };
 
+  const isExportItemActive = activeItem.title === exportItem.title;
+
   return (
-    <aside className="sticky top-[60px] h-theme-builder w-32 overflow-y-auto bg-black py-4 flex-none">
-      <div className="w-full flex-1 space-y-1 px-2">
+    <aside className="sticky top-[60px] h-theme-builder w-[100px] overflow-y-auto bg-black py-4 flex-none flex flex-col justify-between px-2">
+      <div className="w-full space-y-1 px-2">
         {NAV_ITEMS.map((item) => {
           const isActive = item.title === activeItem.title;
           const isDisabled =
@@ -104,18 +107,18 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
               onClick={() => handleItemSelect(item)}
               disabled={isDisabled}
               className={clsx(
-                "group flex w-full flex-col items-center rounded-md p-3 text-xs font-medium cursor-pointer",
+                "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer bg-transparent",
                 isActive
-                  ? "bg-theme-1 text-theme-2"
-                  : "bg-transparent text-white hover:text-theme-1 disabled:text-grayscale-800 disabled:cursor-not-allowed",
+                  ? "text-theme-1"
+                  : "text-grayscale-300 hover:text-white disabled:text-grayscale-800 disabled:cursor-not-allowed",
               )}
             >
               <item.icon
                 aria-hidden="true"
                 className={clsx(
                   isActive
-                    ? "text-theme-2"
-                    : "text-white group-hover:text-theme-1 group-disabled:text-grayscale-800",
+                    ? "text-theme-1"
+                    : "text-grayscale-300 group-hover:text-white group-disabled:text-grayscale-800",
                   "size-6",
                 )}
               />
@@ -124,6 +127,23 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
           );
         })}
       </div>
+      <button
+        aria-current={isExportItemActive ? "page" : undefined}
+        onClick={() => handleItemSelect(exportItem)}
+        disabled={!isBaseThemeSelected}
+        className={clsx(
+          "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer text-theme-2 hover:underline disabled:bg-grayscale-400 disabled:text-grayscale-800 disabled:cursor-not-allowed",
+          isExportItemActive
+            ? "bg-theme-1/100"
+            : "bg-theme-1/80 hover:bg-theme-1/100",
+        )}
+      >
+        <exportItem.icon
+          aria-hidden="true"
+          className={"size-6 text-theme-2 group-disabled:text-grayscale-800"}
+        />
+        <span className="mt-2">{exportItem.title}</span>
+      </button>
     </aside>
   );
 };

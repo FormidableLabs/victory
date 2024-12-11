@@ -1,7 +1,7 @@
 import React from "react";
 import CodeBlock from "./code-block";
 import { useTheme } from "../_providers/themeProvider";
-import { FiCopy } from "react-icons/fi";
+import { FiCheck, FiCopy } from "react-icons/fi";
 
 const ExportPanel = () => {
   const { customThemeConfig: config } = useTheme();
@@ -29,17 +29,21 @@ const ExportPanel = () => {
             <li>
               Click the <FiCopy /> button to copy the JSON theme configuration.
               <div className="relative mt-2">
-                <div className="flex items-center justify-end gap-3 absolute top-3 right-6">
+                <div className="flex items-center justify-end gap-2 absolute top-3 right-6">
+                  {copyStatus && (
+                    <span className="text-grayscale-400 text-xs italic">
+                      {copyStatus}
+                    </span>
+                  )}
                   <button
                     onClick={handleCopyThemeConfig}
-                    className="bg-transparent text-xl text-grayscale-400 cursor-pointer hover:bg-grayscale-300 flex items-center justify-center p-1 rounded-md"
+                    className="bg-transparent text-lg text-grayscale-400 cursor-pointer hover:bg-grayscale-200 flex items-center justify-center p-1 rounded-md"
                   >
-                    {copyStatus && (
-                      <span className="text-grayscale-400 text-xs italic">
-                        {copyStatus}
-                      </span>
+                    {copyStatus ? (
+                      <FiCheck className="text-theme-1" />
+                    ) : (
+                      <FiCopy />
                     )}
-                    <FiCopy />
                   </button>
                 </div>
                 <CodeBlock
