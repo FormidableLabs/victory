@@ -1,6 +1,6 @@
 import { VictoryThemeDefinition } from "victory-core";
 import { ControlConfig } from "./_config";
-import { colorScaleOptions } from "./_components/color-scale-options";
+import { StrokeProps } from "./_const";
 
 export const setNestedConfigValue = (
   config: VictoryThemeDefinition,
@@ -39,14 +39,6 @@ export const getConfigValue = (
 };
 
 // Config helpers
-export enum StrokeProps {
-  STROKE = "Stroke",
-  STROKE_WIDTH = "Stroke Width",
-  STROKE_DASH_ARRAY = "Stroke Dash Array",
-  STROKE_LINE_CAP = "Stroke Line Cap",
-  STROKE_LINE_JOIN = "Stroke Line Join",
-}
-
 export const getPath = (basePath: string | string[], key: string) => {
   if (Array.isArray(basePath)) {
     return basePath.map((p) => `${p}.${key}`);
@@ -58,9 +50,8 @@ export const getNestedColorScaleConfig = (
   basePath: string | string[],
 ): ControlConfig[] => [
   {
-    type: "select",
+    type: "colorScale",
     label: "Color Scale",
-    options: colorScaleOptions,
     path: getPath(basePath, "colorScale"),
   },
 ];

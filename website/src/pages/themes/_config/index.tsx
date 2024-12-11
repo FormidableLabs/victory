@@ -4,9 +4,14 @@ export type ControlConfig = {
   label: string;
   content?: (props: any) => React.ReactNode;
   controls?: ControlConfig[];
+  hasVictoryChart?: boolean;
 } & (
   | {
-      type: "section" | "colorScale" | "accordion";
+      type: "section" | "colorPalette" | "accordion";
+    }
+  | {
+      type: "colorScale";
+      path: string | string[];
     }
   | {
       type: "slider" | "select" | "colorPicker";

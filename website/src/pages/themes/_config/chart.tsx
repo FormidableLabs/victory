@@ -19,9 +19,9 @@ import {
   getBaseLabelsConfig,
   getBaseStrokeConfig,
   getNestedColorScaleConfig,
-  StrokeProps,
 } from "../_utils";
 import { ControlConfig } from ".";
+import { StrokeProps } from "../_const";
 
 const chartOptionsConfig: {
   [key: string]: ControlConfig;

@@ -11,9 +11,9 @@ import {
 import { useTheme } from "../_providers/themeProvider";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
 import Select from "./select";
-import { colorScaleOptions } from "./color-scale-options";
 import Button from "./button";
 import ConfigPreview from "./config-preview";
+import { colorScaleOptions } from "../_const";
 
 const chartStyle: { [key: string]: React.CSSProperties } = {
   parent: {
@@ -178,6 +178,7 @@ const Main = () => {
                         >
                           {Content({
                             labels: ({ datum }) => datum.y || datum.x,
+                            colorScale: colorScale as ColorScalePropType,
                             ...(showTooltips && {
                               labelComponent: <VictoryTooltip />,
                             }),
@@ -188,6 +189,7 @@ const Main = () => {
                           labels: ({ datum }) => datum.y || datum.x,
                           style: chartStyle,
                           theme: customThemeConfig,
+                          colorScale: colorScale as ColorScalePropType,
                           ...(showTooltips && {
                             labelComponent: <VictoryTooltip />,
                           }),

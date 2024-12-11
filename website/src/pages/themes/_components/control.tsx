@@ -2,10 +2,11 @@ import React, { useId } from "react";
 import Select from "./select";
 import Slider from "./slider";
 import ColorPicker from "./color-picker";
-import ColorScaleOptions from "./color-scale-options";
+import ColorPaletteSelector from "./color-palette-selector";
 import { getConfigValue } from "../_utils";
 import { useTheme } from "../_providers/themeProvider";
 import Accordion from "./accordion";
+import ColorScaleOverrideSelector from "./color-scale-override-selector";
 
 export type ColorChangeArgs = {
   newColor?: string;
@@ -57,9 +58,9 @@ const Control = ({ type, control, className }) => {
           ))}
         </Accordion>
       );
-    case "colorScale":
+    case "colorPalette":
       return (
-        <ColorScaleOptions
+        <ColorPaletteSelector
           label={control.label}
           palette={customThemeConfig?.palette}
           colorScaleType={control.colorScaleType}
@@ -108,10 +109,17 @@ const Control = ({ type, control, className }) => {
           includeDefault
         />
       );
+    case "colorScale":
+      return (
+        <ColorScaleOverrideSelector
+          label={control.label}
+          value={configValue as string}
+          onChange={handleChange}
+        />
+      );
     case "colorPicker":
       return (
         <ColorPicker
-          id={id}
           key={control.label}
           label={control.label}
           color={configValue as string}
