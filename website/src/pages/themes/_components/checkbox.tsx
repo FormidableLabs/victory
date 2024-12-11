@@ -34,7 +34,7 @@ const Checkbox = ({
         onChange={handleChange}
         className="mr-2"
       />
-      <label htmlFor="checkbox" className="text-sm">
+      <label htmlFor={id} className="text-sm">
         {label}
       </label>
     </fieldset>

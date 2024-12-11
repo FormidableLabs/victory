@@ -37,7 +37,7 @@ const ColorScaleOverrideSelector = ({
 
   return (
     <fieldset className={clsx("p-0 m-0", className)}>
-      <label className="block mb-3 text-sm font-bold ">{label}</label>
+      <label className="block mb-3 text-sm font-bold">{label}</label>
       <Checkbox
         label="Use custom color scale"
         isChecked={hasCustomValue}
