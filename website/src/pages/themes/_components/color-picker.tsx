@@ -58,7 +58,7 @@ const ColorPicker = ({
   const id = useId();
 
   return (
-    <fieldset className={clsx("p-0", className)}>
+    <fieldset className={clsx("p-0 m-0", className)}>
       {label && (
         <label className="block mb-1 text-sm text-grayscale-900 dark:text-white font-bold">
           {label}

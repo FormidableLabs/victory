@@ -20,7 +20,7 @@ const OptionsPanel = ({ title, description, controls }: GlobalPanelProps) => {
             key={control.label + i}
             type={control.type}
             control={control}
-            className="mb-4"
+            className="mt-4 mb-8"
           />
         );
       })}
