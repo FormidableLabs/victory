@@ -117,7 +117,7 @@ class VictoryPieBase extends React.Component<VictoryPieProps> {
       duration: 500,
       before: () => ({ _y: 0, label: " " }),
       after: (datum) => ({
-        y_: datum._y,
+        _y: datum._y,
         label: datum.label,
       }),
     },

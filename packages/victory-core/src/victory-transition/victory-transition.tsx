@@ -157,6 +157,12 @@ export class VictoryTransition extends React.Component<
     if (!this.state) {
       return this.props;
     }
+    // This causes the following bug in victory pie:
+    // If nodes exit, we run the exit transition using the old props.
+    // This causes us to overwrite any new data values with old data values.
+    // For example, if oldProps has data: [1, 2, 3, 4, 6] and newProps has data: [5, 2, 3, 4],
+    // we end up with data: [1, 2, 3, 4, 0] after the exit transition (default exit transition for pie chart is
+    // before: () => ({ _y: 0 }), which causes the existing nodes to be set to 0).
     return this.state.nodesWillExit
       ? this.state.oldProps || this.props
       : this.props;
