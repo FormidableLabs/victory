@@ -1,12 +1,9 @@
 /* eslint-disable no-magic-numbers */
 import React from "react";
-import {
-  getBaseLabelsConfig,
-  getBaseStrokeConfig,
-  StrokeProps,
-} from "../_utils";
+import { getBaseLabelsConfig, getBaseStrokeConfig } from "../_utils";
 import { VictoryAxis, VictoryPolarAxis } from "victory";
 import { ControlConfig, OptionsPanelConfig } from ".";
+import { StrokeProps } from "../_const";
 
 const generalAxisOptionsConfig: ControlConfig = {
   type: "accordion",

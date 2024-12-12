@@ -11,8 +11,7 @@ import {
 import { useTheme } from "../_providers/themeProvider";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
 import Select from "./select";
-import { colorScaleOptions } from "./color-scale-options";
-import Button from "./button";
+import { colorScaleOptions, NUM_STACKS, sampleStackData } from "../_const";
 import clsx from "clsx";
 
 const chartStyle: { [key: string]: React.CSSProperties } = {
@@ -25,31 +24,6 @@ const chartStyle: { [key: string]: React.CSSProperties } = {
     alignItems: "center",
   },
 };
-
-const NUM_STACKS = 5;
-
-const sampleStackData = [
-  {
-    x: 1,
-    y: 2,
-  },
-  {
-    x: 2,
-    y: 3,
-  },
-  {
-    x: 3,
-    y: 5,
-  },
-  {
-    x: 4,
-    y: 4,
-  },
-  {
-    x: 5,
-    y: 7,
-  },
-];
 
 const Main = () => {
   const { customThemeConfig } = useTheme();
@@ -69,7 +43,7 @@ const Main = () => {
         <div className="flex justify-between items-center mb-4">
           <Select
             id="color-scale"
-            label="Color Scale"
+            label="Choose Color Scale For Preview"
             value={colorScale}
             onChange={updateColorScale}
             options={colorScaleOptions}
@@ -164,6 +138,7 @@ const Main = () => {
                       >
                         {Content({
                           labels: ({ datum }) => datum.y || datum.x,
+                          colorScale: colorScale as ColorScalePropType,
                           ...(showTooltips && {
                             labelComponent: <VictoryTooltip />,
                           }),
@@ -172,6 +147,7 @@ const Main = () => {
                     ) : (
                       Content({
                         labels: ({ datum }) => datum.y || datum.x,
+                        colorScale: colorScale as ColorScalePropType,
                         style: chartStyle,
                         theme: customThemeConfig,
                         ...(showTooltips && {
