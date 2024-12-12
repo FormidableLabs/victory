@@ -3,6 +3,7 @@ import Control from "./control";
 import Select from "./select";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
 import { chartOptionsConfig } from "../_config";
+import PanelHeader from "./panel-header";
 
 const ChartPanel = () => {
   const [chartType, setChartType] = React.useState("");
@@ -27,10 +28,10 @@ const ChartPanel = () => {
 
   return (
     <>
-      <h2 className="mb-0 text-xl font-bold">Chart Options</h2>
-      <p className="text-sm mb-4 text-grayscale-400">
-        Select a chart type to begin customizing.
-      </p>
+      <PanelHeader
+        title="Chart Options"
+        description="Select a chart type to begin customizing."
+      />
       <Select
         id="chart-type-select"
         value={chartType}

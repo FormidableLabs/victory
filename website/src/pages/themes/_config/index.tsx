@@ -7,7 +7,12 @@ export type ControlConfig = {
   hasVictoryChart?: boolean;
 } & (
   | {
-      type: "section" | "colorPalette" | "accordion";
+      type: "section" | "accordion";
+    }
+  | {
+      type: "colorPalette";
+      colorScaleType: string;
+      value: string;
     }
   | {
       type: "colorScale";

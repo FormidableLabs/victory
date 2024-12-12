@@ -1,5 +1,6 @@
 import React from "react";
 import Control from "./control";
+import PanelHeader from "./panel-header";
 
 type GlobalPanelProps = {
   title?: string;
@@ -10,10 +11,7 @@ type GlobalPanelProps = {
 const OptionsPanel = ({ title, description, controls }: GlobalPanelProps) => {
   return (
     <>
-      {!!title && <h2 className="mb-0 text-xl font-bold">{title}</h2>}
-      {!!description && (
-        <p className="text-sm mb-4 text-grayscale-400">{description}</p>
-      )}
+      <PanelHeader title={title} description={description} />
       {controls.map((control, i) => {
         return (
           <Control

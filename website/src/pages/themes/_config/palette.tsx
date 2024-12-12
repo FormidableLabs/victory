@@ -8,6 +8,7 @@ const paletteOptionsConfig: OptionsPanelConfig = {
     type: "colorPalette",
     colorScaleType: option.value,
     label: option.label,
+    value: option.value,
   })),
 };
 

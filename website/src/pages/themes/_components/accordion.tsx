@@ -27,7 +27,7 @@ const Accordion = ({
         <button
           type="button"
           className={clsx(
-            "bg-white flex items-center justify-between w-full px-5 py-3 text-sm font-bold rtl:text-right text-grayscale-500 border border-b-0 border-grayscale-300 gap-3 group-last:border-b cursor-pointer",
+            "bg-white flex items-center justify-between w-full px-5 py-3 text-base font-bold rtl:text-right text-grayscale-500 border border-b-0 border-grayscale-300 gap-3 group-last:border-b cursor-pointer",
             { "group-last:border-b-0": isOpen },
           )}
           aria-expanded="true"
