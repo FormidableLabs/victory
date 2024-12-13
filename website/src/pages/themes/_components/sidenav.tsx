@@ -15,6 +15,7 @@ import {
 import axisOptionsConfig from "../_config/axis";
 import { useTheme } from "../_providers/themeProvider";
 import {
+  defaultColorScale,
   defaultExampleConfigs,
   usePreviewOptions,
 } from "../_providers/previewOptionsProvider";
@@ -79,11 +80,12 @@ const exportItem: NavItem = {
 
 const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
   const { baseTheme } = useTheme();
-  const { setExampleConfigs } = usePreviewOptions();
+  const { setExampleConfigs, updateColorScale } = usePreviewOptions();
   const isBaseThemeSelected = !!baseTheme;
 
   const handleItemSelect = (item: NavItem) => {
     onItemSelect(item);
+    updateColorScale(defaultColorScale);
     if (item.panelType === "default" && !!item.examples) {
       setExampleConfigs(item.examples);
     } else {

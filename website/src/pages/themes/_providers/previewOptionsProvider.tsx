@@ -2,7 +2,7 @@ import React, { createContext, useContext } from "react";
 
 type PreviewOptionsContextType = {
   colorScale?: string;
-  updateColorScale: (newColorScale: string) => void;
+  updateColorScale: (newColorScale?: string) => void;
   showTooltips: boolean;
   setShowTooltips: (showTooltips: boolean) => void;
   resetPreviewOptions: () => void;
@@ -27,8 +27,8 @@ export const PreviewOptionsProvider = ({ children }) => {
     defaultExampleConfigs,
   );
 
-  const updateColorScale = (newColorScale: string) => {
-    const updatedColorScale = newColorScale === "" ? undefined : newColorScale;
+  const updateColorScale = (newColorScale?: string) => {
+    const updatedColorScale = !newColorScale ? undefined : newColorScale;
     setColorScale(updatedColorScale);
   };
 

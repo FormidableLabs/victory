@@ -33,7 +33,7 @@ const Select = ({
   return (
     <div className={clsx("relative", className)}>
       {label && (
-        <label htmlFor={id} className="block mb-1 text-sm font-bold">
+        <label htmlFor={id} className="block mb-1 font-bold text-inherit">
           {label}
         </label>
       )}

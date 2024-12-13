@@ -3,7 +3,8 @@ import { colorScaleOptions } from "../_const";
 
 const paletteOptionsConfig: OptionsPanelConfig = {
   title: "Color Palette",
-  description: "Choose custom colors for each color scale.",
+  description:
+    "Select a color palette to apply it to the preview charts, then adjust individual colors in the palette to customize the theme.",
   controls: colorScaleOptions.map((option) => ({
     type: "colorPalette",
     colorScaleType: option.value,
