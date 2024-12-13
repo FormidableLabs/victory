@@ -195,8 +195,14 @@ export class VictoryTransition extends React.Component<
     const props = this.pickProps();
     const getTransitionProps = this.props.animate?.getTransitions
       ? this.props.animate.getTransitions
-      : Transitions.getTransitionPropsFactory(props, this.state, (newState) =>
-          this.setState(newState),
+      : Transitions.getTransitionPropsFactory(
+          props,
+          this.state,
+          (newState) => this.setState(newState),
+          {
+            oldProps: this.state.oldProps,
+            nextProps: this.props,
+          },
         );
     const child = React.Children.toArray(
       props.children,

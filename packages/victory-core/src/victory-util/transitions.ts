@@ -45,12 +45,15 @@ function getNodeTransitions(oldData, nextData) {
   const oldDataKeyed = oldData && getKeyedData(oldData);
   const nextDataKeyed = nextData && getKeyedData(nextData);
 
-  return {
+  const result = {
     entering:
       oldDataKeyed && getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
     exiting:
       nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed),
   };
+  // Debugging
+  console.log("getNodeTransitions: ", result);
+  return result;
 }
 
 function getChildData(child) {
@@ -182,12 +185,20 @@ function getChildPropsOnExit(
   data,
   exitingNodes,
   cb,
+  { oldProps, nextProps },
 ): TransitionProps {
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
   const onExit = animate && animate.onExit;
   const newAnimate = Object.assign({}, animate, onExit);
   let newData = data;
+
+  // Debugging
+  console.group("getChildPropsOnExit");
+  console.log(oldProps.children.props.data);
+  console.log(newData);
+  console.log(nextProps.children.props.data);
+  console.groupEnd();
 
   if (exitingNodes) {
     // After the exit transition occurs, trigger the animations for
@@ -197,16 +208,41 @@ function getChildPropsOnExit(
       animate.onExit && animate.onExit.before
         ? animate.onExit.before
         : identity;
-    // If nodes need to exit, transform them with the provided onExit.before function.
-    newData = data.map((datum, idx) => {
-      const key = (datum.key || idx).toString();
-      return exitingNodes[key]
-        ? Object.assign({}, datum, before(datum, idx, data))
-        : datum;
-    });
+    //
+    if (oldProps && nextProps) {
+      const transformedPreviousData = transformChildData(
+        oldProps.children.props.data,
+        exitingNodes,
+        before,
+      );
+      // Merge the incoming data with the transformed existing data
+      newData = defaults(
+        [],
+        nextProps.children.props.data,
+        transformedPreviousData,
+      );
+    } else {
+      // If nodes need to exit, transform them with the provided onExit.before function.
+      // TODO: refactor using `transformChildData`
+      newData = data.map((datum, idx) => {
+        const key = (datum.key || idx).toString();
+        return exitingNodes[key]
+          ? Object.assign({}, datum, before(datum, idx, data))
+          : datum;
+      });
+    }
   }
 
   return { animate: newAnimate, data: newData };
+}
+
+function transformChildData(data, nodes, transform) {
+  return data.map((datum, idx) => {
+    const key = (datum.key || idx).toString();
+    return nodes[key]
+      ? Object.assign({}, datum, transform(datum, idx, data))
+      : datum;
+  });
 }
 
 // eslint-disable-next-line max-params
@@ -216,9 +252,18 @@ function getChildPropsBeforeEnter(
   data,
   enteringNodes,
   cb,
+  { oldProps, nextProps },
 ): TransitionProps {
   let newAnimate = animate;
   let newData = data;
+
+  console.group("getChildPropsBeforeEnter");
+  console.log(oldProps);
+  console.log(oldProps?.children.props.data);
+  console.log(nextProps?.children.props.data);
+  console.log(child);
+  console.groupEnd();
+
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
@@ -227,15 +272,30 @@ function getChildPropsBeforeEnter(
       animate.onEnter && animate.onEnter.before
         ? animate.onEnter.before
         : identity;
-    // We want the entering nodes to be included in the transition target
-    // domain.  However, we may not want these nodes to be displayed initially,
-    // so perform the `onEnter.before` transformation on each node.
-    newData = data.map((datum, idx) => {
-      const key = (datum.key || idx).toString();
-      return enteringNodes[key]
-        ? Object.assign({}, datum, before(datum, idx, data))
-        : datum;
-    });
+
+    if (oldProps && nextProps) {
+      const transformedPreviousData = transformChildData(
+        oldProps.children.props.data,
+        enteringNodes,
+        before,
+      );
+      newData = defaults(
+        [],
+        nextProps.children.props.data,
+        transformedPreviousData,
+      );
+    } else {
+      // We want the entering nodes to be included in the transition target
+      // domain.  However, we may not want these nodes to be displayed initially,
+      // so perform the `onEnter.before` transformation on each node.
+      // TODO: refactor using `transformChildData`
+      newData = data.map((datum, idx) => {
+        const key = (datum.key || idx).toString();
+        return enteringNodes[key]
+          ? Object.assign({}, datum, before(datum, idx, data))
+          : datum;
+      });
+    }
   }
 
   return { animate: newAnimate, data: newData };
@@ -291,13 +351,22 @@ function getChildPropsOnEnter(
  *
  * @return {Function}              Child-prop transformation function.
  */
-export function getTransitionPropsFactory(props, state, setState) {
+export function getTransitionPropsFactory(
+  props,
+  state,
+  setState,
+  {
+    oldProps = undefined,
+    nextProps = undefined,
+  }: { oldProps?: any; nextProps?: any } = {},
+) {
   const nodesWillExit = state && state.nodesWillExit;
   const nodesWillEnter = state && state.nodesWillEnter;
   const nodesShouldEnter = state && state.nodesShouldEnter;
   const nodesShouldLoad = state && state.nodesShouldLoad;
   const nodesDoneLoad = state && state.nodesDoneLoad;
   const childrenTransitions = (state && state.childrenTransitions) || [];
+  console.log({ childrenTransitions });
   const transitionDurations = {
     enter:
       props.animate && props.animate.onEnter && props.animate.onEnter.duration,
@@ -322,9 +391,16 @@ export function getTransitionPropsFactory(props, state, setState) {
 
   // eslint-disable-next-line max-params
   const onExit = (nodes, child, data, animate) => {
-    return getChildPropsOnExit(animate, child, data, nodes, () => {
-      setState({ nodesWillExit: false });
-    });
+    return getChildPropsOnExit(
+      animate,
+      child,
+      data,
+      nodes,
+      () => {
+        setState({ nodesWillExit: false });
+      },
+      { oldProps, nextProps },
+    );
   };
 
   // eslint-disable-next-line max-params
@@ -335,9 +411,16 @@ export function getTransitionPropsFactory(props, state, setState) {
       });
     }
 
-    return getChildPropsBeforeEnter(animate, child, data, nodes, () => {
-      setState({ nodesShouldEnter: true });
-    });
+    return getChildPropsBeforeEnter(
+      animate,
+      child,
+      data,
+      nodes,
+      () => {
+        setState({ nodesShouldEnter: true });
+      },
+      { oldProps, nextProps },
+    );
   };
 
   const getChildTransitionDuration = function (child, type) {
@@ -385,6 +468,10 @@ export function getTransitionPropsFactory(props, state, setState) {
       defaultTransitions && defaultTransitions.onLoad,
     );
 
+    // It's possible to run into a situation where a transition has nodes that will enter
+    // but because we're keeping track of this in state, we end up with stale transition state.
+    // e.g. if a previous transition had nodes that exited, but the next has nodes that enter, we still
+    // run a transition as if nodes are exiting, which can then transform the data and we end up in a bad state.
     const childTransitions =
       childrenTransitions[index] || childrenTransitions[0];
     if (!nodesDoneLoad) {
@@ -403,6 +490,8 @@ export function getTransitionPropsFactory(props, state, setState) {
           : getChildTransitionDuration(child, "onExit");
       // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
       const animation = exitingNodes ? { duration: exit } : { delay: exit };
+      // Debugging
+      console.log("calling onExit: ", exitingNodes);
       return onExit(
         exitingNodes,
         child,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as d3Ease from "victory-vendor/d3-ease";
 import { victoryInterpolator } from "./util";
 import TimerContext from "../victory-util/timer-context";
