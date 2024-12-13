@@ -14,6 +14,7 @@ type SelectProps = {
   onChange: (value: string) => void;
   includeDefault?: boolean;
   className?: string;
+  size?: "sm" | "md";
 };
 
 const Select = ({
@@ -24,16 +25,25 @@ const Select = ({
   onChange,
   includeDefault,
   className,
+  size = "md",
 }: SelectProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (onChange) {
       onChange(event.target.value);
     }
   };
+
+  const labelSizeClasses = size === "sm" ? "font-medium" : "font-bold";
+  const selectSizeClasses =
+    size === "sm" ? "text-sm px-2 py-1.5" : "text-base p-2";
+
   return (
     <div className={clsx("relative", className)}>
       {label && (
-        <label htmlFor={id} className="block mb-1 text-sm font-bold">
+        <label
+          htmlFor={id}
+          className={clsx("block flex-1 my-1 text-sm", labelSizeClasses)}
+        >
           {label}
         </label>
       )}
@@ -41,7 +51,10 @@ const Select = ({
         id={id}
         value={value}
         onChange={handleChange}
-        className="p-2 w-full text-base border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-[right_8px_center] bg-[length:16px]"
+        className={clsx(
+          "w-full border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-[right_8px_center] bg-[length:16px] flex-1",
+          selectSizeClasses,
+        )}
       >
         {includeDefault && <option value="">Default</option>}
         {options.map((option, i) => (

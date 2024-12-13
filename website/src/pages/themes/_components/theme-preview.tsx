@@ -10,9 +10,9 @@ import {
 } from "victory";
 import { useTheme } from "../_providers/themeProvider";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
-import Select from "./select";
-import { colorScaleOptions, NUM_STACKS, sampleStackData } from "../_const";
+import { NUM_STACKS, sampleStackData } from "../_const";
 import clsx from "clsx";
+import PreviewSettingsMenu from "./preview-settings-menu";
 
 const chartStyle: { [key: string]: React.CSSProperties } = {
   parent: {
@@ -25,45 +25,24 @@ const chartStyle: { [key: string]: React.CSSProperties } = {
   },
 };
 
-const Main = () => {
+const ThemePreview = () => {
   const { customThemeConfig } = useTheme();
-  const {
-    colorScale,
-    updateColorScale,
-    showTooltips,
-    setShowTooltips,
-    exampleConfigs,
-  } = usePreviewOptions();
+  const { colorScale, showTooltips, exampleConfigs } = usePreviewOptions();
 
   if (!customThemeConfig) return null;
 
+  const showColorScaleOptions =
+    exampleConfigs.length === 0 ||
+    exampleConfigs.filter(
+      ({ allowColorScaleOverride }) => allowColorScaleOverride,
+    ).length > 0;
+
   return (
     <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
-      <div className="max-w-screen-xl w-full p-10 pb-20">
-        <div className="flex justify-between items-center mb-4">
-          <Select
-            id="color-scale"
-            label="Choose Color Scale For Preview"
-            value={colorScale}
-            onChange={updateColorScale}
-            options={colorScaleOptions}
-            includeDefault
-            className="w-1/3"
-          />
-          <fieldset className="p-0 m-0">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                id="show-tooltips"
-                className="form-checkbox h-4 w-4 text-primary"
-                checked={showTooltips}
-                onChange={() => setShowTooltips(!showTooltips)}
-              />
-              <label htmlFor="show-tooltips" className="text-xs cursor-pointer">
-                Show tooltips instead of labels
-              </label>
-            </div>
-          </fieldset>
+      <div className="max-w-screen-xl w-full px-10 pt-6 pb-20">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold m-0">Theme Preview</h1>
+          <PreviewSettingsMenu showColorScaleOptions={showColorScaleOptions} />
         </div>
         <div
           className={clsx(
@@ -77,7 +56,7 @@ const Main = () => {
           {exampleConfigs.length === 0 ? (
             <>
               <div>
-                <h3 className="text-base font-bold mb-3">Stacked Area Chart</h3>
+                <h3 className="text-lg font-bold mb-3">Stacked Area Chart</h3>
                 <VictoryChart
                   theme={customThemeConfig}
                   domainPadding={20}
@@ -96,7 +75,7 @@ const Main = () => {
                 </VictoryChart>
               </div>
               <div>
-                <h3 className="text-base font-bold mb-3">Stacked Bar Chart</h3>
+                <h3 className="text-lg font-bold mb-3">Stacked Bar Chart</h3>
                 <VictoryChart
                   theme={customThemeConfig}
                   domainPadding={20}
@@ -129,7 +108,7 @@ const Main = () => {
               ({ label, content: Content, hasVictoryChart = true }, i) =>
                 Content && (
                   <div key={i}>
-                    <h3 className="text-base font-bold mb-3">{label}</h3>
+                    <h3 className="text-lg font-bold mb-3">{label}</h3>
                     {hasVictoryChart ? (
                       <VictoryChart
                         theme={customThemeConfig}
@@ -164,4 +143,4 @@ const Main = () => {
     </main>
   );
 };
-export default Main;
+export default ThemePreview;

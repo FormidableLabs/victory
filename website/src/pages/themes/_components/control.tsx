@@ -62,16 +62,19 @@ const Control = ({ type, control, className }) => {
       return (
         <ColorPaletteSelector
           label={control.label}
+          value={control.value}
           palette={customThemeConfig?.palette}
           colorScaleType={control.colorScaleType}
           onColorChange={handleColorChange}
-          className={className}
+          className="my-4"
         />
       );
     case "section":
       return (
         <section className="mb-8">
-          <h3 className="text-lg text-secondary mb-4">{control.label}</h3>
+          <h3 className="text-lg font-bold text-secondary mb-4">
+            {control.label}
+          </h3>
           {control.controls?.map((nestedControl, i) => (
             <Control
               key={nestedControl.label + i}

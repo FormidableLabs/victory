@@ -1,7 +1,7 @@
 import React from "react";
 import ColorPicker from "./color-picker";
-import Checkbox from "./checkbox";
 import clsx from "clsx";
+import Toggle from "./toggle";
 
 type ColorScaleOverrideSelectorProps = {
   label?: string;
@@ -38,13 +38,16 @@ const ColorScaleOverrideSelector = ({
   return (
     <fieldset className={clsx("p-0 m-0", className)}>
       <label className="block mb-3 text-sm font-bold">{label}</label>
-      <Checkbox
+      <Toggle
+        id="color-scale-override-toggle"
         label="Use custom color scale"
-        isChecked={hasCustomValue}
+        checked={hasCustomValue}
         onChange={onCheckboxChange}
+        className="mb-3"
+        size="sm"
       />
       {hasCustomValue && (
-        <div className="flex flex-wrap gap-3 mt-3">
+        <div className="flex flex-wrap gap-2 mt-3">
           {value.map((color, i) => (
             <ColorPicker
               key={i}

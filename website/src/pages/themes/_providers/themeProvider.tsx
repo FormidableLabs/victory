@@ -32,9 +32,13 @@ export const ThemeProvider = ({ children }) => {
 
   const onBaseThemeSelect = (themeName?: string) => {
     const theme = themes.find((t) => t.name === themeName);
-    if (!theme) return;
-    setBaseTheme(theme);
-    setCustomThemeConfig({ ...theme?.config });
+    if (!theme) {
+      setBaseTheme(undefined);
+      setCustomThemeConfig(undefined);
+    } else {
+      setBaseTheme(theme);
+      setCustomThemeConfig({ ...theme?.config });
+    }
   };
 
   const updateCustomThemeConfig = useCallback(

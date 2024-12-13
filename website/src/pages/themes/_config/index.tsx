@@ -5,9 +5,15 @@ export type ControlConfig = {
   content?: (props: any) => React.ReactNode;
   controls?: ControlConfig[];
   hasVictoryChart?: boolean;
+  allowColorScaleOverride?: boolean;
 } & (
   | {
-      type: "section" | "colorPalette" | "accordion";
+      type: "section" | "accordion";
+    }
+  | {
+      type: "colorPalette";
+      colorScaleType: string;
+      value: string;
     }
   | {
       type: "colorScale";

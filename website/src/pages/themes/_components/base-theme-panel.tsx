@@ -2,9 +2,10 @@ import React from "react";
 import Select from "./select";
 import { themes, useTheme } from "../_providers/themeProvider";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
+import PanelHeader from "./panel-header";
 
 const themeOptions = [
-  { label: "Select a theme", value: undefined },
+  { label: "Select a theme", value: "" },
   ...themes.map((theme) => ({
     label: theme.name,
     value: theme.name,
@@ -22,16 +23,16 @@ const BaseThemePanel = () => {
 
   return (
     <>
-      <h2 className="mb-0 text-xl font-bold">Customize Your Theme</h2>
-      <p className="text-sm mb-4 text-grayscale-400">
-        Select a theme to begin customizing.
-      </p>
+      <PanelHeader
+        title="Base Theme"
+        description="Select a theme to begin customizing."
+      />
       <Select
         id="theme-select"
         value={baseTheme?.name || ""}
         onChange={handleThemeSelect}
         options={themeOptions}
-        label="Base Theme"
+        label="Theme"
       />
     </>
   );
