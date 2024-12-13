@@ -24,7 +24,7 @@ import {
 import { ControlConfig } from ".";
 import { NUM_STACKS, sampleStackData, StrokeProps } from "../_const";
 
-const chartOptionsConfig: {
+const chartConfigs: {
   [key: string]: ControlConfig;
 } = {
   area: {
@@ -881,6 +881,13 @@ const chartOptionsConfig: {
       },
     ],
   },
+};
+
+const chartOptionsConfig = {
+  title: "Chart Options",
+  description: "Customize the appearance of individual charts.",
+  selectLabel: "Chart Type",
+  types: chartConfigs,
 };
 
 export default chartOptionsConfig;

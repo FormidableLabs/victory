@@ -1,43 +1,54 @@
-import React from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import Control from "./control";
 import Select from "./select";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
-import { chartOptionsConfig } from "../_config";
+import { ChartPanelConfig } from "../_config";
 import PanelHeader from "./panel-header";
 
-const ChartPanel = () => {
-  const [chartType, setChartType] = React.useState("");
+type ChartPanelProps = {
+  config: ChartPanelConfig;
+};
+
+const ChartPanel = ({
+  config: { title, description, selectLabel, types },
+}: ChartPanelProps) => {
+  const [chartType, setChartType] = React.useState(Object.keys(types)[0]);
   const { setExampleConfigs } = usePreviewOptions();
-  const selectOptions = Object.keys(chartOptionsConfig).map((key) => ({
-    label: chartOptionsConfig[key].label,
+  const selectOptions = Object.keys(types).map((key) => ({
+    label: types[key].label,
     value: key,
   }));
-  const options = [
-    { label: "Select a chart type", value: "" },
-    ...selectOptions,
-  ];
-  const controls = chartOptionsConfig[chartType]?.controls || [];
+  const options = useMemo(
+    () => [
+      { label: `Select ${selectLabel.toLowerCase()}`, value: "" },
+      ...selectOptions,
+    ],
+    [selectOptions, selectLabel],
+  );
+  const controls = types[chartType]?.controls || [];
 
-  const onChartTypeChange = (newValue: string) => {
-    setChartType(newValue);
-    const examples = chartOptionsConfig[newValue]
-      ? [chartOptionsConfig[newValue]]
-      : [];
-    setExampleConfigs(examples);
-  };
+  const onChartTypeChange = useCallback(
+    (newValue: string) => {
+      setChartType(newValue);
+      const examples = types[newValue] ? [types[newValue]] : [];
+      setExampleConfigs(examples);
+    },
+    [setExampleConfigs, types],
+  );
+
+  useEffect(() => {
+    onChartTypeChange(Object.keys(types)[0]);
+  }, [types, onChartTypeChange]);
 
   return (
     <>
-      <PanelHeader
-        title="Chart Options"
-        description="Select a chart type to begin customizing."
-      />
+      <PanelHeader title={title} description={description} />
       <Select
         id="chart-type-select"
         value={chartType}
         onChange={onChartTypeChange}
         options={options}
-        label="Chart Type"
+        label={selectLabel}
         className="mt-4 mb-8"
       />
       {controls.map((control, i) => {
