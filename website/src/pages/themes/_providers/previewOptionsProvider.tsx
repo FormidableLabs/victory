@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from "react";
+import { ControlConfig } from "../_config";
 
 type PreviewOptionsContextType = {
   colorScale?: string;
@@ -6,7 +7,7 @@ type PreviewOptionsContextType = {
   showTooltips: boolean;
   setShowTooltips: (showTooltips: boolean) => void;
   resetPreviewOptions: () => void;
-  exampleConfigs: any[];
+  exampleConfigs: ControlConfig[];
   setExampleConfigs: (exampleConfigs: any[]) => void;
 };
 

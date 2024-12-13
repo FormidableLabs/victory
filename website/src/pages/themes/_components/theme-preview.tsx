@@ -31,12 +31,18 @@ const ThemePreview = () => {
 
   if (!customThemeConfig) return null;
 
+  const showColorScaleOptions =
+    exampleConfigs.length === 0 ||
+    exampleConfigs.filter(
+      ({ allowColorScaleOverride }) => allowColorScaleOverride,
+    ).length > 0;
+
   return (
     <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
       <div className="max-w-screen-xl w-full px-10 pt-6 pb-20">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold m-0">Theme Preview</h1>
-          <PreviewSettingsMenu />
+          <PreviewSettingsMenu showColorScaleOptions={showColorScaleOptions} />
         </div>
         <div
           className={clsx(

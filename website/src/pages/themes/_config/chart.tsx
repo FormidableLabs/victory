@@ -457,6 +457,7 @@ const chartOptionsConfig: {
   group: {
     type: "section",
     label: "Group",
+    allowColorScaleOverride: true,
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
@@ -673,6 +674,7 @@ const chartOptionsConfig: {
   pie: {
     type: "section",
     label: "Pie Chart",
+    allowColorScaleOverride: true,
     hasVictoryChart: false,
     content: (props) => (
       <VictoryPie
@@ -761,7 +763,8 @@ const chartOptionsConfig: {
   },
   stack: {
     type: "section",
-    label: "Stacks",
+    label: "Stack",
+    allowColorScaleOverride: true,
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,

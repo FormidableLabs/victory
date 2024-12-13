@@ -5,7 +5,13 @@ import { colorScaleOptions } from "../_const";
 import { FiSettings, FiX } from "react-icons/fi";
 import Toggle from "./toggle";
 
-const PreviewSettingsMenu = () => {
+type PreviewSettingsMenuProps = {
+  showColorScaleOptions: boolean;
+};
+
+const PreviewSettingsMenu = ({
+  showColorScaleOptions = false,
+}: PreviewSettingsMenuProps) => {
   const [isSettingsMenuOpen, setIsSettingsMenuOpen] = React.useState(false);
   const { colorScale, updateColorScale, showTooltips, setShowTooltips } =
     usePreviewOptions();
@@ -43,7 +49,7 @@ const PreviewSettingsMenu = () => {
       </button>
       {isSettingsMenuOpen && (
         <div
-          className="absolute w-[400px] right-0 top-6 border border-grayscale-300 bg-white rounded-md z-10 p-4 shadow-md"
+          className="absolute w-[400px] right-0 top-6 border border-grayscale-300 bg-white rounded-md z-50 p-4 shadow-md"
           ref={menuRef}
         >
           <button
@@ -53,16 +59,18 @@ const PreviewSettingsMenu = () => {
             <FiX className="w-4 h-4 text-grayscale-800" />
           </button>
           <h1 className="text-base font-bold mb-4">Preview Settings</h1>
-          <Select
-            id="color-scale-preview"
-            label="Preview color scale"
-            value={colorScale}
-            onChange={updateColorScale}
-            options={colorScaleOptions}
-            includeDefault
-            className="flex items-center justify-between my-2"
-            size="sm"
-          />
+          {showColorScaleOptions && (
+            <Select
+              id="color-scale-preview"
+              label="Preview color scale"
+              value={colorScale}
+              onChange={updateColorScale}
+              options={colorScaleOptions}
+              includeDefault
+              className="flex items-center justify-between my-2"
+              size="sm"
+            />
+          )}
           <Toggle
             id="show-tooltips"
             label="Show tooltips instead of labels"

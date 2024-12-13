@@ -5,6 +5,7 @@ export type ControlConfig = {
   content?: (props: any) => React.ReactNode;
   controls?: ControlConfig[];
   hasVictoryChart?: boolean;
+  allowColorScaleOverride?: boolean;
 } & (
   | {
       type: "section" | "accordion";
