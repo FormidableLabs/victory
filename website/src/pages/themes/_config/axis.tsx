@@ -2,8 +2,8 @@
 import React from "react";
 import { getBaseLabelsConfig, getBaseStrokeConfig } from "../_utils";
 import { VictoryAxis, VictoryPolarAxis } from "victory";
-import { ControlConfig, OptionsPanelConfig } from ".";
 import { StrokeProps } from "../_const";
+import { ControlConfig } from ".";
 
 const generalAxisOptionsConfig: ControlConfig = {
   type: "accordion",
@@ -54,19 +54,12 @@ const generalAxisOptionsConfig: ControlConfig = {
   ],
 };
 
-const polarAxisOptionsConfig = {
+const polarAxisOptionsConfig: ControlConfig = {
   type: "accordion",
   label: "Polar Axis",
-  content: (props) => [
-    <VictoryPolarAxis {...props} key="polar-axis" standalone={false} />,
-    <VictoryPolarAxis
-      {...props}
-      key="polar-axis-dependent"
-      dependentAxis
-      domain={[0, 10]}
-      standalone={false}
-    />,
-  ],
+  content: (props) => (
+    <VictoryPolarAxis {...props} key="polar-axis" standalone={false} />
+  ),
   controls: [
     {
       type: "section",
@@ -112,6 +105,15 @@ const polarAxisOptionsConfig = {
 const polarDependentAxisOptionsConfig: ControlConfig = {
   type: "accordion",
   label: "Polar Dependent Axis",
+  content: (props) => (
+    <VictoryPolarAxis
+      {...props}
+      key="polar-axis-dependent"
+      dependentAxis
+      domain={[0, 10]}
+      standalone={false}
+    />
+  ),
   controls: [
     {
       type: "section",
@@ -154,14 +156,15 @@ const polarDependentAxisOptionsConfig: ControlConfig = {
   ],
 };
 
-const axisOptionsConfig: OptionsPanelConfig = {
+const axisOptionsConfig = {
   title: "Axis Options",
-  description: "Customize the appearance of axes in your charts.",
-  controls: [
-    generalAxisOptionsConfig,
-    polarAxisOptionsConfig,
-    polarDependentAxisOptionsConfig,
-  ],
+  description: "Customize the appearance of axes.",
+  selectLabel: "Axis Type",
+  types: {
+    base: generalAxisOptionsConfig,
+    polarAxis: polarAxisOptionsConfig,
+    polarDependentAxis: polarDependentAxisOptionsConfig,
+  },
 };
 
 export default axisOptionsConfig;

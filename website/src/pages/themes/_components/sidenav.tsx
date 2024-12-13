@@ -7,7 +7,8 @@ import {
 import clsx from "clsx";
 import React from "react";
 import {
-  ControlConfig,
+  chartOptionsConfig,
+  ChartPanelConfig,
   globalOptionsConfig,
   OptionsPanelConfig,
   paletteOptionsConfig,
@@ -26,12 +27,15 @@ type NavItem = {
   icon: React.ElementType;
 } & (
   | {
-      panelType: "theme" | "chart" | "export";
+      panelType: "theme" | "export";
     }
   | {
       panelType: "default";
       config: OptionsPanelConfig;
-      examples?: ControlConfig[];
+    }
+  | {
+      panelType: "chart";
+      config: ChartPanelConfig;
     }
 );
 
@@ -61,13 +65,13 @@ export const NAV_ITEMS: NavItem[] = [
   {
     title: "Axis Options",
     icon: AdjustmentsVerticalIcon,
-    panelType: "default",
     config: axisOptionsConfig,
-    examples: axisOptionsConfig.controls,
+    panelType: "chart",
   },
   {
     title: "Chart Options",
     icon: AdjustmentsVerticalIcon,
+    config: chartOptionsConfig,
     panelType: "chart",
   },
 ];
@@ -86,11 +90,7 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
   const handleItemSelect = (item: NavItem) => {
     onItemSelect(item);
     updateColorScale(defaultColorScale);
-    if (item.panelType === "default" && !!item.examples) {
-      setExampleConfigs(item.examples);
-    } else {
-      setExampleConfigs(defaultExampleConfigs);
-    }
+    setExampleConfigs(defaultExampleConfigs);
   };
 
   const isExportItemActive = activeItem.title === exportItem.title;
