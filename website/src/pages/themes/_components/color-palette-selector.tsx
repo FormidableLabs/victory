@@ -33,8 +33,8 @@ const ColorPaletteSelector = ({
   return (
     <label
       className={clsx(
-        "flex items-start gap-2 border rounded p-4 cursor-pointer",
-        isSelected ? "border-blue-500 bg-blue-100" : "border-gray-300",
+        "flex items-start gap-2 border-2 rounded-md p-4 cursor-pointer",
+        isSelected ? "border-blue-500 bg-blue-100" : "border-gray-200",
         className,
       )}
     >

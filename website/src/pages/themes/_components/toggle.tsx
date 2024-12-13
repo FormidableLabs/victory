@@ -46,7 +46,7 @@ const Toggle = ({
       />
       <div
         className={clsx(
-          "relative bg-grayscale-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-grayscale-300 after:border after:rounded-full after:transition-all peer-checked:bg-theme-1",
+          "relative bg-grayscale-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-grayscale-300 after:border after:rounded-full after:transition-all peer-checked:bg-blue-800",
           toggleSize,
         )}
       ></div>

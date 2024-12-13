@@ -111,7 +111,7 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
               className={clsx(
                 "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer bg-transparent",
                 isActive
-                  ? "text-theme-1"
+                  ? "text-orange-100"
                   : "text-grayscale-300 hover:text-white disabled:text-grayscale-800 disabled:cursor-not-allowed",
               )}
             >
@@ -119,7 +119,7 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
                 aria-hidden="true"
                 className={clsx(
                   isActive
-                    ? "text-theme-1"
+                    ? "text-orange-100"
                     : "text-grayscale-300 group-hover:text-white group-disabled:text-grayscale-800",
                   "size-6",
                 )}
