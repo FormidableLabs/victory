@@ -37,6 +37,13 @@ export type OptionsPanelConfig = {
   controls: ControlConfig[];
 };
 
+export type ChartPanelConfig = {
+  title: string;
+  description?: string;
+  selectLabel: string;
+  types: Record<string, ControlConfig>;
+};
+
 export { default as paletteOptionsConfig } from "./palette";
 export { default as globalOptionsConfig } from "./global";
 export { default as axisOptionsConfig } from "./axis";

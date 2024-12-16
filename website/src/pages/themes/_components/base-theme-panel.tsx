@@ -4,13 +4,10 @@ import { themes, useTheme } from "../_providers/themeProvider";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
 import PanelHeader from "./panel-header";
 
-const themeOptions = [
-  { label: "Select a theme", value: "" },
-  ...themes.map((theme) => ({
-    label: theme.name,
-    value: theme.name,
-  })),
-];
+const themeOptions = themes.map((theme) => ({
+  label: theme.name,
+  value: theme.name,
+}));
 
 const BaseThemePanel = () => {
   const { baseTheme, onBaseThemeSelect } = useTheme();

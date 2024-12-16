@@ -12,20 +12,14 @@ import ThemePreview from "./_components/theme-preview";
 import { PreviewOptionsProvider } from "./_providers/previewOptionsProvider";
 import ExportPanel from "./_components/export-panel";
 
-const getPanel = (activeSidebarItem) => {
-  switch (activeSidebarItem.panelType) {
+const getPanel = ({ panelType, config }) => {
+  switch (panelType) {
     case "theme":
       return <BaseThemePanel />;
     case "chart":
-      return <ChartPanel />;
+      return <ChartPanel config={config} />;
     default:
-      return (
-        <OptionsPanel
-          title={activeSidebarItem.config.title}
-          description={activeSidebarItem.config.description}
-          controls={activeSidebarItem.config.controls}
-        />
-      );
+      return <OptionsPanel config={config} />;
   }
 };
 

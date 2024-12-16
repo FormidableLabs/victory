@@ -1,14 +1,15 @@
 import React from "react";
 import Control from "./control";
 import PanelHeader from "./panel-header";
+import { OptionsPanelConfig } from "../_config";
 
 type GlobalPanelProps = {
-  title?: string;
-  description?: string;
-  controls: any[];
+  config: OptionsPanelConfig;
 };
 
-const OptionsPanel = ({ title, description, controls }: GlobalPanelProps) => {
+const OptionsPanel = ({
+  config: { title, description, controls },
+}: GlobalPanelProps) => {
   return (
     <>
       <PanelHeader title={title} description={description} />

@@ -4,7 +4,7 @@ import { setNestedConfigValue } from "../_utils";
 
 export type ThemeOption = {
   name: string;
-  config?: VictoryThemeDefinition;
+  config: VictoryThemeDefinition;
 };
 
 type ThemeContextType = {
@@ -20,21 +20,20 @@ export const themes: ThemeOption[] = [
   { name: "Grayscale", config: VictoryTheme.grayscale },
 ];
 
+const defaultTheme = themes[0];
+
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }) => {
-  const [baseTheme, setBaseTheme] = React.useState<ThemeOption | undefined>(
-    undefined,
-  );
-  const [customThemeConfig, setCustomThemeConfig] = React.useState<
-    VictoryThemeDefinition | undefined
-  >(undefined);
+  const [baseTheme, setBaseTheme] = React.useState<ThemeOption>(defaultTheme);
+  const [customThemeConfig, setCustomThemeConfig] =
+    React.useState<VictoryThemeDefinition>(defaultTheme.config);
 
   const onBaseThemeSelect = (themeName?: string) => {
     const theme = themes.find((t) => t.name === themeName);
     if (!theme) {
-      setBaseTheme(undefined);
-      setCustomThemeConfig(undefined);
+      setBaseTheme(defaultTheme);
+      setCustomThemeConfig(defaultTheme.config);
     } else {
       setBaseTheme(theme);
       setCustomThemeConfig({ ...theme?.config });
