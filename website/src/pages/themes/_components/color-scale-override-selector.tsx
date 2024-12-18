@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Toggle from "./toggle";
 
 type ColorScaleOverrideSelectorProps = {
+  id: string;
   label?: string;
   value?: string | string[];
   onChange: (value: string[] | undefined) => void;
@@ -11,6 +12,7 @@ type ColorScaleOverrideSelectorProps = {
 };
 
 const ColorScaleOverrideSelector = ({
+  id,
   label = "Color Scale",
   value,
   onChange,
@@ -39,7 +41,7 @@ const ColorScaleOverrideSelector = ({
     <fieldset className={clsx("p-0 m-0", className)}>
       <label className="block mb-3 text-sm font-bold">{label}</label>
       <Toggle
-        id="color-scale-override-toggle"
+        id={id}
         label="Use custom color scale"
         checked={hasCustomValue}
         onChange={onCheckboxChange}

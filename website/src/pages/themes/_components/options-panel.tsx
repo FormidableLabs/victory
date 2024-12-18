@@ -19,7 +19,6 @@ const OptionsPanel = ({
             key={control.label + i}
             type={control.type}
             control={control}
-            className="my-4"
           />
         );
       })}
