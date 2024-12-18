@@ -460,6 +460,9 @@
       "dependencies": [
         "build:lib:esm"
       ]
+    },
+    "engines": {
+      "node": ">=18.0.0"
     }
   }
 }
