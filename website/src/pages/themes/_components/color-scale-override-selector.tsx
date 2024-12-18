@@ -36,8 +36,8 @@ const ColorScaleOverrideSelector = ({
   };
 
   return (
-    <fieldset className={clsx("p-0 m-0", className)}>
-      <label className="block mb-3 text-sm font-bold">{label}</label>
+    <label className={clsx("p-0 m-0", className)}>
+      <span className="block mb-3 text-sm font-bold">{label}</span>
       <Toggle
         id="color-scale-override-toggle"
         label="Use custom color scale"
@@ -57,7 +57,7 @@ const ColorScaleOverrideSelector = ({
           ))}
         </div>
       )}
-    </fieldset>
+    </label>
   );
 };
 export default ColorScaleOverrideSelector;
