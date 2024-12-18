@@ -768,7 +768,12 @@ const chartConfigs: {
     content: (props) => [
       <VictoryAxis key="x-axis" label="X Axis" />,
       <VictoryAxis key="y-axis" dependentAxis label="Y Axis" />,
-      <VictoryStack {...props} key="victory-stack">
+      <VictoryStack
+        {...props}
+        key="victory-stack"
+        colorScale={props.colorScale}
+        data-testColorScale={props.colorScale}
+      >
         {[...Array(NUM_STACKS)].map((_, i) => (
           <VictoryArea data={sampleStackData} key={i} />
         ))}
@@ -779,14 +784,14 @@ const chartConfigs: {
         type: "section",
         label: "Data",
         controls: [
-          ...getNestedColorScaleConfig("group"),
+          ...getNestedColorScaleConfig("stack"),
           {
             type: "slider",
             label: "Width",
             min: 0,
             max: 50,
             unit: "px",
-            path: "group.style.data.width",
+            path: "stack.style.data.width",
           },
         ],
       },

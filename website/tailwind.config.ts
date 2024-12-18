@@ -64,6 +64,7 @@ module.exports = {
         "button-bg-hover": NearFormColors.White,
         "button-fg-hover": NearFormColors.DeepNavy,
         "button-border": NearFormColors.Green,
+        "code-bg": "#1e1e1e",
         error: "#FF0000",
       },
       height: {

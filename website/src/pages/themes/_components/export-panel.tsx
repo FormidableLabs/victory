@@ -1,92 +1,93 @@
-import React from "react";
+import React, { useMemo } from "react";
 import CodeBlock from "./code-block";
 import { useTheme } from "../_providers/themeProvider";
-import { FiCheck, FiCopy } from "react-icons/fi";
+
+const generateThemeCode = (config, format: "js" | "ts") => {
+  const jsonConfig = JSON.stringify(config, null, 2).replace(
+    // Remove quotes around keys
+    /"([^"]+)":/g,
+    "$1:",
+  );
+  if (format === "js") {
+    return `/** @type {import('victory').VictoryThemeDefinition} */\n\nconst customTheme = ${jsonConfig};\n\nexport default customTheme;`;
+  }
+  return `import { VictoryThemeDefinition } from 'victory';\n\nconst customTheme: VictoryThemeDefinition = ${jsonConfig};\n\nexport default customTheme;`;
+};
 
 const ExportPanel = () => {
   const { customThemeConfig: config } = useTheme();
-  const [copyStatus, setCopyStatus] = React.useState<string | null>(null);
 
-  const handleCopyThemeConfig = () => {
-    navigator.clipboard
-      .writeText(JSON.stringify(config, null, 2))
-      .then(() => {
-        setCopyStatus("Copied successfully.");
-        return "Theme config copied to clipboard";
-      })
-      .catch(() => {
-        setCopyStatus("Failed to copy.");
-      });
-  };
+  const blocks = useMemo(
+    () => [
+      {
+        title: "theme.js",
+        code: generateThemeCode(config, "js"),
+        language: "jsx",
+      },
+      {
+        title: "theme.ts",
+        code: generateThemeCode(config, "ts"),
+        language: "tsx",
+      },
+    ],
+    [config],
+  );
 
   return (
     <div className="max-w-screen-lg mx-auto p-10 w-export-panel">
-      <h1 className="text-3xl">Using Your Exported Victory Theme Config</h1>
+      <h1 className="text-3xl">
+        How to Use Your Exported Victory Theme Config
+      </h1>
       <ol className="pl-4 space-y-2">
         <li>
-          <strong>Copy the theme configuration</strong>
-          <ul className="space-y-2">
-            <li>
-              Click the <FiCopy /> button to copy the JSON theme configuration.
-              <div className="relative mt-2">
-                <div className="flex items-center justify-end gap-2 absolute top-3 right-6">
-                  {copyStatus && (
-                    <span className="text-grayscale-400 text-xs italic">
-                      {copyStatus}
-                    </span>
-                  )}
-                  <button
-                    onClick={handleCopyThemeConfig}
-                    className="bg-transparent text-lg text-grayscale-400 cursor-pointer hover:bg-grayscale-200 flex items-center justify-center p-1 rounded-md"
-                  >
-                    {copyStatus ? (
-                      <FiCheck className="text-theme-1" />
-                    ) : (
-                      <FiCopy />
-                    )}
-                  </button>
-                </div>
-                <CodeBlock
-                  language="json"
-                  code={JSON.stringify(config, null, 2)}
-                  className="h-[500px]"
-                />
-              </div>
-            </li>
-          </ul>
+          <div>
+            <strong>Save the Exported Theme File</strong>
+            <p className="mb-2">
+              Save your custom generate theme to a file in your project. Use{" "}
+              <code>theme.js</code> or <code>theme.ts</code> depending on
+              whether your project uses JavaScript or TypeScript.
+            </p>
+          </div>
+          <CodeBlock blocks={blocks} className="h-[500px]" />
         </li>
         <li>
-          <strong>Save the Exported Theme as a File</strong>
-          <ul className="space-y-2">
-            <li>
-              Save the copied JSON as a <code>.js</code> or <code>.json</code>{" "}
-              file in your project, e.g., <code>theme.js</code>.
-            </li>
-            <li>
-              Import the theme in your app:
-              <CodeBlock
-                language="javascript"
-                code={`import customTheme from './theme.js';`}
-              />
-            </li>
-          </ul>
+          <strong>Import the Theme</strong>
+          <p className="mb-2">
+            To use your custom theme in your application, import the file where
+            you saved the theme configuration. The import path should match the
+            file&apos;s location in your project directory.
+          </p>
+          <CodeBlock
+            blocks={[
+              {
+                title: "App.js",
+                code: `import customTheme from './theme.js';`,
+                language: "jsx",
+              },
+              {
+                title: "App.ts",
+                code: `import customTheme from './theme.ts';`,
+                language: "tsx",
+              },
+            ]}
+          />
         </li>
         <li>
-          <strong>Apply to Victory Components</strong>
-          <ul className="space-y-2">
-            <li>
-              Use the <code>theme</code> prop on any Victory component:
-              <CodeBlock
-                language="javascript"
-                code={`<VictoryChart theme={customTheme}>
-{/* Your Victory components */}
+          <strong>Apply the Theme to Victory Components</strong>
+          <p className="mb-2">
+            Once the theme is imported, you can apply it to Victory components
+            by passing it as the <code>theme</code> prop.
+          </p>
+          <CodeBlock
+            code={`<VictoryChart theme={customTheme}>
+  {/* Add your Victory components here */}
 </VictoryChart>`}
-              />
-            </li>
-          </ul>
+            language="jsx"
+          />
         </li>
       </ol>
     </div>
   );
 };
+
 export default ExportPanel;
