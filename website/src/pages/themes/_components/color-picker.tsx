@@ -58,11 +58,11 @@ const ColorPicker = ({
   const id = useId();
 
   return (
-    <fieldset className={clsx("p-0 m-0", className)}>
+    <label className={clsx("p-0 m-0", className)}>
       {label && (
-        <label className="block mb-1 text-sm text-grayscale-900 dark:text-white font-bold">
+        <span className="block mb-1 text-sm text-grayscale-900 dark:text-white font-bold">
           {label}
-        </label>
+        </span>
       )}
       <div className="flex items-center gap-2">
         {showColorName && (
@@ -146,7 +146,7 @@ const ColorPicker = ({
           </div>
         )}
       </div>
-    </fieldset>
+    </label>
   );
 };
 
