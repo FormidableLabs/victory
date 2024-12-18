@@ -126,6 +126,7 @@
     "not dead"
   ],
   "scripts": {
+    "version-check": "node -v",
     "version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
     "publish": "nps git:tag && pnpm changeset publish --no-git-tag",
     "changeset": "changeset",
@@ -138,7 +139,6 @@
     "clean:cache:lint": "rimraf .eslintcache \"{demo,packages}/*/.eslintcache\"",
     "clean:cache:wireit": "rimraf .wireit \"{demo,packages}/*/.wireit\"",
     "clean:cache:modules": "rimraf node_modules/.cache \"{demo,packages}/*/node_modules/.cache\"",
-    "prebuild": "node -v",
     "build": "wireit",
     "build:lib:esm": "wireit",
     "build:typescript": "wireit",
@@ -184,6 +184,7 @@
     },
     "build": {
       "dependencies": [
+        "version-check",
         "./packages/victory-native:build",
         "./packages/victory-vendor:build",
         "./packages/victory:build",
