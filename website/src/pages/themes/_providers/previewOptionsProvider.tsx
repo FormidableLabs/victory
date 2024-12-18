@@ -11,7 +11,7 @@ type PreviewOptionsContextType = {
   setExampleContent: (content: ExampleConfig[]) => void;
 };
 
-export const defaultColorScale = "qualitative";
+export const defaultColorScale = undefined;
 export const defaultShowTooltips = false;
 
 const PreviewOptionsContext = createContext<

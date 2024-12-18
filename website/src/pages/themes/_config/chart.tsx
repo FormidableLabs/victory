@@ -322,7 +322,6 @@ const chartConfigs: {
   group: {
     type: "section",
     label: "Group",
-    allowColorScaleOverride: true,
     content: GroupExamples,
     controls: [
       {
@@ -445,7 +444,6 @@ const chartConfigs: {
   pie: {
     type: "section",
     label: "Pie Chart",
-    allowColorScaleOverride: true,
     content: PieExamples,
     controls: [
       {
@@ -512,7 +510,6 @@ const chartConfigs: {
   stack: {
     type: "section",
     label: "Stack",
-    allowColorScaleOverride: true,
     content: StackExamples,
     controls: [
       {

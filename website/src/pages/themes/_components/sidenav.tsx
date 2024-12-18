@@ -20,7 +20,13 @@ import {
   usePreviewOptions,
 } from "../_providers/previewOptionsProvider";
 import { TiExportOutline } from "react-icons/ti";
-import { AllExamples, ExampleConfig, StackExamples } from "./examples";
+import {
+  AllExamples,
+  ExampleConfig,
+  GroupExamples,
+  PieExamples,
+  StackExamples,
+} from "./examples";
 
 type NavItem = {
   title: string;
@@ -57,7 +63,7 @@ export const NAV_ITEMS: NavItem[] = [
     icon: SwatchIcon,
     config: paletteOptionsConfig,
     panelType: "default",
-    content: StackExamples,
+    content: [...StackExamples, ...GroupExamples, ...PieExamples],
   },
   {
     title: "Global Options",

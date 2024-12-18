@@ -4,7 +4,6 @@ export type ControlConfig = {
   label: string;
   content?: ExampleConfig[];
   controls?: ControlConfig[];
-  allowColorScaleOverride?: boolean;
 } & (
   | {
       type: "section" | "accordion";
