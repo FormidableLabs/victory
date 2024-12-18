@@ -138,6 +138,7 @@
     "clean:cache:lint": "rimraf .eslintcache \"{demo,packages}/*/.eslintcache\"",
     "clean:cache:wireit": "rimraf .wireit \"{demo,packages}/*/.wireit\"",
     "clean:cache:modules": "rimraf node_modules/.cache \"{demo,packages}/*/node_modules/.cache\"",
+    "prebuild": "node -v",
     "build": "wireit",
     "build:lib:esm": "wireit",
     "build:typescript": "wireit",
