@@ -1,10 +1,9 @@
-import React from "react";
+import { ExampleConfig } from "../_components/examples";
 
 export type ControlConfig = {
   label: string;
-  content?: (props: any) => React.ReactNode;
+  content?: ExampleConfig[];
   controls?: ControlConfig[];
-  hasVictoryChart?: boolean;
   allowColorScaleOverride?: boolean;
 } & (
   | {

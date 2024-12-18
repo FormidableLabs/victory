@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { ControlConfig } from "../_config";
+import { AllExamples, ExampleConfig } from "../_components/examples";
 
 type PreviewOptionsContextType = {
   colorScale?: string;
@@ -7,13 +7,12 @@ type PreviewOptionsContextType = {
   showTooltips: boolean;
   setShowTooltips: (showTooltips: boolean) => void;
   resetPreviewOptions: () => void;
-  exampleConfigs: ControlConfig[];
-  setExampleConfigs: (exampleConfigs: any[]) => void;
+  exampleContent: ExampleConfig[];
+  setExampleContent: (content: ExampleConfig[]) => void;
 };
 
-export const defaultColorScale = undefined;
+export const defaultColorScale = "qualitative";
 export const defaultShowTooltips = false;
-export const defaultExampleConfigs = [];
 
 const PreviewOptionsContext = createContext<
   PreviewOptionsContextType | undefined
@@ -24,9 +23,7 @@ export const PreviewOptionsProvider = ({ children }) => {
     defaultColorScale,
   );
   const [showTooltips, setShowTooltips] = React.useState(defaultShowTooltips);
-  const [exampleConfigs, setExampleConfigs] = React.useState<any[]>(
-    defaultExampleConfigs,
-  );
+  const [exampleContent, setExampleContent] = React.useState(AllExamples);
 
   const updateColorScale = (newColorScale?: string) => {
     const updatedColorScale = !newColorScale ? undefined : newColorScale;
@@ -46,8 +43,8 @@ export const PreviewOptionsProvider = ({ children }) => {
         showTooltips,
         setShowTooltips,
         resetPreviewOptions,
-        exampleConfigs,
-        setExampleConfigs,
+        exampleContent,
+        setExampleContent,
       }}
     >
       {children}

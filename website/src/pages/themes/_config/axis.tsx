@@ -1,17 +1,16 @@
-/* eslint-disable no-magic-numbers */
-import React from "react";
 import { getBaseLabelsConfig, getBaseStrokeConfig } from "../_utils";
-import { VictoryAxis, VictoryPolarAxis } from "victory";
 import { StrokeProps } from "../_const";
 import { ControlConfig } from ".";
+import {
+  AxisExamples,
+  PolarAxisExamples,
+  PolarAxisDependentExamples,
+} from "../_components/examples";
 
 const generalAxisOptionsConfig: ControlConfig = {
   type: "accordion",
   label: "Base Axis",
-  content: (props) => [
-    <VictoryAxis key="x-axis" label="X Axis" {...props} />,
-    <VictoryAxis key="y-axis" dependentAxis label="Y Axis" {...props} />,
-  ],
+  content: AxisExamples,
   controls: [
     {
       type: "section",
@@ -57,9 +56,7 @@ const generalAxisOptionsConfig: ControlConfig = {
 const polarAxisOptionsConfig: ControlConfig = {
   type: "accordion",
   label: "Polar Axis",
-  content: (props) => (
-    <VictoryPolarAxis {...props} key="polar-axis" standalone={false} />
-  ),
+  content: PolarAxisExamples,
   controls: [
     {
       type: "section",
@@ -105,15 +102,7 @@ const polarAxisOptionsConfig: ControlConfig = {
 const polarDependentAxisOptionsConfig: ControlConfig = {
   type: "accordion",
   label: "Polar Dependent Axis",
-  content: (props) => (
-    <VictoryPolarAxis
-      {...props}
-      key="polar-axis-dependent"
-      dependentAxis
-      domain={[0, 10]}
-      standalone={false}
-    />
-  ),
+  content: PolarAxisDependentExamples,
   controls: [
     {
       type: "section",
