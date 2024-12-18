@@ -14,7 +14,13 @@ export type ColorChangeArgs = {
   colorScale: string;
 };
 
-const Control = ({ type, control, className }) => {
+type ControlProps = {
+  type: string;
+  control: any;
+  className?: string;
+};
+
+const Control = ({ type, control, className }: ControlProps) => {
   const { customThemeConfig, updateCustomThemeConfig } = useTheme();
   const handleColorChange = ({
     newColor,
@@ -116,6 +122,7 @@ const Control = ({ type, control, className }) => {
     case "colorScale":
       return (
         <ColorScaleOverrideSelector
+          id={id}
           label={control.label}
           value={configValue as string}
           onChange={handleChange}

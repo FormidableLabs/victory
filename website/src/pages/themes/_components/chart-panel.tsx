@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import Control from "./control";
 import Select from "./select";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
@@ -13,7 +13,7 @@ const ChartPanel = ({
   config: { title, description, selectLabel, types },
 }: ChartPanelProps) => {
   const [chartType, setChartType] = React.useState(Object.keys(types)[0]);
-  const { setExampleConfigs } = usePreviewOptions();
+  const { setExampleContent } = usePreviewOptions();
   const selectOptions = Object.keys(types).map((key) => ({
     label: types[key].label,
     value: key,
@@ -27,18 +27,14 @@ const ChartPanel = ({
   );
   const controls = types[chartType]?.controls || [];
 
-  const onChartTypeChange = useCallback(
-    (newValue: string) => {
-      setChartType(newValue);
-      const examples = types[newValue] ? [types[newValue]] : [];
-      setExampleConfigs(examples);
-    },
-    [setExampleConfigs, types],
-  );
+  const onChartTypeChange = (newValue: string) => {
+    setChartType(newValue);
+  };
 
   useEffect(() => {
-    onChartTypeChange(Object.keys(types)[0]);
-  }, [types, onChartTypeChange]);
+    const examples = types[chartType]?.content || [];
+    setExampleContent(examples);
+  }, [chartType, setExampleContent, types]);
 
   return (
     <>

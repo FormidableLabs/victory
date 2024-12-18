@@ -17,14 +17,21 @@ import axisOptionsConfig from "../_config/axis";
 import { useTheme } from "../_providers/themeProvider";
 import {
   defaultColorScale,
-  defaultExampleConfigs,
   usePreviewOptions,
 } from "../_providers/previewOptionsProvider";
 import { TiExportOutline } from "react-icons/ti";
+import {
+  AllExamples,
+  ExampleConfig,
+  GroupExamples,
+  PieExamples,
+  StackExamples,
+} from "./examples";
 
 type NavItem = {
   title: string;
   icon: React.ElementType;
+  content: ExampleConfig[];
 } & (
   | {
       panelType: "theme" | "export";
@@ -49,30 +56,35 @@ export const NAV_ITEMS: NavItem[] = [
     title: "Base Theme",
     icon: CircleStackIcon,
     panelType: "theme",
+    content: AllExamples,
   },
   {
     title: "Color Palette",
     icon: SwatchIcon,
     config: paletteOptionsConfig,
     panelType: "default",
+    content: [...StackExamples, ...GroupExamples, ...PieExamples],
   },
   {
     title: "Global Options",
     icon: GlobeAmericasIcon,
     config: globalOptionsConfig,
     panelType: "default",
+    content: AllExamples,
   },
   {
     title: "Axis Options",
     icon: AdjustmentsVerticalIcon,
     config: axisOptionsConfig,
     panelType: "chart",
+    content: [],
   },
   {
     title: "Chart Options",
     icon: AdjustmentsVerticalIcon,
     config: chartOptionsConfig,
     panelType: "chart",
+    content: [],
   },
 ];
 
@@ -80,17 +92,18 @@ const exportItem: NavItem = {
   title: "Export",
   icon: TiExportOutline,
   panelType: "export",
+  content: [],
 };
 
 const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
   const { baseTheme } = useTheme();
-  const { setExampleConfigs, updateColorScale } = usePreviewOptions();
+  const { setExampleContent, updateColorScale } = usePreviewOptions();
   const isBaseThemeSelected = !!baseTheme;
 
   const handleItemSelect = (item: NavItem) => {
     onItemSelect(item);
     updateColorScale(defaultColorScale);
-    setExampleConfigs(defaultExampleConfigs);
+    setExampleContent(item.content);
   };
 
   const isExportItemActive = activeItem.title === exportItem.title;
