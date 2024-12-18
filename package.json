@@ -126,6 +126,7 @@
     "not dead"
   ],
   "scripts": {
+    "version-check": "node -v",
     "version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
     "publish": "nps git:tag && pnpm changeset publish --no-git-tag",
     "changeset": "changeset",
@@ -183,6 +184,7 @@
     },
     "build": {
       "dependencies": [
+        "version-check",
         "./packages/victory-native:build",
         "./packages/victory-vendor:build",
         "./packages/victory:build",
@@ -460,6 +462,9 @@
       "dependencies": [
         "build:lib:esm"
       ]
+    },
+    "engines": {
+      "node": ">=18.0.0"
     }
   }
 }
