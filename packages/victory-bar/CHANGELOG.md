@@ -1,5 +1,11 @@
 # victory-bar
 
+## 37.3.5
+
+### Patch Changes
+
+- Fix "props.groupComponent is undefined" error ([#3014](https://github.com/FormidableLabs/victory/pull/3014))
+
 ## 37.3.4
 
 ## 37.3.3
