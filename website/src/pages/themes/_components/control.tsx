@@ -14,8 +14,14 @@ export type ColorChangeArgs = {
   colorScale: string;
 };
 
-const Control = ({ type, control, className }) => {
-  const { customThemeConfig, updateCustomThemeConfig } = useTheme();
+type ControlProps = {
+  type: string;
+  control: any;
+  className?: string;
+};
+
+const Control = ({ type, control, className }: ControlProps) => {
+  const { baseTheme, customThemeConfig, updateCustomThemeConfig } = useTheme();
   const handleColorChange = ({
     newColor,
     index,
@@ -29,6 +35,13 @@ const Control = ({ type, control, className }) => {
 
   const handleChange = (newValue) => {
     updateCustomThemeConfig(control.path, newValue);
+  };
+
+  const handleSliderToggle = (isChecked: boolean) => {
+    const defaultValue =
+      getConfigValue(baseTheme?.config, control.path, control.min) || 0;
+    const newValue = isChecked ? undefined : defaultValue;
+    handleChange(newValue);
   };
 
   const configValue = getConfigValue(
@@ -98,6 +111,7 @@ const Control = ({ type, control, className }) => {
           max={control.max}
           step={control.step}
           className={className}
+          onDefaultToggle={handleSliderToggle}
         />
       );
     case "select":
