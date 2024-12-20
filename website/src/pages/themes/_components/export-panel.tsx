@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import CodeBlock from "./code-block";
 import { useTheme } from "../_providers/themeProvider";
 import { VictoryTheme } from "victory";
-import Button from "./button";
+import { Button } from "@site/src/components/button";
 
 const generateThemeCode = (config, format: "js" | "ts") => {
   const jsonConfig = JSON.stringify(config, null, 2).replace(
