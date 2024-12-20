@@ -3,14 +3,14 @@ import Select from "../select";
 import { usePreviewOptions } from "../../_providers/previewOptionsProvider";
 import { colorScaleOptions } from "../../_const";
 import Toggle from "../toggle";
+import PreviewColorScaleSelect from "./preview-color-scale-select";
 
 type Props = {
   isOpen: boolean;
 };
 
 export const Options = forwardRef<HTMLDivElement, Props>(({ isOpen }, ref) => {
-  const { colorScale, updateColorScale, showTooltips, setShowTooltips } =
-    usePreviewOptions();
+  const { showTooltips, setShowTooltips } = usePreviewOptions();
 
   return (
     <div className="relative">
@@ -20,16 +20,7 @@ export const Options = forwardRef<HTMLDivElement, Props>(({ isOpen }, ref) => {
           ref={ref}
         >
           <h1 className="text-base font-bold mb-4">Preview Settings</h1>
-          <Select
-            id="color-scale-preview"
-            label="Preview color scale"
-            value={colorScale}
-            onChange={updateColorScale}
-            options={colorScaleOptions}
-            includeDefault
-            className="flex items-center justify-between my-2"
-            size="sm"
-          />
+          <PreviewColorScaleSelect size="sm" />
           <Toggle
             id="show-tooltips"
             label="Show tooltips instead of labels"

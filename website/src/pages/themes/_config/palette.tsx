@@ -4,12 +4,13 @@ import { getNestedColorScaleConfig } from "../_utils";
 
 const paletteOptionsConfig: OptionsPanelConfig = {
   title: "Color Palette",
-  description:
-    "Select a color palette to apply it to the preview charts, then adjust individual colors in the palette to customize the theme.",
+  description: "Customize your theme's color palettes.",
   controls: [
     {
       type: "section",
-      label: "Component Defaults",
+      label: "Defaults",
+      description:
+        "Set the default color scale for each of the following Victory components.",
       controls: [
         {
           type: "accordion",
@@ -30,11 +31,12 @@ const paletteOptionsConfig: OptionsPanelConfig = {
     },
     {
       type: "section",
-      label: "Color Palettes",
+      label: "Color Scales",
+      description: "Customize the theme's predefined color scale palettes.",
       controls: colorScaleOptions.map((option) => ({
         type: "colorPalette",
-        colorScaleType: option.value,
         label: option.label,
+        colorScaleType: option.value,
         value: option.value,
       })),
     },

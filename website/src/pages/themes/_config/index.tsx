@@ -6,7 +6,11 @@ export type ControlConfig = {
   controls?: ControlConfig[];
 } & (
   | {
-      type: "section" | "accordion";
+      type: "accordion" | "colorScalePreview";
+    }
+  | {
+      type: "section";
+      description?: string;
     }
   | {
       type: "colorPalette";
@@ -16,6 +20,7 @@ export type ControlConfig = {
   | {
       type: "colorScale";
       path: string | string[];
+      showDefaultToggle?: boolean;
     }
   | {
       type: "slider" | "select" | "colorPicker";
