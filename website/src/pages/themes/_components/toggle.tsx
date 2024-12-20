@@ -7,7 +7,7 @@ type ToggleProps = {
   checked: boolean;
   onChange: (checked: boolean) => void;
   className?: string;
-  size?: "sm" | "md";
+  size?: "xs" | "sm" | "md";
 };
 
 const Toggle = ({
@@ -22,11 +22,7 @@ const Toggle = ({
     onChange(!checked);
   };
 
-  const labelSizeClasses = size === "sm" ? "font-medium" : "font-bold";
-  const toggleSize =
-    size === "sm"
-      ? "w-9 h-5 after:h-4 after:w-4"
-      : "w-11 h-6 after:h-5 after:w-5 ";
+  const labelSizeClasses = size === "md" ? "font-bold" : "font-medium";
 
   return (
     <label
@@ -47,7 +43,9 @@ const Toggle = ({
       <div
         className={clsx(
           "relative bg-grayscale-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-grayscale-300 after:border after:rounded-full after:transition-all peer-checked:bg-blue-800",
-          toggleSize,
+          size === "xs" && "w-7 h-4 after:h-3 after:w-3",
+          size === "sm" && "w-9 h-5 after:h-4 after:w-4",
+          size === "md" && "w-11 h-6 after:h-5 after:w-5",
         )}
       ></div>
     </label>

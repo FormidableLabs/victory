@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 type ButtonProps = {
@@ -6,6 +7,7 @@ type ButtonProps = {
   className?: string;
   ariaLabel?: string;
   disabled?: boolean;
+  size?: "sm" | "md";
 };
 
 export const Button = ({
@@ -14,6 +16,7 @@ export const Button = ({
   className = "",
   ariaLabel = "",
   disabled = false,
+  size = "md",
   ...props
 }: ButtonProps) => {
   const baseClasses =
@@ -24,7 +27,12 @@ export const Button = ({
       onClick={onClick}
       disabled={disabled}
       aria-label={ariaLabel || undefined}
-      className={`${baseClasses} ${className}`}
+      className={clsx(
+        baseClasses,
+        size === "md" && "py-2 px-5 font-bold",
+        size === "sm" && "py-1.5 px-3 font-semibold",
+        className,
+      )}
       {...props}
     >
       {children}

@@ -23,7 +23,8 @@ const Checkbox = ({
   const id = useId();
 
   return (
-    <fieldset
+    <label
+      htmlFor={id}
       className={clsx("p-0 m-0 flex items-center justify-start", className)}
     >
       <input
@@ -34,10 +35,8 @@ const Checkbox = ({
         onChange={handleChange}
         className="mr-2"
       />
-      <label htmlFor={id} className="text-sm">
-        {label}
-      </label>
-    </fieldset>
+      <span className="text-sm">{label}</span>
+    </label>
   );
 };
 export default Checkbox;
