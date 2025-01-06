@@ -75,7 +75,7 @@ export class VictoryClipContainer extends React.Component<
       translateX = 0,
       translateY = 0,
     } = props;
-    const clipPadding = Helpers.getPadding({ padding: props.clipPadding });
+    const clipPadding = Helpers.getPadding(props.clipPadding);
     const radius = props.radius || Helpers.getRadius(props);
     return {
       x: (polar ? origin.x : translateX) - clipPadding.left,
@@ -158,9 +158,7 @@ export class VictoryClipContainer extends React.Component<
       rectComponent,
       clipPathComponent,
     } = props;
-    const { top, bottom, left, right } = Helpers.getPadding({
-      padding: props.clipPadding,
-    });
+    const { top, bottom, left, right } = Helpers.getPadding(props.clipPadding);
     let child;
     if (polar) {
       const radius = props.radius || Helpers.getRadius(props);

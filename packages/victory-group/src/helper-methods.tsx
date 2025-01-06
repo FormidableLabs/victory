@@ -43,7 +43,7 @@ export function getCalculatedProps(initialProps, childComponents) {
   };
 
   const origin = polar ? props.origin : Helpers.getPolarOrigin(props);
-  const padding = Helpers.getPadding(props);
+  const padding = Helpers.getPadding(props.padding);
   return {
     datasets,
     categories,

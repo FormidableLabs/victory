@@ -1,5 +1,21 @@
 # victory-cursor-container
 
+## 37.3.5
+
+## 37.3.4
+
+### Patch Changes
+
+- Fix regression in cursor rendering caused by #2999 ([#3001](https://github.com/FormidableLabs/victory/pull/3001))
+
+## 37.3.3
+
+### Patch Changes
+
+- Remove deprecated babel-plugin-lodash plugin ([#2965](https://github.com/FormidableLabs/victory/pull/2965))
+
+* Improve types in victory-core helpers ([#2999](https://github.com/FormidableLabs/victory/pull/2999))
+
 ## 37.3.2
 
 ## 37.3.1

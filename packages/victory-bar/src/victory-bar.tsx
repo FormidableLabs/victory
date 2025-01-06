@@ -148,7 +148,7 @@ class VictoryBarBase extends React.Component<VictoryBarProps> {
     // when inside a zoom container (the only place VictoryClipContainer is used), all data
     // should be renderable so bars won't dissappear before they've fully exited the container's bounds
     // see https://github.com/FormidableLabs/victory/pull/2970
-    if (props.groupComponent.type === VictoryClipContainer) {
+    if (props.groupComponent?.type === VictoryClipContainer) {
       children = this.renderData(props, VictoryBarBase.shouldRenderDatum);
     } else {
       children = this.renderData(props);

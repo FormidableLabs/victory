@@ -1,5 +1,17 @@
 # victory-area
 
+## 37.3.5
+
+## 37.3.4
+
+## 37.3.3
+
+### Patch Changes
+
+- Upgrade typescript to 5.7.2 ([#2997](https://github.com/FormidableLabs/victory/pull/2997))
+
+* Remove deprecated babel-plugin-lodash plugin ([#2965](https://github.com/FormidableLabs/victory/pull/2965))
+
 ## 37.3.2
 
 ## 37.3.1

@@ -1,5 +1,15 @@
 # victory-scatter
 
+## 37.3.5
+
+## 37.3.4
+
+## 37.3.3
+
+### Patch Changes
+
+- Improve types in victory-core helpers ([#2999](https://github.com/FormidableLabs/victory/pull/2999))
+
 ## 37.3.2
 
 ## 37.3.1

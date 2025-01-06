@@ -1,5 +1,21 @@
 # victory-bar
 
+## 37.3.5
+
+### Patch Changes
+
+- Fix "props.groupComponent is undefined" error ([#3014](https://github.com/FormidableLabs/victory/pull/3014))
+
+## 37.3.4
+
+## 37.3.3
+
+### Patch Changes
+
+- Remove deprecated babel-plugin-lodash plugin ([#2965](https://github.com/FormidableLabs/victory/pull/2965))
+
+* Zoomed bar graph items will no longer be culled from the view when more than 50% of width or height is outside of the clipping parent. Instead they will be clipped once 100% outside" ([#2970](https://github.com/FormidableLabs/victory/pull/2970))
+
 ## 37.3.2
 
 ## 37.3.1

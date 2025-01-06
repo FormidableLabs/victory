@@ -218,8 +218,8 @@ function getTickArray(props) {
       arr.forEach((t, index) => {
         if (Array.isArray(domain)) {
           if (
-            t >= Collection.getMinValue(domain) &&
-            t <= Collection.getMaxValue(domain)
+            t >= Collection.getMinValue(domain).valueOf() &&
+            t <= Collection.getMaxValue(domain).valueOf()
           ) {
             newTickArray.push({
               value: t,

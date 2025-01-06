@@ -95,9 +95,9 @@ export const useVictoryCursorContainer = (
             return isObject(c.props) && c.props.padding !== undefined;
           })
         : props.children;
-      return Helpers.getPadding(child?.props);
+      return Helpers.getPadding(child?.props?.padding);
     }
-    return Helpers.getPadding(props);
+    return Helpers.getPadding(props.padding);
   };
 
   const getCursorElements = () => {

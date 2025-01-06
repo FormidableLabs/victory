@@ -66,6 +66,8 @@ export const useVictoryVoronoiContainer = (
     const { mousePosition, mouseFollowTooltips } = props;
     const voronoiDimension = getDimension();
     const point = getPoint(points[0]);
+
+    // @ts-expect-error scale is defined but the types do not reflect that
     const basePosition = Helpers.scalePoint(props, point);
 
     let center = mouseFollowTooltips ? mousePosition : undefined;

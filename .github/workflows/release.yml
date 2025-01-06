@@ -19,6 +19,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.CHANGESETS_TOKEN }}
+
       - uses: ./.github/actions/setup
 
       - name: Build packages
@@ -31,7 +34,7 @@ jobs:
           version: pnpm run version
           publish: pnpm run publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CHANGESETS_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # Note: We run a custom release notes script so we can generate a single aggregate
@@ -41,4 +44,4 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         run: npm run release-notes
         env:
-          GITHUB_TOKEN: ${{ secrets.CHANGESETS_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CHANGESETS_TOKEN }}

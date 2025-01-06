@@ -165,7 +165,7 @@ describe("victory-util/helpers", () => {
   describe("getPadding", () => {
     it("sets padding from a single number", () => {
       const props = { padding: 40 };
-      expect(Helpers.getPadding(props)).toEqual({
+      expect(Helpers.getPadding(props.padding)).toEqual({
         top: 40,
         bottom: 40,
         left: 40,
@@ -177,14 +177,14 @@ describe("victory-util/helpers", () => {
       const props = {
         padding: { top: 20, bottom: 40, left: 60, right: 80 },
       };
-      expect(Helpers.getPadding(props)).toEqual(props.padding);
+      expect(Helpers.getPadding(props.padding)).toEqual(props.padding);
     });
 
     it("fills missing values with 0", () => {
       const props = {
         padding: { top: 40, bottom: 40 },
       };
-      expect(Helpers.getPadding(props)).toEqual({
+      expect(Helpers.getPadding(props.padding)).toEqual({
         top: 40,
         bottom: 40,
         left: 0,

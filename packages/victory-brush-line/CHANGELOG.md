@@ -1,5 +1,15 @@
 # victory-brush-line
 
+## 37.3.5
+
+## 37.3.4
+
+## 37.3.3
+
+### Patch Changes
+
+- Remove deprecated babel-plugin-lodash plugin ([#2965](https://github.com/FormidableLabs/victory/pull/2965))
+
 ## 37.3.2
 
 ## 37.3.1

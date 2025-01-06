@@ -61,10 +61,10 @@ importers:
         version: 1.0.5(webpack@5.74.0)
       '@storybook/react':
         specifier: ^8.4.1
-        version: 8.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)
+        version: 8.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)
       '@storybook/react-webpack5':
         specifier: ^8.4.1
-        version: 8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)(webpack-cli@4.10.0)
+        version: 8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)(webpack-cli@4.10.0)
       '@svitejs/changesets-changelog-github-compact':
         specifier: ^0.1.1
         version: 0.1.1
@@ -130,7 +130,7 @@ importers:
         version: 9.1.0(eslint@9.14.0(jiti@1.21.0))
       eslint-plugin-jest:
         specifier: ^28.9.0
-        version: 28.9.0(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4))(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4))(eslint@9.14.0(jiti@1.21.0))(jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)))(typescript@4.7.4)
+        version: 28.9.0(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2))(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2))(eslint@9.14.0(jiti@1.21.0))(jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)))(typescript@5.7.2)
       eslint-plugin-prettier:
         specifier: ^5.2.1
         version: 5.2.1(@types/eslint@8.4.3)(eslint-config-prettier@9.1.0(eslint@9.14.0(jiti@1.21.0)))(eslint@9.14.0(jiti@1.21.0))(prettier@3.3.3)
@@ -145,7 +145,7 @@ importers:
         version: 5.0.0(eslint@9.14.0(jiti@1.21.0))
       fork-ts-checker-webpack-plugin:
         specifier: ^8.0.0
-        version: 8.0.0(typescript@4.7.4)(webpack@5.74.0)
+        version: 8.0.0(typescript@5.7.2)(webpack@5.74.0)
       fs-extra:
         specifier: ^10.0.0
         version: 10.1.0
@@ -160,7 +160,7 @@ importers:
         version: 3.8.2
       jest:
         specifier: ^29.7.0
-        version: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+        version: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
@@ -220,19 +220,19 @@ importers:
         version: 8.4.1(prettier@3.3.3)
       ts-jest:
         specifier: ^29.2.5
-        version: 29.2.5(@babel/core@7.23.9)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.23.9))(esbuild@0.18.20)(jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)))(typescript@4.7.4)
+        version: 29.2.5(@babel/core@7.23.9)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.23.9))(esbuild@0.18.20)(jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)))(typescript@5.7.2)
       ts-loader:
         specifier: ^9.3.0
-        version: 9.3.1(typescript@4.7.4)(webpack@5.74.0)
+        version: 9.3.1(typescript@5.7.2)(webpack@5.74.0)
       ts-node:
         specifier: ^10.9.1
-        version: 10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)
+        version: 10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)
       typescript:
-        specifier: ^4.7.3
-        version: 4.7.4
+        specifier: ^5.7.2
+        version: 5.7.2
       typescript-eslint:
         specifier: ^8.13.0
-        version: 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
+        version: 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
       unified:
         specifier: ^8.3.2
         version: 8.4.2
@@ -400,85 +400,85 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-area:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-area
       victory-axis:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-axis
       victory-bar:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-bar
       victory-box-plot:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-box-plot
       victory-brush-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-brush-container
       victory-brush-line:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-brush-line
       victory-candlestick:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-candlestick
       victory-canvas:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-canvas
       victory-chart:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-chart
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-create-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-create-container
       victory-cursor-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-cursor-container
       victory-errorbar:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-errorbar
       victory-group:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-group
       victory-histogram:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-histogram
       victory-legend:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-legend
       victory-line:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-line
       victory-pie:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-pie
       victory-polar-axis:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-polar-axis
       victory-scatter:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-scatter
       victory-selection-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-selection-container
       victory-shared-events:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-shared-events
       victory-stack:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-stack
       victory-tooltip:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-tooltip
       victory-voronoi:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-voronoi
       victory-voronoi-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-voronoi-container
       victory-zoom-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-zoom-container
 
   packages/victory-area:
@@ -490,10 +490,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-vendor
     devDependencies:
       victory-chart:
@@ -509,7 +509,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-bar:
@@ -521,10 +521,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-vendor
     devDependencies:
       victory-chart:
@@ -540,10 +540,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-vendor
     devDependencies:
       victory-chart:
@@ -562,7 +562,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-brush-line:
@@ -577,7 +577,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-candlestick:
@@ -589,7 +589,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
     devDependencies:
       victory-chart:
@@ -608,10 +608,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-bar:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-bar
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-chart:
@@ -626,16 +626,16 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-axis:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-axis
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-polar-axis:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-polar-axis
       victory-shared-events:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-shared-events
 
   packages/victory-core:
@@ -650,7 +650,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-vendor:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-vendor
 
   packages/victory-create-container:
@@ -662,22 +662,22 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-brush-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-brush-container
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-cursor-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-cursor-container
       victory-selection-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-selection-container
       victory-voronoi-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-voronoi-container
       victory-zoom-container:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-zoom-container
 
   packages/victory-cursor-container:
@@ -689,7 +689,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-errorbar:
@@ -701,7 +701,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
     devDependencies:
       victory-vendor:
@@ -720,10 +720,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-shared-events:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-shared-events
     devDependencies:
       victory-bar:
@@ -742,13 +742,13 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-bar:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-bar
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-vendor
 
   packages/victory-legend:
@@ -760,7 +760,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-line:
@@ -772,10 +772,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-vendor
     devDependencies:
       victory-chart:
@@ -797,85 +797,85 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory
       victory-area:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-area
       victory-axis:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-axis
       victory-bar:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-bar
       victory-box-plot:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-box-plot
       victory-brush-container:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-brush-container
       victory-brush-line:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-brush-line
       victory-candlestick:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-candlestick
       victory-chart:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-chart
       victory-core:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-core
       victory-create-container:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-create-container
       victory-cursor-container:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-cursor-container
       victory-errorbar:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-errorbar
       victory-group:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-group
       victory-histogram:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-histogram
       victory-legend:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-legend
       victory-line:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-line
       victory-pie:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-pie
       victory-polar-axis:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-polar-axis
       victory-scatter:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-scatter
       victory-selection-container:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-selection-container
       victory-shared-events:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-shared-events
       victory-stack:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-stack
       victory-tooltip:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-tooltip
       victory-voronoi:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-voronoi
       victory-voronoi-container:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-voronoi-container
       victory-zoom-container:
-        specifier: ^37.3.2
+        specifier: ^37.3.5
         version: link:../victory-zoom-container
     devDependencies:
       '@babel/core':
@@ -900,10 +900,10 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-vendor:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-vendor
 
   packages/victory-polar-axis:
@@ -915,7 +915,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-scatter:
@@ -927,7 +927,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-selection-container:
@@ -939,7 +939,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
     devDependencies:
       victory-bar:
@@ -964,7 +964,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-stack:
@@ -979,10 +979,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-shared-events:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-shared-events
     devDependencies:
       victory-area:
@@ -1004,7 +1004,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-vendor:
@@ -1089,7 +1089,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   packages/victory-voronoi-container:
@@ -1107,10 +1107,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
       victory-tooltip:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-tooltip
 
   packages/victory-zoom-container:
@@ -1122,7 +1122,7 @@ importers:
         specifier: '>=16.6.0'
         version: 18.2.0
       victory-core:
-        specifier: 37.3.2
+        specifier: 37.3.5
         version: link:../victory-core
 
   website:
@@ -11487,11 +11487,6 @@ packages:
       typescript:
         optional: true
 
-  typescript@4.7.4:
-    resolution: {integrity: sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-
   typescript@5.2.2:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
     engines: {node: '>=14.17'}
@@ -11499,6 +11494,11 @@ packages:
 
   typescript@5.3.3:
     resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -16264,7 +16264,7 @@ snapshots:
       jest-util: 29.7.0
       slash: 3.0.0
 
-  '@jest/core@29.7.0(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))':
+  '@jest/core@29.7.0(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))':
     dependencies:
       '@jest/console': 29.7.0
       '@jest/reporters': 29.7.0
@@ -16278,7 +16278,7 @@ snapshots:
       exit: 0.1.2
       graceful-fs: 4.2.11
       jest-changed-files: 29.7.0
-      jest-config: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      jest-config: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
       jest-haste-map: 29.7.0
       jest-message-util: 29.7.0
       jest-regex-util: 29.6.3
@@ -17472,7 +17472,7 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@storybook/builder-webpack5@8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)(webpack-cli@4.10.0)':
+  '@storybook/builder-webpack5@8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)(webpack-cli@4.10.0)':
     dependencies:
       '@storybook/core-webpack': 8.4.1(storybook@8.4.1(prettier@3.3.3))
       '@types/node': 22.8.7
@@ -17483,7 +17483,7 @@ snapshots:
       constants-browserify: 1.0.0
       css-loader: 6.9.1(webpack@5.74.0)
       es-module-lexer: 1.5.4
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@4.7.4)(webpack@5.74.0)
+      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.7.2)(webpack@5.74.0)
       html-webpack-plugin: 5.6.0(webpack@5.74.0)
       magic-string: 0.30.5
       path-browserify: 1.0.1
@@ -17501,7 +17501,7 @@ snapshots:
       webpack-hot-middleware: 2.25.1
       webpack-virtual-modules: 0.6.1
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
     transitivePeerDependencies:
       - '@rspack/core'
       - '@swc/core'
@@ -17559,11 +17559,11 @@ snapshots:
     dependencies:
       storybook: 8.4.1(prettier@3.3.3)
 
-  '@storybook/preset-react-webpack@8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)(webpack-cli@4.10.0)':
+  '@storybook/preset-react-webpack@8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)(webpack-cli@4.10.0)':
     dependencies:
       '@storybook/core-webpack': 8.4.1(storybook@8.4.1(prettier@3.3.3))
-      '@storybook/react': 8.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)
-      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@4.7.4)(webpack@5.74.0)
+      '@storybook/react': 8.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)
+      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(typescript@5.7.2)(webpack@5.74.0)
       '@types/node': 22.8.7
       '@types/semver': 7.5.6
       find-up: 5.0.0
@@ -17577,7 +17577,7 @@ snapshots:
       tsconfig-paths: 4.2.0
       webpack: 5.74.0(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
     transitivePeerDependencies:
       - '@storybook/test'
       - '@swc/core'
@@ -17590,16 +17590,16 @@ snapshots:
     dependencies:
       storybook: 8.4.1(prettier@3.3.3)
 
-  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@4.7.4)(webpack@5.74.0)':
+  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@5.7.2)(webpack@5.74.0)':
     dependencies:
       debug: 4.3.4
       endent: 2.1.0
       find-cache-dir: 3.3.2
       flat-cache: 3.0.4
       micromatch: 4.0.5
-      react-docgen-typescript: 2.2.2(typescript@4.7.4)
+      react-docgen-typescript: 2.2.2(typescript@5.7.2)
       tslib: 2.8.1
-      typescript: 4.7.4
+      typescript: 5.7.2
       webpack: 5.74.0(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
     transitivePeerDependencies:
       - supports-color
@@ -17610,17 +17610,17 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       storybook: 8.4.1(prettier@3.3.3)
 
-  '@storybook/react-webpack5@8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)(webpack-cli@4.10.0)':
+  '@storybook/react-webpack5@8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)(webpack-cli@4.10.0)':
     dependencies:
-      '@storybook/builder-webpack5': 8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)(webpack-cli@4.10.0)
-      '@storybook/preset-react-webpack': 8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)(webpack-cli@4.10.0)
-      '@storybook/react': 8.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)
+      '@storybook/builder-webpack5': 8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)(webpack-cli@4.10.0)
+      '@storybook/preset-react-webpack': 8.4.1(@swc/core@1.8.0)(esbuild@0.18.20)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)(webpack-cli@4.10.0)
+      '@storybook/react': 8.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)
       '@types/node': 22.8.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       storybook: 8.4.1(prettier@3.3.3)
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
     transitivePeerDependencies:
       - '@rspack/core'
       - '@storybook/test'
@@ -17630,7 +17630,7 @@ snapshots:
       - uglify-js
       - webpack-cli
 
-  '@storybook/react@8.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@4.7.4)':
+  '@storybook/react@8.4.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.4.1(prettier@3.3.3))(typescript@5.7.2)':
     dependencies:
       '@storybook/components': 8.4.1(storybook@8.4.1(prettier@3.3.3))
       '@storybook/global': 5.0.0
@@ -17642,7 +17642,7 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       storybook: 8.4.1(prettier@3.3.3)
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
 
   '@storybook/source-loader@8.4.1(storybook@8.4.1(prettier@3.3.3))':
     dependencies:
@@ -18163,34 +18163,34 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.0
 
-  '@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4))(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)':
+  '@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2))(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
-      '@typescript-eslint/parser': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
+      '@typescript-eslint/parser': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
       '@typescript-eslint/scope-manager': 8.13.0
-      '@typescript-eslint/type-utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
-      '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
+      '@typescript-eslint/type-utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
+      '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
       '@typescript-eslint/visitor-keys': 8.13.0
       eslint: 9.14.0(jiti@1.21.0)
       graphemer: 1.4.0
       ignore: 5.3.1
       natural-compare: 1.4.0
-      ts-api-utils: 1.4.0(typescript@4.7.4)
+      ts-api-utils: 1.4.0(typescript@5.7.2)
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)':
+  '@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)':
     dependencies:
       '@typescript-eslint/scope-manager': 8.13.0
       '@typescript-eslint/types': 8.13.0
-      '@typescript-eslint/typescript-estree': 8.13.0(typescript@4.7.4)
+      '@typescript-eslint/typescript-estree': 8.13.0(typescript@5.7.2)
       '@typescript-eslint/visitor-keys': 8.13.0
       debug: 4.3.4
       eslint: 9.14.0(jiti@1.21.0)
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
     transitivePeerDependencies:
       - supports-color
 
@@ -18199,21 +18199,21 @@ snapshots:
       '@typescript-eslint/types': 8.13.0
       '@typescript-eslint/visitor-keys': 8.13.0
 
-  '@typescript-eslint/type-utils@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)':
+  '@typescript-eslint/type-utils@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)':
     dependencies:
-      '@typescript-eslint/typescript-estree': 8.13.0(typescript@4.7.4)
-      '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
+      '@typescript-eslint/typescript-estree': 8.13.0(typescript@5.7.2)
+      '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
       debug: 4.3.4
-      ts-api-utils: 1.4.0(typescript@4.7.4)
+      ts-api-utils: 1.4.0(typescript@5.7.2)
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
     transitivePeerDependencies:
       - eslint
       - supports-color
 
   '@typescript-eslint/types@8.13.0': {}
 
-  '@typescript-eslint/typescript-estree@8.13.0(typescript@4.7.4)':
+  '@typescript-eslint/typescript-estree@8.13.0(typescript@5.7.2)':
     dependencies:
       '@typescript-eslint/types': 8.13.0
       '@typescript-eslint/visitor-keys': 8.13.0
@@ -18222,18 +18222,18 @@ snapshots:
       is-glob: 4.0.3
       minimatch: 9.0.5
       semver: 7.6.3
-      ts-api-utils: 1.4.0(typescript@4.7.4)
+      ts-api-utils: 1.4.0(typescript@5.7.2)
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)':
+  '@typescript-eslint/utils@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)':
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.14.0(jiti@1.21.0))
       '@typescript-eslint/scope-manager': 8.13.0
       '@typescript-eslint/types': 8.13.0
-      '@typescript-eslint/typescript-estree': 8.13.0(typescript@4.7.4)
+      '@typescript-eslint/typescript-estree': 8.13.0(typescript@5.7.2)
       eslint: 9.14.0(jiti@1.21.0)
     transitivePeerDependencies:
       - supports-color
@@ -19942,13 +19942,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  create-jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)):
+  create-jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)):
     dependencies:
       '@jest/types': 29.6.3
       chalk: 4.1.2
       exit: 0.1.2
       graceful-fs: 4.2.11
-      jest-config: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      jest-config: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
       jest-util: 29.7.0
       prompts: 2.4.2
     transitivePeerDependencies:
@@ -20756,13 +20756,13 @@ snapshots:
     dependencies:
       eslint: 9.14.0(jiti@1.21.0)
 
-  eslint-plugin-jest@28.9.0(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4))(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4))(eslint@9.14.0(jiti@1.21.0))(jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)))(typescript@4.7.4):
+  eslint-plugin-jest@28.9.0(@typescript-eslint/eslint-plugin@8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2))(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2))(eslint@9.14.0(jiti@1.21.0))(jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)))(typescript@5.7.2):
     dependencies:
-      '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
+      '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
       eslint: 9.14.0(jiti@1.21.0)
     optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4))(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
-      jest: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      '@typescript-eslint/eslint-plugin': 8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2))(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
+      jest: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -21364,7 +21364,7 @@ snapshots:
     optionalDependencies:
       eslint: 9.14.0(jiti@1.21.0)
 
-  fork-ts-checker-webpack-plugin@8.0.0(typescript@4.7.4)(webpack@5.74.0):
+  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.7.2)(webpack@5.74.0):
     dependencies:
       '@babel/code-frame': 7.23.5
       chalk: 4.1.2
@@ -21378,7 +21378,7 @@ snapshots:
       schema-utils: 3.1.1
       semver: 7.5.4
       tapable: 2.2.1
-      typescript: 4.7.4
+      typescript: 5.7.2
       webpack: 5.74.0(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
 
   form-data-encoder@2.1.4: {}
@@ -22423,16 +22423,16 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-cli@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)):
+  jest-cli@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)):
     dependencies:
-      '@jest/core': 29.7.0(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      '@jest/core': 29.7.0(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
       '@jest/test-result': 29.7.0
       '@jest/types': 29.6.3
       chalk: 4.1.2
-      create-jest: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      create-jest: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
       exit: 0.1.2
       import-local: 3.1.0
-      jest-config: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      jest-config: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
       jest-util: 29.7.0
       jest-validate: 29.7.0
       yargs: 17.7.2
@@ -22442,7 +22442,7 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest-config@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)):
+  jest-config@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)):
     dependencies:
       '@babel/core': 7.23.9
       '@jest/test-sequencer': 29.7.0
@@ -22468,7 +22468,7 @@ snapshots:
       strip-json-comments: 3.1.1
     optionalDependencies:
       '@types/node': 18.6.1
-      ts-node: 10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)
+      ts-node: 10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -22709,12 +22709,12 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)):
+  jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)):
     dependencies:
-      '@jest/core': 29.7.0(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      '@jest/core': 29.7.0(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
       '@jest/types': 29.6.3
       import-local: 3.1.0
-      jest-cli: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      jest-cli: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -25034,9 +25034,9 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  react-docgen-typescript@2.2.2(typescript@4.7.4):
+  react-docgen-typescript@2.2.2(typescript@5.7.2):
     dependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
 
   react-docgen@7.0.3:
     dependencies:
@@ -26632,26 +26632,26 @@ snapshots:
 
   trough@2.2.0: {}
 
-  ts-api-utils@1.4.0(typescript@4.7.4):
+  ts-api-utils@1.4.0(typescript@5.7.2):
     dependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
 
   ts-dedent@2.2.0: {}
 
   ts-interface-checker@0.1.13: {}
 
-  ts-jest@29.2.5(@babel/core@7.23.9)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.23.9))(esbuild@0.18.20)(jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4)))(typescript@4.7.4):
+  ts-jest@29.2.5(@babel/core@7.23.9)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.23.9))(esbuild@0.18.20)(jest@29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)))(typescript@5.7.2):
     dependencies:
       bs-logger: 0.2.6
       ejs: 3.1.10
       fast-json-stable-stringify: 2.1.0
-      jest: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4))
+      jest: 29.7.0(@types/node@18.6.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2))
       jest-util: 29.7.0
       json5: 2.2.3
       lodash.memoize: 4.1.2
       make-error: 1.3.6
       semver: 7.6.3
-      typescript: 4.7.4
+      typescript: 5.7.2
       yargs-parser: 21.1.1
     optionalDependencies:
       '@babel/core': 7.23.9
@@ -26660,16 +26660,16 @@ snapshots:
       babel-jest: 29.7.0(@babel/core@7.23.9)
       esbuild: 0.18.20
 
-  ts-loader@9.3.1(typescript@4.7.4)(webpack@5.74.0):
+  ts-loader@9.3.1(typescript@5.7.2)(webpack@5.74.0):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.10.0
       micromatch: 4.0.5
       semver: 7.3.7
-      typescript: 4.7.4
+      typescript: 5.7.2
       webpack: 5.74.0(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
 
-  ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@4.7.4):
+  ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.9
@@ -26683,7 +26683,7 @@ snapshots:
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
-      typescript: 4.7.4
+      typescript: 5.7.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     optionalDependencies:
@@ -26815,22 +26815,22 @@ snapshots:
       typescript: 5.2.2
       yaml: 2.6.0
 
-  typescript-eslint@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4):
+  typescript-eslint@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4))(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
-      '@typescript-eslint/parser': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
-      '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@4.7.4)
+      '@typescript-eslint/eslint-plugin': 8.13.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2))(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
+      '@typescript-eslint/parser': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
+      '@typescript-eslint/utils': 8.13.0(eslint@9.14.0(jiti@1.21.0))(typescript@5.7.2)
     optionalDependencies:
-      typescript: 4.7.4
+      typescript: 5.7.2
     transitivePeerDependencies:
       - eslint
       - supports-color
 
-  typescript@4.7.4: {}
-
   typescript@5.2.2: {}
 
   typescript@5.3.3: {}
+
+  typescript@5.7.2: {}
 
   ua-parser-js@0.7.31: {}
 
