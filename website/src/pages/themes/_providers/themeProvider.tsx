@@ -9,7 +9,7 @@ export type ThemeOption = {
 
 type ThemeContextType = {
   baseTheme: ThemeOption | undefined;
-  onBaseThemeSelect: (themeName?: string) => void;
+  onBaseThemeSelect: (themeName?: string, themeConfig?: any) => void;
   customThemeConfig: VictoryThemeDefinition | undefined;
   updateCustomThemeConfig: (path: string | string[], newValue: unknown) => void;
 };
@@ -29,7 +29,12 @@ export const ThemeProvider = ({ children }) => {
   const [customThemeConfig, setCustomThemeConfig] =
     React.useState<VictoryThemeDefinition>(defaultTheme.config);
 
-  const onBaseThemeSelect = (themeName?: string) => {
+  const onBaseThemeSelect = (themeName?: string, themeConfig) => {
+    if (themeName === "custom") {
+      setBaseTheme(undefined);
+      setCustomThemeConfig(themeConfig);
+      return;
+    }
     const theme = themes.find((t) => t.name === themeName);
     if (!theme) {
       setBaseTheme(defaultTheme);
