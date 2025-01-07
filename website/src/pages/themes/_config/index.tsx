@@ -1,14 +1,16 @@
-import React from "react";
+import { ExampleConfig } from "../_components/examples";
 
 export type ControlConfig = {
   label: string;
-  content?: (props: any) => React.ReactNode;
+  content?: ExampleConfig[];
   controls?: ControlConfig[];
-  hasVictoryChart?: boolean;
-  allowColorScaleOverride?: boolean;
 } & (
   | {
-      type: "section" | "accordion";
+      type: "accordion" | "colorScalePreview";
+    }
+  | {
+      type: "section";
+      description?: string;
     }
   | {
       type: "colorPalette";
@@ -18,6 +20,7 @@ export type ControlConfig = {
   | {
       type: "colorScale";
       path: string | string[];
+      showDefaultToggle?: boolean;
     }
   | {
       type: "slider" | "select" | "colorPicker";

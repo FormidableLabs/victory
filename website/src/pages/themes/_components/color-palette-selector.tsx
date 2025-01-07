@@ -28,6 +28,17 @@ const ColorPaletteSelector = ({
     updateColorScale(value);
   };
 
+  const handleColorChange = (newColor, i, cScale) => {
+    onColorChange({
+      newColor,
+      index: i,
+      colorScale: cScale,
+    });
+    if (colorScale !== cScale) {
+      updateColorScale(cScale);
+    }
+  };
+
   const isSelected = colorScale === value;
 
   return (
@@ -54,11 +65,7 @@ const ColorPaletteSelector = ({
                 key={i}
                 color={color}
                 onColorChange={(newColor) =>
-                  onColorChange({
-                    newColor,
-                    index: i,
-                    colorScale: colorScaleType as string,
-                  })
+                  handleColorChange(newColor, i, colorScaleType)
                 }
               />
             ))}

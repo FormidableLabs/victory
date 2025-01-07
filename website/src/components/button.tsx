@@ -10,7 +10,7 @@ type ButtonProps = {
   size?: "sm" | "md";
 };
 
-const Button = ({
+export const Button = ({
   onClick,
   children,
   className = "",
@@ -19,13 +19,16 @@ const Button = ({
   size = "md",
   ...props
 }: ButtonProps) => {
+  const baseClasses =
+    "py-2 px-4 font-semibold rounded-md cursor-pointer text-sm border-2 border-solid border-button-border bg-button-bg text-button-fg hover:bg-button-bg-hover hover:text-button-fg-hover disabled:bg-grayscale-300 disabled:text-grayscale-400 disabled:cursor-not-allowed";
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       aria-label={ariaLabel || undefined}
       className={clsx(
-        "border-none rounded-md cursor-pointer text-sm bg-button-bg text-button-fg hover:underline disabled:bg-grayscale-300 disabled:text-grayscale-400 disabled:cursor-not-allowed disabled:hover:no-underline",
+        baseClasses,
         size === "md" && "py-2 px-5 font-bold",
         size === "sm" && "py-1.5 px-3 font-semibold",
         className,
@@ -36,5 +39,3 @@ const Button = ({
     </button>
   );
 };
-
-export default Button;

@@ -8,7 +8,7 @@ import BaseThemePanel from "./_components/base-theme-panel";
 import OptionsPanel from "./_components/options-panel";
 import ChartPanel from "./_components/chart-panel";
 import { ThemeProvider } from "./_providers/themeProvider";
-import ThemePreview from "./_components/theme-preview";
+import { ThemePreview } from "./_components/theme-preview";
 import { PreviewOptionsProvider } from "./_providers/previewOptionsProvider";
 import ExportPanel from "./_components/export-panel";
 

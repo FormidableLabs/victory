@@ -7,6 +7,7 @@ import { getConfigValue } from "../_utils";
 import { useTheme } from "../_providers/themeProvider";
 import Accordion from "./accordion";
 import ColorScaleOverrideSelector from "./color-scale-override-selector";
+import PreviewColorScaleSelect from "./theme-preview/preview-color-scale-select";
 
 export type ColorChangeArgs = {
   newColor?: string;
@@ -85,9 +86,16 @@ const Control = ({ type, control, className }: ControlProps) => {
     case "section":
       return (
         <section className="mb-8">
-          <h3 className="text-lg font-bold text-secondary mb-4">
-            {control.label}
-          </h3>
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-secondary mb-0">
+              {control.label}
+            </h3>
+            {control.description && (
+              <p className="text-sm text-grayscale-400">
+                {control.description}
+              </p>
+            )}
+          </div>
           {control.controls?.map((nestedControl, i) => (
             <Control
               key={nestedControl.label + i}
@@ -130,9 +138,19 @@ const Control = ({ type, control, className }: ControlProps) => {
     case "colorScale":
       return (
         <ColorScaleOverrideSelector
+          id={id}
           label={control.label}
           value={configValue as string}
           onChange={handleChange}
+          className={className}
+          hideDefaultToggle={control.hideDefaultToggle}
+        />
+      );
+    case "colorScalePreview":
+      return (
+        <PreviewColorScaleSelect
+          key={control.label}
+          label={control.label}
           className={className}
         />
       );
