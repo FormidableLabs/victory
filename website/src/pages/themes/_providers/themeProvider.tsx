@@ -9,15 +9,34 @@ export type ThemeOption = {
 
 type ThemeContextType = {
   baseTheme: ThemeOption | undefined;
-  onBaseThemeSelect: (themeName?: string, themeConfig?: any) => void;
+  onBaseThemeSelect: (theme: ThemeOption) => void;
   customThemeConfig: VictoryThemeDefinition | undefined;
   updateCustomThemeConfig: (path: string | string[], newValue: unknown) => void;
+};
+
+const CUSTOM_THEME_CONFIG: VictoryThemeDefinition = {
+  candlestick: {
+    style: {
+      labels: {
+        padding: 5,
+      },
+    },
+  },
+  errorbar: {
+    borderWidth: 8,
+  },
+};
+
+export const CUSTOM_THEME = {
+  name: "Import custom theme",
+  config: CUSTOM_THEME_CONFIG,
 };
 
 export const themes: ThemeOption[] = [
   { name: "Clean", config: VictoryTheme.clean },
   { name: "Material", config: VictoryTheme.material },
   { name: "Grayscale", config: VictoryTheme.grayscale },
+  CUSTOM_THEME,
 ];
 
 const defaultTheme = themes[0];
@@ -29,19 +48,13 @@ export const ThemeProvider = ({ children }) => {
   const [customThemeConfig, setCustomThemeConfig] =
     React.useState<VictoryThemeDefinition>(defaultTheme.config);
 
-  const onBaseThemeSelect = (themeName?: string, themeConfig) => {
-    if (themeName === "custom") {
-      setBaseTheme(undefined);
-      setCustomThemeConfig(themeConfig);
-      return;
-    }
-    const theme = themes.find((t) => t.name === themeName);
+  const onBaseThemeSelect = (theme: ThemeOption) => {
     if (!theme) {
       setBaseTheme(defaultTheme);
       setCustomThemeConfig(defaultTheme.config);
     } else {
       setBaseTheme(theme);
-      setCustomThemeConfig({ ...theme?.config });
+      setCustomThemeConfig({ ...theme.config });
     }
   };
 
@@ -53,9 +66,13 @@ export const ThemeProvider = ({ children }) => {
         path,
         newValue,
       );
+
+      if (baseTheme.name !== CUSTOM_THEME.name) {
+        setBaseTheme(CUSTOM_THEME);
+      }
       setCustomThemeConfig(updatedConfig);
     },
-    [customThemeConfig],
+    [customThemeConfig, baseTheme],
   );
 
   return (

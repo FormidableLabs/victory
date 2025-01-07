@@ -134,3 +134,7 @@ export const getBaseLabelsConfig = (
     path: getPath(basePath, "fill"),
   },
 ];
+
+export const stringifyWithoutQuotes = (config: unknown) => {
+  return JSON.stringify(config, null, 2).replace(/"([^"]+)":/g, "$1:");
+};

@@ -3,13 +3,10 @@ import CodeBlock from "./code-block";
 import { useTheme } from "../_providers/themeProvider";
 import { VictoryTheme } from "victory";
 import { Button } from "@site/src/components/button";
+import { stringifyWithoutQuotes } from "../_utils";
 
 const generateThemeCode = (config, format: "js" | "ts") => {
-  const jsonConfig = JSON.stringify(config, null, 2).replace(
-    // Remove quotes around keys
-    /"([^"]+)":/g,
-    "$1:",
-  );
+  const jsonConfig = stringifyWithoutQuotes(config);
   if (format === "js") {
     return `/** @type {import('victory').VictoryThemeDefinition} */\n\nconst customTheme = ${jsonConfig};\n\nexport default customTheme;`;
   }
