@@ -1,7 +1,5 @@
 import React, { forwardRef } from "react";
-import Select from "../select";
 import { usePreviewOptions } from "../../_providers/previewOptionsProvider";
-import { colorScaleOptions } from "../../_const";
 import Toggle from "../toggle";
 import PreviewColorScaleSelect from "./preview-color-scale-select";
 
