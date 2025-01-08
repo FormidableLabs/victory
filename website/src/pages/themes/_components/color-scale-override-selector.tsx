@@ -16,6 +16,15 @@ type ColorScaleOverrideSelectorProps = {
   className?: string;
 };
 
+const DEFAULT_COLOR_SCALE = [
+  "#252525",
+  "#525252",
+  "#737373",
+  "#969696",
+  "#bdbdbd",
+  "#d9d9d9",
+];
+
 const ColorScaleOverrideSelector = ({
   id,
   label = "Color Scale",
@@ -26,10 +35,7 @@ const ColorScaleOverrideSelector = ({
 }: ColorScaleOverrideSelectorProps) => {
   const { colorScale, updateColorScale } = usePreviewOptions();
   const hasCustomValue = Array.isArray(value);
-  const [initialCustomValue] = React.useState(
-    hasCustomValue ? value : undefined,
-  );
-
+  const initialCustomValue = hasCustomValue ? value : DEFAULT_COLOR_SCALE;
   const setColorScaleToDefault = useCallback(() => {
     if (colorScale !== defaultColorScale) {
       updateColorScale(defaultColorScale);
