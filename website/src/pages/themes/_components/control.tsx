@@ -162,7 +162,7 @@ const Control = ({ type, control, className }: ControlProps) => {
           color={configValue as string}
           onColorChange={handleChange}
           className={className}
-          showColorName
+          showSelectOptions
         />
       );
     default:
