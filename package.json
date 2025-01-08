@@ -126,7 +126,6 @@
     "not dead"
   ],
   "scripts": {
-    "version-check": "node -v",
     "version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
     "publish": "nps git:tag && pnpm changeset publish --no-git-tag",
     "changeset": "changeset",
