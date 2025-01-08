@@ -184,7 +184,6 @@
     },
     "build": {
       "dependencies": [
-        "version-check",
         "./packages/victory-native:build",
         "./packages/victory-vendor:build",
         "./packages/victory:build",
