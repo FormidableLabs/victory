@@ -1,7 +1,8 @@
 import React, { useId } from "react";
-import { TiPencil } from "react-icons/ti";
+import { TiMinus, TiPencil } from "react-icons/ti";
 import clsx from "clsx";
 import Select from "./select";
+import { useTheme } from "../_providers/themeProvider";
 
 type ColorPickerProps = {
   label?: string;
@@ -25,6 +26,7 @@ const ColorPicker = ({
   showColorName = false,
   className,
 }: ColorPickerProps) => {
+  const { updateCustomThemeConfig } = useTheme();
   const [isPickerOpen, setIsPickerOpen] = React.useState(false);
   const [colorOption, setColorOption] = React.useState<string | undefined>(
     () => {
@@ -50,9 +52,11 @@ const ColorPicker = ({
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (onColorChange) {
-      onColorChange(event.target.value);
-    }
+    onColorChange(event.target.value);
+  };
+
+  const handleRemoveColor = () => {
+    onColorChange(undefined);
   };
 
   const id = useId();
@@ -106,13 +110,21 @@ const ColorPicker = ({
                   }}
                 />
                 {!showColorName && (
-                  <div
-                    className={`absolute top-0 left-0 w-full h-full text-white flex justify-center items-center text-xl rounded-full opacity-0 group-hover/swatch:opacity-100 ${
-                      isPickerOpen ? "opacity-100" : ""
-                    }`}
-                  >
-                    <TiPencil />
-                  </div>
+                  <>
+                    <div
+                      className={`absolute top-0 left-0 w-full h-full text-white flex justify-center items-center text-xl rounded-full opacity-0 group-hover/swatch:opacity-100 ${
+                        isPickerOpen ? "opacity-100" : ""
+                      }`}
+                    >
+                      <TiPencil />
+                    </div>
+                    <button
+                      onClick={handleRemoveColor}
+                      className="absolute -top-1.5 -right-1.5 w-5 h-5 text-white bg-red-500 flex justify-center items-center text-xl rounded-full opacity-0 group-hover/swatch:opacity-100 z-20 cursor-pointer"
+                    >
+                      <TiMinus />
+                    </button>
+                  </>
                 )}
               </div>
               {showColorName && (

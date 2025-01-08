@@ -4,6 +4,8 @@ import { ColorScalePropType, VictoryThemeDefinition } from "victory";
 import { ColorChangeArgs } from "./control";
 import clsx from "clsx";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
+import { useTheme } from "../_providers/themeProvider";
+import { TiPlus } from "react-icons/ti";
 
 type ColorPaletteSelectorProps = {
   label: string;
@@ -23,20 +25,37 @@ const ColorPaletteSelector = ({
   className,
 }: ColorPaletteSelectorProps) => {
   const { colorScale, updateColorScale } = usePreviewOptions();
+  const { updateCustomThemeConfig } = useTheme();
 
   const handleRadioChange = () => {
     updateColorScale(value);
   };
 
   const handleColorChange = (newColor, i, cScale) => {
-    onColorChange({
-      newColor,
-      index: i,
-      colorScale: cScale,
-    });
+    if (newColor === undefined) {
+      // Remove color if undefined
+      const updatedColors = palette?.[cScale]?.filter(
+        (_, index) => index !== i,
+      );
+      updateCustomThemeConfig(`palette.${cScale}`, updatedColors);
+    } else {
+      onColorChange({
+        newColor,
+        index: i,
+        colorScale: cScale,
+      });
+    }
     if (colorScale !== cScale) {
       updateColorScale(cScale);
     }
+  };
+
+  const handleAddColor = () => {
+    const updatedColors = [
+      ...(palette?.[colorScaleType as string] || []),
+      "#000000",
+    ];
+    updateCustomThemeConfig(`palette.${colorScaleType}`, updatedColors);
   };
 
   const isSelected = colorScale === value;
@@ -69,6 +88,12 @@ const ColorPaletteSelector = ({
                 }
               />
             ))}
+            <button
+              onClick={handleAddColor}
+              className="font-medium flex w-[35px] h-[35px] rounded-full cursor-pointer justify-center items-center border-2 border-grayscale-300"
+            >
+              <TiPlus className="text-lg" />
+            </button>
           </div>
         )}
       </div>
