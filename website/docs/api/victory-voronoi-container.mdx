@@ -23,7 +23,7 @@ For examples of `VictoryVoronoiContainer` in action, visit the [containers](/doc
 
 <Badges>
   <TypeBadge value="boolean" />
-  <DefaultsBadge value="true}" />
+  <DefaultsBadge value="true" />
 </Badges>
 
 When the `activateData` prop is set to true, the `active` prop will be set to true on all data components within a voronoi area. When this prop is set to false, the `onActivated` and `onDeactivated` callbacks will still fire, but no mutations to data components will occur via Victory's event system.
@@ -34,7 +34,7 @@ When the `activateData` prop is set to true, the `active` prop will be set to tr
 
 <Badges>
   <TypeBadge value="boolean" />
-  <DefaultsBadge value="true}" />
+  <DefaultsBadge value="true" />
 </Badges>
 
 When the `activateLabels` prop is set to true, the `active` prop will be set to true on all labels corresponding to points within a voronoi area. When this prop is set to false, the `onActivated` and `onDeactivated` callbacks will still fire, but no mutations to label components will occur via Victory's event system. Labels defined directly on `VictoryVoronoiContainer` via the `labels` prop will still appear when this prop is set to false.
@@ -74,7 +74,6 @@ _example:_ `labels={({ datum }) => "y: " + datum.y}`
 
 The `labelComponent` prop specified the component that will be rendered when `labels` are defined
 on `VictoryVoronoiContainer`. If the `labels` prop is omitted, no label component will be rendered.
-
 
 ```jsx live
 <VictoryChart
