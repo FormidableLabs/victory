@@ -42,6 +42,9 @@ function generateWireitConfig(pkg, rootPkg) {
       "lint:fix": "wireit",
       "jest": "wireit",
     },
+    "engines": {
+      "node": ">=18.0.0"
+    },
     "wireit": {
       "###            THESE WIREIT CONFIGS ARE GENERATED        ####": {},
       "###            DO NOT MODIFY THESE MANUALLY              ####": {},
