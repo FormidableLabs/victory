@@ -19,13 +19,14 @@ export interface VictoryZoomContainerNativeProps
 export const VictoryZoomContainer = (
   initialProps: VictoryZoomContainerNativeProps,
 ) => {
-  const props = useVictoryZoomContainer({
+  const { props, children } = useVictoryZoomContainer({
     ...initialProps,
     clipContainerComponent: initialProps.clipContainerComponent ?? (
       <VictoryClipContainer />
     ),
   });
-  return <VictoryContainer {...props} />;
+
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictoryZoomContainer.role = "container";
