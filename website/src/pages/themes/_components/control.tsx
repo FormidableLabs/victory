@@ -23,16 +23,6 @@ type ControlProps = {
 
 const Control = ({ type, control, className }: ControlProps) => {
   const { baseTheme, customThemeConfig, updateCustomThemeConfig } = useTheme();
-  const handleColorChange = ({
-    newColor,
-    index,
-    colorScale,
-  }: ColorChangeArgs) => {
-    const updatedColors = customThemeConfig?.palette?.[colorScale]?.map(
-      (color, i) => (i === index ? newColor : color),
-    );
-    updateCustomThemeConfig(`palette.${colorScale}`, updatedColors);
-  };
 
   const handleChange = (newValue) => {
     updateCustomThemeConfig(control.path, newValue);
@@ -78,8 +68,7 @@ const Control = ({ type, control, className }: ControlProps) => {
           label={control.label}
           value={control.value}
           palette={customThemeConfig?.palette}
-          colorScaleType={control.colorScaleType}
-          onColorChange={handleColorChange}
+          onColorsChange={handleChange}
           className="my-4"
         />
       );
@@ -140,8 +129,8 @@ const Control = ({ type, control, className }: ControlProps) => {
         <ColorScaleOverrideSelector
           id={id}
           label={control.label}
-          value={configValue as string}
-          onChange={handleChange}
+          colors={configValue as string}
+          onColorsChange={handleChange}
           className={className}
           hideDefaultToggle={control.hideDefaultToggle}
         />

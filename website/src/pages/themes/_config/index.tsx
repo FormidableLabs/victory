@@ -14,8 +14,8 @@ export type ControlConfig = {
     }
   | {
       type: "colorPalette";
-      colorScaleType: string;
       value: string;
+      path: string | string[];
     }
   | {
       type: "colorScale";
