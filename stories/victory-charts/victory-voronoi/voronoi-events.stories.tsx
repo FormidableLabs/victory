@@ -30,8 +30,8 @@ export const Events: Story = {
                   return [
                     {
                       target: "data",
-                      mutation: (props) => {
-                        const fill = props.style && props.style.fill;
+                      mutation: (eventProps) => {
+                        const fill = eventProps.style && eventProps.style.fill;
                         return fill === "white"
                           ? null
                           : {
