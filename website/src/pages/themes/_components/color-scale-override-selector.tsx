@@ -62,7 +62,7 @@ const ColorScaleOverrideSelector = ({
           checked={hasCustomValue}
           onChange={onCheckboxChange}
           className="mb-3"
-          size="sm"
+          size="xs"
         />
       )}
       {hasCustomValue && (
