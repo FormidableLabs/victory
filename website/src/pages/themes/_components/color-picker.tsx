@@ -87,14 +87,22 @@ const ColorPicker = ({
           </div>
         )}
         {colorOption === ColorPickerOptions.CUSTOM && (
-          <div
-            className={clsx("relative inline-flex rounded-full group/swatch")}
-          >
+          <div className="relative inline-flex rounded-full group/swatch">
             <div className="flex items-center">
               <div className="relative">
+                {onColorRemove && (
+                  <div className="absolute -top-1 -right-1 z-20 group/remove">
+                    <button
+                      onClick={handleRemoveColor}
+                      className="w-4 h-4 text-white bg-red-500 flex justify-center items-center text-2xl font-bold rounded-full p-0.5 cursor-pointer opacity-0 group-hover/swatch:opacity-100 group-hover/remove:bg-red-800"
+                    >
+                      <IoMdClose />
+                    </button>
+                  </div>
+                )}
                 <div
                   className={clsx(
-                    "block w-[35px] h-[35px] rounded-full cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor outline-2 border-2 border-white outline outline-grayscale-300 group-hover/swatch:outline-grayscale-800",
+                    "block w-[35px] h-[35px] rounded-full cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor outline-2 border-2 border-white outline outline-grayscale-300",
                     isPickerOpen
                       ? "outline-currentColor"
                       : "outline-grayscale-300",
@@ -103,14 +111,6 @@ const ColorPicker = ({
                     color,
                   }}
                 />
-                {onColorRemove && (
-                  <button
-                    onClick={handleRemoveColor}
-                    className="absolute -top-1 -right-1 w-4 h-4 text-white bg-red-500 flex justify-center items-center text-2xl font-bold rounded-full opacity-0 p-0.5 group-hover/swatch:opacity-100 z-20 cursor-pointer"
-                  >
-                    <IoMdClose />
-                  </button>
-                )}
               </div>
             </div>
             <input
