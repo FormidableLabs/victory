@@ -36,8 +36,8 @@ const paletteOptionsConfig: OptionsPanelConfig = {
       controls: colorScaleOptions.map((option) => ({
         type: "colorPalette",
         label: option.label,
-        colorScaleType: option.value,
         value: option.value,
+        path: `palette.${option.value}`,
       })),
     },
   ],

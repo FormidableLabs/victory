@@ -1,17 +1,17 @@
-import React, { useCallback } from "react";
-import ColorPicker from "./color-picker";
+import React, { useCallback, useEffect } from "react";
 import clsx from "clsx";
 import Toggle from "./toggle";
 import {
   defaultColorScale,
   usePreviewOptions,
 } from "../_providers/previewOptionsProvider";
+import ColorPickerList from "./color-picker-list";
 
 type ColorScaleOverrideSelectorProps = {
   id: string;
   label?: string;
-  value?: string | string[];
-  onChange: (value: string[] | undefined) => void;
+  colors?: string | string[];
+  onColorsChange: (colors: string[] | undefined) => void;
   hideDefaultToggle?: boolean;
   className?: string;
 };
@@ -19,15 +19,14 @@ type ColorScaleOverrideSelectorProps = {
 const ColorScaleOverrideSelector = ({
   id,
   label = "Color Scale",
-  value,
-  onChange,
+  colors,
+  onColorsChange,
   hideDefaultToggle = false,
   className,
 }: ColorScaleOverrideSelectorProps) => {
   const { colorScale, updateColorScale } = usePreviewOptions();
-  const hasCustomValue = Array.isArray(value);
-  const [initialCustomValue] = React.useState(
-    hasCustomValue ? value : undefined,
+  const [showCustomColors, setShowCustomColors] = React.useState(
+    () => !!colors && Array.isArray(colors),
   );
 
   const setColorScaleToDefault = useCallback(() => {
@@ -37,18 +36,15 @@ const ColorScaleOverrideSelector = ({
   }, [colorScale, updateColorScale]);
 
   const onCheckboxChange = (isChecked) => {
-    if (isChecked) {
-      onChange(initialCustomValue);
-    } else {
-      onChange(undefined);
+    setShowCustomColors(isChecked);
+    if (!isChecked) {
+      onColorsChange(undefined);
     }
     setColorScaleToDefault();
   };
 
-  const handleColorChange = (newColor, index) => {
-    const newValue = [...(value as string[])];
-    newValue[index] = newColor;
-    onChange(newValue);
+  const handleColorsChange = (newColors) => {
+    onColorsChange(newColors);
     setColorScaleToDefault();
   };
 
@@ -59,22 +55,14 @@ const ColorScaleOverrideSelector = ({
         <Toggle
           id={id}
           label="Use custom color scale"
-          checked={hasCustomValue}
+          checked={showCustomColors}
           onChange={onCheckboxChange}
           className="mb-3"
           size="sm"
         />
       )}
-      {hasCustomValue && (
-        <div className="flex flex-wrap gap-2 mt-3">
-          {value.map((color, i) => (
-            <ColorPicker
-              key={i}
-              color={color}
-              onColorChange={(newColor) => handleColorChange(newColor, i)}
-            />
-          ))}
-        </div>
+      {showCustomColors && typeof colors !== "string" && (
+        <ColorPickerList colors={colors} onColorsChange={handleColorsChange} />
       )}
     </label>
   );

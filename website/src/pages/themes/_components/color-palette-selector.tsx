@@ -1,26 +1,23 @@
 import React from "react";
-import ColorPicker from "./color-picker";
-import { ColorScalePropType, VictoryThemeDefinition } from "victory";
-import { ColorChangeArgs } from "./control";
+import { VictoryThemeDefinition } from "victory";
 import clsx from "clsx";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
+import ColorPickerList from "./color-picker-list";
 
 type ColorPaletteSelectorProps = {
   label: string;
   value: string;
   palette?: VictoryThemeDefinition["palette"];
-  colorScaleType?: ColorScalePropType;
-  onColorChange: (args: ColorChangeArgs) => void;
   className?: string;
+  onColorsChange: (newColors: string[]) => void;
 };
 
 const ColorPaletteSelector = ({
   label,
   value,
-  colorScaleType,
   palette,
-  onColorChange,
   className,
+  onColorsChange,
 }: ColorPaletteSelectorProps) => {
   const { colorScale, updateColorScale } = usePreviewOptions();
 
@@ -28,15 +25,9 @@ const ColorPaletteSelector = ({
     updateColorScale(value);
   };
 
-  const handleColorChange = (newColor, i, cScale) => {
-    onColorChange({
-      newColor,
-      index: i,
-      colorScale: cScale,
-    });
-    if (colorScale !== cScale) {
-      updateColorScale(cScale);
-    }
+  const handleColorsChange = (newColors) => {
+    onColorsChange(newColors);
+    updateColorScale(value);
   };
 
   const isSelected = colorScale === value;
@@ -56,22 +47,11 @@ const ColorPaletteSelector = ({
         checked={isSelected}
         onChange={handleRadioChange}
       />
-      <div className="p-0 m-0">
-        <span className="block mb-3 text-sm font-bold">{label}</span>
-        {!!colorScaleType && (
-          <div className="flex flex-wrap gap-3">
-            {palette?.[colorScaleType as string]?.map((color, i) => (
-              <ColorPicker
-                key={i}
-                color={color}
-                onColorChange={(newColor) =>
-                  handleColorChange(newColor, i, colorScaleType)
-                }
-              />
-            ))}
-          </div>
-        )}
-      </div>
+      <ColorPickerList
+        label={label}
+        colors={palette?.[value as string]}
+        onColorsChange={handleColorsChange}
+      />
     </label>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useId } from "react";
-import { TiPencil } from "react-icons/ti";
+import { IoMdClose } from "react-icons/io";
 import clsx from "clsx";
 import Select from "./select";
 
@@ -7,11 +7,12 @@ type ColorPickerProps = {
   label?: string;
   color: string;
   onColorChange: (color?: string) => void;
-  showColorName?: boolean;
+  onColorRemove?: () => void;
+  showSelectOptions?: boolean;
   className?: string;
 };
 
-const PLACEHOLDER_COLOR = "#000000";
+export const PLACEHOLDER_COLOR = "#000000";
 const DEFAULT_COLOR = undefined;
 enum ColorPickerOptions {
   NONE = "none",
@@ -22,7 +23,8 @@ const ColorPicker = ({
   label,
   color,
   onColorChange,
-  showColorName = false,
+  onColorRemove,
+  showSelectOptions = false,
   className,
 }: ColorPickerProps) => {
   const [isPickerOpen, setIsPickerOpen] = React.useState(false);
@@ -55,6 +57,10 @@ const ColorPicker = ({
     }
   };
 
+  const handleRemoveColor = () => {
+    if (onColorRemove) onColorRemove();
+  };
+
   const id = useId();
 
   return (
@@ -64,8 +70,8 @@ const ColorPicker = ({
           {label}
         </span>
       )}
-      <div className="flex items-center gap-2">
-        {showColorName && (
+      <div className="flex items-center justify-between gap-2">
+        {showSelectOptions && (
           <div className="flex items-center my-2 flex-1">
             <Select
               id={id}
@@ -81,57 +87,32 @@ const ColorPicker = ({
           </div>
         )}
         {colorOption === ColorPickerOptions.CUSTOM && (
-          <div
-            className={clsx(
-              "relative inline-flex rounded-full group/swatch flex-1",
-              {
-                "border-2 border-grayscale-300 p-0.5 cursor-pointer justify-between bg-grayscale-100":
-                  showColorName,
-              },
-            )}
-          >
+          <div className="relative inline-flex rounded-full group/swatch">
             <div className="flex items-center">
               <div className="relative">
+                {onColorRemove && (
+                  <div className="absolute -top-1 -right-1 z-20 group/remove">
+                    <button
+                      onClick={handleRemoveColor}
+                      className="w-4 h-4 text-white bg-red-500 flex justify-center items-center text-2xl font-bold rounded-full p-0.5 cursor-pointer opacity-0 group-hover/swatch:opacity-100 group-hover/remove:bg-red-800"
+                    >
+                      <IoMdClose />
+                    </button>
+                  </div>
+                )}
                 <div
                   className={clsx(
-                    "block w-[35px] h-[35px] rounded-full cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor",
-                    {
-                      "outline-2 border-2 border-white outline outline-grayscale-300":
-                        !showColorName,
-                    },
-                    { "w-[30px] h-[30px] p-0.5": showColorName },
+                    "block w-[35px] h-[35px] rounded-full cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor outline-2 border-2 border-white outline outline-grayscale-300",
+                    isPickerOpen
+                      ? "outline-currentColor"
+                      : "outline-grayscale-300",
                   )}
                   style={{
                     color,
                   }}
                 />
-                {!showColorName && (
-                  <div
-                    className={`absolute top-0 left-0 w-full h-full text-white flex justify-center items-center text-xl rounded-full opacity-0 group-hover/swatch:opacity-100 ${
-                      isPickerOpen ? "opacity-100" : ""
-                    }`}
-                  >
-                    <TiPencil />
-                  </div>
-                )}
               </div>
-              {showColorName && (
-                <span
-                  className={
-                    "text-sm font-medium text-grayscale-900 uppercase ml-2 cursor-pointer"
-                  }
-                >
-                  {color}
-                </span>
-              )}
             </div>
-            {showColorName && (
-              <div
-                className={`text-grayscale-400 flex justify-center items-center text-xl rounded-full place-items-end ml-6 mr-1`}
-              >
-                <TiPencil />
-              </div>
-            )}
             <input
               id={id}
               className={`absolute top-0 left-0 w-full h-full cursor-pointer opacity-0 z-10 group-hover/swatch:border-currentColor ${
