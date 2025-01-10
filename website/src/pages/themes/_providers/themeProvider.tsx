@@ -1,4 +1,9 @@
-import React, { createContext, useCallback, useContext } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+} from "react";
 import { VictoryTheme, VictoryThemeDefinition } from "victory";
 import { setNestedConfigValue } from "../_utils";
 
@@ -22,12 +27,39 @@ export const themes: ThemeOption[] = [
 
 const defaultTheme = themes[0];
 
+const localStorageCustomConfigKey = "customThemeConfig";
+
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }) => {
-  const [baseTheme, setBaseTheme] = React.useState<ThemeOption>(defaultTheme);
+  const [baseTheme, setBaseTheme] = React.useState<ThemeOption>(() => {
+    const storedTheme = localStorage.getItem("baseTheme");
+    const baseThemeFromStorage = storedTheme
+      ? JSON.parse(storedTheme)
+      : defaultTheme;
+    const validTheme = themes.find(
+      (t) => t.name === baseThemeFromStorage?.name,
+    );
+    return validTheme ?? defaultTheme;
+  });
   const [customThemeConfig, setCustomThemeConfig] =
-    React.useState<VictoryThemeDefinition>(defaultTheme.config);
+    React.useState<VictoryThemeDefinition>(() => {
+      const storedConfig = localStorage.getItem(localStorageCustomConfigKey);
+      return storedConfig ? JSON.parse(storedConfig) : defaultTheme.config;
+    });
+
+  useEffect(() => {
+    if (customThemeConfig) {
+      localStorage.setItem(
+        localStorageCustomConfigKey,
+        JSON.stringify(customThemeConfig),
+      );
+    }
+  }, [customThemeConfig]);
+
+  useEffect(() => {
+    localStorage.setItem("baseTheme", JSON.stringify(baseTheme));
+  }, [baseTheme]);
 
   const onBaseThemeSelect = (themeName?: string) => {
     const theme = themes.find((t) => t.name === themeName);
@@ -36,7 +68,9 @@ export const ThemeProvider = ({ children }) => {
       setCustomThemeConfig(defaultTheme.config);
     } else {
       setBaseTheme(theme);
-      setCustomThemeConfig({ ...theme?.config });
+      if (theme.name !== "Custom") {
+        setCustomThemeConfig({ ...theme?.config });
+      }
     }
   };
 
