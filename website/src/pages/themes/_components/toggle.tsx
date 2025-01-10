@@ -18,37 +18,38 @@ const Toggle = ({
   className,
   size = "md",
 }: ToggleProps) => {
-  const handleChange = () => {
+  const handleToggle = () => {
     onChange(!checked);
   };
 
   const labelSizeClasses = size === "md" ? "font-bold" : "font-medium";
 
   return (
-    <label
-      htmlFor={id}
-      className={clsx(
-        "flex justify-between items-center cursor-pointer",
-        className,
-      )}
-    >
-      <span className={clsx("text-sm", labelSizeClasses)}>{label}</span>
-      <input
+    <div className={clsx("flex justify-between items-center", className)}>
+      <label className={clsx("text-sm", labelSizeClasses)}>{label}</label>
+      <button
+        type="button"
         id={id}
-        type="checkbox"
-        checked={checked}
-        onChange={handleChange}
-        className="sr-only peer"
-      />
-      <div
+        role="switch"
+        aria-checked={checked}
+        onClick={handleToggle}
         className={clsx(
-          "relative bg-grayscale-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-grayscale-300 after:border after:rounded-full after:transition-all peer-checked:bg-blue-800",
-          size === "xs" && "w-7 h-4 after:h-3 after:w-3",
-          size === "sm" && "w-9 h-5 after:h-4 after:w-4",
-          size === "md" && "w-11 h-6 after:h-5 after:w-5",
+          "group flex p-0.5 rounded-full bg-grayscale-300 transition-colors duration-200 ease-in-out overflow-hidden aria-checked:bg-blue-800 cursor-pointer",
+          size === "xs" && "w-7 h-4",
+          size === "sm" && "w-9 h-5",
+          size === "md" && "w-11 h-6",
         )}
-      ></div>
-    </label>
+      >
+        <span
+          className={clsx(
+            "rounded-full bg-white transition-transform duration-200 ease-in-out group-aria-checked:translate-x-full",
+            size === "xs" && "h-3 w-3",
+            size === "sm" && "h-4 w-4",
+            size === "md" && "h-5 w-5",
+          )}
+        ></span>
+      </button>
+    </div>
   );
 };
 
