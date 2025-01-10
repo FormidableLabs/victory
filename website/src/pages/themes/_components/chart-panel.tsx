@@ -14,17 +14,10 @@ const ChartPanel = ({
 }: ChartPanelProps) => {
   const [chartType, setChartType] = React.useState(Object.keys(types)[0]);
   const { setExampleContent } = usePreviewOptions();
-  const selectOptions = Object.keys(types).map((key) => ({
+  const options = Object.keys(types).map((key) => ({
     label: types[key].label,
     value: key,
   }));
-  const options = useMemo(
-    () => [
-      { label: `Select ${selectLabel.toLowerCase()}`, value: "" },
-      ...selectOptions,
-    ],
-    [selectOptions, selectLabel],
-  );
   const controls = types[chartType]?.controls || [];
 
   const onChartTypeChange = (newValue: string) => {
@@ -32,9 +25,13 @@ const ChartPanel = ({
   };
 
   useEffect(() => {
-    const examples = types[chartType]?.content || [];
-    setExampleContent(examples);
-  }, [chartType, setExampleContent, types]);
+    const newChartType = Object.keys(types)[0];
+    if (chartType !== newChartType) {
+      const examples = types[newChartType]?.content || [];
+      setChartType(newChartType);
+      setExampleContent(examples);
+    }
+  }, [types, chartType, setExampleContent]);
 
   return (
     <>
