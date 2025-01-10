@@ -28,12 +28,13 @@ export const themes: ThemeOption[] = [
 const defaultTheme = themes[0];
 
 const localStorageCustomConfigKey = "customThemeConfig";
+const localStorageBaseThemeKey = "baseTheme";
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }) => {
   const [baseTheme, setBaseTheme] = React.useState<ThemeOption>(() => {
-    const storedTheme = localStorage.getItem("baseTheme");
+    const storedTheme = localStorage.getItem(localStorageBaseThemeKey);
     const baseThemeFromStorage = storedTheme
       ? JSON.parse(storedTheme)
       : defaultTheme;
@@ -58,7 +59,7 @@ export const ThemeProvider = ({ children }) => {
   }, [customThemeConfig]);
 
   useEffect(() => {
-    localStorage.setItem("baseTheme", JSON.stringify(baseTheme));
+    localStorage.setItem(localStorageBaseThemeKey, JSON.stringify(baseTheme));
   }, [baseTheme]);
 
   const onBaseThemeSelect = (themeName?: string) => {
