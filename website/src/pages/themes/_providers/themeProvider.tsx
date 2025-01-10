@@ -34,6 +34,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }) => {
   const [baseTheme, setBaseTheme] = React.useState<ThemeOption>(() => {
+    if (typeof window === "undefined") return defaultTheme;
     const storedTheme = localStorage.getItem(localStorageBaseThemeKey);
     const baseThemeFromStorage = storedTheme
       ? JSON.parse(storedTheme)
@@ -45,12 +46,13 @@ export const ThemeProvider = ({ children }) => {
   });
   const [customThemeConfig, setCustomThemeConfig] =
     React.useState<VictoryThemeDefinition>(() => {
+      if (typeof window === "undefined") return defaultTheme.config;
       const storedConfig = localStorage.getItem(localStorageCustomConfigKey);
       return storedConfig ? JSON.parse(storedConfig) : defaultTheme.config;
     });
 
   useEffect(() => {
-    if (customThemeConfig) {
+    if (customThemeConfig && typeof window !== "undefined") {
       localStorage.setItem(
         localStorageCustomConfigKey,
         JSON.stringify(customThemeConfig),
@@ -59,7 +61,8 @@ export const ThemeProvider = ({ children }) => {
   }, [customThemeConfig]);
 
   useEffect(() => {
-    localStorage.setItem(localStorageBaseThemeKey, JSON.stringify(baseTheme));
+    if (typeof window !== "undefined")
+      localStorage.setItem(localStorageBaseThemeKey, JSON.stringify(baseTheme));
   }, [baseTheme]);
 
   const onBaseThemeSelect = (themeName?: string) => {
