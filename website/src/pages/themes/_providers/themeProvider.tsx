@@ -1,11 +1,7 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-} from "react";
+import React, { createContext, useCallback, useContext } from "react";
 import { VictoryTheme, VictoryThemeDefinition } from "victory";
 import { setNestedConfigValue } from "../_utils";
+import { useLocalStorage } from "@site/src/hooks/useLocalStorage";
 
 export type ThemeOption = {
   name: string;
@@ -33,37 +29,14 @@ const localStorageBaseThemeKey = "baseTheme";
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }) => {
-  const [baseTheme, setBaseTheme] = React.useState<ThemeOption>(() => {
-    if (typeof window === "undefined") return defaultTheme;
-    const storedTheme = localStorage.getItem(localStorageBaseThemeKey);
-    const baseThemeFromStorage = storedTheme
-      ? JSON.parse(storedTheme)
-      : defaultTheme;
-    const validTheme = themes.find(
-      (t) => t.name === baseThemeFromStorage?.name,
-    );
-    return validTheme ?? defaultTheme;
-  });
-  const [customThemeConfig, setCustomThemeConfig] =
-    React.useState<VictoryThemeDefinition>(() => {
-      if (typeof window === "undefined") return defaultTheme.config;
-      const storedConfig = localStorage.getItem(localStorageCustomConfigKey);
-      return storedConfig ? JSON.parse(storedConfig) : defaultTheme.config;
-    });
-
-  useEffect(() => {
-    if (customThemeConfig && typeof window !== "undefined") {
-      localStorage.setItem(
-        localStorageCustomConfigKey,
-        JSON.stringify(customThemeConfig),
-      );
-    }
-  }, [customThemeConfig]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined")
-      localStorage.setItem(localStorageBaseThemeKey, JSON.stringify(baseTheme));
-  }, [baseTheme]);
+  const [baseTheme, setBaseTheme] = useLocalStorage(
+    localStorageBaseThemeKey,
+    defaultTheme,
+  );
+  const [customThemeConfig, setCustomThemeConfig] = useLocalStorage(
+    localStorageCustomConfigKey,
+    defaultTheme.config,
+  );
 
   const onBaseThemeSelect = (themeName?: string) => {
     const theme = themes.find((t) => t.name === themeName);
@@ -88,7 +61,7 @@ export const ThemeProvider = ({ children }) => {
       );
       setCustomThemeConfig(updatedConfig);
     },
-    [customThemeConfig],
+    [customThemeConfig, setCustomThemeConfig],
   );
 
   return (
