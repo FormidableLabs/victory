@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "../../css/custom.css";
 
@@ -11,6 +11,7 @@ import { ThemeProvider } from "./_providers/themeProvider";
 import { ThemePreview } from "./_components/theme-preview";
 import { PreviewOptionsProvider } from "./_providers/previewOptionsProvider";
 import ExportPanel from "./_components/export-panel";
+import { useHistory } from "@docusaurus/router";
 
 const getPanel = ({ panelType, config }) => {
   switch (panelType) {
@@ -23,10 +24,38 @@ const getPanel = ({ panelType, config }) => {
   }
 };
 
+const UNSAVED_CHANGES_MESSAGE =
+  "If you leave this page, your changes will be lost. Are you sure you want to continue?";
+
 const ThemeBuilder = () => {
   const [activeSidebarItem, setActiveSidebarItem] = React.useState(
     NAV_ITEMS[0],
   );
+  const history = useHistory();
+
+  useEffect(() => {
+    const unblock = history.block((location) => {
+      if (window.confirm(UNSAVED_CHANGES_MESSAGE)) {
+        unblock();
+        history.push(location.pathname);
+      }
+      return false;
+    });
+
+    const blockBeforeRefresh = (event) => {
+      const message = UNSAVED_CHANGES_MESSAGE;
+      event.preventDefault();
+      event.returnValue = message;
+      return message;
+    };
+
+    window.addEventListener("beforeunload", blockBeforeRefresh);
+
+    return () => {
+      window.removeEventListener("beforeunload", blockBeforeRefresh);
+      unblock();
+    };
+  }, [history]);
 
   const isExportPanel = activeSidebarItem.panelType === "export";
 
