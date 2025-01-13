@@ -14,27 +14,35 @@ const ChartPanel = ({
 }: ChartPanelProps) => {
   const [chartType, setChartType] = React.useState(Object.keys(types)[0]);
   const { setExampleContent } = usePreviewOptions();
-  const selectOptions = Object.keys(types).map((key) => ({
-    label: types[key].label,
-    value: key,
-  }));
+
+  useEffect(() => {
+    const newChartType = Object.keys(types)[0];
+    setChartType((prevChartType) =>
+      prevChartType !== newChartType ? newChartType : prevChartType,
+    );
+  }, [types]);
+
+  useEffect(() => {
+    const examples = types[chartType]?.content ?? [];
+    setExampleContent(examples);
+  }, [types, chartType, setExampleContent]);
+
   const options = useMemo(
-    () => [
-      { label: `Select ${selectLabel.toLowerCase()}`, value: "" },
-      ...selectOptions,
-    ],
-    [selectOptions, selectLabel],
+    () =>
+      Object.keys(types).map((key) => ({
+        label: types[key].label,
+        value: key,
+      })),
+    [types],
   );
-  const controls = types[chartType]?.controls || [];
+  const controls = useMemo(
+    () => types[chartType]?.controls || [],
+    [types, chartType],
+  );
 
   const onChartTypeChange = (newValue: string) => {
     setChartType(newValue);
   };
-
-  useEffect(() => {
-    const examples = types[chartType]?.content || [];
-    setExampleContent(examples);
-  }, [chartType, setExampleContent, types]);
 
   return (
     <>
