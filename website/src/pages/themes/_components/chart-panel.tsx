@@ -14,24 +14,35 @@ const ChartPanel = ({
 }: ChartPanelProps) => {
   const [chartType, setChartType] = React.useState(Object.keys(types)[0]);
   const { setExampleContent } = usePreviewOptions();
-  const options = Object.keys(types).map((key) => ({
-    label: types[key].label,
-    value: key,
-  }));
-  const controls = types[chartType]?.controls || [];
+
+  useEffect(() => {
+    const newChartType = Object.keys(types)[0];
+    setChartType((prevChartType) =>
+      prevChartType !== newChartType ? newChartType : prevChartType,
+    );
+  }, [types]);
+
+  useEffect(() => {
+    const examples = types[chartType]?.content ?? [];
+    setExampleContent(examples);
+  }, [types, chartType, setExampleContent]);
+
+  const options = useMemo(
+    () =>
+      Object.keys(types).map((key) => ({
+        label: types[key].label,
+        value: key,
+      })),
+    [types],
+  );
+  const controls = useMemo(
+    () => types[chartType]?.controls || [],
+    [types, chartType],
+  );
 
   const onChartTypeChange = (newValue: string) => {
     setChartType(newValue);
   };
-
-  useEffect(() => {
-    const newChartType = Object.keys(types)[0];
-    if (chartType !== newChartType) {
-      const examples = types[newChartType]?.content || [];
-      setChartType(newChartType);
-      setExampleContent(examples);
-    }
-  }, [types, chartType, setExampleContent]);
 
   return (
     <>
