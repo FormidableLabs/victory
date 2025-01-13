@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext } from "react";
 import { VictoryTheme, VictoryThemeDefinition } from "victory";
 import { setNestedConfigValue } from "../_utils";
+import { useLocalStorage } from "@site/src/hooks/useLocalStorage";
 
 export type ThemeOption = {
   name: string;
@@ -22,12 +23,20 @@ export const themes: ThemeOption[] = [
 
 const defaultTheme = themes[0];
 
+const localStorageCustomConfigKey = "customThemeConfig";
+const localStorageBaseThemeKey = "baseTheme";
+
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }) => {
-  const [baseTheme, setBaseTheme] = React.useState<ThemeOption>(defaultTheme);
-  const [customThemeConfig, setCustomThemeConfig] =
-    React.useState<VictoryThemeDefinition>(defaultTheme.config);
+  const [baseTheme, setBaseTheme] = useLocalStorage(
+    localStorageBaseThemeKey,
+    defaultTheme,
+  );
+  const [customThemeConfig, setCustomThemeConfig] = useLocalStorage(
+    localStorageCustomConfigKey,
+    defaultTheme.config,
+  );
 
   const onBaseThemeSelect = (themeName?: string) => {
     const theme = themes.find((t) => t.name === themeName);
@@ -36,7 +45,9 @@ export const ThemeProvider = ({ children }) => {
       setCustomThemeConfig(defaultTheme.config);
     } else {
       setBaseTheme(theme);
-      setCustomThemeConfig({ ...theme?.config });
+      if (theme.name !== "Custom") {
+        setCustomThemeConfig({ ...theme?.config });
+      }
     }
   };
 
@@ -50,7 +61,7 @@ export const ThemeProvider = ({ children }) => {
       );
       setCustomThemeConfig(updatedConfig);
     },
-    [customThemeConfig],
+    [customThemeConfig, setCustomThemeConfig],
   );
 
   return (
