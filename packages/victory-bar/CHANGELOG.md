@@ -1,5 +1,7 @@
 # victory-bar
 
+## 37.3.6
+
 ## 37.3.5
 
 ### Patch Changes
