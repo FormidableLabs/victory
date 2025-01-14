@@ -27,14 +27,16 @@ import {
   PieExamples,
   StackExamples,
 } from "./examples";
+import { useSideNavContext } from "../_providers/sidenavProvider";
+import { HiOutlineCode } from "react-icons/hi";
 
-type NavItem = {
+export type NavItem = {
   title: string;
   icon: React.ElementType;
   content: ExampleConfig[];
 } & (
   | {
-      panelType: "theme" | "export";
+      panelType: "theme" | "export" | "code";
     }
   | {
       panelType: "default";
@@ -45,11 +47,6 @@ type NavItem = {
       config: ChartPanelConfig;
     }
 );
-
-type SideNavProps = {
-  activeItem: NavItem;
-  onItemSelect: (item: NavItem) => void;
-};
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -88,31 +85,40 @@ export const NAV_ITEMS: NavItem[] = [
   },
 ];
 
-const exportItem: NavItem = {
+export const exportItem: NavItem = {
   title: "Export",
   icon: TiExportOutline,
   panelType: "export",
   content: [],
 };
 
-const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
+export const codeItem: NavItem = {
+  title: "Theme Code",
+  icon: HiOutlineCode,
+  panelType: "code",
+  content: [],
+};
+
+const SideNav = () => {
   const { baseTheme } = useTheme();
+  const { activeSideNavItem, setActiveSideNavItem } = useSideNavContext();
   const { setExampleContent, updateColorScale } = usePreviewOptions();
   const isBaseThemeSelected = !!baseTheme;
 
   const handleItemSelect = (item: NavItem) => {
-    onItemSelect(item);
+    setActiveSideNavItem(item);
     updateColorScale(defaultColorScale);
     setExampleContent(item.content);
   };
 
-  const isExportItemActive = activeItem.title === exportItem.title;
+  const isExportItemActive = activeSideNavItem.title === exportItem.title;
+  const isCodeItemActive = activeSideNavItem.title === codeItem.title;
 
   return (
     <aside className="sticky top-[60px] h-theme-builder w-[100px] overflow-y-auto bg-black py-4 flex-none flex flex-col justify-between px-2">
       <div className="w-full space-y-1 px-2">
         {NAV_ITEMS.map((item) => {
-          const isActive = item.title === activeItem.title;
+          const isActive = item.title === activeSideNavItem.title;
           const isDisabled =
             item.title !== "Base Theme" && !isBaseThemeSelected;
           return (
@@ -142,23 +148,39 @@ const SideNav = ({ activeItem, onItemSelect }: SideNavProps) => {
           );
         })}
       </div>
-      <button
-        aria-current={isExportItemActive ? "page" : undefined}
-        onClick={() => handleItemSelect(exportItem)}
-        disabled={!isBaseThemeSelected}
-        className={clsx(
-          "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer text-theme-2 hover:underline disabled:bg-grayscale-400 disabled:text-grayscale-800 disabled:cursor-not-allowed",
-          isExportItemActive
-            ? "bg-theme-1/100"
-            : "bg-theme-1/80 hover:bg-theme-1/100",
-        )}
-      >
-        <exportItem.icon
-          aria-hidden="true"
-          className={"size-6 text-theme-2 group-disabled:text-grayscale-800"}
-        />
-        <span className="mt-2">{exportItem.title}</span>
-      </button>
+      <div>
+        <button
+          className={clsx(
+            "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer hover:underline disabled:bg-grayscale-400 disabled:text-grayscale-800 disabled:cursor-not-allowed",
+            isCodeItemActive
+              ? "text-orange-100 bg-gray-800"
+              : "text-grayscale-300 bg-transparent",
+          )}
+          onClick={() => handleItemSelect(codeItem)}
+        >
+          <codeItem.icon className="size-6 group-disabled:text-grayscale-800" />
+          <span className={clsx("mt-2", isCodeItemActive && "text-white")}>
+            {codeItem.title}
+          </span>
+        </button>
+        <button
+          aria-current={isExportItemActive ? "page" : undefined}
+          onClick={() => handleItemSelect(exportItem)}
+          disabled={!isBaseThemeSelected}
+          className={clsx(
+            "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer text-theme-2 hover:underline disabled:bg-grayscale-400 disabled:text-grayscale-800 disabled:cursor-not-allowed",
+            isExportItemActive
+              ? "bg-theme-1/100"
+              : "bg-theme-1/80 hover:bg-theme-1/100",
+          )}
+        >
+          <exportItem.icon
+            aria-hidden="true"
+            className={"size-6 group-disabled:text-grayscale-800"}
+          />
+          <span className="mt-2">{exportItem.title}</span>
+        </button>
+      </div>
     </aside>
   );
 };

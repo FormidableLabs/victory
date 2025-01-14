@@ -73,7 +73,7 @@ const ExportPanel = () => {
   };
 
   return (
-    <div className="max-w-screen-lg mx-auto p-10 w-export-panel">
+    <div className="max-w-screen-lg mx-auto p-10 w-full-panel">
       <h1 className="text-3xl">
         How to Use Your Exported Victory Theme Config
       </h1>
