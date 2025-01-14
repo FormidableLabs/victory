@@ -67,11 +67,12 @@ To open the demo app, just fire up the expo app.
 # Install victory and its dependencies
 $ git clone https://github.com/FormidableLabs/victory
 $ cd victory
-$ yarn install
-# Open up the React Native demo app
-$ cd demo/rn
-$ yarn install
-$ yarn start
+$ pnpm install
+$ pnpm run build --watch
+# In a new terminal, open up the React Native demo app
+$ cd victory/demo/rn
+$ pnpm install
+$ pnpm start
 ```
 
 Once Expo has fired up, it should open a web browser window where you can find instructions to open the demo application (either on a simulator or a physical device using the Expo Go app).

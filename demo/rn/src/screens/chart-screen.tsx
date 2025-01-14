@@ -10,9 +10,10 @@ import {
   VictoryArea,
   VictoryStack,
   VictoryTooltip,
+  VictoryZoomContainer,
 } from "victory-native";
 import viewStyles from "../styles/view-styles";
-import { getTransitionData } from "../data";
+import { getTransitionData, generateRandomData } from "../data";
 
 export const ChartScreen: React.FC = () => {
   const [transitionData, setTransitionData] =
@@ -185,6 +186,18 @@ export const ChartScreen: React.FC = () => {
         style={{ background: { fill: "pink" } }}
       >
         <VictoryBar />
+      </VictoryChart>
+      <VictoryChart
+        containerComponent={
+          <VictoryZoomContainer
+            zoomDimension="x"
+            zoomDomain={{
+              x: [0, 5],
+            }}
+          />
+        }
+      >
+        <VictoryBar barRatio={1.2} data={generateRandomData(10)} />
       </VictoryChart>
     </ScrollView>
   );
