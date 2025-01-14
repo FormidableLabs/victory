@@ -1,5 +1,11 @@
 # victory-native
 
+## 37.3.6
+
+### Patch Changes
+
+- Fixes clipping/loss of interactivity bug in victory-zoom-container ([#3026](https://github.com/FormidableLabs/victory/pull/3026))
+
 ## 37.3.5
 
 ## 37.3.4
