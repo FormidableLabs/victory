@@ -1,5 +1,5 @@
 import React from "react";
-import { useSideNavContext } from "../_providers/sidenavProvider";
+import { useSideNavContext } from "../_providers/sideNavProvider";
 import { ThemePreview } from "./theme-preview";
 import BaseThemePanel from "./base-theme-panel";
 import ChartPanel from "./chart-panel";

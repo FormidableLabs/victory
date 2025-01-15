@@ -6,7 +6,7 @@ import Layout from "@theme/Layout";
 import SideNav from "./_components/sideNav";
 import { ThemeProvider } from "./_providers/themeProvider";
 import { PreviewOptionsProvider } from "./_providers/previewOptionsProvider";
-import { SideNavProvider } from "./_providers/sidenavProvider";
+import { SideNavProvider } from "./_providers/sideNavProvider";
 import Main from "./_components/main";
 import { AlertProvider } from "./_providers/alertProvider";
 

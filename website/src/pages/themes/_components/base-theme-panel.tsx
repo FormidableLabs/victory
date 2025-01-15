@@ -4,9 +4,9 @@ import { CUSTOM_THEME, themes, useTheme } from "../_providers/themeProvider";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
 import PanelHeader from "./panel-header";
 import Card from "./card";
-import { useSideNavContext } from "../_providers/sidenavProvider";
 import { codeItem } from "./sideNav";
 import { TiArrowRight } from "react-icons/ti";
+import { useSideNavContext } from "../_providers/sideNavProvider";
 
 const themeOptions = themes.map((theme) => ({
   label: theme.name,

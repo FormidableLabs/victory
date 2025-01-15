@@ -27,9 +27,9 @@ import {
   PieExamples,
   StackExamples,
 } from "./examples";
-import { useSideNavContext } from "../_providers/sidenavProvider";
 import { HiOutlineCode } from "react-icons/hi";
 import SideNavButton from "./sideNavButton";
+import { useSideNavContext } from "../_providers/sideNavProvider";
 
 export type NavItem = {
   title: string;
