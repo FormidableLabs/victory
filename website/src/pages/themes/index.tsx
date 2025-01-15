@@ -8,18 +8,21 @@ import { ThemeProvider } from "./_providers/themeProvider";
 import { PreviewOptionsProvider } from "./_providers/previewOptionsProvider";
 import { SideNavProvider } from "./_providers/sidenavProvider";
 import Main from "./_components/main";
+import { AlertProvider } from "./_providers/alertProvider";
 
 const ThemeBuilder = () => {
   return (
     <Layout>
       <ThemeProvider>
         <PreviewOptionsProvider>
-          <SideNavProvider>
-            <div className="relative flex flex-row items-start justify-start w-full theme-builder">
-              <SideNav />
-              <Main />
-            </div>
-          </SideNavProvider>
+          <AlertProvider>
+            <SideNavProvider>
+              <div className="relative flex flex-row items-start justify-start w-full theme-builder">
+                <SideNav />
+                <Main />
+              </div>
+            </SideNavProvider>
+          </AlertProvider>
         </PreviewOptionsProvider>
       </ThemeProvider>
     </Layout>

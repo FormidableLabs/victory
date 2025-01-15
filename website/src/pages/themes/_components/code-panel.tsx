@@ -3,6 +3,8 @@ import Editor from "@monaco-editor/react";
 import { CUSTOM_THEME, useTheme } from "../_providers/themeProvider";
 import { stringifyWithoutQuotes } from "../_utils";
 import { Button } from "@site/src/components/button";
+import { useAlert } from "../_providers/alertProvider";
+import { AlertType } from "./alert";
 
 const EDITOR_OPTIONS = {
   minimap: { enabled: false },
@@ -11,10 +13,10 @@ const EDITOR_OPTIONS = {
 
 const CodePanel = () => {
   const { onBaseThemeSelect, customThemeConfig } = useTheme();
+  const { addAlert } = useAlert();
   const [customTheme, setCustomTheme] = useState<string>(() =>
     stringifyWithoutQuotes(customThemeConfig),
   );
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setCustomTheme(stringifyWithoutQuotes(customThemeConfig));
@@ -22,22 +24,29 @@ const CodePanel = () => {
 
   const handleCustomThemeChange = (value: string | undefined) => {
     setCustomTheme(value || "");
-    setError(null);
   };
 
   const applyCustomTheme = () => {
     try {
       const parsedTheme = new Function(`return (${customTheme.trim()});`)();
       if (typeof parsedTheme !== "object" || Array.isArray(parsedTheme)) {
-        throw new Error("Invalid theme structure. Must be an object.");
+        addAlert({
+          type: AlertType.ERROR,
+          title: "Invalid theme structure.",
+          message: "Must be an object.",
+        });
       }
-
+      addAlert({
+        type: AlertType.SUCCESS,
+        title: "Changes applied successfully.",
+      });
       onBaseThemeSelect(CUSTOM_THEME.name, parsedTheme);
-      setError(null);
     } catch {
-      setError(
-        "Invalid JavaScript object. Please check your theme configuration.",
-      );
+      addAlert({
+        type: AlertType.ERROR,
+        title: "Invalid JavaScript object.",
+        message: "Please check your theme configuration.",
+      });
     }
   };
 
