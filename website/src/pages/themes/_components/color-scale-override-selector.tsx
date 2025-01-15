@@ -49,8 +49,10 @@ const ColorScaleOverrideSelector = ({
   };
 
   return (
-    <label className={clsx("p-0 m-0", className)}>
-      <span className="block mb-3 text-sm font-bold">{label}</span>
+    <div className={clsx("p-0 m-0", className)}>
+      <label htmlFor={id} className="block mb-3 text-sm font-bold">
+        {label}
+      </label>
       {!hideDefaultToggle && (
         <Toggle
           id={id}
@@ -64,7 +66,7 @@ const ColorScaleOverrideSelector = ({
       {showCustomColors && typeof colors !== "string" && (
         <ColorPickerList colors={colors} onColorsChange={handleColorsChange} />
       )}
-    </label>
+    </div>
   );
 };
 export default ColorScaleOverrideSelector;

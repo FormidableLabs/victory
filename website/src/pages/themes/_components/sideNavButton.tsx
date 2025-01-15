@@ -24,7 +24,7 @@ const SideNavButton = ({
       onClick={onClick}
       disabled={isDisabled}
       className={clsx(
-        "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer",
+        "group flex w-full flex-col items-center rounded-md p-3 text-xs font-semibold cursor-pointer",
         isActive
           ? "text-white bg-gray-800"
           : "text-grayscale-300 hover:text-white disabled:text-grayscale-800 disabled:cursor-not-allowed bg-transparent hover:bg-gray-900",

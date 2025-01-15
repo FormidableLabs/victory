@@ -35,7 +35,11 @@ const ColorPickerList = ({
 
   return (
     <div className={clsx("p-0 m-0", className)}>
-      {label && <span className="block mb-3 text-sm font-bold">{label}</span>}
+      {label && (
+        <span className="block mb-3 text-sm font-semibold text-gray-800">
+          {label}
+        </span>
+      )}
       <div className="flex flex-wrap gap-3">
         {colors.map((color, i) => (
           <ColorPicker

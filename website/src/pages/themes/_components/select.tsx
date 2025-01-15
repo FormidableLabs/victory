@@ -33,7 +33,7 @@ const Select = ({
     }
   };
 
-  const labelSizeClasses = size === "sm" ? "font-medium" : "font-bold";
+  const labelSizeClasses = size === "sm" ? "font-medium" : "font-semibold";
   const selectSizeClasses =
     size === "sm" ? "text-sm px-2 py-1.5" : "text-base p-2";
 
@@ -42,7 +42,10 @@ const Select = ({
       {label && (
         <label
           htmlFor={id}
-          className={clsx("block flex-1 my-1 text-sm", labelSizeClasses)}
+          className={clsx(
+            "block flex-1 mb-1 text-sm text-gray-800",
+            labelSizeClasses,
+          )}
         >
           {label}
         </label>
@@ -52,7 +55,7 @@ const Select = ({
         value={value}
         onChange={handleChange}
         className={clsx(
-          "w-full border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-[right_8px_center] bg-[length:16px] flex-1",
+          "w-full border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-[right_8px_center] bg-[length:16px] flex-1 font-sans text-sm p-2.5",
           selectSizeClasses,
         )}
       >

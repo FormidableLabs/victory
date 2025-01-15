@@ -18,7 +18,7 @@ const Main = () => {
 
   return (
     <>
-      <aside className="sticky top-[60px] h-theme-builder p-6 border-r border-grayscale-300 overflow-y-scroll w-[380px] bg-gray-100">
+      <aside className="sticky top-[60px] h-theme-builder p-6 border-r border-grayscale-300 overflow-y-scroll w-[390px] bg-gray-100">
         {activeSideNavItem.panelType === "theme" && <BaseThemePanel />}
         {activeSideNavItem.panelType === "chart" && (
           <ChartPanel config={activeSideNavItem.config} />

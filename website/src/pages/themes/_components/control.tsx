@@ -51,6 +51,7 @@ const Control = ({ type, control, className }: ControlProps) => {
           title={control.label}
           id={id}
           defaultOpen={control.defaultOpen}
+          className="!my-0"
         >
           {control.controls?.map((nestedControl, i) => (
             <Control
@@ -74,9 +75,9 @@ const Control = ({ type, control, className }: ControlProps) => {
       );
     case "section":
       return (
-        <section className="mb-8">
+        <section className="mb-6 bg-white p-4 rounded-md space-y-4">
           <div className="mb-4">
-            <h3 className="text-lg font-semibold text-secondary mb-0">
+            <h3 className="text-lg font-bold text-secondary mb-0 text-gray-800">
               {control.label}
             </h3>
             {control.description && (

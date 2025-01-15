@@ -7,6 +7,7 @@ type AccordionProps = {
   title: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
+  className?: string;
 };
 
 const Accordion = ({
@@ -14,6 +15,7 @@ const Accordion = ({
   title,
   children,
   defaultOpen = false,
+  className,
 }: AccordionProps) => {
   const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
@@ -22,7 +24,7 @@ const Accordion = ({
   };
 
   return (
-    <div id={id} className="group">
+    <div id={id} className={clsx("group", className)}>
       <h2 id={`${id}-heading`} className="mb-0">
         <button
           type="button"

@@ -64,15 +64,18 @@ const ColorPicker = ({
   const id = useId();
 
   return (
-    <label className={clsx("p-0 m-0", className)}>
+    <div className={clsx("p-0 m-0", className)}>
       {label && (
-        <span className="block mb-1 text-sm text-grayscale-900 dark:text-white font-bold">
+        <label
+          htmlFor={id}
+          className="block mb-1 text-sm font-semibold text-gray-800 dark:text-white"
+        >
           {label}
-        </span>
+        </label>
       )}
       <div className="flex items-center justify-between gap-2">
         {showSelectOptions && (
-          <div className="flex items-center my-2 flex-1">
+          <div className="flex items-center flex-1">
             <Select
               id={id}
               value={colorOption}
@@ -127,7 +130,7 @@ const ColorPicker = ({
           </div>
         )}
       </div>
-    </label>
+    </div>
   );
 };
 

@@ -17,7 +17,7 @@ const ThemeBuilder = () => {
         <PreviewOptionsProvider>
           <AlertProvider>
             <SideNavProvider>
-              <div className="relative flex flex-row items-start justify-start w-full theme-builder">
+              <div className="relative flex flex-row items-start justify-start w-full theme-builder font-sans text-gray-700">
                 <SideNav />
                 <Main />
               </div>

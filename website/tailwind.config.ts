@@ -16,13 +16,6 @@ const NearFormColors = {
   DeepNavy: "hsla(225, 100%, 11%, 1)",
 };
 
-const blue = {
-  100: "#E8F0FF",
-  300: "#B9D3FF",
-  500: "#8AB6FF",
-  800: "#4589FF",
-};
-
 const orange = {
   100: "#ff684f",
   200: "#ff4b2e",
@@ -52,7 +45,6 @@ module.exports = {
           800: "#888888",
         },
         orange,
-        blue,
         "theme-1": NearFormColors.Green,
         "theme-2": NearFormColors.DeepNavy,
         "theme-3": NearFormColors.DeepNavy,
