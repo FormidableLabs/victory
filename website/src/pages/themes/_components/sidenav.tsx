@@ -29,10 +29,11 @@ import {
 } from "./examples";
 import { useSideNavContext } from "../_providers/sidenavProvider";
 import { HiOutlineCode } from "react-icons/hi";
+import SideNavButton from "./sideNavButton";
 
 export type NavItem = {
   title: string;
-  icon: React.ElementType;
+  Icon: React.ElementType;
   content: ExampleConfig[];
 } & (
   | {
@@ -51,51 +52,51 @@ export type NavItem = {
 export const NAV_ITEMS: NavItem[] = [
   {
     title: "Base Theme",
-    icon: CircleStackIcon,
+    Icon: CircleStackIcon,
     panelType: "theme",
     content: AllExamples,
   },
   {
     title: "Color Palette",
-    icon: SwatchIcon,
+    Icon: SwatchIcon,
     config: paletteOptionsConfig,
     panelType: "default",
     content: [...StackExamples, ...GroupExamples, ...PieExamples],
   },
   {
     title: "Global Options",
-    icon: GlobeAmericasIcon,
+    Icon: GlobeAmericasIcon,
     config: globalOptionsConfig,
     panelType: "default",
     content: AllExamples,
   },
   {
     title: "Axis Options",
-    icon: AdjustmentsVerticalIcon,
+    Icon: AdjustmentsVerticalIcon,
     config: axisOptionsConfig,
     panelType: "chart",
     content: [],
   },
   {
     title: "Chart Options",
-    icon: AdjustmentsVerticalIcon,
+    Icon: AdjustmentsVerticalIcon,
     config: chartOptionsConfig,
     panelType: "chart",
     content: [],
   },
 ];
 
-export const exportItem: NavItem = {
-  title: "Export",
-  icon: TiExportOutline,
-  panelType: "export",
+export const codeItem: NavItem = {
+  title: "Theme Code",
+  Icon: HiOutlineCode,
+  panelType: "code",
   content: [],
 };
 
-export const codeItem: NavItem = {
-  title: "Theme Code",
-  icon: HiOutlineCode,
-  panelType: "code",
+export const exportItem: NavItem = {
+  title: "Export Theme",
+  Icon: TiExportOutline,
+  panelType: "export",
   content: [],
 };
 
@@ -115,54 +116,31 @@ const SideNav = () => {
   const isCodeItemActive = activeSideNavItem.title === codeItem.title;
 
   return (
-    <aside className="sticky top-[60px] h-theme-builder w-[100px] overflow-y-auto bg-black py-4 flex-none flex flex-col justify-between px-2">
-      <div className="w-full space-y-1 px-2">
-        {NAV_ITEMS.map((item) => {
+    <aside className="sticky top-[60px] h-theme-builder w-[100px] overflow-y-auto bg-black py-2 flex-none flex flex-col justify-between px-2">
+      <div className="w-full space-y-1">
+        {NAV_ITEMS.map((item, i) => {
           const isActive = item.title === activeSideNavItem.title;
           const isDisabled =
             item.title !== "Base Theme" && !isBaseThemeSelected;
           return (
-            <button
-              key={item.title}
-              aria-current={isActive ? "page" : undefined}
+            <SideNavButton
+              key={item.title + i}
+              item={item}
+              Icon={item.Icon}
+              isActive={isActive}
+              isDisabled={isDisabled}
               onClick={() => handleItemSelect(item)}
-              disabled={isDisabled}
-              className={clsx(
-                "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer bg-transparent",
-                isActive
-                  ? "text-orange-100"
-                  : "text-grayscale-300 hover:text-white disabled:text-grayscale-800 disabled:cursor-not-allowed",
-              )}
-            >
-              <item.icon
-                aria-hidden="true"
-                className={clsx(
-                  isActive
-                    ? "text-orange-100"
-                    : "text-grayscale-300 group-hover:text-white group-disabled:text-grayscale-800",
-                  "size-6",
-                )}
-              />
-              <span className="mt-2">{item.title}</span>
-            </button>
+            />
           );
         })}
       </div>
-      <div>
-        <button
-          className={clsx(
-            "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer hover:underline disabled:bg-grayscale-400 disabled:text-grayscale-800 disabled:cursor-not-allowed",
-            isCodeItemActive
-              ? "text-orange-100 bg-gray-800"
-              : "text-grayscale-300 bg-transparent",
-          )}
+      <div className="w-full space-y-4">
+        <SideNavButton
+          item={codeItem}
+          Icon={codeItem.Icon}
+          isActive={isCodeItemActive}
           onClick={() => handleItemSelect(codeItem)}
-        >
-          <codeItem.icon className="size-6 group-disabled:text-grayscale-800" />
-          <span className={clsx("mt-2", isCodeItemActive && "text-white")}>
-            {codeItem.title}
-          </span>
-        </button>
+        />
         <button
           aria-current={isExportItemActive ? "page" : undefined}
           onClick={() => handleItemSelect(exportItem)}
@@ -174,7 +152,7 @@ const SideNav = () => {
               : "bg-theme-1/80 hover:bg-theme-1/100",
           )}
         >
-          <exportItem.icon
+          <exportItem.Icon
             aria-hidden="true"
             className={"size-6 group-disabled:text-grayscale-800"}
           />

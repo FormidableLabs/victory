@@ -60,22 +60,22 @@ export const ThemeProvider = ({ children }) => {
     defaultTheme.config,
   );
 
-  const onBaseThemeSelect = (
-    themeName?: string,
-    config?: VictoryThemeDefinition,
-  ) => {
-    const theme = themes.find((t) => t.name === themeName);
-    if (!theme) {
-      setBaseTheme(defaultTheme);
-      setCustomThemeConfig(defaultTheme.config);
-    } else {
-      setBaseTheme(theme);
-      setCustomThemeConfig({
-        ...CUSTOM_THEME_CONFIG,
-        ...(config ?? theme?.config),
-      });
-    }
-  };
+  const onBaseThemeSelect = useCallback(
+    (themeName?: string, config?: VictoryThemeDefinition) => {
+      const theme = themes.find((t) => t.name === themeName);
+      if (!theme) {
+        setBaseTheme(defaultTheme);
+        setCustomThemeConfig(defaultTheme.config);
+      } else {
+        setBaseTheme(theme);
+        setCustomThemeConfig({
+          ...CUSTOM_THEME_CONFIG,
+          ...(config ?? theme?.config),
+        });
+      }
+    },
+    [setBaseTheme, setCustomThemeConfig],
+  );
 
   const updateCustomThemeConfig = useCallback(
     (path: string | string[], newValue: unknown) => {
@@ -85,9 +85,12 @@ export const ThemeProvider = ({ children }) => {
         path,
         newValue,
       );
+      if (baseTheme.name !== CUSTOM_THEME.name) {
+        setBaseTheme(CUSTOM_THEME);
+      }
       setCustomThemeConfig(updatedConfig);
     },
-    [customThemeConfig, setCustomThemeConfig],
+    [customThemeConfig, setBaseTheme, setCustomThemeConfig, baseTheme],
   );
 
   return (
