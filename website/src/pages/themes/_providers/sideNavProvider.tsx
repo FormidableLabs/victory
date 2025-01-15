@@ -1,4 +1,4 @@
-import { NAV_ITEMS, NavItem } from "../_components/sideNav";
+import { NAV_ITEMS, NavItem } from "../_components/sidenav";
 import React, { createContext, useContext, useState } from "react";
 
 type SideNavContextType = {

@@ -3,7 +3,7 @@ import React from "react";
 import "../../css/custom.css";
 
 import Layout from "@theme/Layout";
-import SideNav from "./_components/sideNav";
+import SideNav from "./_components/sidenav";
 import { ThemeProvider } from "./_providers/themeProvider";
 import { PreviewOptionsProvider } from "./_providers/previewOptionsProvider";
 import { SideNavProvider } from "./_providers/sideNavProvider";

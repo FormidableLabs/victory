@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import { NavItem } from "./sideNav";
+import { NavItem } from "./sidenav";
 
 type SideNavButtonProps = {
   item: NavItem;
