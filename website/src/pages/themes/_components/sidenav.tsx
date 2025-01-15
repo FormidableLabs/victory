@@ -30,6 +30,7 @@ import {
 import { HiOutlineCode } from "react-icons/hi";
 import SideNavButton from "./sideNavButton";
 import { useSideNavContext } from "../_providers/sideNavProvider";
+import { TbAxisX } from "react-icons/tb";
 
 export type NavItem = {
   title: string;
@@ -72,7 +73,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     title: "Axis Options",
-    Icon: AdjustmentsVerticalIcon,
+    Icon: TbAxisX,
     config: axisOptionsConfig,
     panelType: "chart",
     content: [],
