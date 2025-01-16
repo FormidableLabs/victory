@@ -16,6 +16,13 @@ const NearFormColors = {
   DeepNavy: "hsla(225, 100%, 11%, 1)",
 };
 
+const orange = {
+  100: "#ff684f",
+  200: "#ff4b2e",
+  300: "#ff3d1d",
+  400: "#ea2100",
+};
+
 module.exports = {
   corePlugins: {
     preflight: false, // disable Tailwind's reset
@@ -25,6 +32,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        currentColor: "currentColor",
         transparent: "transparent",
         white: NearFormColors.White,
         black: NearFormColors.Black,
@@ -36,6 +44,7 @@ module.exports = {
           500: NearFormColors.Black,
           800: "#888888",
         },
+        orange,
         "theme-1": NearFormColors.Green,
         "theme-2": NearFormColors.DeepNavy,
         "theme-3": NearFormColors.DeepNavy,
@@ -47,13 +56,22 @@ module.exports = {
         "button-bg-hover": NearFormColors.White,
         "button-fg-hover": NearFormColors.DeepNavy,
         "button-border": NearFormColors.Green,
+        "code-bg": "#1e1e1e",
         error: "#FF0000",
+      },
+      height: {
+        "theme-builder": "calc(100vh - 60px)",
       },
       width: {
         prose: "90ch",
+        "full-panel": "calc(100vw - 100px)",
       },
       fontFamily: {
         sans: ["Inter, Helvetica, Arial, sans-serif"],
+      },
+      backgroundImage: {
+        "select-chevron":
+          'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>\')',
       },
     },
   },
