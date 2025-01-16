@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryHistogram } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const HistogramExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.HISTOGRAM,
     title: "VictoryHistogram",
     content: (props) => (
       <VictoryHistogram

@@ -1,14 +1,19 @@
 import React, { createContext, useContext } from "react";
 import { AllExamples, ExampleConfig } from "../_components/examples";
+import { VictoryComponentType } from "../_const";
 
 type PreviewOptionsContextType = {
   colorScale?: string;
   updateColorScale: (newColorScale?: string) => void;
   showTooltips: boolean;
-  setShowTooltips: (showTooltips: boolean) => void;
+  setShowTooltips: React.Dispatch<React.SetStateAction<boolean>>;
   resetPreviewOptions: () => void;
   exampleContent: ExampleConfig[];
-  setExampleContent: (content: ExampleConfig[]) => void;
+  setExampleContent: React.Dispatch<React.SetStateAction<ExampleConfig[]>>;
+  activeChartType: VictoryComponentType | null;
+  setActiveChartType: React.Dispatch<
+    React.SetStateAction<VictoryComponentType | null>
+  >;
 };
 
 export const defaultColorScale = undefined;
@@ -23,6 +28,8 @@ export const PreviewOptionsProvider = ({ children }) => {
     defaultColorScale,
   );
   const [showTooltips, setShowTooltips] = React.useState(defaultShowTooltips);
+  const [activeChartType, setActiveChartType] =
+    React.useState<VictoryComponentType | null>(null);
   const [exampleContent, setExampleContent] = React.useState(AllExamples);
 
   const updateColorScale = (newColorScale?: string) => {
@@ -45,6 +52,8 @@ export const PreviewOptionsProvider = ({ children }) => {
         resetPreviewOptions,
         exampleContent,
         setExampleContent,
+        activeChartType,
+        setActiveChartType,
       }}
     >
       {children}

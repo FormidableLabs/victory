@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryBar, VictoryChart, VictoryLegend } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const LegendExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.LEGEND,
     title: "VictoryLegend",
     content: (props) => (
       <VictoryChart theme={props.theme} domainPadding={20}>
