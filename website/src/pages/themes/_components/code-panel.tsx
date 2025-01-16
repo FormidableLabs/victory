@@ -35,6 +35,7 @@ const CodePanel = () => {
           title: "Invalid theme structure.",
           message: "Must be an object.",
         });
+        return;
       }
       addAlert({
         type: AlertType.SUCCESS,

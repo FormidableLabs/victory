@@ -12,7 +12,7 @@ export const AlertProvider = ({ children }) => {
   const [alerts, setAlerts] = useState<AlertProps[]>([]);
 
   const addAlert = (alertProps: Omit<AlertProps, "id">) => {
-    const id = Date.now();
+    const id = crypto.randomUUID();
     setAlerts((prev) => [...prev, { ...alertProps, id }]);
   };
 

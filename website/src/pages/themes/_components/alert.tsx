@@ -16,7 +16,7 @@ export enum AlertType {
 }
 
 export type AlertProps = {
-  id: number;
+  id: string;
   type: AlertType;
   title: string;
   message?: string;
