@@ -10,15 +10,37 @@ export type ThemeOption = {
 
 type ThemeContextType = {
   baseTheme: ThemeOption | undefined;
-  onBaseThemeSelect: (themeName?: string) => void;
+  onBaseThemeSelect: (
+    themeName?: string,
+    config?: VictoryThemeDefinition,
+  ) => void;
   customThemeConfig: VictoryThemeDefinition | undefined;
   updateCustomThemeConfig: (path: string | string[], newValue: unknown) => void;
+};
+
+const CUSTOM_THEME_CONFIG: VictoryThemeDefinition = {
+  candlestick: {
+    style: {
+      labels: {
+        padding: 5,
+      },
+    },
+  },
+  errorbar: {
+    borderWidth: 8,
+  },
+};
+
+export const CUSTOM_THEME = {
+  name: "Custom",
+  config: CUSTOM_THEME_CONFIG,
 };
 
 export const themes: ThemeOption[] = [
   { name: "Clean", config: VictoryTheme.clean },
   { name: "Material", config: VictoryTheme.material },
   { name: "Grayscale", config: VictoryTheme.grayscale },
+  CUSTOM_THEME,
 ];
 
 const defaultTheme = themes[0];
@@ -38,18 +60,22 @@ export const ThemeProvider = ({ children }) => {
     defaultTheme.config,
   );
 
-  const onBaseThemeSelect = (themeName?: string) => {
-    const theme = themes.find((t) => t.name === themeName);
-    if (!theme) {
-      setBaseTheme(defaultTheme);
-      setCustomThemeConfig(defaultTheme.config);
-    } else {
-      setBaseTheme(theme);
-      if (theme.name !== "Custom") {
-        setCustomThemeConfig({ ...theme?.config });
+  const onBaseThemeSelect = useCallback(
+    (themeName?: string, config?: VictoryThemeDefinition) => {
+      const theme = themes.find((t) => t.name === themeName);
+      if (!theme) {
+        setBaseTheme(defaultTheme);
+        setCustomThemeConfig(defaultTheme.config);
+      } else {
+        setBaseTheme(theme);
+        setCustomThemeConfig({
+          ...CUSTOM_THEME_CONFIG,
+          ...(config ?? theme?.config),
+        });
       }
-    }
-  };
+    },
+    [setBaseTheme, setCustomThemeConfig],
+  );
 
   const updateCustomThemeConfig = useCallback(
     (path: string | string[], newValue: unknown) => {
@@ -59,9 +85,12 @@ export const ThemeProvider = ({ children }) => {
         path,
         newValue,
       );
+      if (baseTheme.name !== CUSTOM_THEME.name) {
+        setBaseTheme(CUSTOM_THEME);
+      }
       setCustomThemeConfig(updatedConfig);
     },
-    [customThemeConfig, setCustomThemeConfig],
+    [customThemeConfig, setBaseTheme, setCustomThemeConfig, baseTheme],
   );
 
   return (

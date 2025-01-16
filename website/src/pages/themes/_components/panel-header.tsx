@@ -8,7 +8,9 @@ type PanelHeaderProps = {
 const PanelHeader = ({ title, description }: PanelHeaderProps) => {
   return (
     <div className="mb-4">
-      {!!title && <h2 className="mb-0 text-xl font-bold">{title}</h2>}
+      {!!title && (
+        <h2 className="mb-0 text-xl font-bold text-gray-800">{title}</h2>
+      )}
       {!!description && (
         <p className="text-sm mt-1 text-grayscale-400">{description}</p>
       )}

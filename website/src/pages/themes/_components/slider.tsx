@@ -49,48 +49,58 @@ const Slider = ({
     onDefaultToggle(isChecked);
   };
 
+  const isUsingDefault = value === undefined;
+
   return (
-    <fieldset className={clsx("relative py-2 px-0 m-0", className)}>
+    <fieldset className={clsx("relative p-0 m-0", className)}>
       <label
         htmlFor={id}
-        className="flex justify-between items-center mb-2 text-sm font-bold text-grayscale-900"
+        className="flex justify-between items-center mb-2 text-sm font-semibold text-gray-800"
       >
         <span>{label}</span>
       </label>
       <Toggle
         id={`${id}-toggle`}
-        label="Use default value"
+        label="Use default"
         checked={value === undefined}
         onChange={handleToggle}
         size="xs"
-        className="mb-2"
       />
-      {value !== undefined && (
-        <div className="flex items-center gap-4">
+      <div
+        className={clsx(
+          "flex items-center gap-4 mt-2",
+          isUsingDefault && "opacity-30",
+        )}
+      >
+        <input
+          id={id}
+          type="range"
+          value={isUsingDefault ? "" : value}
+          onChange={handleSliderChange}
+          className={clsx(
+            "w-full h-2 bg-grayscale-300 rounded-lg appearance-none accent-blue-500 m-0",
+            !isUsingDefault && "cursor-pointer",
+          )}
+          min={min}
+          max={max}
+          step={step}
+          disabled={isUsingDefault}
+        />
+        <div className="flex items-center">
           <input
-            id={id}
-            type="range"
-            value={value}
-            onChange={handleSliderChange}
-            className="w-full h-2 bg-grayscale-300 rounded-lg appearance-none cursor-pointer accent-blue-800 m-0"
+            id={`${id}-number-input`}
+            type="number"
+            value={isUsingDefault ? "" : value}
+            onChange={handleNumberChange}
+            className="px-2 py-1 text-sm border border-grayscale-300 rounded-lg"
             min={min}
             max={max}
             step={step}
+            disabled={isUsingDefault}
           />
-          <div className="flex items-center">
-            <input
-              type="number"
-              value={value}
-              onChange={handleNumberChange}
-              className="px-2 py-1 text-sm border border-grayscale-300 rounded-lg"
-              min={min}
-              max={max}
-              step={step}
-            />
-            {unit && <span className="text-sm ml-1">{unit}</span>}
-          </div>
+          {unit && <span className="text-sm ml-1">{unit}</span>}
         </div>
-      )}
+      </div>
     </fieldset>
   );
 };
