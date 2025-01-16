@@ -17,7 +17,9 @@ export const Options = forwardRef<HTMLDivElement, Props>(({ isOpen }, ref) => {
           className="absolute w-[400px] right-0 mt-1 border border-grayscale-300 bg-white rounded-md z-50 p-4 shadow-md"
           ref={ref}
         >
-          <h1 className="text-base font-bold mb-4">Preview Settings</h1>
+          <h1 className="text-base font-bold mb-4 text-gray-800">
+            Preview Settings
+          </h1>
           <PreviewColorScaleSelect size="sm" />
           <Toggle
             id="show-tooltips"
@@ -25,7 +27,7 @@ export const Options = forwardRef<HTMLDivElement, Props>(({ isOpen }, ref) => {
             checked={showTooltips}
             onChange={setShowTooltips}
             className="mt-4"
-            size="sm"
+            size="xs"
           />
         </div>
       )}

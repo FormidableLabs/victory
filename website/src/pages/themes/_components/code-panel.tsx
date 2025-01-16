@@ -76,7 +76,9 @@ const CodePanel = () => {
           </code>{" "}
           are required for proper theme functionality.
         </p>
-        <Button onClick={applyCustomTheme}>Apply Changes</Button>
+        <Button onClick={applyCustomTheme} className="flex-shrink-0">
+          Apply Changes
+        </Button>
       </div>
       <div className="w-full flex-1 border rounded">
         <Editor

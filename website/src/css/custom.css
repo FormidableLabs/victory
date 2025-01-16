@@ -112,5 +112,14 @@ body {
   .theme-builder * {
     border-width: 0;
     border-style: solid;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: Inter, Helvetica, Arial, sans-serif;
+    }
   }
 }
