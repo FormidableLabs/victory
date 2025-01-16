@@ -1,0 +1,202 @@
+---
+title: Localization
+---
+
+Victory provides extensive support for localization, allowing you to customize your data visualizations to match local conventions for dates, numbers, and text direction. This ensures that your charts are easily understandable and culturally appropriate for users around the world.
+
+## Date and Number Formatting
+
+Different regions have varying conventions for displaying dates, numbers, and currencies. Victory components can be customized to respect these local preferences. The example below demonstrates French formatting conventions for dates (e.g., "1 janvier 2023") and currency values (e.g., "1 234,56 €").
+
+```jsx live noInline
+const numbersData = [
+	{ x: new Date(2023, 0, 1), y: 1500 },
+	{ x: new Date(2023, 2, 15), y: 2800 },
+	{ x: new Date(2023, 5, 1), y: 2200 },
+	{ x: new Date(2023, 8, 20), y: 3100 },
+	{ x: new Date(2023, 11, 31), y: 4000 }
+];
+
+const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+});
+
+const numberFormatter = new Intl.NumberFormat("fr-FR", {
+	style: "currency",
+	currency: "EUR"
+});
+
+function App() {
+	return (
+		<VictoryChart
+			padding={{ top: 50, bottom: 80, left: 80, right: 50 }}
+			scale={{ x: "time" }}
+			domainPadding={{ x: 10, y: 10 }}
+		>
+			<VictoryAxis
+				tickFormat={(t) => dateFormatter.format(t)}
+				style={{
+					tickLabels: {
+						fontSize: 10,
+						padding: 15,
+						angle: -45,
+						textAnchor: "end"
+					},
+				}}
+			/>
+			<VictoryAxis
+				dependentAxis
+				tickFormat={(t) => numberFormatter.format(t)}
+				style={{
+					tickLabels: { fontSize: 10, padding: 10 },
+				}}
+			/>
+			<VictoryLine
+				data={numbersData}
+				style={{
+					data: { stroke: "#c43a31", strokeWidth: 2 }
+				}}
+			/>
+		</VictoryChart>
+	);
+}
+
+render(<App />);
+```
+## Text Direction (LTR/RTL)
+
+Victory supports right-to-left (RTL) layouts for languages like Arabic, Hebrew, and Persian. The following example demonstrates an Arabic sales dashboard with RTL text direction and proper Arabic number formatting.
+
+```jsx live noInline
+const rtlData = [
+	{ x: "المبيعات الشهرية", y: 120 },
+	{ x: "إجمالي الإيرادات", y: 250 },
+	{ x: "عدد العملاء", y: 180 },
+	{ x: "المنتجات النشطة", y: 90 }
+];
+
+function App() {
+	return (
+		<VictoryChart
+			dir="rtl"
+			domainPadding={20}
+			padding={{ top: 20, bottom: 30, left: 50, right: 50 }}
+		>
+			<VictoryBar
+				data={rtlData}
+				labels={({ datum }) => `${datum.y}`}
+				style={{
+					data: { fill: "#c43a31" }
+				}}
+				labelComponent={
+					<VictoryLabel
+						textAnchor="end"
+						style={{
+							direction: "rtl",
+							fontSize: 12,
+							fill: "#252525",
+						}}
+					/>
+				}
+			/>
+		</VictoryChart>
+	);
+}
+
+render(<App />);
+```
+
+## Custom Formatting for Labels and Tooltips
+
+Labels and tooltips often require specialized formatting to match local conventions. This example demonstrates a sales data visualization with Brazilian Portuguese formatting for dates and currency values, including interactive tooltips.
+
+```jsx live noInline
+const salesData = [
+	{ x: new Date(2023, 0, 1), y: 25000 },
+	{ x: new Date(2023, 1, 1), y: 28000 },
+	{ x: new Date(2023, 2, 1), y: 32000 },
+	{ x: new Date(2023, 3, 1), y: 30000 },
+	{ x: new Date(2023, 4, 1), y: 35000 },
+	{ x: new Date(2023, 5, 1), y: 42000 },
+	{ x: new Date(2023, 6, 1), y: 38000 },
+	{ x: new Date(2023, 7, 1), y: 45000 },
+	{ x: new Date(2023, 8, 1), y: 47000 },
+	{ x: new Date(2023, 9, 1), y: 52000 },
+	{ x: new Date(2023, 10, 1), y: 58000 },
+	{ x: new Date(2023, 11, 1), y: 65000 }
+];
+
+const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
+	month: "long",
+	year: "numeric"
+});
+
+const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+	style: "currency",
+	currency: "BRL"
+});
+
+const formatTooltip = ({ datum }) => {
+const date = new Intl.DateTimeFormat("pt-BR", {
+		day: "2-digit",
+		month: "2-digit",
+		year: "numeric"
+	}).format(datum.x);
+
+	return `
+		Data: ${date}
+		Valor: ${currencyFormatter.format(datum.y)}
+	`;
+};
+
+function App() {
+	return (
+		<VictoryChart
+			padding={{ top: 50, bottom: 50, left: 80, right: 50 }}
+			scale={{ x: "time" }}
+		>
+			<VictoryAxis
+				tickFormat={(t) => dateFormatter.format(t)}
+				style={{
+					tickLabels: { fontSize: 10, padding: 5 }
+				}}
+			/>
+			<VictoryAxis
+				dependentAxis
+				tickFormat={(t) => currencyFormatter.format(t)}
+				style={{
+					tickLabels: { fontSize: 10, padding: 5 }
+				}}
+			/>
+			<VictoryLine
+				data={salesData}
+				style={{
+					data: { stroke: "#2196F3", strokeWidth: 2 }
+				}}
+			/>
+			<VictoryScatter
+				data={salesData}
+				size={4}
+				style={{
+					data: { fill: "#2196F3" }
+				}}
+				labels={formatTooltip}
+				labelComponent={
+					<VictoryTooltip
+						cornerRadius={5}
+						flyoutStyle={{
+							fill: "white",
+							stroke: "#d4d4d4",
+							strokeWidth: 1,
+						}}
+					/>
+				}
+			/>
+		</VictoryChart>
+	);
+}
+
+render(<App />);
+```
