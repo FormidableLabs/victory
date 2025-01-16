@@ -17,9 +17,16 @@ type Props = {
   theme: VictoryThemeDefinition;
   colorScale: ColorScalePropType;
   showTooltips: boolean;
+  showOptions: boolean;
 };
 
-export function Preview({ config, theme, colorScale, showTooltips }: Props) {
+export function Preview({
+  config,
+  theme,
+  colorScale,
+  showTooltips,
+  showOptions = true,
+}: Props) {
   const { content: Content, title, key } = config;
   const { setActiveChartType } = usePreviewOptions();
   const { setActiveSideNavItem } = useSideNavContext();
@@ -37,19 +44,21 @@ export function Preview({ config, theme, colorScale, showTooltips }: Props) {
       setActiveSideNavItem(chartOptionsItem);
     }
     setActiveChartType(key);
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
   };
 
   return (
     <div className="border border-solid border-gray-200 p-8">
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-bold mb-0">{title}</h3>
-        <button
-          onClick={handleOptionsClick}
-          className="bg-transparent border border-gray-200 font-sans cursor-pointer p-1.5 -m-1.5 rounded-md hover:bg-gray-200 flex items-center justify-center "
-        >
-          Options{" "}
-          <AdjustmentsVerticalIcon className="ml-1 h-5 w-5 text-gray-800" />
-        </button>
+        {showOptions && (
+          <button
+            onClick={handleOptionsClick}
+            className="bg-transparent border border-gray-200 font-sans cursor-pointer p-1 -m-1 rounded-md hover:bg-gray-200 flex items-center justify-center text-gray-500"
+          >
+            <AdjustmentsVerticalIcon className="size-5" />
+          </button>
+        )}
       </div>
       {Content({
         labels: ({ datum }) => datum.y || datum.x,

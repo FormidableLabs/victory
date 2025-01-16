@@ -25,6 +25,7 @@ export function ThemePreview() {
               colorScale={colorScale as ColorScalePropType}
               showTooltips={showTooltips}
               theme={customThemeConfig}
+              showOptions={exampleContent.length > 1}
             />
           ))}
         </div>
