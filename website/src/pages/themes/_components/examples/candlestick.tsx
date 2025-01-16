@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryCandlestick } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const CandlestickExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.CANDLESTICK,
     title: "VictoryCandlestick",
     content: (props) => (
       <VictoryCandlestick

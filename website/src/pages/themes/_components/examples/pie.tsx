@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryPie } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const PieExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.PIE,
     title: "VictoryPie",
     content: (props) => (
       <VictoryPie

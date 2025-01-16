@@ -50,41 +50,51 @@ export type NavItem = {
     }
 );
 
+export const baseThemeItem: NavItem = {
+  title: "Base Theme",
+  Icon: CircleStackIcon,
+  panelType: "theme",
+  content: AllExamples,
+};
+
+export const colorPaletteItem: NavItem = {
+  title: "Color Palette",
+  Icon: SwatchIcon,
+  config: paletteOptionsConfig,
+  panelType: "default",
+  content: [...StackExamples, ...GroupExamples, ...PieExamples],
+};
+
+export const globalOptionsItem: NavItem = {
+  title: "Global Options",
+  Icon: GlobeAmericasIcon,
+  config: globalOptionsConfig,
+  panelType: "default",
+  content: AllExamples,
+};
+
+export const axisOptionsItem: NavItem = {
+  title: "Axis Options",
+  Icon: TbAxisX,
+  config: axisOptionsConfig,
+  panelType: "chart",
+  content: [],
+};
+
+export const chartOptionsItem: NavItem = {
+  title: "Chart Options",
+  Icon: AdjustmentsVerticalIcon,
+  config: chartOptionsConfig,
+  panelType: "chart",
+  content: [],
+};
+
 export const NAV_ITEMS: NavItem[] = [
-  {
-    title: "Base Theme",
-    Icon: CircleStackIcon,
-    panelType: "theme",
-    content: AllExamples,
-  },
-  {
-    title: "Color Palette",
-    Icon: SwatchIcon,
-    config: paletteOptionsConfig,
-    panelType: "default",
-    content: [...StackExamples, ...GroupExamples, ...PieExamples],
-  },
-  {
-    title: "Global Options",
-    Icon: GlobeAmericasIcon,
-    config: globalOptionsConfig,
-    panelType: "default",
-    content: AllExamples,
-  },
-  {
-    title: "Axis Options",
-    Icon: TbAxisX,
-    config: axisOptionsConfig,
-    panelType: "chart",
-    content: [],
-  },
-  {
-    title: "Chart Options",
-    Icon: AdjustmentsVerticalIcon,
-    config: chartOptionsConfig,
-    panelType: "chart",
-    content: [],
-  },
+  baseThemeItem,
+  colorPaletteItem,
+  globalOptionsItem,
+  axisOptionsItem,
+  chartOptionsItem,
 ];
 
 export const codeItem: NavItem = {
@@ -104,10 +114,12 @@ export const exportItem: NavItem = {
 const SideNav = () => {
   const { baseTheme } = useTheme();
   const { activeSideNavItem, setActiveSideNavItem } = useSideNavContext();
-  const { setExampleContent, updateColorScale } = usePreviewOptions();
+  const { setExampleContent, updateColorScale, setActiveChartType } =
+    usePreviewOptions();
   const isBaseThemeSelected = !!baseTheme;
 
   const handleItemSelect = (item: NavItem) => {
+    setActiveChartType(null);
     setActiveSideNavItem(item);
     updateColorScale(defaultColorScale);
     setExampleContent(item.content);

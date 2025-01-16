@@ -65,3 +65,23 @@ export enum StrokeProps {
   STROKE_LINE_CAP = "Stroke Line Cap",
   STROKE_LINE_JOIN = "Stroke Line Join",
 }
+
+export enum VictoryComponentType {
+  AREA = "area",
+  AXIS = "axis",
+  BAR = "bar",
+  BOX_PLOT = "boxPlot",
+  CANDLESTICK = "candlestick",
+  ERROR_BAR = "errorBar",
+  HISTOGRAM = "histogram",
+  GROUP = "group",
+  LEGEND = "legend",
+  LINE = "line",
+  PIE = "pie",
+  POLAR_AXIS = "polarAxis",
+  POLAR_DEPENDENT_AXIS = "polarDependentAxis",
+  SCATTER = "scatter",
+  STACK = "stack",
+  TOOLTIP = "tooltip",
+  VORONOI = "voronoi",
+}
