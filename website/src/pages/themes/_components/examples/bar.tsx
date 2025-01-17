@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryBar, VictoryAxis, VictoryChart } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const BarExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.BAR,
     title: "VictoryBar",
     content: (props) => (
       <VictoryChart theme={props.theme} domainPadding={20}>

@@ -1,11 +1,16 @@
 import React from "react";
 import { VictoryArea, VictoryAxis, VictoryChart, VictoryStack } from "victory";
-import { NUM_STACKS, sampleStackData } from "../../_const";
+import {
+  NUM_STACKS,
+  sampleStackData,
+  VictoryComponentType,
+} from "../../_const";
 
 import { ExampleConfig } from "./example";
 
 export const StackExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.STACK,
     title: "VictoryStack",
     content: (props) => (
       <VictoryChart theme={props.theme} domainPadding={20}>

@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryGroup } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const GroupExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.GROUP,
     title: "VictoryGroup",
     content: (props) => (
       <VictoryChart theme={props.theme} domainPadding={20}>

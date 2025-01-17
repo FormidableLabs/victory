@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryArea, VictoryAxis, VictoryChart } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const AreaExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.AREA,
     title: "VictoryArea",
     content: (props) => (
       <VictoryChart theme={props.theme} domainPadding={20}>

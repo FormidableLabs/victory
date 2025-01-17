@@ -3,9 +3,11 @@ import React from "react";
 import { VictoryErrorBar } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const ErrorBarExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.ERROR_BAR,
     title: "VictoryErrorBar",
     content: (props) => (
       <VictoryErrorBar

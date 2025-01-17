@@ -3,9 +3,11 @@ import React from "react";
 import { VictoryChart, VictoryPolarAxis } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const PolarAxisDependentExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.POLAR_DEPENDENT_AXIS,
     title: "VictoryPolarAxis - Dependent",
     content: (props) => (
       <VictoryChart theme={props.theme} domainPadding={20}>

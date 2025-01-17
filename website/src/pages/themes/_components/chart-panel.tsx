@@ -12,20 +12,20 @@ type ChartPanelProps = {
 const ChartPanel = ({
   config: { title, description, selectLabel, types },
 }: ChartPanelProps) => {
-  const [chartType, setChartType] = React.useState(Object.keys(types)[0]);
-  const { setExampleContent } = usePreviewOptions();
+  const { activeChartType, setActiveChartType, setExampleContent } =
+    usePreviewOptions();
 
   useEffect(() => {
     const newChartType = Object.keys(types)[0];
-    setChartType((prevChartType) =>
-      prevChartType !== newChartType ? newChartType : prevChartType,
+    setActiveChartType((prevChartType) =>
+      prevChartType === null ? newChartType : prevChartType,
     );
-  }, [types]);
+  }, [types, setActiveChartType]);
 
   useEffect(() => {
-    const examples = types[chartType]?.content ?? [];
+    const examples = types[activeChartType]?.content ?? [];
     setExampleContent(examples);
-  }, [types, chartType, setExampleContent]);
+  }, [types, activeChartType, setExampleContent]);
 
   const options = useMemo(
     () =>
@@ -36,12 +36,12 @@ const ChartPanel = ({
     [types],
   );
   const controls = useMemo(
-    () => types[chartType]?.controls || [],
-    [types, chartType],
+    () => types[activeChartType]?.controls || [],
+    [types, activeChartType],
   );
 
   const onChartTypeChange = (newValue: string) => {
-    setChartType(newValue);
+    setActiveChartType(newValue);
   };
 
   return (
@@ -49,7 +49,7 @@ const ChartPanel = ({
       <PanelHeader title={title} description={description} />
       <Select
         id="chart-type-select"
-        value={chartType}
+        value={activeChartType}
         onChange={onChartTypeChange}
         options={options}
         label={selectLabel}

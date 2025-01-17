@@ -1,9 +1,3 @@
-import {
-  AdjustmentsVerticalIcon,
-  CircleStackIcon,
-  GlobeAmericasIcon,
-  SwatchIcon,
-} from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import React from "react";
 import {
@@ -19,7 +13,6 @@ import {
   defaultColorScale,
   usePreviewOptions,
 } from "../_providers/previewOptionsProvider";
-import { TiExportOutline } from "react-icons/ti";
 import {
   AllExamples,
   ExampleConfig,
@@ -27,10 +20,12 @@ import {
   PieExamples,
   StackExamples,
 } from "./examples";
-import { HiOutlineCode } from "react-icons/hi";
 import SideNavButton from "./sideNavButton";
 import { useSideNavContext } from "../_providers/sideNavProvider";
-import { TbAxisX } from "react-icons/tb";
+import { AxisOptionsIcon, ChartOptionsIcon, ExportIcon } from "../_icons";
+import { FiGlobe } from "react-icons/fi";
+import { LuDatabase } from "react-icons/lu";
+import { HiOutlineColorSwatch, HiCode } from "react-icons/hi";
 
 export type NavItem = {
   title: string;
@@ -50,53 +45,63 @@ export type NavItem = {
     }
 );
 
+export const baseThemeItem: NavItem = {
+  title: "Base Theme",
+  Icon: LuDatabase,
+  panelType: "theme",
+  content: AllExamples,
+};
+
+export const colorPaletteItem: NavItem = {
+  title: "Color Palette",
+  Icon: HiOutlineColorSwatch,
+  config: paletteOptionsConfig,
+  panelType: "default",
+  content: [...StackExamples, ...GroupExamples, ...PieExamples],
+};
+
+export const globalOptionsItem: NavItem = {
+  title: "Global Options",
+  Icon: FiGlobe,
+  config: globalOptionsConfig,
+  panelType: "default",
+  content: AllExamples,
+};
+
+export const axisOptionsItem: NavItem = {
+  title: "Axis Options",
+  Icon: AxisOptionsIcon,
+  config: axisOptionsConfig,
+  panelType: "chart",
+  content: [],
+};
+
+export const chartOptionsItem: NavItem = {
+  title: "Chart Options",
+  Icon: ChartOptionsIcon,
+  config: chartOptionsConfig,
+  panelType: "chart",
+  content: [],
+};
+
 export const NAV_ITEMS: NavItem[] = [
-  {
-    title: "Base Theme",
-    Icon: CircleStackIcon,
-    panelType: "theme",
-    content: AllExamples,
-  },
-  {
-    title: "Color Palette",
-    Icon: SwatchIcon,
-    config: paletteOptionsConfig,
-    panelType: "default",
-    content: [...StackExamples, ...GroupExamples, ...PieExamples],
-  },
-  {
-    title: "Global Options",
-    Icon: GlobeAmericasIcon,
-    config: globalOptionsConfig,
-    panelType: "default",
-    content: AllExamples,
-  },
-  {
-    title: "Axis Options",
-    Icon: TbAxisX,
-    config: axisOptionsConfig,
-    panelType: "chart",
-    content: [],
-  },
-  {
-    title: "Chart Options",
-    Icon: AdjustmentsVerticalIcon,
-    config: chartOptionsConfig,
-    panelType: "chart",
-    content: [],
-  },
+  baseThemeItem,
+  colorPaletteItem,
+  globalOptionsItem,
+  axisOptionsItem,
+  chartOptionsItem,
 ];
 
 export const codeItem: NavItem = {
   title: "Theme Code",
-  Icon: HiOutlineCode,
+  Icon: HiCode,
   panelType: "code",
   content: [],
 };
 
 export const exportItem: NavItem = {
   title: "Export Theme",
-  Icon: TiExportOutline,
+  Icon: ExportIcon,
   panelType: "export",
   content: [],
 };
@@ -104,10 +109,12 @@ export const exportItem: NavItem = {
 const SideNav = () => {
   const { baseTheme } = useTheme();
   const { activeSideNavItem, setActiveSideNavItem } = useSideNavContext();
-  const { setExampleContent, updateColorScale } = usePreviewOptions();
+  const { setExampleContent, updateColorScale, setActiveChartType } =
+    usePreviewOptions();
   const isBaseThemeSelected = !!baseTheme;
 
   const handleItemSelect = (item: NavItem) => {
+    setActiveChartType(null);
     setActiveSideNavItem(item);
     updateColorScale(defaultColorScale);
     setExampleContent(item.content);
@@ -147,7 +154,7 @@ const SideNav = () => {
           onClick={() => handleItemSelect(exportItem)}
           disabled={!isBaseThemeSelected}
           className={clsx(
-            "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer text-theme-2 hover:underline disabled:bg-grayscale-400 disabled:text-grayscale-800 disabled:cursor-not-allowed",
+            "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer text-theme-2 disabled:bg-grayscale-400 disabled:text-grayscale-800 disabled:cursor-not-allowed",
             isExportItemActive
               ? "bg-theme-1/100"
               : "bg-theme-1/80 hover:bg-theme-1/100",
@@ -155,7 +162,7 @@ const SideNav = () => {
         >
           <exportItem.Icon
             aria-hidden="true"
-            className={"size-6 group-disabled:text-grayscale-800"}
+            className={"size-5 group-disabled:text-grayscale-800"}
           />
           <span className="mt-2">{exportItem.title}</span>
         </button>

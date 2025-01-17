@@ -4,7 +4,7 @@ import {
   getNestedColorScaleConfig,
 } from "../_utils";
 import { ControlConfig } from ".";
-import { StrokeProps } from "../_const";
+import { VictoryComponentType, StrokeProps } from "../_const";
 import {
   AreaExamples,
   BarExamples,
@@ -24,7 +24,7 @@ import {
 const chartConfigs: {
   [key: string]: ControlConfig;
 } = {
-  area: {
+  [VictoryComponentType.AREA]: {
     type: "section",
     label: "Area Chart",
     content: AreaExamples,
@@ -59,7 +59,7 @@ const chartConfigs: {
       },
     ],
   },
-  bar: {
+  [VictoryComponentType.BAR]: {
     type: "section",
     label: "Bar Chart",
     content: BarExamples,
@@ -101,7 +101,7 @@ const chartConfigs: {
       },
     ],
   },
-  boxPlot: {
+  [VictoryComponentType.BOX_PLOT]: {
     type: "section",
     label: "Box Plot",
     content: BoxPlotExamples,
@@ -189,7 +189,7 @@ const chartConfigs: {
       },
     ],
   },
-  candlestick: {
+  [VictoryComponentType.CANDLESTICK]: {
     type: "section",
     label: "Candlestick Chart",
     content: CandlestickExamples,
@@ -242,7 +242,7 @@ const chartConfigs: {
       },
     ],
   },
-  errorBar: {
+  [VictoryComponentType.ERROR_BAR]: {
     type: "section",
     label: "Error Bar",
     content: ErrorBarExamples,
@@ -273,7 +273,7 @@ const chartConfigs: {
       },
     ],
   },
-  histogram: {
+  [VictoryComponentType.HISTOGRAM]: {
     type: "section",
     label: "Histogram",
     content: HistogramExamples,
@@ -319,7 +319,7 @@ const chartConfigs: {
       },
     ],
   },
-  group: {
+  [VictoryComponentType.GROUP]: {
     type: "section",
     label: "Group",
     content: GroupExamples,
@@ -341,7 +341,7 @@ const chartConfigs: {
       },
     ],
   },
-  legend: {
+  [VictoryComponentType.LEGEND]: {
     type: "section",
     label: "Legend",
     content: LegendExamples,
@@ -419,7 +419,7 @@ const chartConfigs: {
       },
     ],
   },
-  line: {
+  [VictoryComponentType.LINE]: {
     type: "section",
     label: "Line Chart",
     content: LineExamples,
@@ -441,7 +441,7 @@ const chartConfigs: {
       },
     ],
   },
-  pie: {
+  [VictoryComponentType.PIE]: {
     type: "section",
     label: "Pie Chart",
     content: PieExamples,
@@ -472,7 +472,7 @@ const chartConfigs: {
       },
     ],
   },
-  scatter: {
+  [VictoryComponentType.SCATTER]: {
     type: "section",
     label: "Scatter Chart",
     content: ScatterExamples,
@@ -507,7 +507,7 @@ const chartConfigs: {
       },
     ],
   },
-  stack: {
+  [VictoryComponentType.STACK]: {
     type: "section",
     label: "Stack",
     content: StackExamples,
@@ -529,7 +529,7 @@ const chartConfigs: {
       },
     ],
   },
-  tooltip: {
+  [VictoryComponentType.TOOLTIP]: {
     type: "section",
     label: "Tooltip",
     controls: [
@@ -580,7 +580,7 @@ const chartConfigs: {
       },
     ],
   },
-  voronoi: {
+  [VictoryComponentType.VORONOI]: {
     type: "section",
     label: "Voronoi",
     content: VoronoiExamples,

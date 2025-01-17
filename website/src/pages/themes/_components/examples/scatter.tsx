@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryScatter } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const ScatterExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.SCATTER,
     title: "VictoryScatter",
     content: (props) => (
       <VictoryScatter

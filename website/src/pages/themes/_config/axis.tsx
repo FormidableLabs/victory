@@ -1,5 +1,5 @@
 import { getBaseLabelsConfig, getBaseStrokeConfig } from "../_utils";
-import { StrokeProps } from "../_const";
+import { StrokeProps, VictoryComponentType } from "../_const";
 import { ControlConfig } from ".";
 import {
   AxisExamples,
@@ -150,9 +150,10 @@ const axisOptionsConfig = {
   description: "Customize the appearance of axes.",
   selectLabel: "Axis Type",
   types: {
-    base: generalAxisOptionsConfig,
-    polarAxis: polarAxisOptionsConfig,
-    polarDependentAxis: polarDependentAxisOptionsConfig,
+    [VictoryComponentType.AXIS]: generalAxisOptionsConfig,
+    [VictoryComponentType.POLAR_AXIS]: polarAxisOptionsConfig,
+    [VictoryComponentType.POLAR_DEPENDENT_AXIS]:
+      polarDependentAxisOptionsConfig,
   },
 };
 
