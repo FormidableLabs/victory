@@ -36,7 +36,7 @@ const SideNavButton = ({
           isActive
             ? "text-orange-100"
             : "text-grayscale-300 group-hover:text-white group-disabled:text-grayscale-800",
-          "size-6",
+          "size-5",
         )}
       />
       <span className="mt-2">{item.title}</span>
