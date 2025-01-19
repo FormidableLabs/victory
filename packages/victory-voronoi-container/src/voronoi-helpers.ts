@@ -37,9 +37,9 @@ class VoronoiHelpersClass {
       const continuous = child && child.type && child.type.continuous;
       const style = child ? child.props && child.props.style : props.style;
       return data.map((datum, index) => {
-        const { x, y, y0, x0 } = Helpers.getPoint(datum);
-        const voronoiX = (Number(x) + Number(x0)) / 2;
-        const voronoiY = (Number(y) + Number(y0)) / 2;
+        const { x, y } = Helpers.getPoint(datum);
+        const voronoiX = Number(x);
+        const voronoiY = Number(y);
 
         return Object.assign(
           {
