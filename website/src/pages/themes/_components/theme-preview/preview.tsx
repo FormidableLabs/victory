@@ -54,9 +54,10 @@ export function Preview({
         {showOptions && (
           <button
             onClick={handleOptionsClick}
-            className="bg-transparent border border-gray-200 font-sans cursor-pointer p-1 -m-1 rounded-md hover:bg-gray-200 flex items-center justify-center text-gray-500"
+            className="bg-transparent border border-gray-200 font-sans font-medium cursor-pointer p-1.5 -m-1 rounded-md hover:bg-gray-200 flex items-center justify-center text-gray-500"
           >
-            <AdjustmentsVerticalIcon className="size-5" />
+            Chart Options
+            <AdjustmentsVerticalIcon className="ml-1 size-5" />
           </button>
         )}
       </div>
