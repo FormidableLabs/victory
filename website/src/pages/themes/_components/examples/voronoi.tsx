@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryVoronoi } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const VoronoiExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.VORONOI,
     title: "VictoryVoronoi",
     content: (props) => (
       <VictoryVoronoi

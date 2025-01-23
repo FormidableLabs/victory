@@ -2,9 +2,11 @@ import React from "react";
 import { VictoryAxis, VictoryChart, VictoryLine } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const LineExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.LINE,
     title: "VictoryLine",
     content: (props) => (
       <VictoryChart theme={props.theme} domainPadding={20}>

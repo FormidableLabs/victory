@@ -4,9 +4,11 @@ import React from "react";
 import { VictoryBoxPlot } from "victory";
 
 import { ExampleConfig } from "./example";
+import { VictoryComponentType } from "../../_const";
 
 export const BoxPlotExamples: ExampleConfig[] = [
   {
+    key: VictoryComponentType.BOX_PLOT,
     title: "VictoryBoxPlot",
     content: (props) => (
       <VictoryBoxPlot
