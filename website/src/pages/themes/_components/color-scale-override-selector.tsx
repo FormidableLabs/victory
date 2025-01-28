@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import clsx from "clsx";
 import Toggle from "./toggle";
 import {
@@ -28,6 +28,9 @@ const ColorScaleOverrideSelector = ({
   const [showCustomColors, setShowCustomColors] = React.useState(
     () => !!colors && Array.isArray(colors),
   );
+  const [prevColors, setPrevColors] = React.useState<string[]>(
+    Array.isArray(colors) ? colors : [],
+  );
 
   const setColorScaleToDefault = useCallback(() => {
     if (colorScale !== defaultColorScale) {
@@ -37,14 +40,13 @@ const ColorScaleOverrideSelector = ({
 
   const onCheckboxChange = (isChecked) => {
     setShowCustomColors(isChecked);
-    if (!isChecked) {
-      onColorsChange(undefined);
-    }
+    onColorsChange(!isChecked ? undefined : prevColors);
     setColorScaleToDefault();
   };
 
   const handleColorsChange = (newColors) => {
     onColorsChange(newColors);
+    setPrevColors(newColors);
     setColorScaleToDefault();
   };
 
