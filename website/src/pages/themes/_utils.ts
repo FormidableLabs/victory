@@ -28,13 +28,12 @@ export const setNestedConfigValue = (
 export const getConfigValue = (
   config: VictoryThemeDefinition,
   path: string | string[],
-  defaultValue?: unknown,
 ) => {
   const pathString = Array.isArray(path) ? path[0] : path;
   if (!pathString) return undefined;
   const pathArray = pathString.split(".");
   return pathArray.reduce((acc, key) => {
-    return acc && acc[key] !== undefined ? acc[key] : defaultValue;
+    return acc?.[key];
   }, config);
 };
 
@@ -73,13 +72,18 @@ export const getBaseStrokeConfig = (
       max: 5,
       unit: "px",
       path: getPath(basePath, "strokeWidth"),
+      default: 1,
     },
     {
-      type: "slider",
+      type: "select",
       label: StrokeProps.STROKE_DASH_ARRAY,
-      min: 0,
-      max: 10,
       path: getPath(basePath, "strokeDasharray"),
+      options: [
+        { label: "Solid", value: "0" },
+        { label: "Dashed", value: "4, 4" },
+        { label: "Dotted", value: "1, 1" },
+        { label: "Long Dash", value: "10, 5" },
+      ],
     },
     {
       type: "select",

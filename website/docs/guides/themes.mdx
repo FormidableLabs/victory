@@ -4,7 +4,61 @@ title: Themes & Styling
 
 ## Themes
 
-Try out the Victory themes and make your own. Check out the [VictoryTheme API documentation](/docs/api/victory-theme) more details on themes.
+Victory themes are reusable style configurations that enable you to standardize the appearance of charts across your application. Themes simplify chart development by reducing repetitive styling logic and ensuring visual consistency.
+
+Themes are applied at the chart level and automatically cascade to all child components, such as axes, bars, lines, and legends. Victory provides built-in themes like `clean`, `material` and `grayscale`, but you can also create custom themes to match your branding.
+
+### How Themes Work in Victory
+
+Victory themes are essentially JavaScript objects that define styling properties for various chart elements. These theme configurations enable consistent and reusable styling across charts. Each theme configuration variable corresponds to a specific chart element and takes props that define its styles.
+
+Theme configuration variables include:
+
+- [`.palette`](/docs/api/victory-theme#palette)
+  - Defines color schemes used across the theme.
+- [`.chart`](/docs/api/victory-chart)
+  - Global styles like background and padding.
+- [`.area`](/docs/api/victory-area)
+- [`.axis`](/docs/api/victory-axis)
+- [`.polarAxis`](/docs/api/victory-polar-axis)
+- [`.polarDependentAxis`](/docs/api/victory-polar-axis)
+- [`.bar`](/docs/api/victory-bar)
+- [`.boxplot`](/docs/api/victory-boxplot)
+- [`.candlestick`](/docs/api/victory-candlestick)
+- [`.errorbar`](/docs/api/victory-error-bar)
+- [`.group`](/docs/api/victory-group)
+- [`.histogram`](/docs/api/victory-histogram)
+- [`.legend`](/docs/api/victory-legend)
+- [`.line`](/docs/api/victory-line)
+- [`.pie`](/docs/api/victory-pie)
+- [`.scatter`](/docs/api/victory-scatter)
+- [`.stack`](/docs/api/victory-stack)
+- [`.tooltip`](/docs/api/victory-tooltip)
+- [`.voronoi`](/docs/api/victory-voronoi)
+
+Each configuration variable takes props specific to its chart element, allowing customization of styles like colors, padding, labels, and more. For detailed information about each variable, refer to the [VictoryTheme API page](/docs/api/victory-theme).
+
+When a theme is passed to a chart via the `theme` prop, the styles from the theme object are applied to the corresponding child components unless they are explicitly overridden by inline props.
+
+```jsx live
+<VictoryChart
+  theme={VictoryTheme.material}
+>
+  <VictoryBar />
+</VictoryChart>
+```
+
+### Predefined Themes
+
+Victory includes several built-in themes to help you quickly style your charts:
+
+| Theme                    | Description                                                                                         |
+| ------------------------ | --------------------------------------------------------------------------------------------------- |
+| `VictoryTheme.clean`     | A minimalist theme with no gridlines or extra styling, perfect for clean and modern visualizations. |
+| `VictoryTheme.material`  | Inspired by Google's Material Design, this theme includes bold colors and a structured grid.        |
+| `VictoryTheme.grayscale` | A neutral theme featuring grayscale tones, ideal for muted and professional-looking charts.         |
+
+Each of these themes can be applied to your Victory components by passing it into the `theme` prop.
 
 ```jsx live noInline
 const result = [...Array(10).keys()];
@@ -39,34 +93,34 @@ const DemoComponent = () => {
   ];
   return (
     <div>
-      <div className="mb-8 p-4 mx-auto">
+      <div className="mb-8 p-4 mx-auto flex justify-between w-full">
         <button
-          className="bg-gray-600 border border-gray-800 text-white uppercase py-6 px-12"
+          className="bg-blue-600 border-none rounded-md text-white uppercase py-3 px-6 hover:bg-blue-700 cursor-pointer"
           onClick={() =>
-            setTheme(
-              VictoryTheme.grayscale,
-            )
+            setTheme(VictoryTheme.clean)
           }
         >
-          use grayscale
+          clean
         </button>
         <button
-          className="bg-orange-600 border border-blue-800 text-white uppercase py-6 px-12 ml-2"
+          className="bg-orange-600 border-none rounded-md text-white uppercase py-3 px-6 hover:bg-orange-700 cursor-pointer"
           onClick={() =>
             setTheme(
               VictoryTheme.material,
             )
           }
         >
-          use material
+          material
         </button>
         <button
-          className="bg-blue-600 border border-blue-800 text-white uppercase py-6 px-12 ml-2"
+          className="bg-gray-600 border-none rounded-md text-white uppercase py-3 px-6 hover:bg-gray-700 cursor-pointer"
           onClick={() =>
-            setTheme(VictoryTheme.clean)
+            setTheme(
+              VictoryTheme.grayscale,
+            )
           }
         >
-          use clean
+          grayscale
         </button>
       </div>
       <svg
@@ -231,11 +285,83 @@ const DemoComponent = () => {
 render(<DemoComponent />);
 ```
 
-## Styles
+You can also customize these themes or use them as a base to create your own. To build upon a predefined theme, you can extend it using the spread operator:
 
-### How can I change the colors of lines and other elements in Victory?
+```jsx
+const extendedTheme = {
+  ...VictoryTheme.material,
+  axis: {
+    ...VictoryTheme.material.axis,
+    style: {
+      ...VictoryTheme.material.axis
+        .style,
+      tickLabels: {
+        fill: "#444",
+        fontSize: 10,
+        fontStyle: "italic",
+      },
+    },
+  },
+};
+```
 
-Most components in Victory use a standard `style` prop with style namespaces for "data" and "labels". Any styles added to the "data" namespace will be applied to all the svg elements rendered for a given dataset.
+### Creating a Custom Theme
+
+To create a completely custom theme, define a JavaScript object that includes styles for the components you want to theme. You can omit components that use default styling.
+
+```jsx live noInline
+const customTheme = {
+  axis: {
+    style: {
+      grid: { stroke: "none" },
+      axis: {
+        stroke: "#333",
+        strokeWidth: 2,
+      },
+      ticks: {
+        stroke: "#555",
+        size: 5,
+      },
+      tickLabels: {
+        fill: "#222",
+        fontSize: 12,
+        padding: 5,
+      },
+    },
+  },
+  bar: {
+    style: {
+      data: {
+        fill: "#0074d9",
+        width: 15,
+      },
+    },
+  },
+};
+
+render(
+  <VictoryChart
+    theme={customTheme}
+    domainPadding={{ x: 40 }}
+  >
+    <VictoryBar
+      data={[
+        { x: 1, y: 2 },
+        { x: 2, y: 4 },
+        { x: 3, y: 6 },
+      ]}
+    />
+  </VictoryChart>,
+);
+```
+
+To enhance the "Styles" section of the Victory Themes guide, consider incorporating the following detailed explanations and examples:
+
+## Styling Individual Components
+
+To customize the appearance of Victory components, you can use the `style` prop, which accepts an object containing styles for various component elements like `data`, `labels`, and `parent`. For a detailed breakdown of the style options available, refer to the [Victory Style Interface](/docs/api/victory-style-interface).
+
+**Example: Customizing Bar and Line Colors**
 
 ```jsx live
 <VictoryChart
@@ -262,9 +388,11 @@ Most components in Victory use a standard `style` prop with style namespaces for
 </VictoryChart>
 ```
 
-### How can I change the color of an individual point or bar?
+### Styling Data
 
-Individual elements in Victory can be styled by adding style attributes directly to your data object and using functional styles and props as in the example below. Functions are called with all the props that correspond to the element they render.
+To style individual elements within a dataset, you can include style attributes directly in your data objects and utilize functional styles.
+
+**Note:** Continuous data components like `VictoryLine` and `VictoryArea` render a single SVG element for the entire dataset, so individual styling of data points within these components is not applicable.
 
 ```jsx live
 <VictoryChart>
@@ -284,7 +412,7 @@ Individual elements in Victory can be styled by adding style attributes directly
     style={{
       data: {
         fill: ({ index }) =>
-          +index % 2 === 0
+          index % 2 === 0
             ? "blue"
             : "grey",
         stroke: ({ datum }) =>
@@ -307,11 +435,9 @@ Individual elements in Victory can be styled by adding style attributes directly
 </VictoryChart>
 ```
 
-Note that continuous data types such as `VictoryLine` and `VictoryArea` cannot be styled in this way, as they only render a single element for a given dataset.
+### Using Gradient Fills
 
-### Gradient Fills
-
-Create a gradient def as usual and then reference it by id in your style object. Gradients can be used to give continuous charts (_i.e._ line or area charts) the appearance of discrete data elements and hover states. 
+To apply gradient fills to your charts, define a gradient in the SVG `defs` section and reference it by id in your component's style. Gradients can be used to give continuous charts (i.e. line or area charts) the appearance of discrete data elements and hover states.
 
 ```jsx live
 <div>

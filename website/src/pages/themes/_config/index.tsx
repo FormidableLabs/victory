@@ -23,13 +23,22 @@ export type ControlConfig = {
       showDefaultToggle?: boolean;
     }
   | {
-      type: "slider" | "select" | "colorPicker";
+      type: "slider";
       path: string | string[];
       min?: number;
       max?: number;
       step?: number;
       unit?: string;
+      default?: number;
+    }
+  | {
+      type: "select" | "colorPicker";
+      path: string | string[];
       options?: { label: string; value: string }[];
+    }
+  | {
+      type: "colorPicker";
+      path: string | string[];
     }
 );
 

@@ -129,7 +129,7 @@ See the [Events Guide](/docs/guides/events) for more information on defining eve
 `VictoryArea` uses the standard `groupComponent` prop. [Read about it in detail](/docs/api/victory-common-theme-props#groupcomponent)
 
 :::note
-`VictoryArea` uses [`VictoryClipContainer`](/docs/api/victory-clip-container) as its default `groupComponent` `VictoryClipContainer` renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. 
+`VictoryArea` uses [`VictoryClipContainer`](/docs/api/victory-clip-container) as its default `groupComponent` `VictoryClipContainer` renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit.
 :::
 
 :::warning
@@ -241,7 +241,7 @@ To enable tooltips on `VictoryArea`, it is necessary to use [`VictoryVoronoiCont
 Defines the style of the component using [VictoryStyleInterface](/docs/api/victory-style-interface).
 
 :::note
-Since `VictoryArea` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of an individual `datum`. Instead, try using [gradient fills](/docs/guides/themes#gradient-fills) for styling continuous data.
+Since `VictoryArea` renders a single element to represent an entire dataset, it is not possible to use functional styles to change the style of the line as a function of an individual `datum`. Instead, try using [gradient fills](/docs/guides/themes#using-gradient-fills) for styling continuous data.
 :::
 
 ```jsx live

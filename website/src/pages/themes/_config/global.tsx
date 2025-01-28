@@ -12,7 +12,7 @@ const globalOptionsConfig: OptionsPanelConfig = {
         {
           type: "slider",
           label: "Width",
-          min: 0,
+          min: 150,
           max: 500,
           unit: "px",
           path: [
@@ -35,7 +35,7 @@ const globalOptionsConfig: OptionsPanelConfig = {
         {
           type: "slider",
           label: "Height",
-          min: 0,
+          min: 150,
           max: 500,
           unit: "px",
           path: [

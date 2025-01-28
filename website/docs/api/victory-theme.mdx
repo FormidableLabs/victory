@@ -43,6 +43,23 @@ interface VictoryThemeDefinition {
 }
 ```
 
+### `palette`
+
+The `palette` property defines a collection of colors that can be used across all chart elements. Each palette contains predefined color arrays that you can use directly or customize as needed.
+
+#### Properties
+
+| Property      | Type       | Description                                                                                   |
+| ------------- | ---------- | --------------------------------------------------------------------------------------------- |
+| `grayscale`   | `string[]` | Shades of gray, ideal for minimalist or monochrome chart designs                              |
+| `qualitative` | `string[]` | Used for categorical data, containing distinct colors that are easy to differentiate visually |
+| `heatmap`     | `string[]` | A gradient-based color scheme often used for heatmaps or data density visualizations          |
+| `warm`        | `string[]` | Warm colors like reds, oranges, and yellows                                                   |
+| `cool`        | `string[]` | Cool colors such as blues, purples, and greens                                                |
+| `red`         | `string[]` | Various shades of red                                                                         |
+| `blue`        | `string[]` | Various shades of blue                                                                        |
+| `green`       | `string[]` | Various shades of green                                                                       |
+
 ## Example
 
 ```jsx live
