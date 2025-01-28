@@ -175,6 +175,10 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
       additionalLanguages: ["diff", "diff-ts"],
     },
+    colorMode: {
+      defaultMode: "light",
+      disableSwitch: true,
+    },
   },
   headTags: [
     {
