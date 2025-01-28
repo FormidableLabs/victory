@@ -22,25 +22,13 @@ type ControlProps = {
 };
 
 const Control = ({ type, control, className }: ControlProps) => {
-  const { baseTheme, customThemeConfig, updateCustomThemeConfig } = useTheme();
+  const { customThemeConfig, updateCustomThemeConfig } = useTheme();
 
   const handleChange = (newValue) => {
     updateCustomThemeConfig(control.path, newValue);
   };
 
-  const handleSliderToggle = (isChecked: boolean) => {
-    const defaultValue =
-      getConfigValue(baseTheme?.config, control.path, control.min) || 0;
-    const newValue = isChecked ? undefined : defaultValue;
-    handleChange(newValue);
-  };
-
-  const configValue = getConfigValue(
-    customThemeConfig,
-    control.path,
-    control.default,
-  );
-
+  const configValue = getConfigValue(customThemeConfig, control.path);
   const id = useId();
 
   switch (type) {
@@ -103,13 +91,13 @@ const Control = ({ type, control, className }: ControlProps) => {
           key={control.label}
           label={control.label}
           value={configValue as number}
+          defaultValue={control.default}
           unit={control.unit}
           onChange={handleChange}
           min={control.min}
           max={control.max}
           step={control.step}
           className={className}
-          onDefaultToggle={handleSliderToggle}
         />
       );
     case "select":
