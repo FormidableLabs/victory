@@ -17,6 +17,7 @@ export const useLocalStorage = (key: string, initialValue: any) => {
       try {
         localStorage.setItem(key, JSON.stringify(storedValue));
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error saving to localStorage", error);
       }
     }
