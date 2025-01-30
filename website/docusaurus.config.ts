@@ -148,6 +148,11 @@ const config: Config = {
           label: "DOCS",
         },
         {
+          to: "/themes",
+          label: "THEMES",
+          position: "left",
+        },
+        {
           href: "https://github.com/FormidableLabs/victory",
           "aria-label": "GitHub Repository",
           className: "header-github-link",
@@ -169,6 +174,10 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
       additionalLanguages: ["diff", "diff-ts"],
+    },
+    colorMode: {
+      defaultMode: "light",
+      disableSwitch: true,
     },
   },
   headTags: [
