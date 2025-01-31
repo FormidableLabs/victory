@@ -1,5 +1,7 @@
 # victory-shared-events
 
+## 37.3.7
+
 ## 37.3.6
 
 ## 37.3.5
