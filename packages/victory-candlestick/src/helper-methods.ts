@@ -268,13 +268,13 @@ const calculatePlotValues = (props) => {
 
     const dy =
       orientation === "top" || orientation === "bottom"
-        ? signY * (candleWidth / 2) + signY * (labelStyle.padding || 0)
+        ? signY * (candleWidth / 2) + signY * (labelStyle?.padding || 0)
         : 0;
 
     const dx =
       orientation === "top" || orientation === "bottom"
         ? 0
-        : signX * (labelStyle.padding || 1);
+        : signX * (labelStyle?.padding || 1);
 
     return { yValue, xValue, dx, dy };
   }
@@ -283,13 +283,13 @@ const calculatePlotValues = (props) => {
 
   const dy =
     orientation === "top" || orientation === "bottom"
-      ? signY * (labelStyle.padding || 1)
+      ? signY * (labelStyle?.padding || 1)
       : 0;
 
   const dx =
     orientation === "top" || orientation === "bottom"
       ? 0
-      : signX * (candleWidth / 2) + signX * (labelStyle.padding || 0);
+      : signX * (candleWidth / 2) + signX * (labelStyle?.padding || 0);
 
   return { yValue, xValue, dx, dy };
 };
@@ -358,10 +358,10 @@ const getLabelProps = (props, text, style, type?: string) => {
     datum,
     data,
     orientation,
-    textAnchor: labelStyle.textAnchor || defaultTextAnchors[orientation],
+    textAnchor: labelStyle?.textAnchor || defaultTextAnchors[orientation],
     verticalAnchor:
-      labelStyle.verticalAnchor || defaultVerticalAnchors[orientation],
-    angle: labelStyle.angle,
+      labelStyle?.verticalAnchor || defaultVerticalAnchors[orientation],
+    angle: labelStyle?.angle,
     horizontal,
   };
 
