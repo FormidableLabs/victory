@@ -223,7 +223,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     const errorX = getErrors(props, formattedDatum, "x");
     const errorY = getErrors(props, formattedDatum, "y");
     const dataProps = {
-      borderWidth,
+      borderWidth: borderWidth ? borderWidth : 8,
       data,
       datum: formattedDatum,
       errorX: horizontal ? errorY : errorX,
