@@ -1,5 +1,7 @@
 # victory-native
 
+## 37.3.7
+
 ## 37.3.6
 
 ### Patch Changes

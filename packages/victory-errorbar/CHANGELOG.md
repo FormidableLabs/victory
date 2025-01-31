@@ -1,5 +1,11 @@
 # victory-errorbar
 
+## 37.3.7
+
+### Patch Changes
+
+- add default borderwidth value ([#3046](https://github.com/FormidableLabs/victory/pull/3046))
+
 ## 37.3.6
 
 ## 37.3.5
