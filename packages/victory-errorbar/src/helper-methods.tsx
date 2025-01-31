@@ -215,6 +215,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
       width,
     },
   };
+  const DEFAULT_BORDER_WIDTH = 8;
 
   return data.reduce((childProps, datum, index) => {
     const eventKey = !Helpers.isNil(datum.eventKey) ? datum.eventKey : index;
@@ -223,7 +224,7 @@ export const getBaseProps = (initialProps, fallbackProps) => {
     const errorX = getErrors(props, formattedDatum, "x");
     const errorY = getErrors(props, formattedDatum, "y");
     const dataProps = {
-      borderWidth: borderWidth ? borderWidth : 8,
+      borderWidth: borderWidth ? borderWidth : DEFAULT_BORDER_WIDTH,
       data,
       datum: formattedDatum,
       errorX: horizontal ? errorY : errorX,
