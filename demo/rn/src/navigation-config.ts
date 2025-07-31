@@ -12,6 +12,8 @@ export type RootStackNavigatorParams = {
   Voronoi: undefined;
   BrushLine: undefined;
 
+  Cursor: undefined;
+
   Legends: undefined;
   Axis: undefined;
   PolarAxis: undefined;

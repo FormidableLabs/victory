@@ -16,6 +16,7 @@ import { ErrorBarScreen } from "./error-bar-screen";
 import { PolarAxisScreen } from "./polar-axis-screen";
 import { VoronoiScreen } from "./voronoi-screen";
 import { BrushLineScreen } from "./brush-line-screen";
+import { CursorScreen } from "./cursor-screen";
 
 export const RootNavigator: React.FC = () => {
   return (
@@ -75,6 +76,13 @@ export const RootNavigator: React.FC = () => {
         name="BrushLine"
         component={BrushLineScreen}
         options={{ title: "VictoryBrushLine" }}
+      />
+
+      {/* Containers */}
+      <RootStack.Screen
+        name="Cursor"
+        component={CursorScreen}
+        options={{ title: "Cursor" }}
       />
 
       {/* Other */}

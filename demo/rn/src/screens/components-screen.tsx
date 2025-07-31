@@ -79,13 +79,12 @@ const sections: SectionItem[] = [
     ],
     title: "Charts",
   },
-  // {
-  //   data: [
-  //     { key: "ContainersView", title: "Built–in Containers" },
-  //     { key: "CreateContainerView", title: "Custom Containers" }
-  //   ],
-  //   title: "Containers"
-  // },
+  {
+    data: [
+      { key: "Cursor", title: "Cursor" },
+    ],
+    title: "Containers"
+  },
   {
     data: [
       { key: "Legends", title: "Legends" },
