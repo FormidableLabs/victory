@@ -1,6 +1,6 @@
 {
   "name": "victory-histogram",
-  "version": "37.3.6",
+  "version": "37.3.7",
   "description": "Histogram Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,9 +22,9 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "react-fast-compare": "^3.2.0",
-    "victory-bar": "37.3.6",
-    "victory-core": "37.3.6",
-    "victory-vendor": "37.3.6"
+    "victory-bar": "37.3.7",
+    "victory-core": "37.3.7",
+    "victory-vendor": "37.3.7"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
