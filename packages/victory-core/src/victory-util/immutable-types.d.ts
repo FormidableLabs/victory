@@ -1197,7 +1197,7 @@ export namespace Seq {
   /**
    * `Seq` which represents an ordered indexed list of values.
    */
-  module Indexed {
+  namespace Indexed {
     /**
      * Provides an Seq.Indexed of the values provided.
      */
