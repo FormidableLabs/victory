@@ -238,6 +238,14 @@ describe("victory-util/helpers", () => {
       expect(Helpers.range(5, -5)).toEqual([5, 4, 3, 2, 1, 0, -1, -2, -3, -4]);
     });
 
+    it("returns a descending array of integers when the end is zero", () => {
+      expect(Helpers.range(5, 0)).toEqual([5, 4, 3, 2, 1]);
+    });
+
+    it("returns a descending array using an increment when the end is zero", () => {
+      expect(Helpers.range(10, 0, 2)).toEqual([10, 8, 6, 4, 2]);
+    });
+
     it("returns an array of integers using an increment", () => {
       expect(Helpers.range(0, 20, 5)).toEqual([0, 5, 10, 15]);
     });

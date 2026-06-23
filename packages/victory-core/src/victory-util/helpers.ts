@@ -388,12 +388,12 @@ export function mapValues<T>(
  */
 export function range(start: number, end?: number, increment?: number) {
   // when the end index is not given, start from 0
-  const startIndex = end ? start : 0;
+  const startIndex = end === undefined ? 0 : start;
 
   // when the end index is not given, the end of the range is the start index
-  let endIndex = end ? end : start;
+  let endIndex = end === undefined ? start : end;
 
-  // ensure endIndex is not a falsy value
+  // ensure endIndex is not a NaN/undefined value (e.g. range(NaN) or range())
   if (!endIndex) endIndex = 0;
 
   const k = endIndex - startIndex; // the value range
