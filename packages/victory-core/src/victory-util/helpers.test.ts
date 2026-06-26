@@ -262,4 +262,28 @@ describe("victory-util/helpers", () => {
       expect(Helpers.range(NaN as any)).toEqual([]);
     });
   });
+
+  describe("scalePoint", () => {
+    const identity = (v?: number) => v as number;
+    const identityScale = { x: identity, y: identity };
+
+    it("uses origin.y (not origin.x) for the polar y0 baseline", () => {
+      // Asymmetric origin (as produced for non-square polar charts):
+      // origin.x !== origin.y, so a mix-up between the two is observable.
+      const props = {
+        scale: identityScale,
+        polar: true,
+        origin: { x: 100, y: 50 },
+      };
+      // x0 = PI/2 -> sin(x0) === 1 exactly, cos(x0) ~= 0
+      const datum = { _x: 0, _y: 4, _x0: Math.PI / 2, _y0: 2 };
+      const point = Helpers.scalePoint(props, datum);
+
+      // y0 = -y0 * sin(x0) + origin.y = -2 * 1 + 50 = 48
+      expect(point.y0).toBeCloseTo(48);
+      // controls: y uses origin.y, x0 uses origin.x (both correct already)
+      expect(point.y).toBeCloseTo(50);
+      expect(point.x0).toBeCloseTo(100);
+    });
+  });
 });

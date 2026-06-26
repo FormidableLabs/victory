@@ -150,7 +150,7 @@ export function scalePoint(
     x: polar ? y * Math.cos(x) + origin.x : x,
     x0: polar ? y0 * Math.cos(x0) + origin.x : x0,
     y: polar ? -y * Math.sin(x) + origin.y : y,
-    y0: polar ? -y0 * Math.sin(x0) + origin.x : y0,
+    y0: polar ? -y0 * Math.sin(x0) + origin.y : y0,
   };
 }
 
