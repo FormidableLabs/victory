@@ -79,11 +79,16 @@ export const getCornerRadius = (
   if (!cornerRadius) {
     return realCornerRadius;
   }
-  if (isCornerRadiusObject(cornerRadius)) {
-    return getCornerRadiusFromObject(cornerRadius, props);
+  // The callback variant may resolve to either a number or a
+  // { top, bottom, topLeft, ... } object, so evaluate it before branching.
+  const evaluatedCornerRadius = Helpers.evaluateProp<
+    number | VictoryBarCornerRadiusObject
+  >(cornerRadius, props);
+  if (isCornerRadiusObject(evaluatedCornerRadius)) {
+    return getCornerRadiusFromObject(evaluatedCornerRadius, props);
   }
-  realCornerRadius.topLeft = Helpers.evaluateProp(cornerRadius, props);
-  realCornerRadius.topRight = Helpers.evaluateProp(cornerRadius, props);
+  realCornerRadius.topLeft = evaluatedCornerRadius;
+  realCornerRadius.topRight = evaluatedCornerRadius;
   return realCornerRadius;
 };
 
