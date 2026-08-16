@@ -10,6 +10,7 @@ import {
   StringOrCallback,
   NumberOrCallback,
   VictoryCommonPrimitiveProps,
+  roundPathString,
 } from "victory-core";
 
 const evaluateProps = (props) => {
@@ -47,7 +48,7 @@ export const Curve: React.FC<CurveProps> = (initialProps) => {
   const lineFunction = LineHelpers.getLineFunction(props);
   const defaultTransform =
     polar && origin ? `translate(${origin.x}, ${origin.y})` : undefined;
-  const d = lineFunction(props.data);
+  const d = roundPathString(lineFunction(props.data));
 
   return React.cloneElement(props.pathComponent!, {
     ...props.events,
