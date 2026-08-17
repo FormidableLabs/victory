@@ -500,6 +500,14 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
       (Array.isArray(style) && style.length
         ? style[0].textAnchor
         : style.textAnchor) || "middle";
+    // VictoryLabel reads `lineHeight` from props, not from `style`. When the
+    // theme supplies `tooltip.style.lineHeight`, it is only applied to the
+    // flyout height — not to the text positioning — unless we lift it out of
+    // the style object and pass it through explicitly.
+    const lineHeight =
+      Array.isArray(style) && style.length
+        ? style.map((s) => s.lineHeight)
+        : style.lineHeight;
     const getLabelX = () => {
       if (!textAnchor || textAnchor === "middle") {
         return flyoutCenter.x;
@@ -515,6 +523,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
       textAnchor,
       dy,
       dx,
+      lineHeight,
       style,
       x: getLabelX() + (flyoutPadding.left - flyoutPadding.right) / 2,
       y: flyoutCenter.y + (flyoutPadding.top - flyoutPadding.bottom) / 2,
