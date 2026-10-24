@@ -14,7 +14,7 @@
   },
   "homepage": "https://commerce.nearform.com/open-source/victory",
   "author": "Formidable",
-  "license": "MIT AND ISC",
+  "license": "MIT AND ISC AND BSD-3-Clause",
   "exports": {
     "./package.json": "./package.json",
     "./d3-*": {
@@ -73,13 +73,15 @@
       "files": [
         ".babelrc.js",
         "scripts/build.js",
+        "../../LICENSE.txt",
         "node_modules/**"
       ],
       "output": [
         "es/**",
         "lib/**",
         "lib-vendor/**",
-        "d3-*"
+        "d3-*",
+        "LICENSE.txt"
       ],
       "packageLocks": [
         "pnpm-lock.yaml"
