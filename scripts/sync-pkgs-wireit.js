@@ -48,6 +48,12 @@ const writePkg = async (pkgPath, data, originalPkg) => {
 };
 const clone = (obj) => JSON.parse(JSON.stringify(obj));
 const isVictoryPackage = (p) => p.startsWith("victory");
+// Skip leftover directories (e.g. ignored build output of a removed package).
+const hasPkgJson = (p) =>
+  fs
+    .access(path.join(PKGS_ROOT, p, "package.json"))
+    .then(() => true)
+    .catch(() => false);
 
 // Check for package locks, which we need to set on each wireit config
 // with non-empty `files`.
@@ -110,9 +116,11 @@ const updateLibPkgs = async ({ libPkgs }) => {
 // ============================================================================
 const cli = async () => {
   // Get packages.
-  const libPkgs = (await fs.readdir(PKGS_ROOT)).filter(
+  const dirs = (await fs.readdir(PKGS_ROOT)).filter(
     (p) => isVictoryPackage(p) && !SPECIAL_PKGS.has(p),
   );
+  const exists = await Promise.all(dirs.map(hasPkgJson));
+  const libPkgs = dirs.filter((_, i) => exists[i]);
   const allPkgs = [...SPECIAL_PKGS, ...libPkgs];
 
   // Mutate package.json's
