@@ -29,6 +29,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 ## Commands
 
 Use the Node version in `.nvmrc` and pnpm (version from `packageManager`; no corepack needed). Never use npm or yarn to install.
+pnpm settings (workspace linking, `overrides`, `patchedDependencies`, `allowBuilds`) live in `pnpm-workspace.yaml`. pnpm 11+ ignores them in `.npmrc` and in `package.json`'s `"pnpm"` field.
 
 ```sh
 pnpm install

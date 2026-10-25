@@ -19,7 +19,7 @@
     "url": "https://github.com/formidablelabs/victory/issues"
   },
   "homepage": "https://commerce.nearform.com/open-source/victory",
-  "packageManager": "pnpm@9.13.0",
+  "packageManager": "pnpm@12.14.0",
   "dependencies": {
     "clsx": "^2.1.1"
   },
@@ -100,14 +100,6 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
     "wireit": "^0.7.1"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/eslint": "8.4.3"
-    },
-    "patchedDependencies": {
-      "@changesets/cli@2.24.1": "patches/@changesets__cli@2.24.1.patch"
-    }
   },
   "browserslist": [
     "> 0.5%",

@@ -20,7 +20,7 @@ Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and 
 ### Requirements
 
 - [Node.js](https://nodejs.org/): the version in [`.nvmrc`](./.nvmrc) (the current LTS). CI uses the same file.
-- [pnpm](https://pnpm.io/installation). Any recent version works: pnpm switches itself to the version in `package.json`'s `packageManager` field.
+- [pnpm](https://pnpm.io/installation) 10 or later. pnpm switches itself to the version in `package.json`'s `packageManager` field.
 
 ### Setup
 
