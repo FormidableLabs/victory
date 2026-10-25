@@ -80,7 +80,9 @@ Projects using Victory should also depend on [React][]. As of `victory@34.0.0` V
 
 ## Victory Native
 
-Victory Native shares most of its code with Victory, and has a nearly identical API! To learn more, check out the [Victory Native package README](./packages/victory-native/README.md).
+Want to use Victory with React Native? Check out [Victory Native XL](https://github.com/FormidableLabs/victory-native-xl), our rewrite of Victory Native designed specifically for React Native (`victory-native@latest`).
+
+The legacy `victory-native` package is no longer developed in this repository. Its last release is still available on npm under the `legacy` tag. See the [available versions on npm](https://www.npmjs.com/package/victory-native?activeTab=versions).
 
 ## Contributing
 
