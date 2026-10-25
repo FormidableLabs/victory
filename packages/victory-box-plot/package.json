@@ -260,8 +260,5 @@
         "pnpm-lock.yaml"
       ]
     }
-  },
-  "engines": {
-    "node": ">=18.0.0"
   }
 }

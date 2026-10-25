@@ -26,8 +26,6 @@ jobs:
           fetch-depth: 0
 
       - uses: ./.github/actions/setup
-        with:
-          node-version: 18.x
 
       - name: Build Victory
         run: pnpm run build:lib:esm

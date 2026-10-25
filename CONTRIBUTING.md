@@ -19,8 +19,8 @@ Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and 
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/) 18 or higher.
-- [pnpm](https://pnpm.io/) version specified by [corepack](https://github.com/nodejs/corepack) in the `package.json`.
+- [Node.js](https://nodejs.org/): the version in [`.nvmrc`](./.nvmrc) (the current LTS). CI uses the same file.
+- [pnpm](https://pnpm.io/installation). Any recent version works: pnpm switches itself to the version in `package.json`'s `packageManager` field.
 
 ### Setup
 
@@ -31,10 +31,10 @@ $ git clone https://github.com/FormidableLabs/victory.git
 $ cd victory
 ```
 
-Enable corepack (if not already):
+Switch to the project's Node.js version (with [nvm](https://github.com/nvm-sh/nvm), or any version manager that reads `.nvmrc`):
 
 ```sh
-$ corepack enable
+$ nvm use
 ```
 
 Use [pnpm](https://pnpm.io/) to install dependencies:

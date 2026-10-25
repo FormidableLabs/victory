@@ -1,0 +1,63 @@
+# AGENTS.md
+
+Guidance for AI coding agents (and humans) working in this repo. Keep it short and current: when a convention changes, update this file in the same PR.
+
+## Current focus: 2026 Uplift
+
+Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it before starting uplift work; its **Decision log** is the source of truth for settled choices. Don't re-open a logged decision without saying why.
+
+- **Integration branch:** `chore/2026-uplift`. All uplift PRs target it, not `main`.
+- **Infra first, source last.** No substantive changes to `packages/*/src` in infra PRs. Mechanical churn (formatting, lint autofixes, type-error fixes) goes in its own PR, with no behavior changes mixed in, and its commit is added to `.git-blame-ignore-revs`.
+- **Tasks are plain `package.json` scripts.** The task runner (wireit today, Turborepo planned) orchestrates and caches them. Never put logic only in runner config.
+- **Small, reviewable PRs.** One concern per PR. Each PR that affects a published package needs a changeset (`pnpm changeset`).
+
+## Working agreements
+
+- **Don't commit, stage, push, merge, or open PRs** unless explicitly asked. Prepare the changes in the working tree and suggest a commit message; the maintainer does the git work.
+- Don't publish to npm or change npm/GitHub settings (trusted publishers, environments, dist-tags). Write the scripts and docs; a maintainer runs them.
+- Report outcomes plainly: if a check was skipped or fails, say so with the output.
+
+## Repo map
+
+- `packages/victory-*`: the published packages. They all share one version (changesets `fixed` group).
+- `packages/victory-vendor`: vendors d3 as ESM + CJS. **Highest-stakes package.** About 99% of its downloads come through recharts (`victory-vendor@^37`, using `victory-vendor/d3-scale` and `victory-vendor/d3-shape`). Its `exports` map and published file layout must stay compatible; check the packed output before and after any change to it.
+- `stories/`: Storybook stories (to become a Vite stories app with SVG snapshot and screenshot tests).
+- `website/`: Docusaurus docs site.
+- `test/`: shared Jest config and helpers.
+- `scripts/`: changelog, release notes, and the wireit config generator (to be removed).
+
+## Commands
+
+Use the Node version in `.nvmrc` and pnpm (version from `packageManager`; no corepack needed). Never use npm or yarn to install.
+
+```sh
+pnpm install
+pnpm build          # all packages
+pnpm check          # format + lint + test + types
+pnpm jest           # tests
+pnpm types:check
+pnpm lint
+pnpm format:fix
+```
+
+These commands change as the uplift lands. Update this section in the same PR that changes them.
+
+## Code conventions
+
+- TypeScript, React function components for new code. Some class components remain (conversion is tracked in #2778); don't convert them in infra PRs.
+- Match the surrounding code's style, naming, and comment density.
+- Keep the React peer floor at `>=18`, and don't use React 19-only APIs in library code.
+- Don't add `engines` fields to any `package.json`. `.nvmrc` is the one place the Node version is set.
+- Ship ESM + CJS. Don't add browser-only or Node-only code paths to library packages.
+
+## Keep tuning
+
+These are expected to change as we experiment. Update them as things settle, and log any decisions in the tracking issue.
+
+- **Build and test speed:** keep cold and cached times for `build`, `check`, and CI in mind. Note regressions in the PR.
+- **Task runner cache inputs/outputs:** an inaccurate cache key is a correctness bug. Over-including is safer than missing an input.
+- **CI:** cache hit rates, job split, and running only what changed on PRs.
+- **Published output:** after packaging changes, check `pnpm pack` contents (and, once added, publint + attw).
+- **Bundle size:** measure ESM import scenarios, not only full-library size. (Tree-shaking through the `victory` package is a separate investigation, not part of the uplift.)
+- **Visual testing:** snapshot stability and flakiness.
+- **This file:** if an agent gets something wrong because guidance was missing or stale, fix the guidance here.

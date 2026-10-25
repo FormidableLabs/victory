@@ -1,10 +1,5 @@
 name: Setup
 description: Setup Build Step
-inputs:
-  node-version:
-    default: "18.x"
-    description: "The version of nodejs to use."
-    required: true
 
 runs:
   using: "composite"
@@ -14,11 +9,8 @@ runs:
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version-file: ".nvmrc"
         cache: 'pnpm'
-
-    # Wireit cache
-    - uses: google/wireit@setup-github-actions-caching/v1
 
     - name: Install dependencies
       shell: bash
