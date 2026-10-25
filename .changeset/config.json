@@ -4,5 +4,5 @@
   "access": "public",
   "baseBranch": "main",
   "fixed": [["victory*"]],
-  "ignore": ["rn-demo", "victory-docs"]
+  "ignore": ["victory-docs"]
 }
