@@ -107,7 +107,7 @@ jobs:
     runs-on: ubuntu-latest
     # Requires a reviewer's approval before anything reaches npm, and scopes
     # `id-token: write` to an approved run.
-    environment: Production
+    environment: npm-publish
     permissions:
       contents: write # to create the git tag and GitHub release
       id-token: write # for npm trusted publishing (OIDC)
@@ -149,7 +149,7 @@ jobs:
     runs-on: ubuntu-latest
     # Same environment as publish: trusted publishing is configured for it, and
     # its branch rules decide which branches may publish a canary.
-    environment: Production
+    environment: npm-publish
     permissions:
       contents: read # to check out repo (actions/checkout)
       pull-requests: read # for the changelog plugin's PR lookups

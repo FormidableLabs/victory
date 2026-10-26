@@ -276,16 +276,16 @@ The Version Packages PR is opened and updated with the default `GITHUB_TOKEN`, s
 On the merge of the Version Packages PR, the release workflow:
 
 1. Builds and packs every package (`pack` job).
-2. Waits for a maintainer to approve the `Production` environment, then publishes to npm with [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC, no npm token) and provenance (`publish` job).
+2. Waits for a maintainer to approve the `npm-publish` environment, then publishes to npm with [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC, no npm token) and provenance (`publish` job).
 3. Creates one `v{version}` git tag and GitHub release with generated release notes.
 
 ### Canary releases
 
-To try out unreleased changes, run the release workflow manually (**Actions → Release → Run workflow**) on a branch that the `Production` environment allows. It publishes a snapshot (e.g. `37.4.0-canary-20261025120000`) of every package with a pending changeset to the `next` dist-tag. It never touches `latest`.
+To try out unreleased changes, run the release workflow manually (**Actions → Release → Run workflow**) on a branch that the `npm-publish` environment allows. It publishes a snapshot (e.g. `37.4.0-canary-20261025120000`) of every package with a pending changeset to the `next` dist-tag. It never touches `latest`.
 
 ### Release setup (maintainers, one time)
 
 - **npm:** run `scripts/npm-trust.sh` (npm >= 11.15.0, 2FA) to configure trusted publishing for every package. Add `--dry-run` to preview.
-- **GitHub:** create the `Production` environment (Settings → Environments) with required reviewers, allowing `main` (and any branch used for canaries).
+- **GitHub:** create the `npm-publish` environment (Settings → Environments) with required reviewers, allowing `main` (and any branch used for canaries). Don't reuse `production`: Vercel's docs deployments use it, and environment names are case-insensitive.
 
 There's no manual (local) publish path: packages publish only from the release workflow.

@@ -18,7 +18,7 @@ set -euo pipefail
 
 REPO="FormidableLabs/victory"
 WORKFLOW="release.yml"
-ENVIRONMENT="Production"
+ENVIRONMENT="npm-publish"
 MIN_NPM="11.15.0"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
