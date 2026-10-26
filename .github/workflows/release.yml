@@ -105,8 +105,9 @@ jobs:
     name: Publish to npm
     needs: pack
     runs-on: ubuntu-latest
-    # Requires a reviewer's approval before anything reaches npm, and scopes
-    # `id-token: write` to an approved run.
+    # The environment limits which branches can publish, and is what npm
+    # trusted publishing is bound to. If it has required reviewers, the job
+    # also waits for approval before anything reaches npm.
     environment: npm-publish
     permissions:
       contents: write # to create the git tag and GitHub release

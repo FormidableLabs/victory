@@ -276,7 +276,7 @@ The Version Packages PR is opened and updated with the default `GITHUB_TOKEN`, s
 On the merge of the Version Packages PR, the release workflow:
 
 1. Builds and packs every package (`pack` job).
-2. Waits for a maintainer to approve the `npm-publish` environment, then publishes to npm with [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC, no npm token) and provenance (`publish` job).
+2. Publishes to npm from the `npm-publish` environment with [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC, no npm token) and provenance (`publish` job). If the environment has required reviewers, this waits for a maintainer's approval.
 3. Creates one `v{version}` git tag and GitHub release with generated release notes.
 
 ### Canary releases
@@ -286,6 +286,6 @@ To try out unreleased changes, run the release workflow manually (**Actions → 
 ### Release setup (maintainers, one time)
 
 - **npm:** run `scripts/npm-trust.sh` (npm >= 11.15.0, 2FA) to configure trusted publishing for every package. Add `--dry-run` to preview.
-- **GitHub:** create the `npm-publish` environment (Settings → Environments) with required reviewers, allowing `main` (and any branch used for canaries). Don't reuse `production`: Vercel's docs deployments use it, and environment names are case-insensitive.
+- **GitHub:** create the `npm-publish` environment (Settings → Environments), allowing `main` (and any branch used for canaries). Optionally add required reviewers to approve each publish. Don't reuse `production`: Vercel's docs deployments use it, and environment names are case-insensitive.
 
 There's no manual (local) publish path: packages publish only from the release workflow.
