@@ -1,8 +1,11 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@2.0.0/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@4.0.0/schema.json",
   "changelog": ["../scripts/changelog.js", { "repo": "FormidableLabs/victory" }],
   "access": "public",
   "baseBranch": "main",
   "fixed": [["victory*"]],
-  "ignore": ["rn-demo", "victory-docs"]
+  "ignore": ["victory-docs"],
+  "snapshot": {
+    "useCalculatedVersion": true
+  }
 }

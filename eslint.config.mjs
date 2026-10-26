@@ -19,7 +19,6 @@ export default tseslint.config(
       "**/.docusaurus/",
       "**/artifacts/",
       "**/coverage/",
-      "**/demo/rn/",
       "**/dist/",
       "**/build/",
       "**/es/",

@@ -1,4 +1,18 @@
 packages:
   - 'packages/**'
   - 'website'
-  - 'demo/rn'
+
+autoInstallPeers: true
+linkWorkspacePackages: deep
+preferWorkspacePackages: true
+
+overrides:
+  '@types/eslint': 8.4.3
+
+# Dependencies allowed to run install scripts (pnpm 11+ requires a decision).
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+  # postinstall only prints a funding message.
+  core-js: false
+  core-js-pure: false
