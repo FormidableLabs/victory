@@ -14,8 +14,7 @@
     "pnpm-workspace.yaml",
     "tsconfig.json",
     "tsconfig.base.json",
-    "config/webpack/*.js",
-    "test/**"
+    "config/webpack/*.js"
   ],
   "globalEnv": ["NODE_ENV"],
   "tasks": {
@@ -66,12 +65,15 @@
     },
     // Type-checks src including tests, against dependencies' built types.
     "types:check": {
-      "dependsOn": ["types:create", "^types:create"]
+      "dependsOn": ["types:create", "^types:create"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
     },
-    // Tests import dependencies through their built `lib`. `test/helpers`
-    // imports victory-vendor and victory-voronoi.
+    // Tests import dependencies through their built `lib`, plus the root
+    // `test/` config and helpers (which import victory-vendor and
+    // victory-voronoi).
     "jest": {
-      "dependsOn": ["^build", "victory-vendor#build", "victory-voronoi#build"]
+      "dependsOn": ["^build", "victory-vendor#build", "victory-voronoi#build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
     },
     // ESLint isn't type-aware and doesn't resolve imports, so it needs nothing built.
     "lint": {},
