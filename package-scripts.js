@@ -12,19 +12,8 @@
  * `package.json:scripts`.
  */
 
-// For publishing, use the core package's version.
-const coreVersion = require("./packages/victory-core/package.json").version;
-if (!coreVersion) {
-  throw new Error("Unable to read core version");
-}
-const coreTag = `v${coreVersion}`;
-
 module.exports = {
   scripts: {
-    // Root tasks.
-    // Try to find an existing tag (from previous attempts, etc.), and if not, create one.
-    "git:tag": `git show-ref ${coreTag} || git tag -a ${coreTag} -m \"Version ${coreVersion}\"`,
-
     // Build.
     // - Libraries
     "build:lib:esm":

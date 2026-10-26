@@ -1,6 +1,6 @@
 {
   "name": "victory-brush-line",
-  "version": "37.3.6",
+  "version": "37.4.0",
   "description": "Interactive Brush Line Component for Victory",
   "keywords": [
     "data visualization",
@@ -22,7 +22,7 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "react-fast-compare": "^3.2.0",
-    "victory-core": "37.3.6"
+    "victory-core": "37.4.0"
   },
   "peerDependencies": {
     "react": ">=16.6.0"
@@ -246,8 +246,5 @@
         "pnpm-lock.yaml"
       ]
     }
-  },
-  "engines": {
-    "node": ">=18.0.0"
   }
 }

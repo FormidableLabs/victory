@@ -331,42 +331,6 @@ The `title` prop specifies the title to be applied to the SVG to assist with acc
 
 The `width` prop determines the width of the containing `<svg>`. By default VictoryContainer renders responsive containers with the `viewBox` attribute set to `viewBox="0, 0, width, height"` and `width="100%"`, `height="auto"`. In responsive containers, the `width` and `height` props affect the _aspect ratio_ of the rendered component, while the absolute width and height are determined by the container. To render a static container, set `responsive={false}`
 
-## Native-Only Props
-
-### onTouchStart
-
-<Badges>
-  <TypeBadge value="function" />
-</Badges>
-
-The optional `onTouchStart` prop takes a function that is called on every touch event on the chart (when using `victory-native`). The most common use of `onTouchStart` is to prevent the chart's parent `ScrollView` from scrolling, so that the chart and container can be interacted with unencumbered. The function accepts a single parameter, `event`, a React Native [Synthetic Event][]. Also see `onTouchEnd`.
-
-```jsx
-<ScrollView scrollEnabled={this.state.scrollEnabled}>
-  <VictoryChart
-    containerComponent={
-      <VictoryContainer
-        onTouchStart={() => this.setState({ scrollEnabled: false })}
-        onTouchEnd={() => this.setState({ scrollEnabled: true })}
-      />
-    }
-    theme={VictoryTheme.clean}
-  >
-    <VictoryBar />
-  </VictoryChart>
-</ScrollView>
-```
-
----
-
-### onTouchEnd
-
-<Badges>
-  <TypeBadge value="function" />
-</Badges>
-
-The optional `onTouchEnd` prop takes a function that is called at the conclusion of every touch event on the chart (when using `victory-native`). The most common use of `onTouchEnd` is to prevent the chart's parent `ScrollView` from scrolling, so that the chart and container can be interacted with unencumbered. The function accepts a single parameter, `event`, a React Native [Synthetic Event][]. Also see `onTouchStart`.
-
 ---
 
 [victoryportal]: /docs/api/victory-portal
@@ -376,5 +340,4 @@ The optional `onTouchEnd` prop takes a function that is called at the conclusion
 [victorytooltip]: /docs/api/victory-tooltip
 [grayscale theme]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-theme/grayscale.tsx
 [read more about themes here]: /docs/guides/themes
-[synthetic event]: https://facebook.github.io/react-native/docs/gesture-responder-system.html#responder-lifecycle
 [react event handlers]: https://reactjs.org/docs/handling-events.html

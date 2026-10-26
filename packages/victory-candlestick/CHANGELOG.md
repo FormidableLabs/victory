@@ -1,5 +1,11 @@
 # victory-candlestick
 
+## 37.4.0
+
+### Minor Changes
+
+- Handle undefined labelStyle properties in VictoryCandlestick. Fixes #3039 ([#3043](https://github.com/FormidableLabs/victory/pull/3043))
+
 ## 37.3.6
 
 ## 37.3.5

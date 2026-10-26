@@ -19,7 +19,7 @@
     "url": "https://github.com/formidablelabs/victory/issues"
   },
   "homepage": "https://commerce.nearform.com/open-source/victory",
-  "packageManager": "pnpm@9.13.0",
+  "packageManager": "pnpm@12.14.0",
   "dependencies": {
     "clsx": "^2.1.1"
   },
@@ -31,7 +31,7 @@
     "@babel/preset-env": "7.23.9",
     "@babel/preset-react": "7.23.3",
     "@babel/preset-typescript": "7.23.3",
-    "@changesets/cli": "^2.24.1",
+    "@changesets/cli": "^3.0.3",
     "@chromatic-com/storybook": "^3.2.2",
     "@eslint/js": "^9.14.0",
     "@storybook/addon-essentials": "^8.4.1",
@@ -53,7 +53,6 @@
     "babel-jest": "29.7.0",
     "babel-loader": "9.1.3",
     "babel-plugin-module-resolver": "5.0.0",
-    "babel-preset-react-native": "4.0.1",
     "chromatic": "^11.16.3",
     "concurrently": "^9.0.1",
     "cpx2": "^4.2.0",
@@ -74,10 +73,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "lodash": "^4.17.19",
     "lodash-webpack-plugin": "^0.11.6",
-    "mdast-util-to-string": "^1.0.6",
-    "metro-react-native-babel-preset": "0.77.0",
     "nps": "^5.9.0",
-    "octokit": "^3.1.1",
     "prettier": "^3.3.3",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
@@ -85,8 +81,6 @@
     "react-hot-loader": "4.13.0",
     "react-icons": "^5.3.0",
     "react-test-renderer": "^18.1.0",
-    "remark-parse": "^7.0.1",
-    "remark-stringify": "^7.0.3",
     "rimraf": "^3.0.2",
     "seedrandom": "^3.0.5",
     "storybook": "^8.4.1",
@@ -95,21 +89,12 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.13.0",
-    "unified": "^8.3.2",
     "victory-vendor": "*",
     "victory-voronoi": "*",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
     "wireit": "^0.7.1"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/eslint": "8.4.3"
-    },
-    "patchedDependencies": {
-      "@changesets/cli@2.24.1": "patches/@changesets__cli@2.24.1.patch"
-    }
   },
   "browserslist": [
     "> 0.5%",
@@ -119,7 +104,6 @@
   ],
   "scripts": {
     "version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
-    "publish": "nps git:tag && pnpm changeset publish --no-git-tag",
     "changeset": "changeset",
     "start": "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
     "start:docs": "wireit",
@@ -154,8 +138,7 @@
     "storybook:start": "storybook dev -p 6006 --no-open",
     "sync": "wireit",
     "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
-    "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor --filter !victory-native exec -- cpx ../victory-core/tsconfig.* .",
-    "release-notes": "ts-node ./scripts/release.ts"
+    "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
   },
   "wireit": {
     "clean:cache": {
@@ -175,7 +158,6 @@
     },
     "build": {
       "dependencies": [
-        "./packages/victory-native:build",
         "./packages/victory-vendor:build",
         "./packages/victory:build",
         "./packages/victory-area:build",
@@ -209,7 +191,6 @@
     },
     "build:lib:esm": {
       "dependencies": [
-        "./packages/victory-native:build:lib:esm",
         "./packages/victory-vendor:build:lib:esm",
         "./packages/victory:build:lib:esm",
         "./packages/victory-area:build:lib:esm",
@@ -322,7 +303,6 @@
     },
     "jest:pkgs": {
       "dependencies": [
-        "./packages/victory-native:jest",
         "./packages/victory-vendor:jest",
         "./packages/victory:jest",
         "./packages/victory-area:jest",
@@ -379,7 +359,6 @@
     },
     "types:check": {
       "dependencies": [
-        "./packages/victory-native:types:check",
         "./packages/victory-vendor:types:check",
         "./packages/victory:types:check",
         "./packages/victory-area:types:check",
@@ -413,7 +392,6 @@
     },
     "types:create": {
       "dependencies": [
-        "./packages/victory-native:types:create",
         "./packages/victory-vendor:types:create",
         "./packages/victory:types:create",
         "./packages/victory-area:types:create",
@@ -450,9 +428,6 @@
       "dependencies": [
         "build:lib:esm"
       ]
-    },
-    "engines": {
-      "node": ">=18.0.0"
     }
   }
 }
