@@ -1,5 +1,9 @@
 # victory-area
 
+## 37.4.0
+
+No changes in this release.
+
 ## 37.3.6
 
 ## 37.3.5
