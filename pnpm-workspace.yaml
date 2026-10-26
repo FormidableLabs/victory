@@ -9,9 +9,6 @@ preferWorkspacePackages: true
 overrides:
   '@types/eslint': 8.4.3
 
-patchedDependencies:
-  '@changesets/cli@2.24.1': patches/@changesets__cli@2.24.1.patch
-
 # Dependencies allowed to run install scripts (pnpm 11+ requires a decision).
 allowBuilds:
   '@swc/core': true
