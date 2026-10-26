@@ -66,6 +66,77 @@ const getTypeDefinitionFile = (pkg) => `
 export * from "${pkg.name}";
 `;
 
+const LICENSE_WIDTH = 80;
+const LICENSE_DIVIDER = "-".repeat(LICENSE_WIDTH);
+const LICENSE_HEADER_DIVIDER = "=".repeat(LICENSE_WIDTH);
+
+// Join items with commas, wrapping lines at the license width.
+const wrapList = (items) =>
+  items
+    .join(", ")
+    .match(new RegExp(`.{1,${LICENSE_WIDTH}}(, |$)`, "g"))
+    .map((line) => line.trim())
+    .join("\n");
+
+// Split leading copyright lines from the license body so we can group
+// identical license texts that only differ in copyright years / holders.
+const splitLicense = (text) => {
+  const normalized = text.replace(/\r\n/g, "\n").trim();
+  const [header, ...rest] = normalized.split(/\n\s*\n/);
+  const headerLines = header.split("\n").map((line) => line.trim());
+  if (
+    !headerLines.every((line) => /^(copyright|all rights reserved)/i.test(line))
+  ) {
+    return { copyrights: [], body: normalized };
+  }
+
+  return { copyrights: headerLines, body: rest.join("\n\n") };
+};
+
+// Aggregate our own license with all vendored library licenses so that tooling
+// which only reads the package root (e.g. third-party notice generators) can
+// find everything.
+const getRootLicense = (ownLicense, vendorLicenses) => {
+  const groups = new Map();
+  for (const { name, license, text } of vendorLicenses) {
+    const { copyrights, body } = splitLicense(text);
+    const group = groups.get(body) || { pkgs: [], copyrights: [] };
+    group.pkgs.push(`${name} (${license})`);
+    group.copyrights.push(
+      ...copyrights.filter((line) => !group.copyrights.includes(line)),
+    );
+    groups.set(body, group);
+  }
+
+  const sections = Array.from(groups.entries()).map(
+    ([body, { pkgs, copyrights }]) =>
+      [
+        LICENSE_DIVIDER,
+        wrapList(pkgs),
+        LICENSE_DIVIDER,
+        "",
+        copyrights.length ? `${copyrights.join("\n")}\n` : null,
+        body,
+      ]
+        .filter((part) => part !== null)
+        .join("\n"),
+  );
+
+  return `${ownLicense.trim()}
+
+${LICENSE_HEADER_DIVIDER}
+Third-party software
+${LICENSE_HEADER_DIVIDER}
+
+\`victory-vendor\` bundles transpiled copies of the following libraries in
+\`lib-vendor/\` (used by the CommonJS build). Their licenses are reproduced
+below. The original license file for each library is also available at
+\`lib-vendor/<library>/LICENSE\`.
+
+${sections.join("\n\n")}
+`;
+};
+
 // Main.
 const main = async () => {
   // Lazy ESM imports.
@@ -122,7 +193,8 @@ const main = async () => {
 
   // Iterate and generate index files.
   log("Copying licenses and generating indexes.");
-  for (const pkgName of pkgs) {
+  const vendorLicenses = [];
+  for (const pkgName of pkgs.sort()) {
     log(`- ${pkgName}`);
 
     const pkgBase = path.resolve(__dirname, `../node_modules/${pkgName}`);
@@ -153,7 +225,23 @@ const main = async () => {
           getTypeDefinitionFile(pkg),
         ),
     ]);
+
+    vendorLicenses.push({
+      name: pkgName,
+      license: pkg.license,
+      text: (await fs.readFile(path.join(pkgBase, "LICENSE"))).toString(),
+    });
   }
+
+  // Aggregate licenses into package root.
+  log("Generating root license.");
+  const ownLicense = (
+    await fs.readFile(path.resolve(__dirname, "../../../LICENSE.txt"))
+  ).toString();
+  await fs.writeFile(
+    path.resolve(__dirname, "../LICENSE.txt"),
+    getRootLicense(ownLicense, vendorLicenses),
+  );
 };
 
 if (require.main === module) {

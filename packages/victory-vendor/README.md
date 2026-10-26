@@ -11,6 +11,7 @@ To help provide an easy path to folks still using CommonJS in their Node.js appl
 ## Packages
 
 We presently provide the following top-level libraries:
+
 <!-- cat packages/victory-vendor/package.json | egrep '"d3-' | egrep -o 'd3-[^"]*'| sor t-->
 
 - d3-ease
@@ -20,6 +21,7 @@ We presently provide the following top-level libraries:
 - d3-timer
 
 This is the total list of top and transitive libraries we vendor:
+
 <!-- ls packages/victory-vendor/lib-vendor | sort -->
 
 - d3-array
@@ -67,4 +69,14 @@ Note that for some tooling (like Jest) that doesn't play well with `package.json
 
 ## Licenses
 
-This project is released under the MIT license, but the vendor'ed in libraries include other licenses (e.g. ISC) that we enumerate in our `package.json:license` field.
+`victory-vendor` itself is released under the MIT license. It also bundles transpiled copies of third-party libraries (in `lib-vendor/`, used by the CommonJS build) that carry their own licenses:
+
+| Library                                                                                                                  | License              |
+| ------------------------------------------------------------------------------------------------------------------------ | -------------------- |
+| d3-array, d3-color, d3-format, d3-interpolate, d3-path, d3-scale, d3-shape, d3-time, d3-time-format, d3-timer, internmap | ISC                  |
+| d3-ease (includes Robert Penner's easing equations)                                                                      | BSD-3-Clause         |
+| d3-voronoi (includes Raymond Hill's Javascript-Voronoi, MIT)                                                             | BSD-3-Clause AND MIT |
+
+The combined SPDX expression is `MIT AND ISC AND BSD-3-Clause` (see `package.json:license`). The full text of every license is in the published package's `LICENSE.txt`, and each library's original license is also kept at `lib-vendor/<library>/LICENSE`.
+
+The ESM build (`es/`) re-exports the installed `d3-*` dependencies rather than bundling them, so ESM consumers get those licenses from the upstream packages directly.
