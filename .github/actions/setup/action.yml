@@ -4,7 +4,7 @@ description: Setup Build Step
 runs:
   using: "composite"
   steps:
-    - uses: pnpm/action-setup@v4
+    - uses: pnpm/action-setup@v6
 
     - name: Use Node.js
       uses: actions/setup-node@v4
