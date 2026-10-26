@@ -29,7 +29,7 @@ const DefaultSelectionComponent = ({
 export const VictorySelectionContainer = (
   initialProps: VictorySelectionContainerNativeProps,
 ) => {
-  const props = useVictorySelectionContainer({
+  const { props, children } = useVictorySelectionContainer({
     ...initialProps,
     // @ts-expect-error TODO: standalone is not a valid prop for VictoryContainer, figure out why this is here
     standalone: initialProps.standalone ?? true,
@@ -37,7 +37,7 @@ export const VictorySelectionContainer = (
       <DefaultSelectionComponent />
     ),
   });
-  return <VictoryContainer {...props} />;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictorySelectionContainer.role = "container";

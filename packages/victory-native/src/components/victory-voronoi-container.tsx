@@ -21,14 +21,14 @@ const DEFAULT_VORONOI_PADDING = 5;
 export const VictoryVoronoiContainer = (
   initialProps: VictoryVoronoiContainerNativeProps,
 ) => {
-  const props = useVictoryVoronoiContainer({
+  const { props, children } = useVictoryVoronoiContainer({
     ...initialProps,
     activateData: initialProps.activateData ?? true,
     activateLabels: initialProps.activateLabels ?? true,
     labelComponent: initialProps.labelComponent ?? <VictoryTooltip />,
     voronoiPadding: initialProps.voronoiPadding ?? DEFAULT_VORONOI_PADDING,
   });
-  return <VictoryContainer {...props} />;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictoryVoronoiContainer.role = "container";

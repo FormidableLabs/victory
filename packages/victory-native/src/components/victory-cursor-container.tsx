@@ -20,12 +20,12 @@ export interface VictoryCursorContainerNativeProps
 export const VictoryCursorContainer = (
   initialProps: VictoryCursorContainerNativeProps,
 ) => {
-  const props = useVictoryCursorContainer({
+  const { props, children } = useVictoryCursorContainer({
     ...initialProps,
     cursorLabelComponent: initialProps.cursorLabelComponent ?? <VictoryLabel />,
     cursorComponent: initialProps.cursorComponent ?? <LineSegment />,
   });
-  return <VictoryContainer {...props} />;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictoryCursorContainer.role = "container";

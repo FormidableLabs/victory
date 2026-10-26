@@ -1,5 +1,11 @@
 # victory-native
 
+## 37.3.7
+
+### Patch Changes
+
+- Fix container prop forwarding in the brush, cursor, selection, and voronoi containers, which rendered a clipped SVG (`viewBox="0 0 undefined undefined"`) ([#3065](https://github.com/FormidableLabs/victory/pull/3065))
+
 ## 37.3.6
 
 ### Patch Changes

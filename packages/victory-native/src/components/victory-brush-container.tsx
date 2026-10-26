@@ -29,12 +29,12 @@ const RectWithStyle = ({
 export const VictoryBrushContainer = (
   initialProps: VictoryBrushContainerNativeProps,
 ) => {
-  const props = useVictoryBrushContainer({
+  const { props, children } = useVictoryBrushContainer({
     ...initialProps,
     brushComponent: initialProps.brushComponent ?? <RectWithStyle />,
     handleComponent: initialProps.handleComponent ?? <RectWithStyle />,
   });
-  return <VictoryContainer {...props} />;
+  return <VictoryContainer {...props}>{children}</VictoryContainer>;
 };
 
 VictoryBrushContainer.role = "container";
