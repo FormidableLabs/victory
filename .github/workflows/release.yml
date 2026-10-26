@@ -65,9 +65,10 @@ jobs:
         with:
           # `changeset version`, then refresh the lockfile in the same commit.
           script: pnpm run version
-          # NOTE: PRs opened with the default GITHUB_TOKEN don't trigger CI.
-          # Re-run CI on the Version Packages PR by hand, or pass a
-          # fine-grained token / GitHub App token here (see #3093).
+          # NOTE: PRs opened or updated with the default GITHUB_TOKEN don't
+          # trigger CI at all. After the PR's latest update, a maintainer
+          # closes and reopens it to run CI. Or pass a fine-grained token /
+          # GitHub App token here (see #3093).
         env:
           # For the changelog plugin (scripts/changelog.js), which looks up the
           # PR for each changeset's commit through the GitHub API.
@@ -151,6 +152,7 @@ jobs:
     environment: Production
     permissions:
       contents: read # to check out repo (actions/checkout)
+      pull-requests: read # for the changelog plugin's PR lookups
       id-token: write # for npm trusted publishing (OIDC)
     steps:
       - uses: actions/checkout@v7
@@ -166,5 +168,9 @@ jobs:
       # Versions like `37.4.0-canary-<datetime>` (snapshot.useCalculatedVersion).
       # Needs at least one pending changeset; otherwise nothing is versioned.
       - run: pnpm changeset version --snapshot canary
+        env:
+          # For the changelog plugin, which looks up each changeset's PR through
+          # the GitHub API (snapshot versioning still writes changelogs).
+          GITHUB_TOKEN: ${{ github.token }}
       - run: pnpm run build
       - run: pnpm changeset publish --tag next --no-git-tag

@@ -269,7 +269,7 @@ Review the file, make any necessary adjustments, and commit it to source. When w
 
 On a merge of a feature PR to `main`, the [release workflow](.github/workflows/release.yml) opens (or updates) a PR titled `"Version Packages"`. If you're not ready to publish yet, keep merging feature PRs and merge the Version Packages PR later.
 
-The Version Packages PR is opened with the default `GITHUB_TOKEN`, so CI doesn't run on it automatically. Re-run CI on it by hand before merging.
+The Version Packages PR is opened and updated with the default `GITHUB_TOKEN`, so no CI runs on it at all. Before merging, and after its latest update, a maintainer closes and reopens the PR to trigger CI, then waits for the checks to pass.
 
 ### Publishing packages
 
