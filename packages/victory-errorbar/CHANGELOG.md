@@ -1,5 +1,9 @@
 # victory-errorbar
 
+## 37.4.1
+
+No changes in this release.
+
 ## 37.4.0
 
 ### Patch Changes
