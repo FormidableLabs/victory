@@ -267,49 +267,25 @@ Review the file, make any necessary adjustments, and commit it to source. When w
 
 ### Creating versions
 
-On a merge of a feature PR, the changesets GitHub action will open a new PR titled `"Version Packages"`. This PR is automatically kept up to date with additional PRs with changesets. So, if you're not ready to publish yet, just keep merging feature PRs and then merge the version packages PR later.
+On a merge of a feature PR to `main`, the [release workflow](.github/workflows/release.yml) opens (or updates) a PR titled `"Version Packages"`. If you're not ready to publish yet, keep merging feature PRs and merge the Version Packages PR later.
+
+The Version Packages PR is opened and updated with the default `GITHUB_TOKEN`, so no CI runs on it at all. Before merging, and after its latest update, a maintainer closes and reopens the PR to trigger CI, then waits for the checks to pass.
 
 ### Publishing packages
 
-On the merge of a version packages PR, the changesets GitHub action will publish the packages to npm.
+On the merge of the Version Packages PR, the release workflow:
 
-### The manual version
+1. Builds and packs every package (`pack` job).
+2. Waits for a maintainer to approve the `Production` environment, then publishes to npm with [trusted publishing](https://docs.npmjs.com/trusted-publishers) (OIDC, no npm token) and provenance (`publish` job).
+3. Creates one `v{version}` git tag and GitHub release with generated release notes.
 
-For exceptional circumstances, here is a quick guide to manually publishing from a local computer using changesets.
+### Canary releases
 
-1. Add a changeset with `pnpm run changeset`. Add changeset file, review file, tweak, and commit.
-2. Make a version. Due to our changelog plugin you will need to create a personal GitHub token and pass it to the environment.
+To try out unreleased changes, run the release workflow manually (**Actions → Release → Run workflow**) on a branch that the `Production` environment allows. It publishes a snapshot (e.g. `37.4.0-canary-20261025120000`) of every package with a pending changeset to the `next` dist-tag. It never touches `latest`.
 
-    ```sh
-    $ GITHUB_TOKEN=<INSERT TOKEN> pnpm run version
-    ```
+### Release setup (maintainers, one time)
 
-    Review git changes, tweak, and commit.
+- **npm:** run `scripts/npm-trust.sh` (npm >= 11.15.0, 2FA) to configure trusted publishing for every package. Add `--dry-run` to preview.
+- **GitHub:** create the `Production` environment (Settings → Environments) with required reviewers, allowing `main` (and any branch used for canaries).
 
-3. Publish.
-
-    First, build necessary files:
-
-    ```sh
-    # Build everything
-    $ pnpm run build
-    ```
-
-    Then publish:
-
-    ```sh
-    # Test things out first
-    $ pnpm -r publish --dry-run
-
-    # The real publish
-    # This first does a single git tag (if not already present), then publishes
-    $ pnpm run publish --otp=<insert otp code>
-    ```
-
-    Note that publishing multiple packages via `changeset` to npm with an OTP code can often fail with `429 Too Many Requests` rate limiting error. Take a 5+ minute coffee break, then come back and try again.
-
-    Then issue the following to also push git tags:
-
-    ```sh
-    $ git push && git push --tags
-    ```
+There's no manual (local) publish path: packages publish only from the release workflow.
