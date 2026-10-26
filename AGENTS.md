@@ -6,7 +6,7 @@ Guidance for AI coding agents (and humans) working in this repo. Keep it short a
 
 Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it before starting uplift work; its **Decision log** is the source of truth for settled choices. Don't re-open a logged decision without saying why.
 
-- **Integration branch:** `chore/2026-uplift`. All uplift PRs target it, not `main`.
+- **Integration branch:** `chore/2026-uplift-02`. All uplift PRs target it, not `main`.
 - **Infra first, source last.** No substantive changes to `packages/*/src` in infra PRs. Mechanical churn (formatting, lint autofixes, type-error fixes) goes in its own PR, with no behavior changes mixed in, and its commit is added to `.git-blame-ignore-revs`.
 - **Tasks are plain `package.json` scripts.** The task runner (wireit today, Turborepo planned) orchestrates and caches them. Never put logic only in runner config.
 - **Small, reviewable PRs.** One concern per PR. Each PR that affects a published package needs a changeset (`pnpm changeset`).
@@ -16,6 +16,11 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 - **Don't commit, stage, push, merge, or open PRs** unless explicitly asked. Prepare the changes in the working tree and suggest a commit message; the maintainer does the git work.
 - Don't publish to npm or change npm/GitHub settings (trusted publishers, environments, dist-tags). Write the scripts and docs; a maintainer runs them.
 - Report outcomes plainly: if a check was skipped or fails, say so with the output.
+
+## Releasing
+
+- `release.yml`'s filename and the `npm-publish` environment are bound to npm trusted publishing. Renaming either requires re-running `scripts/npm-trust.sh` (revoke first).
+- Version Packages PRs get no CI (they're opened by `GITHUB_TOKEN`). Close and reopen the PR after its last update to trigger CI.
 
 ## Repo map
 

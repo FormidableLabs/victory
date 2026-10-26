@@ -1,17 +1,17 @@
 name: CI
 
 # Runs build and test on:
-#   every push to main or the 2026 uplift integration branch
+#   every push to main or a 2026 uplift integration branch (chore/2026-uplift*)
 #   every pull request with either as the base
 on:
   push:
     branches:
       - main
-      - chore/2026-uplift
+      - chore/2026-uplift*
   pull_request:
     branches:
       - main
-      - chore/2026-uplift
+      - chore/2026-uplift*
 
 jobs:
   build:
