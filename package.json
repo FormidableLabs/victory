@@ -73,7 +73,6 @@
     "jest-environment-jsdom": "^29.7.0",
     "lodash": "^4.17.19",
     "lodash-webpack-plugin": "^0.11.6",
-    "nps": "^5.9.0",
     "prettier": "^3.3.3",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
@@ -87,14 +86,14 @@
     "ts-jest": "^29.2.5",
     "ts-loader": "^9.3.0",
     "ts-node": "^10.9.1",
+    "turbo": "^2.11.10",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.13.0",
     "victory-vendor": "*",
     "victory-voronoi": "*",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.0",
-    "wireit": "^0.7.1"
+    "webpack-dev-server": "^4.9.0"
   },
   "browserslist": [
     "> 0.5%",
@@ -106,328 +105,34 @@
     "version": "pnpm changeset version && pnpm install --no-frozen-lockfile",
     "changeset": "changeset",
     "start": "webpack serve --config ./config/webpack/demo/webpack.config.dev.js --static demo/ts --entry ./demo/ts/app",
-    "start:docs": "wireit",
-    "check": "wireit",
-    "check:debug": "cross-env WIREIT_PARALLEL=1 pnpm check",
+    "start:docs": "turbo run build:lib:esm --filter=victory-docs^... && pnpm --filter victory-docs start",
+    "check": "turbo run format lint:root lint jest types:check",
+    "check:debug": "turbo run format lint:root lint jest types:check --concurrency=1",
     "clean:build": "rimraf coverage \"packages/*/{dist,es,lib}\"",
-    "clean:cache": "wireit",
-    "clean:cache:lint": "rimraf .eslintcache \"{demo,packages}/*/.eslintcache\"",
-    "clean:cache:wireit": "rimraf .wireit \"{demo,packages}/*/.wireit\"",
-    "clean:cache:modules": "rimraf node_modules/.cache \"{demo,packages}/*/node_modules/.cache\"",
-    "build": "wireit",
-    "build:lib:esm": "wireit",
-    "build:typescript": "wireit",
-    "build:docs": "wireit",
-    "format": "wireit",
-    "format:fix": "wireit",
-    "lint": "wireit",
-    "lint:fix": "wireit",
-    "lint:root": "wireit",
-    "lint:root:fix": "wireit",
-    "lint:pkgs": "wireit",
-    "lint:pkgs:fix": "wireit",
-    "jest": "wireit",
-    "jest:root": "wireit",
-    "jest:pkgs": "wireit",
-    "types:check": "wireit",
-    "types:create": "wireit",
+    "clean:cache": "pnpm clean:cache:turbo && pnpm clean:cache:lint && pnpm clean:cache:modules",
+    "clean:cache:lint": "rimraf .eslintcache node_modules/.cache/eslint node_modules/.cache/prettier \"packages/*/node_modules/.cache/eslint\"",
+    "clean:cache:turbo": "rimraf .turbo \"packages/*/.turbo\" website/.turbo",
+    "clean:cache:modules": "rimraf node_modules/.cache \"packages/*/node_modules/.cache\"",
+    "build": "turbo run build --filter=./packages/*",
+    "build:lib:esm": "turbo run build:lib:esm --filter=./packages/*",
+    "build:typescript": "turbo run build:lib:esm types:create --filter=./packages/*",
+    "build:docs": "turbo run build --filter=victory-docs",
+    "format": "prettier --config .prettierrc.json --ignore-path .prettierignore --cache --cache-location node_modules/.cache/prettier/.prettier-cache --check \"./**/*.{js,jsx,json,ts,tsx}\"",
+    "format:fix": "prettier --config .prettierrc.json --ignore-path .prettierignore --cache --cache-location node_modules/.cache/prettier/.prettier-cache --write \"./**/*.{js,jsx,json,ts,tsx}\"",
+    "lint": "turbo run lint:root lint",
+    "lint:fix": "turbo run lint:root:fix lint:fix",
+    "lint:root": "eslint --color --cache --cache-location node_modules/.cache/eslint/ *.js scripts config stories test website",
+    "lint:root:fix": "eslint --color --cache --cache-location node_modules/.cache/eslint/ --fix *.js scripts config stories test website",
+    "lint:pkgs": "turbo run lint",
+    "lint:pkgs:fix": "turbo run lint:fix",
+    "jest": "turbo run jest",
+    "types:check": "turbo run types:check",
+    "types:create": "turbo run types:create --filter=./packages/*",
     "build-storybook": "storybook build",
     "storybook:typecheck": "tsc -p tsconfig.storybook.json",
-    "storybook:build": "wireit",
-    "storybook:dev": "concurrently --raw \"pnpm:build:lib:esm --watch\" \"pnpx storybook dev -p 6006\"",
+    "storybook:build": "pnpm build:lib:esm && storybook build",
+    "storybook:dev": "concurrently --raw \"turbo watch build:lib:esm --filter=./packages/*\" \"pnpx storybook dev -p 6006\"",
     "storybook:start": "storybook dev -p 6006 --no-open",
-    "sync": "wireit",
-    "sync:pkgs": "node ./scripts/sync-pkgs-wireit.js",
-    "sync:tsconfig": "pnpm -r --filter !victory-core  --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
-  },
-  "wireit": {
-    "clean:cache": {
-      "dependencies": [
-        "clean:cache:wireit",
-        "clean:cache:lint",
-        "clean:cache:modules"
-      ]
-    },
-    "check": {
-      "dependencies": [
-        "format",
-        "lint",
-        "jest",
-        "types:check"
-      ]
-    },
-    "build": {
-      "dependencies": [
-        "./packages/victory-vendor:build",
-        "./packages/victory:build",
-        "./packages/victory-area:build",
-        "./packages/victory-axis:build",
-        "./packages/victory-bar:build",
-        "./packages/victory-box-plot:build",
-        "./packages/victory-brush-container:build",
-        "./packages/victory-brush-line:build",
-        "./packages/victory-candlestick:build",
-        "./packages/victory-canvas:build",
-        "./packages/victory-chart:build",
-        "./packages/victory-core:build",
-        "./packages/victory-create-container:build",
-        "./packages/victory-cursor-container:build",
-        "./packages/victory-errorbar:build",
-        "./packages/victory-group:build",
-        "./packages/victory-histogram:build",
-        "./packages/victory-legend:build",
-        "./packages/victory-line:build",
-        "./packages/victory-pie:build",
-        "./packages/victory-polar-axis:build",
-        "./packages/victory-scatter:build",
-        "./packages/victory-selection-container:build",
-        "./packages/victory-shared-events:build",
-        "./packages/victory-stack:build",
-        "./packages/victory-tooltip:build",
-        "./packages/victory-voronoi:build",
-        "./packages/victory-voronoi-container:build",
-        "./packages/victory-zoom-container:build"
-      ]
-    },
-    "build:lib:esm": {
-      "dependencies": [
-        "./packages/victory-vendor:build:lib:esm",
-        "./packages/victory:build:lib:esm",
-        "./packages/victory-area:build:lib:esm",
-        "./packages/victory-axis:build:lib:esm",
-        "./packages/victory-bar:build:lib:esm",
-        "./packages/victory-box-plot:build:lib:esm",
-        "./packages/victory-brush-container:build:lib:esm",
-        "./packages/victory-brush-line:build:lib:esm",
-        "./packages/victory-candlestick:build:lib:esm",
-        "./packages/victory-canvas:build:lib:esm",
-        "./packages/victory-chart:build:lib:esm",
-        "./packages/victory-core:build:lib:esm",
-        "./packages/victory-create-container:build:lib:esm",
-        "./packages/victory-cursor-container:build:lib:esm",
-        "./packages/victory-errorbar:build:lib:esm",
-        "./packages/victory-group:build:lib:esm",
-        "./packages/victory-histogram:build:lib:esm",
-        "./packages/victory-legend:build:lib:esm",
-        "./packages/victory-line:build:lib:esm",
-        "./packages/victory-pie:build:lib:esm",
-        "./packages/victory-polar-axis:build:lib:esm",
-        "./packages/victory-scatter:build:lib:esm",
-        "./packages/victory-selection-container:build:lib:esm",
-        "./packages/victory-shared-events:build:lib:esm",
-        "./packages/victory-stack:build:lib:esm",
-        "./packages/victory-tooltip:build:lib:esm",
-        "./packages/victory-voronoi:build:lib:esm",
-        "./packages/victory-voronoi-container:build:lib:esm",
-        "./packages/victory-zoom-container:build:lib:esm"
-      ]
-    },
-    "build:typescript": {
-      "dependencies": [
-        "build:lib:esm",
-        "types:create"
-      ]
-    },
-    "build:docs": {
-      "command": "pnpm run --filter victory-docs build",
-      "dependencies": [
-        "build:lib:esm"
-      ]
-    },
-    "format": {
-      "command": "prettier --config .prettierrc.json --ignore-path .prettierignore --check \"./**/*.{js,jsx,json,ts,tsx}\""
-    },
-    "format:fix": {
-      "command": "prettier --config .prettierrc.json --ignore-path .prettierignore --write \"./**/*.{js,jsx,json,ts,tsx}\""
-    },
-    "lint": {
-      "dependencies": [
-        "lint:root",
-        "lint:pkgs"
-      ]
-    },
-    "lint:fix": {
-      "dependencies": [
-        "lint:root:fix",
-        "lint:pkgs:fix"
-      ]
-    },
-    "lint:root": {
-      "command": "eslint --color *.js scripts config stories test website",
-      "files": [
-        "*.js",
-        "scripts",
-        "config",
-        "stories",
-        "test",
-        "website",
-        "!**/node_modules/**"
-      ],
-      "output": [],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "lint:root:fix": {
-      "command": "eslint --color --fix *.js scripts config stories test website",
-      "files": [
-        "*.js",
-        "scripts",
-        "config",
-        "stories",
-        "test",
-        "website",
-        "!**/node_modules/**"
-      ],
-      "output": [],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "lint:pkgs": {
-      "command": "eslint --color packages",
-      "dependencies": [
-        "build"
-      ]
-    },
-    "lint:pkgs:fix": {
-      "command": "eslint --color --fix packages",
-      "dependencies": [
-        "build"
-      ]
-    },
-    "jest": {
-      "dependencies": [
-        "jest:pkgs"
-      ]
-    },
-    "jest:pkgs": {
-      "dependencies": [
-        "./packages/victory-vendor:jest",
-        "./packages/victory:jest",
-        "./packages/victory-area:jest",
-        "./packages/victory-axis:jest",
-        "./packages/victory-bar:jest",
-        "./packages/victory-box-plot:jest",
-        "./packages/victory-brush-container:jest",
-        "./packages/victory-brush-line:jest",
-        "./packages/victory-candlestick:jest",
-        "./packages/victory-canvas:jest",
-        "./packages/victory-chart:jest",
-        "./packages/victory-core:jest",
-        "./packages/victory-create-container:jest",
-        "./packages/victory-cursor-container:jest",
-        "./packages/victory-errorbar:jest",
-        "./packages/victory-group:jest",
-        "./packages/victory-histogram:jest",
-        "./packages/victory-legend:jest",
-        "./packages/victory-line:jest",
-        "./packages/victory-pie:jest",
-        "./packages/victory-polar-axis:jest",
-        "./packages/victory-scatter:jest",
-        "./packages/victory-selection-container:jest",
-        "./packages/victory-shared-events:jest",
-        "./packages/victory-stack:jest",
-        "./packages/victory-tooltip:jest",
-        "./packages/victory-voronoi:jest",
-        "./packages/victory-voronoi-container:jest",
-        "./packages/victory-zoom-container:jest"
-      ]
-    },
-    "storybook:build": {
-      "command": "storybook build",
-      "files": [
-        ".storybook",
-        "stories",
-        "packages/victory*/src/**/*.stories.*"
-      ],
-      "output": [
-        "storybook-static"
-      ],
-      "dependencies": [
-        "build:lib:esm"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "sync": {
-      "dependencies": [
-        "sync:pkgs",
-        "sync:tsconfig"
-      ]
-    },
-    "types:check": {
-      "dependencies": [
-        "./packages/victory-vendor:types:check",
-        "./packages/victory:types:check",
-        "./packages/victory-area:types:check",
-        "./packages/victory-axis:types:check",
-        "./packages/victory-bar:types:check",
-        "./packages/victory-box-plot:types:check",
-        "./packages/victory-brush-container:types:check",
-        "./packages/victory-brush-line:types:check",
-        "./packages/victory-candlestick:types:check",
-        "./packages/victory-canvas:types:check",
-        "./packages/victory-chart:types:check",
-        "./packages/victory-core:types:check",
-        "./packages/victory-create-container:types:check",
-        "./packages/victory-cursor-container:types:check",
-        "./packages/victory-errorbar:types:check",
-        "./packages/victory-group:types:check",
-        "./packages/victory-histogram:types:check",
-        "./packages/victory-legend:types:check",
-        "./packages/victory-line:types:check",
-        "./packages/victory-pie:types:check",
-        "./packages/victory-polar-axis:types:check",
-        "./packages/victory-scatter:types:check",
-        "./packages/victory-selection-container:types:check",
-        "./packages/victory-shared-events:types:check",
-        "./packages/victory-stack:types:check",
-        "./packages/victory-tooltip:types:check",
-        "./packages/victory-voronoi:types:check",
-        "./packages/victory-voronoi-container:types:check",
-        "./packages/victory-zoom-container:types:check"
-      ]
-    },
-    "types:create": {
-      "dependencies": [
-        "./packages/victory-vendor:types:create",
-        "./packages/victory:types:create",
-        "./packages/victory-area:types:create",
-        "./packages/victory-axis:types:create",
-        "./packages/victory-bar:types:create",
-        "./packages/victory-box-plot:types:create",
-        "./packages/victory-brush-container:types:create",
-        "./packages/victory-brush-line:types:create",
-        "./packages/victory-candlestick:types:create",
-        "./packages/victory-canvas:types:create",
-        "./packages/victory-chart:types:create",
-        "./packages/victory-core:types:create",
-        "./packages/victory-create-container:types:create",
-        "./packages/victory-cursor-container:types:create",
-        "./packages/victory-errorbar:types:create",
-        "./packages/victory-group:types:create",
-        "./packages/victory-histogram:types:create",
-        "./packages/victory-legend:types:create",
-        "./packages/victory-line:types:create",
-        "./packages/victory-pie:types:create",
-        "./packages/victory-polar-axis:types:create",
-        "./packages/victory-scatter:types:create",
-        "./packages/victory-selection-container:types:create",
-        "./packages/victory-shared-events:types:create",
-        "./packages/victory-stack:types:create",
-        "./packages/victory-tooltip:types:create",
-        "./packages/victory-voronoi:types:create",
-        "./packages/victory-voronoi-container:types:create",
-        "./packages/victory-zoom-container:types:create"
-      ]
-    },
-    "start:docs": {
-      "command": "pnpm run --filter victory-docs start",
-      "dependencies": [
-        "build:lib:esm"
-      ]
-    }
+    "sync": "pnpm -r --filter !victory-core --filter !victory-vendor exec -- cpx ../victory-core/tsconfig.* ."
   }
 }

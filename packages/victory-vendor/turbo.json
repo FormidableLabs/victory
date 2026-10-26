@@ -1,0 +1,26 @@
+{
+  "$schema": "../../node_modules/turbo/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    // One script builds everything: d3 sources (resolved from the lockfile)
+    // transpiled to `es`, `lib` and `lib-vendor`, plus the root `d3-*` shims.
+    "build": {
+      // Replaces the root `build` aggregate, which would be a cycle here.
+      "dependsOn": [],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/LICENSE.txt", "!*.md"],
+      "outputs": [
+        "es/**",
+        "lib/**",
+        "lib-vendor/**",
+        "d3-*",
+        "internmap.js",
+        "LICENSE.txt"
+      ]
+    },
+    // No scripts of their own; these make other packages' `^build:lib:esm`
+    // (etc.) build victory-vendor.
+    "build:lib:esm": { "dependsOn": ["build"] },
+    "build:lib:cjs": { "dependsOn": ["build"] },
+    "types:create": { "dependsOn": ["build"] }
+  }
+}

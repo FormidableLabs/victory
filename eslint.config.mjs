@@ -15,7 +15,7 @@ export default tseslint.config(
   {
     ignores: [
       "**/*.d.ts",
-      "**/.wireit/",
+      "**/.turbo/",
       "**/.docusaurus/",
       "**/artifacts/",
       "**/coverage/",

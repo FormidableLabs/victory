@@ -3,7 +3,7 @@
 .docusaurus
 .expo
 .storybook
-.wireit
+.turbo
 .vscode
 coverage
 dist
