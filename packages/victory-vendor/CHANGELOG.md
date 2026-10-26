@@ -1,5 +1,11 @@
 # victory-vendor
 
+## 37.4.1
+
+### Patch Changes
+
+- Ship an aggregated `LICENSE.txt` with all vendored library licenses and add `BSD-3-Clause` to the `license` field (#3089, #3090) ([#3092](https://github.com/FormidableLabs/victory/pull/3092))
+
 ## 37.4.0
 
 No changes in this release.
