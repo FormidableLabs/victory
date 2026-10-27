@@ -161,6 +161,13 @@
     "UntypedResolution ./d3-voronoi node16-cjs",
     "UntypedResolution ./d3-voronoi node16-esm"
   ],
+  "loadFailures": [
+    "import victory-vendor/d3-color: Cannot find package 'd3-color' imported from es/d3-color.js",
+    "import victory-vendor/d3-format: Cannot find package 'd3-format' imported from es/d3-format.js",
+    "import victory-vendor/d3-path: Cannot find package 'd3-path' imported from es/d3-path.js",
+    "import victory-vendor/d3-time-format: Cannot find package 'd3-time-format' imported from es/d3-time-format.js",
+    "import victory-vendor/d3-voronoi: Cannot find package 'd3-voronoi' imported from es/d3-voronoi.js"
+  ],
   "files": [
     "CHANGELOG.md",
     "LICENSE.txt",

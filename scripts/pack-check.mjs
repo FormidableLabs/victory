@@ -3,13 +3,14 @@
 //
 // 1. Packs the package with `pnpm pack`.
 // 2. Runs publint and attw (`@arethetypeswrong/cli`) on the tarball.
-// 3. Installs the tarball into a scratch `node_modules` and loads every
-//    entrypoint with both `require()` and `import()`.
+// 3. Installs the tarball outside the repo, next to only the dependencies it
+//    declares, and loads every entrypoint with `require()` and `import()`.
 // 4. If the package has a `pack-snapshot.json`, compares the published
 //    manifest fields, how attw resolves each entrypoint (and its problems),
-//    and the file list against it. Pass `--update` to rewrite it.
+//    which entrypoints fail to load, and the file list against it. Pass `--update` to rewrite it.
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { publint } from "publint";
 import { formatMessage } from "publint/utils";
@@ -19,7 +20,8 @@ const { log, error } = console;
 // publint warnings we accept for now, with the reason. Anything else fails.
 const ALLOWED_PUBLINT_WARNINGS = {
   // `es/*.js` is ESM in a package without `"type": "module"`. Bundlers read
-  // it through `module`; Node uses `main` (CJS). Fixed by `exports` in v38.
+  // it through `module`; Node uses `main` (CJS). tsdown fixes this for the
+  // `victory-*` packages in v38; victory-vendor is #3105.
   FILE_INVALID_FORMAT: true,
 };
 
@@ -64,17 +66,49 @@ const files = run("tar", ["tzf", tarball])
   .map((f) => f.replace(/^package\//, ""))
   .sort();
 
-// Install into a scratch `node_modules`. Its dependencies resolve from the
-// package's own `node_modules` further up.
-const installDir = path.join(workDir, "node_modules/.pkg");
-fs.mkdirSync(installDir, { recursive: true });
-run("tar", ["xzf", tarball, "-C", installDir]);
-const manifest = JSON.parse(
-  fs.readFileSync(path.join(installDir, "package/package.json"), "utf8"),
+// Install outside the repo, so that nothing resolves through the package's or
+// the root's `node_modules` (devDependencies, hoisted packages). Only the
+// declared `dependencies` and `peerDependencies` are linked in, from the
+// workspace install. Workspace dependencies link to their package directory,
+// so they can still see their own devDependencies; each gets its own check.
+const installRoot = fs.realpathSync(
+  fs.mkdtempSync(path.join(os.tmpdir(), "pack-check-")),
 );
-const installed = path.join(workDir, "node_modules", manifest.name);
-fs.renameSync(path.join(installDir, "package"), installed);
-fs.rmSync(installDir, { recursive: true });
+for (let dir = path.dirname(installRoot); ; dir = path.dirname(dir)) {
+  if (fs.existsSync(path.join(dir, "node_modules"))) {
+    throw new Error(`${installRoot} isn't isolated: found ${dir}/node_modules`);
+  }
+  if (dir === path.dirname(dir)) break;
+}
+const modulesDir = path.join(installRoot, "node_modules");
+fs.mkdirSync(modulesDir);
+run("tar", ["xzf", tarball, "-C", installRoot]);
+const manifest = JSON.parse(
+  fs.readFileSync(path.join(installRoot, "package/package.json"), "utf8"),
+);
+const installed = path.join(modulesDir, manifest.name);
+fs.mkdirSync(path.dirname(installed), { recursive: true });
+fs.renameSync(path.join(installRoot, "package"), installed);
+const repoModules = path.resolve(import.meta.dirname, "../node_modules");
+for (const dep of Object.keys({
+  ...manifest.dependencies,
+  ...manifest.peerDependencies,
+})) {
+  // Peers may only be installed at the root.
+  const source = [
+    path.join(pkgDir, "node_modules", dep),
+    path.join(repoModules, dep),
+  ].find((p) => fs.existsSync(p));
+  if (!source) {
+    if (!manifest.peerDependenciesMeta?.[dep]?.optional) {
+      failures.push(`Dependency ${dep} isn't installed in the workspace`);
+    }
+    continue;
+  }
+  const target = path.join(modulesDir, dep);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.symlinkSync(fs.realpathSync(source), target, "dir");
+}
 
 const entrypoints = getEntrypoints(manifest, files);
 
@@ -142,11 +176,13 @@ if (attwProblems.length && !update && !fs.existsSync(snapshotPath)) {
   failures.push(`attw found problems:\n  ${attwProblems.join("\n  ")}`);
 }
 
-// Load every entrypoint as CJS and ESM.
+// Load every entrypoint as CJS and ESM. `import()` of ESM syntax in a `.js`
+// file without `"type"` (victory-vendor's `es/`, #3105) works only because
+// Node 20.19+/22.12+ detects the syntax, as it does for consumers.
 const specifiers = entrypoints.map((e) =>
   e === "." ? manifest.name : `${manifest.name}/${e.replace(/^\.\//, "")}`,
 );
-const loader = path.join(workDir, "load.mjs");
+const loader = path.join(installRoot, "load.mjs");
 fs.writeFileSync(
   loader,
   `import { createRequire } from "node:module";
@@ -156,22 +192,30 @@ for (const spec of ${JSON.stringify(specifiers)}) {
   for (const [kind, load] of [["require", (s) => require(s)], ["import", (s) => import(s)]]) {
     try {
       const mod = await load(spec);
-      if (Object.keys(mod).length === 0) errors.push(kind + "(" + spec + "): no exports");
+      if (Object.keys(mod).length === 0) errors.push(kind + " " + spec + ": no exports");
     } catch (err) {
-      errors.push(kind + "(" + spec + "): " + err.message.split("\\n")[0]);
+      errors.push(kind + " " + spec + ": " + err.message.split("\\n")[0]);
     }
   }
 }
-if (errors.length) {
-  console.error(errors.join("\\n"));
-  process.exit(1);
-}
+console.log(JSON.stringify(errors));
 `,
 );
+let loadFailures;
 try {
-  run(process.execPath, [loader], { stdio: ["ignore", "pipe", "pipe"] });
-} catch (err) {
-  failures.push(`Loading entrypoints failed:\n${err.stderr}`);
+  loadFailures = JSON.parse(
+    run(process.execPath, [loader], {
+      cwd: installRoot,
+      stdio: ["ignore", "pipe", "pipe"],
+    }),
+  )
+    .map((e) => e.replaceAll(`${modulesDir}/${manifest.name}/`, ""))
+    .sort();
+} finally {
+  fs.rmSync(installRoot, { recursive: true, force: true });
+}
+if (loadFailures.length && !update && !fs.existsSync(snapshotPath)) {
+  failures.push(`Loading entrypoints failed:\n  ${loadFailures.join("\n  ")}`);
 }
 
 // Snapshot
@@ -181,6 +225,7 @@ const snapshot = {
   ),
   resolutions,
   attwProblems,
+  loadFailures,
   files,
 };
 if (update) {
@@ -209,6 +254,7 @@ if (update) {
     }
   }
   diffs.push(...listDiff(expected.attwProblems, attwProblems, "attw "));
+  diffs.push(...listDiff(expected.loadFailures ?? [], loadFailures, "load "));
   diffs.push(...listDiff(expected.files, files, ""));
   if (diffs.length) {
     failures.push(

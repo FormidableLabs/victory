@@ -67,7 +67,7 @@ These are expected to change as we experiment. Update them as things settle, and
 - **Build and test speed:** keep cold and cached times for `build`, `check`, and CI in mind. Note regressions in the PR.
 - **Task runner cache inputs/outputs:** an inaccurate cache key is a correctness bug. Over-including is safer than missing an input.
 - **CI:** cache hit rates, job split, and running only what changed on PRs.
-- **Published output:** `pnpm pack:check` packs each package, runs publint and attw, and loads every entrypoint with `require()` and `import()`. `victory-vendor` also has to match its `pack-snapshot.json` (manifest fields, resolution per entrypoint, file list). Update a snapshot (build, then `pnpm pack:check --update` in that package) only for an intended change, and call it out in the PR.
+- **Published output:** `pnpm pack:check` packs each package, runs publint and attw, and loads every entrypoint with `require()` and `import()` from an isolated install (declared dependencies only). `victory-vendor` also has to match its `pack-snapshot.json` (manifest fields, resolution per entrypoint, known attw and load failures, file list). Update a snapshot (build, then `pnpm pack:check --update` in that package) only for an intended change, and call it out in the PR.
 - **Bundle size:** measure ESM import scenarios, not only full-library size. (Tree-shaking through the `victory` package is a separate investigation, not part of the uplift.)
 - **Visual testing:** snapshot stability and flakiness.
 - **This file:** if an agent gets something wrong because guidance was missing or stale, fix the guidance here.
