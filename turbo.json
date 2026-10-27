@@ -75,6 +75,17 @@
       "dependsOn": ["^build", "victory-vendor#build", "victory-voronoi#build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
     },
+    // Packs the built package and checks it (publint, attw, loading every
+    // entrypoint, and `pack-snapshot.json` where present). Loading needs the
+    // dependencies' `lib`. Unlike the builds, Markdown is published.
+    "pack:check": {
+      "dependsOn": ["build", "^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!src/**/*.test.*",
+        "$TURBO_ROOT$/scripts/pack-check.mjs"
+      ]
+    },
     // ESLint isn't type-aware and doesn't resolve imports, so it needs nothing built.
     "lint": {},
     "lint:fix": {
@@ -84,7 +95,7 @@
     // (and leave out build output that other tasks write while this runs).
     "//#format": {
       "inputs": [
-        "**/*.{js,jsx,json,ts,tsx}",
+        "**/*.{js,jsx,mjs,cjs,json,ts,tsx}",
         "!**/node_modules/**",
         "!**/.turbo/**",
         "!**/{es,lib,lib-vendor,dist,build,coverage,storybook-static,.docusaurus,.cache}/**",

@@ -90,6 +90,9 @@ $ pnpm run format
 $ pnpm run lint
 $ pnpm run types:check
 
+# Check what each package publishes
+$ pnpm run pack:check
+
 # Tests
 $ pnpm run jest
 ```
@@ -153,13 +156,15 @@ Your next `pnpm run build|check` will be a full (long) rebuild from scratch. To 
 
 We use [Turborepo](https://turborepo.com/) to run tasks in dependency order and cache them.
 
-- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build:lib:esm`, `build:lib:cjs`, `build:dist:dev`, `build:dist:min`, `types:create`, `types:check`, `lint`, `jest`). If you change one, change it in every package.
+- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build:lib:esm`, `build:lib:cjs`, `build:dist:dev`, `build:dist:min`, `types:create`, `types:check`, `lint`, `jest`, `pack:check`). If you change one, change it in every package.
 - **`turbo.json`** at the root says how tasks depend on each other (`^task` means "this task in my dependencies first"), which files are each task's inputs, and which files it outputs. `build` is an aggregate task in `turbo.json` with no script of its own.
 - **Root `package.json` scripts** (`pnpm run build`, `check`, `lint`, ...) call `turbo run`. Root-only tasks like `format` are listed in `turbo.json` as `//#format`.
 - **`packages/victory-vendor`** has a single `build` script and its own `turbo.json`, which maps the other build tasks to it.
 - **`website`** has its own `turbo.json`: its `build` depends on the packages' `build:lib:esm`.
 
 Getting inputs right matters: if a task reads a file that isn't one of its inputs, Turborepo can replay a stale result. When unsure, add the file. Files outside packages that can affect any task go in `globalDependencies`.
+
+`pack:check` (`scripts/pack-check.mjs`) packs a built package and checks the tarball: publint, [attw](https://github.com/arethetypeswrong/arethetypeswrong.github.io), and loading every entrypoint with both `require()` and `import()` from an install outside the repo that has only the tarball's declared `dependencies` and `peerDependencies`. A package with a `pack-snapshot.json` (today only `victory-vendor`, which recharts depends on) must also match it: its resolution-related manifest fields, which file each entrypoint resolves to under each module resolution mode, attw's problems, which entrypoints fail to load (known issues, e.g. #3104), and the file list. If a change to the snapshot is intended, build, then run `pnpm run pack:check --update` in that package and commit the result.
 
 `pnpm run sync` copies `victory-core`'s tsconfig files to the other packages. CI checks they're in sync.
 

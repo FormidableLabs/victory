@@ -1,6 +1,9 @@
-import * as d3Scale from "victory-vendor/d3-scale";
-import * as d3Shape from "victory-vendor/d3-shape";
-import { _internalD3Voronoi as d3Voronoi } from "victory-voronoi/lib/helper-methods";
+// Relative imports, not package names: a root `package.json` dependency on a
+// workspace package puts it in Turborepo's global hash, so editing it (or
+// anything it depends on) would invalidate every task.
+import * as d3Scale from "../../packages/victory-vendor/d3-scale";
+import * as d3Shape from "../../packages/victory-vendor/d3-shape";
+import { _internalD3Voronoi as d3Voronoi } from "../../packages/victory-voronoi/lib/helper-methods";
 import without from "lodash/without";
 import min from "lodash/min";
 import max from "lodash/max";

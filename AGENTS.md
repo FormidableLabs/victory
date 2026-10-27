@@ -25,7 +25,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 ## Repo map
 
 - `packages/victory-*`: the published packages. They all share one version (changesets `fixed` group).
-- `packages/victory-vendor`: vendors d3 as ESM + CJS. **Highest-stakes package.** About 99% of its downloads come through recharts (`victory-vendor@^37`, using `victory-vendor/d3-scale` and `victory-vendor/d3-shape`). Its `exports` map and published file layout must stay compatible; check the packed output before and after any change to it.
+- `packages/victory-vendor`: vendors d3 as ESM + CJS. **Highest-stakes package.** About 99% of its downloads come through recharts (`victory-vendor@^37`, using `victory-vendor/d3-scale` and `victory-vendor/d3-shape`). Its `exports` map and published file layout must stay compatible; `pnpm pack:check` compares them against `packages/victory-vendor/pack-snapshot.json`.
 - `stories/`: Storybook stories (to become a Vite stories app with SVG snapshot and screenshot tests).
 - `website/`: Docusaurus docs site.
 - `test/`: shared Jest config and helpers.
@@ -42,6 +42,7 @@ pnpm build          # all packages
 pnpm check          # format + lint + test + types
 pnpm jest           # tests
 pnpm types:check
+pnpm pack:check     # published output: publint, attw, entrypoints, vendor snapshot
 pnpm lint
 pnpm format:fix
 pnpm turbo run jest --filter=victory-core   # one package (and what it depends on)
@@ -66,7 +67,7 @@ These are expected to change as we experiment. Update them as things settle, and
 - **Build and test speed:** keep cold and cached times for `build`, `check`, and CI in mind. Note regressions in the PR.
 - **Task runner cache inputs/outputs:** an inaccurate cache key is a correctness bug. Over-including is safer than missing an input.
 - **CI:** cache hit rates, job split, and running only what changed on PRs.
-- **Published output:** after packaging changes, check `pnpm pack` contents (and, once added, publint + attw).
+- **Published output:** `pnpm pack:check` packs each package, runs publint and attw, and loads every entrypoint with `require()` and `import()` from an isolated install (declared dependencies only). `victory-vendor` also has to match its `pack-snapshot.json` (manifest fields, resolution per entrypoint, known attw and load failures, file list). Update a snapshot (build, then `pnpm pack:check --update` in that package) only for an intended change, and call it out in the PR.
 - **Bundle size:** measure ESM import scenarios, not only full-library size. (Tree-shaking through the `victory` package is a separate investigation, not part of the uplift.)
 - **Visual testing:** snapshot stability and flakiness.
 - **This file:** if an agent gets something wrong because guidance was missing or stale, fix the guidance here.
