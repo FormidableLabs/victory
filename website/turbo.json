@@ -1,0 +1,12 @@
+{
+  "$schema": "../node_modules/turbo/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    // Docusaurus bundles Victory's `es` builds. Not cached: Vercel builds from
+    // scratch, and Docusaurus has its own cache.
+    "build": {
+      "dependsOn": ["^build:lib:esm"],
+      "cache": false
+    }
+  }
+}

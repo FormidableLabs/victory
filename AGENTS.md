@@ -8,8 +8,8 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 
 - **Integration branch:** `chore/2026-uplift-02`. All uplift PRs target it, not `main`.
 - **Infra first, source last.** No substantive changes to `packages/*/src` in infra PRs. Mechanical churn (formatting, lint autofixes, type-error fixes) goes in its own PR, with no behavior changes mixed in, and its commit is added to `.git-blame-ignore-revs`.
-- **Tasks are plain `package.json` scripts.** The task runner (wireit today, Turborepo planned) orchestrates and caches them. Never put logic only in runner config.
-- **Small, reviewable PRs.** One concern per PR. Each PR that affects a published package needs a changeset (`pnpm changeset`).
+- **Tasks are plain `package.json` scripts.** Turborepo (`turbo.json`) orchestrates and caches them. Never put logic only in runner config.
+- **Small, reviewable PRs.** One concern per PR. Each PR that changes what users of a published package get (code, types, `exports`, published files, `dependencies`/`peerDependencies`) needs a changeset (`pnpm changeset`). Manifest changes that only touch `scripts` or `devDependencies` don't.
 
 ## Working agreements
 
@@ -29,7 +29,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 - `stories/`: Storybook stories (to become a Vite stories app with SVG snapshot and screenshot tests).
 - `website/`: Docusaurus docs site.
 - `test/`: shared Jest config and helpers.
-- `scripts/`: changelog, release notes, and the wireit config generator (to be removed).
+- `scripts/`: changelog and npm trusted-publishing setup.
 
 ## Commands
 
@@ -44,7 +44,10 @@ pnpm jest           # tests
 pnpm types:check
 pnpm lint
 pnpm format:fix
+pnpm turbo run jest --filter=victory-core   # one package (and what it depends on)
 ```
+
+Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents should set it too. In a git worktree, Turborepo stores its cache in the main checkout's `.turbo/cache`; set `TURBO_CACHE_DIR=.turbo/cache` if that location isn't writable (e.g. a sandbox).
 
 These commands change as the uplift lands. Update this section in the same PR that changes them.
 

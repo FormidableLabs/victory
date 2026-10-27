@@ -13,12 +13,28 @@ on:
       - main
       - chore/2026-uplift*
 
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+  TURBO_CACHE_DIR: .turbo/cache
+  # Pull requests only run tasks for packages changed since the base branch
+  # (and their dependents). Pushes run everything.
+  AFFECTED: ${{ github.event_name == 'pull_request' && '--affected' || '' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # `--affected` diffs against the base branch.
+          fetch-depth: 0
       - uses: ./.github/actions/setup
+      # Saved at the end of the job; the test job restores it to reuse builds.
+      - uses: actions/cache@v4
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: turbo-${{ runner.os }}-build-
 
       - name: Check all package.json's and tsconfig.json's are in sync.
         run: |
@@ -26,34 +42,50 @@ jobs:
           git diff --no-ext-diff --quiet --exit-code
 
       - name: Build libraries and distributions
-        run: pnpm build
+        run: pnpm build $AFFECTED
 
       - name: Types
-        run: pnpm types:check
+        run: pnpm types:check $AFFECTED
 
       - name: 📄 Bundle size report
+        # Not built when a pull request doesn't affect `victory`.
+        if: hashFiles('packages/victory/dist/victory.min.js') != ''
         uses: ./.github/actions/bundle-size # path to composite action
         with:
           paths: "packages/victory/dist/victory.min.js"
           onlyDiff: "true"
           header: "Bundle size report" # PR comment header
 
+  # Lint needs nothing built, so it runs alongside build with its own cache.
   lint:
-    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: ./.github/actions/setup
+      - uses: actions/cache@v4
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-lint-${{ github.sha }}
+          restore-keys: turbo-${{ runner.os }}-lint-
 
       - name: Lint
-        run: pnpm lint
+        run: pnpm lint $AFFECTED
 
   test:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: ./.github/actions/setup
+      # This run's builds, from the build job.
+      - uses: actions/cache/restore@v4
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-build-${{ github.sha }}
 
       - name: Test
-        run: pnpm jest
+        run: pnpm jest $AFFECTED
