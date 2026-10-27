@@ -36,8 +36,6 @@
   "scripts": {
     "build:lib:esm": "cross-env BABEL_ENV=es babel src --out-dir es --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js",
     "build:lib:cjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --config-file ../../.babelrc.build.js --extensions .tsx,.ts,.jsx,.js",
-    "build:dist:dev": "webpack --bail --config ../../config/webpack/webpack.config.dev.js",
-    "build:dist:min": "webpack --bail --config ../../config/webpack/webpack.config.js",
     "types:check": "tsc --pretty --noEmit",
     "types:create": "cpx \"src/**/*.d.ts\" es && (tsc --pretty -p ./tsconfig.build.json --emitDeclarationOnly --rootDir src --outDir es || echo \"Warning: found TypeScript errors during build. Continuing anyway!\") && cpx \"es/**/*{.d.ts,.d.ts.map}\" lib",
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint/ src",

@@ -75,8 +75,7 @@ Our task system takes care of task dependencies for you. When you first clone th
 # Run all checks. Re-run this command for your normal workflow.
 $ pnpm run check
 
-# Build libraries and UMD distributions.
-# Really only needed to double-check the webpack build still works.
+# Build all libraries (ESM, CJS and types).
 $ pnpm run build
 ```
 
@@ -156,7 +155,7 @@ Your next `pnpm run build|check` will be a full (long) rebuild from scratch. To 
 
 We use [Turborepo](https://turborepo.com/) to run tasks in dependency order and cache them.
 
-- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build:lib:esm`, `build:lib:cjs`, `build:dist:dev`, `build:dist:min`, `types:create`, `types:check`, `lint`, `jest`, `pack:check`). If you change one, change it in every package.
+- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build:lib:esm`, `build:lib:cjs`, `types:create`, `types:check`, `lint`, `jest`, `pack:check`). If you change one, change it in every package.
 - **`turbo.json`** at the root says how tasks depend on each other (`^task` means "this task in my dependencies first"), which files are each task's inputs, and which files it outputs. `build` is an aggregate task in `turbo.json` with no script of its own.
 - **Root `package.json` scripts** (`pnpm run build`, `check`, `lint`, ...) call `turbo run`. Root-only tasks like `format` are listed in `turbo.json` as `//#format`.
 - **`packages/victory-vendor`** has a single `build` script and its own `turbo.json`, which maps the other build tasks to it.

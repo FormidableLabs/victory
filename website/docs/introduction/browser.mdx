@@ -1,0 +1,96 @@
+---
+sidebar_position: 4
+title: Using Victory in the Browser
+---
+
+# Using Victory in the Browser
+
+Victory doesn't ship a prebuilt browser bundle (UMD) any more. To use it without a build step (for a prototype, a static page, or a CodePen), import its ESM build from a CDN like [esm.sh](https://esm.sh) or [jsDelivr](https://www.jsdelivr.com/) and map the package names with an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap).
+
+## esm.sh
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19.3.1",
+          "react-dom/client": "https://esm.sh/react-dom@19.3.1/client?external=react",
+          "htm": "https://esm.sh/htm@3.1.1",
+          "victory": "https://esm.sh/victory@37?bundle&external=react,react-dom&alias=lodash:lodash-es"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import { createElement, useState } from "react";
+      import { createRoot } from "react-dom/client";
+      import htm from "htm";
+      import { VictoryBar, VictoryChart, VictoryTheme } from "victory";
+
+      // JSX needs a build step, so use htm's tagged templates instead.
+      const html = htm.bind(createElement);
+
+      const randomData = () =>
+        [1, 2, 3, 4].map((quarter) => ({
+          quarter,
+          earnings: 10000 + Math.round(Math.random() * 10000),
+        }));
+
+      const App = () => {
+        const [data, setData] = useState(randomData);
+        return html`
+          <button onClick=${() => setData(randomData())}>Randomize</button>
+          <${VictoryChart} theme=${VictoryTheme.clean} domainPadding=${20}>
+            <${VictoryBar} data=${data} x="quarter" y="earnings" />
+          </${VictoryChart}>
+        `;
+      };
+
+      createRoot(document.getElementById("root")).render(html`<${App} />`);
+    </script>
+  </body>
+</html>
+```
+
+The esm.sh options on the `victory` URL:
+
+- **`external=react,react-dom`** (required): use the `react` and `react-dom` from your import map. Without it, Victory gets its own copy of React and fails with errors like `Cannot read properties of null (reading 'useMemo')`.
+- **`bundle`** (recommended): bundles Victory's packages into a few files, about a dozen requests instead of over 150.
+- **`alias=lodash:lodash-es`** (optional): uses lodash's ESM build, which is a little smaller.
+
+## jsDelivr
+
+[jsDelivr](https://www.jsdelivr.com/)'s `+esm` URLs work too. Use the same page with this import map:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "react": "https://cdn.jsdelivr.net/npm/react@19.3.1/+esm",
+      "react-dom/client": "https://cdn.jsdelivr.net/npm/react-dom@19.3.1/client/+esm",
+      "htm": "https://cdn.jsdelivr.net/npm/htm@3.1.1/+esm",
+      "victory": "https://cdn.jsdelivr.net/npm/victory@37.4.1/+esm"
+    }
+  }
+</script>
+```
+
+jsDelivr has no `external` option. When it builds a package, it replaces each dependency's import with a full URL at whatever version matched then, so Victory's files import `https://cdn.jsdelivr.net/npm/react@19.3.1/+esm` and not your `react`. The import map above uses that same React, so the page loads one copy. If the two differ, the page loads two copies of React and fails with errors like `Cannot read properties of null (reading 'useMemo')`.
+
+To use a different React, add a line to `"imports"` that redirects Victory's React to yours:
+
+```json
+"https://cdn.jsdelivr.net/npm/react@19.3.1/": "https://cdn.jsdelivr.net/npm/react@19.2.0/"
+```
+
+The React version in Victory's files depends on when jsDelivr built each Victory release, so if you change the `victory` version, check it again. Open `https://cdn.jsdelivr.net/npm/victory-core@<version>/+esm` and search for `/npm/react@`.
+
+## Versions
+
+Pin exact versions for anything long-lived, and keep `react` and `react-dom` on the same version.

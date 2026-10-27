@@ -13,8 +13,7 @@
     "package.json",
     "pnpm-workspace.yaml",
     "tsconfig.json",
-    "tsconfig.base.json",
-    "config/webpack/*.js"
+    "tsconfig.base.json"
   ],
   "globalEnv": ["NODE_ENV"],
   "tasks": {
@@ -40,28 +39,11 @@
         "lib/**/*.d.ts.map"
       ]
     },
-    // Webpack bundles the package's src with its dependencies' `es` builds.
-    "build:dist:dev": {
-      "dependsOn": ["^build:lib:esm"],
-      "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
-      "outputs": ["dist/*.js", "!dist/*.min.js*"]
-    },
-    "build:dist:min": {
-      "dependsOn": ["^build:lib:esm"],
-      "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
-      "outputs": ["dist/*.min.js*"]
-    },
     // Aggregate (no script). Same inputs as above so that test edits don't
     // invalidate dependents' `^build`.
     "build": {
       "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
-      "dependsOn": [
-        "build:lib:esm",
-        "build:lib:cjs",
-        "types:create",
-        "build:dist:dev",
-        "build:dist:min"
-      ]
+      "dependsOn": ["build:lib:esm", "build:lib:cjs", "types:create"]
     },
     // Type-checks src including tests, against dependencies' built types.
     "types:check": {
@@ -106,7 +88,6 @@
       "inputs": [
         "*.js",
         "scripts/**",
-        "config/**",
         "stories/**",
         "test/**",
         "website/**",
