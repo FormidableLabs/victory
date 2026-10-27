@@ -47,6 +47,9 @@ jobs:
       - name: Types
         run: pnpm types:check $AFFECTED
 
+      - name: Check published packages
+        run: pnpm pack:check $AFFECTED
+
       - name: 📄 Bundle size report
         # Not built when a pull request doesn't affect `victory`.
         if: hashFiles('packages/victory/dist/victory.min.js') != ''

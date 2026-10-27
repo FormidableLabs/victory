@@ -24,6 +24,7 @@
     "clsx": "^2.1.1"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
     "@babel/cli": "7.23.9",
     "@babel/core": "7.23.9",
     "@babel/plugin-transform-export-namespace-from": "7.23.4",
@@ -75,6 +76,7 @@
     "lodash-webpack-plugin": "^0.11.6",
     "prettier": "^3.3.3",
     "prop-types": "^15.8.1",
+    "publint": "^0.3.25",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hot-loader": "4.13.0",
@@ -89,8 +91,6 @@
     "turbo": "^2.11.10",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.13.0",
-    "victory-vendor": "*",
-    "victory-voronoi": "*",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0"
@@ -117,8 +117,8 @@
     "build:lib:esm": "turbo run build:lib:esm --filter=./packages/*",
     "build:typescript": "turbo run build:lib:esm types:create --filter=./packages/*",
     "build:docs": "turbo run build --filter=victory-docs",
-    "format": "prettier --config .prettierrc.json --ignore-path .prettierignore --cache --cache-location node_modules/.cache/prettier/.prettier-cache --check \"./**/*.{js,jsx,json,ts,tsx}\"",
-    "format:fix": "prettier --config .prettierrc.json --ignore-path .prettierignore --cache --cache-location node_modules/.cache/prettier/.prettier-cache --write \"./**/*.{js,jsx,json,ts,tsx}\"",
+    "format": "prettier --config .prettierrc.json --ignore-path .prettierignore --cache --cache-location node_modules/.cache/prettier/.prettier-cache --check \"./**/*.{js,jsx,mjs,cjs,json,ts,tsx}\"",
+    "format:fix": "prettier --config .prettierrc.json --ignore-path .prettierignore --cache --cache-location node_modules/.cache/prettier/.prettier-cache --write \"./**/*.{js,jsx,mjs,cjs,json,ts,tsx}\"",
     "lint": "turbo run lint:root lint",
     "lint:fix": "turbo run lint:root:fix lint:fix",
     "lint:root": "eslint --color --cache --cache-location node_modules/.cache/eslint/ *.js scripts config stories test website",
@@ -128,6 +128,7 @@
     "jest": "turbo run jest",
     "types:check": "turbo run types:check",
     "types:create": "turbo run types:create --filter=./packages/*",
+    "pack:check": "turbo run pack:check --filter=./packages/*",
     "build-storybook": "storybook build",
     "storybook:typecheck": "tsc -p tsconfig.storybook.json",
     "storybook:build": "pnpm build:lib:esm && storybook build",
