@@ -293,15 +293,9 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^5.0.0
         version: 5.0.0(eslint@9.14.0(jiti@1.21.0)(supports-color@8.1.1))
-      fork-ts-checker-webpack-plugin:
-        specifier: ^8.0.0
-        version: 8.0.0(typescript@5.7.2)(webpack@5.96.1)
       fs-extra:
         specifier: ^10.0.0
         version: 10.1.0
-      glob:
-        specifier: 8.0.3
-        version: 8.0.3
       globals:
         specifier: ^15.12.0
         version: 15.12.0
@@ -350,9 +344,6 @@ importers:
       ts-jest:
         specifier: ^29.2.5
         version: 29.2.5(@babel/core@7.23.9(supports-color@8.1.1))(@jest/transform@29.7.0(supports-color@8.1.1))(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.23.9(supports-color@8.1.1))(supports-color@8.1.1))(esbuild@0.18.20)(jest@29.7.0(@types/node@18.6.1)(supports-color@8.1.1)(ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)))(typescript@5.7.2)
-      ts-loader:
-        specifier: ^9.3.0
-        version: 9.3.1(typescript@5.7.2)(webpack@5.96.1)
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.7.2)
@@ -8541,11 +8532,6 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  semver@7.3.7:
-    resolution: {integrity: sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
     engines: {node: '>=10'}
@@ -9065,13 +9051,6 @@ packages:
       esbuild:
         optional: true
 
-  ts-loader@9.3.1:
-    resolution: {integrity: sha512-OkyShkcZTsTwyS3Kt7a4rsT/t2qvEVQuKCTg4LJmpj9fhFR7ukGdZwV6Qq3tRUkqcXtfGpPR7+hFKHCG/0d3Lw==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      typescript: '*'
-      webpack: ^5.0.0
-
   ts-node@10.9.1:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
@@ -9438,10 +9417,6 @@ packages:
 
   webpack-merge@5.10.0:
     resolution: {integrity: sha512-+4zXKdx7UnO+1jaN4l2lHVD+mFvnlZQP/6ljaJVb4SZiwIKeUnrT5l0gkT8z+n4hKpC+jpOv6O9R+gLtag7pSA==}
-    engines: {node: '>=10.0.0'}
-
-  webpack-merge@5.8.0:
-    resolution: {integrity: sha512-/SaI7xY0831XwP6kzuwhKWVKDP9t1QY1h65lAFLbZqMPIuYcD9QAW4u9STIbU9kaJbPBB/geU/gLr1wDjOhQ+Q==}
     engines: {node: '>=10.0.0'}
 
   webpack-merge@6.0.1:
@@ -16205,23 +16180,6 @@ snapshots:
       typescript: 5.7.2
       webpack: 5.74.0(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
 
-  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.7.2)(webpack@5.96.1):
-    dependencies:
-      '@babel/code-frame': 7.23.5
-      chalk: 4.1.2
-      chokidar: 3.5.3
-      cosmiconfig: 7.0.1
-      deepmerge: 4.2.2
-      fs-extra: 10.1.0
-      memfs: 3.5.3
-      minimatch: 3.1.2
-      node-abort-controller: 3.1.1
-      schema-utils: 3.1.1
-      semver: 7.5.4
-      tapable: 2.2.1
-      typescript: 5.7.2
-      webpack: 5.96.1(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
-
   form-data-encoder@2.1.4: {}
 
   form-data@4.0.0:
@@ -19498,10 +19456,6 @@ snapshots:
 
   semver@6.3.1: {}
 
-  semver@7.3.7:
-    dependencies:
-      lru-cache: 6.0.0
-
   semver@7.5.4:
     dependencies:
       lru-cache: 6.0.0
@@ -20075,15 +20029,6 @@ snapshots:
       babel-jest: 29.7.0(@babel/core@7.23.9(supports-color@8.1.1))(supports-color@8.1.1)
       esbuild: 0.18.20
 
-  ts-loader@9.3.1(typescript@5.7.2)(webpack@5.96.1):
-    dependencies:
-      chalk: 4.1.2
-      enhanced-resolve: 5.10.0
-      micromatch: 4.0.5
-      semver: 7.3.7
-      typescript: 5.7.2
-      webpack: 5.96.1(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
-
   ts-node@10.9.1(@swc/core@1.8.0)(@types/node@18.6.1)(typescript@5.2.2):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
@@ -20486,7 +20431,7 @@ snapshots:
       interpret: 2.2.0
       rechoir: 0.7.1
       webpack: 5.96.1(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
-      webpack-merge: 5.8.0
+      webpack-merge: 5.10.0
     optionalDependencies:
       webpack-bundle-analyzer: 4.10.2
       webpack-dev-server: 4.15.2(debug@4.3.4(supports-color@8.1.1))(supports-color@8.1.1)(webpack-cli@4.10.0)(webpack@5.96.1)
@@ -20564,12 +20509,6 @@ snapshots:
       clone-deep: 4.0.1
       flat: 5.0.2
       wildcard: 2.0.0
-
-  webpack-merge@5.8.0:
-    dependencies:
-      clone-deep: 4.0.1
-      wildcard: 2.0.0
-    optional: true
 
   webpack-merge@6.0.1:
     dependencies:
