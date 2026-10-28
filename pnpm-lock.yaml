@@ -485,9 +485,6 @@ importers:
 
   packages/victory-canvas:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.3.1
@@ -616,9 +613,6 @@ importers:
 
   packages/victory-histogram:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.3.1
@@ -695,9 +689,6 @@ importers:
 
   packages/victory-scatter:
     dependencies:
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
       react:
         specifier: '>=16.6.0'
         version: 18.3.1
