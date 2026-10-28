@@ -7,7 +7,7 @@ Guidance for AI coding agents (and humans) working in this repo. Keep it short a
 Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it before starting uplift work; its **Decision log** is the source of truth for settled choices. Don't re-open a logged decision without saying why.
 
 - **Integration branch:** `chore/2026-uplift-02`. All uplift PRs target it, not `main`.
-- **Infra first, source last.** No substantive changes to `packages/*/src` in infra PRs. Mechanical churn (formatting, lint autofixes, type-error fixes) goes in its own PR, with no behavior changes mixed in, and its commit is added to `.git-blame-ignore-revs`.
+- **Infra first, source last.** No substantive changes to `packages/*/src` in infra PRs. Mechanical churn (formatting, lint autofixes, type-error fixes) goes in its own PR, with no behavior changes mixed in, and its commit is added to `.git-blame-ignore-revs`. Exception: a few type-only fixes that a tooling or dependency bump needs (no runtime or published-type change) can ride along in that PR; call them out.
 - **Tasks are plain `package.json` scripts.** Turborepo (`turbo.json`) orchestrates and caches them. Never put logic only in runner config.
 - **Small, reviewable PRs.** One concern per PR. Each PR that changes what users of a published package get (code, types, `exports`, published files, `dependencies`/`peerDependencies`) needs a changeset (`pnpm changeset`). Manifest changes that only touch `scripts` or `devDependencies` don't.
 
@@ -47,10 +47,13 @@ pnpm types:check
 pnpm pack:check     # published output: publint, attw, entrypoints, vendor snapshot
 pnpm lint           # oxlint, whole repo (not via turbo)
 pnpm format:fix     # oxfmt, whole repo (not via turbo)
+pnpm dep:check      # list outdated deps (npm-check-updates; config in .ncurc.cjs)
 pnpm turbo run test --filter=victory-core   # one package (and what it depends on)
 ```
 
 Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents should set it too. In a git worktree, Turborepo stores its cache in the main checkout's `.turbo/cache`; set `TURBO_CACHE_DIR=.turbo/cache` if that location isn't writable (e.g. a sandbox).
+
+Dependency updates are manual (no update bots): run `pnpm dep:check` before each release and when a security alert comes in, then update in one PR. Don't bump a major that `.ncurc.cjs` holds back; it has a tracking item.
 
 These commands change as the uplift lands. Update this section in the same PR that changes them.
 
