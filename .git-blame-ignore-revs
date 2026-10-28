@@ -1,0 +1,7 @@
+# Mechanical churn commits (formatting, lint fixes) that `git blame` should
+# skip. GitHub reads this file automatically. Locally:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+# PRs are squash-merged, so each SHA is added after its PR merges.
+
+# [uplift] chore: format with oxfmt (#3111)
+d794bf7adb268f3e1e4ada03db0152fa6f3e28df

@@ -23,6 +23,7 @@
     "**/public/",
     "**/storybook-static/",
     "**/tmp/",
+    ".storybook/",
     "website/src/theme/",
     "website/src/plugins/"
   ],
@@ -200,39 +201,6 @@
       "files": ["**/stories/**/*.ts", "**/stories/**/*.stories.tsx"],
       "rules": {
         "no-magic-numbers": "off"
-      }
-    },
-    {
-      "files": ["packages/victory-pie/src/helper-methods.ts"],
-      "rules": {
-        "no-magic-numbers": [
-          "error",
-          {
-            "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360]
-          }
-        ]
-      }
-    },
-    {
-      "files": ["packages/victory-core/src/victory-util/point-path-helpers.ts"],
-      "rules": {
-        "no-magic-numbers": [
-          "error",
-          {
-            "ignore": [0, 1, 2, 2.5, 3]
-          }
-        ]
-      }
-    },
-    {
-      "files": ["website/src/components/slider.tsx"],
-      "rules": {
-        "no-magic-numbers": [
-          "error",
-          {
-            "ignore": [0, 1, 100]
-          }
-        ]
       }
     }
   ]

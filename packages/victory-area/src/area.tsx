@@ -1,4 +1,3 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import defaults from "lodash/defaults";
 import * as d3Shape from "victory-vendor/d3-shape";

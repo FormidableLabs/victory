@@ -1,4 +1,3 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 1000] }]*/
 import { Children } from "react";
 import defaults from "lodash/defaults";
 import delay from "lodash/delay";
@@ -76,7 +75,7 @@ export const RawZoomHelpers = {
     const { minimumZoom } = props;
     const originalDomain = this.getDomain(props)[axis];
     const [from, to] = originalDomain;
-    const defaultMin = Math.abs(from - to) / 1000;
+    const defaultMin = Math.abs(from - to) / 1000; // eslint-disable-line no-magic-numbers
     const extent = minimumZoom ? minimumZoom[axis] || defaultMin : defaultMin;
     const minExtent = point - extent / 2;
     const maxExtent = point + extent / 2;
