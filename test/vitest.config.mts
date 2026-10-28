@@ -11,7 +11,8 @@ export default defineConfig({
     // worker instead of once per file. Don't set `isolate: false`: some tests
     // leak state into later files and fail when the file order changes.
     pool: "vmThreads",
-    include: ["src/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
+    // victory-vendor has no `src`; its tests are in `tests`.
+    include: ["{src,tests}/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
     setupFiles: [`${import.meta.dirname}/vitest-setup.ts`],
   },
 });

@@ -84,13 +84,22 @@ jobs:
       - name: Test
         run: pnpm test $AFFECTED
 
-      # All packages, uncached. Reported in the job summary, not gated (#2348).
+      # All packages, uncached. Reported in the job summary, not gated (#2348):
+      # a coverage failure shows as a warning, and the Test step gates.
       - name: Coverage
+        continue-on-error: true
+        run: pnpm test:coverage
+
+      - name: Coverage summary
+        if: always()
         run: |
-          pnpm test:coverage
           {
             echo '### Coverage'
-            echo '```'
-            cat coverage/summary.txt
-            echo '```'
+            if [ -f coverage/summary.txt ]; then
+              echo '```'
+              cat coverage/summary.txt
+              echo '```'
+            else
+              echo 'No coverage summary (the Coverage step failed or was skipped).'
+            fi
           } >> "$GITHUB_STEP_SUMMARY"

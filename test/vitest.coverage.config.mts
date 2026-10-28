@@ -8,10 +8,12 @@ export default mergeConfig(
   sharedConfig,
   defineConfig({
     test: {
-      include: ["packages/*/src/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
+      include: ["packages/*/{src,tests}/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
       coverage: {
         enabled: true,
         provider: "v8",
+        // Source only: victory-vendor's tests run, but its generated d3 output
+        // isn't counted.
         include: ["packages/*/src/**"],
         exclude: ["**/*.{test,spec}.*"],
         reporter: [
