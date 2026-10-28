@@ -125,6 +125,7 @@
     "react/no-unknown-property": "error",
     "react/no-unsafe": "off",
     "react/react-in-jsx-scope": "error",
+    "react/require-render-return": "error",
     "promise/always-return": "error",
     "promise/no-return-wrap": "error",
     "promise/param-names": "error",
@@ -135,6 +136,7 @@
     "promise/avoid-new": "off",
     "promise/no-new-statics": "error",
     "promise/valid-params": "warn",
+    "promise/no-return-in-finally": "warn",
     "eqeqeq": "error",
     "max-depth": ["error", 4],
     "max-nested-callbacks": ["error", 3],
@@ -176,6 +178,12 @@
       "files": ["**/*.js"],
       "rules": {
         "typescript/no-require-imports": "off"
+      }
+    },
+    {
+      "files": ["**/*.{js,jsx,mjs,cjs}"],
+      "rules": {
+        "no-undef": "error"
       }
     },
     {
