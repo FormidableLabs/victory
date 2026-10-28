@@ -45,8 +45,8 @@ pnpm test           # tests (Vitest)
 pnpm test:coverage  # all tests in one run with v8 coverage (coverage/index.html)
 pnpm types:check
 pnpm pack:check     # published output: publint, attw, entrypoints, vendor snapshot
-pnpm lint
-pnpm format:fix
+pnpm lint           # oxlint, whole repo (not via turbo)
+pnpm format:fix     # oxfmt, whole repo (not via turbo)
 pnpm turbo run test --filter=victory-core   # one package (and what it depends on)
 ```
 

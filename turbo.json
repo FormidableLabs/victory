@@ -5,9 +5,6 @@
   // only costs cache hits; missing one is a correctness bug.
   "globalDependencies": [
     ".nvmrc",
-    ".prettierrc.json",
-    ".prettierignore",
-    "eslint.config.mjs",
     "package.json",
     "pnpm-workspace.yaml",
     "tsconfig.json",
@@ -49,36 +46,6 @@
         "!src/**/*.test.*",
         "$TURBO_ROOT$/scripts/pack-check.mjs"
       ]
-    },
-    // ESLint isn't type-aware and doesn't resolve imports, so it needs nothing built.
-    "lint": {},
-    "lint:fix": {
-      "cache": false
-    },
-    // Explicit globs don't apply .gitignore, so these mirror .prettierignore
-    // (and leave out build output that other tasks write while this runs).
-    "//#format": {
-      "inputs": [
-        "**/*.{js,jsx,mjs,cjs,json,ts,tsx,mts,cts}",
-        "!**/node_modules/**",
-        "!**/.turbo/**",
-        "!**/{es,lib,lib-vendor,dist,build,coverage,storybook-static,.docusaurus,.cache}/**",
-        "!packages/victory-vendor/{d3-*,internmap.js}"
-      ]
-    },
-    "//#lint:root": {
-      "inputs": [
-        "scripts/**",
-        "stories/**",
-        "test/**",
-        "website/**",
-        "!**/node_modules/**",
-        "!**/.turbo/**",
-        "!website/{build,.docusaurus}/**"
-      ]
-    },
-    "//#lint:root:fix": {
-      "cache": false
     }
   }
 }
