@@ -231,7 +231,7 @@ describe("components/victory-label", () => {
     expect(
       container.querySelector("tspan")!.getAttribute("style"),
     ).toMatchInlineSnapshot(
-      `"fill: #252525; font-size: 14px; font-family: 'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif; stroke: transparent;"`,
+      `"fill: rgb(37, 37, 37); font-size: 14px; font-family: "Gill Sans", "Gill Sans MT", "Ser­avek", "Trebuchet MS", sans-serif; stroke: transparent;"`,
     );
   });
 

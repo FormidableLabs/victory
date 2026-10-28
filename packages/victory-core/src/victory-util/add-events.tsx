@@ -413,7 +413,7 @@ export function addEvents<
           props.animate?.animationWhitelist) ||
         defaultAnimationWhitelist;
 
-      const Comp = this.constructor;
+      const Comp = this.constructor as React.ComponentType<TProps>;
 
       return (
         <VictoryTransition

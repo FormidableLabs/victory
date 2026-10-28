@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 
-import { isCircle, isTriangle } from "../../../test/helpers";
+import { isCircle, isTriangle, toCssColor } from "../../../test/helpers";
 import { VictoryLegend } from "./victory-legend";
 
 describe("components/victory-legend", () => {
@@ -148,7 +148,7 @@ describe("components/victory-legend", () => {
 
       legendData.forEach(({ name }) => {
         const label = screen.getByText(name);
-        expect(label.getAttribute("style")).toContain("#252525");
+        expect(label.getAttribute("style")).toContain(toCssColor("#252525"));
       });
     });
   });

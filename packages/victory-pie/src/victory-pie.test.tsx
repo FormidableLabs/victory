@@ -8,6 +8,7 @@ import {
   parseSvgPathCommands,
   getDistanceFromOrigin,
   getSliceArcEnd,
+  toCssColor,
 } from "../../../test/helpers";
 import { VictoryPie } from "./victory-pie";
 import { Slice } from "./slice";
@@ -331,7 +332,7 @@ describe("components/victory-pie", () => {
     describe("if provided an array of CSS colors", () => {
       it("renders each slice with the next color in the array, reiterating through colors as necessary", () => {
         const data = Helpers.range(5);
-        const colorScale = ["#fffff", "#eeeee", "#ddddd"];
+        const colorScale = ["#ffffff", "#eeeeee", "#dddddd"];
         const { container } = render(
           <VictoryPie data={data} colorScale={colorScale} />,
         );
@@ -340,7 +341,7 @@ describe("components/victory-pie", () => {
         expect(slices).toHaveLength(5);
         slices.forEach((slice, index) => {
           expect(slice.getAttribute("style")).toContain(
-            colorScale[index % colorScale.length],
+            toCssColor(colorScale[index % colorScale.length]),
           );
         });
       });
@@ -372,7 +373,7 @@ describe("components/victory-pie", () => {
                 const expectedColorScheme =
                   colorScale[index % colorScale.length];
                 expect(slice.getAttribute("style")).toContain(
-                  expectedColorScheme,
+                  toCssColor(expectedColorScheme),
                 );
               },
             );

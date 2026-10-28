@@ -19,7 +19,7 @@ Victory is a monorepo built with [Turborepo](https://turborepo.com/) and [pnpm](
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/): the version in [`.nvmrc`](./.nvmrc) (the current LTS). CI uses the same file.
+- [Node.js](https://nodejs.org/): the major version in [`.nvmrc`](./.nvmrc) (an LTS line). CI uses the same file.
 - [pnpm](https://pnpm.io/installation) 10 or later. pnpm switches itself to the version in `package.json`'s `packageManager` field.
 
 ### Setup
@@ -172,6 +172,18 @@ Getting inputs right matters: if a task reads a file that isn't one of its input
 `pnpm run sync` copies `victory-core`'s tsconfig files to the other packages. CI checks they're in sync.
 
 Turborepo collects anonymous telemetry unless you turn it off. CI turns it off. To turn it off on your machine, run `pnpm turbo telemetry disable`.
+
+## Updating dependencies
+
+We don't use Renovate or Dependabot version-update PRs. Instead, run this before each release, and when a Dependabot security alert comes in:
+
+```sh
+$ pnpm run dep:check
+```
+
+It runs [npm-check-updates](https://github.com/raineorshine/npm-check-updates) on the root and every workspace package, and lists newer versions. It doesn't change any files. Versions published in the last week are left out. `.ncurc.cjs` lists the majors we've deliberately held back (each one has a tracking item); remove an entry when its upgrade lands.
+
+Make the updates in one PR, then run `pnpm run check`, `pnpm run build:docs` and `pnpm run pack:check`. Updates to a published package's `dependencies` change what users install, so they need a changeset.
 
 ## Visual Tests
 
