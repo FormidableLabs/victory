@@ -42,6 +42,7 @@ pnpm install
 pnpm build          # all packages
 pnpm check          # format + lint + test + types
 pnpm test           # tests (Vitest)
+pnpm test:coverage  # all tests in one run with v8 coverage (coverage/index.html)
 pnpm types:check
 pnpm pack:check     # published output: publint, attw, entrypoints, vendor snapshot
 pnpm lint

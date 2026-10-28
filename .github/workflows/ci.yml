@@ -83,3 +83,14 @@ jobs:
 
       - name: Test
         run: pnpm test $AFFECTED
+
+      # All packages, uncached. Reported in the job summary, not gated (#2348).
+      - name: Coverage
+        run: |
+          pnpm test:coverage
+          {
+            echo '### Coverage'
+            echo '```'
+            cat coverage/summary.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
