@@ -30,7 +30,9 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # App specific
-.vscode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
 bower_components
 coverage
 dist
@@ -49,7 +51,6 @@ tmp
 
 # Turborepo + caches
 .turbo
-.eslintcache
 
 # Ignore all yarn2+
 .yarn/*

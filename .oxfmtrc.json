@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "arrowParens": "always",
+  "trailingComma": "all",
+  "printWidth": 80,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    ".changeset",
+    ".storybook",
+    "**/CHANGELOG.md",
+    "packages/victory-vendor/d3-*",
+    "pnpm-lock.yaml",
+    "tsconfig.json",
+    "tsconfig.*.json",
+    "website/static"
+  ]
+}

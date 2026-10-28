@@ -50,22 +50,19 @@ jobs:
       - name: Check published packages
         run: pnpm pack:check $AFFECTED
 
-  # Lint needs nothing built, so it runs alongside build with its own cache.
+  # Format and lint need nothing built, so they run alongside build. Each checks
+  # the whole repo in about a second, so they skip Turborepo and `--affected`.
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: ./.github/actions/setup
-      - uses: actions/cache@v4
-        with:
-          path: .turbo/cache
-          key: turbo-${{ runner.os }}-lint-${{ github.sha }}
-          restore-keys: turbo-${{ runner.os }}-lint-
+
+      - name: Format
+        run: pnpm format
 
       - name: Lint
-        run: pnpm lint $AFFECTED
+        run: pnpm lint
 
   test:
     needs: [build]
