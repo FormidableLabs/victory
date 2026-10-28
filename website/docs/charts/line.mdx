@@ -9,9 +9,7 @@ Line charts are used for visualizing trends in data over a continuous interval.
 See the [full API here](/docs/api/victory-line). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -29,10 +27,7 @@ See the [full API here](/docs/api/victory-line). Typically composed with [`Victo
 Line charts can be rendered with a flipped axis by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryLine`.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  horizontal
->
+<VictoryChart theme={VictoryTheme.clean} horizontal>
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -73,11 +68,7 @@ const cartesianInterpolations = [
   "stepBefore",
 ];
 
-const InterpolationSelect = ({
-  currentValue,
-  values,
-  onChange,
-}) => (
+const InterpolationSelect = ({ currentValue, values, onChange }) => (
   <select
     onChange={onChange}
     value={currentValue}
@@ -92,43 +83,24 @@ const InterpolationSelect = ({
 );
 
 function App() {
-  const [state, setState] =
-    React.useState({
-      interpolation: "natural",
-    });
+  const [state, setState] = React.useState({
+    interpolation: "natural",
+  });
 
   return (
     <div className="pt-4">
       <InterpolationSelect
-        currentValue={
-          state.interpolation
-        }
-        values={
-          state.polar
-            ? polarInterpolations
-            : cartesianInterpolations
-        }
+        currentValue={state.interpolation}
+        values={state.polar ? polarInterpolations : cartesianInterpolations}
         onChange={(event) =>
           setState({
-            interpolation:
-              event.target.value,
+            interpolation: event.target.value,
           })
         }
       />
-      <VictoryChart
-        height={390}
-        theme={VictoryTheme.clean}
-      >
-        <VictoryLine
-          interpolation={
-            state.interpolation
-          }
-          data={data}
-        />
-        <VictoryScatter
-          data={data}
-          size={5}
-        />
+      <VictoryChart height={390} theme={VictoryTheme.clean}>
+        <VictoryLine interpolation={state.interpolation} data={data} />
+        <VictoryScatter data={data} size={5} />
       </VictoryChart>
     </div>
   );
@@ -142,22 +114,10 @@ render(<App />);
 Line charts can be rendered with a specific number of samples across a range of values by setting the `samples` prop.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryGroup>
-    <VictoryLine
-      samples={25}
-      y={(d) =>
-        Math.sin(5 * Math.PI * d.x)
-      }
-    />
-    <VictoryLine
-      samples={100}
-      y={(d) =>
-        Math.cos(5 * Math.PI * d.x)
-      }
-    />
+    <VictoryLine samples={25} y={(d) => Math.sin(5 * Math.PI * d.x)} />
+    <VictoryLine samples={100} y={(d) => Math.cos(5 * Math.PI * d.x)} />
   </VictoryGroup>
 </VictoryChart>
 ```
@@ -167,9 +127,7 @@ Line charts can be rendered with a specific number of samples across a range of 
 Line charts can handle null data points by setting the `data` prop to an array of objects with `x` and `y` values. Null data points will be skipped.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryLine
     data={[
       { x: 1, y: 1 },
@@ -207,18 +165,12 @@ function App() {
 
   // scaleDiscontinuous and discontinuitySkipWeekends are both
   // plugins imported from @d3fc/d3fc-discontinuous-scale
-  const discontinuousScale =
-    scaleDiscontinuous(
-      d3Scale.scaleTime(),
-    ).discontinuityProvider(
-      discontinuitySkipWeekends(),
-    );
+  const discontinuousScale = scaleDiscontinuous(
+    d3Scale.scaleTime(),
+  ).discontinuityProvider(discontinuitySkipWeekends());
 
   return (
-    <VictoryChart
-      scale={{ x: discontinuousScale }}
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart scale={{ x: discontinuousScale }} theme={VictoryTheme.clean}>
       <VictoryLine data={data} />
     </VictoryChart>
   );
@@ -232,9 +184,7 @@ render(<App />);
 Line charts can be combined into the same chart. Note that the order of the components will determine the rendering order.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -271,9 +221,7 @@ Line charts can be combined into the same chart. Note that the order of the comp
 Line charts can be stacked using the `VictoryStack` component. This will automatically adjust the baseline for each data point and apply a `colorScale`.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryStack colorScale="qualitative">
     <VictoryLine
       data={[
@@ -302,13 +250,8 @@ Line charts can be stacked using the `VictoryStack` component. This will automat
 Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-line) prop.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryLine
-    data={sampleData}
-    labels={({ datum }) => datum.y}
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryLine data={sampleData} labels={({ datum }) => datum.y} />
 </VictoryChart>
 ```
 
@@ -322,12 +265,8 @@ Add labels to charts by setting the `labels` prop to the name of a property in t
   containerComponent={
     <VictoryVoronoiContainer
       voronoiDimension="x"
-      labels={({ datum }) =>
-        `y: ${datum.y}`
-      }
-      labelComponent={
-        <VictoryTooltip />
-      }
+      labels={({ datum }) => `y: ${datum.y}`}
+      labelComponent={<VictoryTooltip />}
     />
   }
 >
@@ -349,26 +288,20 @@ Charts can be animated by setting the `animate` prop. See the [animations](/docs
 
 ```jsx live noInline
 function App() {
-  const [data, setData] =
-    React.useState(getData());
+  const [data, setData] = React.useState(getData());
 
   React.useState(() => {
-    const setStateInterval =
-      window.setInterval(() => {
-        setData(getData());
-      }, 4000);
+    const setStateInterval = window.setInterval(() => {
+      setData(getData());
+    }, 4000);
 
     return () => {
-      window.clearInterval(
-        setStateInterval,
-      );
+      window.clearInterval(setStateInterval);
     };
   }, []);
 
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryLine
         data={data}
         interpolation="basis"
@@ -395,24 +328,18 @@ render(<App />);
 Chart styling can be customized by using the theme or overriding the style prop on the component.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryLine
     data={sampleData}
     labels={({ datum }) => datum.y}
     style={{
       data: {
         stroke: "#c43a31",
-        strokeWidth: ({ data }) =>
-          data.length,
+        strokeWidth: ({ data }) => data.length,
       },
       labels: {
         fontSize: 15,
-        fill: ({ datum }) =>
-          datum.x === 3
-            ? "#000000"
-            : "#c43a31",
+        fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
       },
     }}
   />
@@ -439,9 +366,7 @@ function App() {
   };
 
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryLine
         data={sampleData}
         labels={({ datum }) => datum.y}
@@ -453,11 +378,7 @@ function App() {
                 return [
                   {
                     eventKey: "all",
-                    mutation: (props) =>
-                      toggleFillColor(
-                        props.style
-                          ?.stroke,
-                      ),
+                    mutation: (props) => toggleFillColor(props.style?.stroke),
                   },
                 ];
               },
@@ -477,11 +398,7 @@ render(<App />);
 Line charts can be rendered in polar coordinates by setting the `polar` prop to `true` and using `VictoryPolarAxis` components.
 
 ```jsx live
-<VictoryChart
-  polar
-  domain={{ y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart polar domain={{ y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryPolarAxis
     dependentAxis
     style={{ axis: { stroke: "none" } }}
@@ -499,11 +416,7 @@ Line charts can be rendered in polar coordinates with a cardioid shape by settin
 ```jsx live noInline
 function App() {
   return (
-    <VictoryChart
-      polar
-      theme={VictoryTheme.clean}
-      domain={{ y: [0, 10] }}
-    >
+    <VictoryChart polar theme={VictoryTheme.clean} domain={{ y: [0, 10] }}>
       <VictoryPolarAxis
         dependentAxis
         style={{
@@ -512,18 +425,8 @@ function App() {
         tickFormat={() => ""}
       />
       <VictoryPolarAxis
-        tickValues={[
-          0,
-          Math.PI / 2,
-          Math.PI,
-          (3 * Math.PI) / 2,
-        ]}
-        tickFormat={[
-          "2π",
-          "π/2",
-          "π",
-          "3π/2",
-        ]}
+        tickValues={[0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2]}
+        tickFormat={["2π", "π/2", "π", "3π/2"]}
         labelPlacement="vertical"
       />
       {[5, 4, 3, 2, 1].map((val, i) => {
@@ -533,15 +436,10 @@ function App() {
             samples={100}
             style={{
               data: {
-                stroke:
-                  VictoryTheme.clean
-                    .palette
-                    .qualitative[i],
+                stroke: VictoryTheme.clean.palette.qualitative[i],
               },
             }}
-            y={(d) =>
-              val * (1 - Math.cos(d.x))
-            }
+            y={(d) => val * (1 - Math.cos(d.x))}
           />
         );
       })}
@@ -557,10 +455,7 @@ render(<App />);
 Bar charts can be rendered outside a VictoryChart.
 
 ```jsx live
-<VictoryLine
-  theme={VictoryTheme.clean}
-  data={sampleData}
-/>
+<VictoryLine theme={VictoryTheme.clean} data={sampleData} />
 ```
 
 They can also be embeded in other SVG components by using the `standalone` prop.
@@ -575,12 +470,7 @@ They can also be embeded in other SVG components by using the `standalone` prop.
       margin: "0 auto",
     }}
   >
-    <circle
-      cx={150}
-      cy={150}
-      r={150}
-      fill="#9ded91"
-    />
+    <circle cx={150} cy={150} r={150} fill="#9ded91" />
     <VictoryLine
       standalone={false}
       theme={VictoryTheme.clean}

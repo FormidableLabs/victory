@@ -11,8 +11,7 @@ export type ScatterSymbolType =
   | "triangleDown"
   | "triangleUp";
 
-export interface VictoryPrimitiveShapeProps
-  extends VictoryCommonPrimitiveProps {
+export interface VictoryPrimitiveShapeProps extends VictoryCommonPrimitiveProps {
   desc?: string;
   rx?: number;
   ry?: number;

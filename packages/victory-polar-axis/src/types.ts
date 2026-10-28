@@ -16,7 +16,8 @@ export type VictoryPolarAxisTTargetType =
   | "tickLabels";
 
 export interface VictoryPolarAxisProps
-  extends VictoryAxisCommonProps,
+  extends
+    VictoryAxisCommonProps,
     VictoryCommonProps,
     VictorySingleLabelableProps {
   axisAngle?: number;

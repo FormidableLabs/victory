@@ -9,10 +9,7 @@ Victory supports polar charts for many of its chart types. Polar charts are a ty
 Bar charts are a common type of polar chart. In the following example, we use a `VictoryPolarAxis` to create a polar chart with a bar series.
 
 ```jsx live
-<VictoryChart
-  polar
-  theme={VictoryTheme.clean}
->
+<VictoryChart polar theme={VictoryTheme.clean}>
   <VictoryPolarAxis
     dependentAxis
     labelPlacement="vertical"
@@ -23,8 +20,7 @@ Bar charts are a common type of polar chart. In the following example, we use a 
   <VictoryBar
     style={{
       data: {
-        fill: VictoryTheme.clean.palette
-          ?.colors.purple,
+        fill: VictoryTheme.clean.palette?.colors.purple,
       },
     }}
     data={[
@@ -47,9 +43,7 @@ Bar charts can be interactive with the use of events. In the following example, 
 <VictoryChart
   polar
   theme={VictoryTheme.clean}
-  containerComponent={
-    <VictoryVoronoiContainer />
-  }
+  containerComponent={<VictoryVoronoiContainer />}
 >
   <VictoryPolarAxis
     dependentAxis
@@ -63,10 +57,8 @@ Bar charts can be interactive with the use of events. In the following example, 
       data: {
         fill: ({ active }) =>
           active
-            ? VictoryTheme.clean.palette
-                ?.colors.blue || "blue"
-            : VictoryTheme.clean.palette
-                ?.colors.red || "red",
+            ? VictoryTheme.clean.palette?.colors.blue || "blue"
+            : VictoryTheme.clean.palette?.colors.red || "red",
       },
     }}
     labelComponent={<VictoryTooltip />}
@@ -122,15 +114,9 @@ Bar charts can be stacked in a polar format. In the following example, we use a 
               childName: "bar-2",
               mutation: () => {
                 return {
-                  style: Object.assign(
-                    {},
-                    props.style,
-                    {
-                      fill: VictoryTheme
-                        .clean.palette
-                        ?.colors.cyan,
-                    },
-                  ),
+                  style: Object.assign({}, props.style, {
+                    fill: VictoryTheme.clean.palette?.colors.cyan,
+                  }),
                 };
               },
             },
@@ -138,15 +124,9 @@ Bar charts can be stacked in a polar format. In the following example, we use a 
               childName: "bar-3",
               mutation: () => {
                 return {
-                  style: Object.assign(
-                    {},
-                    props.style,
-                    {
-                      fill: VictoryTheme
-                        .clean.palette
-                        ?.colors.blue,
-                    },
-                  ),
+                  style: Object.assign({}, props.style, {
+                    fill: VictoryTheme.clean.palette?.colors.blue,
+                  }),
                 };
               },
             },
@@ -176,18 +156,14 @@ Bar charts can be stacked in a polar format. In the following example, we use a 
   />
   <VictoryPolarAxis
     labelPlacement="parallel"
-    tickValues={[
-      0, 45, 90, 135, 180, 225, 270,
-      315,
-    ]}
+    tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
   />
   <VictoryStack>
     <VictoryBar
       name="bar-1"
       style={{
         data: {
-          fill: VictoryTheme.clean
-            .palette?.colors.red,
+          fill: VictoryTheme.clean.palette?.colors.red,
         },
       }}
       data={[
@@ -203,8 +179,7 @@ Bar charts can be stacked in a polar format. In the following example, we use a 
       name="bar-2"
       style={{
         data: {
-          fill: VictoryTheme.clean
-            .palette?.colors.orange,
+          fill: VictoryTheme.clean.palette?.colors.orange,
         },
       }}
       data={[
@@ -220,8 +195,7 @@ Bar charts can be stacked in a polar format. In the following example, we use a 
       name="bar-3"
       style={{
         data: {
-          fill: VictoryTheme.clean
-            .palette?.colors.yellow,
+          fill: VictoryTheme.clean.palette?.colors.yellow,
         },
       }}
       data={[
@@ -242,10 +216,7 @@ Bar charts can be stacked in a polar format. In the following example, we use a 
 Bar and Scatter charts are another common combination for polar charts. In the following example, we use a `VictoryPolarAxis` to create a polar chart with a bar and scatter series, and a `VictoryGroup` to apply styles and data to both components.
 
 ```jsx live
-<VictoryChart
-  polar
-  theme={VictoryTheme.clean}
->
+<VictoryChart polar theme={VictoryTheme.clean}>
   <VictoryPolarAxis
     dependentAxis
     labelPlacement="vertical"
@@ -257,9 +228,7 @@ Bar and Scatter charts are another common combination for polar charts. In the f
   <VictoryBar
     style={{
       data: {
-        fill: ({ datum }) =>
-          VictoryTheme.clean.palette
-            ?.colors[datum.fill],
+        fill: ({ datum }) => VictoryTheme.clean.palette?.colors[datum.fill],
       },
     }}
     data={[
@@ -324,9 +293,7 @@ Line charts are another common type of polar chart. In the following example, we
   polar
   domain={{ y: [0, 10] }}
   theme={VictoryTheme.clean}
-  containerComponent={
-    <VictoryVoronoiContainer />
-  }
+  containerComponent={<VictoryVoronoiContainer />}
 >
   <VictoryPolarAxis
     dependentAxis
@@ -335,9 +302,7 @@ Line charts are another common type of polar chart. In the following example, we
   />
   <VictoryPolarAxis labelPlacement="parallel" />
   <VictoryLine
-    labelComponent={
-      <VictoryLabel labelPlacement="parallel" />
-    }
+    labelComponent={<VictoryLabel labelPlacement="parallel" />}
     interpolation="linear"
     data={[
       { x: 1, y: 2 },
@@ -361,9 +326,7 @@ Line and Scatter charts are a common combination for polar charts. In the follow
 <VictoryChart
   polar
   theme={VictoryTheme.clean}
-  containerComponent={
-    <VictorySelectionContainer />
-  }
+  containerComponent={<VictorySelectionContainer />}
 >
   <VictoryPolarAxis labelPlacement="perpendicular" />
   <VictoryGroup
@@ -379,9 +342,7 @@ Line and Scatter charts are a common combination for polar charts. In the follow
     <VictoryLine />
     <VictoryScatter
       labels={({ datum }) => datum.y}
-      labelComponent={
-        <VictoryTooltip />
-      }
+      labelComponent={<VictoryTooltip />}
     />
   </VictoryGroup>
 
@@ -398,12 +359,8 @@ Line and Scatter charts are a common combination for polar charts. In the follow
   >
     <VictoryLine />
     <VictoryScatter
-      labels={({ datum }) =>
-        `y: ${datum.y}`
-      }
-      labelComponent={
-        <VictoryTooltip />
-      }
+      labels={({ datum }) => `y: ${datum.y}`}
+      labelComponent={<VictoryTooltip />}
     />
   </VictoryGroup>
 
@@ -420,9 +377,7 @@ Line and Scatter charts are a common combination for polar charts. In the follow
     <VictoryLine />
     <VictoryScatter
       labels={({ datum }) => datum.y}
-      labelComponent={
-        <VictoryTooltip />
-      }
+      labelComponent={<VictoryTooltip />}
     />
   </VictoryGroup>
 </VictoryChart>
@@ -433,11 +388,7 @@ Line and Scatter charts are a common combination for polar charts. In the follow
 Area charts can also be displayed in a polar format. In the following example, we use a `VictoryPolarAxis` to create a polar chart with an area series.
 
 ```jsx live
-<VictoryChart
-  polar
-  theme={VictoryTheme.clean}
-  domain={{ y: [0, 10] }}
->
+<VictoryChart polar theme={VictoryTheme.clean} domain={{ y: [0, 10] }}>
   <VictoryPolarAxis
     dependentAxis
     labelPlacement="vertical"
@@ -479,15 +430,9 @@ Area charts can be interactive with the use of events. In the following example,
             {
               mutation: () => {
                 return {
-                  style: Object.assign(
-                    {},
-                    props.style,
-                    {
-                      fill: VictoryTheme
-                        .clean.palette
-                        ?.colors.cyan,
-                    },
-                  ),
+                  style: Object.assign({}, props.style, {
+                    fill: VictoryTheme.clean.palette?.colors.cyan,
+                  }),
                 };
               },
             },
@@ -516,10 +461,7 @@ Area charts can be interactive with the use of events. In the following example,
   />
   <VictoryPolarAxis
     labelPlacement="parallel"
-    tickValues={[
-      0, 45, 90, 135, 180, 225, 270,
-      315,
-    ]}
+    tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
   />
   <VictoryStack>
     <VictoryArea
@@ -527,8 +469,7 @@ Area charts can be interactive with the use of events. In the following example,
       interpolation="cardinal"
       style={{
         data: {
-          fill: VictoryTheme.clean
-            .palette?.colors.red,
+          fill: VictoryTheme.clean.palette?.colors.red,
         },
       }}
       data={[
@@ -545,8 +486,7 @@ Area charts can be interactive with the use of events. In the following example,
       interpolation="cardinal"
       style={{
         data: {
-          fill: VictoryTheme.clean
-            .palette?.colors.orange,
+          fill: VictoryTheme.clean.palette?.colors.orange,
         },
       }}
       data={[
@@ -563,8 +503,7 @@ Area charts can be interactive with the use of events. In the following example,
       interpolation="cardinal"
       style={{
         data: {
-          fill: VictoryTheme.clean
-            .palette?.colors.yellow,
+          fill: VictoryTheme.clean.palette?.colors.yellow,
         },
       }}
       data={[
@@ -585,10 +524,7 @@ Area charts can be interactive with the use of events. In the following example,
 Area and Scatter charts are another common combination for polar charts. In the following example, we use a `VictoryPolarAxis` to create a polar chart with an area and scatter series, and a `VictoryGroup` to apply styles and data to both components.
 
 ```jsx live
-<VictoryChart
-  polar
-  theme={VictoryTheme.clean}
->
+<VictoryChart polar theme={VictoryTheme.clean}>
   <VictoryPolarAxis
     dependentAxis
     labelPlacement="vertical"
@@ -598,13 +534,7 @@ Area and Scatter charts are another common combination for polar charts. In the 
   />
   <VictoryPolarAxis
     labelPlacement="perpendicular"
-    tickFormat={[
-      "strength",
-      "intelligence",
-      "stealth",
-      "luck",
-      "charisma",
-    ]}
+    tickFormat={["strength", "intelligence", "stealth", "luck", "charisma"]}
   />
   <VictoryArea
     data={[

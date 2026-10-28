@@ -80,11 +80,7 @@ The `centerTitle` boolean prop specifies whether a legend title should be center
     border: { stroke: "black" },
     title: { fontSize: 20 },
   }}
-  data={[
-    { name: "One" },
-    { name: "Two" },
-    { name: "Three" },
-  ]}
+  data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
 />
 ```
 
@@ -173,9 +169,7 @@ const { FaSun } = reactIconsFa;
 const CustomIcon = (props) => {
   return (
     <FaSun
-      fill={
-        props?.style?.fill || "green"
-      }
+      fill={props?.style?.fill || "green"}
       x={props.x - 7}
       y={props.y - 7}
       size={15}
@@ -214,13 +208,7 @@ An example of using multiple Custom icons as `dataComponent` in `VictoryLegend`.
 const CustomMultipleIcon = (props) => {
   const { x, y, datum } = props;
   const Icon = reactIconsFa[datum.icon];
-  return (
-    <Icon
-      x={x - 7}
-      y={y - 7}
-      size={15}
-    />
-  );
+  return <Icon x={x - 7} y={y - 7} size={15} />;
 };
 
 function App() {
@@ -237,9 +225,7 @@ function App() {
           icon: "FaStar",
         },
       ]}
-      dataComponent={
-        <CustomMultipleIcon />
-      }
+      dataComponent={<CustomMultipleIcon />}
     />
   );
 }
@@ -282,11 +268,8 @@ See the [Events Guide][] for more information on defining events.
               {
                 target: "data",
                 mutation: (props) => {
-                  const fill =
-                    props.style &&
-                    props.style.fill;
-                  return fill ===
-                    "#c43a31"
+                  const fill = props.style && props.style.fill;
+                  return fill === "#c43a31"
                     ? null
                     : {
                         style: {
@@ -298,8 +281,7 @@ See the [Events Guide][] for more information on defining events.
               {
                 target: "labels",
                 mutation: (props) => {
-                  return props.text ===
-                    "clicked"
+                  return props.text === "clicked"
                     ? null
                     : {
                         text: "clicked",
@@ -311,11 +293,7 @@ See the [Events Guide][] for more information on defining events.
         },
       },
     ]}
-    data={[
-      { name: "One" },
-      { name: "Two" },
-      { name: "Three" },
-    ]}
+    data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
   />
 </div>
 ```
@@ -340,11 +318,7 @@ The `gutter` prop defines the number of pixels between legend columns. This prop
   style={{
     border: { stroke: "black" },
   }}
-  data={[
-    { name: "One" },
-    { name: "Two" },
-    { name: "Three" },
-  ]}
+  data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
 />
 ```
 
@@ -368,12 +342,7 @@ The `itemsPerRow` prop determines how many items to render in each row of a hori
   style={{
     border: { stroke: "black" },
   }}
-  data={[
-    { name: "One" },
-    { name: "Two" },
-    { name: "Three" },
-    { name: "Four" },
-  ]}
+  data={[{ name: "One" }, { name: "Two" }, { name: "Three" }, { name: "Four" }]}
 />
 ```
 
@@ -408,11 +377,7 @@ The `rowGutter` prop defines the number of pixels between legend rows. This prop
   style={{
     border: { stroke: "black" },
   }}
-  data={[
-    { name: "One" },
-    { name: "Two" },
-    { name: "Three" },
-  ]}
+  data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
 />
 ```
 
@@ -481,11 +446,7 @@ The `symbolSpacer` prop defines the number of pixels between data components and
   orientation="horizontal"
   symbolSpacer={5}
   gutter={20}
-  data={[
-    { name: "One" },
-    { name: "Two" },
-    { name: "Three" },
-  ]}
+  data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
 />
 ```
 
@@ -510,11 +471,7 @@ The `title` prop specifies a title to render with the legend. This prop should b
     border: { stroke: "black" },
     title: { fontSize: 20 },
   }}
-  data={[
-    { name: "One" },
-    { name: "Two" },
-    { name: "Three" },
-  ]}
+  data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
 />
 ```
 
@@ -539,19 +496,8 @@ The `titleComponent` prop takes a component instance which will be used to rende
   style={{
     border: { stroke: "black" },
   }}
-  titleComponent={
-    <VictoryLabel
-      style={[
-        { fontSize: 20 },
-        { fontSize: 12 },
-      ]}
-    />
-  }
-  data={[
-    { name: "One" },
-    { name: "Two" },
-    { name: "Three" },
-  ]}
+  titleComponent={<VictoryLabel style={[{ fontSize: 20 }, { fontSize: 12 }]} />}
+  data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
 />
 ```
 
@@ -578,11 +524,7 @@ The `titleOrientation` prop specifies where the title should be rendered in rela
     border: { stroke: "black" },
     title: { fontSize: 20 },
   }}
-  data={[
-    { name: "One" },
-    { name: "Two" },
-    { name: "Three" },
-  ]}
+  data={[{ name: "One" }, { name: "Two" }, { name: "Three" }]}
 />
 ```
 

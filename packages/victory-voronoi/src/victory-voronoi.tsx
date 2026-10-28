@@ -23,7 +23,8 @@ import { getBaseProps } from "./helper-methods";
 export type VictoryVoronoiSortOrderType = "ascending" | "descending";
 
 export interface VictoryVoronoiProps
-  extends Omit<VictoryCommonProps, "polar">,
+  extends
+    Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryLabelableProps,
     VictoryMultiLabelableProps {

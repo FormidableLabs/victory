@@ -9,19 +9,19 @@ Every element that a Victory component renders may be altered or completely repl
 Victory components set props on their primitive components, but these may be overridden or augmented by setting props directly on the primitive component instances.
 
 ```jsx live
-  <VictoryBar
-    data={[
-      {x: 1, y: 3, label: "Alpha"},
-      {x: 2, y: 4, label: "Bravo"},
-      {x: 3, y: 6, label: "Charlie"},
-      {x: 4, y: 3, label: "Delta"},
-      {x: 5, y: 7, label: "Echo"},
-    ]}
-    labelComponent={
-      <VictoryLabel angle={45} verticalAnchor="middle" textAnchor="end"/>
-    }
-    theme={VictoryTheme.clean}
-  />
+<VictoryBar
+  data={[
+    { x: 1, y: 3, label: "Alpha" },
+    { x: 2, y: 4, label: "Bravo" },
+    { x: 3, y: 6, label: "Charlie" },
+    { x: 4, y: 3, label: "Delta" },
+    { x: 5, y: 7, label: "Echo" },
+  ]}
+  labelComponent={
+    <VictoryLabel angle={45} verticalAnchor="middle" textAnchor="end" />
+  }
+  theme={VictoryTheme.clean}
+/>
 ```
 
 ## Wrapping components
@@ -37,16 +37,19 @@ function WrapperComponent(props) {
       // Components like `VictoryChart` expect to control props like `domain` for their children
       // Some props should be merged rather than overridden
       const style = _.merge(child.props.style, props.style);
-      return React.cloneElement(child, Object.assign({}, child.props, props, { style }));
+      return React.cloneElement(
+        child,
+        Object.assign({}, child.props, props, { style }),
+      );
     });
   }
 
   return (
     <g transform="translate(20, 40)">
-      <VictoryLabel text={"add labels"} x={110} y={30}/>
-      <VictoryLabel text={"offset data from axes"} x={70} y={150}/>
-      <VictoryLabel text={"alter props"} x={280} y={150}/>
-      { renderChildren() }
+      <VictoryLabel text={"add labels"} x={110} y={30} />
+      <VictoryLabel text={"offset data from axes"} x={70} y={150} />
+      <VictoryLabel text={"alter props"} x={280} y={150} />
+      {renderChildren()}
     </g>
   );
 }
@@ -60,14 +63,14 @@ function App() {
           samples={15}
           symbol="square"
           size={6}
-          style={{ data: { stroke: "lightblue", strokeWidth: 3 }}}
+          style={{ data: { stroke: "lightblue", strokeWidth: 3 } }}
         />
       </WrapperComponent>
     </VictoryChart>
   );
 }
 
-render(<App/>);
+render(<App />);
 ```
 
 ## Creating new components
@@ -76,7 +79,7 @@ Any component that renders valid svg elements (or elements wrapped in `<foreignO
 
 ```jsx live noInline
 function CatPoint(props) {
-  const {x, y, datum} = props;
+  const { x, y, datum } = props;
   const cat = datum._y >= 0 ? "😻" : "😹";
 
   return (
@@ -90,31 +93,30 @@ function App() {
   return (
     <VictoryChart>
       <VictoryScatter
-        y={(d) =>
-          Math.sin(2 * Math.PI * d.x)
-        }
+        y={(d) => Math.sin(2 * Math.PI * d.x)}
         samples={25}
-        dataComponent={<CatPoint/>}
+        dataComponent={<CatPoint />}
       />
     </VictoryChart>
   );
 }
-render(<App/>);
+render(<App />);
 ```
 
 More complex components may be supplied as direct children of `VictoryChart`. These components will have access to shared chart props such as `scale`. In the example below, the custom `Polygon` components draws a polygon based on a collection of points. The scale provided by `VictoryChart` is used to correctly position the points within the chart.
 
 ```jsx live noInline
 const SAMPLE_DATA = [
-	{x: 2, y: 1},
-	{x: 3, y: 5},
-	{x: 6, y: 3}
+  { x: 2, y: 1 },
+  { x: 3, y: 5 },
+  { x: 6, y: 3 },
 ];
 
 function getPoints(data, scale) {
-  return data.reduce((pointStr, {x, y}) =>
-    `${pointStr} ${scale.x(x)},${scale.y(y)}`
-  , '');
+  return data.reduce(
+    (pointStr, { x, y }) => `${pointStr} ${scale.x(x)},${scale.y(y)}`,
+    "",
+  );
 }
 
 function Polygon(props) {
@@ -122,44 +124,36 @@ function Polygon(props) {
   // scale is provided by VictoryChart
   const { data, style, scale } = props;
   const points = getPoints(data, scale);
-  return <polygon points={points} style={style}/>;
+  return <polygon points={points} style={style} />;
 }
 
 function App() {
   return (
     <VictoryChart domain={[-10, 10]} theme={VictoryTheme.clean}>
-      <Polygon
-        data={SAMPLE_DATA}
-        style={{ fill: "lightblue", opacity: 0.5 }}
-      />
-      <VictoryScatter
-        data={SAMPLE_DATA}
-      />
+      <Polygon data={SAMPLE_DATA} style={{ fill: "lightblue", opacity: 0.5 }} />
+      <VictoryScatter data={SAMPLE_DATA} />
     </VictoryChart>
   );
 }
 
-render(<App/>);
+render(<App />);
 ```
 
 Other Victory components may even be used in creating custom components, as in the example below.
 
 ```jsx live noInline
 function CustomPie(props) {
-  const {datum, x, y} = props;
+  const { datum, x, y } = props;
   const pieWidth = 120;
 
   return (
-    <g transform={
-      `translate(${x - pieWidth / 2}, ${y - pieWidth / 2})`
-      }
-    >
+    <g transform={`translate(${x - pieWidth / 2}, ${y - pieWidth / 2})`}>
       <VictoryPie
         standalone={false}
         height={pieWidth}
         width={pieWidth}
         data={datum.pie}
-        style={{labels: {fontSize: 0}}}
+        style={{ labels: { fontSize: 0 } }}
         colorScale={["#f77", "#55e", "#8af"]}
       />
     </g>
@@ -168,43 +162,41 @@ function CustomPie(props) {
 
 function CustomDataComponent() {
   const data = [
-    {x: "Jan", y: 30},
-    {x: "Feb", y: 32},
-    {x: "Mar", y: 65},
-    {x: "Apr", y: 38},
-    {x: "May", y: 50},
-    {x: "Jun", y: 47},
-    {x: "Jul", y: 38},
-    {x: "Aug", y: 48},
-    {x: "Sep", y: 80},
-    {x: "Oct", y: 73},
-    {x: "Nov", y: 76},
-    {x: "Dec", y: 100}
+    { x: "Jan", y: 30 },
+    { x: "Feb", y: 32 },
+    { x: "Mar", y: 65 },
+    { x: "Apr", y: 38 },
+    { x: "May", y: 50 },
+    { x: "Jun", y: 47 },
+    { x: "Jul", y: 38 },
+    { x: "Aug", y: 48 },
+    { x: "Sep", y: 80 },
+    { x: "Oct", y: 73 },
+    { x: "Nov", y: 76 },
+    { x: "Dec", y: 100 },
   ];
 
   const pieData = data.map((datum) => {
     datum.pie = [
-      {x: "Lions", y: Math.round(Math.random() * 10)},
-      {x: "Tigers", y: Math.round(Math.random() * 10)},
-      {x: "Bears", y: Math.round(Math.random() * 10)}
+      { x: "Lions", y: Math.round(Math.random() * 10) },
+      { x: "Tigers", y: Math.round(Math.random() * 10) },
+      { x: "Bears", y: Math.round(Math.random() * 10) },
     ];
     return datum;
   });
 
   return (
-    <VictoryChart domain={{y: [0, 100]}} theme={VictoryTheme.clean}>
-      <VictoryAxis/>
+    <VictoryChart domain={{ y: [0, 100] }} theme={VictoryTheme.clean}>
+      <VictoryAxis />
       <VictoryGroup data={pieData}>
-        <VictoryLine/>
-        <VictoryScatter
-          dataComponent={<CustomPie />}
-        />
+        <VictoryLine />
+        <VictoryScatter dataComponent={<CustomPie />} />
       </VictoryGroup>
     </VictoryChart>
   );
 }
 
-render(<CustomDataComponent/>);
+render(<CustomDataComponent />);
 ```
 
 Since any custom SVG element can be used as a Victory component, any styling system can be used to style custom components, including styled components, CSS modules, or inline styles.
@@ -235,7 +227,7 @@ const App = () => {
     { x: "Sep", y: 63 },
     { x: "Oct", y: 54 },
     { x: "Nov", y: 47 },
-    { x: "Dec", y: 42 }
+    { x: "Dec", y: 42 },
   ];
 
   const temperatures = data.map(({ y }) => y);
@@ -251,10 +243,9 @@ const App = () => {
       />
     </VictoryChart>
   );
-}
+};
 
-render(<App/>);
-
+render(<App />);
 ```
 
 [primitive components]: /docs/api/victory-primitives

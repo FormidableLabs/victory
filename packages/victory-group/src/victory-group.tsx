@@ -29,9 +29,7 @@ const fallbackProps = {
 
 export type VictoryGroupTTargetType = "data" | "labels" | "parent";
 export interface VictoryGroupProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictoryMultiLabelableProps {
+  extends VictoryCommonProps, VictoryDatableProps, VictoryMultiLabelableProps {
   children?: React.ReactNode;
   color?: string;
   events?: EventPropTypeInterface<

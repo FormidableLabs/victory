@@ -10,10 +10,7 @@ For examples of `VictoryVoronoiContainer` in action, visit the [containers](/doc
 
 ## Inherited Props
 
-<CommonProps
-  interfaces={["VictoryContainerProps"]}
-  overrides={[]}
-/>
+<CommonProps interfaces={["VictoryContainerProps"]} overrides={[]} />
 
 ## Component Props
 
@@ -80,15 +77,8 @@ on `VictoryVoronoiContainer`. If the `labels` prop is omitted, no label componen
   domain={{ y: [0, 6] }}
   containerComponent={
     <VictoryVoronoiContainer
-      labels={() =>
-        "Long, verbose labels"
-      }
-      labelComponent={
-        <VictoryTooltip
-          dy={-7}
-          constrainToVisibleArea
-        />
-      }
+      labels={() => "Long, verbose labels"}
+      labelComponent={<VictoryTooltip dy={-7} constrainToVisibleArea />}
     />
   }
   theme={VictoryTheme.clean}
@@ -133,9 +123,7 @@ When the `mouseFollowTooltip` prop is set on `VictoryVoronoiContainer`, The posi
     <VictoryVoronoiContainer
       mouseFollowTooltips
       voronoiDimension="x"
-      labels={({ datum }) =>
-        `y: ${datum.y}`
-      }
+      labels={({ datum }) => `y: ${datum.y}`}
     />
   }
   theme={VictoryTheme.clean}
@@ -218,9 +206,7 @@ _example:_ `voronoiBlacklist={["redPoints"]}`
   containerComponent={
     <VictoryVoronoiContainer
       voronoiBlacklist={["redPoints"]}
-      labels={({ datum }) =>
-        `y: ${datum.y}`
-      }
+      labels={({ datum }) => `y: ${datum.y}`}
     />
   }
   theme={VictoryTheme.clean}
@@ -270,9 +256,7 @@ _example:_ `voronoiDimension="x"`
   containerComponent={
     <VictoryVoronoiContainer
       voronoiDimension="x"
-      labels={({ datum }) =>
-        `y: ${datum.y}`
-      }
+      labels={({ datum }) => `y: ${datum.y}`}
     />
   }
   theme={VictoryTheme.clean}

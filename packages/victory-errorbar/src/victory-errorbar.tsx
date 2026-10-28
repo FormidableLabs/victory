@@ -38,7 +38,8 @@ export type ErrorType =
   | ((...args: any[]) => StringOrNumberOrList);
 
 export interface VictoryErrorBarProps
-  extends Omit<VictoryCommonProps, "polar">,
+  extends
+    Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryMultiLabelableProps {
   borderWidth?: number;

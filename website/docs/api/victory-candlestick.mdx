@@ -33,10 +33,7 @@ For examples of `VictoryCandlestick` in action, visit the [Candlestick](/docs/ch
 Candle colors are significant in candlestick charts, with colors indicating whether a market closed higher than it opened (positive), or closed lower than it opened (negative). The `candleColors` prop should be given as an object with color strings specified for positive and negative.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  domainPadding={{ x: 25 }}
->
+<VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 25 }}>
   <VictoryCandlestick
     candleColors={{
       positive: "#5f5c5b",
@@ -58,10 +55,7 @@ Candle colors are significant in candlestick charts, with colors indicating whet
 The `candleRatio` prop specifies an _approximate_ ratio between candle widths and spaces between candles. When width is not specified via the `candleWidth` prop or in candle styles, the `candleRatio` prop will be used to calculate a default width for each candle given the total number of candles in the data series and the overall width of the chart.
 
 ```jsx live
-<VictoryCandlestick
-  candleRatio={0.8}
-  data={sampleDataDates}
-/>
+<VictoryCandlestick candleRatio={0.8} data={sampleDataDates} />
 ```
 
 ---
@@ -79,10 +73,7 @@ It is still possible to define candle width via the style prop with the `width` 
 :::
 
 ```jsx live
-<VictoryCandlestick
-  candleWidth={55}
-  data={sampleDataDates}
-/>
+<VictoryCandlestick candleWidth={55} data={sampleDataDates} />
 ```
 
 ---
@@ -126,12 +117,7 @@ The `closeLabelComponent` prop takes a component instance which will be used to 
 <VictoryCandlestick
   data={sampleDataDates}
   closeLabels
-  closeLabelComponent={
-    <VictoryLabel
-      dx={-30}
-      textAnchor="middle"
-    />
-  }
+  closeLabelComponent={<VictoryLabel dx={-30} textAnchor="middle" />}
 />
 ```
 
@@ -242,11 +228,8 @@ See the [Events Guide][] for more information on defining events.
               {
                 target: "data",
                 mutation: (props) => {
-                  const fill =
-                    props.style &&
-                    props.style.fill;
-                  return fill ===
-                    "#c43a31"
+                  const fill = props.style && props.style.fill;
+                  return fill === "#c43a31"
                     ? null
                     : {
                         style: {
@@ -309,18 +292,11 @@ highLabelComponent={<VictoryLabel dy={20}/>}
 ```
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryCandlestick
     data={sampleDataDates}
     highLabels
-    highLabelComponent={
-      <VictoryLabel
-        dx={-10}
-        textAnchor="middle"
-      />
-    }
+    highLabelComponent={<VictoryLabel dx={-10} textAnchor="middle" />}
   />
 </VictoryChart>
 ```
@@ -381,9 +357,7 @@ The `labels` prop defines the label associated with the candle. This prop is typ
 ```jsx live
 <VictoryCandlestick
   data={sampleDataDates}
-  labels={({ datum }) =>
-    `open: ${datum.open}`
-  }
+  labels={({ datum }) => `open: ${datum.open}`}
   theme={VictoryTheme.clean}
 />
 ```
@@ -429,9 +403,7 @@ The `lowLabelComponent` prop takes a component instance which will be used to re
 <VictoryCandlestick
   data={sampleDataDates}
   lowLabels
-  lowLabelComponent={
-    <VictoryTooltip pointerLength={0} />
-  }
+  lowLabelComponent={<VictoryTooltip pointerLength={0} />}
   events={[
     {
       target: "data",
@@ -511,12 +483,7 @@ The `openLabelComponent` prop takes a component instance which will be used to r
 <VictoryCandlestick
   data={sampleDataDates}
   openLabels
-  openLabelComponent={
-    <VictoryLabel
-      dx={-30}
-      textAnchor="middle"
-    />
-  }
+  openLabelComponent={<VictoryLabel dx={-30} textAnchor="middle" />}
 />
 ```
 

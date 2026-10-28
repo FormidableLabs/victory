@@ -8,7 +8,9 @@ function CustomArea(props) {
     return <Area {...props} />;
   } else {
     const { data, activeX, scale, style } = props;
-    const index = data.findIndex(val => val._x.getTime() === activeX.getTime());
+    const index = data.findIndex(
+      (val) => val._x.getTime() === activeX.getTime(),
+    );
     const previousPoint = index === 0 ? activeX : data[index - 1]._x;
     const nextPoint = index === data.length - 1 ? activeX : data[index + 1]._x;
     // create a copy of the x dimension scale, and set the range to [0, 100] to easily calculate a percentage for the gradient offsets
@@ -26,7 +28,7 @@ function CustomArea(props) {
     const loc = isBrowser ? window.location.href : "";
     const newStyle = Object.assign({}, style, {
       fill: `url(${loc}#${gradientId})`,
-      stroke: "none"
+      stroke: "none",
     });
 
     return (
@@ -49,7 +51,7 @@ function CustomArea(props) {
 
 function App() {
   const [state, setState] = React.useState({
-    activeX: null
+    activeX: null,
   });
 
   function onActivated(points, props) {
@@ -59,9 +61,7 @@ function App() {
   return (
     <VictoryChart
       scale={{ x: "time" }}
-      containerComponent={
-        <VictoryVoronoiContainer onActivated={onActivated} />
-      }
+      containerComponent={<VictoryVoronoiContainer onActivated={onActivated} />}
       theme={VictoryTheme.clean}
     >
       <VictoryStack colorScale="blue">
@@ -70,7 +70,7 @@ function App() {
             { x: new Date(1986, 1, 1), y: 2 },
             { x: new Date(1996, 1, 1), y: 3 },
             { x: new Date(2006, 1, 1), y: 5 },
-            { x: new Date(2016, 1, 1), y: 4 }
+            { x: new Date(2016, 1, 1), y: 4 },
           ]}
           dataComponent={<CustomArea activeX={state.activeX} />}
         />
@@ -80,7 +80,7 @@ function App() {
             { x: new Date(1986, 1, 1), y: 4 },
             { x: new Date(1996, 1, 1), y: 3 },
             { x: new Date(2006, 1, 1), y: 2 },
-            { x: new Date(2016, 1, 1), y: 5 }
+            { x: new Date(2016, 1, 1), y: 5 },
           ]}
           dataComponent={<CustomArea activeX={state.activeX} />}
         />
@@ -89,7 +89,7 @@ function App() {
             { x: new Date(1986, 1, 1), y: 3 },
             { x: new Date(1996, 1, 1), y: 1 },
             { x: new Date(2006, 1, 1), y: 4 },
-            { x: new Date(2016, 1, 1), y: 2 }
+            { x: new Date(2016, 1, 1), y: 2 },
           ]}
           dataComponent={<CustomArea activeX={state.activeX} />}
         />
@@ -98,5 +98,5 @@ function App() {
   );
 }
 
-render(<App/>);
+render(<App />);
 ```

@@ -2478,8 +2478,7 @@ export module Collection {
   export module Indexed {}
 
   export interface Indexed<T>
-    extends Collection<number, T>,
-      Iterable.Indexed<T> {
+    extends Collection<number, T>, Iterable.Indexed<T> {
     /**
      * Returns Seq.Indexed.
      * @override

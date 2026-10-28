@@ -20,25 +20,21 @@ See the [Animations Guide][] for more detail on animations and transitions
 
 ```jsx live noInline
 function App(props) {
-  const [state, setState] =
-    React.useState({
-      data: getData(),
-      size: getSize(),
-    });
+  const [state, setState] = React.useState({
+    data: getData(),
+    size: getSize(),
+  });
 
   React.useEffect(() => {
-    const setStateInterval =
-      window.setInterval(() => {
-        setState({
-          data: getData(),
-          size: getSize(),
-        });
-      }, 3000);
+    const setStateInterval = window.setInterval(() => {
+      setState({
+        data: getData(),
+        size: getSize(),
+      });
+    }, 3000);
 
     return () => {
-      window.clearInterval(
-        setStateInterval,
-      );
+      window.clearInterval(setStateInterval);
     };
   }, []);
 
@@ -53,16 +49,11 @@ function App(props) {
         data={state.data}
         style={{
           data: {
-            opacity: ({ datum }) =>
-              datum.opacity || 1,
+            opacity: ({ datum }) => datum.opacity || 1,
           },
         }}
         animate={{
-          animationWhitelist: [
-            "style",
-            "data",
-            "size",
-          ], // Try removing "size"
+          animationWhitelist: ["style", "data", "size"], // Try removing "size"
           onExit: {
             duration: 500,
             before: () => ({
@@ -88,9 +79,7 @@ function App(props) {
 }
 
 function getData() {
-  const num = Math.floor(
-    10 * Math.random() + 5,
-  );
+  const num = Math.floor(10 * Math.random() + 5);
   const points = new Array(num).fill(1);
   return points.map((point, index) => {
     return {
@@ -146,9 +135,7 @@ Container components are supplied with the following props:
   containerComponent={
     <VictoryCursorContainer
       cursorLabel={({ datum }) =>
-        `${datum.x.toPrecision(
-          2,
-        )}, ${datum.y.toPrecision(2)}`
+        `${datum.x.toPrecision(2)}, ${datum.y.toPrecision(2)}`
       }
     />
   }
@@ -192,10 +179,7 @@ Values supplied for `domainPadding` will be coerced so that padding a domain wil
 :::
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 100 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 100 }} theme={VictoryTheme.clean}>
   <VictoryBar data={sampleData} />
 </VictoryChart>
 ```
@@ -219,21 +203,19 @@ type EventCallbackInterface<T, U> = {
   callback?: () => void;
 };
 
-type externalEventMutations =
-  EventCallbackInterface<
-    string | string[],
-    StringOrNumberOrList
-  >[];
+type externalEventMutations = EventCallbackInterface<
+  string | string[],
+  StringOrNumberOrList
+>[];
 ```
 
 The `target`, `eventKey`, and `childName` (when applicable) must always be specified. The `mutation` function will be called with the current props of the element specified by the `target`, `eventKey` and `childName` provided. The mutation function should return a mutation object for that element. The `callback` prop should be used to clear the `externalEventMutations` prop once the mutation has been applied. Clearing `externalEventMutations` is crucial for charts that animate.
 
 ```jsx live noInline
 function App() {
-  const [state, setState] =
-    React.useState({
-      externalMutations: undefined,
-    });
+  const [state, setState] = React.useState({
+    externalMutations: undefined,
+  });
 
   function removeMutation() {
     setState({
@@ -266,17 +248,12 @@ function App() {
 
   return (
     <div>
-      <button
-        onClick={clearClicks}
-        style={buttonStyle}
-      >
+      <button onClick={clearClicks} style={buttonStyle}>
         Reset
       </button>
       <VictoryChart
         domain={{ x: [0, 5] }}
-        externalEventMutations={
-          state.externalMutations
-        }
+        externalEventMutations={state.externalMutations}
         events={[
           {
             target: "data",
@@ -331,15 +308,11 @@ External mutations are applied to the same state object that is used to control 
 The `groupComponent` prop takes a component instance which will be used to create group elements for use within container elements. For most components, this prop defaults to a `<g>` tag. Continuous data components like `VictoryLine` and `VictoryArea` use [VictoryClipContainer][] a component which renders a `<g>` tag with a `clipPath` `def`. This allows continuous data components to transition smoothly when new data points enter and exit. `VictoryClipContainer` may also be used with components like `VictoryScatter` to prevent data from overflowing the chart area.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryScatter
     data={sampleData}
     size={20}
-    groupComponent={
-      <VictoryClipContainer />
-    }
+    groupComponent={<VictoryClipContainer />}
   />
 </VictoryChart>
 ```
@@ -360,11 +333,7 @@ The `height` prop determines the height of the containing `<svg>`. By default Vi
   <VictoryBar height={500} />
   <VictoryBar
     height={500}
-    containerComponent={
-      <VictoryContainer
-        responsive={false}
-      />
-    }
+    containerComponent={<VictoryContainer responsive={false} />}
   />
 </div>
 ```
@@ -381,14 +350,8 @@ The `height` prop determines the height of the containing `<svg>`. By default Vi
 The horizontal prop determines whether data will be plotted horizontally. When this prop is set to true, the independent variable will be plotted on the y axis and the dependent variable will be plotted on the x axis.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  domainPadding={{ x: 10 }}
->
-  <VictoryBar
-    horizontal
-    data={sampleData}
-  />
+<VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 10 }}>
+  <VictoryBar horizontal data={sampleData} />
 </VictoryChart>
 ```
 
@@ -412,10 +375,7 @@ The `x` value supplied to the `maxDomain` prop refers to the _independent_ varia
 - `maxDomain={{ y: 0 }}`
 
 ```jsx live
-<VictoryChart
-  maxDomain={{ y: 0 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart maxDomain={{ y: 0 }} theme={VictoryTheme.clean}>
   <VictoryLine
     data={[
       { x: 1, y: -2 },
@@ -447,10 +407,7 @@ The `x` value supplied to the `minDomain` prop refers to the _independent_ varia
 - `minDomain={{ y: 0 }}`
 
 ```jsx live
-<VictoryChart
-  minDomain={{ y: 0 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart minDomain={{ y: 0 }} theme={VictoryTheme.clean}>
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -588,7 +545,7 @@ This prop is typically not set by external consumers.
 
 <Badges>
   <TypeBadge value="scale || { x: scale, y: scale }" />
-  <DefaultsBadge value='linear' />
+  <DefaultsBadge value="linear" />
 </Badges>
 
 The `scale` prop determines which scales your chart should use. In this case, "scale" refers to the d3 scale that is used inside Victory to determine the placement of data, ticks, and labels. A scale type can be either a string ("linear", "time", "log", "sqrt"), or a custom d3 scale function. This prop can be passed as a single scale, or as an object with scales specified for x and y. For "time" scales, data points should be `Date` objects or `getTime()` instances.
@@ -609,10 +566,7 @@ _examples:_
 - `scale={{x: "linear", y: "log"}}`
 
 ```jsx live
-<VictoryChart
-  scale={{ x: "linear", y: "log" }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart scale={{ x: "linear", y: "log" }} theme={VictoryTheme.clean}>
   <VictoryLine
     style={{ data: { stroke: "red" } }}
     domain={{ x: [0, 5] }}
@@ -641,18 +595,12 @@ function App() {
     { x: new Date(2021, 5, 11), y: 6 },
   ];
 
-  const discontinuousScale =
-    scaleDiscontinuous(
-      d3Scale.scaleTime(),
-    ).discontinuityProvider(
-      discontinuitySkipWeekends(),
-    );
+  const discontinuousScale = scaleDiscontinuous(
+    d3Scale.scaleTime(),
+  ).discontinuityProvider(discontinuitySkipWeekends());
 
   return (
-    <VictoryChart
-      scale={{ x: discontinuousScale }}
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart scale={{ x: discontinuousScale }} theme={VictoryTheme.clean}>
       <VictoryArea
         data={data}
         style={{
@@ -728,12 +676,7 @@ Specifies whether the component should be rendered in an independent `<svg>` ele
 
 ```jsx live
 <svg width={300} height={300}>
-  <circle
-    cx={150}
-    cy={150}
-    r={150}
-    fill="#c43a31"
-  />
+  <circle cx={150} cy={150} r={150} fill="#c43a31" />
   <VictoryArea
     standalone={false}
     width={300}
@@ -760,11 +703,7 @@ The `width` prop determines the width of the containing `<svg>`. By default Vict
   <VictoryBar width={1200} />
   <VictoryBar
     width={1200}
-    containerComponent={
-      <VictoryContainer
-        responsive={false}
-      />
-    }
+    containerComponent={<VictoryContainer responsive={false} />}
   />
 </div>
 ```

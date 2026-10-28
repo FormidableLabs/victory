@@ -9,10 +9,7 @@ Legends can be added to any chart by nesting a `VictoryLegend` component within 
 See the [full API here](/docs/api/victory-legend).
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 30 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 30 }} theme={VictoryTheme.clean}>
   <VictoryLegend
     x={125}
     y={20}
@@ -132,12 +129,7 @@ Victory supports custom icons for legend items such as React components from SVG
 const { FaSun, FaMoon } = reactIconsFa;
 
 const CustomMoon = (props) => (
-  <FaMoon
-    fill={props.datum.fill}
-    x={props.x - 7}
-    y={props.y - 7}
-    size={15}
-  />
+  <FaMoon fill={props.datum.fill} x={props.x - 7} y={props.y - 7} size={15} />
 );
 
 function App() {

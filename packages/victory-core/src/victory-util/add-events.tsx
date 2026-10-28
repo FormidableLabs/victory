@@ -37,9 +37,7 @@ export type MixinOptions = {
 };
 
 export interface EventMixinCommonProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictoryLabelableProps {}
+  extends VictoryCommonProps, VictoryDatableProps, VictoryLabelableProps {}
 
 /**
  * These methods will be implemented by the Mixin,
@@ -121,8 +119,9 @@ export interface VictoryComponentConfiguration<TProps> {
 /**
  * This represents the class itself, including static fields
  */
-export interface WrappedComponentClass<TProps>
-  extends VictoryComponentConfiguration<TProps> {
+export interface WrappedComponentClass<
+  TProps,
+> extends VictoryComponentConfiguration<TProps> {
   new (props: TProps): React.Component<TProps>;
 }
 
