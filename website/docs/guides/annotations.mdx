@@ -9,22 +9,10 @@ When composing charts with `VictoryChart`, annotations can be added to your char
 Use `VictoryLabel` as a child of `VictoryChart` to add arbitrary labels. Labels can be positioned with the `x` and `y` props, or with `datum` when used within `VictoryChart` or `VictoryGroup`.
 
 ```jsx live
-<VictoryChart
-  domain={[0, 10]}
-  theme={VictoryTheme.clean}
->
-  <VictoryLabel
-    text="Chart Title"
-    x={225}
-    y={30}
-    textAnchor="middle"
-  />
+<VictoryChart domain={[0, 10]} theme={VictoryTheme.clean}>
+  <VictoryLabel text="Chart Title" x={225} y={30} textAnchor="middle" />
   <VictoryLine y={(d) => d.x} />
-  <VictoryLabel
-    text="Annotation"
-    datum={{ x: 4, y: 6 }}
-    textAnchor="middle"
-  />
+  <VictoryLabel text="Annotation" datum={{ x: 4, y: 6 }} textAnchor="middle" />
 </VictoryChart>
 ```
 
@@ -33,10 +21,7 @@ Use `VictoryLabel` as a child of `VictoryChart` to add arbitrary labels. Labels 
 Victory doesn't have specific components for annotations. Instead, use standard components such as `VictoryLine` and `VictoryScatter` to add lines and markers to your chart.
 
 ```jsx live
-<VictoryChart
-  domain={[0, 10]}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={[0, 10]} theme={VictoryTheme.clean}>
   <VictoryLine y={(d) => d.x} />
   <VictoryLine
     style={{
@@ -51,9 +36,7 @@ Victory doesn't have specific components for annotations. Instead, use standard 
       },
     }}
     labels={["Important"]}
-    labelComponent={
-      <VictoryLabel y={100} />
-    }
+    labelComponent={<VictoryLabel y={100} />}
     x={() => 5}
   />
   <VictoryScatter

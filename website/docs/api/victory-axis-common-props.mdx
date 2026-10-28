@@ -123,8 +123,7 @@ custom `angle` and `verticalAnchor` properties may be included in `labels` style
       padding: 30,
     },
     grid: {
-      stroke: ({ tick }) =>
-        tick > 0.5 ? "red" : "grey",
+      stroke: ({ tick }) => (tick > 0.5 ? "red" : "grey"),
     },
     ticks: { stroke: "grey", size: 5 },
     tickLabels: {
@@ -173,9 +172,7 @@ Specifies how tick values should be labeled. The `tickFormat` prop can be given 
 ```jsx live
 <VictoryAxis
   tickValues={[2.11, 3.9, 6.1, 8.05]}
-  tickFormat={(t) =>
-    `${Math.round(t)}k`
-  }
+  tickFormat={(t) => `${Math.round(t)}k`}
 />
 ```
 
@@ -207,9 +204,7 @@ tickLabelComponent={<VictoryLabel dy={20}/>}
 The `tickValues` prop explicitly specifies a set of tick values to draw on the axis. This prop should be given as an array of unique values of the same type (_i.e.,_ all numbers). The `tickValues` prop is used to specify the _values_ of each tick, so numeric values are typically appropriate. An array of strings or dates may be supplied for categorical and time series data respectively. Use the [tickFormat][] prop to specify how ticks should be labeled. _Note:_ `tickValues` should be given as a unique array.
 
 ```jsx live
-<VictoryAxis
-  tickValues={[2, 4, 6, 8]}
-/>
+<VictoryAxis tickValues={[2, 4, 6, 8]} />
 ```
 
 [tickformat]: /docs/api/victory-axis-common-props#tickformat

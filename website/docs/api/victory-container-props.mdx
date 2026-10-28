@@ -156,7 +156,7 @@ The `ouiaSafe` outputs an attribute called `data-ouia-safe`, which indicates tha
 
 This prop is used by the Open UI Automation 1.0-RC spec to help maintain automated testing environments. Components that are OUIA compliant must provide the following props; `ouiaId`, `ouiaSafe`, and `ouiaType`.
 
-  <DefaultsBadge value='true' />
+<DefaultsBadge value="true" />
 
 ---
 
@@ -197,7 +197,7 @@ This prop is typically not set by external consumers on containers
 
 The `portalComponent` prop takes a component instance which will be used as a container for children that should render inside a top-level container so that they will always appear above other elements. [VictoryTooltip][] renders inside a portal so that tooltips always render above data. [VictoryPortal][] is used to define elements that should render in the portal container. This prop defaults to [Portal][], and should only be overridden when changing rendered elements from SVG to another type of element _e.g.,_ [react-native-svg][] elements.
 
-  <DefaultsBadge value='<Portal/>}' />
+<DefaultsBadge value="<Portal/>}" />
 
 ---
 
@@ -220,19 +220,15 @@ The `portalZIndex` prop determines the z-index of the div enclosing the portal c
 The `preserveAspectRatio` prop applies to the `svg` elements rendered by `VictoryContainer` to give users more control over how responsive svgs are positioned and scaled. When the `responsive` prop on `VictoryContainer` is set to `false`, this prop has no effect.
 
 ```jsx live
-<div style={{ width: "400px", height: "400px"}}>
+<div style={{ width: "400px", height: "400px" }}>
   <VictoryChart
     height={300}
     width={400}
     style={{ parent: { border: "1px solid black" } }}
-    containerComponent={
-      <VictoryContainer
-        preserveAspectRatio="none"
-      />
-    }
+    containerComponent={<VictoryContainer preserveAspectRatio="none" />}
     theme={VictoryTheme.clean}
   >
-    <VictoryLine/>
+    <VictoryLine />
   </VictoryChart>
 </div>
 ```

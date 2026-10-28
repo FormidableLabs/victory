@@ -31,8 +31,7 @@ const fallbackProps = {
 
 export type VictoryStackTTargetType = "data" | "labels" | "parent";
 export interface VictoryStackProps
-  extends VictoryCommonProps,
-    VictoryMultiLabelableProps {
+  extends VictoryCommonProps, VictoryMultiLabelableProps {
   bins?: number | number[] | Date[];
   categories?: CategoryPropType;
   children?: React.ReactNode | React.ReactNode[];

@@ -20,8 +20,7 @@ const fallbackProps: Partial<VictoryPolarAxisProps> = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface VictoryPolarAxisBase
-  extends EventsMixinClass<VictoryPolarAxisProps> {}
+interface VictoryPolarAxisBase extends EventsMixinClass<VictoryPolarAxisProps> {}
 
 class VictoryPolarAxisBase extends React.Component<VictoryPolarAxisProps> {
   static animationWhitelist = [

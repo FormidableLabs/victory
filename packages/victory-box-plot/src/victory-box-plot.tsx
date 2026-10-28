@@ -86,8 +86,7 @@ export interface VictoryBoxPlotLabelOrientationInterface {
 }
 
 export interface VictoryBoxPlotProps
-  extends VictoryCommonProps,
-    VictoryDatableProps {
+  extends VictoryCommonProps, VictoryDatableProps {
   boxWidth?: number;
   datum?: any;
   domain?: DomainPropType;

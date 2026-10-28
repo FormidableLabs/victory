@@ -27,9 +27,7 @@ export type VictoryLegendTTargetType = "data" | "labels" | "parent";
 export type VictoryLegendOrientationType = "horizontal" | "vertical";
 
 export interface VictoryLegendProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictorySingleLabelableProps {
+  extends VictoryCommonProps, VictoryDatableProps, VictorySingleLabelableProps {
   borderComponent?: React.ReactElement;
   borderPadding?: PaddingProps;
   centerTitle?: boolean;

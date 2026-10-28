@@ -31,7 +31,6 @@ For examples of `VictoryScatter` in action, visit the [Scatter Chart](/docs/char
 
 The `bubbleProperty` prop indicates which property of the data object should be used to scale data points in a bubble chart. If a `bubbleProperty` is given, `size` and `symbol` props will be ignored. Bubble charts always render circular points.
 
-
 ```jsx live
 <VictoryScatter
   bubbleProperty="amount"
@@ -83,9 +82,7 @@ See the [Events Guide][] for more information on defining events.
 ```jsx live
 <div>
   <h3>Click a data point below</h3>
-  <VictoryChart
-    theme={VictoryTheme.clean}
-  >
+  <VictoryChart theme={VictoryTheme.clean}>
     <VictoryScatter
       size={9}
       labels={() => null}
@@ -98,11 +95,8 @@ See the [Events Guide][] for more information on defining events.
                 {
                   target: "data",
                   mutation: (props) => {
-                    const fill =
-                      props.style &&
-                      props.style.fill;
-                    return fill ===
-                      "black"
+                    const fill = props.style && props.style.fill;
+                    return fill === "black"
                       ? null
                       : {
                           style: {
@@ -114,8 +108,7 @@ See the [Events Guide][] for more information on defining events.
                 {
                   target: "labels",
                   mutation: (props) => {
-                    return props.text ===
-                      "clicked"
+                    return props.text === "clicked"
                       ? null
                       : {
                           text: "clicked",
@@ -172,13 +165,8 @@ minBubbleSize={5}
 The `size` prop determines how to scale each data point. When this prop given as a function, it will be called for each point with the props corresponding to that point. If `size` is not specified, either in props or in a theme, it will default to 1. `size` may also be set directly on each data object.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryScatter
-    size={({ datum }) => datum.y + 2}
-    data={sampleData}
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryScatter size={({ datum }) => datum.y + 2} data={sampleData} />
 </VictoryChart>
 ```
 
@@ -198,23 +186,14 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 <VictoryScatter
   style={{
     data: {
-      fill: ({ datum }) =>
-        datum.x === 3
-          ? "#000000"
-          : "#c43a31",
-      stroke: ({ datum }) =>
-        datum.x === 3
-          ? "#000000"
-          : "#c43a31",
+      fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
+      stroke: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
       fillOpacity: 0.7,
       strokeWidth: 3,
     },
     labels: {
       fontSize: 15,
-      fill: ({ datum }) =>
-        datum.x === 3
-          ? "#000000"
-          : "#c43a31",
+      fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
     },
   }}
   size={9}
@@ -234,17 +213,10 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
 
 The `symbol` prop determines which symbol should be drawn to represent data points. Options are: "circle", "cross", "diamond", "plus", "minus", "square", "star", "triangleDown", "triangleUp". When this prop is given as a function, it will be evaluated for each point with the props corresponding to that point. If no `symbol` prop is specified, a circle will be rendered. `symbol` may also be set directly on each data object.
 
-
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryScatter
-    symbol={({ datum }) =>
-      datum.y > 3
-        ? "triangleUp"
-        : "triangleDown"
-    }
+    symbol={({ datum }) => (datum.y > 3 ? "triangleUp" : "triangleDown")}
     size={7}
     data={sampleData}
   />

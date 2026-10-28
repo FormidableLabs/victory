@@ -37,10 +37,7 @@ Return values from event handlers are used to define mutations affecting rendere
             {
               target: "labels",
               mutation: (props) => {
-                return props.text ===
-                  "clicked"
-                  ? null
-                  : { text: "clicked" };
+                return props.text === "clicked" ? null : { text: "clicked" };
               },
             },
           ];
@@ -68,8 +65,7 @@ Wrapper components like `VictoryChart`, `VictoryGroup`, and `VictoryStack` may d
             {
               childName: "area-4",
               mutation: (props) => {
-                const fill =
-                  props.style.fill;
+                const fill = props.style.fill;
                 return fill === "tomato"
                   ? null
                   : {
@@ -154,9 +150,7 @@ Events can target specific elements within a component by using the `eventKey` p
                 return {
                   style: {
                     ...props.style,
-                    fill: VictoryTheme
-                      .clean.palette
-                      ?.colors.teal,
+                    fill: VictoryTheme.clean.palette?.colors.teal,
                   },
                 };
               },
@@ -186,9 +180,7 @@ Events can target specific elements within a component by using the `eventKey` p
                 return {
                   style: {
                     ...props.style,
-                    fill: VictoryTheme
-                      .clean.palette
-                      ?.colors.red,
+                    fill: VictoryTheme.clean.palette?.colors.red,
                   },
                 };
               },
@@ -222,9 +214,7 @@ Wrapper components like `VictoryChart`, `VictoryGroup`, and `VictoryStack` may a
                 return {
                   style: {
                     ...props.style,
-                    fill: VictoryTheme
-                      .clean.palette
-                      ?.colors.yellow,
+                    fill: VictoryTheme.clean.palette?.colors.yellow,
                   },
                 };
               },
@@ -262,10 +252,7 @@ Wrapper components like `VictoryChart`, `VictoryGroup`, and `VictoryStack` may a
       fontSize: 18,
     }}
   />
-  <VictoryBar
-    name="bar"
-    labels={() => null}
-  />
+  <VictoryBar name="bar" labels={() => null} />
 </VictoryChart>
 ```
 
@@ -284,20 +271,12 @@ Components like `VictoryChart` use the `VictorySharedEvents` wrapper automatical
           onMouseOver: () => {
             return [
               {
-                childName: [
-                  "pie",
-                  "bar",
-                ],
+                childName: ["pie", "bar"],
                 mutation: (props) => {
                   return {
-                    style:
-                      Object.assign(
-                        {},
-                        props.style,
-                        {
-                          fill: "lightblue",
-                        },
-                      ),
+                    style: Object.assign({}, props.style, {
+                      fill: "lightblue",
+                    }),
                   };
                 },
               },
@@ -306,10 +285,7 @@ Components like `VictoryChart` use the `VictorySharedEvents` wrapper automatical
           onMouseOut: () => {
             return [
               {
-                childName: [
-                  "pie",
-                  "bar",
-                ],
+                childName: ["pie", "bar"],
                 mutation: () => {
                   return null;
                 },
@@ -336,9 +312,7 @@ Components like `VictoryChart` use the `VictorySharedEvents` wrapper automatical
           { x: "d", y: 4 },
         ]}
         labels={["a", "b", "c", "d"]}
-        labelComponent={
-          <VictoryLabel y={290} />
-        }
+        labelComponent={<VictoryLabel y={290} />}
       />
     </g>
     <g transform={"translate(0, -75)"}>
@@ -372,10 +346,7 @@ Occasionally is it necessary to trigger events in Victory's event system from so
 externalEventMutations: PropTypes.arrayOf(
   PropTypes.shape({
     callback: PropTypes.func,
-    childName: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-    ]),
+    childName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     eventKey: PropTypes.oneOfType([
       PropTypes.array,
       CustomPropTypes.allOfType([
@@ -385,10 +356,7 @@ externalEventMutations: PropTypes.arrayOf(
       PropTypes.string,
     ]),
     mutation: PropTypes.func,
-    target: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-    ]),
+    target: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   }),
 );
 ```
@@ -397,10 +365,9 @@ The `target`, `eventKey`, and `childName` (when applicable) must always be speci
 
 ```jsx live noInline
 function App() {
-  const [state, setState] =
-    React.useState({
-      externalMutations: undefined,
-    });
+  const [state, setState] = React.useState({
+    externalMutations: undefined,
+  });
 
   function removeMutation() {
     setState({
@@ -433,17 +400,12 @@ function App() {
 
   return (
     <div>
-      <button
-        onClick={clearClicks}
-        style={buttonStyle}
-      >
+      <button onClick={clearClicks} style={buttonStyle}>
         Reset
       </button>
       <VictoryChart
         domain={{ x: [0, 5] }}
-        externalEventMutations={
-          state.externalMutations
-        }
+        externalEventMutations={state.externalMutations}
         events={[
           {
             target: "data",
@@ -501,10 +463,7 @@ For simple events, it may be desirable to bypass Victory's event system. To do s
   dataComponent={
     <Bar
       events={{
-        onClick: (evt) =>
-          alert(
-            `(${evt.clientX}, ${evt.clientY})`,
-          ),
+        onClick: (evt) => alert(`(${evt.clientX}, ${evt.clientY})`),
       }}
     />
   }
@@ -519,46 +478,28 @@ For custom SVG components, Victory's event system is not the only option. It's p
 Notice how the `circle` component in this example is a basic SVG element with React event props rather than a Victory component.
 
 ```jsx live noInline
-const ScatterPoint = ({
-  x,
-  y,
-  datum,
-}) => {
-  const [selected, setSelected] =
-    React.useState(false);
-  const [hovered, setHovered] =
-    React.useState(false);
+const ScatterPoint = ({ x, y, datum }) => {
+  const [selected, setSelected] = React.useState(false);
+  const [hovered, setHovered] = React.useState(false);
 
   return (
     <circle
       cx={x}
       cy={y}
       r={datum.x * datum.y}
-      stroke={
-        hovered ? "purple" : "white"
-      }
+      stroke={hovered ? "purple" : "white"}
       strokeWidth={2}
-      fill={
-        selected ? "cyan" : "magenta"
-      }
-      onClick={() =>
-        setSelected(!selected)
-      }
-      onMouseEnter={() =>
-        setHovered(true)
-      }
-      onMouseLeave={() =>
-        setHovered(false)
-      }
+      fill={selected ? "cyan" : "magenta"}
+      onClick={() => setSelected(!selected)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     />
   );
 };
 
 const App = () => {
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryScatter
         data={[
           { x: 1, y: 7 },

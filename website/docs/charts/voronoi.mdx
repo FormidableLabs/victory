@@ -9,10 +9,7 @@ Voronoi charts are used for visualizing proximity and influence by dividing spac
 See the [full API here](/docs/api/victory-voronoi). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryVoronoi
     data={[
       { x: 1, y: 2 },
@@ -30,10 +27,7 @@ See the [full API here](/docs/api/victory-voronoi). Typically composed with [`Vi
 Voronoi charts can be used to display labels using a `label` property in the dataset or by specifying a function to the `labels` prop.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryVoronoi
     data={[
       { x: 1, y: 2, label: "Dogs" },
@@ -47,10 +41,7 @@ Voronoi charts can be used to display labels using a `label` property in the dat
 ```
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryVoronoi
     data={[
       { x: 1, y: 2 },
@@ -59,9 +50,7 @@ Voronoi charts can be used to display labels using a `label` property in the dat
       { x: 4, y: 4 },
       { x: 5, y: 7 },
     ]}
-    labels={({ datum }) =>
-      `y: ${datum.y}`
-    }
+    labels={({ datum }) => `y: ${datum.y}`}
   />
 </VictoryChart>
 ```
@@ -71,10 +60,7 @@ Voronoi charts can be used to display labels using a `label` property in the dat
 Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryVoronoi
     data={[
       { x: 1, y: 2, label: "Dogs" },
@@ -104,14 +90,8 @@ const data = [
 
 function App() {
   return (
-    <VictoryChart
-      domain={{ x: [0, 5], y: [0, 7] }}
-      theme={VictoryTheme.clean}
-    >
-      <VictoryVoronoi
-        data={data}
-        size={50}
-      />
+    <VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
+      <VictoryVoronoi data={data} size={50} />
       <VictoryLine data={data} />
       <VictoryScatter data={data} />
     </VictoryChart>
@@ -179,10 +159,7 @@ render(<App />);
 Chart styling can be customized by using the theme or overriding the style prop on the component.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryVoronoi
     data={[
       { x: 1, y: 2 },
@@ -208,10 +185,7 @@ Chart styling can be customized by using the theme or overriding the style prop 
 Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryVoronoi
     events={[
       {
@@ -222,11 +196,8 @@ Events can be handled by passing an array of event objects to the `events` prop 
               {
                 target: "data",
                 mutation: (props) => {
-                  const fill =
-                    props.style &&
-                    props.style.fill;
-                  return fill ===
-                    "white"
+                  const fill = props.style && props.style.fill;
+                  return fill === "white"
                     ? null
                     : {
                         style: {
@@ -273,12 +244,7 @@ They can also be embeded in other SVG components by using the `standalone` prop.
     margin: "0 auto",
   }}
 >
-  <circle
-    cx={150}
-    cy={150}
-    r={150}
-    fill="#9ded91"
-  />
+  <circle cx={150} cy={150} r={150} fill="#9ded91" />
   <VictoryVoronoi
     standalone={false}
     theme={VictoryTheme.clean}

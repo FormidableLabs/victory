@@ -43,8 +43,7 @@ export const VICTORY_SELECTION_CONTAINER_DEFAULT_PROPS = {
   },
 };
 
-interface VictorySelectionContainerMutatedProps
-  extends VictorySelectionContainerProps {
+interface VictorySelectionContainerMutatedProps extends VictorySelectionContainerProps {
   x1: number;
   x2: number;
   y1: number;

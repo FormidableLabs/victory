@@ -30,8 +30,7 @@ const fallbackProps = {
 };
 
 export interface VictoryTooltipProps
-  extends VictoryLabelableProps,
-    VictoryLabelProps {
+  extends VictoryLabelableProps, VictoryLabelProps {
   activateData?: boolean;
   active?: boolean;
   activePoints?: any[];

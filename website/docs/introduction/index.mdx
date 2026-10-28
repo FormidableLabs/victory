@@ -13,79 +13,55 @@ const series = [
   {
     name: "Canada",
     data: [
-      3.9670002, 5.2650003, 6.201,
-      7.8010006, 9.694, 11.214001,
-      11.973001, 12.250001, 12.816001,
-      13.413001, 13.626961, 14.30356,
-      15.295461,
+      3.9670002, 5.2650003, 6.201, 7.8010006, 9.694, 11.214001, 11.973001,
+      12.250001, 12.816001, 13.413001, 13.626961, 14.30356, 15.295461,
     ],
   },
   {
     name: "Germany",
     data: [
-      26.903002, 28.712002, 30.979002,
-      33.477, 38.614002, 44.58, 49.435,
-      55.58, 58.721004, 60.742004,
-      62.201004, 63.833004, 66.315,
+      26.903002, 28.712002, 30.979002, 33.477, 38.614002, 44.58, 49.435, 55.58,
+      58.721004, 60.742004, 62.201004, 63.833004, 66.315,
     ],
   },
   {
     name: "India",
     data: [
-      13.184001, 16.179, 17.2997,
-      18.4204, 22.465302, 25.08819,
-      28.700441, 32.84846, 35.288105,
-      37.50518, 38.558605, 40.06727,
-      41.929783,
+      13.184001, 16.179, 17.2997, 18.4204, 22.465302, 25.08819, 28.700441,
+      32.84846, 35.288105, 37.50518, 38.558605, 40.06727, 41.929783,
     ],
   },
   {
     name: "United States",
     data: [
-      39.349697, 45.79497, 59.453304,
-      60.198166, 64.43019, 72.767235,
-      81.502365, 87.83079, 94.66619,
-      103.835556, 118.66354, 133.01929,
-      140.86162,
+      39.349697, 45.79497, 59.453304, 60.198166, 64.43019, 72.767235, 81.502365,
+      87.83079, 94.66619, 103.835556, 118.66354, 133.01929, 140.86162,
     ],
   },
   {
     name: "Italy",
     data: [
-      5.794, 6.918, 8.102, 8.542001,
-      8.683001, 9.137, 9.384001,
-      9.736579, 10.230247, 10.679461,
-      10.870623, 11.253734, 11.779734,
+      5.794, 6.918, 8.102, 8.542001, 8.683001, 9.137, 9.384001, 9.736579,
+      10.230247, 10.679461, 10.870623, 11.253734, 11.779734,
     ],
   },
   {
     name: "Japan",
     data: [
-      2.2940001, 2.4190001, 2.562,
-      2.6460001, 2.753, 2.808,
-      3.2470002, 3.4830003, 3.4980001,
-      3.9540002, 4.367, 4.467, 4.577,
+      2.2940001, 2.4190001, 2.562, 2.6460001, 2.753, 2.808, 3.2470002,
+      3.4830003, 3.4980001, 3.9540002, 4.367, 4.467, 4.577,
     ],
   },
   {
     name: "Spain",
     data: [
-      20.693, 21.529001, 22.789001,
-      22.958, 22.925001, 22.943,
-      22.990002, 23.12448, 23.405056,
-      25.590076, 26.819191, 27.907652,
-      29.307837,
+      20.693, 21.529001, 22.789001, 22.958, 22.925001, 22.943, 22.990002,
+      23.12448, 23.405056, 25.590076, 26.819191, 27.907652, 29.307837,
     ],
   },
 ];
 
-const symbols = [
-  "circle",
-  "diamond",
-  "plus",
-  "square",
-  "triangleUp",
-];
+const symbols = ["circle", "diamond", "plus", "square", "triangleUp"];
 
 function App() {
   return (
@@ -117,11 +93,7 @@ function App() {
         dy={30}
       />
       <VictoryAxis
-        tickValues={_.range(
-          2010,
-          2024,
-          2,
-        )}
+        tickValues={_.range(2010, 2024, 2)}
         style={{
           tickLabels: {
             fontSize: 8,
@@ -136,9 +108,7 @@ function App() {
         dependentAxis
         label="Total Capacity"
         tickValues={_.range(0, 200, 40)}
-        tickFormat={(value) =>
-          `${value} GW`
-        }
+        tickFormat={(value) => `${value} GW`}
         style={{
           axis: {
             stroke: "transparent",
@@ -167,10 +137,7 @@ function App() {
           <VictoryLine
             style={{
               data: {
-                stroke:
-                  VictoryTheme.clean
-                    .palette
-                    .qualitative[i],
+                stroke: VictoryTheme.clean.palette.qualitative[i],
                 strokeWidth: 1,
               },
             }}
@@ -180,10 +147,7 @@ function App() {
             symbol={symbols[i]}
             style={{
               data: {
-                fill: VictoryTheme.clean
-                  .palette.qualitative[
-                  i
-                ],
+                fill: VictoryTheme.clean.palette.qualitative[i],
               },
             }}
           />
@@ -196,19 +160,13 @@ function App() {
         data={series.map((s) => ({
           name: s.name,
           symbol: {
-            fill: VictoryTheme.clean
-              .palette.qualitative[
-              series.indexOf(s)
-            ],
-            type: symbols[
-              series.indexOf(s)
-            ],
+            fill: VictoryTheme.clean.palette.qualitative[series.indexOf(s)],
+            type: symbols[series.indexOf(s)],
           },
         }))}
         style={{
           data: {
-            fill: ({ datum }) =>
-              datum.symbol.fill,
+            fill: ({ datum }) => datum.symbol.fill,
           },
           labels: {
             fontSize: 8,
@@ -258,10 +216,7 @@ Add Victory to your project with the command `npm install victory`, then import 
 
 ```jsx
 import React from "react";
-import {
-  VictoryChart,
-  VictoryLine,
-} from "victory";
+import { VictoryChart, VictoryLine } from "victory";
 ```
 
 ### 2. Start with a basic chart
@@ -271,9 +226,7 @@ Components include sensible defaults, so even without data the chart will render
 ```jsx live noInline
 function App() {
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryLine />
     </VictoryChart>
   );
@@ -298,27 +251,20 @@ const series = [
   {
     name: "Canada",
     data: [
-      3.9670002, 5.2650003, 6.201,
-      7.8010006, 9.694, 11.214001,
-      11.973001, 12.250001, 12.816001,
-      13.413001, 13.626961, 14.30356,
-      15.295461,
+      3.9670002, 5.2650003, 6.201, 7.8010006, 9.694, 11.214001, 11.973001,
+      12.250001, 12.816001, 13.413001, 13.626961, 14.30356, 15.295461,
     ],
   },
 ];
 
 function App() {
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryLine
-        data={series[0].data.map(
-          (d, i) => ({
-            x: i + 2010,
-            y: d,
-          }),
-        )}
+        data={series[0].data.map((d, i) => ({
+          x: i + 2010,
+          y: d,
+        }))}
       />
     </VictoryChart>
   );
@@ -344,9 +290,7 @@ We will start by adding a dependent axis to our chart. This axis will be the ver
 Our data is an array of values from the year 2010 to 2022, so we will also add a horizontal axis with tick values.
 
 ```tsx
-<VictoryAxis
-  tickValues={_.range(2010, 2024, 2)}
-/>
+<VictoryAxis tickValues={_.range(2010, 2024, 2)} />
 ```
 
 Finally, we will customize the axis styles to make it more readable. We will adjust the font size of the tick labels and the axis ticks, and add grid lines to the dependent axis.
@@ -356,26 +300,17 @@ const series = [
   {
     name: "Canada",
     data: [
-      3.9670002, 5.2650003, 6.201,
-      7.8010006, 9.694, 11.214001,
-      11.973001, 12.250001, 12.816001,
-      13.413001, 13.626961, 14.30356,
-      15.295461,
+      3.9670002, 5.2650003, 6.201, 7.8010006, 9.694, 11.214001, 11.973001,
+      12.250001, 12.816001, 13.413001, 13.626961, 14.30356, 15.295461,
     ],
   },
 ];
 
 function App() {
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryAxis
-        tickValues={_.range(
-          2010,
-          2024,
-          2,
-        )}
+        tickValues={_.range(2010, 2024, 2)}
         style={{
           tickLabels: {
             fontSize: 8,
@@ -389,9 +324,7 @@ function App() {
       <VictoryAxis
         dependentAxis
         tickValues={_.range(0, 200, 40)}
-        tickFormat={(value) =>
-          `${value} GW`
-        }
+        tickFormat={(value) => `${value} GW`}
         style={{
           axis: {
             stroke: "transparent",
@@ -410,12 +343,10 @@ function App() {
         }}
       />
       <VictoryLine
-        data={series[0].data.map(
-          (d, i) => ({
-            x: i + 2010,
-            y: d,
-          }),
-        )}
+        data={series[0].data.map((d, i) => ({
+          x: i + 2010,
+          y: d,
+        }))}
       />
     </VictoryChart>
   );
@@ -439,9 +370,7 @@ Lets expand our data to include multiple countries by iterating over the `series
       }))}
       style={{
         data: {
-          stroke:
-            VictoryTheme.clean.palette
-              .qualitative[i],
+          stroke: VictoryTheme.clean.palette.qualitative[i],
           strokeWidth: 1,
         },
       }}
@@ -455,83 +384,59 @@ const series = [
   {
     name: "Canada",
     data: [
-      3.9670002, 5.2650003, 6.201,
-      7.8010006, 9.694, 11.214001,
-      11.973001, 12.250001, 12.816001,
-      13.413001, 13.626961, 14.30356,
-      15.295461,
+      3.9670002, 5.2650003, 6.201, 7.8010006, 9.694, 11.214001, 11.973001,
+      12.250001, 12.816001, 13.413001, 13.626961, 14.30356, 15.295461,
     ],
   },
   {
     name: "Germany",
     data: [
-      26.903002, 28.712002, 30.979002,
-      33.477, 38.614002, 44.58, 49.435,
-      55.58, 58.721004, 60.742004,
-      62.201004, 63.833004, 66.315,
+      26.903002, 28.712002, 30.979002, 33.477, 38.614002, 44.58, 49.435, 55.58,
+      58.721004, 60.742004, 62.201004, 63.833004, 66.315,
     ],
   },
   {
     name: "India",
     data: [
-      13.184001, 16.179, 17.2997,
-      18.4204, 22.465302, 25.08819,
-      28.700441, 32.84846, 35.288105,
-      37.50518, 38.558605, 40.06727,
-      41.929783,
+      13.184001, 16.179, 17.2997, 18.4204, 22.465302, 25.08819, 28.700441,
+      32.84846, 35.288105, 37.50518, 38.558605, 40.06727, 41.929783,
     ],
   },
   {
     name: "United States",
     data: [
-      39.349697, 45.79497, 59.453304,
-      60.198166, 64.43019, 72.767235,
-      81.502365, 87.83079, 94.66619,
-      103.835556, 118.66354, 133.01929,
-      140.86162,
+      39.349697, 45.79497, 59.453304, 60.198166, 64.43019, 72.767235, 81.502365,
+      87.83079, 94.66619, 103.835556, 118.66354, 133.01929, 140.86162,
     ],
   },
   {
     name: "Italy",
     data: [
-      5.794, 6.918, 8.102, 8.542001,
-      8.683001, 9.137, 9.384001,
-      9.736579, 10.230247, 10.679461,
-      10.870623, 11.253734, 11.779734,
+      5.794, 6.918, 8.102, 8.542001, 8.683001, 9.137, 9.384001, 9.736579,
+      10.230247, 10.679461, 10.870623, 11.253734, 11.779734,
     ],
   },
   {
     name: "Japan",
     data: [
-      2.2940001, 2.4190001, 2.562,
-      2.6460001, 2.753, 2.808,
-      3.2470002, 3.4830003, 3.4980001,
-      3.9540002, 4.367, 4.467, 4.577,
+      2.2940001, 2.4190001, 2.562, 2.6460001, 2.753, 2.808, 3.2470002,
+      3.4830003, 3.4980001, 3.9540002, 4.367, 4.467, 4.577,
     ],
   },
   {
     name: "Spain",
     data: [
-      20.693, 21.529001, 22.789001,
-      22.958, 22.925001, 22.943,
-      22.990002, 23.12448, 23.405056,
-      25.590076, 26.819191, 27.907652,
-      29.307837,
+      20.693, 21.529001, 22.789001, 22.958, 22.925001, 22.943, 22.990002,
+      23.12448, 23.405056, 25.590076, 26.819191, 27.907652, 29.307837,
     ],
   },
 ];
 
 function App() {
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryAxis
-        tickValues={_.range(
-          2010,
-          2024,
-          2,
-        )}
+        tickValues={_.range(2010, 2024, 2)}
         style={{
           tickLabels: {
             fontSize: 8,
@@ -545,9 +450,7 @@ function App() {
       <VictoryAxis
         dependentAxis
         tickValues={_.range(0, 200, 40)}
-        tickFormat={(value) =>
-          `${value} GW`
-        }
+        tickFormat={(value) => `${value} GW`}
         style={{
           axis: {
             stroke: "transparent",
@@ -569,11 +472,7 @@ function App() {
         <VictoryLine
           style={{
             data: {
-              stroke:
-                VictoryTheme.clean
-                  .palette.qualitative[
-                  i
-                ],
+              stroke: VictoryTheme.clean.palette.qualitative[i],
               strokeWidth: 1,
             },
           }}
@@ -608,9 +507,7 @@ To make each data point stand out more, we can combine our [`VictoryLine`](/docs
       <VictoryLine
         style={{
           data: {
-            stroke:
-              VictoryTheme.clean.palette
-                .qualitative[i],
+            stroke: VictoryTheme.clean.palette.qualitative[i],
             strokeWidth: 1,
           },
         }}
@@ -620,8 +517,7 @@ To make each data point stand out more, we can combine our [`VictoryLine`](/docs
         symbol={symbols[i]}
         style={{
           data: {
-            fill: VictoryTheme.clean
-              .palette.qualitative[i],
+            fill: VictoryTheme.clean.palette.qualitative[i],
           },
         }}
       />
@@ -635,91 +531,61 @@ const series = [
   {
     name: "Canada",
     data: [
-      3.9670002, 5.2650003, 6.201,
-      7.8010006, 9.694, 11.214001,
-      11.973001, 12.250001, 12.816001,
-      13.413001, 13.626961, 14.30356,
-      15.295461,
+      3.9670002, 5.2650003, 6.201, 7.8010006, 9.694, 11.214001, 11.973001,
+      12.250001, 12.816001, 13.413001, 13.626961, 14.30356, 15.295461,
     ],
   },
   {
     name: "Germany",
     data: [
-      26.903002, 28.712002, 30.979002,
-      33.477, 38.614002, 44.58, 49.435,
-      55.58, 58.721004, 60.742004,
-      62.201004, 63.833004, 66.315,
+      26.903002, 28.712002, 30.979002, 33.477, 38.614002, 44.58, 49.435, 55.58,
+      58.721004, 60.742004, 62.201004, 63.833004, 66.315,
     ],
   },
   {
     name: "India",
     data: [
-      13.184001, 16.179, 17.2997,
-      18.4204, 22.465302, 25.08819,
-      28.700441, 32.84846, 35.288105,
-      37.50518, 38.558605, 40.06727,
-      41.929783,
+      13.184001, 16.179, 17.2997, 18.4204, 22.465302, 25.08819, 28.700441,
+      32.84846, 35.288105, 37.50518, 38.558605, 40.06727, 41.929783,
     ],
   },
   {
     name: "United States",
     data: [
-      39.349697, 45.79497, 59.453304,
-      60.198166, 64.43019, 72.767235,
-      81.502365, 87.83079, 94.66619,
-      103.835556, 118.66354, 133.01929,
-      140.86162,
+      39.349697, 45.79497, 59.453304, 60.198166, 64.43019, 72.767235, 81.502365,
+      87.83079, 94.66619, 103.835556, 118.66354, 133.01929, 140.86162,
     ],
   },
   {
     name: "Italy",
     data: [
-      5.794, 6.918, 8.102, 8.542001,
-      8.683001, 9.137, 9.384001,
-      9.736579, 10.230247, 10.679461,
-      10.870623, 11.253734, 11.779734,
+      5.794, 6.918, 8.102, 8.542001, 8.683001, 9.137, 9.384001, 9.736579,
+      10.230247, 10.679461, 10.870623, 11.253734, 11.779734,
     ],
   },
   {
     name: "Japan",
     data: [
-      2.2940001, 2.4190001, 2.562,
-      2.6460001, 2.753, 2.808,
-      3.2470002, 3.4830003, 3.4980001,
-      3.9540002, 4.367, 4.467, 4.577,
+      2.2940001, 2.4190001, 2.562, 2.6460001, 2.753, 2.808, 3.2470002,
+      3.4830003, 3.4980001, 3.9540002, 4.367, 4.467, 4.577,
     ],
   },
   {
     name: "Spain",
     data: [
-      20.693, 21.529001, 22.789001,
-      22.958, 22.925001, 22.943,
-      22.990002, 23.12448, 23.405056,
-      25.590076, 26.819191, 27.907652,
-      29.307837,
+      20.693, 21.529001, 22.789001, 22.958, 22.925001, 22.943, 22.990002,
+      23.12448, 23.405056, 25.590076, 26.819191, 27.907652, 29.307837,
     ],
   },
 ];
 
-const symbols = [
-  "circle",
-  "diamond",
-  "plus",
-  "square",
-  "triangleUp",
-];
+const symbols = ["circle", "diamond", "plus", "square", "triangleUp"];
 
 function App() {
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryAxis
-        tickValues={_.range(
-          2010,
-          2024,
-          2,
-        )}
+        tickValues={_.range(2010, 2024, 2)}
         style={{
           tickLabels: {
             fontSize: 8,
@@ -733,9 +599,7 @@ function App() {
       <VictoryAxis
         dependentAxis
         tickValues={_.range(0, 200, 40)}
-        tickFormat={(value) =>
-          `${value} GW`
-        }
+        tickFormat={(value) => `${value} GW`}
         style={{
           axis: {
             stroke: "transparent",
@@ -764,10 +628,7 @@ function App() {
           <VictoryLine
             style={{
               data: {
-                stroke:
-                  VictoryTheme.clean
-                    .palette
-                    .qualitative[i],
+                stroke: VictoryTheme.clean.palette.qualitative[i],
                 strokeWidth: 1,
               },
             }}
@@ -777,10 +638,7 @@ function App() {
             symbol={symbols[i]}
             style={{
               data: {
-                fill: VictoryTheme.clean
-                  .palette.qualitative[
-                  i
-                ],
+                fill: VictoryTheme.clean.palette.qualitative[i],
               },
             }}
           />
@@ -805,8 +663,7 @@ To make it easier to identify each country, we can add a legend to our chart. Vi
   data={series.map((s, i) => ({
     name: s.name,
     symbol: {
-      fill: VictoryTheme.clean.palette
-        .qualitative[i],
+      fill: VictoryTheme.clean.palette.qualitative[i],
       type: symbols[i],
     },
   }))}
@@ -831,79 +688,55 @@ const series = [
   {
     name: "Canada",
     data: [
-      3.9670002, 5.2650003, 6.201,
-      7.8010006, 9.694, 11.214001,
-      11.973001, 12.250001, 12.816001,
-      13.413001, 13.626961, 14.30356,
-      15.295461,
+      3.9670002, 5.2650003, 6.201, 7.8010006, 9.694, 11.214001, 11.973001,
+      12.250001, 12.816001, 13.413001, 13.626961, 14.30356, 15.295461,
     ],
   },
   {
     name: "Germany",
     data: [
-      26.903002, 28.712002, 30.979002,
-      33.477, 38.614002, 44.58, 49.435,
-      55.58, 58.721004, 60.742004,
-      62.201004, 63.833004, 66.315,
+      26.903002, 28.712002, 30.979002, 33.477, 38.614002, 44.58, 49.435, 55.58,
+      58.721004, 60.742004, 62.201004, 63.833004, 66.315,
     ],
   },
   {
     name: "India",
     data: [
-      13.184001, 16.179, 17.2997,
-      18.4204, 22.465302, 25.08819,
-      28.700441, 32.84846, 35.288105,
-      37.50518, 38.558605, 40.06727,
-      41.929783,
+      13.184001, 16.179, 17.2997, 18.4204, 22.465302, 25.08819, 28.700441,
+      32.84846, 35.288105, 37.50518, 38.558605, 40.06727, 41.929783,
     ],
   },
   {
     name: "United States",
     data: [
-      39.349697, 45.79497, 59.453304,
-      60.198166, 64.43019, 72.767235,
-      81.502365, 87.83079, 94.66619,
-      103.835556, 118.66354, 133.01929,
-      140.86162,
+      39.349697, 45.79497, 59.453304, 60.198166, 64.43019, 72.767235, 81.502365,
+      87.83079, 94.66619, 103.835556, 118.66354, 133.01929, 140.86162,
     ],
   },
   {
     name: "Italy",
     data: [
-      5.794, 6.918, 8.102, 8.542001,
-      8.683001, 9.137, 9.384001,
-      9.736579, 10.230247, 10.679461,
-      10.870623, 11.253734, 11.779734,
+      5.794, 6.918, 8.102, 8.542001, 8.683001, 9.137, 9.384001, 9.736579,
+      10.230247, 10.679461, 10.870623, 11.253734, 11.779734,
     ],
   },
   {
     name: "Japan",
     data: [
-      2.2940001, 2.4190001, 2.562,
-      2.6460001, 2.753, 2.808,
-      3.2470002, 3.4830003, 3.4980001,
-      3.9540002, 4.367, 4.467, 4.577,
+      2.2940001, 2.4190001, 2.562, 2.6460001, 2.753, 2.808, 3.2470002,
+      3.4830003, 3.4980001, 3.9540002, 4.367, 4.467, 4.577,
     ],
   },
   {
     name: "Spain",
     data: [
-      20.693, 21.529001, 22.789001,
-      22.958, 22.925001, 22.943,
-      22.990002, 23.12448, 23.405056,
-      25.590076, 26.819191, 27.907652,
-      29.307837,
+      20.693, 21.529001, 22.789001, 22.958, 22.925001, 22.943, 22.990002,
+      23.12448, 23.405056, 25.590076, 26.819191, 27.907652, 29.307837,
     ],
   },
 ];
 
-const symbols = [
-  "circle",
-  "diamond",
-  "plus",
-  "square",
-  "triangleUp",
-];
+const symbols = ["circle", "diamond", "plus", "square", "triangleUp"];
 
 function App() {
   return (
@@ -917,11 +750,7 @@ function App() {
       theme={VictoryTheme.clean}
     >
       <VictoryAxis
-        tickValues={_.range(
-          2010,
-          2024,
-          2,
-        )}
+        tickValues={_.range(2010, 2024, 2)}
         style={{
           tickLabels: {
             fontSize: 8,
@@ -935,9 +764,7 @@ function App() {
       <VictoryAxis
         dependentAxis
         tickValues={_.range(0, 200, 40)}
-        tickFormat={(value) =>
-          `${value} GW`
-        }
+        tickFormat={(value) => `${value} GW`}
         style={{
           axis: {
             stroke: "transparent",
@@ -966,10 +793,7 @@ function App() {
           <VictoryLine
             style={{
               data: {
-                stroke:
-                  VictoryTheme.clean
-                    .palette
-                    .qualitative[i],
+                stroke: VictoryTheme.clean.palette.qualitative[i],
                 strokeWidth: 1,
               },
             }}
@@ -979,10 +803,7 @@ function App() {
             symbol={symbols[i]}
             style={{
               data: {
-                fill: VictoryTheme.clean
-                  .palette.qualitative[
-                  i
-                ],
+                fill: VictoryTheme.clean.palette.qualitative[i],
               },
             }}
           />
@@ -995,19 +816,13 @@ function App() {
         data={series.map((s) => ({
           name: s.name,
           symbol: {
-            fill: VictoryTheme.clean
-              .palette.qualitative[
-              series.indexOf(s)
-            ],
-            type: symbols[
-              series.indexOf(s)
-            ],
+            fill: VictoryTheme.clean.palette.qualitative[series.indexOf(s)],
+            type: symbols[series.indexOf(s)],
           },
         }))}
         style={{
           data: {
-            fill: ({ datum }) =>
-              datum.symbol.fill,
+            fill: ({ datum }) => datum.symbol.fill,
           },
           labels: {
             fontSize: 8,
@@ -1029,11 +844,7 @@ render(<App />);
 Finally, we can add labels to our chart to provide more context. We will add a title and a source link to our chart as well as axes labels.
 
 ```jsx
-<VictoryLabel
-  text="Installed Wind Capacity (GW)"
-  dx={28}
-  dy={18}
-/>
+<VictoryLabel text="Installed Wind Capacity (GW)" dx={28} dy={18} />
 ```
 
 ```jsx live noInline
@@ -1041,79 +852,55 @@ const series = [
   {
     name: "Canada",
     data: [
-      3.9670002, 5.2650003, 6.201,
-      7.8010006, 9.694, 11.214001,
-      11.973001, 12.250001, 12.816001,
-      13.413001, 13.626961, 14.30356,
-      15.295461,
+      3.9670002, 5.2650003, 6.201, 7.8010006, 9.694, 11.214001, 11.973001,
+      12.250001, 12.816001, 13.413001, 13.626961, 14.30356, 15.295461,
     ],
   },
   {
     name: "Germany",
     data: [
-      26.903002, 28.712002, 30.979002,
-      33.477, 38.614002, 44.58, 49.435,
-      55.58, 58.721004, 60.742004,
-      62.201004, 63.833004, 66.315,
+      26.903002, 28.712002, 30.979002, 33.477, 38.614002, 44.58, 49.435, 55.58,
+      58.721004, 60.742004, 62.201004, 63.833004, 66.315,
     ],
   },
   {
     name: "India",
     data: [
-      13.184001, 16.179, 17.2997,
-      18.4204, 22.465302, 25.08819,
-      28.700441, 32.84846, 35.288105,
-      37.50518, 38.558605, 40.06727,
-      41.929783,
+      13.184001, 16.179, 17.2997, 18.4204, 22.465302, 25.08819, 28.700441,
+      32.84846, 35.288105, 37.50518, 38.558605, 40.06727, 41.929783,
     ],
   },
   {
     name: "United States",
     data: [
-      39.349697, 45.79497, 59.453304,
-      60.198166, 64.43019, 72.767235,
-      81.502365, 87.83079, 94.66619,
-      103.835556, 118.66354, 133.01929,
-      140.86162,
+      39.349697, 45.79497, 59.453304, 60.198166, 64.43019, 72.767235, 81.502365,
+      87.83079, 94.66619, 103.835556, 118.66354, 133.01929, 140.86162,
     ],
   },
   {
     name: "Italy",
     data: [
-      5.794, 6.918, 8.102, 8.542001,
-      8.683001, 9.137, 9.384001,
-      9.736579, 10.230247, 10.679461,
-      10.870623, 11.253734, 11.779734,
+      5.794, 6.918, 8.102, 8.542001, 8.683001, 9.137, 9.384001, 9.736579,
+      10.230247, 10.679461, 10.870623, 11.253734, 11.779734,
     ],
   },
   {
     name: "Japan",
     data: [
-      2.2940001, 2.4190001, 2.562,
-      2.6460001, 2.753, 2.808,
-      3.2470002, 3.4830003, 3.4980001,
-      3.9540002, 4.367, 4.467, 4.577,
+      2.2940001, 2.4190001, 2.562, 2.6460001, 2.753, 2.808, 3.2470002,
+      3.4830003, 3.4980001, 3.9540002, 4.367, 4.467, 4.577,
     ],
   },
   {
     name: "Spain",
     data: [
-      20.693, 21.529001, 22.789001,
-      22.958, 22.925001, 22.943,
-      22.990002, 23.12448, 23.405056,
-      25.590076, 26.819191, 27.907652,
-      29.307837,
+      20.693, 21.529001, 22.789001, 22.958, 22.925001, 22.943, 22.990002,
+      23.12448, 23.405056, 25.590076, 26.819191, 27.907652, 29.307837,
     ],
   },
 ];
 
-const symbols = [
-  "circle",
-  "diamond",
-  "plus",
-  "square",
-  "triangleUp",
-];
+const symbols = ["circle", "diamond", "plus", "square", "triangleUp"];
 
 function App() {
   return (
@@ -1145,11 +932,7 @@ function App() {
         dy={30}
       />
       <VictoryAxis
-        tickValues={_.range(
-          2010,
-          2024,
-          2,
-        )}
+        tickValues={_.range(2010, 2024, 2)}
         style={{
           tickLabels: {
             fontSize: 8,
@@ -1164,9 +947,7 @@ function App() {
         dependentAxis
         label="Total Capacity"
         tickValues={_.range(0, 200, 40)}
-        tickFormat={(value) =>
-          `${value} GW`
-        }
+        tickFormat={(value) => `${value} GW`}
         style={{
           axis: {
             stroke: "transparent",
@@ -1195,10 +976,7 @@ function App() {
           <VictoryLine
             style={{
               data: {
-                stroke:
-                  VictoryTheme.clean
-                    .palette
-                    .qualitative[i],
+                stroke: VictoryTheme.clean.palette.qualitative[i],
                 strokeWidth: 1,
               },
             }}
@@ -1208,10 +986,7 @@ function App() {
             symbol={symbols[i]}
             style={{
               data: {
-                fill: VictoryTheme.clean
-                  .palette.qualitative[
-                  i
-                ],
+                fill: VictoryTheme.clean.palette.qualitative[i],
               },
             }}
           />
@@ -1224,19 +999,13 @@ function App() {
         data={series.map((s) => ({
           name: s.name,
           symbol: {
-            fill: VictoryTheme.clean
-              .palette.qualitative[
-              series.indexOf(s)
-            ],
-            type: symbols[
-              series.indexOf(s)
-            ],
+            fill: VictoryTheme.clean.palette.qualitative[series.indexOf(s)],
+            type: symbols[series.indexOf(s)],
           },
         }))}
         style={{
           data: {
-            fill: ({ datum }) =>
-              datum.symbol.fill,
+            fill: ({ datum }) => datum.symbol.fill,
           },
           labels: {
             fontSize: 8,

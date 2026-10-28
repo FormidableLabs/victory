@@ -10,9 +10,7 @@ For examples of `VictoryBrushContainer` in action, visit the [Data Selection](/d
 
 ## Inherited Props
 
-<CommonProps
-  interfaces={["VictoryContainerProps"]}
-/>
+<CommonProps interfaces={["VictoryContainerProps"]} />
 
 ## Component Props
 
@@ -30,10 +28,7 @@ The optional `allowDrag` prop accepts a boolean that enables dragging behavior f
 ```jsx live
 <VictoryChart
   containerComponent={
-    <VictoryBrushContainer
-      allowDrag={false}
-      brushDomain={{ x: [0.1, 0.3] }}
-    />
+    <VictoryBrushContainer allowDrag={false} brushDomain={{ x: [0.1, 0.3] }} />
   }
   theme={VictoryTheme.clean}
 >
@@ -55,10 +50,7 @@ The optional `allowDraw` prop accepts a boolean that enables drawing new brush a
 ```jsx live
 <VictoryChart
   containerComponent={
-    <VictoryBrushContainer
-      allowDraw={false}
-      brushDomain={{ x: [0.1, 0.3] }}
-    />
+    <VictoryBrushContainer allowDraw={false} brushDomain={{ x: [0.1, 0.3] }} />
   }
   theme={VictoryTheme.clean}
 >

@@ -128,7 +128,7 @@ This is especially helpful when you're making changes to a package that is _depe
 
 #### My IDE shows outdated TypeScript errors
 
-It seems like VS Code and WebStorm both struggle to update their internal cache, whenever the **built types** change.  For example, when making changes to `victory-core`, the TypeScript changes won't be picked up by your IDE automatically.
+It seems like VS Code and WebStorm both struggle to update their internal cache, whenever the **built types** change. For example, when making changes to `victory-core`, the TypeScript changes won't be picked up by your IDE automatically.
 
 Instead of restarting your IDE completely, try restarting the TypeScript Service.
 

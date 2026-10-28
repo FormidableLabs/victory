@@ -9,10 +9,7 @@ Victory supports multiple ways to show tooltips on your charts. Tooltips can be 
 The simplest way to add tooltips to a chart is to use `VictoryTooltip` as a `labelComponent`. By default, the `labelComponent` will display the `label` prop of the data point it is associated with, unless you specify a custom `labels` function.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 11], y: [-10, 10] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 11], y: [-10, 10] }} theme={VictoryTheme.clean}>
   <VictoryBar
     labelComponent={<VictoryTooltip />}
     data={[
@@ -32,24 +29,14 @@ The simplest way to add tooltips to a chart is to use `VictoryTooltip` as a `lab
 `VictoryTooltip` can be styled using the `style` prop. The `style` prop accepts an object with `data`, `labels`, and `flyout` keys. The `data` key styles the data point, the `labels` key styles the text of the tooltip, and the `flyout` key styles the background of the tooltip.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 11], y: [-10, 10] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 11], y: [-10, 10] }} theme={VictoryTheme.clean}>
   <VictoryBar
     labelComponent={
       <VictoryTooltip
-        cornerRadius={({ datum }) =>
-          datum.x > 6 ? 0 : 20
-        }
-        pointerLength={({ datum }) =>
-          datum.y > 0 ? 5 : 20
-        }
+        cornerRadius={({ datum }) => (datum.x > 6 ? 0 : 20)}
+        pointerLength={({ datum }) => (datum.y > 0 ? 5 : 20)}
         flyoutStyle={{
-          stroke: ({ datum }) =>
-            datum.x === 10
-              ? "tomato"
-              : "black",
+          stroke: ({ datum }) => (datum.x === 10 ? "tomato" : "black"),
         }}
       />
     }
@@ -116,10 +103,7 @@ When other `onMouseOver` and `onMouseOut` events are specified for data, the eve
 :::
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 11], y: [-10, 10] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 11], y: [-10, 10] }} theme={VictoryTheme.clean}>
   <VictoryBar
     labelComponent={<VictoryTooltip />}
     data={[
@@ -199,15 +183,11 @@ However, the component that uses it must be standalone
 ```jsx live
 <VictoryChart
   domain={{ x: [0, 5], y: [-5, 5] }}
-  containerComponent={
-    <VictoryVoronoiContainer />
-  }
+  containerComponent={<VictoryVoronoiContainer />}
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
-    size={({ active }) =>
-      active ? 5 : 3
-    }
+    size={({ active }) => (active ? 5 : 3)}
     labels={({ datum }) => datum.y}
     labelComponent={<VictoryTooltip />}
     data={[
@@ -218,9 +198,7 @@ However, the component that uses it must be standalone
     ]}
   />
   <VictoryScatter
-    size={(datum, active) =>
-      active ? 5 : 3
-    }
+    size={(datum, active) => (active ? 5 : 3)}
     labels={({ datum }) => datum.y}
     labelComponent={<VictoryTooltip />}
     data={[
@@ -239,9 +217,7 @@ However, the component that uses it must be standalone
     ]}
     labels={({ datum }) => datum.y}
     labelComponent={<VictoryTooltip />}
-    size={({ active }) =>
-      active ? 5 : 3
-    }
+    size={({ active }) => (active ? 5 : 3)}
   />
 </VictoryChart>
 ```
@@ -256,15 +232,9 @@ When using `VictoryVoronoiContainer` with `VictoryTooltip`, you can add tooltips
   domain={{ y: [0, 1] }}
   containerComponent={
     <VictoryVoronoiContainer
-      labels={({ datum }) =>
-        `Data ${datum.y}`
-      }
+      labels={({ datum }) => `Data ${datum.y}`}
       mouseFollowTooltips
-      labelComponent={
-        <VictoryTooltip
-          constrainToVisibleArea
-        />
-      }
+      labelComponent={<VictoryTooltip constrainToVisibleArea />}
     />
   }
 >
@@ -280,13 +250,10 @@ When using `VictoryVoronoiContainer` with `VictoryTooltip`, you can add tooltips
     ]}
     style={{
       data: {
-        fill: VictoryTheme.clean.palette
-          ?.colors.blue,
+        fill: VictoryTheme.clean.palette?.colors.blue,
       },
     }}
-    size={({ active }) =>
-      active ? 8 : 3
-    }
+    size={({ active }) => (active ? 8 : 3)}
   />
   <VictoryScatter
     data={[
@@ -300,13 +267,10 @@ When using `VictoryVoronoiContainer` with `VictoryTooltip`, you can add tooltips
     ]}
     style={{
       data: {
-        fill: VictoryTheme.clean.palette
-          ?.colors.red,
+        fill: VictoryTheme.clean.palette?.colors.red,
       },
     }}
-    size={({ active }) =>
-      active ? 5 : 3
-    }
+    size={({ active }) => (active ? 5 : 3)}
   />
 </VictoryChart>
 ```
@@ -320,28 +284,19 @@ When using `VictoryVoronoiContainer` with `VictoryTooltip`, you can add tooltips
   domainPadding={{ y: 10 }}
   containerComponent={
     <VictoryVoronoiContainer
-      labels={({ datum }) =>
-        `${_.round(datum.x, 2)}, ${_.round(
-          datum.y,
-          2,
-        )}`
-      }
+      labels={({ datum }) => `${_.round(datum.x, 2)}, ${_.round(datum.y, 2)}`}
     />
   }
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
-    y={(datum) =>
-      Math.sin(2 * Math.PI * datum.x)
-    }
+    y={(datum) => Math.sin(2 * Math.PI * datum.x)}
     style={{
       data: {
         fill: ({ active }) =>
           active
-            ? VictoryTheme.clean.palette
-                ?.colors.red
-            : VictoryTheme.clean.palette
-                ?.colors.blue,
+            ? VictoryTheme.clean.palette?.colors.red
+            : VictoryTheme.clean.palette?.colors.blue,
       },
     }}
   />
@@ -363,9 +318,7 @@ several tooltips being active at the same time. Provide a `labels` and (optional
   containerComponent={
     <VictoryVoronoiContainer
       voronoiDimension="x"
-      labels={({ datum }) =>
-        `y: ${datum.y}`
-      }
+      labels={({ datum }) => `y: ${datum.y}`}
       labelComponent={
         <VictoryTooltip
           cornerRadius={0}
@@ -392,8 +345,7 @@ several tooltips being active at the same time. Provide a `labels` and (optional
     style={{
       data: {
         stroke: "tomato",
-        strokeWidth: ({ active }) =>
-          active ? 4 : 2,
+        strokeWidth: ({ active }) => (active ? 4 : 2),
       },
       labels: { fill: "tomato" },
     }}
@@ -408,8 +360,7 @@ several tooltips being active at the same time. Provide a `labels` and (optional
     style={{
       data: {
         stroke: "blue",
-        strokeWidth: ({ active }) =>
-          active ? 4 : 2,
+        strokeWidth: ({ active }) => (active ? 4 : 2),
       },
       labels: { fill: "blue" },
     }}
@@ -424,8 +375,7 @@ several tooltips being active at the same time. Provide a `labels` and (optional
     style={{
       data: {
         stroke: "black",
-        strokeWidth: ({ active }) =>
-          active ? 4 : 2,
+        strokeWidth: ({ active }) => (active ? 4 : 2),
       },
       labels: { fill: "black" },
     }}
@@ -453,18 +403,13 @@ Using the `VictoryCursorContainer` component, you can add a 2D cursor to a line 
   containerComponent={
     <VictoryCursorContainer
       cursorLabel={({ datum }) =>
-        `${_.round(datum.x, 2)}, ${_.round(
-          datum.y,
-          2,
-        )}`
+        `${_.round(datum.x, 2)}, ${_.round(datum.y, 2)}`
       }
     />
   }
   theme={VictoryTheme.clean}
 >
-  <VictoryScatter
-    y={(d) => d.x * d.x}
-  />
+  <VictoryScatter y={(d) => d.x * d.x} />
 </VictoryChart>
 ```
 
@@ -477,10 +422,7 @@ You can also use the `cursorDimension` prop to create a 1D cursor. This is usefu
   containerComponent={
     <VictoryCursorContainer
       cursorLabel={({ datum }) =>
-        `${_.round(datum.x, 2)}, ${_.round(
-          datum.y,
-          2,
-        )}`
+        `${_.round(datum.x, 2)}, ${_.round(datum.y, 2)}`
       }
       cursorDimension="x"
       defaultCursorValue={0.3}
@@ -488,9 +430,7 @@ You can also use the `cursorDimension` prop to create a 1D cursor. This is usefu
   }
   theme={VictoryTheme.clean}
 >
-  <VictoryScatter
-    y={(d) => d.x * d.x}
-  />
+  <VictoryScatter y={(d) => d.x * d.x} />
 </VictoryChart>
 ```
 
@@ -505,9 +445,7 @@ You can also use the `VictoryCursorContainer` component with bar charts.
   domainPadding={{ x: 15 }}
   containerComponent={
     <VictoryCursorContainer
-      cursorLabel={({ datum }) =>
-        _.round(datum.x, 2)
-      }
+      cursorLabel={({ datum }) => _.round(datum.x, 2)}
       cursorDimension="y"
       defaultCursorValue={3}
     />
@@ -552,19 +490,14 @@ You can also use the `VictoryCursorContainer` component with scatter charts. Not
     data: {
       fill: ({ active }) =>
         active
-          ? VictoryTheme.clean.palette
-              ?.colors.teal || "teal"
-          : VictoryTheme.clean.palette
-              ?.colors.purple ||
-            "purple",
+          ? VictoryTheme.clean.palette?.colors.teal || "teal"
+          : VictoryTheme.clean.palette?.colors.purple || "purple",
     },
   }}
   containerComponent={
     <VictoryCursorContainer
       theme={VictoryTheme.clean}
-      cursorLabel={({ datum }) =>
-        _.round(datum.x, 2)
-      }
+      cursorLabel={({ datum }) => _.round(datum.x, 2)}
       defaultCursorValue={1}
     />
   }
@@ -588,8 +521,7 @@ You can also use the `onCursorChange` prop to listen to cursor changes and inspe
 
 ```jsx live noInline
 function App() {
-  const [cursorValue, setCursorValue] =
-    React.useState(null);
+  const [cursorValue, setCursorValue] = React.useState(null);
 
   function onCursorChange(value) {
     setCursorValue(value);
@@ -600,13 +532,9 @@ function App() {
       theme={VictoryTheme.clean}
       containerComponent={
         <VictoryCursorContainer
-          cursorLabel={({ datum }) =>
-            _.round(datum.x, 2)
-          }
+          cursorLabel={({ datum }) => _.round(datum.x, 2)}
           cursorLabelOffset={15}
-          onCursorChange={
-            onCursorChange
-          }
+          onCursorChange={onCursorChange}
         />
       }
     >
@@ -614,8 +542,7 @@ function App() {
         <VictoryScatter
           style={{
             data: {
-              fill: VictoryTheme.clean
-                .palette?.colors.red,
+              fill: VictoryTheme.clean.palette?.colors.red,
             },
           }}
           data={[
@@ -631,8 +558,7 @@ function App() {
         <VictoryScatter
           style={{
             data: {
-              fill: VictoryTheme.clean
-                .palette?.colors.yellow,
+              fill: VictoryTheme.clean.palette?.colors.yellow,
             },
           }}
           data={[
@@ -658,13 +584,7 @@ function App() {
         />
       </VictoryGroup>
       {cursorValue && (
-        <VictoryLabel
-          x={20}
-          y={20}
-          text={JSON.stringify(
-            cursorValue,
-          )}
-        />
+        <VictoryLabel x={20} y={20} text={JSON.stringify(cursorValue)} />
       )}
     </VictoryChart>
   );
@@ -684,38 +604,16 @@ render(<App />);
 An example of replacing the default `Flyout` component with a custom component.
 
 ```jsx live noInline
-const colors =
-  VictoryTheme.clean.palette.cool;
+const colors = VictoryTheme.clean.palette.cool;
 
 function CustomFlyout(props) {
   const { x, y, orientation } = props;
-  const newY =
-    orientation === "bottom"
-      ? y - 35
-      : y + 35;
+  const newY = orientation === "bottom" ? y - 35 : y + 35;
   return (
     <g>
-      <circle
-        cx={x}
-        cy={newY}
-        r="20"
-        stroke={colors[0]}
-        fill="none"
-      />
-      <circle
-        cx={x}
-        cy={newY}
-        r="25"
-        stroke={colors[1]}
-        fill="none"
-      />
-      <circle
-        cx={x}
-        cy={newY}
-        r="30"
-        stroke={colors[2]}
-        fill="none"
-      />
+      <circle cx={x} cy={newY} r="20" stroke={colors[0]} fill="none" />
+      <circle cx={x} cy={newY} r="25" stroke={colors[1]} fill="none" />
+      <circle cx={x} cy={newY} r="30" stroke={colors[2]} fill="none" />
     </g>
   );
 }
@@ -730,13 +628,7 @@ function App() {
       theme={VictoryTheme.clean}
     >
       <VictoryBar
-        labelComponent={
-          <VictoryTooltip
-            flyoutComponent={
-              <CustomFlyout />
-            }
-          />
-        }
+        labelComponent={<VictoryTooltip flyoutComponent={<CustomFlyout />} />}
         data={[
           { x: 2, y: 5, label: "A" },
           { x: 4, y: -6, label: "B" },
@@ -780,8 +672,7 @@ function CustomLabel(props) {
   );
 }
 
-CustomLabel.defaultEvents =
-  VictoryTooltip.defaultEvents;
+CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
 
 function App() {
   return (
@@ -822,15 +713,11 @@ function CustomTooltip(props) {
   const rotation = `rotate(45 ${x} ${y})`;
   return (
     <g transform={rotation}>
-      <VictoryTooltip
-        {...props}
-        renderInPortal={false}
-      />
+      <VictoryTooltip {...props} renderInPortal={false} />
     </g>
   );
 }
-CustomTooltip.defaultEvents =
-  VictoryTooltip.defaultEvents;
+CustomTooltip.defaultEvents = VictoryTooltip.defaultEvents;
 
 function App() {
   return (
@@ -842,9 +729,7 @@ function App() {
       theme={VictoryTheme.clean}
     >
       <VictoryBar
-        labelComponent={
-          <CustomTooltip />
-        }
+        labelComponent={<CustomTooltip />}
         data={[
           { x: 2, y: 5, label: "A" },
           { x: 4, y: -6, label: "B" },
@@ -864,11 +749,7 @@ render(<App />);
 In Victory Native tooltips are much more reliable when using `VictoryVoronoiContainer`. Using `VictoryVoronoiContainer` registers all touch events on the container itself, which mitigates interference with other chart elements, which can be a problem on some platforms. Showing the closest data point with `VictoryVoronoiContainer` also increases the tap targets for the tooltip, which can otherwise be quite small. Set `VictoryVoronoiContainer` as the `containerComponent` prop on the outermost Victory component.
 
 ```jsx
-<VictoryChart
-  containerComponent={
-    <VictoryVoronoiContainer />
-  }
->
+<VictoryChart containerComponent={<VictoryVoronoiContainer />}>
   <VictoryScatter
     labelComponent={<VictoryTooltip />}
     labels={({ datum }) => datum.y}

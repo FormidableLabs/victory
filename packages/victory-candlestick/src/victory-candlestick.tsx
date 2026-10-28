@@ -41,7 +41,8 @@ export type VictoryCandlestickLabelsType =
   | ((datum: any) => number | string);
 
 export interface VictoryCandlestickProps
-  extends Omit<VictoryCommonProps, "polar">,
+  extends
+    Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryMultiLabelableProps {
   candleColors?: {
@@ -128,8 +129,7 @@ const datumHasXandY = (datum) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface VictoryCandlestickBase
-  extends EventsMixinClass<VictoryCandlestickProps> {}
+interface VictoryCandlestickBase extends EventsMixinClass<VictoryCandlestickProps> {}
 
 /**
  * VictoryCandlestick renders a dataset as a series of candlesticks.

@@ -45,20 +45,12 @@ The `events` prop takes an array of event objects. Event objects are composed of
           onMouseOver: () => {
             return [
               {
-                childName: [
-                  "pie",
-                  "bar",
-                ],
+                childName: ["pie", "bar"],
                 mutation: (props) => {
                   return {
-                    style:
-                      Object.assign(
-                        {},
-                        props.style,
-                        {
-                          fill: "tomato",
-                        },
-                      ),
+                    style: Object.assign({}, props.style, {
+                      fill: "tomato",
+                    }),
                   };
                 },
               },
@@ -67,10 +59,7 @@ The `events` prop takes an array of event objects. Event objects are composed of
           onMouseOut: () => {
             return [
               {
-                childName: [
-                  "pie",
-                  "bar",
-                ],
+                childName: ["pie", "bar"],
                 mutation: () => {
                   return null;
                 },
@@ -97,9 +86,7 @@ The `events` prop takes an array of event objects. Event objects are composed of
           { x: "d", y: 4 },
         ]}
         labels={["a", "b", "c", "d"]}
-        labelComponent={
-          <VictoryLabel y={280} />
-        }
+        labelComponent={<VictoryLabel y={280} />}
         theme={VictoryTheme.clean}
       />
     </g>
@@ -151,10 +138,9 @@ The `target`, `eventKey`, and `childName` (when applicable) must always be speci
 
 ```jsx live noInline
 function App() {
-  const [state, setState] =
-    React.useState({
-      externalMutations: undefined,
-    });
+  const [state, setState] = React.useState({
+    externalMutations: undefined,
+  });
 
   function removeMutation() {
     setState({
@@ -187,17 +173,12 @@ function App() {
 
   return (
     <div>
-      <button
-        onClick={clearClicks}
-        style={buttonStyle}
-      >
+      <button onClick={clearClicks} style={buttonStyle}>
         Reset
       </button>
       <svg viewBox="0 0 450 350">
         <VictorySharedEvents
-          externalEventMutations={
-            state.externalMutations
-          }
+          externalEventMutations={state.externalMutations}
           events={[
             {
               childName: ["pie", "bar"],
@@ -206,22 +187,12 @@ function App() {
                 onClick: () => {
                   return [
                     {
-                      childName: [
-                        "pie",
-                        "bar",
-                      ],
-                      mutation: (
-                        props,
-                      ) => {
+                      childName: ["pie", "bar"],
+                      mutation: (props) => {
                         return {
-                          style:
-                            Object.assign(
-                              {},
-                              props.style,
-                              {
-                                fill: "tomato",
-                              },
-                            ),
+                          style: Object.assign({}, props.style, {
+                            fill: "tomato",
+                          }),
                         };
                       },
                     },
@@ -231,11 +202,7 @@ function App() {
             },
           ]}
         >
-          <g
-            transform={
-              "translate(150, 50)"
-            }
-          >
+          <g transform={"translate(150, 50)"}>
             <VictoryBar
               name="bar"
               width={300}
@@ -252,23 +219,12 @@ function App() {
                 { x: "c", y: 5 },
                 { x: "d", y: 4 },
               ]}
-              labels={[
-                "a",
-                "b",
-                "c",
-                "d",
-              ]}
-              labelComponent={
-                <VictoryLabel y={290} />
-              }
+              labels={["a", "b", "c", "d"]}
+              labelComponent={<VictoryLabel y={290} />}
               theme={VictoryTheme.clean}
             />
           </g>
-          <g
-            transform={
-              "translate(0, -75)"
-            }
-          >
+          <g transform={"translate(0, -75)"}>
             <VictoryPie
               name="pie"
               width={250}

@@ -6,31 +6,19 @@ title: Bar - Linked Brushing
 const barData = [
   {
     name: "SEA",
-    range: [
-      new Date(2013, 1, 1),
-      new Date(2019, 1, 1),
-    ],
+    range: [new Date(2013, 1, 1), new Date(2019, 1, 1)],
   },
   {
     name: "HKG",
-    range: [
-      new Date(2015, 1, 1),
-      new Date(2015, 5, 1),
-    ],
+    range: [new Date(2015, 1, 1), new Date(2015, 5, 1)],
   },
   {
     name: "LHR",
-    range: [
-      new Date(2016, 5, 1),
-      new Date(2019, 1, 1),
-    ],
+    range: [new Date(2016, 5, 1), new Date(2019, 1, 1)],
   },
   {
     name: "DEN",
-    range: [
-      new Date(2018, 8, 1),
-      new Date(2019, 1, 1),
-    ],
+    range: [new Date(2018, 8, 1), new Date(2019, 1, 1)],
   },
 ];
 
@@ -59,14 +47,11 @@ const containerStyle = {
   flexWrap: "wrap",
   alignItems: "center",
   justifyContent: "center",
-  paddingBottom: 50
+  paddingBottom: 50,
 };
 
 const domain = {
-  y: [
-    new Date(2012, 1, 1),
-    new Date(2019, 1, 1),
-  ],
+  y: [new Date(2012, 1, 1), new Date(2019, 1, 1)],
   x: [0.5, 4.5],
 };
 
@@ -80,51 +65,26 @@ class DraggablePoint extends React.Component {
     {
       target: "data",
       eventHandlers: {
-        onMouseOver: (
-          evt,
-          targetProps,
-        ) => {
+        onMouseOver: (evt, targetProps) => {
           return [
             {
-              mutation: () =>
-                Object.assign(
-                  targetProps,
-                  { active: true },
-                ),
+              mutation: () => Object.assign(targetProps, { active: true }),
             },
           ];
         },
-        onMouseDown: (
-          evt,
-          targetProps,
-        ) => {
+        onMouseDown: (evt, targetProps) => {
           return [
             {
-              mutation: () =>
-                Object.assign(
-                  targetProps,
-                  { dragging: true },
-                ),
+              mutation: () => Object.assign(targetProps, { dragging: true }),
             },
           ];
         },
-        onMouseMove: (
-          evt,
-          targetProps,
-        ) => {
-          const {
-            onPointChange,
-            datum,
-            scale,
-          } = targetProps;
+        onMouseMove: (evt, targetProps) => {
+          const { onPointChange, datum, scale } = targetProps;
 
           if (targetProps.dragging) {
-            const { x } =
-              Selection.getSVGEventCoordinates(
-                evt,
-              );
-            const point =
-              scale.y.invert(x);
+            const { x } = Selection.getSVGEventCoordinates(evt);
+            const point = scale.y.invert(x);
             const name = datum.name;
 
             onPointChange({
@@ -134,47 +94,31 @@ class DraggablePoint extends React.Component {
 
             return [
               {
-                mutation: () =>
-                  Object.assign(
-                    targetProps,
-                    { x },
-                  ),
+                mutation: () => Object.assign(targetProps, { x }),
               },
             ];
           }
           return null;
         },
-        onMouseUp: (
-          evt,
-          targetProps,
-        ) => {
+        onMouseUp: (evt, targetProps) => {
           return [
             {
               mutation: () =>
-                Object.assign(
-                  targetProps,
-                  {
-                    dragging: false,
-                    active: false,
-                  },
-                ),
+                Object.assign(targetProps, {
+                  dragging: false,
+                  active: false,
+                }),
             },
           ];
         },
-        onMouseLeave: (
-          evt,
-          targetProps,
-        ) => {
+        onMouseLeave: (evt, targetProps) => {
           return [
             {
               mutation: () =>
-                Object.assign(
-                  targetProps,
-                  {
-                    dragging: false,
-                    active: false,
-                  },
-                ),
+                Object.assign(targetProps, {
+                  dragging: false,
+                  active: false,
+                }),
             },
           ];
         },
@@ -188,35 +132,25 @@ class DraggablePoint extends React.Component {
 }
 
 function App() {
-  const [zoomDomain, setZoomDomain] =
-    React.useState({});
-  const [bars, setBars] =
-    React.useState(barData);
-  const [points, setPoints] =
-    React.useState(pointData);
+  const [zoomDomain, setZoomDomain] = React.useState({});
+  const [bars, setBars] = React.useState(barData);
+  const [points, setPoints] = React.useState(pointData);
 
   function handleZoom(domain) {
     setZoomDomain(domain);
   }
 
-  function onDomainChange(
-    domain,
-    props,
-  ) {
+  function onDomainChange(domain, props) {
     const { name } = props;
     const newBars = bars.map((bar) =>
-      bar.name === name
-        ? { name, range: domain }
-        : bar,
+      bar.name === name ? { name, range: domain } : bar,
     );
 
     setBars(newBars);
   }
 
   function onPointChange(point) {
-    const newPoints = points.map((p) =>
-      p.name === point.name ? point : p,
-    );
+    const newPoints = points.map((p) => (p.name === point.name ? point : p));
     setPoints(newPoints);
   }
 
@@ -232,9 +166,7 @@ function App() {
             allowPan={false}
             zoomDomain={zoomDomain}
             zoomDimension="y"
-            onZoomDomainChange={
-              handleZoom
-            }
+            onZoomDomainChange={handleZoom}
             clipContainerComponent={
               <VictoryClipContainer
                 clipPadding={{
@@ -262,17 +194,10 @@ function App() {
                 width={20}
                 allowDraw={false}
                 brushDomain={bar.range}
-                onBrushDomainChange={
-                  onDomainChange
-                }
+                onBrushDomainChange={onDomainChange}
                 brushStyle={{
-                  fill: VictoryTheme
-                    .clean.palette
-                    ?.colors?.cyan,
-                  opacity: ({
-                    active,
-                  }) =>
-                    active ? 1 : 0.5,
+                  fill: VictoryTheme.clean.palette?.colors?.cyan,
+                  opacity: ({ active }) => (active ? 1 : 0.5),
                 }}
               />
             }
@@ -285,19 +210,11 @@ function App() {
         ))}
         <VictoryScatter
           data={points}
-          dataComponent={
-            <DraggablePoint
-              onPointChange={
-                onPointChange
-              }
-            />
-          }
+          dataComponent={<DraggablePoint onPointChange={onPointChange} />}
           style={{
             data: {
-              fill: VictoryTheme.clean
-                .palette?.colors?.cyan,
-              opacity: ({ active }) =>
-                active ? 1 : 0.5,
+              fill: VictoryTheme.clean.palette?.colors?.cyan,
+              opacity: ({ active }) => (active ? 1 : 0.5),
               cursor: "move",
             },
           }}
@@ -323,9 +240,7 @@ function App() {
             responsive={false}
             brushDomain={zoomDomain}
             brushDimension="y"
-            onBrushDomainChange={
-              handleZoom
-            }
+            onBrushDomainChange={handleZoom}
           />
         }
       >
@@ -344,17 +259,14 @@ function App() {
             },
           }}
           tickCount={3}
-          tickFormat={(t) =>
-            t.getFullYear()
-          }
+          tickFormat={(t) => t.getFullYear()}
         />
         <VictoryScatter
           data={points}
           size={5}
           style={{
             data: {
-              fill: VictoryTheme.clean
-                .palette?.colors?.cyan,
+              fill: VictoryTheme.clean.palette?.colors?.cyan,
             },
           }}
           x="name"
@@ -363,8 +275,7 @@ function App() {
         <VictoryBar
           style={{
             data: {
-              fill: VictoryTheme.clean
-                .palette?.colors?.cyan,
+              fill: VictoryTheme.clean.palette?.colors?.cyan,
             },
           }}
           data={bars}
