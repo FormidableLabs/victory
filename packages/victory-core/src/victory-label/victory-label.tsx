@@ -70,7 +70,7 @@ const defaultStyles = {
   fill: "#252525",
   fontSize: 14,
   fontFamily:
-    "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+    "'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif",
   stroke: "transparent",
 };
 
