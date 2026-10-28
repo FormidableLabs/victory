@@ -5,3 +5,6 @@
 
 # [uplift] chore: format with oxfmt (#3111)
 d794bf7adb268f3e1e4ada03db0152fa6f3e28df
+
+# [uplift] chore: fix oxlint errors (#3112)
+0d2aff20656b246a96b80ab01e4cc388118c6822
