@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
+    // Matches `target` in tsdown.config.mts.
+    "target": "ES2022",
+    // Class fields are assigned in the constructor, so type-only fields
+    // aren't emitted (as with the old Babel build). ES2022 would otherwise
+    // default this to `true`.
+    "useDefineForClassFields": false,
     "module": "es6",
     "jsx": "react",
     "declaration": true,
