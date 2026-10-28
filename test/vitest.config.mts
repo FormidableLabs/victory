@@ -7,7 +7,12 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
-    include: ["src/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
+    // Each test file still gets a fresh context, but jsdom is set up once per
+    // worker instead of once per file. Don't set `isolate: false`: some tests
+    // leak state into later files and fail when the file order changes.
+    pool: "vmThreads",
+    // victory-vendor has no `src`; its tests are in `tests`.
+    include: ["{src,tests}/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
     setupFiles: [`${import.meta.dirname}/vitest-setup.ts`],
   },
 });

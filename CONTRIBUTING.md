@@ -94,6 +94,9 @@ $ pnpm run pack:check
 
 # Tests
 $ pnpm run test
+
+# Tests with coverage (HTML report in coverage/index.html)
+$ pnpm run test:coverage
 ```
 
 We also have some helper tasks to fix issues that are fixable.

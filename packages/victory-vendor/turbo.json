@@ -7,7 +7,12 @@
     "build": {
       // victory-vendor has no workspace dependencies to wait for.
       "dependsOn": [],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/LICENSE.txt", "!*.md"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/LICENSE.txt",
+        "!*.md",
+        "!tests/**"
+      ],
       "outputs": [
         "es/**",
         "lib/**",
@@ -16,6 +21,11 @@
         "internmap.js",
         "LICENSE.txt"
       ]
+    },
+    // The tests import the package by name (`victory-vendor/d3-*`), so they
+    // need its own build, but not the shared test helpers' dependencies.
+    "test": {
+      "dependsOn": ["build"]
     }
   }
 }
