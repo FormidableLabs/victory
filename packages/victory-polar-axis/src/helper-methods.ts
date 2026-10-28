@@ -135,6 +135,7 @@ const getAxisAngle = (props: {
   return Helpers.radiansToDegrees(axisValue);
 };
 
+// eslint-disable-next-line max-params
 const getTickProps = (
   props: VictoryPolarAxisProps,
   calculatedValues: {
@@ -149,7 +150,6 @@ const getTickProps = (
   },
   tickValue,
   index,
-  // eslint-disable-next-line max-params
 ) => {
   const {
     axisType,
@@ -216,6 +216,7 @@ const getTickProps = (
       };
 };
 
+// eslint-disable-next-line max-params
 const getTickLabelProps = (
   props: VictoryPolarAxisProps,
   calculatedValues: {
@@ -230,7 +231,6 @@ const getTickLabelProps = (
   },
   tickValue,
   index,
-  // eslint-disable-next-line max-params
 ) => {
   const {
     axisType,
@@ -293,6 +293,7 @@ const getTickLabelProps = (
   };
 };
 
+// eslint-disable-next-line max-params
 const getGridProps = (
   props: VictoryPolarAxisProps,
   calculatedValues: {
@@ -307,7 +308,6 @@ const getGridProps = (
   },
   tickValue,
   index,
-  // eslint-disable-next-line max-params
 ) => {
   const {
     axisType,

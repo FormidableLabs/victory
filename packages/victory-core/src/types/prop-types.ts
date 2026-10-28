@@ -196,6 +196,7 @@ export type CoordinatesPropType = {
   y: number;
 };
 
+// eslint-disable-next-line max-params
 export type VictoryEventHandler = (
   event?: any,
   targetProps?: any,

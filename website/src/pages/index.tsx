@@ -8,7 +8,6 @@ import { LandingDemo } from "./_components/landing-demo";
 import { LandingShowcase } from "./_components/landing-showcase";
 import CalloutBanner from "../components/CalloutBanner";
 
-// eslint-disable-next-line no-undef
 export default function Home(): JSX.Element {
   return (
     <Layout>

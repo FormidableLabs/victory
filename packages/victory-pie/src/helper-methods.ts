@@ -1,4 +1,3 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 90, 135, 180, 225, 270, 315, 360] }]*/
 import defaults from "lodash/defaults";
 import isPlainObject from "lodash/isPlainObject";
 import * as d3Shape from "victory-vendor/d3-shape";
@@ -151,6 +150,7 @@ const getLabelOrientation = (degree, labelPlacement) => {
   } else if (labelPlacement === "parallel") {
     return degree >= 0 && degree <= 180 ? "right" : "left";
   }
+  /* eslint-disable no-magic-numbers */
   if (degree < 45 || degree > 315) {
     return "top";
   } else if (degree >= 45 && degree < 135) {
@@ -158,6 +158,7 @@ const getLabelOrientation = (degree, labelPlacement) => {
   } else if (degree >= 135 && degree < 225) {
     return "bottom";
   }
+  /* eslint-enable no-magic-numbers */
   return "left";
 };
 

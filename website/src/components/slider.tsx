@@ -1,5 +1,3 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 100] }]*/
-
 import React, { useLayoutEffect, useState, useRef, useCallback } from "react";
 import clamp from "lodash/clamp";
 
@@ -105,7 +103,7 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
             style={{
               backgroundColor:
                 tooltipPercentage <= percentage ? color : LIGHT_GREY,
-              left: `${tooltipPercentage * 100}%`,
+              left: `${tooltipPercentage * 100}%`, // eslint-disable-line no-magic-numbers
             }}
           />
         );
@@ -113,7 +111,7 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
 
       <div
         style={{
-          transform: `translateX(${percentage * 100}%)`,
+          transform: `translateX(${percentage * 100}%)`, // eslint-disable-line no-magic-numbers
         }}
         className="w-full h-[8px] relative mt-px"
       >
@@ -137,7 +135,7 @@ const Slider = ({ tooltipValues, color, value, maxValue, onChange }) => {
 
       <div
         style={{
-          transform: `translateX(${percentage * 100}%)`,
+          transform: `translateX(${percentage * 100}%)`, // eslint-disable-line no-magic-numbers
         }}
         className="w-full h-[8px] relative mt-px"
       >

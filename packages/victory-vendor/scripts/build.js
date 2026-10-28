@@ -1,4 +1,3 @@
-/* global __dirname:false */
 /**
  * Build d3 vendor libraries from `node_modules`.
  *
