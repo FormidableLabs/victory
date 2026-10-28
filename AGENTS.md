@@ -25,6 +25,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 ## Repo map
 
 - `packages/victory-*`: the published packages. They all share one version (changesets `fixed` group).
+- `tsdown.config.mts`: the shared build for every `victory-*` package except `victory-vendor`. It writes `dist/` (`.mjs`/`.cjs`, one file per source file, `.d.mts`/`.d.cts`) and the `main`/`module`/`types`/`exports` fields in each `package.json`. Don't hand-edit those fields; rebuild and commit what tsdown writes.
 - `packages/victory-vendor`: vendors d3 as ESM + CJS. **Highest-stakes package.** About 99% of its downloads come through recharts (`victory-vendor@^37`, using `victory-vendor/d3-scale` and `victory-vendor/d3-shape`). Its `exports` map and published file layout must stay compatible; `pnpm pack:check` compares them against `packages/victory-vendor/pack-snapshot.json`.
 - `stories/`: Storybook stories (to become a Vite stories app with SVG snapshot and screenshot tests).
 - `website/`: Docusaurus docs site.

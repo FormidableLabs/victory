@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES2015",
+    // Class fields are assigned in the constructor (the default for this
+    // target), so type-only fields aren't emitted. Set explicitly so that
+    // raising `target` doesn't change the build output.
+    "useDefineForClassFields": false,
     "module": "es6",
     "jsx": "react",
     "declaration": true,

@@ -5,7 +5,6 @@
   // only costs cache hits; missing one is a correctness bug.
   "globalDependencies": [
     ".babelrc.js",
-    ".babelrc.build.js",
     ".nvmrc",
     ".prettierrc.json",
     ".prettierignore",
@@ -13,41 +12,25 @@
     "package.json",
     "pnpm-workspace.yaml",
     "tsconfig.json",
-    "tsconfig.base.json"
+    "tsconfig.base.json",
+    "tsdown.config.mts"
   ],
   "globalEnv": ["NODE_ENV"],
   "tasks": {
-    // Library packages. Build inputs leave out tests and docs, which the build
-    // never reads, so editing a test doesn't rebuild every dependent package.
-    "build:lib:esm": {
-      "dependsOn": ["^build:lib:esm"],
-      "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
-      "outputs": ["es/**/*.js", "es/**/*.js.map"]
-    },
-    "build:lib:cjs": {
-      "dependsOn": ["^build:lib:cjs"],
-      "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
-      "outputs": ["lib/**/*.js", "lib/**/*.js.map"]
-    },
-    "types:create": {
-      "dependsOn": ["^types:create"],
-      "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
-      "outputs": [
-        "es/**/*.d.ts",
-        "es/**/*.d.ts.map",
-        "lib/**/*.d.ts",
-        "lib/**/*.d.ts.map"
-      ]
-    },
-    // Aggregate (no script). Same inputs as above so that test edits don't
-    // invalidate dependents' `^build`.
+    // Library packages: tsdown (`tsdown.config.mts`) writes `dist/` (JS and
+    // declarations), and also the `package.json` entry fields, which are
+    // committed. Inputs leave out tests and docs, which the build never reads,
+    // so editing a test doesn't rebuild every dependent package.
     "build": {
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
-      "dependsOn": ["build:lib:esm", "build:lib:cjs", "types:create"]
+      "outputs": ["dist/**"]
     },
-    // Type-checks src including tests, against dependencies' built types.
+    // Type-checks src including tests, against dependencies' built types. Also
+    // waits for the package's own build: the shared `test/` helpers import
+    // victory-voronoi's source, which imports `victory-core` by package name.
     "types:check": {
-      "dependsOn": ["types:create", "^types:create"],
+      "dependsOn": ["build", "^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
     },
     // Tests import dependencies through their built `lib`, plus the root
@@ -77,7 +60,7 @@
     // (and leave out build output that other tasks write while this runs).
     "//#format": {
       "inputs": [
-        "**/*.{js,jsx,mjs,cjs,json,ts,tsx}",
+        "**/*.{js,jsx,mjs,cjs,json,ts,tsx,mts,cts}",
         "!**/node_modules/**",
         "!**/.turbo/**",
         "!**/{es,lib,lib-vendor,dist,build,coverage,storybook-static,.docusaurus,.cache}/**",

@@ -17,12 +17,14 @@ import { formatMessage } from "publint/utils";
 
 const { log, error } = console;
 
-// publint warnings we accept for now, with the reason. Anything else fails.
+// publint warnings we accept for now, by package, with the reason. Anything
+// else fails.
 const ALLOWED_PUBLINT_WARNINGS = {
-  // `es/*.js` is ESM in a package without `"type": "module"`. Bundlers read
-  // it through `module`; Node uses `main` (CJS). tsdown fixes this for the
-  // `victory-*` packages in v38; victory-vendor is #3105.
-  FILE_INVALID_FORMAT: true,
+  "victory-vendor": {
+    // `es/*.js` is ESM in a package without `"type": "module"`. Bundlers read
+    // it through `module`; Node uses `main` (CJS). See #3105.
+    FILE_INVALID_FORMAT: true,
+  },
 };
 
 // Manifest fields that change how consumers resolve or install the package.
@@ -120,7 +122,10 @@ const { messages, pkg } = await publint({
 });
 for (const message of messages) {
   const text = `publint ${message.type} (${message.code}): ${formatMessage(message, pkg)}`;
-  if (message.type === "warning" && ALLOWED_PUBLINT_WARNINGS[message.code]) {
+  if (
+    message.type === "warning" &&
+    ALLOWED_PUBLINT_WARNINGS[manifest.name]?.[message.code]
+  ) {
     continue;
   }
   failures.push(text);

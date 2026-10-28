@@ -155,11 +155,12 @@ Your next `pnpm run build|check` will be a full (long) rebuild from scratch. To 
 
 We use [Turborepo](https://turborepo.com/) to run tasks in dependency order and cache them.
 
-- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build:lib:esm`, `build:lib:cjs`, `types:create`, `types:check`, `lint`, `jest`, `pack:check`). If you change one, change it in every package.
-- **`turbo.json`** at the root says how tasks depend on each other (`^task` means "this task in my dependencies first"), which files are each task's inputs, and which files it outputs. `build` is an aggregate task in `turbo.json` with no script of its own.
+- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build`, `types:check`, `lint`, `jest`, `pack:check`). If you change one, change it in every package.
+- **`build`** runs [tsdown](https://tsdown.dev/) with the shared root `tsdown.config.mts`. It writes `dist/`: ESM (`.mjs`) and CJS (`.cjs`), one file per source file, with `.d.mts`/`.d.cts` declarations. It also writes the `main`, `module`, `types` and `exports` fields in the package's `package.json`; commit any change it makes there.
+- **`turbo.json`** at the root says how tasks depend on each other (`^task` means "this task in my dependencies first"), which files are each task's inputs, and which files it outputs.
 - **Root `package.json` scripts** (`pnpm run build`, `check`, `lint`, ...) call `turbo run`. Root-only tasks like `format` are listed in `turbo.json` as `//#format`.
-- **`packages/victory-vendor`** has a single `build` script and its own `turbo.json`, which maps the other build tasks to it.
-- **`website`** has its own `turbo.json`: its `build` depends on the packages' `build:lib:esm`.
+- **`packages/victory-vendor`** has its own `build` script (not tsdown) and its own `turbo.json`.
+- **`website`** has its own `turbo.json`: its `build` depends on the packages' `build`.
 
 Getting inputs right matters: if a task reads a file that isn't one of its inputs, Turborepo can replay a stale result. When unsure, add the file. Files outside packages that can affect any task go in `globalDependencies`.
 
