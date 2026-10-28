@@ -56,7 +56,7 @@ describe("components/victory-tooltip", () => {
 
   describe("event handling", () => {
     it("attaches an to the flyout object", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryTooltip {...baseProps} events={{ onClick: clickHandler }} />,
         {

@@ -82,4 +82,4 @@ jobs:
           key: turbo-${{ runner.os }}-build-${{ github.sha }}
 
       - name: Test
-        run: pnpm jest $AFFECTED
+        run: pnpm test $AFFECTED

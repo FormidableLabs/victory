@@ -4,7 +4,6 @@
   // Files outside packages that can change any task's result. Over-including
   // only costs cache hits; missing one is a correctness bug.
   "globalDependencies": [
-    ".babelrc.js",
     ".nvmrc",
     ".prettierrc.json",
     ".prettierignore",
@@ -33,10 +32,10 @@
       "dependsOn": ["build", "^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
     },
-    // Tests import dependencies through their built `lib`, plus the root
+    // Tests import dependencies through their built `dist`, plus the root
     // `test/` config and helpers (which import victory-vendor and
     // victory-voronoi).
-    "jest": {
+    "test": {
       "dependsOn": ["^build", "victory-vendor#build", "victory-voronoi#build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
     },
@@ -69,7 +68,6 @@
     },
     "//#lint:root": {
       "inputs": [
-        "*.js",
         "scripts/**",
         "stories/**",
         "test/**",

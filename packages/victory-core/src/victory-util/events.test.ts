@@ -51,11 +51,11 @@ describe("victory-util/events", () => {
         setState: (x) => x,
         state: {},
       };
-      jest.spyOn(fake, "setState");
+      vi.spyOn(fake, "setState");
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it("returns new functions that call set state", () => {

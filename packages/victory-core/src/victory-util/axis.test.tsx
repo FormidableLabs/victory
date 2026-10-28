@@ -79,11 +79,11 @@ describe("helpers/axis", () => {
     const bar = <MockVictoryBar />;
 
     beforeEach(() => {
-      jest.spyOn(dependentAxis.type, "getAxis");
+      vi.spyOn(dependentAxis.type, "getAxis");
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it("returns the independent axis when called with 'x'", () => {
@@ -101,11 +101,11 @@ describe("helpers/axis", () => {
     const scale = Scale.getBaseScale({ scale: { x: "linear" } }, "x");
     const ticks = [1, 2, 3, 4, 5];
     beforeEach(() => {
-      jest.spyOn(scale, "tickFormat");
+      vi.spyOn(scale, "tickFormat");
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it("returns tickFormat function from props", () => {
@@ -143,11 +143,11 @@ describe("helpers/axis", () => {
   describe("getTicks", () => {
     const scale = Scale.getBaseScale({ scale: { x: "linear" } }, "x");
     beforeEach(() => {
-      jest.spyOn(scale, "ticks");
+      vi.spyOn(scale, "ticks");
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it("returns tickValues from props", () => {

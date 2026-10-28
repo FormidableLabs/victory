@@ -1017,7 +1017,7 @@ describe("components/victory-errorbar", () => {
 
   describe("event handling", () => {
     it("attaches an event to the parent svg", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       const { container } = render(
         <VictoryErrorBar
           events={[
@@ -1034,7 +1034,7 @@ describe("components/victory-errorbar", () => {
     });
 
     it("attaches an event to data, click border lines", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryErrorBar
           events={[
@@ -1056,7 +1056,7 @@ describe("components/victory-errorbar", () => {
     });
 
     it("attaches an event to data, click cross lines", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryErrorBar
           events={[

@@ -27,6 +27,6 @@
     "paths": {
       "@/*": ["packages/*"]
     },
-    "types": ["@testing-library/jest-dom"],
+    "types": ["vitest/globals", "@testing-library/jest-dom/vitest"],
   },
 }

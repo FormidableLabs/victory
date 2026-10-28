@@ -1,6 +1,6 @@
 import eslint from "@eslint/js";
 import prettier from "eslint-plugin-prettier/recommended";
-import pluginJest from "eslint-plugin-jest";
+import vitest from "@vitest/eslint-plugin";
 import pluginPromise from "eslint-plugin-promise";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
@@ -121,10 +121,10 @@ export default tseslint.config(
 
   // Overrides for Test files
   {
-    files: ["**/*.test.*", "**/test/**/*", "**/jest-native-setup.tsx"],
-    plugins: { jest: pluginJest },
+    files: ["**/*.test.*", "**/test/**/*"],
+    plugins: { vitest },
     languageOptions: {
-      globals: pluginJest.environments.globals.globals,
+      globals: vitest.environments.env.globals,
     },
     rules: {
       "react/sort-comp": "off",

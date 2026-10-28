@@ -201,7 +201,7 @@ describe("components/victory-candlestick", () => {
   });
 
   describe("event handling", () => {
-    const clickHandler = jest.fn();
+    const clickHandler = vi.fn();
 
     beforeEach(() => {
       clickHandler.mockReset();

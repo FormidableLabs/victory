@@ -123,7 +123,7 @@ describe("components/victory-histogram", () => {
   });
 
   describe("event handling", () => {
-    const clickHandler = jest.fn();
+    const clickHandler = vi.fn();
 
     beforeEach(() => {
       clickHandler.mockReset();

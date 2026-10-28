@@ -81,7 +81,7 @@ describe("components/victory-chart", () => {
 
   describe("event handling", () => {
     it("attaches an event to the parent svg", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       const { container } = render(
         <VictoryChart
           events={[

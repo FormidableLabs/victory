@@ -29,7 +29,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 - `packages/victory-vendor`: vendors d3 as ESM + CJS. **Highest-stakes package.** About 99% of its downloads come through recharts (`victory-vendor@^37`, using `victory-vendor/d3-scale` and `victory-vendor/d3-shape`). Its `exports` map and published file layout must stay compatible; `pnpm pack:check` compares them against `packages/victory-vendor/pack-snapshot.json`.
 - `stories/`: Storybook stories (to become a Vite stories app with SVG snapshot and screenshot tests).
 - `website/`: Docusaurus docs site.
-- `test/`: shared Jest config and helpers.
+- `test/`: shared Vitest config (jsdom, globals) and helpers.
 - `scripts/`: changelog and npm trusted-publishing setup.
 
 ## Commands
@@ -41,12 +41,12 @@ pnpm settings (workspace linking, `overrides`, `patchedDependencies`, `allowBuil
 pnpm install
 pnpm build          # all packages
 pnpm check          # format + lint + test + types
-pnpm jest           # tests
+pnpm test           # tests (Vitest)
 pnpm types:check
 pnpm pack:check     # published output: publint, attw, entrypoints, vendor snapshot
 pnpm lint
 pnpm format:fix
-pnpm turbo run jest --filter=victory-core   # one package (and what it depends on)
+pnpm turbo run test --filter=victory-core   # one package (and what it depends on)
 ```
 
 Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents should set it too. In a git worktree, Turborepo stores its cache in the main checkout's `.turbo/cache`; set `TURBO_CACHE_DIR=.turbo/cache` if that location isn't writable (e.g. a sandbox).

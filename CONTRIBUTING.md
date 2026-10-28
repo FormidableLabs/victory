@@ -93,7 +93,7 @@ $ pnpm run types:check
 $ pnpm run pack:check
 
 # Tests
-$ pnpm run jest
+$ pnpm run test
 ```
 
 We also have some helper tasks to fix issues that are fixable.
@@ -106,7 +106,7 @@ $ pnpm run lint:fix
 To re-run a task whenever files change, use `turbo watch`:
 
 ```sh
-$ pnpm turbo watch jest types:check
+$ pnpm turbo watch test types:check
 ```
 
 ### Tips and tricks
@@ -116,9 +116,9 @@ $ pnpm turbo watch jest types:check
 When working on a single package like `victory-core`, use a `--filter` to run only its tasks (plus whatever they depend on):
 
 ```sh
-$ pnpm turbo run jest types:check lint --filter=victory-core
+$ pnpm turbo run test types:check lint --filter=victory-core
 # ... and the packages that depend on it, too:
-$ pnpm turbo run jest --filter=...victory-core
+$ pnpm turbo run test --filter=...victory-core
 ```
 
 This is especially helpful when you're making changes to a package that is _depended upon_, like `victory-core` or `victory-vendor`, and don't want to run every single task during development.
@@ -143,7 +143,7 @@ Turborepo caches every task that succeeds. So, if you run `pnpm run check` and g
 
 #### Cache issues
 
-If you think you're hitting a stale cache, this command cleans the Turborepo cache as well as all the tool caches (ESLint, Prettier, Babel):
+If you think you're hitting a stale cache, this command cleans the Turborepo cache as well as all the tool caches (ESLint, Prettier):
 
 ```sh
 $ pnpm run clean:cache
@@ -155,7 +155,7 @@ Your next `pnpm run build|check` will be a full (long) rebuild from scratch. To 
 
 We use [Turborepo](https://turborepo.com/) to run tasks in dependency order and cache them.
 
-- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build`, `types:check`, `lint`, `jest`, `pack:check`). If you change one, change it in every package.
+- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build`, `types:check`, `lint`, `test`, `pack:check`). If you change one, change it in every package.
 - **`build`** runs [tsdown](https://tsdown.dev/) with the shared root `tsdown.config.mts`. It writes `dist/`: ESM (`.mjs`) and CJS (`.cjs`), one file per source file, with `.d.mts`/`.d.cts` declarations. It also writes the `main`, `module`, `types` and `exports` fields in the package's `package.json`; commit any change it makes there.
 - **`turbo.json`** at the root says how tasks depend on each other (`^task` means "this task in my dependencies first"), which files are each task's inputs, and which files it outputs.
 - **Root `package.json` scripts** (`pnpm run build`, `check`, `lint`, ...) call `turbo run`. Root-only tasks like `format` are listed in `turbo.json` as `//#format`.

@@ -206,7 +206,7 @@ describe("components/victory-line", () => {
 
   describe("event handling", () => {
     it("attaches an event to the parent svg", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryLine
           data-testid="container"
@@ -225,7 +225,7 @@ describe("components/victory-line", () => {
     });
 
     it("attaches an event to data", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryLine
           dataComponent={<Curve data-testid="line" />}
@@ -246,7 +246,7 @@ describe("components/victory-line", () => {
     });
 
     it("attaches an event to a label", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryLine
           data={[
