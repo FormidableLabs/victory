@@ -7,6 +7,10 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
+    // Each test file still gets a fresh context, but jsdom is set up once per
+    // worker instead of once per file. Don't set `isolate: false`: some tests
+    // leak state into later files and fail when the file order changes.
+    pool: "vmThreads",
     include: ["src/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
     setupFiles: [`${import.meta.dirname}/vitest-setup.ts`],
   },
