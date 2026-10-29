@@ -83,6 +83,17 @@ function App() {
 
   return (
     <VictoryChart scale={{ x: discontinuousScale }} theme={VictoryTheme.clean}>
+      {/* Tick on the data dates: default ticks can land on a weekend */}
+      <VictoryAxis
+        tickValues={data.map((d) => d.x)}
+        tickFormat={(t) =>
+          new Date(t).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+          })
+        }
+      />
+      <VictoryAxis dependentAxis />
       <VictoryArea data={data} />
     </VictoryChart>
   );

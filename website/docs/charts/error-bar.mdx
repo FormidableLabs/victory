@@ -220,7 +220,7 @@ function App() {
   return (
     <VictoryChart theme={VictoryTheme.clean}>
       {segments.map((y) => (
-        <VictoryGroup>
+        <VictoryGroup key={y}>
           <VictoryLine
             data={data}
             y={y}

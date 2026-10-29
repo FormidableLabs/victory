@@ -29,6 +29,11 @@
       "dependsOn": ["build", "^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
     },
+    // The website's own build is the docs site, which the type check doesn't
+    // need. It only needs the Victory packages' built types.
+    "victory-docs#types:check": {
+      "dependsOn": ["^build"]
+    },
     // Tests import dependencies through their built `dist`, plus the root
     // `test/` config and helpers (which import victory-vendor and
     // victory-voronoi).
