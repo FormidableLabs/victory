@@ -5,6 +5,9 @@
 // 2. Runs publint and attw (`@arethetypeswrong/cli`) on the tarball.
 // 3. Installs the tarball outside the repo, next to only the dependencies it
 //    declares, and loads every entrypoint with `require()` and `import()`.
+//    Also loads each package its `.mjs` files default-import, as Node ESM
+//    does, and fails on Babel-style CJS (`__esModule` with `exports.default`):
+//    strict ESM gives the default import `module.exports`, not `.default`.
 // 4. If the package has a `pack-snapshot.json`, compares the published
 //    manifest fields, how attw resolves each entrypoint (and its problems),
 //    which entrypoints fail to load, and the file list against it. Pass `--update` to rewrite it.
@@ -25,6 +28,13 @@ const ALLOWED_PUBLINT_WARNINGS = {
     // it through `module`; Node uses `main` (CJS). See #3105.
     FILE_INVALID_FORMAT: true,
   },
+};
+
+// Default imports of Babel-style CJS that the source unwraps itself, by
+// package. Anything else fails.
+const ALLOWED_CJS_DEFAULT_IMPORTS = {
+  // `voronoi-helpers.ts` falls back from `.default`.
+  "victory-voronoi-container": ["delaunay-find/lib/index.js"],
 };
 
 // Manifest fields that change how consumers resolve or install the package.
@@ -187,6 +197,16 @@ if (attwProblems.length && !update && !fs.existsSync(snapshotPath)) {
 const specifiers = entrypoints.map((e) =>
   e === "." ? manifest.name : `${manifest.name}/${e.replace(/^\.\//, "")}`,
 );
+// Bare specifiers default-imported by the ESM output, with a file using each.
+const defaultImports = {};
+for (const file of files.filter((f) => f.endsWith(".mjs"))) {
+  const source = fs.readFileSync(path.join(installed, file), "utf8");
+  for (const [, spec] of source.matchAll(
+    /^import \w+(?:\s*,\s*\{[^}]*\})? from "([^./][^"]*)";/gm,
+  )) {
+    defaultImports[spec] ??= file;
+  }
+}
 const loader = path.join(installRoot, "load.mjs");
 fs.writeFileSync(
   loader,
@@ -203,19 +223,35 @@ for (const spec of ${JSON.stringify(specifiers)}) {
     }
   }
 }
-console.log(JSON.stringify(errors));
+const interop = [];
+for (const spec of ${JSON.stringify(Object.keys(defaultImports))}) {
+  try {
+    const value = (await import(spec)).default;
+    if (value != null && value.__esModule && "default" in value) interop.push(spec);
+  } catch {
+    // Not loadable on its own (e.g. a peer); entrypoint loading covers it.
+  }
+}
+console.log(JSON.stringify({ errors, interop }));
 `,
 );
 let loadFailures;
 try {
-  loadFailures = JSON.parse(
+  const { errors, interop } = JSON.parse(
     run(process.execPath, [loader], {
       cwd: installRoot,
       stdio: ["ignore", "pipe", "pipe"],
     }),
-  )
+  );
+  loadFailures = errors
     .map((e) => e.replaceAll(`${modulesDir}/${manifest.name}/`, ""))
     .sort();
+  const allowed = ALLOWED_CJS_DEFAULT_IMPORTS[manifest.name] ?? [];
+  for (const spec of interop.filter((s) => !allowed.includes(s))) {
+    failures.push(
+      `${defaultImports[spec]} default-imports "${spec}", which is CJS with \`exports.default\`: in strict ESM the import gets \`module.exports\`. Unwrap \`.default\` and add it to ALLOWED_CJS_DEFAULT_IMPORTS.`,
+    );
+  }
 } finally {
   fs.rmSync(installRoot, { recursive: true, force: true });
 }
