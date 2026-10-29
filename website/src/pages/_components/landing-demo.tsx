@@ -108,7 +108,7 @@ const VoronoiLabel = (props) => {
 };
 
 // Victory accepts Date accessors at runtime, but its accessor type
-// (DataGetterPropType) leaves out Date.
+// (DataGetterPropType) leaves out Date. Drop this once #3125 is fixed.
 const dateX = (date: string) => new Date(date) as unknown as number;
 
 const lastDate = last(downloads.data)!.day;
