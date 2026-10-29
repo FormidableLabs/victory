@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import findCacheDirectory from "find-cache-dir";
-import { Application, JSONOutput } from "typedoc";
+import { Application, JSONOutput, normalizePath } from "typedoc";
 
 export type TypeInfo = {
   name: string;
@@ -148,7 +148,10 @@ async function loadTypeInfo(): Promise<JSONOutput.ProjectReflection> {
       throw new Error("Failed to load type information from Victory");
     }
 
-    typeInfo = typedocApp.serializer.projectToObject(project, process.cwd());
+    typeInfo = typedocApp.serializer.projectToObject(
+      project,
+      normalizePath(process.cwd()),
+    );
 
     // save typeInfo to a file
     // TODO: we can strip this file down to only what we need
