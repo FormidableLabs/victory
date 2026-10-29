@@ -29,6 +29,7 @@ function App() {
         <VictoryStack style={{ data: { width: 10 } }} horizontal>
           {data.map((d, i) => (
             <VictoryBar
+              key={i}
               style={styles[i]}
               data={d}
               labels={i === 0 ? labelFn : undefined}

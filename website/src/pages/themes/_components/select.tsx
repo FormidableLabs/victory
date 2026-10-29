@@ -10,7 +10,7 @@ type SelectProps = {
   id: string;
   label?: string;
   options: SelectOption[];
-  value?: string;
+  value?: string | null;
   onChange: (value: string) => void;
   includeDefault?: boolean;
   className?: string;
@@ -21,7 +21,7 @@ const Select = ({
   id,
   label,
   options,
-  value = "",
+  value,
   onChange,
   includeDefault,
   className,
@@ -52,7 +52,7 @@ const Select = ({
       )}
       <select
         id={id}
-        value={value}
+        value={value ?? ""}
         onChange={handleChange}
         className={clsx(
           "w-full border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-position-[right_8px_center] bg-size-[16px] flex-1 font-sans text-sm p-2.5",

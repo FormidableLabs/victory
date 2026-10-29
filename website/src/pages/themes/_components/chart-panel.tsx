@@ -3,6 +3,7 @@ import Control from "./control";
 import Select from "./select";
 import { usePreviewOptions } from "../_providers/previewOptionsProvider";
 import { ChartPanelConfig } from "../_config";
+import { VictoryComponentType } from "../_const";
 import PanelHeader from "./panel-header";
 
 type ChartPanelProps = {
@@ -16,7 +17,7 @@ const ChartPanel = ({
     usePreviewOptions();
 
   useEffect(() => {
-    const newChartType = Object.keys(types)[0];
+    const newChartType = Object.keys(types)[0] as VictoryComponentType;
     setActiveChartType((prevChartType) =>
       prevChartType === null ? newChartType : prevChartType,
     );
@@ -41,7 +42,7 @@ const ChartPanel = ({
   );
 
   const onChartTypeChange = (newValue: string) => {
-    setActiveChartType(newValue);
+    setActiveChartType(newValue as VictoryComponentType);
   };
 
   return (

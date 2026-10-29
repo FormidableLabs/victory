@@ -1,7 +1,12 @@
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": [
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic",
+      "@docusaurus/theme-live-codeblock"
+    ]
   },
-  "include": ["vendors.d.ts"]
+  "include": ["vendors.d.ts", "src"]
 }
