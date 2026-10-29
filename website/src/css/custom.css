@@ -60,7 +60,8 @@
 
 /*
  * Needed for theme builder since we're disabling Tailwind's reset for docs.
- * Before the utilities, so utilities like `border-2` still win.
+ * v3 put this in `@layer base`; there's no such layer here, so its position
+ * before `@tailwind utilities` is what lets utilities like `border-2` win.
  */
 .theme-builder * {
   border-width: 0;
