@@ -5,6 +5,9 @@
 // 2. Runs publint and attw (`@arethetypeswrong/cli`) on the tarball.
 // 3. Installs the tarball outside the repo, next to only the dependencies it
 //    declares, and loads every entrypoint with `require()` and `import()`.
+//    Also loads every bare specifier that the package's `.mjs` files
+//    default-import, as Node ESM does, and fails on Babel-style CJS (`__esModule` with `exports.default`):
+//    strict ESM gives the default import `module.exports`, not `.default`.
 // 4. If the package has a `pack-snapshot.json`, compares the published
 //    manifest fields, how attw resolves each entrypoint (and its problems),
 //    which entrypoints fail to load, and the file list against it. Pass `--update` to rewrite it.
@@ -26,6 +29,22 @@ const ALLOWED_PUBLINT_WARNINGS = {
     FILE_INVALID_FORMAT: true,
   },
 };
+
+// Default imports of Babel-style CJS that the source unwraps itself, by
+// package, as `<published file>:<specifier>`. Anything else fails, and so does
+// an entry that no longer matches, so the list can't outlive the workaround.
+const ALLOWED_CJS_DEFAULT_IMPORTS = {
+  "victory-voronoi-container": [
+    // `voronoi-helpers.ts` falls back from `.default`.
+    "dist/voronoi-helpers.mjs:delaunay-find/lib/index.js",
+  ],
+};
+
+// Default imports in tsdown's ESM output, one per line: `D`, `D, { ... }` and
+// `D, * as ns`, from a bare specifier. Revisit if the output format changes
+// (a stale allowlist entry above is the canary).
+const ESM_DEFAULT_IMPORT =
+  /^import\s+[\w$]+(?:\s*,\s*(?:\{[^}]*\}|\*\s+as\s+[\w$]+))?\s+from\s+["']([^./"'][^"']*)["'];?/gm;
 
 // Manifest fields that change how consumers resolve or install the package.
 const SNAPSHOT_FIELDS = [
@@ -187,6 +206,17 @@ if (attwProblems.length && !update && !fs.existsSync(snapshotPath)) {
 const specifiers = entrypoints.map((e) =>
   e === "." ? manifest.name : `${manifest.name}/${e.replace(/^\.\//, "")}`,
 );
+// Bare specifiers default-imported by the ESM output, with every file importing
+// each (an unwrapped import in one file doesn't excuse another). `.mjs` only:
+// victory-vendor ships its ESM as `es/*.js` (#3105), so it isn't scanned.
+const defaultImports = new Map();
+for (const file of files.filter((f) => f.endsWith(".mjs"))) {
+  const source = fs.readFileSync(path.join(installed, file), "utf8");
+  for (const [, spec] of source.matchAll(ESM_DEFAULT_IMPORT)) {
+    if (!defaultImports.has(spec)) defaultImports.set(spec, new Set());
+    defaultImports.get(spec).add(file);
+  }
+}
 const loader = path.join(installRoot, "load.mjs");
 fs.writeFileSync(
   loader,
@@ -203,19 +233,49 @@ for (const spec of ${JSON.stringify(specifiers)}) {
     }
   }
 }
-console.log(JSON.stringify(errors));
+const interop = [];
+for (const spec of ${JSON.stringify([...defaultImports.keys()])}) {
+  try {
+    const value = (await import(spec)).default;
+    if (value != null && value.__esModule && "default" in value) interop.push(spec);
+  } catch {
+    // Not loadable on its own (e.g. a peer); entrypoint loading covers it.
+  }
+}
+console.log(JSON.stringify({ errors, interop }));
 `,
 );
 let loadFailures;
 try {
-  loadFailures = JSON.parse(
+  const { errors, interop } = JSON.parse(
     run(process.execPath, [loader], {
       cwd: installRoot,
       stdio: ["ignore", "pipe", "pipe"],
     }),
-  )
+  );
+  loadFailures = errors
     .map((e) => e.replaceAll(`${modulesDir}/${manifest.name}/`, ""))
     .sort();
+  const allowed = new Set(ALLOWED_CJS_DEFAULT_IMPORTS[manifest.name]);
+  const seen = new Set();
+  for (const spec of interop) {
+    for (const file of defaultImports.get(spec)) {
+      const entry = `${file}:${spec}`;
+      seen.add(entry);
+      if (!allowed.has(entry)) {
+        failures.push(
+          `${file} default-imports "${spec}", which is CJS with \`exports.default\`: in strict ESM the import gets \`module.exports\`. Unwrap \`.default\` and add "${entry}" under "${manifest.name}" in ALLOWED_CJS_DEFAULT_IMPORTS.`,
+        );
+      }
+    }
+  }
+  for (const entry of allowed) {
+    if (!seen.has(entry)) {
+      failures.push(
+        `ALLOWED_CJS_DEFAULT_IMPORTS entry "${entry}" for "${manifest.name}" no longer matches; remove it.`,
+      );
+    }
+  }
 } finally {
   fs.rmSync(installRoot, { recursive: true, force: true });
 }
