@@ -55,7 +55,7 @@ const Select = ({
         value={value}
         onChange={handleChange}
         className={clsx(
-          "w-full border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-[right_8px_center] bg-[length:16px] flex-1 font-sans text-sm p-2.5",
+          "w-full border border-grayscale-300 bg-white appearance-none rounded-md bg-select-chevron bg-no-repeat bg-position-[right_8px_center] bg-size-[16px] flex-1 font-sans text-sm p-2.5",
           selectSizeClasses,
         )}
       >

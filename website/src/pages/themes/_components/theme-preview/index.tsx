@@ -15,7 +15,7 @@ export function ThemePreview() {
 
   return (
     <main className="flex-1 flex flex-col items-center overflow-y-auto h-full">
-      <div className="max-w-screen-xl w-full px-10 pt-6 pb-20">
+      <div className="max-w-(--breakpoint-xl) w-full px-10 pt-6 pb-20">
         <Header />
         <div className="grid grid-cols-1 gap-10 xl:grid-cols-2">
           {exampleContent.map((content, i) => (

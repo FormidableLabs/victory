@@ -19,7 +19,7 @@ export const LandingHero = () => {
             <p className="mt-6 text-lg leading-8">{siteConfig.tagline}</p>
             <div className="mt-10 flex flex-wrap flex-col xl:flex-row xl:items-center justify-start gap-6">
               <button
-                className="overflow-hidden grid-rows-2 md:grid-rows-1 lg:max-w-fit grid lg:grid-cols-6 align-center rounded-md shadow-sm border-none bg-white my-0 py-0 px-0 text-sm font-semibold text-theme-2  cursor-pointer"
+                className="overflow-hidden grid-rows-2 md:grid-rows-1 lg:max-w-fit grid lg:grid-cols-6 align-center rounded-md shadow-xs border-none bg-white my-0 py-0 px-0 text-sm font-semibold text-theme-2  cursor-pointer"
                 onClick={() =>
                   navigator.clipboard.writeText("npm install victory")
                 }
@@ -27,7 +27,7 @@ export const LandingHero = () => {
                 <code className="max-w-fit py-2.5 pl-3.5 content-center grid-span-12 lg:col-span-4 border-0 bg-white">
                   npm install victory
                 </code>
-                <span className="w-full lg:min-w-fit col-span-2 capitalize rounded-b-md lg:rounded-l-none lg:!rounded-r-md text-theme-2 bg-theme-1 lg:ml-2 pr-3.5 lg:pl-2.5 py-2.5 h-full">
+                <span className="w-full lg:min-w-fit col-span-2 capitalize rounded-b-md lg:rounded-l-none lg:rounded-r-md! text-theme-2 bg-theme-1 lg:ml-2 pr-3.5 lg:pl-2.5 py-2.5 h-full">
                   Copy
                 </span>
               </button>
