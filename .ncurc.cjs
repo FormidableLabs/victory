@@ -16,6 +16,8 @@ const MINOR_ONLY = {
   "@babel/cli": "vendor build port",
   "@babel/core": "vendor build port",
   "@babel/plugin-transform-modules-commonjs": "vendor build port",
+  // Website: react-live 5 item.
+  "react-live": "react-live 5",
 };
 
 // Phase 3 replaces Storybook and Chromatic (and `concurrently` with them).
