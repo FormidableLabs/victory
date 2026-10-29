@@ -156,8 +156,8 @@ const SideNav = () => {
           className={clsx(
             "group flex w-full flex-col items-center rounded-md p-3 text-xs font-bold cursor-pointer text-theme-2 disabled:bg-grayscale-400 disabled:text-grayscale-800 disabled:cursor-not-allowed",
             isExportItemActive
-              ? "bg-theme-1/100"
-              : "bg-theme-1/80 hover:bg-theme-1/100",
+              ? "bg-theme-1"
+              : "bg-theme-1/80 hover:bg-theme-1",
           )}
         >
           <exportItem.Icon

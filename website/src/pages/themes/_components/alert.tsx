@@ -91,7 +91,7 @@ const Alert = ({
   return (
     <div
       className={clsx(
-        "flex items-start p-4 mb-4 rounded shadow-md gap-3 min-w-[500px] transform transition-all duration-500",
+        "flex items-start p-4 mb-4 rounded-sm shadow-md gap-3 min-w-[500px] transform transition-all duration-500",
         typeStyle,
         isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0",
       )}

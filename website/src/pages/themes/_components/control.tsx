@@ -39,7 +39,7 @@ const Control = ({ type, control, className }: ControlProps) => {
           title={control.label}
           id={id}
           defaultOpen={control.defaultOpen}
-          className="!my-0"
+          className="my-0!"
         >
           {control.controls?.map((nestedControl, i) => (
             <Control

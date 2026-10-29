@@ -69,10 +69,9 @@ const config: Config = {
         name: "tailwind-plugin",
         configurePostCss(postcssOptions) {
           postcssOptions.plugins = [
-            /* eslint-disable @typescript-eslint/no-require-imports */
-            require("tailwindcss"),
-            require("autoprefixer"),
-            /* eslint-enable @typescript-eslint/no-require-imports */
+            // Also handles vendor prefixes (no autoprefixer needed).
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
+            require("@tailwindcss/postcss"),
           ];
           return postcssOptions;
         },
