@@ -1,5 +1,6 @@
 import React from "react";
 import { VictoryAxis } from "victory-axis";
+import { Circle, Line, Path, Rect, Text } from "victory-core";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 import { VictoryChart } from "./victory-chart";
@@ -107,6 +108,43 @@ describe("components/victory-chart", () => {
       );
 
       expect(container.querySelector("svg")).toBeInTheDocument();
+    });
+  });
+
+  describe("primitive children", () => {
+    it("doesn't write chart props to their DOM elements (#3118)", () => {
+      const error = vi.spyOn(console, "error").mockImplementation(() => {});
+      // Spread: the primitives' prop types don't declare SVG attributes.
+      const { container } = render(
+        <VictoryChart polar={false}>
+          <Line {...{ x1: 25, x2: 425, y1: 270, y2: 270 }} className="p" />
+          <Rect {...{ x: 0, y: 0, width: 10, height: 10 }} className="p" />
+          <Circle {...{ cx: 5, cy: 5, r: 5 }} className="p" />
+          <Path {...{ d: "M0,0L10,10" }} className="p" />
+          <Text {...{ x: 5, y: 5 }} className="p">
+            label
+          </Text>
+        </VictoryChart>,
+      );
+      const elements = container.querySelectorAll(".p");
+
+      expect(elements).toHaveLength(5);
+      for (const element of elements) {
+        for (const name of [
+          "standalone",
+          "polar",
+          "theme",
+          "stringmap",
+          "name",
+          "padding",
+          "domain",
+          "scale",
+        ]) {
+          expect(element.hasAttribute(name)).toBe(false);
+        }
+      }
+      expect(error).not.toHaveBeenCalled();
+      error.mockRestore();
     });
   });
 });
