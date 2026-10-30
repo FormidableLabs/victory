@@ -54,6 +54,35 @@ describe("components/victory-tooltip", () => {
     expect(flyout).toBeInTheDocument();
   });
 
+  it("passes lineHeight from the style to the label component", () => {
+    const style = { lineHeight: 2, fontSize: 12 };
+    render(
+      <VictoryTooltip
+        {...baseProps}
+        style={style}
+        labelComponent={
+          <VictoryLabel
+            data-testid={labelId}
+            text={"line one\nline two"}
+          />
+        }
+      />,
+      {
+        wrapper: VictoryContainer as React.JSXElementConstructor<{
+          children: React.ReactNode;
+        }>,
+      },
+    );
+    const label = screen.getByTestId(labelId);
+    expect(label).toBeInTheDocument();
+    // The second line's tspan dy should reflect the lineHeight multiplier,
+    // not fall back to the default of 1.
+    const tspans = label.querySelectorAll("tspan");
+    const secondLineDy = tspans[1].getAttribute("dy");
+    expect(secondLineDy).not.toBeNull();
+    expect(parseInt(secondLineDy!, 10)).toBeGreaterThan(0);
+  });
+
   describe("event handling", () => {
     it("attaches an to the flyout object", () => {
       const clickHandler = jest.fn();
