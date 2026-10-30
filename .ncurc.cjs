@@ -12,10 +12,11 @@ const MINOR_ONLY = {
   typescript: "TS 7",
   // Matches `.nvmrc`. Node 26 is checked at the end of the uplift.
   "@types/node": "Node 26",
-  // victory-vendor's build: Babel goes if the build moves to Rolldown.
-  "@babel/cli": "vendor build port",
-  "@babel/core": "vendor build port",
-  "@babel/plugin-transform-modules-commonjs": "vendor build port",
+  // victory-vendor's build stays on Babel 7. Moving it to one build tool is a
+  // separate post-uplift ticket (#3126); Babel goes then.
+  "@babel/cli": "vendor single-tool build",
+  "@babel/core": "vendor single-tool build",
+  "@babel/plugin-transform-modules-commonjs": "vendor single-tool build",
   // Website: react-live 5 item.
   "react-live": "react-live 5",
 };

@@ -13,14 +13,7 @@
         "!*.md",
         "!tests/**"
       ],
-      "outputs": [
-        "es/**",
-        "lib/**",
-        "lib-vendor/**",
-        "d3-*",
-        "internmap.js",
-        "LICENSE.txt"
-      ]
+      "outputs": ["es/**", "lib/**", "lib-vendor/**", "d3-*", "LICENSE.txt"]
     },
     // The tests import the package by name (`victory-vendor/d3-*`), so they
     // need its own build, but not the shared test helpers' dependencies.
