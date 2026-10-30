@@ -152,16 +152,20 @@ const main = async () => {
     await fs.readdir(path.resolve(__dirname, "../node_modules/"))
   ).filter((name) => /^(d3-|internmap)/.test(name));
 
-  // Safety check: we assume that **all** are flattened to root level of this
-  // package, and want to make sure there are no nested dependencies.
+  // Safety check: every d3 dependency of a vendored package must be vendored
+  // too (see the transitive dependencies note above), or its rewritten
+  // `lib-vendor` require won't exist. Checks presence, not version ranges.
   for (const pkgName of pkgs) {
-    const pkgModsPath = path.resolve(
-      __dirname,
-      `../node_modules/${pkgName}/node_modules`,
+    const { dependencies = {} } = require(
+      `../node_modules/${pkgName}/package.json`,
     );
-    const stat = await fs.lstat(pkgModsPath).catch(() => null);
-    if (stat) {
-      throw new Error(`Found nested modules: ${pkgModsPath}`);
+    const missing = Object.keys(dependencies).filter(
+      (dep) => /^(d3-|internmap)/.test(dep) && !pkgs.includes(dep),
+    );
+    if (missing.length) {
+      throw new Error(
+        `${pkgName} depends on ${missing.join(", ")}: add to devDependencies`,
+      );
     }
   }
 
@@ -187,11 +191,13 @@ const main = async () => {
   );
 
   // Transpile.
+  // Runs the CLI with this Node directly (no `pnpm` or shell lookup), so it
+  // works the same on Windows.
   log("Transpiling vendor sources.");
   await run(
-    "pnpm",
+    process.execPath,
     [
-      "babel",
+      require.resolve("@babel/cli/bin/babel.js"),
       "--config-file",
       path.resolve(__dirname, "../.babelrc.js"),
       "-d",
