@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.18.1",
     "react-fast-compare": "^3.2.0",
     "victory-core": "37.4.1"
   },

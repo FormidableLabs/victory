@@ -237,8 +237,8 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/lodash':
-        specifier: ^4.14.149
-        version: 4.14.182
+        specifier: ^4.17.27
+        version: 4.17.27
       '@types/node':
         specifier: ^18.6.1
         version: 18.6.1
@@ -315,8 +315,8 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(supports-color@8.1.1)
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       lodash-webpack-plugin:
         specifier: ^0.11.6
         version: 0.11.6(webpack@5.74.0)
@@ -477,8 +477,8 @@ importers:
   packages/victory-area:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -496,8 +496,8 @@ importers:
   packages/victory-axis:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -508,8 +508,8 @@ importers:
   packages/victory-bar:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -527,8 +527,8 @@ importers:
   packages/victory-box-plot:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -546,8 +546,8 @@ importers:
   packages/victory-brush-container:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -561,8 +561,8 @@ importers:
   packages/victory-brush-line:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -576,8 +576,8 @@ importers:
   packages/victory-candlestick:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -595,8 +595,8 @@ importers:
   packages/victory-canvas:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -610,8 +610,8 @@ importers:
   packages/victory-chart:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -634,8 +634,8 @@ importers:
   packages/victory-core:
     dependencies:
       lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -649,8 +649,8 @@ importers:
   packages/victory-create-container:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -676,8 +676,8 @@ importers:
   packages/victory-cursor-container:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -688,8 +688,8 @@ importers:
   packages/victory-errorbar:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -704,8 +704,8 @@ importers:
   packages/victory-group:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -726,8 +726,8 @@ importers:
   packages/victory-histogram:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -747,8 +747,8 @@ importers:
   packages/victory-legend:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -759,8 +759,8 @@ importers:
   packages/victory-line:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -778,8 +778,8 @@ importers:
   packages/victory-pie:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -793,8 +793,8 @@ importers:
   packages/victory-polar-axis:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -805,8 +805,8 @@ importers:
   packages/victory-scatter:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -817,8 +817,8 @@ importers:
   packages/victory-selection-container:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -839,8 +839,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -854,8 +854,8 @@ importers:
   packages/victory-stack:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -882,8 +882,8 @@ importers:
   packages/victory-tooltip:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -967,8 +967,8 @@ importers:
         specifier: ^1.1.4
         version: 1.1.4
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -982,8 +982,8 @@ importers:
         specifier: 0.0.6
         version: 0.0.6
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -1000,8 +1000,8 @@ importers:
   packages/victory-zoom-container:
     dependencies:
       lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
+        specifier: ^4.18.1
+        version: 4.18.1
       react:
         specifier: '>=16.6.0'
         version: 18.2.0
@@ -3877,8 +3877,8 @@ packages:
   '@types/jsonfile@6.1.3':
     resolution: {integrity: sha512-/yqTk2SZ1wIezK0hiRZD7RuSf4B3whFxFamB1kGStv+8zlWScTMcHanzfc0XKWs5vA1TkHeckBlOyM8jxU8nHA==}
 
-  '@types/lodash@4.14.182':
-    resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
+  '@types/lodash@4.17.27':
+    resolution: {integrity: sha512-VenMRv/eKNrspX9v3H4dbmjsrnCOYdYBG3kxXKk3dG6X+urBGcj2Prww3xw1U5K4FV/mE4h5GbWd0szEKf+9ew==}
 
   '@types/mdast@4.0.3':
     resolution: {integrity: sha512-LsjtqsyF+d2/yFOYaN22dHZI1Cpwkrj+g06G8+qtUKlhovPW89YhqSnfKtMbkgmEtYpH2gydRNULd6y8mciAFg==}
@@ -6962,6 +6962,9 @@ packages:
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
@@ -13675,7 +13678,7 @@ snapshots:
       chalk: 3.0.0
       css.escape: 1.5.1
       dom-accessibility-api: 0.6.3
-      lodash: 4.17.21
+      lodash: 4.18.1
       redent: 3.0.0
 
   '@testing-library/react@16.0.1(@testing-library/dom@10.4.0)(@types/react-dom@18.0.6)(@types/react@18.0.15)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
@@ -13868,7 +13871,7 @@ snapshots:
     dependencies:
       '@types/node': 18.6.1
 
-  '@types/lodash@4.14.182': {}
+  '@types/lodash@4.17.27': {}
 
   '@types/mdast@4.0.3':
     dependencies:
@@ -14985,7 +14988,7 @@ snapshots:
   concurrently@9.1.0:
     dependencies:
       chalk: 4.1.2
-      lodash: 4.17.21
+      lodash: 4.18.1
       rxjs: 7.8.1
       shell-quote: 1.8.1
       supports-color: 8.1.1
@@ -17632,7 +17635,7 @@ snapshots:
 
   lodash-webpack-plugin@0.11.6(webpack@5.74.0):
     dependencies:
-      lodash: 4.17.21
+      lodash: 4.18.1
       webpack: 5.74.0(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
 
   lodash.debounce@4.0.8: {}
@@ -17644,6 +17647,8 @@ snapshots:
   lodash.uniq@4.5.0: {}
 
   lodash@4.17.21: {}
+
+  lodash@4.18.1: {}
 
   longest-streak@3.1.0: {}
 
@@ -18370,7 +18375,7 @@ snapshots:
       common-tags: 1.8.2
       find-up: 2.1.0
       js-yaml: 3.14.1
-      lodash: 4.17.21
+      lodash: 4.18.1
       manage-path: 2.0.0
       prefix-matches: 1.0.1
       readline-sync: 1.4.10
