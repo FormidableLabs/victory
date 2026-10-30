@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "d3-voronoi": "^1.1.4",
-    "lodash": "^4.17.19",
+    "lodash": "^4.18.1",
     "victory-core": "37.4.1"
   },
   "peerDependencies": {
