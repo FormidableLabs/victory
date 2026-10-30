@@ -46,6 +46,7 @@ pnpm test:coverage  # all tests in one run with v8 coverage (coverage/index.html
 pnpm types:check
 pnpm pack:check     # published output: publint, attw, entrypoints, vendor snapshot
 pnpm lint           # oxlint, whole repo (not via turbo)
+pnpm lint:gha       # zizmor on .github/ (skips if zizmor isn't installed; CI runs it)
 pnpm format:fix     # oxfmt, whole repo (not via turbo)
 pnpm dep:check      # list outdated deps (npm-check-updates; config in .ncurc.cjs)
 pnpm turbo run test --filter=victory-core   # one package (and what it depends on)
@@ -54,6 +55,8 @@ pnpm turbo run test --filter=victory-core   # one package (and what it depends o
 Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents should set it too. In a git worktree, Turborepo stores its cache in the main checkout's `.turbo/cache`; set `TURBO_CACHE_DIR=.turbo/cache` if that location isn't writable (e.g. a sandbox).
 
 Dependency updates are manual (no update bots): run `pnpm dep:check` before each release and when a security alert comes in, then update in one PR. Don't bump a major that `.ncurc.cjs` holds back; it has a tracking item.
+
+GitHub Actions: `actions/*` and `github/*` use major version tags; every other action is pinned to a commit SHA with a `# vX.Y.Z` comment (enforced by `.github/zizmor.yml`). Refresh them in the same routine as dependencies (pinact, see CONTRIBUTING "GitHub Actions"). Every workflow sets `permissions: {}` and grants per job; checkouts set `persist-credentials: false`. Reference local actions as `$/.github/actions/...`, not `./...`.
 
 These commands change as the uplift lands. Update this section in the same PR that changes them.
 

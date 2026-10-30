@@ -4,10 +4,10 @@ description: Setup Build Step
 runs:
   using: "composite"
   steps:
-    - uses: pnpm/action-setup@v6
+    - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
 
     - name: Use Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
         node-version-file: ".nvmrc"
         cache: "pnpm"

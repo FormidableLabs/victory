@@ -4,16 +4,20 @@ on:
   schedule:
     - cron: "0 0 * * *"
 
+permissions: {}
+
 jobs:
   close-issues:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    # No `actions: write`: actions/stale only needs it to save its progress
+    # between runs (in the Actions cache), and every run finishes all issues.
+    # No `contents: write`: it's only for the `delete-branch` option.
     permissions:
-      contents: write
-      issues: write
-      pull-requests: write
+      issues: write # to label, comment on, and close issues
+      pull-requests: read # PRs are listed but never marked stale
 
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v11
         with:
           ascending: false
           operations-per-run: 100

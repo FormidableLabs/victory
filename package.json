@@ -81,6 +81,7 @@
     "format:fix": "oxfmt",
     "lint": "oxlint --report-unused-disable-directives-severity=error",
     "lint:fix": "oxlint --report-unused-disable-directives-severity=error --fix",
+    "lint:gha": "if command -v zizmor >/dev/null; then zizmor .; else echo 'zizmor is not installed, skipping (CI runs it). Install: brew install zizmor, or uv tool install zizmor'; fi",
     "test": "turbo run test",
     "test:coverage": "pnpm build && vitest run --config test/vitest.coverage.config.mts",
     "types:check": "turbo run types:check",

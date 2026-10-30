@@ -14,6 +14,9 @@ on:
       - "stories/**"
       - "packages/**"
 
+# Reset permissions and grant them per job.
+permissions: {}
+
 env:
   TURBO_TELEMETRY_DISABLED: 1
 
@@ -22,19 +25,22 @@ jobs:
     name: Storybook Publish
     if: github.event.pull_request.draft == false && github.repository == 'FormidableLabs/victory'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # to check out repo (actions/checkout)
     steps:
       # requires all branches and tags to be fetched for chromatic
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
+          persist-credentials: false
           fetch-depth: 0
 
-      - uses: ./.github/actions/setup
+      - uses: $/.github/actions/setup
 
       - name: Build Victory
         run: pnpm run build
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@c93e0bc3a63aa176e14a75b61a31847cbfdd341c # v11.27.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

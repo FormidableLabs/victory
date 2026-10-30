@@ -1,0 +1,12 @@
+# zizmor (https://docs.zizmor.sh) audits GitHub Actions workflows: `pnpm lint:gha`
+# locally, and the lint job in ci.yml.
+rules:
+  unpinned-uses:
+    config:
+      # GitHub's own actions use version tags. Third-party actions are pinned
+      # to a commit SHA, with the version in a trailing comment. Refresh them
+      # with pinact (see CONTRIBUTING.md).
+      policies:
+        actions/*: ref-pin
+        github/*: ref-pin
+        "*": hash-pin
