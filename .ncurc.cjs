@@ -13,7 +13,7 @@ const MINOR_ONLY = {
   // Matches `.nvmrc`. Node 26 is checked at the end of the uplift.
   "@types/node": "Node 26",
   // victory-vendor's build stays on Babel 7. Moving it to one build tool is a
-  // separate post-uplift ticket; Babel goes then.
+  // separate post-uplift ticket (#3126); Babel goes then.
   "@babel/cli": "vendor single-tool build",
   "@babel/core": "vendor single-tool build",
   "@babel/plugin-transform-modules-commonjs": "vendor single-tool build",
