@@ -7,12 +7,21 @@
  * compatible version to `package.json:devDependencies` here to make sure we
  * get the library in our `node_modules` and appropriately build it.
  */
+const { spawn } = require("child_process");
 const fs = require("fs").promises;
 const path = require("path");
-const { promisify } = require("util");
 
-const rimraf = require("rimraf");
-const rimrafP = promisify(rimraf);
+// Run a command, rejecting on a non-zero exit.
+const run = (cmd, args, opts) =>
+  new Promise((resolve, reject) => {
+    spawn(cmd, args, opts)
+      .on("error", reject)
+      .on("close", (code) =>
+        code === 0
+          ? resolve()
+          : reject(new Error(`${cmd} ${args.join(" ")} exited with ${code}`)),
+      );
+  });
 
 const vendorPkg = require("../package.json");
 const VENDOR_PKGS = new Set(Object.keys(vendorPkg.dependencies));
@@ -138,9 +147,6 @@ ${sections.join("\n\n")}
 
 // Main.
 const main = async () => {
-  // Lazy ESM imports.
-  const { execa } = await import("execa");
-
   // Get d3-related packages we want to vendor.
   const pkgs = (
     await fs.readdir(path.resolve(__dirname, "../node_modules/"))
@@ -151,7 +157,7 @@ const main = async () => {
   for (const pkgName of pkgs) {
     const pkgModsPath = path.resolve(
       __dirname,
-      `../node_modules/git${pkgName}/node_modules`,
+      `../node_modules/${pkgName}/node_modules`,
     );
     const stat = await fs.lstat(pkgModsPath).catch(() => null);
     if (stat) {
@@ -164,10 +170,17 @@ const main = async () => {
   const CjsBasePath = path.resolve(__dirname, `../lib`);
   const VendorBasePath = path.resolve(__dirname, `../lib-vendor`);
   const baseDirs = [EsmBasePath, CjsBasePath, VendorBasePath];
-  const cleanGlobs = [].concat(baseDirs, path.resolve(__dirname, "../d3-*"));
+  const rootShims = (await fs.readdir(path.resolve(__dirname, "..")))
+    .filter((name) => name.startsWith("d3-"))
+    .map((name) => path.resolve(__dirname, `../${name}`));
+  const cleanPaths = [].concat(baseDirs, rootShims);
 
   log("Cleaning old vendor directories.");
-  await Promise.all(cleanGlobs.map((glob) => rimrafP(glob)));
+  await Promise.all(
+    cleanPaths.map((cleanPath) =>
+      fs.rm(cleanPath, { recursive: true, force: true }),
+    ),
+  );
   log("Creating empty vendor directories.");
   await Promise.all(
     baseDirs.map((libPath) => fs.mkdir(libPath, { recursive: true })),
@@ -175,7 +188,7 @@ const main = async () => {
 
   // Transpile.
   log("Transpiling vendor sources.");
-  await execa(
+  await run(
     "pnpm",
     [
       "babel",
