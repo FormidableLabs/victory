@@ -30,7 +30,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 - `stories/`: Storybook stories (to become a Vite stories app with SVG snapshot and screenshot tests).
 - `website/`: Docusaurus docs site.
 - `test/`: shared Vitest config (jsdom, globals) and helpers.
-- `scripts/`: changelog and npm trusted-publishing setup.
+- `scripts/`: task scripts (`pack-check.mjs`, `bundle-size.mjs`, `lint-gha.mjs`), changelog, and npm trusted-publishing setup.
 
 ## Commands
 

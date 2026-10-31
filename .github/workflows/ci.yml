@@ -164,7 +164,8 @@ jobs:
       - name: Bundle size
         env:
           BASE_REPORT: ${{ github.event_name == 'pull_request' && format('{0}/base/bundle-size/report.json', runner.temp) || '' }}
-        run: pnpm bundle-size ${BASE_REPORT:+--base "$BASE_REPORT"}
+        # Empty on pushes, which means no comparison.
+        run: pnpm bundle-size --base "$BASE_REPORT"
 
       - name: Bundle size summary
         if: always()

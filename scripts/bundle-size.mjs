@@ -30,16 +30,26 @@ const workDir = path.join(
   "packages/victory/node_modules/.cache/bundle-size",
 );
 
+// Warning annotations show on the PR's checks without needing write access.
+const warn = (message) =>
+  process.stdout.write(
+    process.env.GITHUB_ACTIONS
+      ? `::warning title=Bundle size::${message}\n`
+      : `Warning: ${message}\n`,
+  );
+
+// An empty `--base ""` means no comparison (CI passes one on pushes).
 const baseIndex = process.argv.indexOf("--base");
-const basePath = baseIndex === -1 ? null : process.argv[baseIndex + 1];
+if (baseIndex !== -1 && baseIndex + 1 >= process.argv.length) {
+  throw new Error("--base needs a path to a report.json");
+}
+const basePath = baseIndex === -1 ? "" : process.argv[baseIndex + 1];
 let base = null;
 if (basePath) {
   if (fs.existsSync(basePath)) {
     base = JSON.parse(fs.readFileSync(basePath, "utf8"));
   } else {
-    process.stderr.write(
-      `No base report at ${basePath}, skipping comparison.\n`,
-    );
+    warn(`No base report at ${basePath}, so no comparison.`);
   }
 }
 
@@ -47,23 +57,27 @@ fs.rmSync(workDir, { recursive: true, force: true });
 fs.mkdirSync(workDir, { recursive: true });
 
 const results = {};
-for (const [name, source] of Object.entries(SCENARIOS)) {
-  const entry = path.join(workDir, `${Object.keys(results).length}.mjs`);
-  fs.writeFileSync(entry, `${source}\n`);
-  const { output } = await build({
-    input: entry,
-    platform: "browser",
-    external: /^react(-dom)?($|\/)/,
-    transform: { define: { "process.env.NODE_ENV": '"production"' } },
-    output: { format: "esm", minify: true, codeSplitting: false },
-    write: false,
-    logLevel: "silent",
-  });
-  const code = output[0].code;
-  results[name] = {
-    minified: Buffer.byteLength(code),
-    gzip: gzipSync(code).length,
-  };
+try {
+  for (const [name, source] of Object.entries(SCENARIOS)) {
+    const entry = path.join(workDir, `${Object.keys(results).length}.mjs`);
+    fs.writeFileSync(entry, `${source}\n`);
+    const { output } = await build({
+      input: entry,
+      platform: "browser",
+      external: /^react(-dom)?($|\/)/,
+      transform: { define: { "process.env.NODE_ENV": '"production"' } },
+      output: { format: "esm", minify: true, codeSplitting: false },
+      write: false,
+      logLevel: "silent",
+    });
+    const code = output[0].code;
+    results[name] = {
+      minified: Buffer.byteLength(code),
+      gzip: gzipSync(code).length,
+    };
+  }
+} finally {
+  fs.rmSync(workDir, { recursive: true, force: true });
 }
 
 const BYTES_PER_KB = 1000;
@@ -111,15 +125,9 @@ fs.writeFileSync(
 fs.writeFileSync(path.join(outDir, "report.md"), markdown);
 process.stdout.write(markdown);
 
-// Warning annotations show on the PR's checks without needing write access.
 for (const [name, { gzip }] of Object.entries(results)) {
   const then = base?.[name]?.gzip;
   if (then && (gzip - then) / then > WARN_GROWTH) {
-    const message = `${name}: gzip ${delta(gzip, then)} vs base`;
-    process.stdout.write(
-      process.env.GITHUB_ACTIONS
-        ? `::warning title=Bundle size::${message}\n`
-        : `Warning: ${message}\n`,
-    );
+    warn(`${name}: gzip ${delta(gzip, then)} vs base`);
   }
 }
