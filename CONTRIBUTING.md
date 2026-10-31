@@ -191,7 +191,7 @@ Workflows reference GitHub's own actions (`actions/*`, `github/*`) by major vers
 
 Update actions in the same routine as the dependencies above:
 
-- Third-party actions: run `pinact run --update` ([pinact](https://github.com/suzuki-shunsuke/pinact), `brew install pinact`). It updates SHAs and their version comments, skipping versions published in the last week (`.github/pinact.yaml`). Review each action's release notes.
+- Third-party actions: run `pinact run --update` ([pinact](https://github.com/suzuki-shunsuke/pinact), `brew install pinact`). It updates SHAs and their version comments, skipping versions published in the last week (`.github/pinact.yml`). Review each action's release notes.
 - GitHub's actions: check each one's releases page for a new major and read its breaking changes.
 - zizmor itself: bump `version` on the zizmor step in `.github/workflows/ci.yml`.
 
