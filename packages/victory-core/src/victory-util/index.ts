@@ -12,6 +12,7 @@ export * as Hooks from "./hooks";
 export * as Immutable from "./immutable";
 export * as LabelHelpers from "./label-helpers";
 export * as LineHelpers from "./line-helpers";
+export * from "./round-path-string";
 export * as Log from "./log";
 export * as PointPathHelpers from "./point-path-helpers";
 export * as Scale from "./scale";
