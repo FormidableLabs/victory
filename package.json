@@ -81,6 +81,7 @@
     "format:fix": "oxfmt",
     "lint": "oxlint --report-unused-disable-directives-severity=error",
     "lint:fix": "oxlint --report-unused-disable-directives-severity=error --fix",
+    "lint:gha": "node scripts/lint-gha.mjs",
     "test": "turbo run test",
     "test:coverage": "pnpm build && vitest run --config test/vitest.coverage.config.mts",
     "types:check": "turbo run types:check",

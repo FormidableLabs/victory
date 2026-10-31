@@ -185,6 +185,18 @@ It runs [npm-check-updates](https://github.com/raineorshine/npm-check-updates) o
 
 Make the updates in one PR, then run `pnpm run check`, `pnpm run build:docs` and `pnpm run pack:check`. Updates to a published package's `dependencies` change what users install, so they need a changeset.
 
+### GitHub Actions
+
+Workflows reference GitHub's own actions (`actions/*`, `github/*`) by major version tag, such as `actions/checkout@v7`. Third-party actions are pinned to a commit SHA with the version in a comment, such as `pnpm/action-setup@<sha> # v6.1.0`, because a tag can be moved to different code. [zizmor](https://docs.zizmor.sh) enforces this (`.github/zizmor.yml`) along with its other security checks.
+
+Update actions in the same routine as the dependencies above:
+
+- Third-party actions: run `pinact run --update` ([pinact](https://github.com/suzuki-shunsuke/pinact), `brew install pinact`). It updates SHAs and their version comments, skipping versions published in the last week (`.github/pinact.yml`). Review each action's release notes.
+- GitHub's actions: check each one's releases page for a new major and read its breaking changes.
+- zizmor itself: bump `version` on the zizmor step in `.github/workflows/ci.yml`.
+
+CI runs zizmor in the `lint` job, at the `version` pinned there. To run it locally, install it and run `pnpm run lint:gha`; without it installed, the script skips. Newer zizmor releases add audits, so a different version locally can report findings that CI doesn't. To match CI, install that version, e.g. `uv tool install zizmor==1.31.1` (or `brew install zizmor` for the latest). Set `GH_TOKEN` to include zizmor's online audits.
+
 ## Visual Tests
 
 Victory relies heavily on visual regression testing with [Storybook](https://storybook.js.org/) and [Chromatic](https://www.chromaticqa.com/).
