@@ -97,6 +97,9 @@ $ pnpm run test
 
 # Tests with coverage (HTML report in coverage/index.html)
 $ pnpm run test:coverage
+
+# ESM bundle sizes of common imports (bundle-size/report.md)
+$ pnpm run bundle-size
 ```
 
 We also have some helper tasks to fix issues that are fixable.
@@ -168,6 +171,8 @@ We use [Turborepo](https://turborepo.com/) to run tasks in dependency order and 
 Getting inputs right matters: if a task reads a file that isn't one of its inputs, Turborepo can replay a stale result. When unsure, add the file. Files outside packages that can affect any task go in `globalDependencies`.
 
 `pack:check` (`scripts/pack-check.mjs`) packs a built package and checks the tarball: publint, [attw](https://github.com/arethetypeswrong/arethetypeswrong.github.io), and loading every entrypoint with both `require()` and `import()` from an install outside the repo that has only the tarball's declared `dependencies` and `peerDependencies`. A package with a `pack-snapshot.json` (today only `victory-vendor`, which recharts depends on) must also match it: its resolution-related manifest fields, which file each entrypoint resolves to under each module resolution mode, attw's problems, which entrypoints fail to load (known issues, e.g. #3104), and the file list. If a change to the snapshot is intended, build, then run `pnpm run pack:check --update` in that package and commit the result.
+
+`bundle-size` (`scripts/bundle-size.mjs`) bundles a few common ESM imports from the built `dist/` with [rolldown](https://rolldown.rs/) (minified, React external) and reports minified and gzipped sizes. CI's `bundle-size` job puts the report in the job summary; on pull requests it also builds the base commit, shows the change, and adds a warning annotation when a scenario's gzipped size grows by more than 1%. It's reported, not gated. The scenarios are listed at the top of the script; keep them few, since renaming one loses its comparison.
 
 `pnpm run sync` copies `victory-core`'s tsconfig files to the other packages. CI checks they're in sync.
 
