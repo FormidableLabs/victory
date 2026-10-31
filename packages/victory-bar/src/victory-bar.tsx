@@ -2,6 +2,7 @@ import React from "react";
 import { getBaseProps } from "./helper-methods";
 import { Bar } from "./bar";
 import {
+  CallbackArgs,
   Helpers,
   VictoryLabel,
   VictoryContainer,
@@ -33,6 +34,11 @@ export type VictoryBarCornerRadiusObject = Partial<
   Record<VictoryBarCornerRadiusKey, NumberOrCallback>
 >;
 
+export type VictoryBarCornerRadiusProp =
+  | NumberOrCallback
+  | VictoryBarCornerRadiusObject
+  | ((args: CallbackArgs) => VictoryBarCornerRadiusObject);
+
 export type VictoryBarTTargetType = "data" | "labels" | "parent";
 
 export type VictoryBarAlignmentType = "start" | "middle" | "end";
@@ -44,7 +50,7 @@ export interface VictoryBarProps
   alignment?: VictoryBarAlignmentType;
   barRatio?: number;
   barWidth?: NumberOrCallback;
-  cornerRadius?: NumberOrCallback | VictoryBarCornerRadiusObject;
+  cornerRadius?: VictoryBarCornerRadiusProp;
   events?: EventPropTypeInterface<
     VictoryBarTTargetType,
     number | string | number[] | string[]
