@@ -79,6 +79,9 @@ jobs:
         uses: zizmorcore/zizmor-action@53290badfa369cb0bf7ad16342cb62c2fa47ac7b # v0.8.0
         with:
           version: 1.31.1
+          # The default, set explicitly: online audits include impostor-commit,
+          # which checks that each SHA pin is a commit in the action's own repo.
+          online-audits: true
           advanced-security: false
           annotations: true
 

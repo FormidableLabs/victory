@@ -9,8 +9,10 @@ permissions: {}
 jobs:
   close-issues:
     runs-on: ubuntu-latest
-    # No `actions: write`: actions/stale only needs it to save its progress
-    # between runs (in the Actions cache), and every run finishes all issues.
+    # No `actions: write`, which actions/stale needs to save its progress
+    # between runs (in the Actions cache). Without it, each run starts again
+    # from the newest issue. That's fine while a run gets through every issue
+    # within `operations-per-run`; grant it if the backlog outgrows that.
     # No `contents: write`: it's only for the `delete-branch` option.
     permissions:
       issues: write # to label, comment on, and close issues

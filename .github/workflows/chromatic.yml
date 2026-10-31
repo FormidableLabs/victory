@@ -39,6 +39,8 @@ jobs:
       - name: Build Victory
         run: pnpm run build
 
+      # Pinned to the commit `v1` resolved to, and not updated: Phase 3 of the
+      # 2026 uplift (#3093) removes Chromatic.
       - name: Publish to Chromatic
         uses: chromaui/action@c93e0bc3a63aa176e14a75b61a31847cbfdd341c # v11.27.0
         with:

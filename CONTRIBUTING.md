@@ -195,7 +195,7 @@ Update actions in the same routine as the dependencies above:
 - GitHub's actions: check each one's releases page for a new major and read its breaking changes.
 - zizmor itself: bump `version` on the zizmor step in `.github/workflows/ci.yml`.
 
-CI runs zizmor in the `lint` job. To run it locally, install it (`brew install zizmor` or `uv tool install zizmor`) and run `pnpm run lint:gha`. Without it installed, the script skips. Set `GH_TOKEN` to include zizmor's online audits.
+CI runs zizmor in the `lint` job, at the `version` pinned there. To run it locally, install it and run `pnpm run lint:gha`; without it installed, the script skips. Newer zizmor releases add audits, so a different version locally can report findings that CI doesn't. To match CI, install that version, e.g. `uv tool install zizmor==1.31.1` (or `brew install zizmor` for the latest). Set `GH_TOKEN` to include zizmor's online audits.
 
 ## Visual Tests
 

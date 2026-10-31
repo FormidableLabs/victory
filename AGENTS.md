@@ -56,7 +56,7 @@ Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents s
 
 Dependency updates are manual (no update bots): run `pnpm dep:check` before each release and when a security alert comes in, then update in one PR. Don't bump a major that `.ncurc.cjs` holds back; it has a tracking item.
 
-GitHub Actions: `actions/*` and `github/*` use major version tags; every other action is pinned to a commit SHA with a `# vX.Y.Z` comment (enforced by `.github/zizmor.yml`). Refresh them in the same routine as dependencies (pinact, see CONTRIBUTING "GitHub Actions"). Every workflow sets `permissions: {}` and grants per job; checkouts set `persist-credentials: false`. Reference local actions as `$/.github/actions/...`, not `./...`.
+GitHub Actions: `actions/*` and `github/*` use major version tags; every other action is pinned to a commit SHA (enforced by `.github/zizmor.yml`) with a `# vX.Y.Z` comment (convention; pinact keeps it current). Refresh them in the same routine as dependencies (pinact, see CONTRIBUTING "GitHub Actions"). Every workflow sets `permissions: {}` and grants per job; checkouts set `persist-credentials: false`. Reference local actions as `$/.github/actions/...`, not `./...`.
 
 These commands change as the uplift lands. Update this section in the same PR that changes them.
 
