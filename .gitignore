@@ -35,6 +35,7 @@ $RECYCLE.BIN/
 !.vscode/settings.json
 bower_components
 coverage
+/bundle-size
 dist
 lib
 es
