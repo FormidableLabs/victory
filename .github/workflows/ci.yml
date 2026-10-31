@@ -146,16 +146,17 @@ jobs:
 
       # Builds the base commit in a worktree and measures it with this
       # branch's script, so both sides use the same scenarios and bundler.
-      # Shares the Turborepo cache, so unchanged packages aren't rebuilt.
+      # Pull requests check out a merge commit, so its first parent is exactly
+      # the base it was merged onto. Shares the Turborepo cache, so unchanged
+      # packages aren't rebuilt.
       - name: Bundle size (base)
         if: github.event_name == 'pull_request'
         continue-on-error: true
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
           BASE_DIR: ${{ runner.temp }}/base
           TURBO_CACHE_DIR: ${{ github.workspace }}/.turbo/cache
         run: |
-          git worktree add --detach "$BASE_DIR" "$BASE_SHA"
+          git worktree add --detach "$BASE_DIR" HEAD^1
           cd "$BASE_DIR"
           pnpm install --frozen-lockfile
           pnpm build
