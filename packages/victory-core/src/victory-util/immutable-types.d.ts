@@ -117,7 +117,7 @@ export function is(first: any, second: any): boolean;
  * "unset" index and an index set to `undefined`. `List#forEach` visits all
  * indices from 0 to size, regardless of whether they were explicitly defined.
  */
-export module List {
+export namespace List {
   /**
    * True if the provided value is a List
    */
@@ -387,7 +387,7 @@ export interface List<T> extends Collection.Indexed<T> {
  *
  * Implemented by a hash-array mapped trie.
  */
-export module Map {
+export namespace Map {
   /**
    * True if the provided value is a Map
    */
@@ -700,7 +700,7 @@ export interface Map<K, V> extends Collection.Keyed<K, V> {
  * stable.
  */
 
-export module OrderedMap {
+export namespace OrderedMap {
   /**
    * True if the provided value is an OrderedMap.
    */
@@ -749,7 +749,7 @@ export interface OrderedMap<K, V> extends Map<K, V> {}
  * `Immutable.is`, enabling Sets to uniquely include other Immutable
  * collections, custom value types, and NaN.
  */
-export module Set {
+export namespace Set {
   /**
    * True if the provided value is a Set
    */
@@ -856,7 +856,7 @@ export interface Set<T> extends Collection.Set<T> {
  * consume more memory. `OrderedSet#add` is amortized O(log32 N), but not
  * stable.
  */
-export module OrderedSet {
+export namespace OrderedSet {
   /**
    * True if the provided value is an OrderedSet.
    */
@@ -904,7 +904,7 @@ export interface OrderedSet<T> extends Set<T> {}
  *
  * Stack is implemented with a Single-Linked List.
  */
-export module Stack {
+export namespace Stack {
   /**
    * True if the provided value is a Stack
    */
@@ -1087,7 +1087,7 @@ export function Repeat<T>(value: T, times?: number): Seq.Indexed<T>;
  *     myRecord.getAB() // 4
  *
  */
-export module Record {
+export namespace Record {
   export interface Class {
     new (): Map<string, any>;
     new (values: { [key: string]: any }): Map<string, any>;
@@ -1152,7 +1152,7 @@ export function Record(
  *     // { x: 0, y: 2, z: 4 }
  */
 
-export module Seq {
+export namespace Seq {
   /**
    * True if `maybeSeq` is a Seq, it is not backed by a concrete
    * structure such as Map, List, or Set.
@@ -1167,7 +1167,7 @@ export module Seq {
   /**
    * `Seq` which represents key-value pairs.
    */
-  export module Keyed {}
+  export namespace Keyed {}
 
   /**
    * Always returns a Seq.Keyed, if input is not keyed, expects an
@@ -1197,7 +1197,7 @@ export module Seq {
   /**
    * `Seq` which represents an ordered indexed list of values.
    */
-  module Indexed {
+  namespace Indexed {
     /**
      * Provides an Seq.Indexed of the values provided.
      */
@@ -1231,7 +1231,7 @@ export module Seq {
    * Because `Seq` are often lazy, `Seq.Set` does not provide the same guarantee
    * of value uniqueness as the concrete `Set`.
    */
-  export module Set {
+  export namespace Set {
     /**
      * Returns a Seq.Set of the provided values
      */
@@ -1324,7 +1324,7 @@ export interface Seq<K, V> extends Iterable<K, V> {
  * Note: An iterable is always iterated in the same order, however that order
  * may not always be well defined, as is the case for the `Map` and `Set`.
  */
-export module Iterable {
+export namespace Iterable {
   /**
    * True if `maybeIterable` is an Iterable, or any of its subclasses.
    */
@@ -1358,7 +1358,7 @@ export module Iterable {
    * tuple, in other words, `Iterable#entries` is the default iterator for
    * Keyed Iterables.
    */
-  export module Keyed {}
+  export namespace Keyed {}
 
   /**
    * Creates an Iterable.Keyed
@@ -1449,7 +1449,7 @@ export module Iterable {
    * preserve indices, using them as keys, convert to a Iterable.Keyed by
    * calling `toKeyedSeq`.
    */
-  export module Indexed {}
+  export namespace Indexed {}
 
   /**
    * Creates a new Iterable.Indexed.
@@ -1630,7 +1630,7 @@ export module Iterable {
    *     assert.equal(seq.every((v, k) => v === k), true);
    *
    */
-  export module Set {}
+  export namespace Set {}
 
   /**
    * Similar to `Iterable()`, but always returns a Iterable.Set.
@@ -2458,11 +2458,11 @@ export interface Iterable<K, V> {
  * Implementations should extend one of the subclasses, `Collection.Keyed`,
  * `Collection.Indexed`, or `Collection.Set`.
  */
-export module Collection {
+export namespace Collection {
   /**
    * `Collection` which represents key-value pairs.
    */
-  export module Keyed {}
+  export namespace Keyed {}
 
   export interface Keyed<K, V> extends Collection<K, V>, Iterable.Keyed<K, V> {
     /**
@@ -2475,7 +2475,7 @@ export module Collection {
   /**
    * `Collection` which represents ordered indexed values.
    */
-  export module Indexed {}
+  export namespace Indexed {}
 
   export interface Indexed<T>
     extends Collection<number, T>, Iterable.Indexed<T> {
@@ -2491,7 +2491,7 @@ export module Collection {
    *
    * `Collection.Set` implementations should guarantee value uniqueness.
    */
-  export module Set {}
+  export namespace Set {}
 
   export interface Set<T> extends Collection<T, T>, Iterable.Set<T> {
     /**
