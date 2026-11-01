@@ -6,7 +6,7 @@
     // aren't emitted (as with the old Babel build). ES2022 would otherwise
     // default this to `true`.
     "useDefineForClassFields": false,
-    "module": "es6",
+    "module": "esnext",
     "jsx": "react",
     "declaration": true,
     "declarationMap": true,
@@ -14,18 +14,17 @@
     "isolatedModules": true,
     "strict": true,        
     "noImplicitAny": false,
-    "moduleResolution": "node",           
+    "moduleResolution": "bundler",
     "esModuleInterop": true,              
     "skipLibCheck": true,                 
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
     "lib": [
       "dom", 
       "dom.iterable", 
       "esnext"
     ],
     "paths": {
-      "@/*": ["packages/*"]
+      "@/*": ["./packages/*"]
     },
     "types": ["vitest/globals", "@testing-library/jest-dom/vitest"],
   },

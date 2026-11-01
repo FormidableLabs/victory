@@ -1,7 +1,14 @@
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
+    // TS 6 deprecates `baseUrl`. Unset the inherited one and redeclare
+    // `paths`, which then resolves relative to this file.
+    "baseUrl": null,
+    "paths": {
+      "@site/*": ["./*"]
+    },
+    // TS 6 defaults this to `true`. The site was never strict.
+    "strict": false,
     "types": [
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic",

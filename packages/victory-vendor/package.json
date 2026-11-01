@@ -56,6 +56,7 @@
   },
   "scripts": {
     "build": "node ./scripts/build.js",
+    "types:check": "tsc --pretty --noEmit",
     "pack:check": "node ../../scripts/pack-check.mjs",
     "test": "vitest run --config ../../test/vitest.config.mts --passWithNoTests"
   }
