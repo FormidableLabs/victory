@@ -193,7 +193,7 @@ Make the updates in one PR, then run `pnpm run check`, `pnpm run build:docs` and
 Version ranges:
 
 - `^` by default.
-- Exact versions only for tools whose output we commit or publish: oxfmt and oxlint (a new version can reformat the repo or fail CI), and victory-vendor's Babel packages (its published files).
+- Exact versions only for tools whose upgrade needs its own PR: oxfmt and oxlint (a new version can reformat the repo or fail CI), and victory-vendor's Babel packages (they write its published files, and nothing checks their contents). TypeScript, tsdown and rolldown also shape published output, but `pnpm pack:check` and a `dist/` diff in the upgrade PR cover them, so they follow the other rules.
 - `~` only to match another package's range (root `rolldown` matches tsdown's, so one copy is installed).
 - The `victory-*` packages depend on each other at the exact shared version. Changesets updates those.
 

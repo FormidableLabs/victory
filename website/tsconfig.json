@@ -2,7 +2,8 @@
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
     // TS 6 deprecates `baseUrl`. Unset the inherited one and redeclare
-    // `paths`, which then resolves relative to this file.
+    // `paths`, which then resolves relative to this file. (`tsc --showConfig`
+    // still prints a `baseUrl`; resolution doesn't use it.)
     "baseUrl": null,
     "paths": {
       "@site/*": ["./*"]
