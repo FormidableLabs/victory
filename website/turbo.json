@@ -8,10 +8,10 @@
       "dependsOn": ["^build"],
       "cache": false
     },
-    // No `types:check` script here. Without this, the root definition's
-    // `dependsOn: ["build"]` would run the docs build during `pnpm check`.
+    // Needs only the Victory packages' built types, not the docs build (the
+    // root definition's `dependsOn: ["build"]` would run it during `pnpm check`).
     "types:check": {
-      "dependsOn": []
+      "dependsOn": ["^build"]
     }
   }
 }
