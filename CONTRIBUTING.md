@@ -190,6 +190,13 @@ It runs [npm-check-updates](https://github.com/raineorshine/npm-check-updates) o
 
 Make the updates in one PR, then run `pnpm run check`, `pnpm run build:docs` and `pnpm run pack:check`. Updates to a published package's `dependencies` change what users install, so they need a changeset.
 
+Version ranges:
+
+- `^` by default.
+- Exact versions only for tools whose output we commit or publish: oxfmt and oxlint (a new version can reformat the repo or fail CI), and victory-vendor's Babel packages (its published files).
+- `~` only to match another package's range (root `rolldown` matches tsdown's, so one copy is installed).
+- The `victory-*` packages depend on each other at the exact shared version. Changesets updates those.
+
 ### GitHub Actions
 
 Workflows reference GitHub's own actions (`actions/*`, `github/*`) by major version tag, such as `actions/checkout@v7`. Third-party actions are pinned to a commit SHA with the version in a comment, such as `pnpm/action-setup@<sha> # v6.1.0`, because a tag can be moved to different code. [zizmor](https://docs.zizmor.sh) enforces this (`.github/zizmor.yml`) along with its other security checks.
