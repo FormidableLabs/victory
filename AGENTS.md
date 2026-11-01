@@ -55,7 +55,7 @@ pnpm turbo run test --filter=victory-core   # one package (and what it depends o
 
 Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents should set it too. In a git worktree, Turborepo stores its cache in the main checkout's `.turbo/cache`; set `TURBO_CACHE_DIR=.turbo/cache` if that location isn't writable (e.g. a sandbox).
 
-Dependency updates are manual (no update bots): run `pnpm dep:check` before each release and when a security alert comes in, then update in one PR. Don't bump a major that `.ncurc.cjs` holds back; it has a tracking item.
+Dependency updates are manual (no update bots): run `pnpm dep:check` before each release and when a security alert comes in, then update in one PR. Don't bump a major that `.ncurc.cjs` holds back; it has a tracking item. Version ranges: `^` by default; exact only for tools whose output we commit or publish (oxfmt, oxlint, vendor Babel); `~` only to match another package's range (root `rolldown` matches tsdown's). Sibling `victory-*` dependencies are exact (see CONTRIBUTING "Updating dependencies").
 
 GitHub Actions: `actions/*` and `github/*` use major version tags; every other action is pinned to a commit SHA (enforced by `.github/zizmor.yml`) with a `# vX.Y.Z` comment (convention; pinact keeps it current). Refresh them in the same routine as dependencies (pinact, see CONTRIBUTING "GitHub Actions"). Every workflow sets `permissions: {}` and grants per job; checkouts set `persist-credentials: false`. Reference local actions as `$/.github/actions/...`, not `./...`.
 
@@ -65,7 +65,7 @@ These commands change as the uplift lands. Update this section in the same PR th
 
 - TypeScript, React function components for new code. Some class components remain (conversion is tracked in #2778); don't convert them in infra PRs.
 - Match the surrounding code's style, naming, and comment density.
-- Keep the React peer floor at `>=18`, and don't use React 19-only APIs in library code.
+- React peer range: published packages declare `>=16.6.0`. Phase 4 (#3093) raises it to `>=18` (decided, needs a changeset). Until then, don't use React 18+ APIs (`useId`, `useSyncExternalStore`, ...) in library code; after it, still no React 19-only APIs.
 - Don't add `engines` fields to any `package.json`. `.nvmrc` is the one place the Node version is set.
 - Ship ESM + CJS. Don't add browser-only or Node-only code paths to library packages.
 
