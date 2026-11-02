@@ -36,6 +36,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 
 Use the Node version in `.nvmrc` and pnpm (version from `packageManager`; no corepack needed). Never use npm or yarn to install.
 pnpm settings (workspace linking, `overrides`, `patchedDependencies`, `allowBuilds`) live in `pnpm-workspace.yaml`. pnpm 11+ ignores them in `.npmrc` and in `package.json`'s `"pnpm"` field.
+TypeScript: `tsc` is 7.0; `.pnpmfile.cjs` keeps tools that import the `typescript` JS API (rolldown-plugin-dts, which emits declarations) on 6.0.3 until the tsgo generator (TS 7.1). Overrides can't do this: a peer still resolves to the root's copy.
 
 ```sh
 pnpm install
@@ -44,7 +45,7 @@ pnpm check          # format + lint + test + types
 pnpm test           # tests (Vitest)
 pnpm test:coverage  # all tests in one run with v8 coverage (coverage/index.html)
 pnpm types:check
-pnpm pack:check     # published output: publint, attw, entrypoints, vendor snapshot
+pnpm pack:check     # published output: publint, attw, declarations, entrypoints, vendor snapshot
 pnpm bundle-size    # ESM bundle sizes of common imports (bundle-size/report.md; CI job summary)
 pnpm lint           # oxlint, whole repo (not via turbo)
 pnpm lint:gha       # zizmor on .github/ (skips if zizmor isn't installed; CI runs it)
@@ -76,7 +77,7 @@ These are expected to change as we experiment. Update them as things settle, and
 - **Build and test speed:** keep cold and cached times for `build`, `check`, and CI in mind. Note regressions in the PR.
 - **Task runner cache inputs/outputs:** an inaccurate cache key is a correctness bug. Over-including is safer than missing an input.
 - **CI:** cache hit rates, job split, and running only what changed on PRs.
-- **Published output:** `pnpm pack:check` packs each package, runs publint and attw, and loads every entrypoint with `require()` and `import()` from an isolated install (declared dependencies only). `victory-vendor` also has to match its `pack-snapshot.json` (manifest fields, resolution per entrypoint, known attw and load failures, file list). Update a snapshot (build, then `pnpm pack:check --update` in that package) only for an intended change, and call it out in the PR.
+- **Published output:** `pnpm pack:check` packs each package, runs publint and attw, type-checks its published declarations with `skipLibCheck` off (known errors in `ALLOWED_DECLARATION_ERRORS`), and loads every entrypoint with `require()` and `import()` from an isolated install (declared dependencies only). `victory-vendor` also has to match its `pack-snapshot.json` (manifest fields, resolution per entrypoint, known attw and load failures, file list). Update a snapshot (build, then `pnpm pack:check --update` in that package) only for an intended change, and call it out in the PR.
 - **Bundle size:** `pnpm bundle-size` measures ESM import scenarios (`scripts/bundle-size.mjs`), and CI reports the change against the base branch. Reported, not gated. Note size changes in the PR.
 - **Visual testing:** snapshot stability and flakiness.
 - **This file:** if an agent gets something wrong because guidance was missing or stale, fix the guidance here.

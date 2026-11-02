@@ -2,7 +2,8 @@
 // `pack:check` script) after building it:
 //
 // 1. Packs the package with `pnpm pack`.
-// 2. Runs publint and attw (`@arethetypeswrong/cli`) on the tarball.
+// 2. Runs publint and attw (`@arethetypeswrong/cli`) on the tarball, and
+//    type-checks the published declarations with `skipLibCheck` off.
 // 3. Installs the tarball outside the repo, next to only the dependencies it
 //    declares, and loads every entrypoint with `require()` and `import()`.
 //    Also loads every bare specifier that the package's `.mjs` files
@@ -37,6 +38,25 @@ const ALLOWED_CJS_DEFAULT_IMPORTS = {
   "victory-voronoi-container": [
     // `voronoi-helpers.ts` falls back from `.default`.
     "dist/voronoi-helpers.mjs:delaunay-find/lib/index.js",
+  ],
+};
+
+// Type errors in the published declarations that predate this check, by
+// package, as `<published file>:<error code>`. Fixing them changes published
+// types (tracked in #3093). Anything else fails, and so does an entry that no
+// longer matches.
+const ALLOWED_DECLARATION_ERRORS = {
+  "victory-create-container": [
+    // `createContainer`'s inferred return type indexes the container map with
+    // a type parameter that isn't narrowed to `ContainerType`.
+    "dist/create-container.d.cts:TS2344",
+    "dist/create-container.d.mts:TS2344",
+  ],
+  "victory-errorbar": [
+    // `ErrorBar`'s props use `typeof ErrorBar.default`, which doesn't exist
+    // (it's `any` in the source).
+    "dist/error-bar.d.cts:TS2339",
+    "dist/error-bar.d.mts:TS2339",
   ],
 };
 
@@ -198,6 +218,53 @@ const resolutions = Object.fromEntries(
 );
 if (attwProblems.length && !update && !fs.existsSync(snapshotPath)) {
   failures.push(`attw found problems:\n  ${attwProblems.join("\n  ")}`);
+}
+
+// Declarations. Our tsconfig's `skipLibCheck` skips every `.d.ts`, including
+// the ones we publish, so check those with it off (this also catches syntax
+// TS 7 rejects, like `module` blocks). They're checked in place, against the
+// workspace's types (`@types/react` is a consumer's, not a dependency).
+// Errors in other packages' files are left to those packages' checks.
+const declarations = files.filter((f) => /\.d\.[cm]?ts$/.test(f));
+if (declarations.length) {
+  const dtsConfig = path.join(workDir, "tsconfig.dts.json");
+  fs.writeFileSync(
+    dtsConfig,
+    JSON.stringify({
+      extends: path.resolve(import.meta.dirname, "../tsconfig.json"),
+      compilerOptions: { noEmit: true, skipLibCheck: false, types: [] },
+      files: declarations.map((f) => path.join(pkgDir, f)),
+    }),
+  );
+  let output = "";
+  try {
+    run("tsc", ["-p", dtsConfig, "--pretty", "false"], {
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+  } catch (err) {
+    output = `${err.stdout}${err.stderr}`;
+  }
+  const allowed = new Set(ALLOWED_DECLARATION_ERRORS[manifest.name]);
+  const seen = new Set();
+  for (const line of output.split("\n").filter((l) => /error TS\d+/.test(l))) {
+    const match = line.match(/^(.+?)\(\d+,\d+\): error (TS\d+):/);
+    if (!match) {
+      failures.push(`tsc (declarations): ${line}`);
+      continue;
+    }
+    const file = path.relative(pkgDir, path.resolve(pkgDir, match[1]));
+    if (file.startsWith("..") || file.includes("node_modules")) continue;
+    const entry = `${file}:${match[2]}`;
+    seen.add(entry);
+    if (!allowed.has(entry)) failures.push(`tsc (declarations): ${line}`);
+  }
+  for (const entry of allowed) {
+    if (!seen.has(entry)) {
+      failures.push(
+        `ALLOWED_DECLARATION_ERRORS entry "${entry}" for "${manifest.name}" no longer matches; remove it.`,
+      );
+    }
+  }
 }
 
 // Load every entrypoint as CJS and ESM. `import()` of ESM syntax in a `.js`
