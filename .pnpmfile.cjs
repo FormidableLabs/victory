@@ -8,6 +8,7 @@ const TS_API_USERS = new Set([
   "rolldown-plugin-dts",
   "cosmiconfig",
   "react-docgen-typescript",
+  "@storybook/react-docgen-typescript-plugin",
   "fork-ts-checker-webpack-plugin",
 ]);
 

@@ -165,7 +165,7 @@ settings:
 overrides:
   '@types/eslint': 8.4.3
 
-pnpmfileChecksum: sha256-gMBHhFHl6vj0nNB7/S+EHF5gD1I00z6tP3mneeMbTn0=
+pnpmfileChecksum: sha256-ZhmrGpAn1X12mLpdnhtBcyMD/QusYmX4v9vEhXRzagg=
 
 importers:
 
@@ -4116,7 +4116,6 @@ packages:
   '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0':
     resolution: {integrity: sha512-KUqXC3oa9JuQ0kZJLBhVdS4lOneKTOopnNBK4tUAgoxWQ3u/IjzdueZjFr7gyBrXMoU6duutk3RQR9u8ZpYJ4Q==}
     peerDependencies:
-      typescript: '>= 4.x'
       webpack: '>= 4'
 
   '@storybook/react-dom-shim@8.4.1':
@@ -14454,7 +14453,7 @@ snapshots:
     dependencies:
       '@storybook/core-webpack': 8.4.1(storybook@8.4.1(prettier@3.3.3)(supports-color@8.1.1))
       '@storybook/react': 8.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.1(prettier@3.3.3)(supports-color@8.1.1))(typescript@7.0.2)
-      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(supports-color@8.1.1)(typescript@7.0.2)(webpack@5.74.0)
+      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.0c3f3b7.0(supports-color@8.1.1)(webpack@5.74.0)
       '@types/node': 22.8.7
       '@types/semver': 7.5.6
       find-up: 5.0.0
@@ -14481,7 +14480,7 @@ snapshots:
     dependencies:
       storybook: 8.4.1(prettier@3.3.3)(supports-color@8.1.1)
 
-  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(supports-color@8.1.1)(typescript@7.0.2)(webpack@5.74.0)':
+  '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(supports-color@8.1.1)(webpack@5.74.0)':
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
       endent: 2.1.0
@@ -14490,7 +14489,7 @@ snapshots:
       micromatch: 4.0.5
       react-docgen-typescript: 2.2.2
       tslib: 2.8.1
-      typescript: 7.0.2
+      typescript: 6.0.3
       webpack: 5.74.0(@swc/core@1.8.0)(esbuild@0.18.20)(webpack-cli@4.10.0)
     transitivePeerDependencies:
       - supports-color

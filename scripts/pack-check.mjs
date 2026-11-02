@@ -42,22 +42,22 @@ const ALLOWED_CJS_DEFAULT_IMPORTS = {
 };
 
 // Type errors in the published declarations that predate this check, by
-// package, as `<published file>:<error code>`. Fixing them changes published
-// types (tracked in #3093). Anything else fails, and so does an entry that no
-// longer matches.
+// package, as `<published file>:<error code>` with how many there are. Fixing
+// them changes published types (tracked in #3093). Anything else fails, and so
+// does a count that no longer matches.
 const ALLOWED_DECLARATION_ERRORS = {
-  "victory-create-container": [
+  "victory-create-container": {
     // `createContainer`'s inferred return type indexes the container map with
     // a type parameter that isn't narrowed to `ContainerType`.
-    "dist/create-container.d.cts:TS2344",
-    "dist/create-container.d.mts:TS2344",
-  ],
-  "victory-errorbar": [
+    "dist/create-container.d.cts:TS2344": 8,
+    "dist/create-container.d.mts:TS2344": 8,
+  },
+  "victory-errorbar": {
     // `ErrorBar`'s props use `typeof ErrorBar.default`, which doesn't exist
     // (it's `any` in the source).
-    "dist/error-bar.d.cts:TS2339",
-    "dist/error-bar.d.mts:TS2339",
-  ],
+    "dist/error-bar.d.cts:TS2339": 1,
+    "dist/error-bar.d.mts:TS2339": 1,
+  },
 };
 
 // Default imports in tsdown's ESM output, one per line: `D`, `D, { ... }` and
@@ -236,17 +236,24 @@ if (declarations.length) {
       files: declarations.map((f) => path.join(pkgDir, f)),
     }),
   );
-  let output = "";
+  let errorLines = [];
   try {
     run("tsc", ["-p", dtsConfig, "--pretty", "false"], {
       stdio: ["ignore", "pipe", "pipe"],
     });
   } catch (err) {
-    output = `${err.stdout}${err.stderr}`;
+    const output = `${err.stdout ?? ""}${err.stderr ?? ""}`;
+    errorLines = output.split("\n").filter((l) => /error TS\d+/.test(l));
+    // Failed without a diagnostic (e.g. `tsc` not found, or a crash).
+    if (!errorLines.length) {
+      failures.push(
+        `tsc (declarations) failed: ${output.trim() || err.message}`,
+      );
+    }
   }
-  const allowed = new Set(ALLOWED_DECLARATION_ERRORS[manifest.name]);
-  const seen = new Set();
-  for (const line of output.split("\n").filter((l) => /error TS\d+/.test(l))) {
+  const allowed = ALLOWED_DECLARATION_ERRORS[manifest.name] ?? {};
+  const found = new Map();
+  for (const line of errorLines) {
     const match = line.match(/^(.+?)\(\d+,\d+\): error (TS\d+):/);
     if (!match) {
       failures.push(`tsc (declarations): ${line}`);
@@ -255,13 +262,17 @@ if (declarations.length) {
     const file = path.relative(pkgDir, path.resolve(pkgDir, match[1]));
     if (file.startsWith("..") || file.includes("node_modules")) continue;
     const entry = `${file}:${match[2]}`;
-    seen.add(entry);
-    if (!allowed.has(entry)) failures.push(`tsc (declarations): ${line}`);
+    if (!found.has(entry)) found.set(entry, []);
+    found.get(entry).push(line);
   }
-  for (const entry of allowed) {
-    if (!seen.has(entry)) {
+  for (const entry of new Set([...Object.keys(allowed), ...found.keys()])) {
+    const lines = found.get(entry) ?? [];
+    const expected = allowed[entry] ?? 0;
+    if (lines.length > expected) {
+      failures.push(...lines.map((l) => `tsc (declarations): ${l}`));
+    } else if (lines.length < expected) {
       failures.push(
-        `ALLOWED_DECLARATION_ERRORS entry "${entry}" for "${manifest.name}" no longer matches; remove it.`,
+        `ALLOWED_DECLARATION_ERRORS entry "${entry}" for "${manifest.name}" expects ${expected} errors, found ${lines.length}; update it.`,
       );
     }
   }
