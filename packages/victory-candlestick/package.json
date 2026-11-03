@@ -35,7 +35,7 @@
     "victory-core": "37.4.1"
   },
   "peerDependencies": {
-    "react": ">=16.6.0"
+    "react": ">=18"
   },
   "devDependencies": {
     "victory-vendor": "*",
