@@ -1,5 +1,30 @@
 # victory-core
 
+## 38.0.0
+
+### Major Changes
+
+- [#3138](https://github.com/FormidableLabs/victory/pull/3138) [`b7ebc3e`](https://github.com/FormidableLabs/victory/commit/b7ebc3e316d05740f11d4e8b8072d420db6ccfad) - Require React 18 or later: the `react` peer dependency is now `>=18` (was `>=16.6.0`). If you're on React 16 or 17, stay on Victory 37.x until you upgrade React.
+
+- [#3107](https://github.com/FormidableLabs/victory/pull/3107) [`4c436bd`](https://github.com/FormidableLabs/victory/commit/4c436bd47b835e795e96bc205cdf9c590fe92ddb) - Remove the UMD bundles (`dist/<package>.js` and `dist/<package>.min.js`). To use Victory in the browser without a build step, import it as ESM from a CDN with an import map; see [Using Victory in the browser](https://commerce.nearform.com/open-source/victory/docs/introduction/browser).
+
+- [#3108](https://github.com/FormidableLabs/victory/pull/3108) [`8f16467`](https://github.com/FormidableLabs/victory/commit/8f1646767d6059d764541118284cf71cc1da5c95) - Packages are now built with tsdown and published from `dist/`, with an `exports` map:
+  
+  - ESM is `dist/*.mjs` and CommonJS is `dist/*.cjs`, with matching `.d.mts`/`.d.cts` types. `main`, `module` and `types` still point at them for older tooling.
+  - Only the package root (and `package.json`) can be imported. Deep imports into `lib/`, `es/` or `src/` no longer resolve; import from the package root instead (for example `import { Helpers } from "victory-core"`).
+  - The output targets ES2022 and is no longer down-leveled further. If you support older browsers, transpile `node_modules` in your bundler.
+  - `src/` is no longer published.
+
+### Patch Changes
+
+- [#3108](https://github.com/FormidableLabs/victory/pull/3108) [`8f16467`](https://github.com/FormidableLabs/victory/commit/8f1646767d6059d764541118284cf71cc1da5c95) - Export the `ComponentEvent` type. Component declarations that use it (such as `componentEvents` on `VictoryArea`) now reference `victory-core` instead of an internal path.
+
+- [#3115](https://github.com/FormidableLabs/victory/pull/3115) [`1864919`](https://github.com/FormidableLabs/victory/commit/18649193d7c8d42a8f5f58ade9c63288af68a7f8) - Fix `VictoryLabel`'s default `fontFamily`: an invisible soft hyphen inside `'Seravek'` meant that font never matched. Remove the unused `lodash` dependency from `victory-canvas`, `victory-histogram` and `victory-scatter`.
+
+- [#3123](https://github.com/FormidableLabs/victory/pull/3123) [`4261e04`](https://github.com/FormidableLabs/victory/commit/4261e0453733d19154dc0700f14c03e8e0aad539) - Stop the primitives (`Circle`, `Line`, `Path`, `Rect`, `Text`, `TSpan`) from writing Victory props such as `standalone`, `polar`, `theme` and `stringMap` to the DOM. `VictoryChart`, `VictoryGroup` and `VictoryStack` inject these into every child, so a primitive placed directly in a chart triggered React warnings like "Received `false` for a non-boolean attribute `standalone`" ([#3118](https://github.com/FormidableLabs/victory/issues/3118)).
+
+- [#3132](https://github.com/FormidableLabs/victory/pull/3132) [`f74f959`](https://github.com/FormidableLabs/victory/commit/f74f95912f5f1ca6fdb8b501bfad0ed7ffc6cb67) - Fix `TS1540` errors when type-checking the published declarations with TypeScript 7 and `skipLibCheck: false` by using `namespace` instead of the deprecated `module` keyword in the Immutable.js type declarations. Thanks @vinassefranche ([#3077](https://github.com/FormidableLabs/victory/issues/3077)).
+
 ## 37.4.1
 
 No changes in this release.

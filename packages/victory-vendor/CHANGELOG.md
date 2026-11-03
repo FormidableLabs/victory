@@ -1,5 +1,9 @@
 # victory-vendor
 
+## 38.0.0
+
+No changes in this release.
+
 ## 37.4.1
 
 ### Patch Changes
