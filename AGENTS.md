@@ -69,6 +69,7 @@ These commands change as the uplift lands. Update this section in the same PR th
 - React peer range: published packages declare `>=16.6.0`. Phase 4 (#3093) raises it to `>=18` (decided, needs a changeset). Until then, don't use React 18+ APIs (`useId`, `useSyncExternalStore`, ...) in library code; after it, still no React 19-only APIs.
 - Don't add `engines` fields to any `package.json`. `.nvmrc` is the one place the Node version is set.
 - Ship ESM + CJS. Don't add browser-only or Node-only code paths to library packages.
+- Scripts and tooling: prefer async Node APIs (`node:fs/promises`, top-level `await`, `Promise.all` for independent work) over `*Sync` functions. Use a sync call only where async can't work (e.g. a synchronous config hook) or it clearly simplifies a step, and say why in a comment. Existing `*Sync` code isn't converted in unrelated PRs.
 
 ## Keep tuning
 
