@@ -15,8 +15,6 @@ const MINOR_ONLY = {
   "@babel/cli": "vendor single-tool build",
   "@babel/core": "vendor single-tool build",
   "@babel/plugin-transform-modules-commonjs": "vendor single-tool build",
-  // Website: react-live 5 item.
-  "react-live": "react-live 5",
 };
 
 // Phase 3 replaces Storybook and Chromatic (and `concurrently` with them).
