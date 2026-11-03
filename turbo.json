@@ -2,11 +2,15 @@
   "$schema": "./node_modules/turbo/schema.json",
   "ui": "stream",
   // Files outside packages that can change any task's result. Over-including
-  // only costs cache hits; missing one is a correctness bug.
+  // only costs cache hits; missing one is a correctness bug. These are global,
+  // not `$TURBO_ROOT$` task inputs, because `--affected` (PR CI) only sees
+  // package files and global dependencies.
   "globalDependencies": [
     ".nvmrc",
     "package.json",
     "pnpm-workspace.yaml",
+    "scripts/pack-check.mjs",
+    "test/**",
     "tsconfig.json",
     "tsconfig.base.json",
     "tsdown.config.mts"
@@ -22,32 +26,23 @@
       "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
       "outputs": ["dist/**"]
     },
-    // Type-checks src including tests, against dependencies' built types. The
-    // shared `test/` helpers import victory-voronoi's source, which imports
-    // `victory-core` by package name: so this waits for the package's own
-    // build, and depends on victory-voronoi's build so edits to that source
-    // change the hash.
+    // Type-checks src including tests, against dependencies' built types. Also
+    // waits for the package's own build: victory-vendor's checks the `d3-*`
+    // files its build writes.
     "types:check": {
-      "dependsOn": ["build", "^build", "victory-voronoi#build"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
+      "dependsOn": ["build", "^build"]
     },
     // Tests import dependencies through their built `dist`, plus the root
-    // `test/` config and helpers (which import victory-vendor and
-    // victory-voronoi).
+    // `test/` config and helpers (which import victory-vendor's build).
     "test": {
-      "dependsOn": ["^build", "victory-vendor#build", "victory-voronoi#build"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
+      "dependsOn": ["^build", "victory-vendor#build"]
     },
     // Packs the built package and checks it (publint, attw, loading every
     // entrypoint, and `pack-snapshot.json` where present). Loading needs the
     // dependencies' `lib`. Unlike the builds, Markdown is published.
     "pack:check": {
       "dependsOn": ["build", "^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "!src/**/*.test.*",
-        "$TURBO_ROOT$/scripts/pack-check.mjs"
-      ]
+      "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*"]
     }
   }
 }
