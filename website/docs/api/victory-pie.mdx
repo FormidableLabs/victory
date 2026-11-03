@@ -33,9 +33,7 @@ The `cornerRadius` prop specifies the corner radius of the slices rendered in th
 
 ```jsx live
 <VictoryPie
-  cornerRadius={({ datum }) =>
-    datum.y * 5
-  }
+  cornerRadius={({ datum }) => datum.y * 5}
   data={sampleData}
   theme={VictoryTheme.clean}
 />
@@ -51,7 +49,6 @@ The `cornerRadius` prop specifies the corner radius of the slices rendered in th
 </Badges>
 
 The `endAngle` props defines the overall end angle of the pie in degrees. This prop is used in conjunction with `startAngle` to create a pie that spans only a segment of a circle, or to change overall rotation of the pie. This prop should be given as a number of degrees. Degrees are defined as starting at the 12 o'clock position, and proceeding clockwise.
-
 
 ```jsx live
 <div>
@@ -104,11 +101,8 @@ See the [Events Guide][] for more information on defining events.
             return [
               {
                 target: "data",
-                mutation: ({
-                  style,
-                }) => {
-                  return style.fill ===
-                    "#c43a31"
+                mutation: ({ style }) => {
+                  return style.fill === "#c43a31"
                     ? null
                     : {
                         style: {
@@ -119,11 +113,8 @@ See the [Events Guide][] for more information on defining events.
               },
               {
                 target: "labels",
-                mutation: ({
-                  text,
-                }) => {
-                  return text ===
-                    "clicked"
+                mutation: ({ text }) => {
+                  return text === "clicked"
                     ? null
                     : {
                         text: "clicked",
@@ -153,9 +144,7 @@ The `innerRadius` prop determines the number of pixels between the center of the
 
 ```jsx live
 <VictoryPie
-  innerRadius={({ datum }) =>
-    datum.y * 20
-  }
+  innerRadius={({ datum }) => datum.y * 20}
   data={sampleData}
   theme={VictoryTheme.clean}
 />
@@ -172,13 +161,8 @@ The `innerRadius` prop determines the number of pixels between the center of the
 The `labelIndicator` prop defines the label indicator line between labels and the pie chart. If this prop is used as a boolean,then the default indicator will be displayed. To customize or pass your own styling `<LineSegment/>` can be passed to labelIndicator. LabelIndicator is functional only when labelPosition = "centroid". To adjust the labelIndicator length, `labelIndicatorInnerOffset` and `labelIndicatorOuterOffset` props can be used alongside labelIndicator.
 
 ```jsx live
-<VictoryGroup
-  theme={VictoryTheme.clean}
->
-  <VictoryPie
-    data={sampleData}
-    labelIndicator
-  />
+<VictoryGroup theme={VictoryTheme.clean}>
+  <VictoryPie data={sampleData} labelIndicator />
   <VictoryPie
     data={sampleData}
     labelIndicator={
@@ -238,11 +222,7 @@ The `labelIndicatorInnerOffset` prop defines the offset by which the indicator l
 The `labelIndicatorOuterOffset` prop defines the offset by which the indicator length outside the pie chart is being drawn. Higher the number shorter the length.
 
 ```jsx live
-<VictoryPie
-  data={sampleData}
-  labelIndicator
-  labelIndicatorOuterOffset={5}
-/>
+<VictoryPie data={sampleData} labelIndicator labelIndicatorOuterOffset={5} />
 ```
 
 ---
@@ -258,15 +238,9 @@ The `labelPlacement` prop specifies the angular placement of each label relative
 ```jsx live
 <VictoryPie
   data={sampleData}
-  labels={({ datum }) =>
-    `y: ${datum.y}`
-  }
-  labelPosition={({ index }) =>
-    index ? "centroid" : "startAngle"
-  }
-  labelPlacement={({ index }) =>
-    index ? "parallel" : "vertical"
-  }
+  labels={({ datum }) => `y: ${datum.y}`}
+  labelPosition={({ index }) => (index ? "centroid" : "startAngle")}
+  labelPlacement={({ index }) => (index ? "parallel" : "vertical")}
   theme={VictoryTheme.clean}
 />
 ```
@@ -285,9 +259,7 @@ The `labelPosition` prop specifies the position of each label relative to its co
 <VictoryPie
   data={sampleData}
   labels={({ datum }) => datum.y}
-  labelPosition={({ index }) =>
-    index ? "centroid" : "startAngle"
-  }
+  labelPosition={({ index }) => (index ? "centroid" : "startAngle")}
   theme={VictoryTheme.clean}
 />
 ```
@@ -305,12 +277,8 @@ The `labelRadius` prop defines the radius of the arc that will be used for posit
 ```jsx live
 <VictoryPie
   data={sampleData}
-  labelRadius={({ innerRadius }) =>
-    innerRadius + 5
-  }
-  radius={({ datum }) =>
-    50 + datum.y * 20
-  }
+  labelRadius={({ innerRadius }) => innerRadius + 5}
+  radius={({ datum }) => 50 + datum.y * 20}
   innerRadius={50}
   style={{
     labels: {
@@ -353,9 +321,7 @@ The `radius` prop specifies the radius of the pie. When this prop is not given, 
 
 ```jsx live
 <VictoryPie
-  radius={({ datum }) =>
-    20 + datum.y * 20
-  }
+  radius={({ datum }) => 20 + datum.y * 20}
   data={sampleData}
   theme={VictoryTheme.clean}
 />

@@ -21,9 +21,7 @@ See the full API for [`VictoryAxis`](/docs/api/victory-axis) for more details.
 The `VictoryAxis` component can be used to render a basic axis.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryAxis crossAxis />
   <VictoryAxis dependentAxis />
   <VictoryLine
@@ -45,9 +43,7 @@ The `VictoryAxis` component can be used to render a basic axis.
 The `crossAxis` prop can be used to render a horizontal axis, and the `dependentAxis` prop can be used to render a vertical axis.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryAxis crossAxis />
   <VictoryLine
     data={[
@@ -66,9 +62,7 @@ The `crossAxis` prop can be used to render a horizontal axis, and the `dependent
 Gridlines can be shown by styling the axis component.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryAxis
     crossAxis
     style={{
@@ -82,10 +76,7 @@ Gridlines can be shown by styling the axis component.
     dependentAxis
     style={{
       grid: {
-        stroke: ({ tick }) =>
-          tick === 5
-            ? "#2d7ff9"
-            : "#CFD8DC",
+        stroke: ({ tick }) => (tick === 5 ? "#2d7ff9" : "#CFD8DC"),
         strokeDasharray: "10, 5",
       },
     }}
@@ -109,13 +100,8 @@ Gridlines can be shown by styling the axis component.
 You can specify the specific tick values you would like to display on the axis using the `tickValues` prop.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryAxis
-    crossAxis
-    tickValues={[0, 2, 4, 6]}
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryAxis crossAxis tickValues={[0, 2, 4, 6]} />
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -139,15 +125,8 @@ Use the `tickFormat` prop to customize axis labels. This prop can be given as an
 :::
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryAxis
-    crossAxis
-    tickFormat={(tick) =>
-      `$${Math.round(tick)}M`
-    }
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryAxis crossAxis tickFormat={(tick) => `$${Math.round(tick)}M`} />
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -165,15 +144,10 @@ Use the `tickFormat` prop to customize axis labels. This prop can be given as an
 You can also return an array of strings to create multiline labels.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryAxis
     crossAxis
-    tickFormat={(tick) => [
-      `$${Math.round(tick)}`,
-      "Million",
-    ]}
+    tickFormat={(tick) => [`$${Math.round(tick)}`, "Million"]}
   />
   <VictoryLine
     data={[
@@ -205,34 +179,22 @@ const data = [
 ];
 
 const domain = {
-  x: [
-    Math.min(...data.map((d) => d.x)),
-    Math.max(...data.map((d) => d.x)),
-  ],
+  x: [Math.min(...data.map((d) => d.x)), Math.max(...data.map((d) => d.x))],
 };
 
 // ref: https://d3js.org/d3-scale/time
-const timeScaledomain = d3Scale
-  .scaleTime()
-  .domain(domain.x);
+const timeScaledomain = d3Scale.scaleTime().domain(domain.x);
 
 // ref: https://d3js.org/d3-scale/time#time_ticks
 const ticks = timeScaledomain.ticks(6);
 
 // ref: https://d3js.org/d3-scale/time#time_tickFormat
-const formatter =
-  timeScaledomain.tickFormat();
+const formatter = timeScaledomain.tickFormat();
 
 function App() {
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
-      <VictoryAxis
-        crossAxis
-        tickValues={ticks}
-        tickFormat={formatter}
-      />
+    <VictoryChart theme={VictoryTheme.clean}>
+      <VictoryAxis crossAxis tickValues={ticks} tickFormat={formatter} />
       <VictoryLine data={data} />
     </VictoryChart>
   );
@@ -246,13 +208,8 @@ render(<App />);
 You can offset the position of the axis using the `offsetX` and `offsetY` props.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryAxis
-    dependentAxis
-    offsetX={225}
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryAxis dependentAxis offsetX={225} />
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -272,13 +229,8 @@ You can offset the position of the axis using the `offsetX` and `offsetY` props.
 The axis orientation can be set to `top`, `bottom`, `left`, or `right` using the `orientation` prop.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryAxis
-    dependentAxis
-    orientation="right"
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryAxis dependentAxis orientation="right" />
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -298,17 +250,9 @@ The axis orientation can be set to `top`, `bottom`, `left`, or `right` using the
 The axis supports labels using the `label` prop.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryAxis
-    dependentAxis
-    label="Sample Values"
-  />
-  <VictoryAxis
-    crossAxis
-    label="Sample Input"
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryAxis dependentAxis label="Sample Values" />
+  <VictoryAxis crossAxis label="Sample Input" />
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -343,39 +287,29 @@ const data = [
 ];
 
 const ampRange = [0, 20];
-const ampAxisColor =
-  VictoryTheme.clean.palette.blue[3];
+const ampAxisColor = VictoryTheme.clean.palette.blue[3];
 
 const tempRange = [0, 100];
-const tempAxisColor =
-  VictoryTheme.clean.palette.red[3];
+const tempAxisColor = VictoryTheme.clean.palette.red[3];
 
 const ticks = 10;
 const tickValues = _.range(ticks + 1);
 const domain = { y: [0, ticks] };
 
-const tickFormat = (range) => (t) =>
-  (t * (range[1] - range[0])) / ticks;
+const tickFormat = (range) => (t) => (t * (range[1] - range[0])) / ticks;
 
-const normalize =
-  (range, props) => (datum) =>
-    datum[props] /
-    ((range[1] - range[0]) / ticks);
+const normalize = (range, props) => (datum) =>
+  datum[props] / ((range[1] - range[0]) / ticks);
 
 function App() {
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-      domain={domain}
-    >
+    <VictoryChart theme={VictoryTheme.clean} domain={domain}>
       <VictoryAxis crossAxis />
       <VictoryAxis
         dependentAxis
         orientation="left"
         tickValues={tickValues}
-        tickFormat={tickFormat(
-          ampRange,
-        )}
+        tickFormat={tickFormat(ampRange)}
         style={{
           axis: {
             stroke: ampAxisColor,
@@ -392,9 +326,7 @@ function App() {
         dependentAxis
         orientation="right"
         tickValues={tickValues}
-        tickFormat={tickFormat(
-          tempRange,
-        )}
+        tickFormat={tickFormat(tempRange)}
         style={{
           axis: {
             stroke: tempAxisColor,
@@ -439,9 +371,7 @@ render(<App />);
 Dependent axes can be aligned to their corresponding data points by setting the `axisValue` prop.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryBar
     data={[
       { x: "cat", y: 10 },
@@ -452,14 +382,7 @@ Dependent axes can be aligned to their corresponding data points by setting the 
     ]}
   />
   <VictoryAxis />
-  {[
-    "cat",
-    "dog",
-    "bird",
-    "dog",
-    "frog",
-    "fish",
-  ].map((d, i) => {
+  {["cat", "dog", "bird", "dog", "frog", "fish"].map((d, i) => {
     return (
       <VictoryAxis
         dependentAxis
@@ -482,10 +405,7 @@ Dependent axes can be aligned to their corresponding data points by setting the 
 When a dataset only has a single value, or when all values on an axis have the same value, the single-point domain for that axis will be converted to a two-point domain. Victory does this by offsetting the domain value by a very small number. To solve this, you will need to manually set sensible defaults on the domain of your chart.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 2] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 2] }} theme={VictoryTheme.clean}>
   <VictoryBar data={[{ x: 1, y: 1 }]} />
 </VictoryChart>
 ```
@@ -530,9 +450,7 @@ Splitting the labels onto multiple lines can help to make the labels more readab
 :::
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryAxis
     dependentAxis
     tickFormat={[
@@ -553,9 +471,7 @@ Using angled labels can help to make the labels more readable.
 :::
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryAxis
     dependentAxis
     style={{
@@ -594,13 +510,7 @@ Fixing axis label and tick label overlap using the style prop.
       axisLabel: { padding: 60 },
     }}
     label="Axis Label"
-    tickFormat={[
-      "1000K",
-      "2000k",
-      "3000k",
-      "4000k",
-      "5000k",
-    ]}
+    tickFormat={["1000K", "2000k", "3000k", "4000k", "5000k"]}
   />
   <VictoryAxis />
   <VictoryLine />
@@ -618,9 +528,7 @@ See the full API for [`VictoryBrushLine`](/docs/api/victory-brush-line) for more
 :::
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryBar
     data={[
       { x: "one", y: 4 },
@@ -628,13 +536,7 @@ See the full API for [`VictoryBrushLine`](/docs/api/victory-brush-line) for more
       { x: "three", y: 6 },
     ]}
   />
-  <VictoryAxis
-    axisComponent={
-      <VictoryBrushLine
-        brushWidth={20}
-      />
-    }
-  />
+  <VictoryAxis axisComponent={<VictoryBrushLine brushWidth={20} />} />
 </VictoryChart>
 ```
 
@@ -655,10 +557,7 @@ See the full API for [`VictoryPolarAxis`](/docs/api/victory-polar-axis) for more
 The `VictoryPolarAxis` component can be used to render a basic axis for polar charts.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  polar
->
+<VictoryChart theme={VictoryTheme.clean} polar>
   <VictoryPolarAxis crossAxis />
   <VictoryPolarAxis dependentAxis />
   <VictoryLine
@@ -680,15 +579,9 @@ The `VictoryPolarAxis` component can be used to render a basic axis for polar ch
 The dependent axis can be rendered at different angles.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  polar
->
+<VictoryChart theme={VictoryTheme.clean} polar>
   <VictoryPolarAxis crossAxis />
-  <VictoryPolarAxis
-    dependentAxis
-    axisAngle={45}
-  />
+  <VictoryPolarAxis dependentAxis axisAngle={45} />
   <VictoryLine
     data={[
       { x: 1, y: 2 },
@@ -708,14 +601,8 @@ The dependent axis can be rendered at different angles.
 The label placement can be adjusted by using the [`labelPlacement`](/docs/api/victory-polar-axis#labelplacement) prop.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  polar
->
-  <VictoryPolarAxis
-    crossAxis
-    labelPlacement="vertical"
-  />
+<VictoryChart theme={VictoryTheme.clean} polar>
+  <VictoryPolarAxis crossAxis labelPlacement="vertical" />
   <VictoryLine
     data={[
       { x: 1, y: 2 },

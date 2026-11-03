@@ -9,10 +9,7 @@ Bar charts renders a dataset as series of bars and is used for comparing numeric
 See the [full API here](/docs/api/victory-bar). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 20 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.clean}>
   <VictoryBar data={sampleData} />
 </VictoryChart>
 ```
@@ -26,10 +23,7 @@ Using `domainPadding` to adjust the bar position is the most common way to adjus
 :::
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 50 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 50 }} theme={VictoryTheme.clean}>
   <VictoryBar data={sampleData} />
 </VictoryChart>
 ```
@@ -39,13 +33,8 @@ Setting the bar alignment using the `alignment` prop.
 :::
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryBar
-    alignment="start"
-    data={sampleData}
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryBar alignment="start" data={sampleData} />
 </VictoryChart>
 ```
 
@@ -54,10 +43,7 @@ Setting the bar alignment using the `domain` prop.
 :::
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0.5, 5.5] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0.5, 5.5] }} theme={VictoryTheme.clean}>
   <VictoryBar data={sampleData} />
 </VictoryChart>
 ```
@@ -67,11 +53,7 @@ Setting the bar alignment using the `domain` prop.
 Bar charts can be rendered horizontally by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryBar`.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 20 }}
-  horizontal
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 20 }} horizontal theme={VictoryTheme.clean}>
   <VictoryBar />
 </VictoryChart>
 ```
@@ -81,14 +63,8 @@ Bar charts can be rendered horizontally by setting the `horizontal` prop to `tru
 Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-area#labelcomponent) prop.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 20 }}
-  theme={VictoryTheme.clean}
->
-  <VictoryBar
-    data={sampleData}
-    labels={({ datum }) => datum.y}
-  />
+<VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.clean}>
+  <VictoryBar data={sampleData} labels={({ datum }) => datum.y} />
 </VictoryChart>
 ```
 
@@ -97,10 +73,7 @@ Add labels to charts by setting the `labels` prop to the name of a property in t
 Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 20 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.clean}>
   <VictoryBar
     data={sampleData}
     labelComponent={<VictoryTooltip />}
@@ -121,10 +94,7 @@ function App() {
       domain={{ y: [0.5, 5.5] }}
       domainPadding={{ x: 40 }}
     >
-      <VictoryGroup
-        offset={20}
-        style={{ data: { width: 15 } }}
-      >
+      <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
         <VictoryBar
           data={[
             { x: "2023 Q1", y: 1 },
@@ -169,10 +139,7 @@ function App() {
       domain={{ y: [0.5, 5.5] }}
       domainPadding={{ x: 40 }}
     >
-      <VictoryGroup
-        offset={20}
-        style={{ data: { width: 15 } }}
-      >
+      <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
         <VictoryBar
           data={[
             { x: "2023 Q1", y: 1 },
@@ -180,9 +147,7 @@ function App() {
             { x: "2023 Q3", y: 3 },
             { x: "2023 Q4", y: 2 },
           ]}
-          labels={({ datum }) =>
-            datum.y
-          }
+          labels={({ datum }) => datum.y}
         />
         <VictoryBar
           data={[
@@ -191,9 +156,7 @@ function App() {
             { x: "2023 Q3", y: 4 },
             { x: "2023 Q4", y: 5 },
           ]}
-          labels={({ datum }) =>
-            datum.y
-          }
+          labels={({ datum }) => datum.y}
         />
         <VictoryBar
           data={[
@@ -202,9 +165,7 @@ function App() {
             { x: "2023 Q3", y: 3 },
             { x: "2023 Q4", y: 4 },
           ]}
-          labels={({ datum }) =>
-            datum.y
-          }
+          labels={({ datum }) => datum.y}
         />
       </VictoryGroup>
     </VictoryChart>
@@ -219,11 +180,7 @@ render(<App />);
 Bar charts can be rendered with other chart types like `Line`.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 20 }}
-  horizontal
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 20 }} horizontal theme={VictoryTheme.clean}>
   <VictoryBar />
   <VictoryLine />
 </VictoryChart>
@@ -235,31 +192,21 @@ Charts can be animated by setting the `animate` prop. See the [animations](/docs
 
 ```jsx live noInline
 function App() {
-  const [data, setData] =
-    React.useState(getData());
+  const [data, setData] = React.useState(getData());
 
   React.useState(() => {
-    const setStateInterval =
-      window.setInterval(() => {
-        setData(getData());
-      }, 4000);
+    const setStateInterval = window.setInterval(() => {
+      setData(getData());
+    }, 4000);
 
     return () => {
-      window.clearInterval(
-        setStateInterval,
-      );
+      window.clearInterval(setStateInterval);
     };
   }, []);
 
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-      domainPadding={{ x: 20 }}
-    >
-      <VictoryBar
-        animate={{ duration: 1000 }}
-        data={data}
-      />
+    <VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 20 }}>
+      <VictoryBar animate={{ duration: 1000 }} data={data} />
     </VictoryChart>
   );
 }
@@ -317,10 +264,7 @@ Bar charts support pan and zoom behavior by using the `VictoryZoomContainer` com
 Chart styling can be customized by using the theme or overriding the style prop on the component.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 20 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.clean}>
   <VictoryBar
     data={sampleData}
     labels={({ datum }) => datum.y}
@@ -359,10 +303,7 @@ function App() {
   };
 
   return (
-    <VictoryChart
-      domainPadding={{ x: 20 }}
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.clean}>
       <VictoryBar
         data={sampleData}
         labels={({ datum }) => datum.y}
@@ -374,11 +315,7 @@ function App() {
                 return [
                   {
                     target: "data",
-                    mutation: (props) =>
-                      toggleFillColor(
-                        props.style
-                          ?.fill,
-                      ),
+                    mutation: (props) => toggleFillColor(props.style?.fill),
                   },
                 ];
               },
@@ -398,10 +335,7 @@ render(<App />);
 Bar charts can be stacked to show how different categories contribute to the total.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 40 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 40 }} theme={VictoryTheme.clean}>
   <VictoryStack>
     <VictoryBar
       data={[
@@ -462,60 +396,32 @@ function App() {
   // use to transform your data to make 100% data
 
   function transformData(dataset) {
-    const totals = dataset[0].map(
-      (data, i) => {
-        return dataset.reduce(
-          (memo, curr) => {
-            return memo + curr[i].y;
-          },
-          0,
-        );
-      },
-    );
+    const totals = dataset[0].map((data, i) => {
+      return dataset.reduce((memo, curr) => {
+        return memo + curr[i].y;
+      }, 0);
+    });
     return dataset.map((data) => {
       return data.map((datum, i) => {
         return {
           x: datum.x,
-          y:
-            (datum.y / totals[i]) * 100,
+          y: (datum.y / totals[i]) * 100,
         };
       });
     });
   }
 
-  const dataset =
-    transformData(myDataset);
+  const dataset = transformData(myDataset);
   return (
     <div>
-      <VictoryChart
-        domainPadding={{ x: 30, y: 20 }}
-        theme={VictoryTheme.clean}
-      >
+      <VictoryChart domainPadding={{ x: 30, y: 20 }} theme={VictoryTheme.clean}>
         <VictoryStack>
           {dataset.map((data, i) => {
-            return (
-              <VictoryBar
-                data={data}
-                key={i}
-              />
-            );
+            return <VictoryBar data={data} key={i} />;
           })}
         </VictoryStack>
-        <VictoryAxis
-          dependentAxis
-          tickFormat={(tick) =>
-            `${tick}%`
-          }
-        />
-        <VictoryAxis
-          tickFormat={[
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-          ]}
-        />
+        <VictoryAxis dependentAxis tickFormat={(tick) => `${tick}%`} />
+        <VictoryAxis tickFormat={["a", "b", "c", "d", "e"]} />
       </VictoryChart>
     </div>
   );
@@ -542,56 +448,27 @@ function App() {
 
   return (
     <div>
-      <VictoryChart
-        domainPadding={{ x: 50 }}
-      >
+      <VictoryChart domainPadding={{ x: 50 }}>
         <VictoryGroup
           offset={20}
           style={{
             data: { width: 15 },
           }}
         >
-          <VictoryStack
-            colorScale={"red"}
-          >
-            {getBarData().map(
-              (data, index) => {
-                return (
-                  <VictoryBar
-                    key={index}
-                    data={data}
-                  />
-                );
-              },
-            )}
+          <VictoryStack colorScale={"red"}>
+            {getBarData().map((data, index) => {
+              return <VictoryBar key={index} data={data} />;
+            })}
           </VictoryStack>
-          <VictoryStack
-            colorScale={"green"}
-          >
-            {getBarData().map(
-              (data, index) => {
-                return (
-                  <VictoryBar
-                    key={index}
-                    data={data}
-                  />
-                );
-              },
-            )}
+          <VictoryStack colorScale={"green"}>
+            {getBarData().map((data, index) => {
+              return <VictoryBar key={index} data={data} />;
+            })}
           </VictoryStack>
-          <VictoryStack
-            colorScale={"blue"}
-          >
-            {getBarData().map(
-              (data, index) => {
-                return (
-                  <VictoryBar
-                    key={index}
-                    data={data}
-                  />
-                );
-              },
-            )}
+          <VictoryStack colorScale={"blue"}>
+            {getBarData().map((data, index) => {
+              return <VictoryBar key={index} data={data} />;
+            })}
           </VictoryStack>
         </VictoryGroup>
       </VictoryChart>
@@ -607,10 +484,7 @@ render(<App />);
 Diverging bar are useful for showing how different categories compare to a common baseline. By default, Victory will calculate the domain based on the data provided.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 50 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 50 }} theme={VictoryTheme.clean}>
   <VictoryBar
     data={[
       { x: "rabbits", y: 5 },
@@ -629,11 +503,7 @@ Diverging bar are useful for showing how different categories compare to a commo
 Diverging bar are useful for showing how different categories compare to a common baseline. By default, Victory will calculate the domain based on the data provided.
 
 ```jsx live
-<VictoryChart
-  horizontal
-  domainPadding={{ x: 50 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart horizontal domainPadding={{ x: 50 }} theme={VictoryTheme.clean}>
   <VictoryBar
     data={[
       { x: "rabbits", y: 5 },
@@ -654,27 +524,17 @@ Diverging bar are useful for showing how different categories compare to a commo
 ```jsx live noInline
 function App() {
   return (
-    <VictoryChart
-      domainPadding={{ x: 50 }}
-      theme={VictoryTheme.clean}
-    >
-      <VictoryGroup
-        offset={18}
-        colorScale={"qualitative"}
-      >
-        {getBarData().map(
-          (data, index) => {
-            return (
-              <VictoryBar
-                key={index}
-                data={data}
-                labels={({ datum }) =>
-                  datum.y
-                }
-              />
-            );
-          },
-        )}
+    <VictoryChart domainPadding={{ x: 50 }} theme={VictoryTheme.clean}>
+      <VictoryGroup offset={18} colorScale={"qualitative"}>
+        {getBarData().map((data, index) => {
+          return (
+            <VictoryBar
+              key={index}
+              data={data}
+              labels={({ datum }) => datum.y}
+            />
+          );
+        })}
       </VictoryGroup>
     </VictoryChart>
   );
@@ -718,10 +578,7 @@ const dataA = [
 ];
 
 const dataB = dataA.map((point) => {
-  const y = Math.round(
-    point.y +
-      3 * (Math.random() - 0.75),
-  );
+  const y = Math.round(point.y + 3 * (Math.random() - 0.75));
   return { ...point, y };
 });
 
@@ -764,18 +621,12 @@ function App() {
       >
         <VictoryBar
           data={dataA}
-          y={(data) =>
-            -Math.abs(data.y)
-          }
-          labels={({ datum }) =>
-            `${Math.abs(datum.y)}%`
-          }
+          y={(data) => -Math.abs(data.y)}
+          labels={({ datum }) => `${Math.abs(datum.y)}%`}
         />
         <VictoryBar
           data={dataB}
-          labels={({ datum }) =>
-            `${Math.abs(datum.y)}%`
-          }
+          labels={({ datum }) => `${Math.abs(datum.y)}%`}
         />
       </VictoryStack>
 
@@ -798,15 +649,8 @@ function App() {
           your tick labels in the center of the chart. The correct
           y values are still provided by VictoryAxis for each tick
         */
-        tickLabelComponent={
-          <VictoryLabel
-            x={width / 2}
-            textAnchor="middle"
-          />
-        }
-        tickValues={dataA
-          .map((point) => point.x)
-          .reverse()}
+        tickLabelComponent={<VictoryLabel x={width / 2} textAnchor="middle" />}
+        tickValues={dataA.map((point) => point.x).reverse()}
       />
     </VictoryChart>
   );
@@ -820,10 +664,7 @@ render(<App />);
 Bar charts can be rendered in polar coordinates by setting the `polar` prop to `true` and using `VictoryPolarAxis` components.
 
 ```jsx live
-<VictoryChart
-  polar
-  theme={VictoryTheme.clean}
->
+<VictoryChart polar theme={VictoryTheme.clean}>
   <VictoryPolarAxis
     dependentAxis
     style={{ axis: { stroke: "none" } }}
@@ -869,23 +710,14 @@ function CompassCenter(props) {
 
   return (
     <g>
-      <circle
-        cx={origin.x}
-        cy={origin.y}
-        r={innerRadius}
-        style={circleStyle}
-      />
+      <circle cx={origin.x} cy={origin.y} r={innerRadius} style={circleStyle} />
     </g>
   );
 }
 
 function CenterLabel(props) {
-  const { datum, active, color } =
-    props;
-  const text = [
-    `${directions[datum._x]}`,
-    `${Math.round(datum._y1)} mph`,
-  ];
+  const { datum, active, color } = props;
+  const text = [`${directions[datum._x]}`, `${Math.round(datum._y1)} mph`];
   const baseStyle = {
     fill: color.highlight,
     textAnchor: "middle",
@@ -900,21 +732,14 @@ function CenterLabel(props) {
   ];
 
   return active ? (
-    <VictoryLabel
-      text={text}
-      style={style}
-      x={75}
-      y={75}
-      renderInPortal
-    />
+    <VictoryLabel text={text} style={style} x={75} y={75} renderInPortal />
   ) : null;
 }
 
 function App() {
-  const [state, setState] =
-    React.useState({
-      wind: getWindData(),
-    });
+  const [state, setState] = React.useState({
+    wind: getWindData(),
+  });
 
   return (
     <VictoryChart
@@ -977,21 +802,14 @@ function App() {
       />
       <VictoryPolarAxis
         labelPlacement="parallel"
-        tickValues={_.keys(
-          directions,
-        ).map((k) => +k)}
-        tickFormat={_.values(
-          directions,
-        )}
+        tickValues={_.keys(directions).map((k) => +k)}
+        tickFormat={_.values(directions)}
       />
       <VictoryStack>
         <VictoryBar
           style={{
             data: {
-              fill: ({ active }) =>
-                active
-                  ? orange.highlight
-                  : orange.base,
+              fill: ({ active }) => (active ? orange.highlight : orange.base),
               width: 40,
             },
           }}
@@ -999,31 +817,20 @@ function App() {
           x="windBearing"
           y="windSpeed"
           labels={() => ""}
-          labelComponent={
-            <CenterLabel
-              color={orange}
-            />
-          }
+          labelComponent={<CenterLabel color={orange} />}
         />
         <VictoryBar
           style={{
             data: {
-              fill: (d, a) =>
-                a
-                  ? red.highlight
-                  : red.base,
+              fill: (d, a) => (a ? red.highlight : red.base),
               width: 40,
             },
           }}
           data={state.wind}
           x="windBearing"
-          y={(d) =>
-            d.windGust - d.windSpeed
-          }
+          y={(d) => d.windGust - d.windSpeed}
           labels={() => ""}
-          labelComponent={
-            <CenterLabel color={red} />
-          }
+          labelComponent={<CenterLabel color={red} />}
         />
       </VictoryStack>
       <CompassCenter />
@@ -1033,8 +840,7 @@ function App() {
 
 function getWindData() {
   return _.keys(directions).map((d) => {
-    const speed =
-      Math.floor(_.random() * 17) + 4;
+    const speed = Math.floor(_.random() * 17) + 4;
     return {
       windSpeed: speed,
       windGust: speed + _.random(2, 10),
@@ -1051,9 +857,7 @@ render(<App />);
 Bar charts can be rendered outside a VictoryChart.
 
 ```jsx live
-<VictoryBar
-  theme={VictoryTheme.clean}
-/>
+<VictoryBar theme={VictoryTheme.clean} />
 ```
 
 They can also be embeded in other SVG components by using the `standalone` prop.
@@ -1068,12 +872,7 @@ They can also be embeded in other SVG components by using the `standalone` prop.
       margin: "0 auto",
     }}
   >
-    <circle
-      cx={150}
-      cy={150}
-      r={150}
-      fill="#9ded91"
-    />
+    <circle cx={150} cy={150} r={150} fill="#9ded91" />
     <VictoryBar
       standalone={false}
       theme={VictoryTheme.clean}

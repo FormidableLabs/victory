@@ -160,13 +160,17 @@ describe("components/victory-candlestick", () => {
     it("renders data values with null accessor", () => {
       const data = Helpers.range(10);
       const { container } = render(
-        // @ts-expect-error "'null' is not assignable to 'x'"
         <VictoryCandlestick
           data={data}
+          // @ts-expect-error "'null' is not assignable to 'x'"
           x={null}
+          // @ts-expect-error "'null' is not assignable to 'open'"
           open={null}
+          // @ts-expect-error "'null' is not assignable to 'close'"
           close={null}
+          // @ts-expect-error "'null' is not assignable to 'high'"
           high={null}
+          // @ts-expect-error "'null' is not assignable to 'low'"
           low={null}
         />,
       );
@@ -201,7 +205,7 @@ describe("components/victory-candlestick", () => {
   });
 
   describe("event handling", () => {
-    const clickHandler = jest.fn();
+    const clickHandler = vi.fn();
 
     beforeEach(() => {
       clickHandler.mockReset();

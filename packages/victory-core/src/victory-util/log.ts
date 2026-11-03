@@ -1,4 +1,3 @@
-/* global console process */
 /* eslint-disable no-console */
 
 export function warn(message: string) {

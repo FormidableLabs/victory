@@ -41,9 +41,7 @@ Each configuration variable takes props specific to its chart element, allowing 
 When a theme is passed to a chart via the `theme` prop, the styles from the theme object are applied to the corresponding child components unless they are explicitly overridden by inline props.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.material}
->
+<VictoryChart theme={VictoryTheme.material}>
   <VictoryBar />
 </VictoryChart>
 ```
@@ -63,21 +61,15 @@ Each of these themes can be applied to your Victory components by passing it int
 ```jsx live noInline
 const result = [...Array(10).keys()];
 
-const scatterData = [
-  ...Array(20).keys(),
-].forEach((i) => ({
+const scatterData = [...Array(20).keys()].forEach((i) => ({
   x: (i - 10) / 3,
   y: i / 2 - 2 * Math.random() - 4,
 }));
 
-const toInteger = (number) =>
-  parseInt(number).toString();
+const toInteger = (number) => parseInt(number).toString();
 
 const DemoComponent = () => {
-  const [theme, setTheme] =
-    React.useState(
-      VictoryTheme.grayscale,
-    );
+  const [theme, setTheme] = React.useState(VictoryTheme.grayscale);
 
   const positions = [
     { transform: "translate(0, -15)" },
@@ -96,29 +88,19 @@ const DemoComponent = () => {
       <div className="mb-8 p-4 mx-auto flex justify-between w-full">
         <button
           className="bg-blue-600 border-none rounded-md text-white uppercase py-3 px-6 hover:bg-blue-700 cursor-pointer"
-          onClick={() =>
-            setTheme(VictoryTheme.clean)
-          }
+          onClick={() => setTheme(VictoryTheme.clean)}
         >
           clean
         </button>
         <button
           className="bg-orange-600 border-none rounded-md text-white uppercase py-3 px-6 hover:bg-orange-700 cursor-pointer"
-          onClick={() =>
-            setTheme(
-              VictoryTheme.material,
-            )
-          }
+          onClick={() => setTheme(VictoryTheme.material)}
         >
           material
         </button>
         <button
           className="bg-gray-600 border-none rounded-md text-white uppercase py-3 px-6 hover:bg-gray-700 cursor-pointer"
-          onClick={() =>
-            setTheme(
-              VictoryTheme.grayscale,
-            )
-          }
+          onClick={() => setTheme(VictoryTheme.grayscale)}
         >
           grayscale
         </button>
@@ -132,11 +114,7 @@ const DemoComponent = () => {
           width: "100%",
         }}
       >
-        <g
-          transform={
-            positions[0].transform
-          }
-        >
+        <g transform={positions[0].transform}>
           <VictoryPie
             theme={theme}
             standalone={false}
@@ -147,66 +125,33 @@ const DemoComponent = () => {
             width={200}
           />
         </g>
-        <g
-          transform={
-            positions[1].transform
-          }
-        >
+        <g transform={positions[1].transform}>
           <VictoryChart
             theme={theme}
             standalone={false}
             height={250}
             width={250}
           >
-            <VictoryAxis
-              tickCount={3}
-              tickFormat={toInteger}
-            />
-            <VictoryAxis
-              tickCount={4}
-              dependentAxis
-            />
-            <VictoryScatter
-              size={2}
-              data={scatterData}
-            />
+            <VictoryAxis tickCount={3} tickFormat={toInteger} />
+            <VictoryAxis tickCount={4} dependentAxis />
+            <VictoryScatter size={2} data={scatterData} />
           </VictoryChart>
         </g>
 
-        <g
-          transform={
-            positions[2].transform
-          }
-        >
+        <g transform={positions[2].transform}>
           <VictoryChart
             theme={theme}
             standalone={false}
             height={250}
             width={250}
           >
-            <VictoryAxis
-              tickCount={4}
-              domain={[0, 3]}
-              tickFormat={toInteger}
-            />
-            <VictoryAxis
-              tickCount={4}
-              dependentAxis
-              domain={[0, 10]}
-            />
-            <VictoryLine
-              y={(data) =>
-                data.x * data.x
-              }
-            />
+            <VictoryAxis tickCount={4} domain={[0, 3]} tickFormat={toInteger} />
+            <VictoryAxis tickCount={4} dependentAxis domain={[0, 10]} />
+            <VictoryLine y={(data) => data.x * data.x} />
           </VictoryChart>
         </g>
 
-        <g
-          transform={
-            positions[3].transform
-          }
-        >
+        <g transform={positions[3].transform}>
           <VictoryChart
             standalone={false}
             theme={theme}
@@ -214,17 +159,8 @@ const DemoComponent = () => {
             width={250}
             domainPadding={{ x: 40 }}
           >
-            <VictoryAxis
-              tickFormat={[
-                "A",
-                "B",
-                "C",
-              ]}
-            />
-            <VictoryAxis
-              tickCount={3}
-              dependentAxis
-            />
+            <VictoryAxis tickFormat={["A", "B", "C"]} />
+            <VictoryAxis tickCount={3} dependentAxis />
             <VictoryStack>
               <VictoryBar
                 data={[
@@ -293,8 +229,7 @@ const extendedTheme = {
   axis: {
     ...VictoryTheme.material.axis,
     style: {
-      ...VictoryTheme.material.axis
-        .style,
+      ...VictoryTheme.material.axis.style,
       tickLabels: {
         fill: "#444",
         fontSize: 10,
@@ -340,10 +275,7 @@ const customTheme = {
 };
 
 render(
-  <VictoryChart
-    theme={customTheme}
-    domainPadding={{ x: 40 }}
-  >
+  <VictoryChart theme={customTheme} domainPadding={{ x: 40 }}>
     <VictoryBar
       data={[
         { x: 1, y: 2 },
@@ -364,10 +296,7 @@ To customize the appearance of Victory components, you can use the `style` prop,
 **Example: Customizing Bar and Line Colors**
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  domain={{ x: [0, 4] }}
->
+<VictoryChart theme={VictoryTheme.clean} domain={{ x: [0, 4] }}>
   <VictoryBar
     style={{ data: { fill: "red" } }}
     data={[
@@ -411,18 +340,12 @@ To style individual elements within a dataset, you can include style attributes 
   <VictoryScatter
     style={{
       data: {
-        fill: ({ index }) =>
-          index % 2 === 0
-            ? "blue"
-            : "grey",
-        stroke: ({ datum }) =>
-          datum.y < 6 ? "red" : "black",
+        fill: ({ index }) => (index % 2 === 0 ? "blue" : "grey"),
+        stroke: ({ datum }) => (datum.y < 6 ? "red" : "black"),
         strokeWidth: 2,
       },
     }}
-    symbol={({ datum }) =>
-      datum.x > 1 ? "plus" : "square"
-    }
+    symbol={({ datum }) => (datum.x > 1 ? "plus" : "square")}
     size={({ datum }) => datum.y + 2}
     data={[
       { x: 0, y: 2 },
@@ -444,32 +367,15 @@ To apply gradient fills to your charts, define a gradient in the SVG `defs` sect
   <svg style={{ height: 0 }}>
     <defs>
       <linearGradient id="myGradient">
-        <stop
-          offset="0%"
-          stopColor="red"
-        />
-        <stop
-          offset="25%"
-          stopColor="orange"
-        />
-        <stop
-          offset="50%"
-          stopColor="gold"
-        />
-        <stop
-          offset="75%"
-          stopColor="yellow"
-        />
-        <stop
-          offset="100%"
-          stopColor="green"
-        />
+        <stop offset="0%" stopColor="red" />
+        <stop offset="25%" stopColor="orange" />
+        <stop offset="50%" stopColor="gold" />
+        <stop offset="75%" stopColor="yellow" />
+        <stop offset="100%" stopColor="green" />
       </linearGradient>
     </defs>
   </svg>
-  <VictoryChart
-    theme={VictoryTheme.clean}
-  >
+  <VictoryChart theme={VictoryTheme.clean}>
     <VictoryArea
       style={{
         data: {

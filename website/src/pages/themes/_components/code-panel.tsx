@@ -60,7 +60,7 @@ const CodePanel = () => {
   };
 
   return (
-    <div className="max-w-screen-lg mx-auto p-10 w-full-panel flex-1 flex flex-col justify-start">
+    <div className="max-w-(--breakpoint-lg) mx-auto p-10 w-full-panel flex-1 flex flex-col justify-start">
       <h1 className="text-3xl">Theme Code</h1>
       <p className="text-sm text-grayscale-400 mb-2">
         You can <strong>import your code</strong> by pasting your custom theme
@@ -77,11 +77,11 @@ const CodePanel = () => {
           </code>{" "}
           are required for proper theme functionality.
         </p>
-        <Button onClick={applyCustomTheme} className="flex-shrink-0">
+        <Button onClick={applyCustomTheme} className="shrink-0">
           Apply Changes
         </Button>
       </div>
-      <div className="w-full flex-1 border rounded">
+      <div className="w-full flex-1 border rounded-sm">
         <Editor
           height={650}
           defaultLanguage="json"

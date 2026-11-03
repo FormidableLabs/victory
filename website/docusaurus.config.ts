@@ -13,8 +13,12 @@ const config: Config = {
   baseUrl: "/open-source/victory",
   onBrokenAnchors: "throw",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "throw",
   onDuplicateRoutes: "throw",
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "throw",
+    },
+  },
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -28,6 +32,7 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           sidebarCollapsed: true,
         },
+        blog: false,
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -64,11 +69,9 @@ const config: Config = {
         name: "tailwind-plugin",
         configurePostCss(postcssOptions) {
           postcssOptions.plugins = [
-            /* eslint-disable @typescript-eslint/no-require-imports */
-            require("postcss-import"),
-            require("tailwindcss"),
-            require("autoprefixer"),
-            /* eslint-enable @typescript-eslint/no-require-imports */
+            // Also handles vendor prefixes (no autoprefixer needed).
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
+            require("@tailwindcss/postcss"),
           ];
           return postcssOptions;
         },

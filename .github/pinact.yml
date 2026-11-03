@@ -1,0 +1,11 @@
+# pinact (https://github.com/suzuki-shunsuke/pinact) pins third-party actions to
+# a commit SHA and updates them: `pinact run --update`. See CONTRIBUTING.md.
+version: 3
+# Skip versions published in the last week, like `pnpm dep:check`.
+min_age:
+  value: 7
+rules:
+  # GitHub's own actions stay on version tags (see .github/zizmor.yml).
+  - ignore: true
+    conditions:
+      - expr: ActionRepoOwner in ["actions", "github"]

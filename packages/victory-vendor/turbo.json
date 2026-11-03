@@ -1,0 +1,24 @@
+{
+  "$schema": "../../node_modules/turbo/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    // One script builds everything: d3 sources (resolved from the lockfile)
+    // transpiled to `es`, `lib` and `lib-vendor`, plus the root `d3-*` shims.
+    "build": {
+      // victory-vendor has no workspace dependencies to wait for.
+      "dependsOn": [],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/LICENSE.txt",
+        "!*.md",
+        "!tests/**"
+      ],
+      "outputs": ["es/**", "lib/**", "lib-vendor/**", "d3-*", "LICENSE.txt"]
+    },
+    // The tests import the package by name (`victory-vendor/d3-*`), so they
+    // need its own build, but not the shared test helpers' dependencies.
+    "test": {
+      "dependsOn": ["build"]
+    }
+  }
+}

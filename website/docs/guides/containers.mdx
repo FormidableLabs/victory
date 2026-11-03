@@ -16,18 +16,10 @@ Responsive containers are not appropriate for every application, so Victory prov
 <VictoryChart
   height={200}
   width={300}
-  containerComponent={
-    <VictoryContainer
-      responsive={false}
-    />
-  }
+  containerComponent={<VictoryContainer responsive={false} />}
   theme={VictoryTheme.clean}
 >
-  <VictoryLine
-    y={(data) =>
-      Math.sin(2 * Math.PI * data.x)
-    }
-  />
+  <VictoryLine y={(data) => Math.sin(2 * Math.PI * data.x)} />
 </VictoryChart>
 ```
 
@@ -40,8 +32,7 @@ The difference is the order of the children in `VictoryChart`.
 :::
 
 ```jsx live noInline
-const sampleFn = (data) =>
-  Math.sin(2 * Math.PI * data.x);
+const sampleFn = (data) => Math.sin(2 * Math.PI * data.x);
 
 const scatterStyle = {
   data: { fill: "red" },
@@ -50,9 +41,7 @@ const scatterStyle = {
 function App() {
   return (
     <>
-      <VictoryChart
-        theme={VictoryTheme.clean}
-      >
+      <VictoryChart theme={VictoryTheme.clean}>
         <VictoryScatter
           y={sampleFn}
           samples={25}
@@ -62,9 +51,7 @@ function App() {
         <VictoryLine y={sampleFn} />
       </VictoryChart>
 
-      <VictoryChart
-        theme={VictoryTheme.clean}
-      >
+      <VictoryChart theme={VictoryTheme.clean}>
         <VictoryLine y={sampleFn} />
         <VictoryScatter
           y={sampleFn}
@@ -89,10 +76,7 @@ Some components should _always_ render above others. Use `VictoryPortal` to rend
 :::
 
 ```jsx live
-<VictoryChart
-  domainPadding={40}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={40} theme={VictoryTheme.clean}>
   <VictoryStack
     colorScale="warm"
     style={{
@@ -215,7 +199,7 @@ const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
 The function takes two `behavior` arguments as strings:
 
 ```js
-createContainer(behaviorA, behaviorB)
+createContainer(behaviorA, behaviorB);
 ```
 
 #### Behavior
@@ -226,7 +210,7 @@ The resulting container uses the events from both behaviors.
 For example, if both behaviors use the click event (like zoom and selection) the combined container
 will trigger both behaviors' events on each click.
 
-*Note*: Order of the behaviors matters in a few cases.
+_Note_: Order of the behaviors matters in a few cases.
 It is recommended to use `"zoom"` before any other behaviors: for example,
 `createContainer("zoom", "voronoi")` instead of `createContainer("voronoi", "zoom")`.
 
@@ -238,7 +222,7 @@ while scrolling and dragging will zoom and pan.
 
 ```jsx live noInline
 const VictoryZoomVoronoiContainer = createContainer("zoom", "voronoi");
-const data = _.range(100).map((x) => ({x, y: 100 + x + _.random(10)}));
+const data = _.range(100).map((x) => ({ x, y: 100 + x + _.random(10) }));
 
 const App = () => (
   <VictoryChart
@@ -253,5 +237,5 @@ const App = () => (
   </VictoryChart>
 );
 
-render(<App/>);
+render(<App />);
 ```

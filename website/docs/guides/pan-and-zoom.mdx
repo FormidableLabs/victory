@@ -29,14 +29,9 @@ function App() {
         data={getScatterData()}
         style={{
           data: {
-            opacity: ({ datum }) =>
-              datum.y % 5 === 0
-                ? 1
-                : 0.7,
+            opacity: ({ datum }) => (datum.y % 5 === 0 ? 1 : 0.7),
             fill: ({ datum }) =>
-              datum.y % 5 === 0
-                ? "lightblue"
-                : "lightgreen",
+              datum.y % 5 === 0 ? "lightblue" : "lightgreen",
           },
         }}
       />
@@ -82,14 +77,9 @@ function App() {
         data={getScatterData()}
         style={{
           data: {
-            opacity: ({ datum }) =>
-              datum.y % 5 === 0
-                ? 1
-                : 0.7,
+            opacity: ({ datum }) => (datum.y % 5 === 0 ? 1 : 0.7),
             fill: ({ datum }) =>
-              datum.y % 5 === 0
-                ? "lightblue"
-                : "lightgreen",
+              datum.y % 5 === 0 ? "lightblue" : "lightgreen",
           },
         }}
       />
@@ -122,8 +112,7 @@ For more information on brushing, see the [Data Selection](/docs/guides/data-sel
 
 ```jsx live noInline
 function App() {
-  const [state, setState] =
-    React.useState({});
+  const [state, setState] = React.useState({});
 
   function handleZoom(domain) {
     setState({
@@ -146,12 +135,8 @@ function App() {
           <VictoryZoomContainer
             responsive={false}
             zoomDimension="x"
-            zoomDomain={
-              state.zoomDomain
-            }
-            onZoomDomainChange={
-              handleZoom
-            }
+            zoomDomain={state.zoomDomain}
+            onZoomDomainChange={handleZoom}
           />
         }
       >
@@ -208,12 +193,8 @@ function App() {
           <VictoryBrushContainer
             responsive={false}
             brushDimension="x"
-            brushDomain={
-              state.selectedDomain
-            }
-            onBrushDomainChange={
-              handleBrush
-            }
+            brushDomain={state.selectedDomain}
+            onBrushDomainChange={handleBrush}
           />
         }
       >
@@ -227,9 +208,7 @@ function App() {
             new Date(2010, 1, 1),
             new Date(2015, 1, 1),
           ]}
-          tickFormat={(x) =>
-            new Date(x).getFullYear()
-          }
+          tickFormat={(x) => new Date(x).getFullYear()}
         />
         <VictoryLine
           data={[

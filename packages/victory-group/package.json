@@ -14,9 +14,20 @@
   },
   "homepage": "https://commerce.nearform.com/open-source/victory",
   "sideEffects": false,
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "author": "Lauren Eastridge",
   "license": "MIT",
   "dependencies": {
@@ -29,239 +40,15 @@
     "victory-bar": "*"
   },
   "peerDependencies": {
-    "react": ">=16.6.0"
+    "react": ">=18"
   },
   "publishConfig": {
     "provenance": true
   },
   "scripts": {
-    "###            THESE SCRIPTS ARE GENERATED           ###": "true",
-    "###            DO NOT MODIFY THESE MANUALLY          ###": "true",
-    "build": "wireit",
-    "build:lib": "wireit",
-    "build:lib:esm": "wireit",
-    "build:lib:cjs": "wireit",
-    "build:dist": "wireit",
-    "build:dist:dev": "wireit",
-    "build:dist:min": "wireit",
-    "check": "wireit",
-    "types:check": "wireit",
-    "types:create": "wireit",
-    "lint": "wireit",
-    "lint:fix": "wireit",
-    "jest": "wireit"
-  },
-  "wireit": {
-    "###            THESE WIREIT CONFIGS ARE GENERATED        ####": {},
-    "###            DO NOT MODIFY THESE MANUALLY              ####": {},
-    "build": {
-      "dependencies": [
-        "build:lib",
-        "build:dist",
-        "types:create"
-      ]
-    },
-    "build:lib": {
-      "dependencies": [
-        "build:lib:esm",
-        "build:lib:cjs"
-      ]
-    },
-    "build:lib:esm": {
-      "command": "nps build:lib:esm",
-      "files": [
-        "src/**",
-        "!src/**/*.test.*",
-        "../../.babelrc.build.js",
-        "../../.babelrc.js",
-        "../../package-scripts.js"
-      ],
-      "output": [
-        "es/**/*.js",
-        "es/**/*.js.map"
-      ],
-      "dependencies": [
-        "../victory-core:build:lib:esm",
-        "../victory-shared-events:build:lib:esm"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "build:lib:cjs": {
-      "command": "nps build:lib:cjs",
-      "files": [
-        "src/**",
-        "!src/**/*.test.*",
-        "../../.babelrc.build.js",
-        "../../.babelrc.js",
-        "../../package-scripts.js"
-      ],
-      "output": [
-        "lib/**/*.js",
-        "lib/**/*.js.map"
-      ],
-      "dependencies": [
-        "../victory-core:build:lib:cjs",
-        "../victory-shared-events:build:lib:cjs"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "build:dist": {
-      "dependencies": [
-        "build:dist:dev",
-        "build:dist:min"
-      ]
-    },
-    "build:dist:dev": {
-      "command": "nps build:dist:dev",
-      "files": [
-        "src/**",
-        "!src/**/*.test.*",
-        "../../.babelrc.build.js",
-        "../../.babelrc.js",
-        "../../package-scripts.js",
-        "../../config/webpack.config.js",
-        "../../config/webpack.config.dev.js"
-      ],
-      "output": [
-        "dist/victory*.js",
-        "!dist/victory*.min.js*"
-      ],
-      "dependencies": [
-        "../victory-core:build:lib:esm",
-        "../victory-shared-events:build:lib:esm"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "build:dist:min": {
-      "command": "nps build:dist:min",
-      "files": [
-        "src/**",
-        "!src/**/*.test.*",
-        "../../.babelrc.build.js",
-        "../../.babelrc.js",
-        "../../package-scripts.js",
-        "../../config/webpack.config.js"
-      ],
-      "output": [
-        "dist/victory*.min.js*"
-      ],
-      "dependencies": [
-        "../victory-core:build:lib:esm",
-        "../victory-shared-events:build:lib:esm"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "check": {
-      "dependencies": [
-        "types:check",
-        "jest",
-        "format",
-        "lint"
-      ]
-    },
-    "types:check": {
-      "command": "nps types:pkg:check",
-      "files": [
-        "src/**/*.{ts,tsx}",
-        "../../tsconfig.base.json",
-        "tsconfig.json"
-      ],
-      "dependencies": [
-        "types:create",
-        "../victory-core:types:create",
-        "../victory-shared-events:types:create",
-        "../victory-bar:types:create",
-        "../victory-vendor:types:create",
-        "../victory-voronoi:types:create"
-      ],
-      "output": [],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "types:create": {
-      "command": "nps types:pkg:create",
-      "files": [
-        "src/**",
-        "!src/**/*.test.*",
-        "../../tsconfig.base.json",
-        "tsconfig.build.json"
-      ],
-      "output": [
-        "es/**/*.d.ts",
-        "es/**/*.d.ts.map",
-        "lib/**/*.d.ts",
-        "lib/**/*.d.ts.map"
-      ],
-      "dependencies": [
-        "../victory-core:types:create",
-        "../victory-shared-events:types:create"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "lint": {
-      "command": "eslint src",
-      "files": [
-        "src/**"
-      ],
-      "output": [],
-      "dependencies": [
-        "../victory-core:types:create",
-        "../victory-shared-events:types:create",
-        "../victory-bar:types:create",
-        "../victory-vendor:types:create",
-        "../victory-voronoi:types:create"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "lint:fix": {
-      "command": "eslint --fix src",
-      "files": [
-        "src/**"
-      ],
-      "output": [],
-      "dependencies": [
-        "../victory-core:types:create",
-        "../victory-shared-events:types:create",
-        "../victory-bar:types:create",
-        "../victory-vendor:types:create",
-        "../victory-voronoi:types:create"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "jest": {
-      "command": "jest --passWithNoTests",
-      "files": [
-        "src/**/*.test.*",
-        "../../.babelrc.js",
-        "../../test/jest-config.js",
-        "../../test/jest-setup.ts"
-      ],
-      "output": [],
-      "dependencies": [
-        "../victory-core:build",
-        "../victory-shared-events:build",
-        "../victory-bar:build",
-        "../victory-vendor:build",
-        "../victory-voronoi:build"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    }
+    "build": "tsdown -c ../../tsdown.config.mts",
+    "types:check": "tsc --pretty --noEmit",
+    "test": "vitest run --config ../../test/vitest.config.mts --passWithNoTests",
+    "pack:check": "node ../../scripts/pack-check.mjs"
   }
 }

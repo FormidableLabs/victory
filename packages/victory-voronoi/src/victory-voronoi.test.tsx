@@ -116,7 +116,7 @@ describe("components/victory-voronoi", () => {
 
   describe("event handling", () => {
     it("attaches an event to the parent svg", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       const { container } = render(
         <VictoryVoronoi
           events={[
@@ -137,7 +137,7 @@ describe("components/victory-voronoi", () => {
     });
 
     it("attaches an event to data", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       const { container } = render(
         <VictoryVoronoi
           events={[
@@ -164,7 +164,7 @@ describe("components/victory-voronoi", () => {
     });
 
     it("attaches an event to a label", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       const { container } = render(
         <VictoryVoronoi
           labels={["okay"]}

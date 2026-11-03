@@ -3,11 +3,11 @@ import * as Helpers from "./helper-methods";
 describe("victory-scatter/helper-methods", () => {
   describe("getSize", () => {
     beforeEach(() => {
-      jest.spyOn(Helpers, "getBubbleSize");
+      vi.spyOn(Helpers, "getBubbleSize");
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     const data = [

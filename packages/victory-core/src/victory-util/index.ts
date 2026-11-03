@@ -7,6 +7,7 @@ export * as Data from "./data";
 export * as DefaultTransitions from "./default-transitions";
 export * as Domain from "./domain";
 export * as Events from "./events";
+export type { ComponentEvent } from "./events";
 export * as Helpers from "./helpers";
 export * as Hooks from "./hooks";
 export * as Immutable from "./immutable";

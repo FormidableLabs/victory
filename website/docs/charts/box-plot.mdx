@@ -9,10 +9,7 @@ Box plots are used to show the distribution of a dataset. The box represents the
 See the [full API here](/docs/api/victory-boxplot). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
 
 ```jsx live
-<VictoryChart
-  domainPadding={20}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={20} theme={VictoryTheme.clean}>
   <VictoryBoxPlot
     boxWidth={15}
     data={[
@@ -35,11 +32,7 @@ See the [full API here](/docs/api/victory-boxplot). Typically composed with [`Vi
 Bar charts can be rendered horizontally by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryBoxPlot`.
 
 ```jsx live
-<VictoryChart
-  horizontal
-  domainPadding={20}
-  theme={VictoryTheme.clean}
->
+<VictoryChart horizontal domainPadding={20} theme={VictoryTheme.clean}>
   <VictoryBoxPlot
     boxWidth={10}
     data={[
@@ -62,10 +55,7 @@ Bar charts can be rendered horizontally by setting the `horizontal` prop to `tru
 Box plots can be labeled by setting the `labels` prop to `true`. By default this will show all labels. For more granular label control, use the individual `minLabels`, `maxLabels`, `medianLabels`, `q1Labels`, and `q3Labels` props.
 
 ```jsx live
-<VictoryChart
-  domainPadding={20}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={20} theme={VictoryTheme.clean}>
   <VictoryBoxPlot
     labels
     labelOrientation="right"
@@ -85,10 +75,7 @@ Box plots can be labeled by setting the `labels` prop to `true`. By default this
 Specific labels can be chosen by using the appropriate label prop. In this example, the `minLabels` prop is set to `true` to show only the minimum value of each box.
 
 ```jsx live
-<VictoryChart
-  domainPadding={20}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={20} theme={VictoryTheme.clean}>
   <VictoryBoxPlot
     minLabels
     boxWidth={10}
@@ -113,40 +100,27 @@ Charts can be animated by setting the `animate` prop. See the [animations](/docs
 
 ```jsx live noInline
 function App() {
-  const [data, setData] =
-    React.useState(getData());
+  const [data, setData] = React.useState(getData());
 
   React.useState(() => {
-    const setStateInterval =
-      window.setInterval(() => {
-        setData(getData());
-      }, 4000);
+    const setStateInterval = window.setInterval(() => {
+      setData(getData());
+    }, 4000);
 
     return () => {
-      window.clearInterval(
-        setStateInterval,
-      );
+      window.clearInterval(setStateInterval);
     };
   }, []);
 
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-      domainPadding={{ x: 20 }}
-    >
-      <VictoryBoxPlot
-        animate={{ duration: 1000 }}
-        data={data}
-        boxWidth={10}
-      />
+    <VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 20 }}>
+      <VictoryBoxPlot animate={{ duration: 1000 }} data={data} boxWidth={10} />
     </VictoryChart>
   );
 }
 
 function rr(start, end, count) {
-  return _.range(count).map(() =>
-    _.random(start, end),
-  );
+  return _.range(count).map(() => _.random(start, end));
 }
 
 function getData() {
@@ -171,10 +145,7 @@ render(<App />);
 Chart styling can be customized by using the theme or overriding the style prop on the component.
 
 ```jsx live
-<VictoryChart
-  domainPadding={20}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={20} theme={VictoryTheme.clean}>
   <VictoryBoxPlot
     labels
     labelOrientation="right"
@@ -208,10 +179,7 @@ Chart styling can be customized by using the theme or overriding the style prop 
 Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
 
 ```jsx live
-<VictoryChart
-  domainPadding={20}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={20} theme={VictoryTheme.clean}>
   <VictoryBoxPlot
     labels
     labelOrientation="right"
@@ -248,13 +216,9 @@ Events can be handled by passing an array of event objects to the `events` prop 
               {
                 mutation: (props) => {
                   return {
-                    style:
-                      Object.assign(
-                        props.style,
-                        {
-                          fill: "tomato",
-                        },
-                      ),
+                    style: Object.assign(props.style, {
+                      fill: "tomato",
+                    }),
                   };
                 },
               },
@@ -405,12 +369,7 @@ They can also be embeded in other SVG components by using the `standalone` prop.
     margin: "0 auto",
   }}
 >
-  <circle
-    cx={150}
-    cy={150}
-    r={150}
-    fill="#9ded91"
-  />
+  <circle cx={150} cy={150} r={150} fill="#9ded91" />
   <VictoryBoxPlot
     standalone={false}
     theme={VictoryTheme.clean}

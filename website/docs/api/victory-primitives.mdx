@@ -21,7 +21,9 @@ const Border = (props) => <Rect {...props} />;
 Used by `Background`, `VictoryClipContainer`, and `Voronoi`
 
 ```jsx
-const Circle = (props) => <circle vectorEffect="non-scaling-stroke" {...props} />;
+const Circle = (props) => (
+  <circle vectorEffect="non-scaling-stroke" {...props} />
+);
 ```
 
 ### ClipPath
@@ -480,12 +482,12 @@ _note_ `Box` also exported as `Border`
 [area]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-area/src/area.tsx
 [victoryarea]: /docs/api/victory-area
 [background]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/background.tsx
-[bar]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-bar/src/bar.tsx 
+[bar]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-bar/src/bar.tsx
 [border]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-core/src/victory-primitives/border.tsx
 [victorybar]: /docs/api/victory-bar
-[candlestick]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-candlestick/src/victory-candlestick.tsx 
+[candlestick]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-candlestick/src/victory-candlestick.tsx
 [victorycandlestick]: /docs/api/victory-candlestick
-[curve]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-line/src/curve.tsx 
+[curve]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-line/src/curve.tsx
 [victoryline]: /docs/api/victory-line
 [errorbar]: https://github.com/FormidableLabs/victory/blob/main/packages/victory-errorbar/src/error-bar.tsx
 [victoryerrorbar]: /docs/api/victory-error-bar

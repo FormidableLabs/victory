@@ -5,10 +5,7 @@ title: VictoryBrushLine
 `VictoryBrushLine` renders a brush component centered around a line. It may be used in place of the default `axisComponent` or `gridComponent` within `VictoryAxis`. Use `VictoryBrushLine` instead of [`VictoryBrushContainer`](/docs/api/victory-brush-container) in charts that require multiple brushes.
 
 ```jsx live
-<VictoryChart
-  domainPadding={50}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={50} theme={VictoryTheme.clean}>
   <VictoryScatter
     size={4}
     data={[
@@ -19,9 +16,7 @@ title: VictoryBrushLine
   />
   <VictoryAxis
     tickValues={[1, 2, 3]}
-    gridComponent={
-      <VictoryBrushLine width={30} />
-    }
+    gridComponent={<VictoryBrushLine width={30} />}
   />
 </VictoryChart>
 ```

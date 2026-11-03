@@ -10,10 +10,7 @@ For examples of `VictorySelectionContainer` in action, visit the [containers](/d
 
 ## Inherited Props
 
-<CommonProps
-  interfaces={["VictoryContainerProps"]}
-  overrides={[]}
-/>
+<CommonProps interfaces={["VictoryContainerProps"]} overrides={[]} />
 
 ## Component Props
 
@@ -105,16 +102,13 @@ _example:_ `selectionDimension="x"`
 
 ```jsx live
 <VictoryChart
-  containerComponent={
-    <VictorySelectionContainer selectionDimension="x" />
-  }
+  containerComponent={<VictorySelectionContainer selectionDimension="x" />}
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
     style={{
       data: {
-        fill: ({ active }) =>
-          active ? "tomato" : "gray",
+        fill: ({ active }) => (active ? "tomato" : "gray"),
       },
     }}
   />
@@ -150,8 +144,7 @@ The `selectionStyle` prop should be given as an object of style attributes to be
   <VictoryScatter
     style={{
       data: {
-        fill: ({ active }) =>
-          active ? "tomato" : "gray",
+        fill: ({ active }) => (active ? "tomato" : "gray"),
       },
     }}
   />

@@ -1,6 +1,5 @@
 import siteConfig from "@generated/docusaurus.config";
 import * as PrismNamespace from "prismjs";
-import { Optional } from "utility-types";
 import { diffHighlight } from "./prism-diff-highlight";
 import "./prism-diff-highlight.css";
 
@@ -41,5 +40,5 @@ export default function prismIncludeLanguages(
 
   diffHighlight(PrismObject);
 
-  delete (globalThis as Optional<typeof globalThis, "Prism">).Prism;
+  delete (globalThis as Partial<typeof globalThis>).Prism;
 }

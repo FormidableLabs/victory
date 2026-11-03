@@ -34,8 +34,7 @@ export interface VictoryCursorContainerProps extends VictoryContainerProps {
   ) => void;
 }
 
-interface VictoryCursorContainerMutatedProps
-  extends VictoryCursorContainerProps {
+interface VictoryCursorContainerMutatedProps extends VictoryCursorContainerProps {
   cursorValue: CoordinatesPropType | null;
   domain: { x: DomainTuple; y: DomainTuple };
 }

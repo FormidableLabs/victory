@@ -63,7 +63,7 @@ describe("getInitialTransitionState", () => {
 });
 
 describe("getTransitionPropsFactory", () => {
-  const toZero = jest.fn().mockImplementation(() => ({ y: 0 }));
+  const toZero = vi.fn().mockImplementation(() => ({ y: 0 }));
   const makeChild = (data) => {
     return {
       type: {
@@ -76,7 +76,7 @@ describe("getTransitionPropsFactory", () => {
     };
   };
 
-  const callback = jest.fn();
+  const callback = vi.fn();
 
   it("returns a function that describes data exiting", () => {
     const exitingState = {

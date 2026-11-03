@@ -1,4 +1,3 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 180] }]*/
 import React from "react";
 import defaults from "lodash/defaults";
 

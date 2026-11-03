@@ -173,7 +173,7 @@ describe("components/victory-area", () => {
 
   describe("event handling", () => {
     it("attaches an event to the parent svg", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryArea
           data-testid="container"
@@ -191,7 +191,7 @@ describe("components/victory-area", () => {
     });
 
     it("attaches an event to data", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryArea
           dataComponent={<Area data-testid="data" />}
@@ -210,7 +210,7 @@ describe("components/victory-area", () => {
     });
 
     it("attaches an event to a label", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       render(
         <VictoryArea
           data={[

@@ -3,9 +3,81 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+/*
+ * Tailwind's theme and utilities only. No preflight (reset), which would
+ * fight Infima. Nothing here goes in a cascade layer: Infima is unlayered,
+ * and unlayered CSS always beats layered CSS.
+ */
+@import "tailwindcss/theme.css";
+
+/* Scan only these for class names (as `content` did in v3). */
+@source "../**/*.{js,jsx,ts,tsx}";
+@source "../../docs/**/*.mdx";
+
+@custom-variant dark (&:is([data-theme="dark"] *));
+
+@theme {
+  /* NearForm brand colors */
+  --color-currentColor: currentColor;
+  --color-white: hsla(0, 0%, 100%, 1);
+  --color-black: hsla(0, 0%, 0%, 1);
+
+  --color-grayscale-100: hsla(0, 0%, 100%, 1); /* White */
+  --color-grayscale-200: #f4f8fa; /* LightGrey */
+  --color-grayscale-300: hsla(0, 0%, 85%, 1); /* Grey */
+  --color-grayscale-400: hsla(240, 8%, 29%, 1); /* DeepGrey */
+  --color-grayscale-500: hsla(0, 0%, 0%, 1); /* Black */
+  --color-grayscale-800: #888888;
+
+  --color-orange-100: #ff684f;
+  --color-orange-200: #ff4b2e;
+  --color-orange-300: #ff3d1d;
+  --color-orange-400: #ea2100;
+
+  --color-theme-1: hsla(163, 100%, 45%, 1); /* Green */
+  --color-theme-2: hsla(225, 100%, 11%, 1); /* DeepNavy */
+  --color-theme-3: hsla(225, 100%, 11%, 1); /* DeepNavy */
+  --color-theme-4: hsla(0, 0%, 100%, 1); /* White */
+  --color-header-bg: hsla(0, 0%, 100%, 1);
+  --color-header-fg: hsla(225, 100%, 11%, 1);
+  --color-button-bg: hsla(163, 100%, 45%, 1);
+  --color-button-fg: hsla(225, 100%, 11%, 1);
+  --color-button-bg-hover: hsla(0, 0%, 100%, 1);
+  --color-button-fg-hover: hsla(225, 100%, 11%, 1);
+  --color-button-border: hsla(163, 100%, 45%, 1);
+  --color-code-bg: #1e1e1e;
+  --color-error: #ff0000;
+
+  --height-theme-builder: calc(100vh - 60px);
+  --width-prose: 90ch;
+  --width-full-panel: calc(100vw - 100px);
+
+  --font-sans: Inter, Helvetica, Arial, sans-serif;
+
+  --background-image-select-chevron: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>');
+}
+
+/*
+ * Needed for theme builder since we're disabling Tailwind's reset for docs.
+ * v3 put this in `@layer base`; there's no such layer here, so its position
+ * before `@tailwind utilities` is what lets utilities like `border-2` win.
+ */
+.theme-builder * {
+  border-width: 0;
+  border-style: solid;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: Inter, Helvetica, Arial, sans-serif;
+  }
+}
+
+@tailwind utilities source(none);
 
 body {
   scroll-behavior: smooth;
@@ -105,21 +177,4 @@ body {
 
 .footer__copyright {
   color: white;
-}
-
-@layer base {
-  /* Needed for theme builder since we're disabling Tailwind's reset for docs */
-  .theme-builder * {
-    border-width: 0;
-    border-style: solid;
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: Inter, Helvetica, Arial, sans-serif;
-    }
-  }
 }

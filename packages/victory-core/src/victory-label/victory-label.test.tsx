@@ -73,7 +73,7 @@ describe("components/victory-label", () => {
     // This suppresses the warning about the fontSize being a string.
     // TODO: For some reason this test file doesn't respect the eslint override for this rule.
 
-    jest.spyOn(console, "warn").mockImplementation(() => {});
+    vi.spyOn(console, "warn").mockImplementation(() => {});
     const { container } = render(
       <VictoryLabel
         style={{ fontSize: "10px" }}
@@ -90,7 +90,7 @@ describe("components/victory-label", () => {
     // This suppresses the console warning for invalid fontSize prop
     // TODO: For some reason this test file doesn't respect the eslint override for this rule.
 
-    jest.spyOn(Log, "warn").mockImplementation(() => {});
+    vi.spyOn(Log, "warn").mockImplementation(() => {});
 
     const { container } = render(
       <VictoryLabel style={{ fontSize: "foo" }} text="such text, wow" />,
@@ -158,7 +158,7 @@ describe("components/victory-label", () => {
 
   describe("event handling", () => {
     it("attaches an to the parent object", () => {
-      const clickHandler = jest.fn();
+      const clickHandler = vi.fn();
       const { container } = render(
         <VictoryLabel text="hi" events={{ onClick: clickHandler }} />,
         { wrapper: SVGWrapper },
@@ -231,7 +231,7 @@ describe("components/victory-label", () => {
     expect(
       container.querySelector("tspan")!.getAttribute("style"),
     ).toMatchInlineSnapshot(
-      `"fill: #252525; font-size: 14px; font-family: 'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif; stroke: transparent;"`,
+      `"fill: rgb(37, 37, 37); font-size: 14px; font-family: "Gill Sans", "Gill Sans MT", "Seravek", "Trebuchet MS", sans-serif; stroke: transparent;"`,
     );
   });
 

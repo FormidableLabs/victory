@@ -58,19 +58,16 @@ style={{
 
 ```ts
 type StringOrNumberOrCallback =
-  | string
-  | number
-  | ((props: any) => string | number);
+  string | number | ((props: any) => string | number);
 
 type VictoryStyleObject = {
   [K in keyof React.CSSProperties]: StringOrNumberOrCallback;
 };
 
-type LabelProps =
-  React.CSSProperties & {
-    angle?: number;
-    verticalAnchor?: VerticalAnchorType;
-  };
+type LabelProps = React.CSSProperties & {
+  angle?: number;
+  verticalAnchor?: VerticalAnchorType;
+};
 
 type VictoryLabelStyleObject = {
   [K in keyof LabelProps]: StringOrNumberOrCallback;
@@ -79,9 +76,7 @@ type VictoryLabelStyleObject = {
 interface VictoryStyleInterface {
   parent?: VictoryStyleObject;
   data?: VictoryStyleObject;
-  labels?:
-    | VictoryLabelStyleObject
-    | VictoryLabelStyleObject[];
+  labels?: VictoryLabelStyleObject | VictoryLabelStyleObject[];
   border?: VictoryStyleObject;
 }
 ```

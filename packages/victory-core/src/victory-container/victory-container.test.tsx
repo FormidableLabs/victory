@@ -78,7 +78,7 @@ describe("components/victory-container", () => {
   });
 
   it("attaches an event to the container", () => {
-    const clickHandler = jest.fn();
+    const clickHandler = vi.fn();
     const { container } = render(
       <VictoryContainer events={{ onClick: clickHandler }} />,
     );

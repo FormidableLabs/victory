@@ -146,7 +146,7 @@ describe("components/victory-scatter", () => {
     let clickHandler;
 
     beforeEach(() => {
-      clickHandler = jest.fn();
+      clickHandler = vi.fn();
     });
 
     afterEach(() => {

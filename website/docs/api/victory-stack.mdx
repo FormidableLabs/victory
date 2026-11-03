@@ -23,9 +23,7 @@ title: VictoryStack
 ## Example
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryStack>
     <VictoryArea
       data={[
@@ -116,9 +114,7 @@ See the [Events Guide][] for more information on defining events.
 _note:_ `VictoryStack` coordinates events between children using the `VictorySharedEvents` and the `sharedEvents` prop
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryStack
     events={[
       {
@@ -131,33 +127,21 @@ _note:_ `VictoryStack` coordinates events between children using the `VictorySha
                 childName: "area-2",
                 target: "data",
                 mutation: (props) => ({
-                  style: Object.assign(
-                    {},
-                    props.style,
-                    { fill: "gold" },
-                  ),
+                  style: Object.assign({}, props.style, { fill: "gold" }),
                 }),
               },
               {
                 childName: "area-3",
                 target: "data",
                 mutation: (props) => ({
-                  style: Object.assign(
-                    {},
-                    props.style,
-                    { fill: "orange" },
-                  ),
+                  style: Object.assign({}, props.style, { fill: "orange" }),
                 }),
               },
               {
                 childName: "area-4",
                 target: "data",
                 mutation: (props) => ({
-                  style: Object.assign(
-                    {},
-                    props.style,
-                    { fill: "red" },
-                  ),
+                  style: Object.assign({}, props.style, { fill: "red" }),
                 }),
               },
             ];
@@ -166,22 +150,10 @@ _note:_ `VictoryStack` coordinates events between children using the `VictorySha
       },
     ]}
   >
-    <VictoryArea
-      name="area-1"
-      data={sampleData}
-    />
-    <VictoryArea
-      name="area-2"
-      data={sampleData}
-    />
-    <VictoryArea
-      name="area-3"
-      data={sampleData}
-    />
-    <VictoryArea
-      name="area-4"
-      data={sampleData}
-    />
+    <VictoryArea name="area-1" data={sampleData} />
+    <VictoryArea name="area-2" data={sampleData} />
+    <VictoryArea name="area-3" data={sampleData} />
+    <VictoryArea name="area-4" data={sampleData} />
   </VictoryStack>
 </VictoryChart>
 ```

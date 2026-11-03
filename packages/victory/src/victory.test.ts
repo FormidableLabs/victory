@@ -157,7 +157,7 @@ describe("victory", () => {
   it("ensure it has named exports", () => {
     expect(Area).toBeInstanceOf(Function);
   });
-  xit("ensure all components have valid types", () => {
+  it.skip("ensure all components have valid types", () => {
     /*
      * See https://github.com/FormidableLabs/victory/issues/2411
      * It's easy for some of our Components to accidentally get typed as 'any'.

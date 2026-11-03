@@ -27,16 +27,13 @@ However, the component that uses it must be standalone
 
 ```jsx live
 <VictoryChart
-  containerComponent={
-    <VictorySelectionContainer />
-  }
+  containerComponent={<VictorySelectionContainer />}
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
     style={{
       data: {
-        fill: ({ active }) =>
-          active ? "tomato" : "gray",
+        fill: ({ active }) => (active ? "tomato" : "gray"),
       },
     }}
   />
@@ -128,16 +125,13 @@ The `selectionDimension` prop may be used to limit brushing behavior to a single
 
 ```jsx live
 <VictoryChart
-  containerComponent={
-    <VictorySelectionContainer selectionDimension="y" />
-  }
+  containerComponent={<VictorySelectionContainer selectionDimension="y" />}
   theme={VictoryTheme.clean}
 >
   <VictoryScatter
     style={{
       data: {
-        fill: ({ active }) =>
-          active ? "tomato" : "gray",
+        fill: ({ active }) => (active ? "tomato" : "gray"),
       },
     }}
   />
@@ -151,15 +145,11 @@ when the selection area changes.
 
 ```jsx live noInline
 function App() {
-  const [selection, setSelection] =
-    React.useState({});
+  const [selection, setSelection] = React.useState({});
 
-  const handleSelection = (
-    datasets,
-  ) => {
+  const handleSelection = (datasets) => {
     const points = datasets.reduce(
-      (memo, dataset) =>
-        memo.concat(dataset.data),
+      (memo, dataset) => memo.concat(dataset.data),
       [],
     );
     setSelection({ points });
@@ -172,12 +162,9 @@ function App() {
         <VictorySelectionContainer
           selectionDimension="x"
           selectionStyle={{
-            stroke:
-              VictoryTheme.clean.palette
-                ?.colors.red,
+            stroke: VictoryTheme.clean.palette?.colors.red,
             strokeWidth: 2,
-            fill: VictoryTheme.clean
-              .palette?.colors.red,
+            fill: VictoryTheme.clean.palette?.colors.red,
             fillOpacity: 0.1,
           }}
           onSelection={handleSelection}
@@ -187,9 +174,7 @@ function App() {
       <VictoryLine
         style={{
           data: {
-            stroke:
-              VictoryTheme.clean.palette
-                ?.colors.purple,
+            stroke: VictoryTheme.clean.palette?.colors.purple,
           },
         }}
         data={[
@@ -205,9 +190,7 @@ function App() {
       <VictoryLine
         style={{
           data: {
-            stroke:
-              VictoryTheme.clean.palette
-                ?.colors.green,
+            stroke: VictoryTheme.clean.palette?.colors.green,
           },
         }}
         data={[
@@ -223,9 +206,7 @@ function App() {
       <VictoryLine
         style={{
           data: {
-            stroke:
-              VictoryTheme.clean.palette
-                ?.colors.blue,
+            stroke: VictoryTheme.clean.palette?.colors.blue,
           },
         }}
         data={[
@@ -242,11 +223,7 @@ function App() {
         <VictoryLabel
           x={20}
           y={20}
-          text={JSON.stringify(
-            selection.points?.map(
-              ({ x, y }) => ({ x, y }),
-            ),
-          )}
+          text={JSON.stringify(selection.points?.map(({ x, y }) => ({ x, y })))}
         />
       )}
     </VictoryChart>
@@ -335,28 +312,13 @@ The `brushDimension` prop may be used to limit brushing behavior to a single dim
   containerComponent={
     <VictoryBrushContainer
       onBrushCleared={(domain, props) =>
-        console.log(
-          "[onBrushCleared]",
-          { domain, props },
-        )
+        console.log("[onBrushCleared]", { domain, props })
       }
-      onBrushDomainChange={(
-        domain,
-        props,
-      ) =>
-        console.log(
-          "[onBrushDomainChange]",
-          { domain, props },
-        )
+      onBrushDomainChange={(domain, props) =>
+        console.log("[onBrushDomainChange]", { domain, props })
       }
-      onBrushDomainChangeEnd={(
-        domain,
-        props,
-      ) =>
-        console.log(
-          "[onBrushDomainChangeEnd]",
-          { domain, props },
-        )
+      onBrushDomainChangeEnd={(domain, props) =>
+        console.log("[onBrushDomainChangeEnd]", { domain, props })
       }
     />
   }
@@ -365,8 +327,7 @@ The `brushDimension` prop may be used to limit brushing behavior to a single dim
     <VictoryScatter
       style={{
         data: {
-          fill: VictoryTheme.clean
-            .palette?.colors.red,
+          fill: VictoryTheme.clean.palette?.colors.red,
         },
       }}
       data={[
@@ -382,8 +343,7 @@ The `brushDimension` prop may be used to limit brushing behavior to a single dim
     <VictoryScatter
       style={{
         data: {
-          fill: VictoryTheme.clean
-            .palette?.colors.yellow,
+          fill: VictoryTheme.clean.palette?.colors.yellow,
         },
       }}
       data={[

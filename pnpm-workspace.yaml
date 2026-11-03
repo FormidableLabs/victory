@@ -1,17 +1,24 @@
 packages:
-  - 'packages/**'
-  - 'website'
+  - "packages/**"
+  - "website"
 
 autoInstallPeers: true
 linkWorkspacePackages: deep
 preferWorkspacePackages: true
 
+# Install only versions published at least 7 days ago, transitive deps
+# included (matches `dep:check`'s `cooldown`, which covers direct deps only).
+# pnpm 12's default is 1 day and falls back to a newer version when nothing
+# qualifies; setting it explicitly makes it strict (resolution fails instead).
+# It also checks the existing lockfile.
+minimumReleaseAge: 10080
+
 overrides:
-  '@types/eslint': 8.4.3
+  "@types/eslint": 8.4.3
 
 # Dependencies allowed to run install scripts (pnpm 11+ requires a decision).
 allowBuilds:
-  '@swc/core': true
+  "@swc/core": true
   esbuild: true
   # postinstall only prints a funding message.
   core-js: false

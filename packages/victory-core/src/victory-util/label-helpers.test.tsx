@@ -1,4 +1,3 @@
-/* eslint max-nested-callbacks: 0 */
 import React from "react";
 import * as d3Scale from "victory-vendor/d3-scale";
 

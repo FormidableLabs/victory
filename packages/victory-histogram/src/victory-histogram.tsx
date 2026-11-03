@@ -26,7 +26,8 @@ import {
 export type VictoryHistogramTargetType = "data" | "labels" | "parent";
 
 export interface VictoryHistogramProps
-  extends Omit<VictoryCommonProps, "polar">,
+  extends
+    Omit<VictoryCommonProps, "polar">,
     Omit<VictoryDatableProps, "y" | "y0">,
     VictoryMultiLabelableProps {
   binSpacing?: number;
@@ -58,8 +59,7 @@ const fallbackProps: Partial<VictoryHistogramProps> = {
 const defaultData = [];
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface VictoryHistogramBase
-  extends EventsMixinClass<VictoryHistogramProps> {}
+interface VictoryHistogramBase extends EventsMixinClass<VictoryHistogramProps> {}
 
 /**
  * Draw SVG histogram charts with React. VictoryHistogram is a composable component, so it doesn't include axes

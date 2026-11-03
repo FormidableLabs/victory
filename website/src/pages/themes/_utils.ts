@@ -1,4 +1,4 @@
-import { VictoryThemeDefinition } from "victory-core";
+import { VictoryThemeDefinition } from "victory";
 import { ControlConfig } from "./_config";
 import { StrokeProps } from "./_const";
 

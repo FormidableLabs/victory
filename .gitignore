@@ -30,9 +30,12 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # App specific
-.vscode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
 bower_components
 coverage
+/bundle-size
 dist
 lib
 es
@@ -47,9 +50,8 @@ build-storybook.log*
 artifacts
 tmp
 
-# Wireit + caches
-.wireit
-.eslintcache
+# Turborepo + caches
+.turbo
 
 # Ignore all yarn2+
 .yarn/*

@@ -1,0 +1,17 @@
+{
+  "$schema": "../node_modules/turbo/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    // Docusaurus bundles Victory's built packages. Not cached: Vercel builds
+    // from scratch, and Docusaurus has its own cache.
+    "build": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    // Needs only the Victory packages' built types, not the docs build (the
+    // root definition's `dependsOn: ["build"]` would run it during `pnpm check`).
+    "types:check": {
+      "dependsOn": ["^build"]
+    }
+  }
+}

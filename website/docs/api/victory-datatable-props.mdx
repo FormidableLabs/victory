@@ -21,19 +21,10 @@ The `x` value supplied to the `categories` prop refers to the _independent_ vari
 :::
 
 ```jsx live
-<VictoryChart
-  domainPadding={25}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={25} theme={VictoryTheme.clean}>
   <VictoryBar
     categories={{
-      x: [
-        "birds",
-        "cats",
-        "dogs",
-        "fish",
-        "frogs",
-      ],
+      x: ["birds", "cats", "dogs", "fish", "frogs"],
     }}
     data={[
       { x: "cats", y: 1 },
@@ -98,8 +89,7 @@ All values stored on the data object will be interpolated during animation. Do n
   style={{
     data: {
       fill: ({ datum }) => datum.fill,
-      opacity: ({ datum }) =>
-        datum.opacity,
+      opacity: ({ datum }) => datum.opacity,
     },
   }}
 />
@@ -120,8 +110,7 @@ See the [Custom Components Guide][] for more detail on creating your own `dataCo
 ```jsx live noInline
 function CatPoint(props) {
   const { x, y, datum } = props; // VictoryScatter supplies x, y and datum
-  const cat =
-    datum._y >= 0 ? "😻" : "😹";
+  const cat = datum._y >= 0 ? "😻" : "😹";
 
   return (
     <text x={x} y={y} fontSize={30}>
@@ -135,9 +124,7 @@ function App() {
     <VictoryChart>
       <VictoryScatter
         dataComponent={<CatPoint />}
-        y={(d) =>
-          Math.sin(2 * Math.PI * d.x)
-        }
+        y={(d) => Math.sin(2 * Math.PI * d.x)}
         samples={15}
       />
     </VictoryChart>
@@ -167,10 +154,7 @@ The `x` value supplied to the `domain` prop refers to the _independent_ variable
 - `domain={{x: [0, 100], y: [0, 1]}}`
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0.5, 5.5], y: [0, 10] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0.5, 5.5], y: [0, 10] }} theme={VictoryTheme.clean}>
   <VictoryBar data={sampleData} />
 </VictoryChart>
 ```
@@ -199,10 +183,7 @@ Values supplied for `domainPadding` will be coerced so that padding a domain wil
 :::
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 100 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 100 }} theme={VictoryTheme.clean}>
   <VictoryBar data={sampleData} />
 </VictoryChart>
 ```
@@ -219,21 +200,12 @@ Specifies how many individual points to plot when plotting
 y as a function of x. The `samples` prop is ignored if `data` is supplied in props.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryLine
-    samples={25}
-    y={(d) =>
-      Math.sin(5 * Math.PI * d.x)
-    }
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryLine samples={25} y={(d) => Math.sin(5 * Math.PI * d.x)} />
   <VictoryLine
     samples={100}
     style={{ data: { stroke: "red" } }}
-    y={(d) =>
-      Math.cos(5 * Math.PI * d.x)
-    }
+    y={(d) => Math.cos(5 * Math.PI * d.x)}
   />
 </VictoryChart>
 ```
@@ -282,13 +254,9 @@ sortKey={["age", "height"]}
 
 ```jsx live
 <VictoryLine
-  data={_.range(0, 2 * Math.PI, 0.01).map(
-    (t) => ({ t }),
-  )}
+  data={_.range(0, 2 * Math.PI, 0.01).map((t) => ({ t }))}
   sortKey="t"
-  x={(d) =>
-    Math.sin(3 * d.t + 2 * Math.PI)
-  }
+  x={(d) => Math.sin(3 * d.t + 2 * Math.PI)}
   y={(d) => Math.sin(2 * d.t)}
 />
 ```
@@ -317,8 +285,8 @@ Use the `x` data accessor prop to determine how the component defines data in th
 `string` - specify which property in an array of data objects should be used as the x value. This string may reference a nested property using dot notation.
 
 ```jsx
-x="name";
-x="employees.name"
+x = "name";
+x = "employees.name";
 ```
 
 `string[]` - specify which property in an array of nested data objects should be used as an x value
@@ -354,8 +322,8 @@ Use the `y` data accessor prop to determine how the component defines data in th
 `string` - specify which property in an array of data objects should be used as the x value. This string may reference a nested property using dot notation.
 
 ```jsx
-y="salary";
-y="employees.salary"
+y = "salary";
+y = "employees.salary";
 ```
 
 `string[]` - specify which property in an array of nested data objects should be used as an x value
@@ -391,8 +359,8 @@ Use the `y0` data accessor prop to determine how the component defines the basel
 `string` - specify which property in an array of data objects should be used as the `y0` value. This string may reference a nested property using dot notation.
 
 ```jsx
-y0="last_quarter_profit";
-y0="sales.last_quarter_profit"
+y0 = "last_quarter_profit";
+y0 = "sales.last_quarter_profit";
 ```
 
 `string[]` - specify which property in an array of nested data objects should be used as a `y0` value

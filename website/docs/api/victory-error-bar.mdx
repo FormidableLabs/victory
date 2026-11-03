@@ -139,16 +139,12 @@ See the [Events Guide][] for more information on defining events.
               {
                 target: "data",
                 mutation: (props) => {
-                  const stroke =
-                    props.style &&
-                    props.style.stroke;
-                  return stroke ===
-                    "#c43a31"
+                  const stroke = props.style && props.style.stroke;
+                  return stroke === "#c43a31"
                     ? null
                     : {
                         style: {
-                          stroke:
-                            "#c43a31",
+                          stroke: "#c43a31",
                           strokeWidth: 7,
                         },
                       };

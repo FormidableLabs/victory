@@ -1,5 +1,3 @@
-/* eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 2.5, 3] }]*/
-
 import * as Helpers from "./helpers";
 
 export function circle(x: number, y: number, size: number) {
@@ -33,7 +31,7 @@ export function diamond(x: number, y: number, size: number) {
 }
 
 export function triangleDown(x: number, y: number, size: number) {
-  const height = (size / 2) * Math.sqrt(3);
+  const height = (size / 2) * Math.sqrt(3); // eslint-disable-line no-magic-numbers
   const x0 = x - size;
   const x1 = x + size;
   const y0 = y - size;
@@ -45,7 +43,7 @@ export function triangleDown(x: number, y: number, size: number) {
 }
 
 export function triangleUp(x: number, y: number, size: number) {
-  const height = (size / 2) * Math.sqrt(3);
+  const height = (size / 2) * Math.sqrt(3); // eslint-disable-line no-magic-numbers
   const x0 = x - size;
   const x1 = x + size;
   const y0 = y - height;

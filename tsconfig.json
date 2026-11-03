@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "es6",
+    // Matches `target` in tsdown.config.mts.
+    "target": "ES2022",
+    // Class fields are assigned in the constructor, so type-only fields
+    // aren't emitted (as with the old Babel build). ES2022 would otherwise
+    // default this to `true`.
+    "useDefineForClassFields": false,
+    "module": "esnext",
     "jsx": "react",
     "declaration": true,
     "declarationMap": true,
@@ -9,19 +14,18 @@
     "isolatedModules": true,
     "strict": true,        
     "noImplicitAny": false,
-    "moduleResolution": "node",           
+    "moduleResolution": "bundler",
     "esModuleInterop": true,              
     "skipLibCheck": true,                 
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
     "lib": [
       "dom", 
       "dom.iterable", 
       "esnext"
     ],
     "paths": {
-      "@/*": ["packages/*"]
+      "@/*": ["./packages/*"]
     },
-    "types": ["@testing-library/jest-dom"],
+    "types": ["vitest/globals", "@testing-library/jest-dom/vitest"],
   },
 }

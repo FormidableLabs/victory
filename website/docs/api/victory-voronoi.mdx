@@ -44,11 +44,8 @@ See the [Events Guide][] for more information on defining events.
               {
                 target: "data",
                 mutation: (props) => {
-                  const fill =
-                    props.style &&
-                    props.style.fill;
-                  return fill ===
-                    "black"
+                  const fill = props.style && props.style.fill;
+                  return fill === "black"
                     ? null
                     : {
                         style: {

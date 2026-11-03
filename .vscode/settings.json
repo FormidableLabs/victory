@@ -1,4 +1,5 @@
 {
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "search.exclude": {
     "**/node_modules": true,
     "**/es": true,

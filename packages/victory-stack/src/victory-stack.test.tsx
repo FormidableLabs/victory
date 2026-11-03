@@ -65,11 +65,11 @@ describe("components/victory-stack", () => {
 
   describe("warnings", () => {
     beforeEach(() => {
-      jest.spyOn(console, "warn").mockImplementation(() => {});
+      vi.spyOn(console, "warn").mockImplementation(() => {});
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it("should warn when histogram children are mixed with non-histogram children", () => {

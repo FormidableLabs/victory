@@ -44,7 +44,8 @@ export type VictoryAxisTTargetType =
   | "parent";
 
 export interface VictoryAxisProps
-  extends VictoryAxisCommonProps,
+  extends
+    VictoryAxisCommonProps,
     VictoryCommonProps,
     VictorySingleLabelableProps {
   crossAxis?: boolean;

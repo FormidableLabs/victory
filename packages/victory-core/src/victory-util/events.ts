@@ -20,6 +20,7 @@ export type ComponentEventName = string; // `on${Capitalize<string>}`;
 export interface ComponentEventHandlers {
   [k: ComponentEventName]: ComponentEventHandler;
 }
+// eslint-disable-next-line max-params
 export type ComponentEventHandler = (
   evt: React.SyntheticEvent,
   childProps: unknown,

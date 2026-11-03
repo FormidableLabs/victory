@@ -47,13 +47,8 @@ The `alignment` prop specifies how bars should be aligned relative to their data
 The `barRatio` prop specifies an _approximate_ ratio between bar widths and spaces between bars. When width is not specified via the `barWidth` prop or in bar styles, the `barRatio` prop will be used to calculate a default width for each bar given the total number of bars in the data series and the overall width of the chart.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  domainPadding={{ x: 30 }}
->
-  <VictoryBar
-    barRatio={0.8}
-  />
+<VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 30 }}>
+  <VictoryBar barRatio={0.8} />
 </VictoryChart>
 ```
 
@@ -72,13 +67,8 @@ It is still possible to define bar width via the style prop with the `width` att
 :::
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  domainPadding={{ x: 20 }}
->
-  <VictoryBar
-    barWidth={({ datum }) => datum.x * 7}
-  />
+<VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 20 }}>
+  <VictoryBar barWidth={({ datum }) => datum.x * 7} />
 </VictoryChart>
 ```
 
@@ -93,13 +83,8 @@ It is still possible to define bar width via the style prop with the `width` att
 The `cornerRadius` prop specifies a radius to apply to each bar. If this prop is given as a single number, the radius will only be applied to the _top_ of each bar. When this prop is given as a function, it will be evaluated for each bar with the props object corresponding to that bar.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  domainPadding={{ x: 20 }}
->
-  <VictoryBar
-    cornerRadius={{ topLeft: ({ datum }) => datum.x * 4 }}
-  />
+<VictoryChart theme={VictoryTheme.clean} domainPadding={{ x: 20 }}>
+  <VictoryBar cornerRadius={{ topLeft: ({ datum }) => datum.x * 4 }} />
 </VictoryChart>
 ```
 
@@ -129,15 +114,15 @@ Defines the style of the component using [VictoryStyleInterface](/docs/api/victo
   <VictoryBar
     style={{
       data: {
-        fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31",
-        stroke: ({ index }) => +index % 2 === 0  ? "#000000" : "#c43a31",
+        fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
+        stroke: ({ index }) => (+index % 2 === 0 ? "#000000" : "#c43a31"),
         fillOpacity: 0.7,
-        strokeWidth: 3
+        strokeWidth: 3,
       },
       labels: {
         fontSize: 15,
-        fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31"
-      }
+        fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
+      },
     }}
     data={sampleData}
     labels={({ datum }) => datum.x}

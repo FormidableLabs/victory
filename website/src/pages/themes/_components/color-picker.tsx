@@ -105,7 +105,7 @@ const ColorPicker = ({
                 )}
                 <div
                   className={clsx(
-                    "block w-[35px] h-[35px] rounded-full cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor outline-2 border-2 border-white outline outline-grayscale-300",
+                    "block w-[35px] h-[35px] rounded-full cursor-pointer transition-all justify-center items-center after:content-[''] after:block after:w-full after:h-full after:rounded-[inherit] after:bg-currentColor outline-2 border-2 border-white outline-solid outline-grayscale-300",
                     isPickerOpen
                       ? "outline-currentColor"
                       : "outline-grayscale-300",

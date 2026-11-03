@@ -113,9 +113,7 @@ export const VictoryLine = addEvents(VictoryLineBase, options);
 export type VictoryLineTTargetType = "data" | "labels" | "parent";
 
 export interface VictoryLineProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictoryMultiLabelableProps {
+  extends VictoryCommonProps, VictoryDatableProps, VictoryMultiLabelableProps {
   events?: EventPropTypeInterface<VictoryLineTTargetType, number | string>[];
   eventKey?: StringOrNumberOrCallback | string[];
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type

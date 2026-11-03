@@ -28,12 +28,7 @@ Chart types like `VictoryLine` and `VictoryBar` expose aria props like `aria-lab
       { x: 5, y: 7 },
     ]}
     dataComponent={
-      <Bar
-        ariaLabel={({ datum }) =>
-          `x: ${datum.x}`
-        }
-        tabIndex={0}
-      />
+      <Bar ariaLabel={({ datum }) => `x: ${datum.x}`} tabIndex={0} />
     }
   />
 </VictoryChart>

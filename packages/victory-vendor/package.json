@@ -40,120 +40,24 @@
     "d3-timer": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/cli": "7.29.7",
+    "@babel/core": "7.29.7",
+    "@babel/plugin-transform-modules-commonjs": "7.29.7",
+    "babel-plugin-module-resolver": "5.0.3",
     "d3-color": "^3.1.0",
     "d3-format": "^3.1.0",
     "d3-path": "^3.0.1",
     "d3-time-format": "^4.1.0",
     "d3-voronoi": "^1.1.4",
-    "internmap": "^2.0.3",
-    "execa": "^6.1.0",
-    "rimraf": "^3.0.2"
+    "internmap": "^2.0.3"
   },
   "publishConfig": {
     "provenance": true
   },
   "scripts": {
-    "build": "wireit",
-    "build:lib": "wireit",
-    "build:lib:esm": "wireit",
-    "build:lib:cjs": "wireit",
-    "build:dist": "wireit",
-    "build:dist:dev": "wireit",
-    "build:dist:min": "wireit",
-    "check": "wireit",
-    "types:check": "wireit",
-    "types:create": "wireit",
-    "lint": "wireit",
-    "lint:fix": "wireit",
-    "jest": "wireit"
-  },
-  "wireit": {
-    "build": {
-      "command": "node ./scripts/build.js",
-      "files": [
-        ".babelrc.js",
-        "scripts/build.js",
-        "../../LICENSE.txt",
-        "node_modules/**"
-      ],
-      "output": [
-        "es/**",
-        "lib/**",
-        "lib-vendor/**",
-        "d3-*",
-        "LICENSE.txt"
-      ],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "build:lib:esm": {
-      "dependencies": [
-        "build"
-      ]
-    },
-    "build:lib:cjs": {
-      "dependencies": [
-        "build"
-      ]
-    },
-    "build:dist": {
-      "dependencies": [
-        "build"
-      ]
-    },
-    "build:dist:dev": {
-      "dependencies": [
-        "build"
-      ]
-    },
-    "build:dist:min": {
-      "dependencies": [
-        "build"
-      ]
-    },
-    "check": {
-      "dependencies": [
-        "types:check",
-        "jest",
-        "format",
-        "lint"
-      ]
-    },
-    "types:check": {
-      "command": "echo \"No types to check here\"",
-      "files": [],
-      "output": []
-    },
-    "types:create": {
-      "dependencies": [
-        "build"
-      ]
-    },
-    "lint": {
-      "command": "eslint scripts",
-      "files": [
-        "scripts/**"
-      ],
-      "output": [],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "lint:fix": {
-      "command": "eslint --fix scripts",
-      "files": [
-        "scripts/**"
-      ],
-      "output": [],
-      "packageLocks": [
-        "pnpm-lock.yaml"
-      ]
-    },
-    "jest": {
-      "command": "echo victory-vendor has no tests",
-      "files": [],
-      "output": []
-    }
+    "build": "node ./scripts/build.js",
+    "types:check": "tsc --pretty --noEmit",
+    "pack:check": "node ../../scripts/pack-check.mjs",
+    "test": "vitest run --config ../../test/vitest.config.mts --passWithNoTests"
   }
 }

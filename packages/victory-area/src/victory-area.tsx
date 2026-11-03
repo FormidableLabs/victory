@@ -40,9 +40,7 @@ const options = {
 export type VictoryAreaTTargetType = "data" | "labels" | "parent";
 
 export interface VictoryAreaProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictoryMultiLabelableProps {
+  extends VictoryCommonProps, VictoryDatableProps, VictoryMultiLabelableProps {
   eventKey?: string[] | number[] | StringOrNumberOrCallback;
   events?: EventPropTypeInterface<VictoryAreaTTargetType, string | number>[];
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type

@@ -12,13 +12,8 @@ title: VictoryGroup
 :::
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryGroup
-    offset={20}
-    colorScale={"qualitative"}
-  >
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryGroup offset={20} colorScale={"qualitative"}>
     <VictoryBar
       data={[
         { x: 1, y: 1 },
@@ -79,15 +74,9 @@ title: VictoryGroup
 The `color` prop is an optional prop that defines a single color to be applied to the children of `VictoryGroup`. The `color` prop will override colors specified via `colorScale`.
 
 ```jsx live
-<VictoryGroup
-  data={sampleData}
-  color="blue"
->
+<VictoryGroup data={sampleData} color="blue">
   <VictoryLine />
-  <VictoryScatter
-    size={6}
-    symbol="star"
-  />
+  <VictoryScatter size={6} symbol="star" />
 </VictoryGroup>
 ```
 
@@ -133,33 +122,21 @@ eventKey = "x";
               childName: "bar-2",
               target: "data",
               mutation: (props) => ({
-                style: Object.assign(
-                  {},
-                  props.style,
-                  { fill: "gold" },
-                ),
+                style: Object.assign({}, props.style, { fill: "gold" }),
               }),
             },
             {
               childName: "bar-3",
               target: "data",
               mutation: (props) => ({
-                style: Object.assign(
-                  {},
-                  props.style,
-                  { fill: "orange" },
-                ),
+                style: Object.assign({}, props.style, { fill: "orange" }),
               }),
             },
             {
               childName: "bar-4",
               target: "data",
               mutation: (props) => ({
-                style: Object.assign(
-                  {},
-                  props.style,
-                  { fill: "red" },
-                ),
+                style: Object.assign({}, props.style, { fill: "red" }),
               }),
             },
           ];

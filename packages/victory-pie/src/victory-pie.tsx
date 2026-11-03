@@ -28,7 +28,8 @@ import {
 } from "./slice";
 
 export interface VictoryPieProps
-  extends Omit<VictoryCommonProps, "polar">,
+  extends
+    Omit<VictoryCommonProps, "polar">,
     VictoryDatableProps,
     VictoryMultiLabelableProps {
   cornerRadius?: SliceNumberOrCallback<SliceProps, "cornerRadius">;

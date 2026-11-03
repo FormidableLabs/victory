@@ -62,10 +62,7 @@ Data accessors may also be given as path strings or arrays to specify deeply nes
 Data accessor props may be given as functions and used to process data, as in the following example.
 
 ```jsx live
-<VictoryChart
-  domainPadding={{ x: 40 }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domainPadding={{ x: 40 }} theme={VictoryTheme.clean}>
   <VictoryBar
     data={[
       {
@@ -90,9 +87,7 @@ Data accessor props may be given as functions and used to process data, as in th
       },
     ]}
     x="experiment"
-    y={(d) =>
-      (d.actual / d.expected) * 100
-    }
+    y={(d) => (d.actual / d.expected) * 100}
   />
   <VictoryAxis
     label="experiment"
@@ -119,16 +114,10 @@ This prop can be provided as a string, function, or array of either.
 
 ```jsx live
 <VictoryLine
-  data={_.range(
-    0,
-    2 * Math.PI,
-    0.01,
-  ).map((t) => ({ t }))}
+  data={_.range(0, 2 * Math.PI, 0.01).map((t) => ({ t }))}
   sortKey="t"
   theme={VictoryTheme.clean}
-  x={({ t }) =>
-    Math.sin(3 * t + 2 * Math.PI)
-  }
+  x={({ t }) => Math.sin(3 * t + 2 * Math.PI)}
   y={({ t }) => Math.sin(2 * t)}
 />
 ```
@@ -138,37 +127,27 @@ This prop can be provided as a string, function, or array of either.
 If data is not given, data accessor props may be used to plot math functions. In this scenarios, initial data will be generated based on the domain and number of samples. Alter the `samples` and `domain` props to change how functions are plotted.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryLine
     samples={50}
     style={{
       data: {
-        stroke:
-          VictoryTheme.clean.palette
-            .cool[1],
+        stroke: VictoryTheme.clean.palette.cool[1],
         strokeWidth: 4,
       },
     }}
-    y={(data) =>
-      Math.sin(2 * Math.PI * data.x)
-    }
+    y={(data) => Math.sin(2 * Math.PI * data.x)}
   />
 
   <VictoryLine
     samples={10}
     style={{
       data: {
-        stroke:
-          VictoryTheme.clean.palette
-            .cool[2],
+        stroke: VictoryTheme.clean.palette.cool[2],
         strokeWidth: 4,
       },
     }}
-    y={(data) =>
-      Math.cos(2 * Math.PI * data.x)
-    }
+    y={(data) => Math.cos(2 * Math.PI * data.x)}
   />
 </VictoryChart>
 ```

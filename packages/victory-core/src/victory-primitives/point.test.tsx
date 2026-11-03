@@ -26,7 +26,7 @@ describe("victory-primitives/point", () => {
     ] as const
   ).forEach((symbol) => {
     it(`should render the appropriate symbol for "${symbol}"`, () => {
-      const stub = jest
+      const stub = vi
         .spyOn(PointPathHelpers, symbol)
 
         .mockImplementation(() => `${symbol} symbol`);

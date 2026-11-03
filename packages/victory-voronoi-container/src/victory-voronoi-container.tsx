@@ -27,8 +27,7 @@ export interface VictoryVoronoiContainerProps extends VictoryContainerProps {
   horizontal?: boolean;
 }
 
-interface VictoryVoronoiContainerMutatedProps
-  extends VictoryVoronoiContainerProps {
+interface VictoryVoronoiContainerMutatedProps extends VictoryVoronoiContainerProps {
   mousePosition: { x: number; y: number };
   activePoints: any[];
 }

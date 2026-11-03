@@ -51,28 +51,28 @@ For examples of `VictoryLine` in action, visit the [Line Chart](/docs/charts/lin
 ```jsx live
 <div>
   <h3>Click the line below</h3>
-  <VictoryChart
-    theme={VictoryTheme.clean}
-  >
+  <VictoryChart theme={VictoryTheme.clean}>
     <VictoryLine
-      events={[{
-        target: "parent",
-        eventHandlers: {
-          onClick: () => {
-            return [
-              {
-                target: "data",
-                eventKey: "all",
-                mutation: ({ style }) => {
-                  return style.stroke === "black"
-                    ? null
-                    : { style: { stroke: "black", strokeWidth: 5 } };
-                }
-              }
-            ];
-          }
-        }
-      }]}
+      events={[
+        {
+          target: "parent",
+          eventHandlers: {
+            onClick: () => {
+              return [
+                {
+                  target: "data",
+                  eventKey: "all",
+                  mutation: ({ style }) => {
+                    return style.stroke === "black"
+                      ? null
+                      : { style: { stroke: "black", strokeWidth: 5 } };
+                  },
+                },
+              ];
+            },
+          },
+        },
+      ]}
       data={sampleData}
       theme={VictoryTheme.clean}
     />
@@ -98,13 +98,8 @@ Cartesian line charts may use the following interpolation options: "basis", "bun
 You can also provide a function if you need to adjust parameters for d3-shape curves or to use a [custom curve function](https://github.com/d3/d3-shape#custom-curves).
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
-  <VictoryLine
-    interpolation="natural"
-    data={sampleData}
-  />
+<VictoryChart theme={VictoryTheme.clean}>
+  <VictoryLine interpolation="natural" data={sampleData} />
 </VictoryChart>
 ```
 
@@ -129,12 +124,12 @@ _default (provided by default theme):_ See [grayscale theme][] for more detail
   style={{
     data: {
       stroke: "#c43a31",
-      strokeWidth: ({ data }) => data.length
+      strokeWidth: ({ data }) => data.length,
     },
     labels: {
       fontSize: 15,
-      fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31"
-    }
+      fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
+    },
   }}
   data={sampleData}
   labels={({ datum }) => datum.x}

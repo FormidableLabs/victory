@@ -54,11 +54,7 @@ For examples of `VictoryPolarAxis` in action, visit the [Chart Axis](/docs/guide
 The `axisAngle` prop is used to position the dependent axis. This prop should be given in degrees. Degrees are defined as starting at the 3 o'clock position, and proceeding counterclockwise. This prop only affects the dependent axis.
 
 ```jsx live
-<VictoryPolarAxis
-  dependentAxis
-  theme={VictoryTheme.clean}
-  axisAngle={45}
-/>
+<VictoryPolarAxis dependentAxis theme={VictoryTheme.clean} axisAngle={45} />
 ```
 
 ---
@@ -147,9 +143,7 @@ Targets that correspond to only one element ("axis" and "axisLabel") should use 
 When the `innerRadius` prop is set, polar axes will be hollow rather than circular.
 
 ```jsx live
-<VictoryPolarAxis
-  theme={VictoryTheme.clean}
-/>
+<VictoryPolarAxis theme={VictoryTheme.clean} />
 ```
 
 ---
@@ -157,19 +151,14 @@ When the `innerRadius` prop is set, polar axes will be hollow rather than circul
 ### labelPlacement
 
 <Badges>
-  <TypeBadge
-    value={`"parallel" | "perpendicular" | "vertical"`}
-  />
+  <TypeBadge value={`"parallel" | "perpendicular" | "vertical"`} />
   <DefaultsBadge value='"parallel"' />
 </Badges>
 
 The `labelPlacement` prop specifies how tick labels should be placed relative to the angular tick values. Options for this prop are "vertical", "parallel", and "perpendicular".
 
 ```jsx live
-<VictoryPolarAxis
-  labelPlacement="perpendicular"
-  theme={VictoryTheme.clean}
-/>
+<VictoryPolarAxis labelPlacement="perpendicular" theme={VictoryTheme.clean} />
 ```
 
 ---
@@ -214,8 +203,7 @@ The `style` prop defines the style of the component. The style prop should be gi
   style={{
     axis: { stroke: "black" },
     grid: {
-      stroke: ({ tick }) =>
-        tick > 0.5 ? "red" : "blue",
+      stroke: ({ tick }) => (tick > 0.5 ? "red" : "blue"),
     },
     tickLabels: {
       fontSize: 15,

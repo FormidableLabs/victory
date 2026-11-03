@@ -93,11 +93,8 @@ See the [Events Guide](/docs/guides/events) for more information on defining eve
               {
                 eventKey: "all",
                 mutation: (props) => {
-                  const fill =
-                    props.style &&
-                    props.style.fill;
-                  return fill ===
-                    "black"
+                  const fill = props.style && props.style.fill;
+                  return fill === "black"
                     ? null
                     : {
                         style: {
@@ -137,9 +134,7 @@ Using a custom `groupComponent` with `VictoryArea` may result in broken animatio
 :::
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryArea
     groupComponent={
       <VictoryClipContainer
@@ -219,12 +214,7 @@ To enable tooltips on `VictoryArea`, it is necessary to use [`VictoryVoronoiCont
 <VictoryArea
   data={sampleData}
   labels={({ datum }) => datum.y}
-  labelComponent={
-    <VictoryLabel
-      renderInPortal
-      dy={-20}
-    />
-  }
+  labelComponent={<VictoryLabel renderInPortal dy={-20} />}
   theme={VictoryTheme.clean}
 />
 ```
@@ -255,10 +245,7 @@ Since `VictoryArea` renders a single element to represent an entire dataset, it 
     },
     labels: {
       fontSize: 15,
-      fill: ({ datum }) =>
-        datum.x === 3
-          ? "#000000"
-          : "#c43a31",
+      fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
     },
   }}
   data={sampleData}

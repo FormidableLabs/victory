@@ -1,59 +1,208 @@
 name: CI
 
 # Runs build and test on:
-#   every push to main or the 2026 uplift integration branch
+#   every push to main or a 2026 uplift integration branch (chore/2026-uplift*)
 #   every pull request with either as the base
 on:
   push:
     branches:
       - main
-      - chore/2026-uplift
+      - chore/2026-uplift*
   pull_request:
     branches:
       - main
-      - chore/2026-uplift
+      - chore/2026-uplift*
+
+# Reset permissions and grant them per job.
+permissions: {}
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+  TURBO_CACHE_DIR: .turbo/cache
+  # Pull requests only run tasks for packages changed since the base branch
+  # (and their dependents). Pushes run everything.
+  AFFECTED: ${{ github.event_name == 'pull_request' && '--affected' || '' }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # to check out repo (actions/checkout)
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          # `--affected` diffs against the base branch.
+          fetch-depth: 0
+      - uses: $/.github/actions/setup
+      # Saved at the end of the job; the test job restores it to reuse builds.
+      - uses: actions/cache@v6
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: turbo-${{ runner.os }}-build-
 
       - name: Check all package.json's and tsconfig.json's are in sync.
         run: |
           pnpm sync
           git diff --no-ext-diff --quiet --exit-code
 
-      - name: Build libraries and distributions
-        run: pnpm build
+      - name: Build
+        run: pnpm build $AFFECTED
 
       - name: Types
-        run: pnpm types:check
+        run: pnpm types:check $AFFECTED
 
-      - name: 📄 Bundle size report
-        uses: ./.github/actions/bundle-size # path to composite action
-        with:
-          paths: "packages/victory/dist/victory.min.js"
-          onlyDiff: "true"
-          header: "Bundle size report" # PR comment header
+      - name: Check published packages
+        run: pnpm pack:check $AFFECTED
 
+  # Format and lint need nothing built, so they run alongside build. Each checks
+  # the whole repo in about a second, so they skip Turborepo and `--affected`.
   lint:
-    needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # to check out repo (actions/checkout)
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: $/.github/actions/setup
+
+      - name: Format
+        run: pnpm format
 
       - name: Lint
         run: pnpm lint
 
+      # Same config as `pnpm lint:gha` (.github/zizmor.yml).
+      - name: Lint GitHub Actions
+        uses: zizmorcore/zizmor-action@53290badfa369cb0bf7ad16342cb62c2fa47ac7b # v0.8.0
+        with:
+          version: 1.31.1
+          # The default, set explicitly: online audits include impostor-commit,
+          # which checks that each SHA pin is a commit in the action's own repo.
+          online-audits: true
+          advanced-security: false
+          annotations: true
+
   test:
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # to check out repo (actions/checkout)
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: $/.github/actions/setup
+      # This run's builds, from the build job.
+      - uses: actions/cache/restore@v6
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-build-${{ github.sha }}
 
       - name: Test
-        run: pnpm jest
+        run: pnpm test $AFFECTED
+
+      # All packages, uncached. Reported in the job summary, not gated (#2348):
+      # a coverage failure shows as a warning, and the Test step gates.
+      - name: Coverage
+        continue-on-error: true
+        run: pnpm test:coverage
+
+      - name: Coverage summary
+        if: always()
+        run: |
+          {
+            echo '### Coverage'
+            if [ -f coverage/summary.txt ]; then
+              echo '```'
+              cat coverage/summary.txt
+              echo '```'
+            else
+              echo 'No coverage summary (the Coverage step failed or was skipped).'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # The lockfile pins React 18.3, which the test job covers. This job tests the
+  # other end of the `>=18` peer range, exactly 18.0.0 (`^18` would install the
+  # newest 18.x). `@types/react` isn't a peer and stays on the lockfile's `^18`.
+  react-18:
+    name: Test (React 18.0.0)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # to check out repo (actions/checkout)
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: $/.github/actions/setup
+
+      # Overrides in the working tree only; the lockfile change isn't committed.
+      - name: Install React 18.0.0
+        run: |
+          pnpm config set --json --location project overrides \
+            "$(pnpm config get --location project overrides --json | jq -c '. + {"react": "18.0.0", "react-dom": "18.0.0"}')"
+          pnpm install --no-frozen-lockfile
+          node -e 'for (const p of ["react", "react-dom"]) { const v = require(`${p}/package.json`).version; if (v !== "18.0.0") throw new Error(`${p} is ${v}`); }'
+
+      # Changing pnpm-workspace.yaml (a Turborepo global dependency) misses the
+      # cache and marks every package affected, so this runs everything.
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+  # ESM bundle sizes in the job summary, compared with the base branch on pull
+  # requests. Reported, not gated. Every package is measured, so no `--affected`.
+  bundle-size:
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # to check out repo (actions/checkout)
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          # The base commit, for the comparison.
+          fetch-depth: 0
+      - uses: $/.github/actions/setup
+      - uses: actions/cache/restore@v6
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-build-${{ github.sha }}
+
+      # Builds the base commit in a worktree and measures it with this
+      # branch's script, so both sides use the same scenarios and bundler.
+      # Pull requests check out a merge commit, so its first parent is exactly
+      # the base it was merged onto. Shares the Turborepo cache, so unchanged
+      # packages aren't rebuilt.
+      - name: Bundle size (base)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          BASE_DIR: ${{ runner.temp }}/base
+          TURBO_CACHE_DIR: ${{ github.workspace }}/.turbo/cache
+        run: |
+          git worktree add --detach "$BASE_DIR" HEAD^1
+          cd "$BASE_DIR"
+          pnpm install --frozen-lockfile
+          pnpm build
+          node "$GITHUB_WORKSPACE/scripts/bundle-size.mjs"
+
+      - name: Bundle size
+        env:
+          BASE_REPORT: ${{ github.event_name == 'pull_request' && format('{0}/base/bundle-size/report.json', runner.temp) || '' }}
+        # Empty on pushes, which means no comparison.
+        run: pnpm bundle-size --base "$BASE_REPORT"
+
+      - name: Bundle size summary
+        if: always()
+        run: |
+          if [ -f bundle-size/report.md ]; then
+            cat bundle-size/report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'No bundle size report (the Bundle size step failed).' >> "$GITHUB_STEP_SUMMARY"
+          fi

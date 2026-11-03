@@ -32,9 +32,7 @@ const fallbackProps = {
 export type VictoryScatterTTargetType = "data" | "labels" | "parent";
 
 export interface VictoryScatterProps
-  extends VictoryCommonProps,
-    VictoryDatableProps,
-    VictoryMultiLabelableProps {
+  extends VictoryCommonProps, VictoryDatableProps, VictoryMultiLabelableProps {
   bubbleProperty?: string;
   children?: React.ReactElement | React.ReactElement[];
   events?: EventPropTypeInterface<

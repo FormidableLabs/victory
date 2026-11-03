@@ -15,11 +15,11 @@ There are some parts of Victory that are in need of a little extra attention rig
 
 ## Monorepo!
 
-Victory is a monorepo built with [Wireit](https://github.com/google/wireit) and [pnpm](https://pnpm.io/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `pnpm install` will automatically link all interdependent `victory-*` packages. **You must use `pnpm` rather than `npm` or `yarn` when installing and running `package.json` scripts in this project.**
+Victory is a monorepo built with [Turborepo](https://turborepo.com/) and [pnpm](https://pnpm.io/) workspaces. All `victory-*` packages live in the `packages` directory, and each has its own `package.json`. Installing this repo with `pnpm install` will automatically link all interdependent `victory-*` packages. **You must use `pnpm` rather than `npm` or `yarn` when installing and running `package.json` scripts in this project.**
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/): the version in [`.nvmrc`](./.nvmrc) (the current LTS). CI uses the same file.
+- [Node.js](https://nodejs.org/): the major version in [`.nvmrc`](./.nvmrc) (an LTS line). CI uses the same file.
 - [pnpm](https://pnpm.io/installation) 10 or later. pnpm switches itself to the version in `package.json`'s `packageManager` field.
 
 ### Setup
@@ -69,37 +69,37 @@ $ pnpm start:docs
 
 ### Build and checks
 
-Our task system mostly takes care of all task dependencies and things you need. When you first clone this repo or a new branch, run:
+Our task system takes care of task dependencies for you. When you first clone this repo or a new branch, run:
 
 ```sh
 # Run all checks. Re-run this command for your normal workflow.
 $ pnpm run check
-# ... or add in a `--watch` to watch & re-run checks for only what you change!
-$ pnpm run check --watch
 
-# Build libraries and UMD distributions.
-# Really only needed to double-check the webpack build still works.
+# Build all libraries (ESM, CJS and types).
 $ pnpm run build
-# ... or add in a `--watch` to watch & re-run the parts of the build that changed!
-$ pnpm run build --watch
 ```
 
-This will do all the build, seeding the task cache so subsequent tasks are fast, and checks that everything is correctly working. Your Victory workflow could reasonably just be (1) making some changes to files + tests, and then (2) re-running `pnpm run check`!
+This does the whole build, seeding the task cache so later runs are fast, and checks that everything works. Your Victory workflow could reasonably just be (1) making some changes to files + tests, and then (2) re-running `pnpm run check`!
 
-Here are some other useful tasks (with or without a `--watch` flag):
+Here are some other useful tasks:
 
 ```sh
 # Quality checks
 $ pnpm run format
-$ pnpm run format --watch
 $ pnpm run lint
-$ pnpm run lint --watch
 $ pnpm run types:check
-$ pnpm run types:check --watch
+
+# Check what each package publishes
+$ pnpm run pack:check
 
 # Tests
-$ pnpm run jest
-$ pnpm run jest --watch
+$ pnpm run test
+
+# Tests with coverage (HTML report in coverage/index.html)
+$ pnpm run test:coverage
+
+# ESM bundle sizes of common imports (bundle-size/report.md)
+$ pnpm run bundle-size
 ```
 
 We also have some helper tasks to fix issues that are fixable.
@@ -109,101 +109,118 @@ $ pnpm run format:fix
 $ pnpm run lint:fix
 ```
 
-### Tips and tricks
-
-#### Scripts can be run from the _root_ AND from inside any _package_ folder
-
-For example, when working on a single package like `victory-core`, you can run `pnpm run check --watch` from the `packages/victory-core` directory, and it will only check the core.  Example:  
+To re-run a task whenever files change, use `turbo watch`:
 
 ```sh
-$ cd packages/victory-core
-$ pnpm run check --watch
+$ pnpm turbo watch test types:check
 ```
 
-This is especially helpful when you're making changes to any package that is _depended upon_, like `victory-core` or `victory-vendor`, and don't want to run every single script during development.
+### Tips and tricks
 
+#### Run tasks for one package
+
+When working on a single package like `victory-core`, use a `--filter` to run only its tasks (plus whatever they depend on):
+
+```sh
+$ pnpm turbo run test types:check --filter=victory-core
+# ... and the packages that depend on it, too:
+$ pnpm turbo run test --filter=...victory-core
+```
+
+This is especially helpful when you're making changes to a package that is _depended upon_, like `victory-core` or `victory-vendor`, and don't want to run every single task during development.
 
 #### My IDE shows outdated TypeScript errors
 
-It seems like VS Code and WebStorm both struggle to update their internal cache, whenever the **built types** change.  For example, when making changes to `victory-core`, the TypeScript changes won't be picked up by your IDE automatically.
+It seems like VS Code and WebStorm both struggle to update their internal cache, whenever the **built types** change. For example, when making changes to `victory-core`, the TypeScript changes won't be picked up by your IDE automatically.
 
 Instead of restarting your IDE completely, try restarting the TypeScript Service.
 
 #### My computer grinds to a halt!
 
-The initial build/check, or one where something that is part of a lot of cache keys changes, can really slow down your computer, especially if you've got an older model. To allow you to do other work on your computer at the same time, consider using the `WIREIT_PARALLEL=<NUM_PROCESS>` environment variable like:
+The initial build/check, or one where something that is part of a lot of cache keys changes, can really slow down your computer, especially if you've got an older model. To leave room for other work, limit how many tasks run at once:
 
 ```sh
-$ WIREIT_PARALLEL=4 pnpm run check
+$ pnpm run check --concurrency=4
 ```
-
-A good rubric is "number of cores" for max speed while still a mostly usable system or one less than that number for a much more usable system.
-
-#### Unit of work/caching
-
-Wireit is a flexible tool that caches at the task level. So that means that out-of-the box any wireit task will run the entire task again if any of the input `files` change. This leads us to two tips:
-
-1. **Decompose tasks to package level**: Jest could be run over the whole monorepo in one command, but we instead break it out per-package, so that we only re-run Jest tests for packages that have actually changed (or have dependencies that have changed).
-2. **Use tool-specific caching**: Tools like eslint and tsc can cache within a subtask run, so we like to leverage this within single tasks to make subtask re-runs faster.
 
 #### What happens if a check/subtask fails?
 
-The neat thing about wireit caching, is that for any high-level task, all of the sub-tasks that succeeded don't need to be re-run. So, if you're trying to run `pnpm run check` and get a single package lint error, just fix that package lint error and run `pnpm run check` again -- and then repeat until you get a pass! All of the work along the way that _succeeds_ will be cached and won't be run again!
-
-#### What should be a package script? What should be a wireit script?
-
-If you look at our `package.json:scripts.start` command, you'll notice that we use both a wireit-based script (`pnpm run build:lib:esm`) as well as a normal shell command (`webpack serve ...`). This is a good example of the types of things that should and shouldn't be wireit script tasks.
-
-1. **Wireit tasks**: Tasks that should run on input file **changes** and then not run again should be wireit tasks. E.g. "transpile files", "lint files".
-2. **Normal script tasks**: Tasks that should _always_ run regardless of the state of cache task execution. E.g. "start a webpack dev server".
+Turborepo caches every task that succeeds. So, if you run `pnpm run check` and get a single package test error, just fix that error and run `pnpm run check` again. Everything that already passed is replayed from the cache instead of running again.
 
 #### Cache issues
 
-We use tools caching within subtasks wherever we can. However, that can sometimes lead to weird errors. Here are some familiar ones with remedies.
-
-*Everything*
-
-If you want to make sure globally you're not hitting a cache issue, this command cleans the wireit cache as well as all the tool caches:
+If you think you're hitting a stale cache, this command cleans the Turborepo cache as well as all the tool caches:
 
 ```sh
 $ pnpm run clean:cache
 ```
 
-Your next `pnpm run build|check` will be a full (long) rebuild from scratch.
-
-*Eslint*
-
-If you hit something like:
-
-```
-/PATH/TO/victory/test/jest-setup.ts
-  0:0  error  Parsing error: Debug Failure. False expression: /PATH/TO/victory/packages/victory/node_modules/victory-area/es/index.js linked to nonexistent file /PATH/TO/victory/packages/victory-area/es/index.js
-
-✖ 1 problem (1 error, 0 warnings)
-```
-
-Then you've hit an eslint issue that can be fixed with:
-
-```sh
-$ pnpm run clean:cache:lint
-```
+Your next `pnpm run build|check` will be a full (long) rebuild from scratch. To skip the Turborepo cache for a single run, add `--force`.
 
 ## Authoring tasks
 
-Our task system is optimized for fast, easy developer experience, at the acknowledged cost of **extra maintainer burden** when we change task structure, add tasks, etc. If you are editing the scripts in a `package.json` or `package-scripts.js` you'll need to read up on [Wireit](https://github.com/google/wireit) and probably want to talk to an existing Victory maintainer.
+We use [Turborepo](https://turborepo.com/) to run tasks in dependency order and cache them.
 
-We use three tools and some custom scripts as follows:
+- **Tasks are plain `package.json` scripts.** Each library package has the same set of scripts (`build`, `types:check`, `test`, `pack:check`). If you change one, change it in every package.
+- **`build`** runs [tsdown](https://tsdown.dev/) with the shared root `tsdown.config.mts`. It writes `dist/`: ESM (`.mjs`) and CJS (`.cjs`), one file per source file, with `.d.mts`/`.d.cts` declarations. It also writes the `main`, `module`, `types` and `exports` fields in the package's `package.json`; commit any change it makes there.
+- **`turbo.json`** at the root says how tasks depend on each other (`^task` means "this task in my dependencies first"), which files are each task's inputs, and which files it outputs.
+- **Root `package.json` scripts** (`pnpm run build`, `test`, `types:check`, ...) call `turbo run`. `format` ([oxfmt](https://oxc.rs/docs/guide/usage/formatter)) and `lint` ([oxlint](https://oxc.rs/docs/guide/usage/linter)) check the whole repo in about a second, so they run directly, without Turborepo. Their configs are `.oxfmtrc.json` and `.oxlintrc.json`.
+- **`packages/victory-vendor`** has its own `build` script (not tsdown) and its own `turbo.json`.
+- **`website`** has its own `turbo.json`: its `build` depends on the packages' `build`.
 
-- `pnpm` to `run` or `exec` scripts
-- `wireit` to cache tasks and run dependent tasks.
-- `nps` to place one off script tasks in the root `/project-scripts.js` in a manner that can be called from within a workspace.
-- `scripts/sync-pkgs-wireit*.js`: Scripts run with `pnpm run sync` to automate dependency management. This is where most of your work for task management will take place.
+Getting inputs right matters: if a task reads a file that isn't one of its inputs, Turborepo can replay a stale result. When unsure, add the file. Files outside packages that can affect any task go in `globalDependencies`.
 
-For our packages, we primarily focus on four types of package.json files:
+`pack:check` (`scripts/pack-check.mjs`) packs a built package and checks the tarball: publint, [attw](https://github.com/arethetypeswrong/arethetypeswrong.github.io), type-checking the published declarations with `skipLibCheck` off (our tsconfig skips them otherwise; known errors are listed in `ALLOWED_DECLARATION_ERRORS`), and loading every entrypoint with both `require()` and `import()` from an install outside the repo that has only the tarball's declared `dependencies` and `peerDependencies`. A package with a `pack-snapshot.json` (today only `victory-vendor`, which recharts depends on) must also match it: its resolution-related manifest fields, which file each entrypoint resolves to under each module resolution mode, attw's problems, which entrypoints fail to load (known issues, e.g. #3104), and the file list. If a change to the snapshot is intended, build, then run `pnpm run pack:check --update` in that package and commit the result.
 
-- `package.json`: Define root tasks here and aggregate workspace tasks here. Note that instead of relying on `pnpm -r run` to concurrently run tasks in each workspace, we instead rely on `wireit` alone to have dependencies in aggregate tasks on all subtasks. This is more efficient to have `wireit` command concurrency and the task dependency graph.
-- `packages/victory*/package.json`: These package scripts are generated by `scripts/sync-pkgs-wireit-helpers.js`. If you want to change them, edit that script and run `pnpm run sync`.
-- `packages/victory-vendor/package.json`: A custom package.json that must have implementations or no-ops for all things in `victory-core`.
+`bundle-size` (`scripts/bundle-size.mjs`) bundles a few common ESM imports from the built `dist/` with [rolldown](https://rolldown.rs/) (minified, React external) and reports minified and gzipped sizes. CI's `bundle-size` job puts the report in the job summary; on pull requests it also builds the base commit, shows the change, and adds a warning annotation when a scenario's gzipped size grows by more than 1%. It's reported, not gated. The scenarios are listed at the top of the script; keep them few, since renaming one loses its comparison.
+
+`pnpm run sync` copies `victory-core`'s tsconfig files to the other packages. CI checks they're in sync.
+
+Turborepo collects anonymous telemetry unless you turn it off. CI turns it off. To turn it off on your machine, run `pnpm turbo telemetry disable`.
+
+## Updating dependencies
+
+We don't use Renovate or Dependabot version-update PRs. Instead, run this before each release, and when a Dependabot security alert comes in:
+
+```sh
+$ pnpm run dep:check
+```
+
+It runs [npm-check-updates](https://github.com/raineorshine/npm-check-updates) on the root and every workspace package, and lists newer versions. It doesn't change any files. Versions published in the last week are left out. `.ncurc.cjs` lists the majors we've deliberately held back (each one has a tracking item); remove an entry when its upgrade lands.
+
+Make the updates in one PR, then run `pnpm run check`, `pnpm run build:docs` and `pnpm run pack:check`. Updates to a published package's `dependencies` change what users install, so they need a changeset.
+
+pnpm installs only versions published at least 7 days ago (`minimumReleaseAge` in `pnpm-workspace.yaml`), transitive dependencies included. When no version in a range is old enough, resolution fails instead of picking a newer one. pnpm also checks the existing lockfile, so `pnpm install` fails with `ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION` if the lockfile has a version that's too new. To fix it, re-resolve those packages to an older version with `pnpm update <name> ...` (it works for transitive dependencies too), or wait until they're a week old.
+
+For an urgent security fix that can't wait a week, add the fixed version to `minimumReleaseAgeExclude` in `pnpm-workspace.yaml`, with a comment that links the advisory and gives the date it can be removed:
+
+```yaml
+minimumReleaseAgeExclude:
+  # GHSA-xxxx-xxxx-xxxx. Remove after 2026-11-09.
+  - some-package@1.2.3
+```
+
+Remove the entry once that version is a week old. Don't add exceptions to get a new version early for any other reason.
+
+Version ranges:
+
+- `^` by default.
+- Exact versions only for tools whose upgrade needs its own PR: oxfmt and oxlint (a new version can reformat the repo or fail CI), and victory-vendor's Babel packages (they write its published files, and nothing checks their contents). TypeScript, tsdown and rolldown also shape published output, but `pnpm pack:check` and a `dist/` diff in the upgrade PR cover them, so they follow the other rules.
+- `~` only to match another package's range (root `rolldown` matches tsdown's, so one copy is installed).
+- TypeScript: `tsc` (`types:check`) is TypeScript 7. TypeScript 7.0 has no stable JS API, so `.pnpmfile.cjs` pins the tools that import `typescript` (rolldown-plugin-dts, which writes our declarations, and a few website and Storybook tools) to 6.0.3. `dep:check` doesn't see that pin; update it by hand. It goes away when declarations move to the tsgo generator (TypeScript 7.1).
+- The `victory-*` packages depend on each other at the exact shared version. Changesets updates those.
+
+### GitHub Actions
+
+Workflows reference GitHub's own actions (`actions/*`, `github/*`) by major version tag, such as `actions/checkout@v7`. Third-party actions are pinned to a commit SHA with the version in a comment, such as `pnpm/action-setup@<sha> # v6.1.0`, because a tag can be moved to different code. [zizmor](https://docs.zizmor.sh) enforces this (`.github/zizmor.yml`) along with its other security checks.
+
+Update actions in the same routine as the dependencies above:
+
+- Third-party actions: run `pinact run --update` ([pinact](https://github.com/suzuki-shunsuke/pinact), `brew install pinact`). It updates SHAs and their version comments, skipping versions published in the last week (`.github/pinact.yml`). Review each action's release notes.
+- GitHub's actions: check each one's releases page for a new major and read its breaking changes.
+- zizmor itself: bump `version` on the zizmor step in `.github/workflows/ci.yml`.
+
+CI runs zizmor in the `lint` job, at the `version` pinned there. To run it locally, install it and run `pnpm run lint:gha`; without it installed, the script skips. Newer zizmor releases add audits, so a different version locally can report findings that CI doesn't. To match CI, install that version, e.g. `uv tool install zizmor==1.31.1` (or `brew install zizmor` for the latest). Set `GH_TOKEN` to include zizmor's online audits.
 
 ## Visual Tests
 

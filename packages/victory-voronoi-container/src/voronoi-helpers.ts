@@ -3,8 +3,12 @@ import isEmpty from "lodash/isEmpty";
 import isRegExp from "lodash/isRegExp";
 import throttle from "lodash/throttle";
 import isEqual from "react-fast-compare";
-import Delaunay from "delaunay-find/lib/index.js";
+import DelaunayModule from "delaunay-find/lib/index.js";
 import React from "react";
+
+// delaunay-find is Babel-compiled CJS (`exports.default`). Strict ESM (Node,
+// webpack for `.mjs`) gives the default import the whole `module.exports`.
+const Delaunay = (DelaunayModule as any).default ?? DelaunayModule;
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 32;
 

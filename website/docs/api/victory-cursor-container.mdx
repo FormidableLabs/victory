@@ -10,9 +10,7 @@ For examples of `VictoryCursorContainer` in action, visit the [Tooltips](/docs/g
 
 ## Inherited Props
 
-<CommonProps
-  interfaces={["VictoryContainerProps"]}
-/>
+<CommonProps interfaces={["VictoryContainerProps"]} />
 
 ## Component Props
 
@@ -46,10 +44,7 @@ the cursor will then be a vertical line that will inspect the time value of the 
     <VictoryCursorContainer
       cursorDimension="x"
       cursorLabel={({ datum }) =>
-        `${_.round(datum.x, 2)}, ${_.round(
-          datum.y,
-          2,
-        )}`
+        `${_.round(datum.x, 2)}, ${_.round(datum.y, 2)}`
       }
     />
   }

@@ -4,12 +4,7 @@ title: VictoryChart
 
 ## Inherited Props
 
-<CommonProps
-  interfaces={[
-    "VictoryCommonProps",
-    "VictoryEventProps",
-  ]}
-/>
+<CommonProps interfaces={["VictoryCommonProps", "VictoryEventProps"]} />
 
 ---
 
@@ -29,9 +24,7 @@ The `backgroundComponent` prop takes a component instance which will be responsi
   style={{
     background: { fill: "lightblue" },
   }}
-  backgroundComponent={
-    <Background y={20} height={100} />
-  }
+  backgroundComponent={<Background y={20} height={100} />}
   theme={VictoryTheme.clean}
 />
 ```
@@ -144,17 +137,9 @@ The `endAngle` props defines the overall end angle of a polar chart in degrees. 
 
 ```jsx live
 <div>
-  <VictoryChart
-    polar
-    theme={VictoryTheme.clean}
-    startAngle={90}
-    endAngle={450}
-  >
+  <VictoryChart polar theme={VictoryTheme.clean} startAngle={90} endAngle={450}>
     <VictoryPolarAxis
-      tickValues={[
-        0, 45, 90, 135, 180, 225, 270,
-        315,
-      ]}
+      tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
       labelPlacement="vertical"
     />
     <VictoryBar
@@ -170,12 +155,7 @@ The `endAngle` props defines the overall end angle of a polar chart in degrees. 
     />
   </VictoryChart>
 
-  <VictoryChart
-    polar
-    theme={VictoryTheme.clean}
-    startAngle={0}
-    endAngle={180}
-  >
+  <VictoryChart polar theme={VictoryTheme.clean} startAngle={0} endAngle={180}>
     <VictoryPolarAxis
       tickValues={[0, 45, 90, 135, 180]}
       labelPlacement="vertical"
@@ -223,33 +203,21 @@ See the [Events Guide][] for more information on defining events.
               childName: "area-2",
               target: "data",
               mutation: (props) => ({
-                style: Object.assign(
-                  {},
-                  props.style,
-                  { fill: "gold" },
-                ),
+                style: Object.assign({}, props.style, { fill: "gold" }),
               }),
             },
             {
               childName: "area-3",
               target: "data",
               mutation: (props) => ({
-                style: Object.assign(
-                  {},
-                  props.style,
-                  { fill: "orange" },
-                ),
+                style: Object.assign({}, props.style, { fill: "orange" }),
               }),
             },
             {
               childName: "area-4",
               target: "data",
               mutation: (props) => ({
-                style: Object.assign(
-                  {},
-                  props.style,
-                  { fill: "red" },
-                ),
+                style: Object.assign({}, props.style, { fill: "red" }),
               }),
             },
           ];
@@ -260,22 +228,10 @@ See the [Events Guide][] for more information on defining events.
   theme={VictoryTheme.clean}
 >
   <VictoryStack>
-    <VictoryArea
-      name="area-1"
-      data={sampleData}
-    />
-    <VictoryArea
-      name="area-2"
-      data={sampleData}
-    />
-    <VictoryArea
-      name="area-3"
-      data={sampleData}
-    />
-    <VictoryArea
-      name="area-4"
-      data={sampleData}
-    />
+    <VictoryArea name="area-1" data={sampleData} />
+    <VictoryArea name="area-2" data={sampleData} />
+    <VictoryArea name="area-3" data={sampleData} />
+    <VictoryArea name="area-4" data={sampleData} />
   </VictoryStack>
 </VictoryChart>
 ```
@@ -291,20 +247,10 @@ See the [Events Guide][] for more information on defining events.
 When the `innerRadius` prop is set, polar charts will be hollow rather than circular.
 
 ```jsx live
-<VictoryChart
-  polar
-  theme={VictoryTheme.clean}
->
+<VictoryChart polar theme={VictoryTheme.clean}>
   <VictoryPolarAxis />
-  <VictoryPolarAxis
-    dependentAxis
-    tickValues={[1, 3, 5]}
-    axisAngle={40}
-  />
-  <VictoryBar
-    data={sampleData}
-    style={{ data: { width: 30 } }}
-  />
+  <VictoryPolarAxis dependentAxis tickValues={[1, 3, 5]} axisAngle={40} />
+  <VictoryBar data={sampleData} style={{ data: { width: 30 } }} />
 </VictoryChart>
 ```
 
@@ -332,17 +278,9 @@ The `startAngle` props defines the overall start angle of a polar chart in degre
 
 ```jsx live
 <div>
-  <VictoryChart
-    polar
-    theme={VictoryTheme.clean}
-    startAngle={90}
-    endAngle={450}
-  >
+  <VictoryChart polar theme={VictoryTheme.clean} startAngle={90} endAngle={450}>
     <VictoryPolarAxis
-      tickValues={[
-        0, 45, 90, 135, 180, 225, 270,
-        315,
-      ]}
+      tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
       labelPlacement="vertical"
     />
     <VictoryBar
@@ -357,12 +295,7 @@ The `startAngle` props defines the overall start angle of a polar chart in degre
     />
   </VictoryChart>
 
-  <VictoryChart
-    polar
-    theme={VictoryTheme.clean}
-    startAngle={0}
-    endAngle={180}
-  >
+  <VictoryChart polar theme={VictoryTheme.clean} startAngle={0} endAngle={180}>
     <VictoryPolarAxis
       tickValues={[0, 45, 90, 135, 180]}
       labelPlacement="vertical"

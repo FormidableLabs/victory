@@ -9,10 +9,7 @@ Scatter charts render a dataset as a series of points.
 See the [full API here](/docs/api/victory-scatter). Typically composed with [`VictoryChart`](/docs/api/victory-chart) to create full charts.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryScatter
     size={7}
     data={[
@@ -31,10 +28,7 @@ See the [full API here](/docs/api/victory-scatter). Typically composed with [`Vi
 Add labels to charts by setting the `labels` prop to the name of a property in the dataset, or a function that returns the label value. You can customize the display of the labels by using the [`labelComponent`](/docs/api/victory-area#labelcomponent) prop. `VictoryScatter` will also preferentially use the `label` property from the data object.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryScatter
     size={7}
     data={[
@@ -54,10 +48,7 @@ Add labels to charts by setting the `labels` prop to the name of a property in t
 Custom labels can be rendered by using the `labelComponent` prop. See the [VictoryLabel](/docs/api/victory-label) API for more information.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryScatter
     size={7}
     data={[
@@ -84,10 +75,7 @@ Custom labels can be rendered by using the `labelComponent` prop. See the [Victo
 Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) component as the `labelComponent`.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryScatter
     size={7}
     data={[
@@ -98,9 +86,7 @@ Tooltips can be added by using a [`VictoryTooltip`](/docs/api/victory-tooltip) c
       { x: 5, y: 7 },
     ]}
     labels={({ datum }) => datum.y}
-    labelComponent={
-      <VictoryTooltip dy={-10} />
-    }
+    labelComponent={<VictoryTooltip dy={-10} />}
   />
 </VictoryChart>
 ```
@@ -139,10 +125,7 @@ Scatter charts support all four quadrants by default. You can customize the doma
 Scatter charts can be rendered with a flipped axis by setting the `horizontal` prop to `true`. This prop can be applied to either `VictoryChart` or `VictoryLine`.
 
 ```jsx live
-<VictoryChart
-  horizontal
-  theme={VictoryTheme.clean}
->
+<VictoryChart horizontal theme={VictoryTheme.clean}>
   <VictoryScatter
     size={7}
     data={[
@@ -161,9 +144,7 @@ Scatter charts can be rendered with a flipped axis by setting the `horizontal` p
 Scatter charts can handle null data points by setting the `data` prop to an array of objects with `x` and `y` values. Null data points will be skipped.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryScatter
     data={[
       { x: 1, y: 1 },
@@ -186,10 +167,7 @@ Scatter charts can handle null data points by setting the `data` prop to an arra
 Scatter charts can render a dynamic bubble size by setting the `bubbleProperty` to a property of the data object.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
-  domain={{ x: [0, 6], y: [0, 8] }}
->
+<VictoryChart theme={VictoryTheme.clean} domain={{ x: [0, 6], y: [0, 8] }}>
   <VictoryScatter
     bubbleProperty="amount"
     maxBubbleSize={25}
@@ -210,10 +188,7 @@ Scatter charts can render a dynamic bubble size by setting the `bubbleProperty` 
 Scatter chart bubbles can be customized by setting the `symbol` prop.
 
 ```jsx live
-<VictoryChart
-  domain={{ x: [0, 5], y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryScatter
     size={7}
     data={[
@@ -256,10 +231,7 @@ const CustomIcon = (props) => {
 
 function App() {
   return (
-    <VictoryChart
-      domain={{ x: [0, 5], y: [0, 7] }}
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart domain={{ x: [0, 5], y: [0, 7] }} theme={VictoryTheme.clean}>
       <VictoryScatter
         size={7}
         data={[
@@ -284,38 +256,28 @@ Scatter charts support all four quadrants by default. You can customize the doma
 
 ```jsx live noInline
 function App() {
-  const [data, setData] =
-    React.useState(getData());
+  const [data, setData] = React.useState(getData());
 
   React.useState(() => {
-    const setStateInterval =
-      window.setInterval(() => {
-        setData(getData());
-      }, 4000);
+    const setStateInterval = window.setInterval(() => {
+      setData(getData());
+    }, 4000);
 
     return () => {
-      window.clearInterval(
-        setStateInterval,
-      );
+      window.clearInterval(setStateInterval);
     };
   }, []);
 
   return (
-    <VictoryChart
-      theme={VictoryTheme.clean}
-    >
+    <VictoryChart theme={VictoryTheme.clean}>
       <VictoryScatter
         animate={{ duration: 2000 }}
-        groupComponent={
-          <VictoryClipContainer />
-        }
+        groupComponent={<VictoryClipContainer />}
         data={data}
         style={{
           data: {
-            fill: ({ datum }) =>
-              datum.fill,
-            opacity: ({ datum }) =>
-              datum.opacity,
+            fill: ({ datum }) => datum.fill,
+            opacity: ({ datum }) => datum.opacity,
           },
         }}
         animate={{
@@ -331,8 +293,7 @@ function App() {
               opacity: 0.3,
             }),
             after: (datum) => ({
-              opacity:
-                datum.opacity || 1,
+              opacity: datum.opacity || 1,
             }),
           },
         }}
@@ -361,21 +322,17 @@ function getData() {
     "plus",
   ];
   const elementNum = _.random(10, 40);
-  return _.range(elementNum).map(
-    (index) => {
-      const scaledIndex = Math.floor(
-        index % 7,
-      );
-      return {
-        x: _.random(10, 50),
-        y: _.random(2, 100),
-        size: _.random(8) + 3,
-        symbol: symbols[scaledIndex],
-        fill: colors[_.random(0, 6)],
-        opacity: 1,
-      };
-    },
-  );
+  return _.range(elementNum).map((index) => {
+    const scaledIndex = Math.floor(index % 7);
+    return {
+      x: _.random(10, 50),
+      y: _.random(2, 100),
+      size: _.random(8) + 3,
+      symbol: symbols[scaledIndex],
+      fill: colors[_.random(0, 6)],
+      opacity: 1,
+    };
+  });
 }
 
 render(<App />);
@@ -386,9 +343,7 @@ render(<App />);
 Chart styling can be customized by using the theme or overriding the style prop on the component.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryScatter
     size={7}
     data={[
@@ -400,23 +355,14 @@ Chart styling can be customized by using the theme or overriding the style prop 
     ]}
     style={{
       data: {
-        fill: ({ datum }) =>
-          datum.x === 3
-            ? "#000000"
-            : "#c43a31",
-        stroke: ({ datum }) =>
-          datum.x === 3
-            ? "#000000"
-            : "#c43a31",
+        fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
+        stroke: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
         fillOpacity: 0.7,
         strokeWidth: 3,
       },
       labels: {
         fontSize: 15,
-        fill: ({ datum }) =>
-          datum.x === 3
-            ? "#000000"
-            : "#c43a31",
+        fill: ({ datum }) => (datum.x === 3 ? "#000000" : "#c43a31"),
       },
     }}
   />
@@ -428,9 +374,7 @@ Chart styling can be customized by using the theme or overriding the style prop 
 Events can be handled by passing an array of event objects to the `events` prop on the component. Each event object should specify a `target` and an `eventHandlers` object. See the [events](/docs/guides/events) guide for more information.
 
 ```jsx live
-<VictoryChart
-  theme={VictoryTheme.clean}
->
+<VictoryChart theme={VictoryTheme.clean}>
   <VictoryScatter
     size={7}
     data={[
@@ -449,11 +393,8 @@ Events can be handled by passing an array of event objects to the `events` prop 
               {
                 target: "data",
                 mutation: (props) => {
-                  const fill =
-                    props.style &&
-                    props.style.fill;
-                  return fill ===
-                    "black"
+                  const fill = props.style && props.style.fill;
+                  return fill === "black"
                     ? null
                     : {
                         style: {
@@ -476,11 +417,7 @@ Events can be handled by passing an array of event objects to the `events` prop 
 Line charts can be rendered in polar coordinates by setting the `polar` prop to `true` and using `VictoryPolarAxis` components.
 
 ```jsx live
-<VictoryChart
-  polar
-  domain={{ y: [0, 7] }}
-  theme={VictoryTheme.clean}
->
+<VictoryChart polar domain={{ y: [0, 7] }} theme={VictoryTheme.clean}>
   <VictoryPolarAxis
     dependentAxis
     style={{ axis: { stroke: "none" } }}
@@ -496,11 +433,7 @@ Line charts can be rendered in polar coordinates by setting the `polar` prop to 
 Scatter charts can be rendered outside a VictoryChart.
 
 ```jsx live
-<VictoryScatter
-  size={7}
-  theme={VictoryTheme.clean}
-  data={sampleData}
-/>
+<VictoryScatter size={7} theme={VictoryTheme.clean} data={sampleData} />
 ```
 
 They can also be embeded in other SVG components by using the `standalone` prop.
@@ -515,12 +448,7 @@ They can also be embeded in other SVG components by using the `standalone` prop.
       margin: "0 auto",
     }}
   >
-    <circle
-      cx={150}
-      cy={150}
-      r={150}
-      fill="#9ded91"
-    />
+    <circle cx={150} cy={150} r={150} fill="#9ded91" />
     <VictoryScatter
       standalone={false}
       size={7}
