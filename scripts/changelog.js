@@ -1,12 +1,9 @@
-const {
-  default: changelogFunctions,
-} = require("@svitejs/changesets-changelog-github-compact");
+const { default: changelogFunctions } = require("@changesets/changelog-github");
 
 const customFunctions = {
   ...changelogFunctions,
-  // Keep a blank line between entries (1.x writes tight lists).
-  getReleaseLine: async (...args) =>
-    `\n${await changelogFunctions.getReleaseLine(...args)}`,
+  // Every package is in one `fixed` group, so each release would list its
+  // sibling bumps as "Updated dependencies" in every changelog.
   getDependencyReleaseLine: async () => "",
 };
 

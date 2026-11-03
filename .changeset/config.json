@@ -1,6 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@4.0.0/schema.json",
-  "changelog": ["../scripts/changelog.js", { "repo": "FormidableLabs/victory" }],
+  "changelog": [
+    "../scripts/changelog.js",
+    { "repo": "FormidableLabs/victory", "disableThanks": true }
+  ],
   "access": "public",
   "baseBranch": "main",
   "fixed": [["victory*"]],
