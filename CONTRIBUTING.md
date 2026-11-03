@@ -190,6 +190,18 @@ It runs [npm-check-updates](https://github.com/raineorshine/npm-check-updates) o
 
 Make the updates in one PR, then run `pnpm run check`, `pnpm run build:docs` and `pnpm run pack:check`. Updates to a published package's `dependencies` change what users install, so they need a changeset.
 
+pnpm installs only versions published at least 7 days ago (`minimumReleaseAge` in `pnpm-workspace.yaml`), transitive dependencies included. When no version in a range is old enough, resolution fails instead of picking a newer one. pnpm also checks the existing lockfile, so `pnpm install` fails with `ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION` if the lockfile has a version that's too new. To fix it, re-resolve those packages to an older version with `pnpm update <name> ...` (it works for transitive dependencies too), or wait until they're a week old.
+
+For an urgent security fix that can't wait a week, add the fixed version to `minimumReleaseAgeExclude` in `pnpm-workspace.yaml`, with a comment that links the advisory and gives the date it can be removed:
+
+```yaml
+minimumReleaseAgeExclude:
+  # GHSA-xxxx-xxxx-xxxx. Remove after 2026-11-09.
+  - some-package@1.2.3
+```
+
+Remove the entry once that version is a week old. Don't add exceptions to get a new version early for any other reason.
+
 Version ranges:
 
 - `^` by default.

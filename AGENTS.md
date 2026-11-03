@@ -35,7 +35,8 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 ## Commands
 
 Use the Node version in `.nvmrc` and pnpm (version from `packageManager`; no corepack needed). Never use npm or yarn to install.
-pnpm settings (workspace linking, `overrides`, `patchedDependencies`, `allowBuilds`) live in `pnpm-workspace.yaml`. pnpm 11+ ignores them in `.npmrc` and in `package.json`'s `"pnpm"` field.
+pnpm settings (workspace linking, `overrides`, `patchedDependencies`, `allowBuilds`, `minimumReleaseAge`) live in `pnpm-workspace.yaml`. pnpm 11+ ignores them in `.npmrc` and in `package.json`'s `"pnpm"` field.
+`minimumReleaseAge` is 7 days and applies to the lockfile too: if `pnpm install` fails with `ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION`, re-resolve the named packages with `pnpm update <name> ...`. Don't add `minimumReleaseAgeExclude` entries except for an urgent security fix (CONTRIBUTING "Updating dependencies").
 TypeScript: `tsc` is 7.0; `.pnpmfile.cjs` keeps tools that import the `typescript` JS API (rolldown-plugin-dts, which emits declarations) on 6.0.3 until the tsgo generator (TS 7.1). Overrides can't do this: a peer still resolves to the root's copy.
 
 ```sh
