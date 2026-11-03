@@ -60,7 +60,7 @@
     "victory-zoom-container": "37.4.1"
   },
   "peerDependencies": {
-    "react": ">=16.6.0"
+    "react": ">=18"
   },
   "publishConfig": {
     "provenance": true
