@@ -22,11 +22,13 @@
       "inputs": ["$TURBO_DEFAULT$", "!src/**/*.test.*", "!*.md"],
       "outputs": ["dist/**"]
     },
-    // Type-checks src including tests, against dependencies' built types. Also
-    // waits for the package's own build: the shared `test/` helpers import
-    // victory-voronoi's source, which imports `victory-core` by package name.
+    // Type-checks src including tests, against dependencies' built types. The
+    // shared `test/` helpers import victory-voronoi's source, which imports
+    // `victory-core` by package name: so this waits for the package's own
+    // build, and depends on victory-voronoi's build so edits to that source
+    // change the hash.
     "types:check": {
-      "dependsOn": ["build", "^build"],
+      "dependsOn": ["build", "^build", "victory-voronoi#build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/test/**"]
     },
     // Tests import dependencies through their built `dist`, plus the root
