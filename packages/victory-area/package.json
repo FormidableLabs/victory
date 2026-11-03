@@ -1,6 +1,6 @@
 {
   "name": "victory-area",
-  "version": "37.4.1",
+  "version": "38.0.0",
   "description": "Area Component for Victory",
   "keywords": [
     "data visualization",
@@ -32,8 +32,8 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.19",
-    "victory-core": "37.4.1",
-    "victory-vendor": "37.4.1"
+    "victory-core": "38.0.0",
+    "victory-vendor": "38.0.0"
   },
   "peerDependencies": {
     "react": ">=18"

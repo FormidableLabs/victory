@@ -1,5 +1,24 @@
 # victory-canvas
 
+## 38.0.0
+
+### Major Changes
+
+- [#3138](https://github.com/FormidableLabs/victory/pull/3138) [`b7ebc3e`](https://github.com/FormidableLabs/victory/commit/b7ebc3e316d05740f11d4e8b8072d420db6ccfad) - Require React 18 or later: the `react` peer dependency is now `>=18` (was `>=16.6.0`). If you're on React 16 or 17, stay on Victory 37.x until you upgrade React.
+
+- [#3107](https://github.com/FormidableLabs/victory/pull/3107) [`4c436bd`](https://github.com/FormidableLabs/victory/commit/4c436bd47b835e795e96bc205cdf9c590fe92ddb) - Remove the UMD bundles (`dist/<package>.js` and `dist/<package>.min.js`). To use Victory in the browser without a build step, import it as ESM from a CDN with an import map; see [Using Victory in the browser](https://commerce.nearform.com/open-source/victory/docs/introduction/browser).
+
+- [#3108](https://github.com/FormidableLabs/victory/pull/3108) [`8f16467`](https://github.com/FormidableLabs/victory/commit/8f1646767d6059d764541118284cf71cc1da5c95) - Packages are now built with tsdown and published from `dist/`, with an `exports` map:
+  
+  - ESM is `dist/*.mjs` and CommonJS is `dist/*.cjs`, with matching `.d.mts`/`.d.cts` types. `main`, `module` and `types` still point at them for older tooling.
+  - Only the package root (and `package.json`) can be imported. Deep imports into `lib/`, `es/` or `src/` no longer resolve; import from the package root instead (for example `import { Helpers } from "victory-core"`).
+  - The output targets ES2022 and is no longer down-leveled further. If you support older browsers, transpile `node_modules` in your bundler.
+  - `src/` is no longer published.
+
+### Patch Changes
+
+- [#3115](https://github.com/FormidableLabs/victory/pull/3115) [`1864919`](https://github.com/FormidableLabs/victory/commit/18649193d7c8d42a8f5f58ade9c63288af68a7f8) - Fix `VictoryLabel`'s default `fontFamily`: an invisible soft hyphen inside `'Seravek'` meant that font never matched. Remove the unused `lodash` dependency from `victory-canvas`, `victory-histogram` and `victory-scatter`.
+
 ## 37.4.1
 
 No changes in this release.
