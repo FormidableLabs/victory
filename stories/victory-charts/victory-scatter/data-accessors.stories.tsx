@@ -72,11 +72,22 @@ export const DataAccessors: Story = {
           ]}
         />
       </VictoryChart>
+      {/* No data: Victory samples `y` over the x domain. */}
       <VictoryChart theme={VictoryTheme[props.themeKey]}>
-        <VictoryScatter {...props} y={(d) => Math.sin(2 * Math.PI * d.x)} />
+        <VictoryScatter
+          {...props}
+          data={undefined}
+          samples={25}
+          y={(d) => Math.sin(2 * Math.PI * d.x)}
+        />
       </VictoryChart>
       <VictoryChart theme={VictoryTheme[props.themeKey]} polar>
-        <VictoryScatter {...props} y={(d) => Math.sin(2 * Math.PI * d.x)} />
+        <VictoryScatter
+          {...props}
+          data={undefined}
+          samples={25}
+          y={(d) => Math.sin(2 * Math.PI * d.x)}
+        />
       </VictoryChart>
     </>
   ),

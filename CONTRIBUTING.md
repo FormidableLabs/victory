@@ -241,7 +241,7 @@ $ pnpm run build
 $ pnpm --filter victory-stories exec vitest run -u
 ```
 
-CI fails on a missing or changed snapshot, and on a snapshot file whose story no longer exists (delete it). A story that's known to throw is listed in `KNOWN_ERRORS` in `stories/tests/stories.test.tsx` and checked for that error instead.
+CI fails on a missing or changed snapshot, on a snapshot file whose story no longer exists (delete it), and on a story that throws or logs a `console.error` or `console.warn` (React's warnings, such as a missing `key`, included). Fix the story; `ALLOWED_CONSOLE` in `stories/tests/stories.test.tsx` is for messages that can't be avoided.
 
 [Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All internal PRs will trigger a new Chromatic build, which will be displayed along with CI status. Chromatic builds for Victory may be viewed in more detail here: https://www.chromaticqa.com/builds?appId=5b4acf7c54c0490024d5980b. Chromatic requires a secret app code to run, so PRs from external contributors will not automatically trigger a Chromatic build. For this reason, changes from external contributors will be checked out and opened as separate PRs so Chromatic may be used to verify any changes. Developers with access to the secret app code may also trigger a chromatic build manually with:
 
