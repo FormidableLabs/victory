@@ -49,14 +49,10 @@ $ pnpm install
 
 We have some dev servers available for a sample development environment.
 
-> Note: The demo app is deprecated, all development should occur in storybook or the docs
+Develop in the stories gallery or the docs. The gallery shows every story in `stories/` at http://localhost:5173/ (Vite), and rebuilds the packages when their source changes:
 
 ```sh
-# watch mode / HMR
-$ pnpm storybook:dev
-
-# storybook standalone
-$ pnpm storybook:start
+$ pnpm stories:dev
 ```
 
 ### Running Docs locally
@@ -224,15 +220,15 @@ CI runs zizmor in the `lint` job, at the `version` pinned there. To run it local
 
 ## Visual Tests
 
-Victory relies heavily on visual regression testing with [Storybook](https://storybook.js.org/) and [Chromatic](https://www.chromaticqa.com/).
+Victory relies heavily on visual regression testing. The stories in `stories/` are moving from [Storybook](https://storybook.js.org/) and [Chromatic](https://www.chromaticqa.com/) to a Vite gallery with snapshot tests (#3093, Phase 3).
 
-Write visual tests for new features by adding them in the `stories` directory. Run storybooks and check out changes. Storybooks are served from http://localhost:6006/
+Write visual tests for new features by adding stories in the `stories` directory (`*.stories.tsx`, Storybook's file format). Check them in the gallery, served from http://localhost:5173/:
 
 ```sh
-$ pnpm run storybook:server
+$ pnpm stories:dev
 ```
 
-This task also watches and rebuilds all Victory source files so you can more easily develop against storybook.
+This task also watches and rebuilds all Victory source files so you can develop against the stories.
 
 [Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All internal PRs will trigger a new Chromatic build, which will be displayed along with CI status. Chromatic builds for Victory may be viewed in more detail here: https://www.chromaticqa.com/builds?appId=5b4acf7c54c0490024d5980b. Chromatic requires a secret app code to run, so PRs from external contributors will not automatically trigger a Chromatic build. For this reason, changes from external contributors will be checked out and opened as separate PRs so Chromatic may be used to verify any changes. Developers with access to the secret app code may also trigger a chromatic build manually with:
 

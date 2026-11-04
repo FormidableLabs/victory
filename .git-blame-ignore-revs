@@ -8,3 +8,6 @@ d794bf7adb268f3e1e4ada03db0152fa6f3e28df
 
 # [uplift] chore: fix oxlint errors (#3112)
 0d2aff20656b246a96b80ab01e4cc388118c6822
+
+# [uplift] chore: stories workspace package, local story types, package imports (#3145)
+b2bbea1ea427379c1a4a20665e92b61c27e1d3ab

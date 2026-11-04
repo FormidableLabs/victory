@@ -1,0 +1,18 @@
+{
+  "$schema": "../node_modules/turbo/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    // The root task also waits for the package's own build, which here would
+    // be a `vite build` that the type check doesn't read.
+    "types:check": {
+      "dependsOn": ["^build"]
+    },
+    // Vite's dev server (`turbo watch dev`). Vite imports the packages'
+    // `dist/`, so `turbo watch` rebuilds them on change and Vite reloads.
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

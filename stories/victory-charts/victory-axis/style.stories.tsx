@@ -1,7 +1,12 @@
 import React from "react";
 import type { Meta } from "../../utils/types";
 
-import { VictoryAxis, VictoryChart, VictoryTheme } from "victory";
+import {
+  type CallbackArgs,
+  VictoryAxis,
+  VictoryChart,
+  VictoryTheme,
+} from "victory";
 import { Story, ComponentMeta } from "./config";
 
 const meta: Meta<typeof VictoryAxis> = {
@@ -20,7 +25,9 @@ export const Style: Story = {
           style={{
             axis: { stroke: "#756f6a" },
             axisLabel: { fontSize: 20, padding: 30 },
-            grid: { stroke: ({ tick }) => (tick > 0.5 ? "red" : "grey") },
+            grid: {
+              stroke: ({ tick }: CallbackArgs) => (tick > 0.5 ? "red" : "grey"),
+            },
             ticks: { stroke: "grey", size: 5 },
             tickLabels: { fontSize: 15, padding: 5 },
           }}

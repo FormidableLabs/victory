@@ -27,7 +27,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 - `packages/victory-*`: the published packages. They all share one version (changesets `fixed` group).
 - `tsdown.config.mts`: the shared build for every `victory-*` package except `victory-vendor`. It writes `dist/` (`.mjs`/`.cjs`, one file per source file, `.d.mts`/`.d.cts`) and the `main`/`module`/`types`/`exports` fields in each `package.json`. Don't hand-edit those fields; rebuild and commit what tsdown writes.
 - `packages/victory-vendor`: vendors d3 as ESM + CJS. **Highest-stakes package.** About 99% of its downloads come through recharts (`victory-vendor@^37`, using `victory-vendor/d3-scale` and `victory-vendor/d3-shape`). Its `exports` map and published file layout must stay compatible; `pnpm pack:check` compares them against `packages/victory-vendor/pack-snapshot.json`.
-- `stories/`: Storybook stories (to become a Vite stories app with SVG snapshot and screenshot tests).
+- `stories/`: the `victory-stories` workspace package (private): 197 stories in Storybook's file format and a Vite gallery app (`app/`). `utils/load-stories.ts` loads them and renders each as Storybook did (global, meta, then story args; meta decorators). SVG snapshot and screenshot tests come next; Storybook and Chromatic are still configured but broken until they're removed (#3093 Phase 3).
 - `website/`: Docusaurus docs site.
 - `test/`: shared Vitest config (jsdom, globals) and helpers.
 - `scripts/`: task scripts (`pack-check.mjs`, `bundle-size.mjs`, `lint-gha.mjs`), changelog, and npm trusted-publishing setup.
@@ -53,6 +53,7 @@ pnpm lint:gha       # zizmor on .github/ (skips if zizmor isn't installed; CI ru
 pnpm format:fix     # oxfmt, whole repo (not via turbo)
 pnpm dep:check      # list outdated deps (npm-check-updates; config in .ncurc.cjs)
 pnpm turbo run test --filter=victory-core   # one package (and what it depends on)
+pnpm stories:dev    # stories gallery (Vite, http://localhost:5173/), rebuilding packages on change (turbo watch)
 ```
 
 Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents should set it too. In a git worktree, Turborepo stores its cache in the main checkout's `.turbo/cache`; set `TURBO_CACHE_DIR=.turbo/cache` if that location isn't writable (e.g. a sandbox).
