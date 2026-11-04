@@ -11,10 +11,15 @@ export default mergeConfig(
   defineConfig({
     test: {
       include: ["tests/**/*.test.tsx"],
+      // Loads the stories' CSS and makes text measurement machine-independent.
+      setupFiles: ["tests/setup.ts"],
       browser: {
         enabled: true,
         headless: true,
-        provider: playwright(),
+        provider: playwright({
+          // Time scales and date labels depend on the timezone and locale.
+          contextOptions: { timezoneId: "UTC", locale: "en-US" },
+        }),
         instances: [{ browser: "chromium" }],
         // Fixed, so a layout that depends on the window can't vary by machine.
         viewport: { width: 1280, height: 800 },

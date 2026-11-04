@@ -3,7 +3,6 @@ import { flushSync } from "react-dom";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, test } from "vitest";
 
-import "../app/stories.css";
 import { stories } from "../utils/load-stories";
 import { serialize } from "./serialize";
 

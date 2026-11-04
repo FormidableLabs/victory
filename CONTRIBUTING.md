@@ -234,7 +234,7 @@ $ pnpm stories:dev
 
 This task also watches and rebuilds all Victory source files so you can develop against the stories.
 
-`pnpm run test` (and `check`) also renders every story in headless Chromium ([Vitest browser mode](https://vitest.dev/guide/browser/)) and compares its markup with a snapshot, one file per story in `stories/tests/__snapshots__/`. Install the browser once with `pnpm run stories:install`. Generated ids are renumbered and numbers in attributes are rounded to 2 decimals, so snapshots don't change with test order or sub-pixel float noise. A new story writes its snapshot on the first run; commit it. If a change is meant to alter a story's output, build and update the snapshots, then review the diff:
+`pnpm run test` (and `check`) also renders every story in headless Chromium ([Vitest browser mode](https://vitest.dev/guide/browser/)) and compares its markup with a snapshot, one file per story in `stories/tests/__snapshots__/`. Install the browser once with `pnpm run stories:install`. Snapshots are the same on every machine: text is sized with Victory's approximation (`TextSize`) rather than measured with the installed fonts, the browser runs in UTC with the `en-US` locale, generated ids are renumbered, and numbers in attributes are rounded to 2 decimals. A new story writes its snapshot on the first run; commit it. If a change is meant to alter a story's output, build and update the snapshots, then review the diff:
 
 ```sh
 $ pnpm run build
