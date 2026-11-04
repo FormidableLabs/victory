@@ -20,7 +20,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 ## Releasing
 
 - `release.yml`'s filename and the `npm-publish` environment are bound to npm trusted publishing. Renaming either requires re-running `scripts/npm-trust.sh` (revoke first).
-- Version Packages PRs get no CI (they're opened by `GITHUB_TOKEN`). Close and reopen the PR after its last update to trigger CI.
+- Version Packages PRs are opened by `GITHUB_TOKEN`, so GitHub holds their CI runs for approval. After the PR's last update, a maintainer clicks "Approve and run" on the held runs.
 
 ## Repo map
 

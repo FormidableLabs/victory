@@ -68,10 +68,10 @@ jobs:
         with:
           # `changeset version`, then refresh the lockfile in the same commit.
           script: pnpm run version
-          # NOTE: PRs opened or updated with the default GITHUB_TOKEN don't
-          # trigger CI at all. After the PR's latest update, a maintainer
-          # closes and reopens it to run CI. Or pass a fine-grained token /
-          # GitHub App token here (see #3093).
+          # NOTE: CI runs on PRs opened or updated with the default
+          # GITHUB_TOKEN are held for approval. After the PR's latest update,
+          # a maintainer clicks "Approve and run". Or pass a fine-grained
+          # token / GitHub App token here (see #3093).
         env:
           # For the changelog plugin (scripts/changelog.js), which looks up the
           # PR for each changeset's commit through the GitHub API.
