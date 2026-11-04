@@ -6,7 +6,7 @@ Guidance for AI coding agents (and humans) working in this repo. Keep it short a
 
 Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it before starting uplift work; its **Decision log** is the source of truth for settled choices. Don't re-open a logged decision without saying why.
 
-- **Integration branch:** `chore/2026-uplift-02`. All uplift PRs target it, not `main`.
+- **Branch:** `main`. 38.0.0 shipped from the integration branch (2026-11-03); uplift PRs now target `main` directly.
 - **Infra first, source last.** No substantive changes to `packages/*/src` in infra PRs. Mechanical churn (formatting, lint autofixes, type-error fixes) goes in its own PR, with no behavior changes mixed in, and its commit is added to `.git-blame-ignore-revs`. Exception: a few type-only fixes that a tooling or dependency bump needs (no runtime or published-type change) can ride along in that PR; call them out.
 - **Tasks are plain `package.json` scripts.** Turborepo (`turbo.json`) orchestrates and caches them. Never put logic only in runner config.
 - **Small, reviewable PRs.** One concern per PR. Each PR that changes what users of a published package get (code, types, `exports`, published files, `dependencies`/`peerDependencies`) needs a changeset (`pnpm changeset`). Manifest changes that only touch `scripts` or `devDependencies` don't.
