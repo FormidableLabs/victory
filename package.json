@@ -89,6 +89,7 @@
     "pack:check": "turbo run pack:check --filter=./packages/*",
     "stories:dev": "turbo watch dev --filter=victory-stories",
     "stories:build": "turbo run build --filter=victory-stories",
+    "stories:install": "pnpm --filter victory-stories exec playwright install chromium --only-shell",
     "build-storybook": "storybook build",
     "storybook:typecheck": "tsc -p tsconfig.storybook.json",
     "storybook:build": "pnpm build && storybook build",

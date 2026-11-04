@@ -100,6 +100,10 @@ jobs:
           path: .turbo/cache
           key: turbo-${{ runner.os }}-build-${{ github.sha }}
 
+      # For the stories' snapshot tests (Vitest browser mode).
+      - name: Install Chromium
+        run: pnpm stories:install --with-deps
+
       - name: Test
         run: pnpm test $AFFECTED
 
@@ -149,6 +153,10 @@ jobs:
       # cache and marks every package affected, so this runs everything.
       - name: Build
         run: pnpm build
+
+      # The stories' snapshot tests run here too, on React 18.0.0.
+      - name: Install Chromium
+        run: pnpm stories:install --with-deps
 
       - name: Test
         run: pnpm test

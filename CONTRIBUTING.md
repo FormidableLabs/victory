@@ -68,6 +68,10 @@ $ pnpm start:docs
 Our task system takes care of task dependencies for you. When you first clone this repo or a new branch, run:
 
 ```sh
+# Once per clone (and after a Playwright update): Chromium for the stories'
+# snapshot tests.
+$ pnpm run stories:install
+
 # Run all checks. Re-run this command for your normal workflow.
 $ pnpm run check
 
@@ -229,6 +233,15 @@ $ pnpm stories:dev
 ```
 
 This task also watches and rebuilds all Victory source files so you can develop against the stories.
+
+`pnpm run test` (and `check`) also renders every story in headless Chromium ([Vitest browser mode](https://vitest.dev/guide/browser/)) and compares its markup with a snapshot, one file per story in `stories/tests/__snapshots__/`. Install the browser once with `pnpm run stories:install`. Generated ids are renumbered and numbers in attributes are rounded to 2 decimals, so snapshots don't change with test order or sub-pixel float noise. A new story writes its snapshot on the first run; commit it. If a change is meant to alter a story's output, build and update the snapshots, then review the diff:
+
+```sh
+$ pnpm run build
+$ pnpm --filter victory-stories exec vitest run -u
+```
+
+CI fails on a missing or changed snapshot, and on a snapshot file whose story no longer exists (delete it). A story that's known to throw is listed in `KNOWN_ERRORS` in `stories/tests/stories.test.tsx` and checked for that error instead.
 
 [Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All internal PRs will trigger a new Chromatic build, which will be displayed along with CI status. Chromatic builds for Victory may be viewed in more detail here: https://www.chromaticqa.com/builds?appId=5b4acf7c54c0490024d5980b. Chromatic requires a secret app code to run, so PRs from external contributors will not automatically trigger a Chromatic build. For this reason, changes from external contributors will be checked out and opened as separate PRs so Chromatic may be used to verify any changes. Developers with access to the secret app code may also trigger a chromatic build manually with:
 
