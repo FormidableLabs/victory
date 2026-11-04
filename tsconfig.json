@@ -23,9 +23,6 @@
       "dom.iterable", 
       "esnext"
     ],
-    "paths": {
-      "@/*": ["./packages/*"]
-    },
     "types": ["vitest/globals", "@testing-library/jest-dom/vitest"],
   },
 }

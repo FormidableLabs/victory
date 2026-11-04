@@ -1,6 +1,6 @@
 import React from "react";
 
-import { VictoryLabel, VictoryTheme, VictoryTooltip } from "@/victory";
+import { VictoryLabel, VictoryTheme, VictoryTooltip } from "victory";
 
 export const VictoryAxisCommonProps = {
   dependentAxis: { control: "boolean" },

@@ -1,12 +1,12 @@
 import React from "react";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "../../utils/types";
 
 import {
   VictoryLine,
   VictoryChart,
   VictoryTheme,
   VictoryTooltip,
-} from "@/victory";
+} from "victory";
 
 import { getData, getMixedData } from "../../utils/data";
 import { Story, ComponentMeta } from "./config";

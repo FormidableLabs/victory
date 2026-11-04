@@ -1,10 +1,10 @@
 import React from "react";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "../../utils/types";
 
-import { VictoryHistogram, VictoryChart, VictoryTheme } from "@/victory";
-import * as d3Array from "@/victory-vendor/d3-array";
-import * as d3Scale from "@/victory-vendor/d3-scale";
-import * as d3Time from "@/victory-vendor/d3-time";
+import { VictoryHistogram, VictoryChart, VictoryTheme } from "victory";
+import * as d3Array from "victory-vendor/d3-array";
+import * as d3Scale from "victory-vendor/d3-scale";
+import * as d3Time from "victory-vendor/d3-time";
 
 import { timeData } from "./data";
 import { Story, ComponentMeta } from "./config";

@@ -7,7 +7,7 @@
   "access": "public",
   "baseBranch": "main",
   "fixed": [["victory*"]],
-  "ignore": ["victory-docs"],
+  "ignore": ["victory-docs", "victory-stories"],
   "snapshot": {
     "useCalculatedVersion": true
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "../../utils/types";
 
 import {
   VictoryAxis,
@@ -8,7 +8,7 @@ import {
   VictoryLine,
   VictoryScatter,
   VictoryTheme,
-} from "@/victory";
+} from "victory";
 
 import { getArrayData, getData, getFourQuadrantData } from "../../utils/data";
 import { Story, ComponentMeta } from "./config";

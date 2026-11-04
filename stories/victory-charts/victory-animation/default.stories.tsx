@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from "react";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "../../utils/types";
 
-import { VictoryAnimation, VictoryLabel, VictoryPie } from "@/victory";
+import { VictoryAnimation, VictoryLabel, VictoryPie } from "victory";
 import { Story, ComponentMeta } from "./config";
 
 const meta: Meta<typeof VictoryAnimation> = {

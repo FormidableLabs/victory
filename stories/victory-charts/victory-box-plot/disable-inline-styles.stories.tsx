@@ -1,5 +1,5 @@
 import React from "react";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "../../utils/types";
 
 import {
   Box,
@@ -8,7 +8,7 @@ import {
   VictoryChart,
   VictoryTheme,
   Whisker,
-} from "@/victory";
+} from "victory";
 
 import { getBoxPlotData } from "../../utils/data";
 import { Story, ComponentMeta } from "./config";

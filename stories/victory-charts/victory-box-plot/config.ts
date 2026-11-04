@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "../../utils/types";
 
-import { VictoryBoxPlot, VictoryBoxPlotProps } from "@/victory";
+import { VictoryBoxPlot, VictoryBoxPlotProps } from "victory";
 
 import { VictoryCommonProps, VictoryDatableProps } from "../../utils/arg-types";
 import { componentContainer } from "../../utils/decorators";
