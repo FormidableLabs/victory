@@ -10,6 +10,7 @@
     "**/CHANGELOG.md",
     "packages/victory-vendor/d3-*",
     "pnpm-lock.yaml",
+    "stories/tests/__snapshots__",
     "tsconfig.json",
     "tsconfig.*.json",
     "website/static"

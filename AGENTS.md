@@ -27,7 +27,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 - `packages/victory-*`: the published packages. They all share one version (changesets `fixed` group).
 - `tsdown.config.mts`: the shared build for every `victory-*` package except `victory-vendor`. It writes `dist/` (`.mjs`/`.cjs`, one file per source file, `.d.mts`/`.d.cts`) and the `main`/`module`/`types`/`exports` fields in each `package.json`. Don't hand-edit those fields; rebuild and commit what tsdown writes.
 - `packages/victory-vendor`: vendors d3 as ESM + CJS. **Highest-stakes package.** About 99% of its downloads come through recharts (`victory-vendor@^37`, using `victory-vendor/d3-scale` and `victory-vendor/d3-shape`). Its `exports` map and published file layout must stay compatible; `pnpm pack:check` compares them against `packages/victory-vendor/pack-snapshot.json`.
-- `stories/`: the `victory-stories` workspace package (private): 197 stories in Storybook's file format and a Vite gallery app (`app/`). `utils/load-stories.ts` loads them and renders each as Storybook did (global, meta, then story args; meta decorators). SVG snapshot and screenshot tests come next; Storybook and Chromatic are still configured but broken until they're removed (#3093 Phase 3).
+- `stories/`: the `victory-stories` workspace package (private): 197 stories in Storybook's file format and a Vite gallery app (`app/`). `utils/load-stories.ts` loads them and renders each as Storybook did (global, meta, then story args; meta decorators). `tests/` snapshots every story's markup in headless Chromium (Vitest browser mode), one file per story in `tests/__snapshots__/`. Screenshot tests come next; Storybook and Chromatic are still configured but broken until they're removed (#3093 Phase 3).
 - `website/`: Docusaurus docs site.
 - `test/`: shared Vitest config (jsdom, globals) and helpers.
 - `scripts/`: task scripts (`pack-check.mjs`, `bundle-size.mjs`, `lint-gha.mjs`), changelog, and npm trusted-publishing setup.
@@ -43,7 +43,7 @@ TypeScript: `tsc` is 7.0; `.pnpmfile.cjs` keeps tools that import the `typescrip
 pnpm install
 pnpm build          # all packages
 pnpm check          # format + lint + test + types
-pnpm test           # tests (Vitest)
+pnpm test           # tests (Vitest); the stories' tests need `pnpm stories:install` once
 pnpm test:coverage  # all tests in one run with v8 coverage (coverage/index.html)
 pnpm types:check
 pnpm pack:check     # published output: publint, attw, declarations, entrypoints, vendor snapshot
@@ -54,6 +54,8 @@ pnpm format:fix     # oxfmt, whole repo (not via turbo)
 pnpm dep:check      # list outdated deps (npm-check-updates; config in .ncurc.cjs)
 pnpm turbo run test --filter=victory-core   # one package (and what it depends on)
 pnpm stories:dev    # stories gallery (Vite, http://localhost:5173/), rebuilding packages on change (turbo watch)
+pnpm stories:install  # Chromium for the stories' snapshot tests (Playwright)
+pnpm --filter victory-stories exec vitest run -u   # update story snapshots (after `pnpm build`)
 ```
 
 Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents should set it too. In a git worktree, Turborepo stores its cache in the main checkout's `.turbo/cache`; set `TURBO_CACHE_DIR=.turbo/cache` if that location isn't writable (e.g. a sandbox).
@@ -82,5 +84,5 @@ These are expected to change as we experiment. Update them as things settle, and
 - **CI:** cache hit rates, job split, and running only what changed on PRs.
 - **Published output:** `pnpm pack:check` packs each package, runs publint and attw, type-checks its published declarations with `skipLibCheck` off (known errors in `ALLOWED_DECLARATION_ERRORS`), and loads every entrypoint with `require()` and `import()` from an isolated install (declared dependencies only). `victory-vendor` also has to match its `pack-snapshot.json` (manifest fields, resolution per entrypoint, known attw and load failures, file list). Update a snapshot (build, then `pnpm pack:check --update` in that package) only for an intended change, and call it out in the PR.
 - **Bundle size:** `pnpm bundle-size` measures ESM import scenarios (`scripts/bundle-size.mjs`), and CI reports the change against the base branch. Reported, not gated. Note size changes in the PR.
-- **Visual testing:** snapshot stability and flakiness.
+- **Visual testing:** snapshot stability and flakiness. Story snapshots are markup, not pixels, and must match across OSes: text is sized with `TextSize`'s approximation, not the installed fonts (`stories/tests/setup.ts`); the browser runs in UTC, `en-US`; generated ids are renumbered and attribute numbers rounded to 2 decimals (`stories/tests/serialize.ts`). A story that throws needs an entry in `KNOWN_ERRORS` (`stories/tests/stories.test.tsx`). Update snapshots only for an intended change, and call it out in the PR.
 - **This file:** if an agent gets something wrong because guidance was missing or stale, fix the guidance here.

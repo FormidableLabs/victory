@@ -16,7 +16,7 @@ export const GLOBAL_ARGS = {
 };
 
 export interface LoadedStory {
-  // Storybook's story id, e.g. `victory-charts-victorybar--alignment`.
+  // Storybook's story id, e.g. `victory-charts-victorybar--bar-ratio`.
   id: string;
   // `meta.title`, e.g. `Victory Charts/VictoryBar`.
   title: string;
@@ -45,8 +45,12 @@ const sanitize = (value: string) =>
     .replace(/^-+/, "")
     .replace(/-+$/, "");
 
+// Storybook's `storyNameFromExport` is a `startCase` too (the same result for
+// every story here), and its ids sanitize that name, not the export name.
+const toStoryName = (exportName: string) => startCase(exportName);
+
 export const toStoryId = (title: string, exportName: string) =>
-  `${sanitize(title)}--${sanitize(exportName)}`;
+  `${sanitize(title)}--${sanitize(toStoryName(exportName))}`;
 
 const modules = import.meta.glob<StoryModule>("../**/*.stories.tsx", {
   eager: true,
@@ -78,7 +82,7 @@ const loadStories = (): LoadedStory[] => {
         return {
           id: toStoryId(title, exportName),
           title,
-          name: startCase(exportName),
+          name: toStoryName(exportName),
           file,
           args,
           Component,

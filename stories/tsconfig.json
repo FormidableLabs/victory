@@ -4,6 +4,9 @@
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "noEmit": true,
+    // `vitest.config.ts` imports `./vite.config.ts`: Vite's native config
+    // loader (its future default) needs the extension.
+    "allowImportingTsExtensions": true,
     "types": ["vite/client"]
   }
 }
