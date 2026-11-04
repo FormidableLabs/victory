@@ -899,6 +899,27 @@ importers:
         specifier: 38.0.0
         version: link:../victory-core
 
+  stories:
+    dependencies:
+      lodash:
+        specifier: ^4.18.1
+        version: 4.18.1
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      seedrandom:
+        specifier: ^3.0.5
+        version: 3.0.5
+      victory:
+        specifier: workspace:*
+        version: link:../packages/victory
+      victory-vendor:
+        specifier: workspace:*
+        version: link:../packages/victory-vendor
+
   website:
     dependencies:
       '@docusaurus/core':

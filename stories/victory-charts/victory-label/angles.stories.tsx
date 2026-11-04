@@ -1,7 +1,7 @@
 import React from "react";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "../../utils/types";
 
-import { VictoryLabel, VictoryScatter } from "@/victory";
+import { VictoryLabel, VictoryScatter } from "victory";
 import { defaultScatterProps, Story, ComponentMeta } from "./config";
 
 const meta: Meta<typeof VictoryLabel> = {

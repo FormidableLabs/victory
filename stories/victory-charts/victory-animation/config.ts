@@ -1,7 +1,7 @@
 import React from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "../../utils/types";
 
-import { VictoryAnimation } from "@/victory";
+import { VictoryAnimation } from "victory";
 import { componentContainer } from "../../utils/decorators";
 
 type StoryProps = React.ComponentProps<typeof VictoryAnimation>;

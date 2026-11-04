@@ -1,5 +1,5 @@
 import React from "react";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "../../utils/types";
 
 import {
   VictoryBar,
@@ -7,7 +7,7 @@ import {
   VictoryGroup,
   VictoryStack,
   VictoryTheme,
-} from "@/victory";
+} from "victory";
 
 import { getLogData, getTimeData } from "../../utils/data";
 import { Story, ComponentMeta } from "./config";

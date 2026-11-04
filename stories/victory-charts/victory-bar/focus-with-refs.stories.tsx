@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useCallback, useRef } from "react";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "../../utils/types";
 
 import {
   Bar,
@@ -8,7 +8,7 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryTooltip,
-} from "@/victory";
+} from "victory";
 import { Story, ComponentMeta } from "./config";
 import { getData } from "../../utils/data";
 
