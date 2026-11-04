@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  color: #222;
+  background: #fff;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+}
+
+.sidebar {
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+  background: #f7f7f7;
+  padding: 8px 0;
+}
+
+.sidebar input {
+  box-sizing: border-box;
+  width: calc(100% - 16px);
+  margin: 0 8px 8px;
+  padding: 4px 6px;
+}
+
+.sidebar h2 {
+  margin: 12px 12px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar a {
+  display: block;
+  padding: 2px 12px 2px 20px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  background: #eaeaea;
+}
+
+.sidebar a[aria-current="page"] {
+  background: #dde8f7;
+  font-weight: 600;
+}
+
+.story {
+  overflow: auto;
+  padding: 16px;
+}
+
+.story h1 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.story .file {
+  margin: 0 0 16px;
+  color: #666;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+}
+
+.story .error {
+  color: #b00020;
+  white-space: pre-wrap;
+}

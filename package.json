@@ -87,6 +87,8 @@
     "bundle-size": "pnpm build && node scripts/bundle-size.mjs",
     "types:check": "turbo run types:check",
     "pack:check": "turbo run pack:check --filter=./packages/*",
+    "stories:dev": "turbo watch dev --filter=victory-stories",
+    "stories:build": "turbo run build --filter=victory-stories",
     "build-storybook": "storybook build",
     "storybook:typecheck": "tsc -p tsconfig.storybook.json",
     "storybook:build": "pnpm build && storybook build",
