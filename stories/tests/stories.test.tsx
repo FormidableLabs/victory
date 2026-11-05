@@ -14,10 +14,15 @@ const ALLOWED_CONSOLE: Record<string, RegExp[]> = {};
 let root: Root | undefined;
 let container: HTMLElement | undefined;
 
-afterEach(() => {
+const unmountStory = () => {
   root?.unmount();
   container?.remove();
   root = container = undefined;
+};
+
+// Cleans up after a test that failed before unmounting its story.
+afterEach(() => {
+  unmountStory();
   vi.restoreAllMocks();
 });
 
@@ -94,6 +99,8 @@ for (const [title, group] of Object.entries(
           snapshotPath(story.id),
         );
 
+        // Unmount first, so errors and warnings from effect cleanup count too.
+        unmountStory();
         const allowed = ALLOWED_CONSOLE[story.id] ?? [];
         const unexpected = messages.filter(
           (message) => !allowed.some((pattern) => pattern.test(message)),
