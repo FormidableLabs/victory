@@ -6,7 +6,6 @@
   "sortPackageJson": false,
   "ignorePatterns": [
     ".changeset",
-    ".storybook",
     "**/CHANGELOG.md",
     "packages/victory-vendor/d3-*",
     "pnpm-lock.yaml",

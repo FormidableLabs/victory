@@ -207,7 +207,7 @@ Version ranges:
 - `^` by default.
 - Exact versions only for tools whose upgrade needs its own PR: oxfmt and oxlint (a new version can reformat the repo or fail CI), and victory-vendor's Babel packages (they write its published files, and nothing checks their contents). TypeScript, tsdown and rolldown also shape published output, but `pnpm pack:check` and a `dist/` diff in the upgrade PR cover them, so they follow the other rules.
 - `~` only to match another package's range (root `rolldown` matches tsdown's, so one copy is installed).
-- TypeScript: `tsc` (`types:check`) is TypeScript 7. TypeScript 7.0 has no stable JS API, so `.pnpmfile.cjs` pins the tools that import `typescript` (rolldown-plugin-dts, which writes our declarations, and a few website and Storybook tools) to 6.0.3. `dep:check` doesn't see that pin; update it by hand. It goes away when declarations move to the tsgo generator (TypeScript 7.1).
+- TypeScript: `tsc` (`types:check`) is TypeScript 7. TypeScript 7.0 has no stable JS API, so `.pnpmfile.cjs` pins the tools that import `typescript` (rolldown-plugin-dts, which writes our declarations, and a website tool) to 6.0.3. `dep:check` doesn't see that pin; update it by hand. It goes away when declarations move to the tsgo generator (TypeScript 7.1).
 - The `victory-*` packages depend on each other at the exact shared version. Changesets updates those.
 
 ### GitHub Actions
@@ -224,9 +224,9 @@ CI runs zizmor in the `lint` job, at the `version` pinned there. To run it local
 
 ## Visual Tests
 
-Victory relies heavily on visual regression testing. The stories in `stories/` are moving from [Storybook](https://storybook.js.org/) and [Chromatic](https://www.chromaticqa.com/) to a Vite gallery with snapshot tests (#3093, Phase 3).
+Victory relies heavily on visual regression testing. The stories in `stories/` render in a Vite gallery for local development and in snapshot tests in CI.
 
-Write visual tests for new features by adding stories in the `stories` directory (`*.stories.tsx`, Storybook's file format). Check them in the gallery, served from http://localhost:5173/:
+Write visual tests for new features by adding stories in the `stories` directory (`*.stories.tsx`, in [Storybook's file format](https://storybook.js.org/docs/api/csf), which Victory used before). Check them in the gallery, served from http://localhost:5173/:
 
 ```sh
 $ pnpm stories:dev
@@ -242,14 +242,6 @@ $ pnpm --filter victory-stories exec vitest run -u
 ```
 
 CI fails on a missing or changed snapshot, on a snapshot file whose story no longer exists (delete it), and on a story that throws or logs a `console.error` or `console.warn` (React's warnings, such as a missing `key`, included). Fix the story; `ALLOWED_CONSOLE` in `stories/tests/stories.test.tsx` is for messages that can't be avoided.
-
-[Chromatic](https://www.chromaticqa.com/) provides automated visual testing. All internal PRs will trigger a new Chromatic build, which will be displayed along with CI status. Chromatic builds for Victory may be viewed in more detail here: https://www.chromaticqa.com/builds?appId=5b4acf7c54c0490024d5980b. Chromatic requires a secret app code to run, so PRs from external contributors will not automatically trigger a Chromatic build. For this reason, changes from external contributors will be checked out and opened as separate PRs so Chromatic may be used to verify any changes. Developers with access to the secret app code may also trigger a chromatic build manually with:
-
-```sh
-$ pnpm run chromatic
-```
-
-Note that Chromatic internally runs `npm run build-storybook` around which we have a custom `package.json:scripts.build-storybook` task that is meant to work within Chromatic.
 
 ## Release
 

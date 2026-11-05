@@ -15,20 +15,10 @@ const MINOR_ONLY = {
   "@babel/plugin-transform-modules-commonjs": "vendor single-tool build",
 };
 
-// Phase 3 replaces Storybook and Chromatic (and `concurrently` with them).
-const REMOVED_IN_PHASE_3 = [
-  "storybook",
-  "@storybook/*",
-  "chromatic",
-  "@chromatic-com/storybook",
-  "concurrently",
-];
-
 module.exports = {
   workspaces: true,
   root: true,
   // Skip versions published in the last week.
   cooldown: 7,
-  reject: REMOVED_IN_PHASE_3,
   target: (name) => (name in MINOR_ONLY ? "minor" : "latest"),
 };

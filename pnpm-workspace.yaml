@@ -14,9 +14,6 @@ preferWorkspacePackages: true
 # It also checks the existing lockfile.
 minimumReleaseAge: 10080
 
-overrides:
-  "@types/eslint": 8.4.3
-
 # Dependencies allowed to run install scripts (pnpm 11+ requires a decision).
 allowBuilds:
   "@swc/core": true

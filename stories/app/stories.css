@@ -1,4 +1,4 @@
-/* Styles the stories render with (from `.storybook/preview.css`). */
+/* Styles the stories render with (Storybook's preview styles, carried over). */
 
 .VictoryContainer {
   border: 1px solid #ccc;
