@@ -21,7 +21,11 @@ export const PolarInterpolation: Story = {
   args: {},
   render: (props) => {
     const makeInterpolationChart = (interpolation) => (
-      <VictoryChart polar theme={VictoryTheme[props.themeKey]}>
+      <VictoryChart
+        key={interpolation}
+        polar
+        theme={VictoryTheme[props.themeKey]}
+      >
         <VictoryLabel
           x={175}
           y={30}

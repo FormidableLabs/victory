@@ -1,64 +1,52 @@
 import React from "react";
 import { flushSync } from "react-dom";
 import { createRoot, type Root } from "react-dom/client";
-import { afterEach, describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { stories } from "../utils/load-stories";
 import { serialize } from "./serialize";
 
-// Stories that are known to throw, and the error they throw. They're tested
-// for that error instead of a snapshot (an error boundary unmounts the story).
-const KNOWN_ERRORS: Record<string, RegExp> = {
-  // Looks bars up by their DOM `index` attribute, which Victory stopped
-  // writing in 38.0.0 (#3123), so it finds no bar to focus.
-  "victory-charts-victorybar--focus-with-refs":
-    /Cannot read properties of undefined \(reading 'focus'\)/,
-};
-
-class ErrorBoundary extends React.Component<
-  { children: React.ReactNode; onError: (error: Error) => void },
-  { failed: boolean }
-> {
-  state = { failed: false };
-
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-
-  componentDidCatch(error: Error) {
-    this.props.onError(error);
-  }
-
-  render() {
-    return this.state.failed ? null : this.props.children;
-  }
-}
+// Console errors and warnings a story is allowed to log, by story id. Any
+// other `console.error` or `console.warn` (React's warnings included) fails
+// the story's test. Empty: fix the story instead where you can.
+const ALLOWED_CONSOLE: Record<string, RegExp[]> = {};
 
 let root: Root | undefined;
 let container: HTMLElement | undefined;
 
-afterEach(() => {
+const unmountStory = () => {
   root?.unmount();
   container?.remove();
   root = container = undefined;
+};
+
+// Cleans up after a test that failed before unmounting its story.
+afterEach(() => {
+  unmountStory();
+  vi.restoreAllMocks();
 });
+
+// Records what's logged, and still logs it.
+const recordConsole = () => {
+  const messages: string[] = [];
+  for (const method of ["error", "warn"] as const) {
+    const original = console[method];
+    vi.spyOn(console, method).mockImplementation((...args: unknown[]) => {
+      messages.push(`console.${method}: ${args.map(String).join(" ")}`);
+      original(...args);
+    });
+  }
+  return messages;
+};
 
 // The first render, after effects: what Storybook showed before any
 // interaction. Snapshots are compared before animations or timers run.
 const renderStory = async (Story: React.ComponentType) => {
-  let error: Error | undefined;
   container = document.createElement("div");
   document.body.append(container);
   root = createRoot(container);
-  flushSync(() => {
-    root!.render(
-      <ErrorBoundary onError={(e) => (error = e)}>
-        <Story />
-      </ErrorBoundary>,
-    );
-  });
+  flushSync(() => root!.render(<Story />));
   await settle(container);
-  return { error };
 };
 
 const nextFrame = () =>
@@ -91,11 +79,7 @@ const snapshotPath = (id: string) => {
 // removed, so check for leftovers. The glob lists the files when Vite
 // transforms this file, without loading them.
 test("has no obsolete snapshots", () => {
-  const expected = new Set(
-    stories
-      .filter((story) => !KNOWN_ERRORS[story.id])
-      .map((story) => snapshotPath(story.id)),
-  );
+  const expected = new Set(stories.map((story) => snapshotPath(story.id)));
   const obsolete = Object.keys(import.meta.glob("./__snapshots__/**")).filter(
     (file) => !expected.has(file),
   );
@@ -108,19 +92,20 @@ for (const [title, group] of Object.entries(
   describe(title, () => {
     for (const story of group ?? []) {
       test(story.name, async () => {
-        const { error } = await renderStory(story.Component);
-        const knownError = KNOWN_ERRORS[story.id];
-        if (knownError) {
-          expect(error?.message).toMatch(knownError);
-          return;
-        }
-        if (error) {
-          throw error;
-        }
+        const messages = recordConsole();
+        await renderStory(story.Component);
 
         await expect(serialize(container!)).toMatchFileSnapshot(
           snapshotPath(story.id),
         );
+
+        // Unmount first, so errors and warnings from effect cleanup count too.
+        unmountStory();
+        const allowed = ALLOWED_CONSOLE[story.id] ?? [];
+        const unexpected = messages.filter(
+          (message) => !allowed.some((pattern) => pattern.test(message)),
+        );
+        expect(unexpected, "Console errors and warnings").toEqual([]);
       });
     }
   });

@@ -30,14 +30,16 @@ export const FocusWithRefs: Story = {
 
     useEffect(() => {
       if (barsRef.current) {
-        focusOnBar("1");
+        focusOnBar("Bar 1");
       }
     }, []);
 
+    // Bars are keyed by their `aria-label` (from `ariaLabel` below). Victory
+    // no longer writes an `index` attribute to the DOM (38.0.0).
     const setRef = useCallback((node) => {
       const map = barsRef.current;
       if (node) {
-        map.set(node.attributes.index.value, node);
+        map.set(node.getAttribute("aria-label"), node);
       }
     }, []);
 
@@ -53,7 +55,13 @@ export const FocusWithRefs: Story = {
             data={getData(5)}
             labels={({ datum }) => `x: ${datum.x}`}
             labelComponent={<VictoryTooltip active />}
-            dataComponent={<Bar tabIndex={0} ref={setRef} />}
+            dataComponent={
+              <Bar
+                tabIndex={0}
+                ariaLabel={({ index }) => `Bar ${index}`}
+                ref={setRef}
+              />
+            }
           />
         </VictoryChart>
       </>
