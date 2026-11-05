@@ -21,9 +21,7 @@
     "**/lib/",
     "**/lib-vendor/",
     "**/public/",
-    "**/storybook-static/",
     "**/tmp/",
-    ".storybook/",
     "website/src/theme/",
     "website/src/plugins/"
   ],

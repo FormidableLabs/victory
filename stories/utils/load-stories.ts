@@ -7,8 +7,8 @@ import type { Meta, StoryObj } from "./types";
 // renders the way Storybook did. UI-free, so the gallery and the snapshot
 // tests can share it.
 
-// Storybook's global args (`.storybook/preview.ts`), applied before the meta's
-// and the story's own.
+// Global args (Storybook's were in its `preview.ts`), applied before the
+// meta's and the story's own.
 export const GLOBAL_ARGS = {
   height: 350,
   themeKey: "grayscale",
