@@ -80,6 +80,7 @@
     "pack:check": "turbo run pack:check --filter=./packages/*",
     "stories:dev": "turbo watch dev --filter=victory-stories",
     "stories:build": "turbo run build --filter=victory-stories",
+    "stories:interactions:watch": "pnpm --filter victory-stories test:interactions:watch",
     "stories:install": "pnpm --filter victory-stories exec playwright install chromium --only-shell",
     "stories:screenshots": "pnpm build && node scripts/stories-screenshots.mjs",
     "sync": "node scripts/sync-tsconfig.mjs"

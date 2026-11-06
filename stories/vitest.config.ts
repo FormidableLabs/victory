@@ -18,16 +18,28 @@ import viteConfig from "./vite.config.ts";
 // The image `pnpm stories:screenshots` and CI run in sets this.
 const IN_CONTAINER = process.env.PLAYWRIGHT_BROWSERS_PATH === "/ms-playwright";
 
+// Milliseconds between mouse actions, to watch the interaction tests in a
+// visible browser: 500 under `pnpm stories:interactions:watch` (its script
+// name, which works on every OS, unlike `SLOW_MO=... cmd`), or set `SLOW_MO`.
+// 0: headless, full speed.
+const SLOW_MO =
+  Number(process.env.SLOW_MO) ||
+  (process.env.npm_lifecycle_event === "test:interactions:watch" ? 500 : 0);
+
 export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
       browser: {
         enabled: true,
-        headless: true,
+        headless: !SLOW_MO,
+        // Vitest's UI scales the page down to fit next to it, which rounds
+        // mouse positions; the interaction tests need it unscaled.
+        ui: false,
         provider: playwright({
           // Time scales and date labels depend on the timezone and locale.
           contextOptions: { timezoneId: "UTC", locale: "en-US" },
+          launchOptions: { slowMo: SLOW_MO },
         }),
         instances: [{ browser: "chromium" }],
         // Fixed, so a layout that depends on the window can't vary by machine.
@@ -53,6 +65,8 @@ export default mergeConfig(
             include: ["tests/interactions/*.test.tsx"],
             // As `markup`, so tooltip and label sizes match on every machine.
             setupFiles: ["tests/setup.ts", "tests/approximate-text.ts"],
+            provide: { slowMo: SLOW_MO },
+            testTimeout: SLOW_MO ? 120_000 : undefined,
           },
         },
         {

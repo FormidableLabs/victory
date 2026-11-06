@@ -55,6 +55,7 @@ pnpm dep:check      # list outdated deps (npm-check-updates; config in .ncurc.cj
 pnpm turbo run test --filter=victory-core   # one package (and what it depends on)
 pnpm stories:dev    # stories gallery (Vite, http://localhost:5173/), rebuilding packages on change (turbo watch)
 pnpm stories:install  # Chromium for the stories' snapshot tests (Playwright)
+pnpm stories:interactions:watch  # interaction tests in a visible browser, slowed down (needs full Chromium; CONTRIBUTING)
 pnpm --filter victory-stories test -u   # update story snapshots (after `pnpm build`)
 pnpm stories:screenshots [-u]  # story screenshots in the CI image (Docker or Colima); -u updates
 ```

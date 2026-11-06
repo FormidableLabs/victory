@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, expect, vi } from "vitest";
+import { afterEach, beforeEach, expect, inject, vi } from "vitest";
 
 import { stories } from "../../utils/load-stories";
 import { recordConsole } from "../console";
@@ -9,6 +9,40 @@ import { renderStory, unmountStory } from "../render";
 // hit-tests and dispatches the events as it would for a user), then check
 // what the user would see change.
 
+declare module "vitest" {
+  interface ProvidedContext {
+    // From `vitest.config.ts` (`SLOW_MO`).
+    slowMo: number;
+  }
+}
+
+const slowMo = inject("slowMo");
+
+// Slow mode only (`pnpm stories:interactions:watch`): Playwright's mouse has
+// no pointer on screen, so draw one, and show which test is running.
+const showProgress = () => {
+  const pointer = document.createElement("div");
+  pointer.style.cssText =
+    "position:fixed;z-index:1000;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:rgb(255 0 0 / 0.6);pointer-events:none;left:-20px;top:-20px";
+  const caption = document.createElement("div");
+  caption.style.cssText =
+    "position:fixed;z-index:1000;right:16px;bottom:16px;padding:8px 12px;background:#222;color:#fff;font:14px sans-serif;pointer-events:none";
+  document.body.append(pointer, caption);
+  for (const type of ["pointermove", "pointerdown", "wheel"]) {
+    document.addEventListener(
+      type,
+      (event) => {
+        const { clientX, clientY } = event as MouseEvent;
+        pointer.style.left = `${clientX}px`;
+        pointer.style.top = `${clientY}px`;
+      },
+      { capture: true, passive: true },
+    );
+  }
+  return caption;
+};
+const caption = slowMo ? showProgress() : undefined;
+
 // Call once per test file: unmounts the story after each test, and fails a
 // test that logs a `console.error` or `console.warn` (cleanup included), as
 // the markup tests do.
@@ -16,8 +50,15 @@ export const setupInteractionTests = () => {
   let messages: string[] = [];
   beforeEach(() => {
     messages = recordConsole();
+    if (caption) {
+      caption.textContent = expect.getState().currentTestName ?? "";
+    }
   });
-  afterEach(() => {
+  afterEach(async () => {
+    if (slowMo) {
+      // Time to see the result before the next test.
+      await new Promise((resolve) => setTimeout(resolve, slowMo * 4));
+    }
     unmountStory();
     vi.restoreAllMocks();
     expect(messages, "Console errors and warnings").toEqual([]);
