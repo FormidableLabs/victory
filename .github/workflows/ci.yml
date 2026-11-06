@@ -127,6 +127,44 @@ jobs:
             fi
           } >> "$GITHUB_STEP_SUMMARY"
 
+  # Pixel screenshots of a few stories. They run in Playwright's image, pinned
+  # to the `playwright` version in stories/package.json (bump them together),
+  # so fonts and the browser match `pnpm stories:screenshots` locally, which
+  # reads the tag from here.
+  screenshots:
+    name: Screenshots
+    needs: [build]
+    # arm64, like Apple silicon, so screenshots taken locally match (Chromium
+    # under x86 emulation crashes there).
+    runs-on: ubuntu-24.04-arm
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --ipc=host
+    permissions:
+      contents: read # to check out repo (actions/checkout)
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: $/.github/actions/setup
+      - uses: actions/cache/restore@v6
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-build-${{ github.sha }}
+
+      - name: Screenshots
+        run: pnpm turbo run test:screenshots $AFFECTED
+
+      # The actual and diff images of failing screenshots.
+      - name: Upload screenshot diffs
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: screenshot-diffs
+          path: stories/.vitest/attachments/
+          if-no-files-found: ignore
+
   # The lockfile pins React 18.3, which the test job covers. This job tests the
   # other end of the `>=18` peer range, exactly 18.0.0 (`^18` would install the
   # newest 18.x). `@types/react` isn't a peer and stays on the lockfile's `^18`.

@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "types:check": "tsc --pretty --noEmit",
-    "test": "vitest run"
+    "test": "vitest run --project markup",
+    "test:screenshots": "vitest run --project screenshots"
   },
   "dependencies": {
     "lodash": "^4.18.1",

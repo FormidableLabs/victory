@@ -9,6 +9,13 @@
     },
     // Vite's dev server (`turbo watch dev`). Vite imports the packages'
     // `dist/`, so `turbo watch` rebuilds them on change and Vite reloads.
+    // Pixel screenshots, run in the pinned Playwright container (CI, and
+    // `pnpm stories:screenshots`). Not cached: the cache key can't tell which
+    // machine took them.
+    "test:screenshots": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
     "dev": {
       "dependsOn": ["^build"],
       "cache": false,

@@ -238,10 +238,27 @@ This task also watches and rebuilds all Victory source files so you can develop 
 
 ```sh
 $ pnpm run build
-$ pnpm --filter victory-stories exec vitest run -u
+$ pnpm --filter victory-stories test -u
 ```
 
 CI fails on a missing or changed snapshot, on a snapshot file whose story no longer exists (delete it), and on a story that throws or logs a `console.error` or `console.warn` (React's warnings, such as a missing `key`, included). Fix the story; `ALLOWED_CONSOLE` in `stories/tests/stories.test.tsx` is for messages that can't be avoided.
+
+### Screenshots
+
+A few stories also have pixel screenshots (`SCREENSHOT_STORIES` in `stories/tests/screenshots.test.tsx`, images in `stories/tests/__screenshots__/`), for what markup can't show: CSS, fills and strokes, clipping, stacking order and text rendering. Pixels differ between operating systems, so screenshots only run in the Playwright Docker image CI uses (the tag is in `.github/workflows/ci.yml`). Locally, that needs [Docker Desktop](https://www.docker.com/products/docker-desktop/) or [Colima](https://github.com/abiosoft/colima) (`brew install colima docker`, then `colima start`):
+
+```sh
+$ pnpm stories:screenshots      # compare
+$ pnpm stories:screenshots -u   # update after an intended change
+```
+
+It builds the packages, installs the stories' dependencies in the container (cached in a Docker volume) and runs the tests there as arm64, like CI's screenshot job (Chromium's rendering can differ by CPU). On Apple silicon (and Windows or Linux on arm64) that's native, about 15 seconds with a warm cache; 2 GB of VM memory is enough. New and updated screenshots are copied back into `stories/tests/__screenshots__/`; for a failing one, the actual image and a diff are in `stories/.vitest/attachments/` (the test output names their paths inside the container, under `/work`). In CI, failing screenshots and diffs are uploaded as the `screenshot-diffs` artifact. Review image changes in the PR diff before committing them.
+
+On an x86-64 machine (Windows, Linux, Intel Macs), Docker has to emulate arm64: slow at best, and Chromium can crash under emulation. Use CI instead: push, download the `screenshot-diffs` artifact from the failing Screenshots job, and copy each `*-actual-chromium-linux.png` over the matching `stories/tests/__screenshots__/<story>.png` (a new screenshot is only an `-actual-` image).
+
+To add a story's screenshot, add its id to `SCREENSHOT_STORIES` and run `pnpm stories:screenshots`. Keep the list short: every story already has a markup snapshot.
+
+When upgrading `playwright` (in `stories/package.json`), update the image tag in `ci.yml` to the same version and update the screenshots; `pnpm stories:screenshots` stops if the two don't match.
 
 ## Release
 
