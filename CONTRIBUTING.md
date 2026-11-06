@@ -243,6 +243,12 @@ $ pnpm --filter victory-stories test -u
 
 CI fails on a missing or changed snapshot, on a snapshot file whose story no longer exists (delete it), and on a story that throws or logs a `console.error` or `console.warn` (React's warnings, such as a missing `key`, included). Fix the story; `ALLOWED_CONSOLE` in `stories/tests/stories.test.tsx` is for messages that can't be avoided.
 
+### Interaction tests
+
+Snapshots show a chart's first render only. `stories/tests/interactions/` drives stories with the mouse and checks what changes: tooltips on hover, the zoom, brush, cursor, selection and voronoi containers, `createContainer`, the `events` prop and `VictorySharedEvents`. They run in `pnpm run test` too, in the same browser setup as the snapshots.
+
+A test renders a story by id, moves the mouse with [`userEvent`](https://vitest.dev/api/browser/interactivity) (Playwright's mouse, so the browser hit-tests and dispatches real events), then asserts on what a user would see: tick labels, tooltip text, a fill, a brush's position. `at(svg, x, y)` in `helpers.ts` converts a point in the chart's own coordinates (its `width` x `height` viewBox) into a mouse position. Wrap assertions after an interaction in `expect.poll`: some handlers are throttled. As in the snapshot tests, a `console.error` or `console.warn` fails the test. To test something no story shows, add a story for it first, so it's in the gallery and has a snapshot too.
+
 ### Screenshots
 
 A few stories also have pixel screenshots (`SCREENSHOT_STORIES` in `stories/tests/screenshots.test.tsx`, images in `stories/tests/__screenshots__/`), for what markup can't show: CSS, fills and strokes, clipping, stacking order and text rendering. Pixels differ between operating systems, so screenshots only run in the Playwright Docker image CI uses (the tag is in `.github/workflows/ci.yml`). Locally, that needs [Docker Desktop](https://www.docker.com/products/docker-desktop/) or [Colima](https://github.com/abiosoft/colima) (`brew install colima docker`, then `colima start`):

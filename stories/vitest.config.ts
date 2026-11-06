@@ -6,9 +6,11 @@ import { defineConfig, mergeConfig } from "vitest/config";
 import viteConfig from "./vite.config.ts";
 
 // Story tests in headless Chromium through Vitest's browser mode (`tests/`),
-// as two projects:
+// as three projects:
 // - `markup`: an SVG markup snapshot of every story (`pnpm test`). Install the
 //   browser once with `pnpm stories:install` (from the repo root).
+// - `interactions`: drive stories with the mouse (hover, click, drag, wheel)
+//   and check what changes: tooltips, containers, events (`pnpm test` too).
 // - `screenshots`: pixel screenshots of a few stories, only in the pinned
 //   Playwright container (`pnpm stories:screenshots` locally, and CI), since
 //   pixels differ between operating systems.
@@ -41,6 +43,15 @@ export default mergeConfig(
             name: "markup",
             include: ["tests/stories.test.tsx"],
             // Text measurement that's the same on every machine.
+            setupFiles: ["tests/setup.ts", "tests/approximate-text.ts"],
+          },
+        },
+        {
+          extends: true,
+          test: {
+            name: "interactions",
+            include: ["tests/interactions/*.test.tsx"],
+            // As `markup`, so tooltip and label sizes match on every machine.
             setupFiles: ["tests/setup.ts", "tests/approximate-text.ts"],
           },
         },

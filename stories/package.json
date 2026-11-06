@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "types:check": "tsc --pretty --noEmit",
-    "test": "vitest run --project markup",
+    "test": "vitest run --project markup --project interactions",
     "test:screenshots": "vitest run --project screenshots"
   },
   "dependencies": {
