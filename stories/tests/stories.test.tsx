@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { stories } from "../utils/load-stories";
+import { recordConsole } from "./console";
 import { renderStory, unmountStory } from "./render";
 import { serialize } from "./serialize";
 
@@ -14,19 +15,6 @@ afterEach(() => {
   unmountStory();
   vi.restoreAllMocks();
 });
-
-// Records what's logged, and still logs it.
-const recordConsole = () => {
-  const messages: string[] = [];
-  for (const method of ["error", "warn"] as const) {
-    const original = console[method];
-    vi.spyOn(console, method).mockImplementation((...args: unknown[]) => {
-      messages.push(`console.${method}: ${args.map(String).join(" ")}`);
-      original(...args);
-    });
-  }
-  return messages;
-};
 
 // One file per story, e.g.
 // `__snapshots__/victory-charts-victorybar/bar-ratio.html`.
