@@ -20,8 +20,6 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
-      // Loads the stories' CSS and makes text measurement machine-independent.
-      setupFiles: ["tests/setup.ts"],
       browser: {
         enabled: true,
         headless: true,
@@ -39,13 +37,20 @@ export default mergeConfig(
       projects: [
         {
           extends: true,
-          test: { name: "markup", include: ["tests/stories.test.tsx"] },
+          test: {
+            name: "markup",
+            include: ["tests/stories.test.tsx"],
+            // Text measurement that's the same on every machine.
+            setupFiles: ["tests/setup.ts", "tests/approximate-text.ts"],
+          },
         },
         {
           extends: true,
           test: {
             name: "screenshots",
             include: ["tests/screenshots.test.tsx"],
+            // Real text measurement: the pinned container's fonts.
+            setupFiles: ["tests/setup.ts"],
             provide: { inContainer: IN_CONTAINER },
             browser: {
               expect: {

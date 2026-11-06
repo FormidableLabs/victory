@@ -147,6 +147,10 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+      # The checkout belongs to the runner's user but the container runs as
+      # root, so git (which Turborepo's `--affected` uses) refuses it.
+      - name: Trust the checkout
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - uses: $/.github/actions/setup
       - uses: actions/cache/restore@v6
         with:
