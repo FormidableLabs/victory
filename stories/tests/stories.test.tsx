@@ -1,24 +1,13 @@
-import React from "react";
-import { flushSync } from "react-dom";
-import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { stories } from "../utils/load-stories";
+import { renderStory, unmountStory } from "./render";
 import { serialize } from "./serialize";
 
 // Console errors and warnings a story is allowed to log, by story id. Any
 // other `console.error` or `console.warn` (React's warnings included) fails
 // the story's test. Empty: fix the story instead where you can.
 const ALLOWED_CONSOLE: Record<string, RegExp[]> = {};
-
-let root: Root | undefined;
-let container: HTMLElement | undefined;
-
-const unmountStory = () => {
-  root?.unmount();
-  container?.remove();
-  root = container = undefined;
-};
 
 // Cleans up after a test that failed before unmounting its story.
 afterEach(() => {
@@ -37,35 +26,6 @@ const recordConsole = () => {
     });
   }
   return messages;
-};
-
-// The first render, after effects: what Storybook showed before any
-// interaction. Snapshots are compared before animations or timers run.
-const renderStory = async (Story: React.ComponentType) => {
-  container = document.createElement("div");
-  document.body.append(container);
-  root = createRoot(container);
-  flushSync(() => root!.render(<Story />));
-  await settle(container);
-};
-
-const nextFrame = () =>
-  new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve)));
-
-// Mount effects set state that renders more (VictoryClipContainer's clip id,
-// VictoryPortal's children), scheduled by React rather than flushed with the
-// first render. Wait until the markup stops changing.
-const MAX_FRAMES = 20;
-const settle = async (element: HTMLElement) => {
-  let markup = element.innerHTML;
-  for (let frame = 0; frame < MAX_FRAMES; frame++) {
-    await nextFrame();
-    if (element.innerHTML === markup) {
-      return;
-    }
-    markup = element.innerHTML;
-  }
-  throw new Error(`Still changing after ${MAX_FRAMES} frames`);
 };
 
 // One file per story, e.g.
@@ -93,9 +53,9 @@ for (const [title, group] of Object.entries(
     for (const story of group ?? []) {
       test(story.name, async () => {
         const messages = recordConsole();
-        await renderStory(story.Component);
+        const container = await renderStory(story.Component);
 
-        await expect(serialize(container!)).toMatchFileSnapshot(
+        await expect(serialize(container)).toMatchFileSnapshot(
           snapshotPath(story.id),
         );
 

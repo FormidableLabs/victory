@@ -1,18 +1,25 @@
+import path from "node:path";
+
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig, mergeConfig } from "vitest/config";
 
 import viteConfig from "./vite.config.ts";
 
-// SVG snapshot tests for every story (`tests/`), in headless Chromium through
-// Vitest's browser mode. Install the browser once with `pnpm stories:install`
-// (from the repo root).
+// Story tests in headless Chromium through Vitest's browser mode (`tests/`),
+// as two projects:
+// - `markup`: an SVG markup snapshot of every story (`pnpm test`). Install the
+//   browser once with `pnpm stories:install` (from the repo root).
+// - `screenshots`: pixel screenshots of a few stories, only in the pinned
+//   Playwright container (`pnpm stories:screenshots` locally, and CI), since
+//   pixels differ between operating systems.
+
+// The image `pnpm stories:screenshots` and CI run in sets this.
+const IN_CONTAINER = process.env.PLAYWRIGHT_BROWSERS_PATH === "/ms-playwright";
+
 export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
-      include: ["tests/**/*.test.tsx"],
-      // Loads the stories' CSS and makes text measurement machine-independent.
-      setupFiles: ["tests/setup.ts"],
       browser: {
         enabled: true,
         headless: true,
@@ -27,6 +34,43 @@ export default mergeConfig(
         // on the page doesn't.
         screenshotFailures: false,
       },
+      projects: [
+        {
+          extends: true,
+          test: {
+            name: "markup",
+            include: ["tests/stories.test.tsx"],
+            // Text measurement that's the same on every machine.
+            setupFiles: ["tests/setup.ts", "tests/approximate-text.ts"],
+          },
+        },
+        {
+          extends: true,
+          test: {
+            name: "screenshots",
+            include: ["tests/screenshots.test.tsx"],
+            // Real text measurement: the pinned container's fonts.
+            setupFiles: ["tests/setup.ts"],
+            provide: { inContainer: IN_CONTAINER },
+            browser: {
+              expect: {
+                toMatchScreenshot: {
+                  // Exact: the pinned image renders the same pixels every
+                  // time, and pixelmatch's default threshold (0.1) misses
+                  // subtle color changes.
+                  comparatorName: "pixelmatch",
+                  comparatorOptions: { threshold: 0 },
+                  // `tests/__screenshots__/<story path>.png`: one image per
+                  // story, without the default browser and platform suffix
+                  // (there's one of each).
+                  resolveScreenshotPath: ({ arg, ext, root }) =>
+                    path.join(root, "tests/__screenshots__", arg + ext),
+                },
+              },
+            },
+          },
+        },
+      ],
     },
   }),
 );
