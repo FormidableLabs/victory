@@ -7,15 +7,18 @@
     "types:check": {
       "dependsOn": ["^build"]
     },
-    // Vite's dev server (`turbo watch dev`). Vite imports the packages'
-    // `dist/`, so `turbo watch` rebuilds them on change and Vite reloads.
-    // Pixel screenshots, run in the pinned Playwright container (CI, and
-    // `pnpm stories:screenshots`). Not cached: the cache key can't tell which
-    // machine took them.
+    // Pixel screenshots, in CI's pinned Playwright container. Not cached: the
+    // cache key can't tell which machine took them. The image's
+    // `PLAYWRIGHT_BROWSERS_PATH` points Playwright at its browsers (and tells
+    // `vitest.config.ts` it's in the container); Turborepo drops undeclared
+    // environment variables.
     "test:screenshots": {
       "dependsOn": ["^build"],
-      "cache": false
+      "cache": false,
+      "passThroughEnv": ["PLAYWRIGHT_BROWSERS_PATH"]
     },
+    // Vite's dev server (`turbo watch dev`). Vite imports the packages'
+    // `dist/`, so `turbo watch` rebuilds them on change and Vite reloads.
     "dev": {
       "dependsOn": ["^build"],
       "cache": false,
