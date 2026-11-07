@@ -521,3 +521,70 @@ export function isHorizontal(props: {
   };
   return traverseChildren(React.Children.toArray(props.children));
 }
+
+// React 18 adds a component's `defaultProps` to `element.props` when the
+// element is created. React 19's JSX runtime doesn't: class components get
+// them only when they render. Victory reads props from elements it hasn't
+// rendered (children, and props like `labelComponent`), so these helpers add
+// the missing defaults back, as React 18 did. On React 18 nothing is missing.
+
+const getMissingDefaultProps = (
+  element: React.ReactElement<Record<string, unknown>>,
+): Record<string, unknown> | undefined => {
+  const defaultProps =
+    typeof element.type === "string"
+      ? undefined
+      : (element.type as { defaultProps?: Record<string, unknown> })
+          .defaultProps;
+  if (!defaultProps) {
+    return undefined;
+  }
+  let missing: Record<string, unknown> | undefined;
+  Object.keys(defaultProps).forEach((key) => {
+    if (element.props[key] === undefined) {
+      missing = missing || {};
+      missing[key] = defaultProps[key];
+    }
+  });
+  return missing;
+};
+
+/**
+ * Returns an element's props with its component's `defaultProps` for any
+ * that are `undefined`, as `element.props` is on React 18.
+ */
+export function getElementProps<TProps = any>(
+  element: React.ReactElement<TProps>,
+): TProps {
+  const missing = getMissingDefaultProps(
+    element as React.ReactElement<Record<string, unknown>>,
+  );
+  return missing ? Object.assign({}, element.props, missing) : element.props;
+}
+
+/**
+ * Returns `children` with each element, at any depth, given its missing
+ * `defaultProps` (see `getElementProps`). Elements that already have them are
+ * returned as is, so on React 18 this returns `children` itself.
+ */
+export function withDefaultProps<T extends React.ReactNode>(children: T): T {
+  if (Array.isArray(children)) {
+    const mapped: React.ReactNode[] = children.map(withDefaultProps);
+    return mapped.some((child, i) => child !== children[i])
+      ? (mapped as unknown as T)
+      : children;
+  }
+  if (!isValidElement<Record<string, unknown>>(children)) {
+    return children;
+  }
+  const nested = children.props.children as React.ReactNode;
+  const newNested = withDefaultProps(nested);
+  const missing = getMissingDefaultProps(children);
+  if (!missing && newNested === nested) {
+    return children;
+  }
+  return React.cloneElement(
+    children,
+    newNested === nested ? missing : { ...missing, children: newNested },
+  ) as T;
+}

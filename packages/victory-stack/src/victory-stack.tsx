@@ -57,7 +57,12 @@ const defaultProps = {
 const VictoryStackBase = (initialProps: VictoryStackProps) => {
   const { role } = VictoryStack;
   const propsWithDefaults = React.useMemo(
-    () => defaults({}, initialProps, defaultProps),
+    () =>
+      defaults(
+        { children: Helpers.withDefaultProps(initialProps.children) },
+        initialProps,
+        defaultProps,
+      ),
     [initialProps],
   );
   const { setAnimationState, getAnimationProps, getProps } =

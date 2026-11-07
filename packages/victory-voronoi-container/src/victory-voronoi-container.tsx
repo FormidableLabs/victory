@@ -85,7 +85,7 @@ export const useVictoryVoronoiContainer = (
 
   const getStyle = (points, type) => {
     const { labels, labelComponent, theme } = props;
-    const componentProps = labelComponent.props || {};
+    const componentProps = Helpers.getElementProps(labelComponent) || {};
     const themeStyles =
       theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
     const componentStyleArray =
@@ -133,7 +133,7 @@ export const useVictoryVoronoiContainer = (
 
   const getLabelProps = (points) => {
     const { labels, scale, labelComponent, theme, width, height } = props;
-    const componentProps = labelComponent.props || {};
+    const componentProps = Helpers.getElementProps(labelComponent) || {};
     const text = points.reduce((memo, datum) => {
       const labelProps = defaults({}, componentProps, {
         datum,

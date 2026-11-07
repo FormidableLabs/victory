@@ -1,3 +1,4 @@
+import React from "react";
 import * as Helpers from "./helpers";
 
 describe("victory-util/helpers", () => {
@@ -260,6 +261,75 @@ describe("victory-util/helpers", () => {
 
     it("should not throw on NaN start value", () => {
       expect(Helpers.range(NaN as any)).toEqual([]);
+    });
+  });
+
+  // React 19's JSX runtime doesn't add `defaultProps` to `element.props`.
+  // Setting `defaultProps` after creating the elements does the same on any
+  // React version.
+  describe("getElementProps and withDefaultProps", () => {
+    const makeComponents = () => {
+      const Parent = (props: { children?: React.ReactNode }) =>
+        React.createElement("g", null, props.children);
+      const Child = (props: { a?: number; b?: number }) =>
+        React.createElement("g", null, props.a);
+      return { Parent, Child };
+    };
+
+    it("getElementProps adds missing defaultProps", () => {
+      const { Child } = makeComponents();
+      const element = React.createElement(Child, { b: 2 });
+      Object.assign(Child, { defaultProps: { a: 1, b: 3 } });
+      expect(element.props).toEqual({ b: 2 });
+      expect(Helpers.getElementProps(element)).toEqual({ a: 1, b: 2 });
+    });
+
+    it("getElementProps returns the same props when nothing is missing", () => {
+      const { Child } = makeComponents();
+      const element = React.createElement(Child, { a: 1, b: 2 });
+      Object.assign(Child, { defaultProps: { a: 3 } });
+      expect(Helpers.getElementProps(element)).toBe(element.props);
+      expect(
+        Helpers.getElementProps(React.createElement("g", { x: 1 })),
+      ).toEqual({ x: 1 });
+    });
+
+    it("withDefaultProps adds missing defaultProps at any depth", () => {
+      const { Parent, Child } = makeComponents();
+      const children = [
+        React.createElement(
+          Parent,
+          { key: "p" },
+          React.createElement(Child, { key: "c", b: 2 }),
+        ),
+        "text",
+        null,
+      ];
+      Object.assign(Child, { defaultProps: { a: 1 } });
+      const result = Helpers.withDefaultProps(children) as React.ReactNode[];
+      const parent = result[0] as React.ReactElement<{
+        children: React.ReactElement;
+      }>;
+      expect(parent.key).toBe("p");
+      expect(parent.props.children.key).toBe("c");
+      expect(parent.props.children.props).toEqual({ a: 1, b: 2 });
+      expect(result.slice(1)).toEqual(["text", null]);
+    });
+
+    it("withDefaultProps returns the same children when nothing is missing", () => {
+      const { Parent, Child } = makeComponents();
+      Object.assign(Child, { defaultProps: { a: 1 } });
+      const children = [
+        React.createElement(
+          Parent,
+          { key: "p" },
+          React.createElement(Child, { key: "c" }),
+        ),
+        "text",
+      ];
+      expect(Helpers.withDefaultProps(children)).toBe(children);
+      const single = React.createElement(Child);
+      expect(Helpers.withDefaultProps(single)).toBe(single);
     });
   });
 });

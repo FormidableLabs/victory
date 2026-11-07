@@ -315,6 +315,7 @@ describe("victory-core", () => {
             "evaluateStyle": [Function],
             "getCurrentAxis": [Function],
             "getDefaultStyles": [Function],
+            "getElementProps": [Function],
             "getPadding": [Function],
             "getPoint": [Function],
             "getPolarOrigin": [Function],
@@ -333,6 +334,7 @@ describe("victory-core", () => {
             "range": [Function],
             "reduceChildren": [Function],
             "scalePoint": [Function],
+            "withDefaultProps": [Function],
           },
           "Hooks": {
             "useAnimationState": [Function],
