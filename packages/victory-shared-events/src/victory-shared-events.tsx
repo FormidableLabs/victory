@@ -177,7 +177,9 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
 
   getBaseProps(props) {
     const { container } = props;
-    const children = React.Children.toArray(this.props.children);
+    const children = React.Children.toArray(
+      Helpers.withDefaultProps(this.props.children),
+    );
     const childBaseProps = this.getBasePropsFromChildren(children);
     const parentBaseProps = container ? container.props : {};
     return Object.assign({}, childBaseProps, { parent: parentBaseProps });
@@ -263,7 +265,9 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
       }, []);
     };
     const childNames = Object.keys(baseProps);
-    const childComponents = React.Children.toArray(props.children);
+    const childComponents = React.Children.toArray(
+      Helpers.withDefaultProps(props.children),
+    );
     return alterChildren(childComponents, childNames);
   }
 
