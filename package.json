@@ -68,6 +68,7 @@
     "clean:cache:modules": "node scripts/clean.mjs node_modules/.cache \"packages/*/node_modules/.cache\"",
     "build": "turbo run build --filter=./packages/*",
     "build:docs": "turbo run build --filter=victory-docs",
+    "docs:check-browser": "node scripts/check-browser-docs.mjs",
     "format": "oxfmt --check",
     "format:fix": "oxfmt",
     "lint": "oxlint --report-unused-disable-directives-severity=error",

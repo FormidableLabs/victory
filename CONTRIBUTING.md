@@ -63,6 +63,12 @@ You can run the documentation website locally with the following command. It is 
 $ pnpm start:docs
 ```
 
+### Browser docs examples
+
+[Using Victory in the Browser](website/docs/introduction/browser.mdx) has two no-build examples that load published Victory and React from esm.sh and jsDelivr. `pnpm docs:check-browser` checks them: it crawls each example's module graph to check that React loads once, then renders the page in headless Chromium (after `pnpm stories:install`), clicks "Randomize" and fails on any error. It also checks the jsDelivr remap advice: on another React, the page works with the documented remap line and fails without it. Pass `--victory <version>` to check another Victory version (a canary, or a release before the docs are bumped).
+
+It tests the CDNs and published versions, not your changes, so CI runs it only for pull requests that change the page or the check, and on demand (**Actions → Browser docs → Run workflow**, with an optional Victory version).
+
 ### Build and checks
 
 Our task system takes care of task dependencies for you. When you first clone this repo or a new branch, run:
@@ -333,6 +339,8 @@ On the merge of the Version Packages PR, the release workflow:
 ### Canary releases
 
 To try out unreleased changes, run the release workflow manually (**Actions → Release → Run workflow**) on a branch that the `npm-publish` environment allows. It publishes a snapshot (e.g. `37.4.0-canary-20261025120000`) of every package with a pending changeset to the `next` dist-tag. It never touches `latest`.
+
+Before a release, check the [browser docs examples](#browser-docs-examples) against the canary: run **Actions → Browser docs → Run workflow** with the canary's version (or `pnpm docs:check-browser --victory <version>`). If jsDelivr built the canary against a different React than the docs use, it names the module that imports it; update the docs' React (and the remap line) with the release. A new major also bumps the docs' `victory` versions.
 
 ### Release setup (maintainers, one time)
 
