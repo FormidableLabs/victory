@@ -30,7 +30,7 @@ Tracking issue: https://github.com/FormidableLabs/victory/issues/3093. Read it b
 - `stories/`: the `victory-stories` workspace package (private): 203 stories in Storybook's file format and a Vite gallery app (`app/`). `utils/load-stories.ts` loads them and renders each as Storybook did (global, meta, then story args; meta decorators). `tests/` snapshots every story's markup in headless Chromium (Vitest browser mode), one file per story in `tests/__snapshots__/`, and screenshots a curated few (`SCREENSHOT_STORIES`) in `tests/__screenshots__/`, only in the pinned Playwright Docker image (tag in `ci.yml`). `tests/interactions/` drives stories with Playwright's mouse (`userEvent`) and asserts on what changes (tooltips, containers, events).
 - `website/`: Docusaurus docs site.
 - `test/`: shared Vitest config (jsdom, globals) and helpers.
-- `scripts/`: task scripts (`pack-check.mjs`, `bundle-size.mjs`, `lint-gha.mjs`), changelog, and npm trusted-publishing setup.
+- `scripts/`: task scripts (`pack-check.mjs`, `bundle-size.mjs`, `lint-gha.mjs`, `check-browser-docs.mjs`), changelog, and npm trusted-publishing setup.
 
 ## Commands
 
@@ -58,6 +58,7 @@ pnpm stories:install  # Chromium for the stories' snapshot tests (Playwright)
 pnpm stories:interactions:watch  # interaction tests in a visible browser, slowed down (needs full Chromium; CONTRIBUTING)
 pnpm --filter victory-stories test -u   # update story snapshots (after `pnpm build`)
 pnpm stories:screenshots [-u]  # story screenshots in the CI image (Docker or Colima); -u updates
+pnpm docs:check-browser [--victory <version>]  # browser docs examples on esm.sh/jsDelivr (network; CI: PRs changing them, manual runs)
 ```
 
 Keep Turborepo telemetry off: CI sets `TURBO_TELEMETRY_DISABLED=1`, and agents should set it too. In a git worktree, Turborepo stores its cache in the main checkout's `.turbo/cache`; set `TURBO_CACHE_DIR=.turbo/cache` if that location isn't writable (e.g. a sandbox).

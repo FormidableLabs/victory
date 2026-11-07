@@ -1,0 +1,47 @@
+name: Browser docs
+
+# Checks the no-build examples in "Using Victory in the Browser"
+# (website/docs/introduction/browser.mdx) with `pnpm docs:check-browser`. They
+# load published Victory and React from esm.sh and jsDelivr, so this tests the
+# CDNs and published versions, not a pull request's code. It runs on:
+#   pull requests that change the page or the check
+#   manual runs (Actions → Browser docs → Run workflow), optionally against
+#   another Victory version, e.g. a canary before a release
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - website/docs/introduction/browser.mdx
+      - scripts/check-browser-docs.mjs
+      - .github/workflows/browser-docs.yml
+  workflow_dispatch:
+    inputs:
+      victory:
+        description: Victory version to check instead of the docs' (e.g. 38.1.0-canary-20261106120000)
+        required: false
+        type: string
+
+# Reset permissions and grant them per job.
+permissions: {}
+
+jobs:
+  check:
+    name: Check browser docs examples
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # to check out repo (actions/checkout)
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: $/.github/actions/setup
+
+      # The stories package's Playwright, which the check uses.
+      - name: Install Chromium
+        run: pnpm stories:install --with-deps
+
+      - name: Check
+        env:
+          VICTORY_VERSION: ${{ inputs.victory }}
+        run: pnpm docs:check-browser ${VICTORY_VERSION:+--victory "$VICTORY_VERSION"}
