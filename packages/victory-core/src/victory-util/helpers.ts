@@ -562,10 +562,20 @@ export function getElementProps<TProps = any>(
   return missing ? Object.assign({}, element.props, missing) : element.props;
 }
 
+const isIterableNode = (
+  node: React.ReactNode,
+): node is Iterable<React.ReactNode> & object =>
+  typeof node === "object" &&
+  node !== null &&
+  !isValidElement(node) &&
+  typeof (node as Partial<Iterable<unknown>>)[Symbol.iterator] === "function";
+
 /**
  * Returns `children` with each element, at any depth, given its missing
  * `defaultProps` (see `getElementProps`). Elements that already have them are
- * returned as is, so on React 18 this returns `children` itself.
+ * returned as is, so on React 18 this returns `children` itself. Other
+ * iterables (a `Set`, a generator) are returned as an array, since some can
+ * only be iterated once.
  */
 export function withDefaultProps<T extends React.ReactNode>(children: T): T {
   if (Array.isArray(children)) {
@@ -573,6 +583,9 @@ export function withDefaultProps<T extends React.ReactNode>(children: T): T {
     return mapped.some((child, i) => child !== children[i])
       ? (mapped as unknown as T)
       : children;
+  }
+  if (isIterableNode(children)) {
+    return Array.from(children, withDefaultProps) as unknown as T;
   }
   if (!isValidElement<Record<string, unknown>>(children)) {
     return children;
