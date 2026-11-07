@@ -53,7 +53,12 @@ const defaultProps = {
 
 const VictoryChartImpl: React.FC<VictoryChartProps> = (initialProps) => {
   const propsWithDefaults = React.useMemo(
-    () => defaults({}, initialProps, defaultProps),
+    () =>
+      defaults(
+        { children: Helpers.withDefaultProps(initialProps.children) },
+        initialProps,
+        defaultProps,
+      ),
     [initialProps],
   );
   const role = "chart";
