@@ -169,14 +169,25 @@ jobs:
           path: stories/.vitest/attachments/
           if-no-files-found: ignore
 
-  # The lockfile pins React 18.3, which the test job covers. This job tests the
-  # other end of the `>=18` peer range, exactly 18.0.0 (`^18` would install the
-  # newest 18.x). `@types/react` isn't a peer and stays on the lockfile's `^18`.
-  react-18:
-    name: Test (React 18.0.0)
+  # The lockfile pins React 18.3, which the test job covers. This job tests
+  # other React versions in the `>=18` peer range. `@types/react` isn't a peer
+  # and stays on the lockfile's `^18`.
+  react:
+    name: Test (React ${{ matrix.react }})
     runs-on: ubuntu-latest
     permissions:
       contents: read # to check out repo (actions/checkout)
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The low end of the range, exactly 18.0.0 (`^18` would install the
+          # newest 18.x).
+          - react: 18.0.0
+            expect: 18.0.0
+          # The newest 19.x (that `minimumReleaseAge` allows).
+          - react: ^19
+            expect: "19."
     steps:
       - uses: actions/checkout@v7
         with:
@@ -184,24 +195,28 @@ jobs:
       - uses: $/.github/actions/setup
 
       # Overrides in the working tree only; the lockfile change isn't committed.
-      - name: Install React 18.0.0
+      - name: Install React ${{ matrix.react }}
+        env:
+          REACT: ${{ matrix.react }}
+          EXPECT: ${{ matrix.expect }}
         run: |
           pnpm config set --json --location project overrides \
-            "$(pnpm config get --location project overrides --json | jq -c '. + {"react": "18.0.0", "react-dom": "18.0.0"}')"
+            "$(pnpm config get --location project overrides --json | jq -c --arg v "$REACT" '. + {"react": $v, "react-dom": $v}')"
           pnpm install --no-frozen-lockfile
-          node -e 'for (const p of ["react", "react-dom"]) { const v = require(`${p}/package.json`).version; if (v !== "18.0.0") throw new Error(`${p} is ${v}`); }'
+          node -e 'for (const p of ["react", "react-dom"]) { const v = require(`${p}/package.json`).version; console.log(`${p} ${v}`); if (!v.startsWith(process.env.EXPECT)) throw new Error(`${p} is ${v}, expected ${process.env.EXPECT}`); }'
 
       # Changing pnpm-workspace.yaml (a Turborepo global dependency) misses the
       # cache and marks every package affected, so this runs everything.
       - name: Build
         run: pnpm build
 
-      # The stories' snapshot tests run here too, on React 18.0.0.
+      # The stories' snapshot, interaction and unit tests all run on this React.
       - name: Install Chromium
         run: pnpm stories:install --with-deps
 
+      # `--continue` reports every failing package, not just the first.
       - name: Test
-        run: pnpm test
+        run: pnpm test --continue
 
   # ESM bundle sizes in the job summary, compared with the base branch on pull
   # requests. Reported, not gated. Every package is measured, so no `--affected`.
