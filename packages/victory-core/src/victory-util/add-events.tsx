@@ -11,7 +11,7 @@ import { VictoryCommonProps, VictoryDatableProps } from "./common-props";
 import { difference } from "./collection";
 import type { ComponentEvent } from "./events";
 import * as Events from "./events";
-import { isFunction, isNil } from "./helpers";
+import { getElementProps, isFunction, isNil } from "./helpers";
 
 // DISCLAIMER:
 // This file is not currently tested, and it is first on the list of files
@@ -362,10 +362,9 @@ export function addEvents<
         return undefined;
       }
 
-      const currentProps =
-        component && typeof component === "object" && "props" in component
-          ? component.props
-          : undefined;
+      const currentProps = React.isValidElement(component)
+        ? getElementProps(component)
+        : undefined;
 
       if (this.hasEvents) {
         const baseEvents = this.getEvents(this.props, type, key);

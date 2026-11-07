@@ -55,7 +55,12 @@ const VictoryGroupBase: React.FC<VictoryGroupProps> = (initialProps) => {
   const { getAnimationProps, setAnimationState, getProps } =
     Hooks.useAnimationState();
   const propsWithDefaults = React.useMemo(
-    () => defaults({}, initialProps, defaultProps),
+    () =>
+      defaults(
+        { children: Helpers.withDefaultProps(initialProps.children) },
+        initialProps,
+        defaultProps,
+      ),
     [initialProps],
   );
   const props = getProps(propsWithDefaults);
