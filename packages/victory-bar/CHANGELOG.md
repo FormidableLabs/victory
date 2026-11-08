@@ -1,5 +1,9 @@
 # victory-bar
 
+## 38.0.1
+
+No changes in this release.
+
 ## 38.0.0
 
 ### Major Changes
