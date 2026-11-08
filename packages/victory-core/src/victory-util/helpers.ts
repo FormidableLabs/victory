@@ -563,12 +563,17 @@ export function getElementProps<TProps = any>(
 }
 
 // `withDefaultProps`' result: an iterable other than an array (or a string)
-// becomes an array of its children.
-type WithDefaultProps<T> = T extends string | readonly unknown[]
+// becomes an array of its children, at any depth. Elements keep their type:
+// an element whose `children` prop is a `Set` gets an array at runtime, but
+// its props type still says `Set`. Children are almost always typed
+// `ReactNode`, so this isn't worth rewriting `ReactElement` prop types for.
+type WithDefaultProps<T> = T extends string
   ? T
-  : T extends Iterable<infer U>
-    ? U[]
-    : T;
+  : T extends readonly unknown[]
+    ? { [K in keyof T]: WithDefaultProps<T[K]> }
+    : T extends Iterable<infer U>
+      ? WithDefaultProps<U>[]
+      : T;
 
 const isIterableNode = (
   node: React.ReactNode,

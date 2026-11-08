@@ -375,5 +375,17 @@ describe("victory-util/helpers", () => {
         Helpers.withDefaultProps("text" as React.ReactNode),
       ).toExtend<React.ReactNode>();
     });
+
+    it("withDefaultProps converts nested iterables, and its return type says so", () => {
+      const inArray = Helpers.withDefaultProps([new Set(["text"])]);
+      expectTypeOf(inArray).toEqualTypeOf<string[][]>();
+      expect(inArray).toEqual([["text"]]);
+      const inSet = Helpers.withDefaultProps(new Set([new Set(["text"])]));
+      expectTypeOf(inSet).toEqualTypeOf<string[][]>();
+      expect(inSet).toEqual([["text"]]);
+      const tuple = Helpers.withDefaultProps(["a", new Set([1])] as const);
+      expectTypeOf(tuple).toEqualTypeOf<readonly ["a", number[]]>();
+      expect(tuple).toEqual(["a", [1]]);
+    });
   });
 });
