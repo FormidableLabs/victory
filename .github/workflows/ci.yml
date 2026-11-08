@@ -169,9 +169,9 @@ jobs:
           path: stories/.vitest/attachments/
           if-no-files-found: ignore
 
-  # The lockfile pins React 18.3, which the test job covers. This job tests
-  # other React versions in the `>=18` peer range. `@types/react` isn't a peer
-  # and stays on the lockfile's `^18`.
+  # The lockfile pins React 19, which the test job covers. This job tests
+  # React 18 versions in the `>=18` peer range. `@types/react` isn't a peer
+  # and stays on the lockfile's version.
   react:
     name: Test (React ${{ matrix.react }})
     runs-on: ubuntu-latest
@@ -185,9 +185,9 @@ jobs:
           # newest 18.x).
           - react: 18.0.0
             expect: 18.0.0
-          # The newest 19.x (that `minimumReleaseAge` allows).
-          - react: ^19
-            expect: "19."
+          # The newest 18.x (18.3, the last 18).
+          - react: ^18
+            expect: "18."
     steps:
       - uses: actions/checkout@v7
         with:

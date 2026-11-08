@@ -3,9 +3,8 @@
 // Majors we've deliberately parked. Each one has an item in the uplift
 // tracking issue (#3093); remove the entry when that item lands.
 const MINOR_ONLY = {
-  // Phase 4: develop on React 19, with a CI job on React 18.0.0.
-  react: "React 19",
-  "react-dom": "React 19",
+  // Phase 4: React 19 types. The source type fixes for `@types/react` 19 go in
+  // their own PR (#3076).
   "@types/react": "React 19",
   "@types/react-dom": "React 19",
   // victory-vendor's build stays on Babel 7. Moving it to one build tool is a
