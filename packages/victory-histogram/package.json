@@ -1,6 +1,6 @@
 {
   "name": "victory-histogram",
-  "version": "38.0.0",
+  "version": "38.0.1",
   "description": "Histogram Component for Victory",
   "keywords": [
     "data visualization",
@@ -32,9 +32,9 @@
   "license": "MIT",
   "dependencies": {
     "react-fast-compare": "^3.2.0",
-    "victory-bar": "38.0.0",
-    "victory-core": "38.0.0",
-    "victory-vendor": "38.0.0"
+    "victory-bar": "38.0.1",
+    "victory-core": "38.0.1",
+    "victory-vendor": "38.0.1"
   },
   "peerDependencies": {
     "react": ">=18"

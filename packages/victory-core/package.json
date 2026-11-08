@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "38.0.0",
+  "version": "38.0.1",
   "description": "Victory Core",
   "keywords": [
     "data visualization",
@@ -33,7 +33,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "react-fast-compare": "^3.2.0",
-    "victory-vendor": "38.0.0"
+    "victory-vendor": "38.0.1"
   },
   "peerDependencies": {
     "react": ">=18"

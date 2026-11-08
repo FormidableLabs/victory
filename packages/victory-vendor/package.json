@@ -1,6 +1,6 @@
 {
   "name": "victory-vendor",
-  "version": "38.0.0",
+  "version": "38.0.1",
   "description": "Vendored dependencies for Victory",
   "keywords": [
     "data visualization",

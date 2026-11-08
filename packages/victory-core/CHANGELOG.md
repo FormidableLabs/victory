@@ -1,5 +1,13 @@
 # victory-core
 
+## 38.0.1
+
+### Patch Changes
+
+- [#3156](https://github.com/FormidableLabs/victory/pull/3156) [`974becf`](https://github.com/FormidableLabs/victory/commit/974becfcea43beab7f345f1246b831ef44deb1d0) - Fix charts on React 19: Victory reads props from child elements (and props like `labelComponent`) before React renders them, and React 19's JSX runtime no longer adds a class component's `defaultProps` to `element.props`. Charts lost defaults such as `data`, `samples` and VictoryLegend's `titleComponent` (missing bars, wrong lines, a `TypeError` with a titled legend), and VictoryBrushLine lost its width as an `axisComponent`. Victory now adds the missing defaults itself, as React 18 did. Adds `Helpers.getElementProps` and `Helpers.withDefaultProps` to `victory-core`.
+
+- [#3158](https://github.com/FormidableLabs/victory/pull/3158) [`a01b1e9`](https://github.com/FormidableLabs/victory/commit/a01b1e99db10ee9d2351d7116b4d0d590ed735d5) - Fix charts on React 19 whose children are an iterable other than an array (such as a `Set`): `Helpers.withDefaultProps` now adds missing `defaultProps` to their elements too, returning them as an array, and its return type now says so.
+
 ## 38.0.0
 
 ### Major Changes
