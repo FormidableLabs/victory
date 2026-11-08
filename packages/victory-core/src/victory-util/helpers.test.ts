@@ -331,5 +331,61 @@ describe("victory-util/helpers", () => {
       const single = React.createElement(Child);
       expect(Helpers.withDefaultProps(single)).toBe(single);
     });
+
+    it("withDefaultProps adds missing defaultProps in other iterables", () => {
+      const { Parent, Child } = makeComponents();
+      const makeChildren = () => [
+        React.createElement(Child, { key: "c", b: 2 }),
+        React.createElement(Parent, { key: "p" }, [
+          React.createElement(Child, { key: "n" }),
+        ]),
+      ];
+      const set = new Set(makeChildren());
+      function* generate() {
+        yield* makeChildren();
+      }
+      Object.assign(Child, { defaultProps: { a: 1 } });
+      const keys = (node: React.ReactNode) =>
+        React.Children.toArray(node).map((child) => (child as any).key);
+      [set, generate()].forEach((children) => {
+        const result = Helpers.withDefaultProps(children);
+        expect(Array.isArray(result)).toBe(true);
+        const [child, parent] = result as unknown as [
+          React.ReactElement<object>,
+          React.ReactElement<{ children: React.ReactElement<object>[] }>,
+        ];
+        expect(child.props).toEqual({ a: 1, b: 2 });
+        expect(parent.props.children[0].props).toEqual({ a: 1 });
+      });
+      expect(keys(Helpers.withDefaultProps(set))).toEqual(keys(set));
+    });
+
+    it("withDefaultProps' return type describes the array for other iterables", () => {
+      const result = Helpers.withDefaultProps(new Set(["text"]));
+      expectTypeOf(result).toEqualTypeOf<string[]>();
+      expect(result).toEqual(["text"]);
+      expectTypeOf(Helpers.withDefaultProps(["a", 1])).toEqualTypeOf<
+        (string | number)[]
+      >();
+      const element = React.createElement("g");
+      expectTypeOf(Helpers.withDefaultProps(element)).toEqualTypeOf<
+        typeof element
+      >();
+      expectTypeOf(
+        Helpers.withDefaultProps("text" as React.ReactNode),
+      ).toExtend<React.ReactNode>();
+    });
+
+    it("withDefaultProps converts nested iterables, and its return type says so", () => {
+      const inArray = Helpers.withDefaultProps([new Set(["text"])]);
+      expectTypeOf(inArray).toEqualTypeOf<string[][]>();
+      expect(inArray).toEqual([["text"]]);
+      const inSet = Helpers.withDefaultProps(new Set([new Set(["text"])]));
+      expectTypeOf(inSet).toEqualTypeOf<string[][]>();
+      expect(inSet).toEqual([["text"]]);
+      const tuple = Helpers.withDefaultProps(["a", new Set([1])] as const);
+      expectTypeOf(tuple).toEqualTypeOf<readonly ["a", number[]]>();
+      expect(tuple).toEqual(["a", [1]]);
+    });
   });
 });

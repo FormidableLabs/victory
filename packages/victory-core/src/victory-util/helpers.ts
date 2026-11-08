@@ -562,17 +562,44 @@ export function getElementProps<TProps = any>(
   return missing ? Object.assign({}, element.props, missing) : element.props;
 }
 
+// `withDefaultProps`' result: an iterable other than an array (or a string)
+// becomes an array of its children, at any depth. Elements keep their type:
+// an element whose `children` prop is a `Set` gets an array at runtime, but
+// its props type still says `Set`. Children are almost always typed
+// `ReactNode`, so this isn't worth rewriting `ReactElement` prop types for.
+type WithDefaultProps<T> = T extends string
+  ? T
+  : T extends readonly unknown[]
+    ? { [K in keyof T]: WithDefaultProps<T[K]> }
+    : T extends Iterable<infer U>
+      ? WithDefaultProps<U>[]
+      : T;
+
+const isIterableNode = (
+  node: React.ReactNode,
+): node is Iterable<React.ReactNode> & object =>
+  typeof node === "object" &&
+  node !== null &&
+  !isValidElement(node) &&
+  typeof (node as Partial<Iterable<unknown>>)[Symbol.iterator] === "function";
+
 /**
  * Returns `children` with each element, at any depth, given its missing
  * `defaultProps` (see `getElementProps`). Elements that already have them are
- * returned as is, so on React 18 this returns `children` itself.
+ * returned as is, so on React 18 this returns `children` itself. Other
+ * iterables (a `Set`, a generator) are returned as an array, since some can
+ * only be iterated once.
  */
-export function withDefaultProps<T extends React.ReactNode>(children: T): T {
+export function withDefaultProps<T extends React.ReactNode>(
+  children: T,
+): WithDefaultProps<T>;
+export function withDefaultProps(children: React.ReactNode): React.ReactNode {
   if (Array.isArray(children)) {
     const mapped: React.ReactNode[] = children.map(withDefaultProps);
-    return mapped.some((child, i) => child !== children[i])
-      ? (mapped as unknown as T)
-      : children;
+    return mapped.some((child, i) => child !== children[i]) ? mapped : children;
+  }
+  if (isIterableNode(children)) {
+    return Array.from(children, withDefaultProps);
   }
   if (!isValidElement<Record<string, unknown>>(children)) {
     return children;
@@ -586,5 +613,5 @@ export function withDefaultProps<T extends React.ReactNode>(children: T): T {
   return React.cloneElement(
     children,
     newNested === nested ? missing : { ...missing, children: newNested },
-  ) as T;
+  );
 }
