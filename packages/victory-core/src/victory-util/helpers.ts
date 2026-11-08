@@ -562,6 +562,14 @@ export function getElementProps<TProps = any>(
   return missing ? Object.assign({}, element.props, missing) : element.props;
 }
 
+// `withDefaultProps`' result: an iterable other than an array (or a string)
+// becomes an array of its children.
+type WithDefaultProps<T> = T extends string | readonly unknown[]
+  ? T
+  : T extends Iterable<infer U>
+    ? U[]
+    : T;
+
 const isIterableNode = (
   node: React.ReactNode,
 ): node is Iterable<React.ReactNode> & object =>
@@ -577,15 +585,16 @@ const isIterableNode = (
  * iterables (a `Set`, a generator) are returned as an array, since some can
  * only be iterated once.
  */
-export function withDefaultProps<T extends React.ReactNode>(children: T): T {
+export function withDefaultProps<T extends React.ReactNode>(
+  children: T,
+): WithDefaultProps<T>;
+export function withDefaultProps(children: React.ReactNode): React.ReactNode {
   if (Array.isArray(children)) {
     const mapped: React.ReactNode[] = children.map(withDefaultProps);
-    return mapped.some((child, i) => child !== children[i])
-      ? (mapped as unknown as T)
-      : children;
+    return mapped.some((child, i) => child !== children[i]) ? mapped : children;
   }
   if (isIterableNode(children)) {
-    return Array.from(children, withDefaultProps) as unknown as T;
+    return Array.from(children, withDefaultProps);
   }
   if (!isValidElement<Record<string, unknown>>(children)) {
     return children;
@@ -599,5 +608,5 @@ export function withDefaultProps<T extends React.ReactNode>(children: T): T {
   return React.cloneElement(
     children,
     newNested === nested ? missing : { ...missing, children: newNested },
-  ) as T;
+  );
 }

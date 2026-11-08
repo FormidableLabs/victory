@@ -359,5 +359,21 @@ describe("victory-util/helpers", () => {
       });
       expect(keys(Helpers.withDefaultProps(set))).toEqual(keys(set));
     });
+
+    it("withDefaultProps' return type describes the array for other iterables", () => {
+      const result = Helpers.withDefaultProps(new Set(["text"]));
+      expectTypeOf(result).toEqualTypeOf<string[]>();
+      expect(result).toEqual(["text"]);
+      expectTypeOf(Helpers.withDefaultProps(["a", 1])).toEqualTypeOf<
+        (string | number)[]
+      >();
+      const element = React.createElement("g");
+      expectTypeOf(Helpers.withDefaultProps(element)).toEqualTypeOf<
+        typeof element
+      >();
+      expectTypeOf(
+        Helpers.withDefaultProps("text" as React.ReactNode),
+      ).toExtend<React.ReactNode>();
+    });
   });
 });
