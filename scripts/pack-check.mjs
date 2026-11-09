@@ -2,20 +2,23 @@
 // `pack:check` script) after building it:
 //
 // 1. Packs the package with `pnpm pack`.
-// 2. Runs publint and attw (`@arethetypeswrong/cli`) on the tarball, and
-//    type-checks the published declarations with `skipLibCheck` off.
+// 2. Runs publint and attw (`@arethetypeswrong/cli`) on the tarball.
 // 3. Installs the tarball outside the repo, next to only the dependencies it
-//    declares, and loads every entrypoint with `require()` and `import()`.
+//    declares. Type-checks the published declarations there with
+//    `skipLibCheck` off, against `@types/react` 18 and 19, and loads every
+//    entrypoint with `require()` and `import()`.
 //    Also loads every bare specifier that the package's `.mjs` files
 //    default-import, as Node ESM does, and fails on Babel-style CJS (`__esModule` with `exports.default`):
 //    strict ESM gives the default import `module.exports`, not `.default`.
 // 4. If the package has a `pack-snapshot.json`, compares the published
 //    manifest fields, how attw resolves each entrypoint (and its problems),
 //    which entrypoints fail to load, and the file list against it. Pass `--update` to rewrite it.
-import { execFileSync } from "node:child_process";
+import { execFile, execFileSync } from "node:child_process";
 import fs from "node:fs";
+import fsp from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { promisify } from "node:util";
 import { publint } from "publint";
 import { formatMessage } from "publint/utils";
 
@@ -42,10 +45,25 @@ const ALLOWED_CJS_DEFAULT_IMPORTS = {
 };
 
 // Type errors in the published declarations that predate this check, by
-// package, as `<published file>:<error code>` with how many there are. Fixing
-// them changes published types (tracked in #3093). Anything else fails, and so
-// does a count that no longer matches.
+// package, as `<published file>:<error code>` with how many there are, the
+// same with `@types/react` 18 and 19. Fixing them changes published types
+// (tracked in #3093). Anything else fails, and so does a count that no longer
+// matches.
+//
+// TS7016: these declarations use lodash types (inferred from lodash calls),
+// but `@types/lodash` isn't a dependency, so consumers get `any`. Fixed with
+// explicit types in the source; lodash itself is to be removed (#2711).
+const lodashTypes = (file, count) => ({
+  [`dist/${file}.d.cts:TS7016`]: count,
+  [`dist/${file}.d.mts:TS7016`]: count,
+});
 const ALLOWED_DECLARATION_ERRORS = {
+  "victory-brush-container": lodashTypes("brush-helpers", 1),
+  "victory-cursor-container": lodashTypes("cursor-helpers", 1),
+  "victory-selection-container": lodashTypes("selection-helpers", 1),
+  "victory-shared-events": lodashTypes("victory-shared-events", 2),
+  "victory-voronoi-container": lodashTypes("voronoi-helpers", 1),
+  "victory-zoom-container": lodashTypes("zoom-helpers", 2),
   "victory-create-container": {
     // `createContainer`'s inferred return type indexes the container map with
     // a type parameter that isn't narrowed to `ContainerType`.
@@ -91,6 +109,7 @@ const failures = [];
 
 const run = (cmd, args, opts = {}) =>
   execFileSync(cmd, args, { encoding: "utf8", ...opts });
+const execFileAsync = promisify(execFile);
 
 // Pack
 fs.rmSync(workDir, { recursive: true, force: true });
@@ -222,58 +241,93 @@ if (attwProblems.length && !update && !fs.existsSync(snapshotPath)) {
 
 // Declarations. Our tsconfig's `skipLibCheck` skips every `.d.ts`, including
 // the ones we publish, so check those with it off (this also catches syntax
-// TS 7 rejects, like `module` blocks). They're checked in place, against the
-// workspace's types (`@types/react` is a consumer's, not a dependency).
-// Errors in other packages' files are left to those packages' checks.
+// TS 7 rejects, like `module` blocks). They're checked in the isolated install,
+// as a strict consumer would, so a type from a package the tarball doesn't
+// declare (or whose types aren't installed) is an error. `@types/react` is the
+// consumer's, so it's checked against each supported major; `paths` sends
+// every `react` import to it, including from workspace dependencies, which
+// would otherwise resolve the root's copy. Errors in other packages' files are
+// left to those packages' checks. Each run must match the allowlist.
 const declarations = files.filter((f) => /\.d\.[cm]?ts$/.test(f));
 if (declarations.length) {
-  const dtsConfig = path.join(workDir, "tsconfig.dts.json");
-  fs.writeFileSync(
-    dtsConfig,
-    JSON.stringify({
-      extends: path.resolve(import.meta.dirname, "../tsconfig.json"),
-      compilerOptions: { noEmit: true, skipLibCheck: false, types: [] },
-      files: declarations.map((f) => path.join(pkgDir, f)),
+  const reactTypes = {
+    18: path.join(repoModules, "@types/react-18"),
+    19: path.join(repoModules, "@types/react"),
+  };
+  const runs = await Promise.all(
+    Object.entries(reactTypes).map(async ([version, typesDir]) => {
+      const dtsConfig = path.join(
+        installRoot,
+        `tsconfig.react-${version}.json`,
+      );
+      const reactDir = await fsp.realpath(typesDir);
+      await fsp.writeFile(
+        dtsConfig,
+        JSON.stringify({
+          compilerOptions: {
+            target: "ES2022",
+            module: "esnext",
+            moduleResolution: "bundler",
+            lib: ["dom", "dom.iterable", "esnext"],
+            jsx: "react-jsx",
+            strict: true,
+            skipLibCheck: false,
+            noEmit: true,
+            types: [],
+            paths: { react: [reactDir], "react/*": [`${reactDir}/*`] },
+          },
+          files: declarations.map((f) => path.join(installed, f)),
+        }),
+      );
+      try {
+        await execFileAsync("tsc", ["-p", dtsConfig, "--pretty", "false"], {
+          cwd: installRoot,
+        });
+        return { version, errorLines: [] };
+      } catch (err) {
+        const output = `${err.stdout ?? ""}${err.stderr ?? ""}`;
+        const errorLines = output
+          .split("\n")
+          .filter((l) => /error TS\d+/.test(l));
+        // Failed without a diagnostic (e.g. `tsc` not found, or a crash).
+        if (!errorLines.length) {
+          failures.push(
+            `tsc (declarations, @types/react ${version}) failed: ${output.trim() || err.message}`,
+          );
+        }
+        return { version, errorLines };
+      }
     }),
   );
-  let errorLines = [];
-  try {
-    run("tsc", ["-p", dtsConfig, "--pretty", "false"], {
-      stdio: ["ignore", "pipe", "pipe"],
-    });
-  } catch (err) {
-    const output = `${err.stdout ?? ""}${err.stderr ?? ""}`;
-    errorLines = output.split("\n").filter((l) => /error TS\d+/.test(l));
-    // Failed without a diagnostic (e.g. `tsc` not found, or a crash).
-    if (!errorLines.length) {
-      failures.push(
-        `tsc (declarations) failed: ${output.trim() || err.message}`,
-      );
-    }
-  }
   const allowed = ALLOWED_DECLARATION_ERRORS[manifest.name] ?? {};
-  const found = new Map();
-  for (const line of errorLines) {
-    const match = line.match(/^(.+?)\(\d+,\d+\): error (TS\d+):/);
-    if (!match) {
-      failures.push(`tsc (declarations): ${line}`);
-      continue;
-    }
-    const file = path.relative(pkgDir, path.resolve(pkgDir, match[1]));
-    if (file.startsWith("..") || file.includes("node_modules")) continue;
-    const entry = `${file}:${match[2]}`;
-    if (!found.has(entry)) found.set(entry, []);
-    found.get(entry).push(line);
-  }
-  for (const entry of new Set([...Object.keys(allowed), ...found.keys()])) {
-    const lines = found.get(entry) ?? [];
-    const expected = allowed[entry] ?? 0;
-    if (lines.length > expected) {
-      failures.push(...lines.map((l) => `tsc (declarations): ${l}`));
-    } else if (lines.length < expected) {
-      failures.push(
-        `ALLOWED_DECLARATION_ERRORS entry "${entry}" for "${manifest.name}" expects ${expected} errors, found ${lines.length}; update it.`,
+  for (const { version, errorLines } of runs) {
+    const label = `tsc (declarations, @types/react ${version})`;
+    const found = new Map();
+    for (const line of errorLines) {
+      const match = line.match(/^(.+?)\(\d+,\d+\): error (TS\d+):/);
+      if (!match) {
+        failures.push(`${label}: ${line}`);
+        continue;
+      }
+      const file = path.relative(
+        installed,
+        path.resolve(installRoot, match[1]),
       );
+      if (file.startsWith("..") || file.includes("node_modules")) continue;
+      const entry = `${file}:${match[2]}`;
+      if (!found.has(entry)) found.set(entry, []);
+      found.get(entry).push(line);
+    }
+    for (const entry of new Set([...Object.keys(allowed), ...found.keys()])) {
+      const lines = found.get(entry) ?? [];
+      const expected = allowed[entry] ?? 0;
+      if (lines.length > expected) {
+        failures.push(...lines.map((l) => `${label}: ${l}`));
+      } else if (lines.length < expected) {
+        failures.push(
+          `ALLOWED_DECLARATION_ERRORS entry "${entry}" for "${manifest.name}" expects ${expected} errors, found ${lines.length} with @types/react ${version}; update it.`,
+        );
+      }
     }
   }
 }
