@@ -172,7 +172,7 @@ export function getCalculatedProps(initialProps, childComponents) {
 const withoutSharedEvents = (props) => {
   const { children } = props;
   const modifiedChildren = React.Children.toArray(children).map((_child) => {
-    const child = _child as React.ReactElement;
+    const child = _child as React.ReactElement<any>;
     return {
       ...child,
       props: Helpers.omit(child.props, ["sharedEvents"]),

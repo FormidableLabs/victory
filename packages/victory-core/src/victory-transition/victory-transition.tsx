@@ -15,7 +15,7 @@ type VictoryTransitionChild = React.ReactElement<
   {
     polar?: boolean;
     domain?: number[] | { x: number[]; y: number[] };
-    groupComponent?: React.ReactElement;
+    groupComponent?: React.ReactElement<any>;
   },
   // Type:
   {

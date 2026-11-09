@@ -506,7 +506,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
       const sign = textAnchor === "end" ? -1 : 1;
       return flyoutCenter.x - sign * (labelSize.width / 2);
     };
-    return defaults({}, labelComponent!.props, {
+    return defaults({}, (labelComponent as React.ReactElement<any>).props, {
       key: `${this.id}-label-${index}`,
       text,
       datum,
@@ -570,7 +570,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
       props.pointerOrientation,
       props,
     );
-    return defaults({}, flyoutComponent!.props, {
+    return defaults({}, (flyoutComponent as React.ReactElement<any>).props, {
       x,
       y,
       dx,
@@ -618,7 +618,7 @@ export class VictoryTooltip extends React.Component<VictoryTooltipProps> {
       ),
     ];
     const tooltip = React.cloneElement(
-      groupComponent!,
+      groupComponent as React.ReactElement<any>,
       { role: "presentation", transform: calculatedValues.transform },
       children,
     );

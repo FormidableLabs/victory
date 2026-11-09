@@ -6,7 +6,15 @@
     // still prints a `baseUrl`; resolution doesn't use it.)
     "baseUrl": null,
     "paths": {
-      "@site/*": ["./*"]
+      "@site/*": ["./*"],
+      // The site runs React 18 with `@types/react` 18, but workspace packages
+      // (`victory-*`) and some dependencies resolve `react` and `react-dom`
+      // to the root's `@types/react*` 19. Send every import to the site's
+      // copies so the program has one version.
+      "react": ["./node_modules/@types/react"],
+      "react/*": ["./node_modules/@types/react/*"],
+      "react-dom": ["./node_modules/@types/react-dom"],
+      "react-dom/*": ["./node_modules/@types/react-dom/*"]
     },
     // TS 6 defaults this to `true`. The site was never strict.
     "strict": false,

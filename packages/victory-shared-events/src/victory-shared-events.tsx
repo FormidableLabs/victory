@@ -320,7 +320,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
     if (events) {
       return this.getContainer(this.props, this.baseProps, events);
     }
-    return React.cloneElement(this.props.container as React.ReactElement, {
+    return React.cloneElement(this.props.container as React.ReactElement<any>, {
       children: this.props.children,
     });
   }

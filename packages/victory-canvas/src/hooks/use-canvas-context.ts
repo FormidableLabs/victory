@@ -1,7 +1,7 @@
 import React from "react";
 
 export type CanvasContextValue = {
-  canvasRef: React.RefObject<HTMLCanvasElement>;
+  canvasRef: React.RefObject<HTMLCanvasElement | null>;
   clear: (ctx: CanvasRenderingContext2D) => void;
   clip: (ctx: CanvasRenderingContext2D) => void;
 };

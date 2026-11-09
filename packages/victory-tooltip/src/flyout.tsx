@@ -168,7 +168,7 @@ export const Flyout: React.FC<FlyoutProps> = (initialProps) => {
     y: props.y,
   };
 
-  return React.cloneElement(props.pathComponent!, {
+  return React.cloneElement(props.pathComponent as React.ReactElement<any>, {
     ...props.events,
     ...userProps,
     style: props.style,
