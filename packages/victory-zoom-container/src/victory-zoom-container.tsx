@@ -115,7 +115,7 @@ export const useVictoryZoomContainer = (
   };
 
   const modifiedChildren = (
-    React.Children.toArray(children) as React.ReactElement[]
+    React.Children.toArray(children) as React.ReactElement<any>[]
   ).map((child) => {
     const role = (child as any).type && (child as any).type.role;
     const isDataComponent = Data.isDataComponent(child);

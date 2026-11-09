@@ -89,7 +89,9 @@ export const useVictoryCursorContainer = (
 
   const getPadding = () => {
     if (props.padding === undefined) {
-      const child = Array.isArray(props.children)
+      const child: React.ReactElement<any> | undefined = Array.isArray(
+        props.children,
+      )
         ? props.children.find((c: any) => {
             return isObject(c.props) && c.props.padding !== undefined;
           })

@@ -90,7 +90,7 @@ export const Bar = forwardRef<SVGPathElement, BarProps>(
       return null;
     }
 
-    return React.cloneElement(props.pathComponent, {
+    return React.cloneElement(props.pathComponent as React.ReactElement<any>, {
       ...props.events,
       "aria-label": props.ariaLabel,
       style,

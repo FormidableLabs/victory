@@ -1,3 +1,4 @@
+import type React from "react";
 import defaults from "lodash/defaults";
 import uniqBy from "lodash/uniqBy";
 import { Helpers, LabelHelpers, Scale, Axis } from "victory-core";
@@ -255,7 +256,8 @@ const getTickLabelProps = (
     scale,
     axisType,
   });
-  const { tickLabelComponent } = props;
+  const tickLabelComponent: React.ReactElement<any> | undefined =
+    props.tickLabelComponent;
   const labelPlacement = tickLabelComponent?.props.labelPlacement
     ? tickLabelComponent.props.labelPlacement
     : props.labelPlacement;
@@ -366,7 +368,8 @@ const getAxisLabelProps = (
   },
 ) => {
   const { axisType, radius, style, origin } = calculatedValues;
-  const { axisLabelComponent } = props;
+  const axisLabelComponent: React.ReactElement<any> | undefined =
+    props.axisLabelComponent;
   if (axisType !== "radial") {
     return {};
   }
