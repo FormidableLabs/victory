@@ -5,6 +5,19 @@ import React from "react";
 
 const ON_MOUSE_MOVE_THROTTLE_MS = 16;
 
+// lodash's `DebouncedFuncLeading`, spelled out so the published declarations
+// don't reference `@types/lodash`, which consumers don't have.
+type Throttled<T extends (...args: any[]) => any> = {
+  (...args: Parameters<T>): ReturnType<T>;
+  cancel(): void;
+  flush(): ReturnType<T>;
+};
+
+const throttleLeading = <T extends (...args: any[]) => any>(
+  fn: T,
+  wait: number,
+): Throttled<T> => throttle(fn, wait, { leading: true, trailing: false });
+
 class SelectionHelpersClass {
   getDimension(props) {
     const { horizontal, selectionDimension } = props;
@@ -155,10 +168,10 @@ class SelectionHelpersClass {
     };
   };
 
-  onMouseMove = throttle(this.handleMouseMove, ON_MOUSE_MOVE_THROTTLE_MS, {
-    leading: true,
-    trailing: false,
-  });
+  onMouseMove = throttleLeading(
+    this.handleMouseMove,
+    ON_MOUSE_MOVE_THROTTLE_MS,
+  );
 
   onMouseUp = (evt, targetProps) => {
     const { activateSelectedData, allowSelection, x2, y2 } = targetProps;

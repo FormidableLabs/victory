@@ -185,7 +185,7 @@ export class VictorySharedEvents extends React.Component<VictorySharedEventsProp
     return Object.assign({}, childBaseProps, { parent: parentBaseProps });
   }
 
-  getBasePropsFromChildren(childComponents) {
+  getBasePropsFromChildren(childComponents): Record<string, any> {
     const iteratee = (child, childName) => {
       if (child.type && Helpers.isFunction(child.type.getBaseProps)) {
         const baseProps = child.props && child.type.getBaseProps(child.props);

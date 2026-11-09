@@ -49,21 +49,7 @@ const ALLOWED_CJS_DEFAULT_IMPORTS = {
 // same with `@types/react` 18 and 19. Fixing them changes published types
 // (tracked in #3093). Anything else fails, and so does a count that no longer
 // matches.
-//
-// TS7016: these declarations use lodash types (inferred from lodash calls),
-// but `@types/lodash` isn't a dependency, so consumers get `any`. Fixed with
-// explicit types in the source; lodash itself is to be removed (#2711).
-const lodashTypes = (file, count) => ({
-  [`dist/${file}.d.cts:TS7016`]: count,
-  [`dist/${file}.d.mts:TS7016`]: count,
-});
 const ALLOWED_DECLARATION_ERRORS = {
-  "victory-brush-container": lodashTypes("brush-helpers", 1),
-  "victory-cursor-container": lodashTypes("cursor-helpers", 1),
-  "victory-selection-container": lodashTypes("selection-helpers", 1),
-  "victory-shared-events": lodashTypes("victory-shared-events", 2),
-  "victory-voronoi-container": lodashTypes("voronoi-helpers", 1),
-  "victory-zoom-container": lodashTypes("zoom-helpers", 2),
   "victory-create-container": {
     // `createContainer`'s inferred return type indexes the container map with
     // a type parameter that isn't narrowed to `ContainerType`.
