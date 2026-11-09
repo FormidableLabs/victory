@@ -185,7 +185,7 @@ importers:
         version: 7.0.1(@testing-library/dom@10.4.2)(vitest@5.0.5)
       '@testing-library/react':
         specifier: ^16.3.3
-        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@types/lodash':
         specifier: ^4.17.27
         version: 4.17.27
@@ -226,11 +226,11 @@ importers:
         specifier: ^0.3.25
         version: 0.3.25
       react:
-        specifier: ^18.3.1
-        version: 18.3.1
+        specifier: ^19.3.1
+        version: 19.3.1
       react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
+        specifier: ^19.3.1
+        version: 19.3.1(react@19.3.1)
       rolldown:
         specifier: ~1.2.15
         version: 1.2.15
@@ -254,7 +254,7 @@ importers:
     dependencies:
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-area:
         specifier: 38.0.1
         version: link:../victory-area
@@ -344,7 +344,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -363,7 +363,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -375,7 +375,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -394,7 +394,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -413,7 +413,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -428,7 +428,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -443,7 +443,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -459,7 +459,7 @@ importers:
     dependencies:
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-bar:
         specifier: 38.0.1
         version: link:../victory-bar
@@ -474,7 +474,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -498,7 +498,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -513,7 +513,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-brush-container:
         specifier: 38.0.1
         version: link:../victory-brush-container
@@ -540,7 +540,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -552,7 +552,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -568,7 +568,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -587,7 +587,7 @@ importers:
     dependencies:
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -608,7 +608,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -620,7 +620,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -639,7 +639,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -654,7 +654,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -663,7 +663,7 @@ importers:
     dependencies:
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -675,7 +675,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -697,7 +697,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -712,7 +712,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -740,7 +740,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -831,7 +831,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -846,7 +846,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -864,7 +864,7 @@ importers:
         version: 4.17.21
       react:
         specifier: '>=18'
-        version: 18.3.1
+        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -875,11 +875,11 @@ importers:
         specifier: ^4.18.1
         version: 4.18.1
       react:
-        specifier: ^18.3.1
-        version: 18.3.1
+        specifier: ^19.3.1
+        version: 19.3.1
       react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
+        specifier: ^19.3.1
+        version: 19.3.1(react@19.3.1)
       seedrandom:
         specifier: ^3.0.5
         version: 3.0.5
@@ -8241,6 +8241,11 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
+  react-dom@19.3.1:
+    resolution: {integrity: sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==}
+    peerDependencies:
+      react: ^19.3.1
+
   react-fast-compare@3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
 
@@ -8302,6 +8307,10 @@ packages:
 
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+    engines: {node: '>=0.10.0'}
+
+  react@19.3.1:
+    resolution: {integrity: sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==}
     engines: {node: '>=0.10.0'}
 
   readable-stream@2.3.7:
@@ -8544,6 +8553,9 @@ packages:
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+
+  scheduler@0.28.0:
+    resolution: {integrity: sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==}
 
   schema-dts@1.1.5:
     resolution: {integrity: sha512-RJr9EaCmsLzBX2NDiO5Z3ux2BVosNZN5jo0gWgsyKvxKIUL5R3swNvoorulAeL9kLB0iTSX7V6aokhla2m7xbg==}
@@ -13765,12 +13777,12 @@ snapshots:
     optionalDependencies:
       vitest: 5.0.5(@types/node@26.6.5)(@vitest/browser-playwright@5.0.5)(@vitest/coverage-v8@5.0.5)(@vitest/ui@5.0.5)(jsdom@30.1.3(@noble/hashes@1.8.0))(vite@8.3.5(@types/node@26.6.5)(jiti@1.21.0)(terser@5.31.1)(yaml@2.9.1))
 
-  '@testing-library/react@16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@testing-library/react@16.3.3(@testing-library/dom@10.4.2)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@babel/runtime': 7.26.0
       '@testing-library/dom': 10.4.2
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
     optionalDependencies:
       '@types/react': 18.3.31
       '@types/react-dom': 18.3.7(@types/react@18.3.31)
@@ -18206,6 +18218,11 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
+  react-dom@19.3.1(react@19.3.1):
+    dependencies:
+      react: 19.3.1
+      scheduler: 0.28.0
+
   react-fast-compare@3.2.0: {}
 
   react-fast-compare@3.2.2: {}
@@ -18277,6 +18294,8 @@ snapshots:
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
+
+  react@19.3.1: {}
 
   readable-stream@2.3.7:
     dependencies:
@@ -18608,6 +18627,8 @@ snapshots:
   scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
+
+  scheduler@0.28.0: {}
 
   schema-dts@1.1.5: {}
 

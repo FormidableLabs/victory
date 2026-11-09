@@ -73,7 +73,7 @@ These commands change as the uplift lands. Update this section in the same PR th
 
 - TypeScript, React function components for new code. Some class components remain (conversion is tracked in #2778); don't convert them in infra PRs.
 - Match the surrounding code's style, naming, and comment density.
-- React peer range: published packages declare `>=18`, and CI's `react` job tests on React 18.0.0 and the newest 19.x (the lockfile's 18.3 runs in `test`). React 18 APIs (`useId`, `useSyncExternalStore`, ...) are fine in library code; React 19-only APIs aren't.
+- React peer range: published packages declare `>=18`, and CI's `react` job tests on React 18.0.0 and 18.3 (the lockfile's 19 runs in `test`). React 18 APIs (`useId`, `useSyncExternalStore`, ...) are fine in library code; React 19-only APIs aren't.
 - Don't add `engines` fields to any `package.json`. `.nvmrc` is the one place the Node version is set.
 - Ship ESM + CJS. Don't add browser-only or Node-only code paths to library packages.
 - Scripts and tooling: prefer async Node APIs (`node:fs/promises`, top-level `await`, `Promise.all` for independent work) over `*Sync` functions. Use a sync call only where async can't work (e.g. a synchronous config hook) or it clearly simplifies a step, and say why in a comment. Existing `*Sync` code isn't converted in unrelated PRs.
