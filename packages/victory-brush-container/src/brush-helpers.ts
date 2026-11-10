@@ -4,6 +4,19 @@ import throttle from "lodash/throttle";
 import { Helpers as CoreHelpers, Selection } from "victory-core";
 import isEqual from "react-fast-compare";
 
+// lodash's `DebouncedFuncLeading`, spelled out so the published declarations
+// don't reference `@types/lodash`, which consumers don't have.
+type Throttled<T extends (...args: any[]) => any> = {
+  (...args: Parameters<T>): ReturnType<T>;
+  cancel(): void;
+  flush(): ReturnType<T>;
+};
+
+const throttleLeading = <T extends (...args: any[]) => any>(
+  fn: T,
+  wait: number,
+): Throttled<T> => throttle(fn, wait, { leading: true, trailing: false });
+
 const Helpers = {
   getDimension(props) {
     const { horizontal, brushDimension } = props;
@@ -494,9 +507,8 @@ export const BrushHelpers = {
   ...Helpers,
   onMouseDown: Helpers.onMouseDown.bind(Helpers),
   onGlobalMouseUp: Helpers.onGlobalMouseUp.bind(Helpers),
-  onGlobalMouseMove: throttle(
+  onGlobalMouseMove: throttleLeading(
     Helpers.onGlobalMouseMove.bind(Helpers),
     16, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false },
   ),
 };

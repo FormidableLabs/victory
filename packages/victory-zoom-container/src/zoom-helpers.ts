@@ -5,6 +5,19 @@ import throttle from "lodash/throttle";
 
 import { Helpers, Selection, Collection, Wrapper } from "victory-core";
 
+// lodash's `DebouncedFuncLeading`, spelled out so the published declarations
+// don't reference `@types/lodash`, which consumers don't have.
+type Throttled<T extends (...args: any[]) => any> = {
+  (...args: Parameters<T>): ReturnType<T>;
+  cancel(): void;
+  flush(): ReturnType<T>;
+};
+
+const throttleLeading = <T extends (...args: any[]) => any>(
+  fn: T,
+  wait: number,
+): Throttled<T> => throttle(fn, wait, { leading: true, trailing: false });
+
 export const RawZoomHelpers = {
   checkDomainEquality(a, b) {
     const checkDimension = (dim) => {
@@ -368,14 +381,12 @@ export const ZoomHelpers = {
   onMouseDown: RawZoomHelpers.onMouseDown.bind(RawZoomHelpers),
   onMouseUp: RawZoomHelpers.onMouseUp.bind(RawZoomHelpers),
   onMouseLeave: RawZoomHelpers.onMouseLeave.bind(RawZoomHelpers),
-  onMouseMove: throttle(
+  onMouseMove: throttleLeading(
     RawZoomHelpers.onMouseMove.bind(RawZoomHelpers),
     16, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false },
   ),
-  onWheel: throttle(
+  onWheel: throttleLeading(
     RawZoomHelpers.onWheel.bind(RawZoomHelpers),
     16, // eslint-disable-line no-magic-numbers
-    { leading: true, trailing: false },
   ),
 };
