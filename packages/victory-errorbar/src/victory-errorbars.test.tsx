@@ -1090,7 +1090,7 @@ describe("components/victory-errorbar", () => {
               <ErrorBar
                 data-testid="error-bar"
                 ariaLabel={({ datum }) => `error bar chart, x ${datum.x}`}
-                tabIndex={({ index }) => index + 2}
+                tabIndex={({ index }) => Number(index) + 2}
               />
             }
           />,

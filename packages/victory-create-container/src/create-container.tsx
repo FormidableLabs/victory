@@ -107,7 +107,15 @@ const CONTAINER_HOOKS = {
  * - These containers are specific to the web. Victory Native has its own container components.
  * - For this utility, we only need the container components to extract the defaultEvents.
  */
-const CONTAINER_COMPONENTS_WEB = {
+interface WebContainerComponents {
+  zoom: typeof VictoryZoomContainer;
+  selection: typeof VictorySelectionContainer;
+  brush: typeof VictoryBrushContainer;
+  cursor: typeof VictoryCursorContainer;
+  voronoi: typeof VictoryVoronoiContainer;
+}
+
+const CONTAINER_COMPONENTS_WEB: WebContainerComponents = {
   zoom: VictoryZoomContainer,
   selection: VictorySelectionContainer,
   brush: VictoryBrushContainer,
@@ -122,22 +130,45 @@ type ContainerComponents = Record<
   }
 >;
 
+// Helper type to support backwards compatibility with old types
+type CombinedContainerProps<
+  TContainerComponents extends ContainerComponents,
+  A,
+  B,
+> = A extends ContainerType
+  ? B extends ContainerType
+    ? React.ComponentProps<TContainerComponents[A]> &
+        React.ComponentProps<TContainerComponents[B]> // New style: infer from container types
+    : A & B // Old style: expect props as generic types
+  : A & B;
+
+interface CombinedContainer<TProps> {
+  (props: TProps): React.JSX.Element;
+  displayName: string;
+  role: string;
+  defaultEvents: (props: TProps) => ({
+    target: string;
+    eventHandlers: any;
+  } | null)[];
+}
+
+type CreateContainer<TContainerComponents extends ContainerComponents> = <
+  TContainerA extends ContainerType | VictoryContainerProps,
+  TContainerB extends ContainerType | VictoryContainerProps,
+>(
+  containerA: TContainerA extends ContainerType ? TContainerA : ContainerType,
+  containerB: TContainerB extends ContainerType ? TContainerB : ContainerType,
+) => CombinedContainer<
+  CombinedContainerProps<TContainerComponents, TContainerA, TContainerB>
+>;
+
 export function makeCreateContainerFunction<
   TContainerComponents extends ContainerComponents,
 >(
   containerComponents: TContainerComponents,
   VictoryContainerBase: typeof VictoryContainer,
-) {
-  type ContainerProps<T extends ContainerType> = React.ComponentProps<
-    TContainerComponents[T]
-  >;
-
-  // Helper type to support backwards compatibility with old types
-  type CombinedContainerProps<A, B> = A extends ContainerType
-    ? B extends ContainerType
-      ? ContainerProps<A> & ContainerProps<B> // New style: infer from container types
-      : A & B // Old style: expect props as generic types
-    : A & B;
+): CreateContainer<TContainerComponents> {
+  type Props<A, B> = CombinedContainerProps<TContainerComponents, A, B>;
 
   return function combineContainers<
     TContainerA extends ContainerType | VictoryContainerProps,
@@ -145,15 +176,13 @@ export function makeCreateContainerFunction<
   >(
     containerA: TContainerA extends ContainerType ? TContainerA : ContainerType,
     containerB: TContainerB extends ContainerType ? TContainerB : ContainerType,
-  ) {
+  ): CombinedContainer<Props<TContainerA, TContainerB>> {
     const ContainerA = containerComponents[containerA as ContainerType];
     const ContainerB = containerComponents[containerB as ContainerType];
     const useContainerA = CONTAINER_HOOKS[containerA as ContainerType];
     const useContainerB = CONTAINER_HOOKS[containerB as ContainerType];
 
-    const CombinedContainer = (
-      props: CombinedContainerProps<TContainerA, TContainerB>,
-    ) => {
+    const CombinedContainer = (props: Props<TContainerA, TContainerB>) => {
       const { children: childrenA, props: propsA } = useContainerA(props);
       const { children: combinedChildren, props: combinedProps } =
         useContainerB({
@@ -171,7 +200,7 @@ export function makeCreateContainerFunction<
     CombinedContainer.displayName = `Victory${containerA}${containerB}Container`;
     CombinedContainer.role = "container";
     CombinedContainer.defaultEvents = (
-      props: CombinedContainerProps<TContainerA, TContainerB>,
+      props: Props<TContainerA, TContainerB>,
     ) =>
       combineDefaultEvents([
         ...ContainerA.defaultEvents(props),
@@ -182,7 +211,5 @@ export function makeCreateContainerFunction<
   };
 }
 
-export const createContainer = makeCreateContainerFunction(
-  CONTAINER_COMPONENTS_WEB,
-  VictoryContainer,
-);
+export const createContainer: CreateContainer<WebContainerComponents> =
+  makeCreateContainerFunction(CONTAINER_COMPONENTS_WEB, VictoryContainer);
