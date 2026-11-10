@@ -286,7 +286,7 @@ export function getTicks(
   props,
   scale: D3Scale,
   filterZero = false,
-): number[] | string[] {
+): number[] | string[] | Date[] {
   const { tickCount } = props;
   const tickArray = getTickArray(props);
 
