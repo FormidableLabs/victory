@@ -162,6 +162,18 @@ describe("helpers/axis", () => {
       expect(tickResult).toEqual([1, 2, 3, 4]);
     });
 
+    it("returns Date tickValues as Dates", () => {
+      const tickValues = [
+        new Date(2020, 0, 1),
+        new Date(2021, 0, 1),
+        new Date(2022, 0, 1),
+      ];
+      const timeScale = Scale.getBaseScale({ scale: { x: "time" } }, "x");
+      const tickResult = Axis.getTicks({ tickValues }, timeScale);
+      expect(tickResult).toEqual(tickValues);
+      expect(tickResult[0]).toBeInstanceOf(Date);
+    });
+
     it("calculates tickValues from scale.ticks()", () => {
       const props = { tickCount: 5 };
       Axis.getTicks(props, scale);

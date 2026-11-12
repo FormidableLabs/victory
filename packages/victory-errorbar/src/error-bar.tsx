@@ -6,7 +6,6 @@ import {
   Line,
   UserProps,
   VictoryCommonPrimitiveProps,
-  EventsMixinClass,
 } from "victory-core";
 
 const renderBorder = (props, error, type) => {
@@ -104,9 +103,6 @@ export interface ErrorProps {
   top?: { error: any; errorIndex: number };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface ErrorBar extends EventsMixinClass<ErrorBarProps> {}
-
 const defaultProps = {
   groupComponent: <g />,
   lineComponent: <Line />,
@@ -114,9 +110,7 @@ const defaultProps = {
   shapeRendering: "auto",
 };
 
-export const ErrorBar = (
-  initialProps: ErrorBarProps & typeof ErrorBar.default,
-) => {
+export const ErrorBar = (initialProps: ErrorBarProps) => {
   const props = evaluateProps(defaults({}, initialProps, defaultProps));
   const { groupComponent } = props;
   const userProps = UserProps.getSafeUserProps(props);

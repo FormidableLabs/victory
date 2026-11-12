@@ -44,25 +44,13 @@ const ALLOWED_CJS_DEFAULT_IMPORTS = {
   ],
 };
 
-// Type errors in the published declarations that predate this check, by
-// package, as `<published file>:<error code>` with how many there are, the
-// same with `@types/react` 18 and 19. Fixing them changes published types
-// (tracked in #3093). Anything else fails, and so does a count that no longer
-// matches.
-const ALLOWED_DECLARATION_ERRORS = {
-  "victory-create-container": {
-    // `createContainer`'s inferred return type indexes the container map with
-    // a type parameter that isn't narrowed to `ContainerType`.
-    "dist/create-container.d.cts:TS2344": 8,
-    "dist/create-container.d.mts:TS2344": 8,
-  },
-  "victory-errorbar": {
-    // `ErrorBar`'s props use `typeof ErrorBar.default`, which doesn't exist
-    // (it's `any` in the source).
-    "dist/error-bar.d.cts:TS2339": 1,
-    "dist/error-bar.d.mts:TS2339": 1,
-  },
-};
+// Known type errors in the published declarations, by package, as
+// `<published file>:<error code>` with how many there are, the same with
+// `@types/react` 18 and 19, e.g.
+// `{ "victory-foo": { "dist/foo.d.mts:TS2344": 1 } }`. Anything else fails,
+// and so does a count that no longer matches. Keep it empty: fix the source
+// instead.
+const ALLOWED_DECLARATION_ERRORS = {};
 
 // Default imports in tsdown's ESM output, one per line: `D`, `D, { ... }` and
 // `D, * as ns`, from a bare specifier. Revisit if the output format changes

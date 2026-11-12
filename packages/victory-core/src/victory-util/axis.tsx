@@ -282,7 +282,11 @@ function downsampleTicks(ticks: number[], tickCount: number) {
   return ticks.filter((d, i) => i % k === 0);
 }
 
-export function getTicks(props, scale: D3Scale, filterZero = false) {
+export function getTicks(
+  props,
+  scale: D3Scale,
+  filterZero = false,
+): number[] | string[] | Date[] {
   const { tickCount } = props;
   const tickArray = getTickArray(props);
 
