@@ -28,13 +28,14 @@ const NON_SVG_PROPS = [
 ] as const;
 const nonSvgProps = new Set<string>(NON_SVG_PROPS);
 
+/** Props `getSvgProps` drops: never written to the primitive's element. */
+export type NonSvgProp = (typeof NON_SVG_PROPS)[number];
+
 /**
  * Drops props that aren't SVG attributes, so primitives can spread the rest
  * onto their element.
  */
-export function getSvgProps<T extends object>(
-  props: T,
-): Omit<T, (typeof NON_SVG_PROPS)[number]> {
+export function getSvgProps<T extends object>(props: T): Omit<T, NonSvgProp> {
   const svgProps = {} as T;
   for (const key in props) {
     if (!nonSvgProps.has(key)) {
