@@ -9,7 +9,7 @@ const fallbackProps = {
   padding: 50,
 };
 
-// Assumes data in `datasets` is sorted by `Data.getData`.
+// Not required now: Assumes data in `datasets` is sorted by `Data.getData`
 function fillData(props, datasets) {
   const { fillInMissingData } = props;
   const xMap = datasets.reduce((prev, dataset) => {
@@ -22,28 +22,31 @@ function fillData(props, datasets) {
   const xArr = orderBy(xKeys);
 
   return datasets.map((dataset) => {
-    let indexOffset = 0;
     const isDate = dataset[0] && dataset[0]._x instanceof Date;
-    const filledInData = xArr.map((x: number | Date, index) => {
+    const dataMap = new Map();
+    dataset.forEach((datum) => {
+      const key = datum._x instanceof Date ? datum._x.getTime() : datum._x;
+      const numKey = Number(key);
+      if (!dataMap.has(numKey)) {
+        dataMap.set(numKey, datum);
+      }
+    });
+    return xArr.map((x) => {
+      const existingDatum = dataMap.get(x);
       let parsedX: number | Date = Number(x);
-      const datum = dataset[index - indexOffset];
-
-      if (datum) {
-        const x1 = isDate ? datum._x.getTime() : datum._x;
-        if (x1 === parsedX) {
-          return datum;
-        }
-        indexOffset++;
+      if (existingDatum) {
+        return existingDatum;
+      } else {
         const y = fillInMissingData ? 0 : null;
         parsedX = isDate ? new Date(parsedX) : parsedX;
-        return { x: parsedX, y, _x: parsedX, _y: y };
+        return {
+          x: parsedX,
+          y,
+          _x: parsedX,
+          _y: y,
+        };
       }
-      const y = fillInMissingData ? 0 : null;
-      parsedX = isDate ? new Date(parsedX) : parsedX;
-      return { x: parsedX, y, _x: parsedX, _y: y };
     });
-
-    return filledInData;
   });
 }
 
