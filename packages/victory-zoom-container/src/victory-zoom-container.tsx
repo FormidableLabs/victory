@@ -227,7 +227,9 @@ VictoryZoomContainer.defaultEvents = (
         onTouchCancel: createEventHandler(ZoomHelpers.onMouseLeave),
         onMouseMove: createEventHandler(ZoomHelpers.onMouseMove),
         onTouchMove: createEventHandler(ZoomHelpers.onMouseMove),
-        onWheel: createEventHandler(ZoomHelpers.onWheel, !props.allowZoom),
+        ...(props.allowZoom
+          ? { onWheel: createEventHandler(ZoomHelpers.onWheel) }
+          : undefined),
       },
     },
   ];
