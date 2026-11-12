@@ -255,9 +255,6 @@ importers:
 
   packages/victory:
     dependencies:
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-area:
         specifier: 38.0.1
         version: link:../victory-area
@@ -339,15 +336,16 @@ importers:
       victory-zoom-container:
         specifier: 38.0.1
         version: link:../victory-zoom-container
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-area:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -355,6 +353,9 @@ importers:
         specifier: 38.0.1
         version: link:../victory-vendor
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
@@ -364,21 +365,19 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-bar:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -386,6 +385,9 @@ importers:
         specifier: 38.0.1
         version: link:../victory-vendor
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
@@ -395,9 +397,6 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -405,6 +404,9 @@ importers:
         specifier: 38.0.1
         version: link:../victory-vendor
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
@@ -414,43 +416,45 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-brush-line:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-candlestick:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
@@ -460,24 +464,22 @@ importers:
 
   packages/victory-canvas:
     dependencies:
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-bar:
         specifier: 38.0.1
         version: link:../victory-bar
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-chart:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -493,30 +495,32 @@ importers:
       victory-shared-events:
         specifier: 38.0.1
         version: link:../victory-shared-events
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-core:
     dependencies:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
       victory-vendor:
         specifier: 38.0.1
         version: link:../victory-vendor
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-create-container:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-brush-container:
         specifier: 38.0.1
         version: link:../victory-brush-container
@@ -535,31 +539,36 @@ importers:
       victory-zoom-container:
         specifier: 38.0.1
         version: link:../victory-zoom-container
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-cursor-container:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-errorbar:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-vendor:
         specifier: '*'
         version: link:../victory-vendor
@@ -569,9 +578,6 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -582,15 +588,15 @@ importers:
         specifier: 38.0.1
         version: link:../victory-shared-events
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-bar:
         specifier: '*'
         version: link:../victory-bar
 
   packages/victory-histogram:
     dependencies:
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -603,27 +609,29 @@ importers:
       victory-vendor:
         specifier: 38.0.1
         version: link:../victory-vendor
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-legend:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-line:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
@@ -631,6 +639,9 @@ importers:
         specifier: 38.0.1
         version: link:../victory-vendor
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-chart:
         specifier: '*'
         version: link:../victory-chart
@@ -640,49 +651,52 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
       victory-vendor:
         specifier: 38.0.1
         version: link:../victory-vendor
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-polar-axis:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-scatter:
     dependencies:
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-selection-container:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-bar:
         specifier: '*'
         version: link:../victory-bar
@@ -698,24 +712,22 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-stack:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -726,6 +738,9 @@ importers:
         specifier: 38.0.1
         version: link:../victory-shared-events
     devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
       victory-area:
         specifier: '*'
         version: link:../victory-area
@@ -741,12 +756,13 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-vendor:
     dependencies:
@@ -832,12 +848,13 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-voronoi-container:
     dependencies:
@@ -847,9 +864,6 @@ importers:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       react-fast-compare:
         specifier: ^3.2.0
         version: 3.2.0
@@ -859,18 +873,23 @@ importers:
       victory-tooltip:
         specifier: 38.0.1
         version: link:../victory-tooltip
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   packages/victory-zoom-container:
     dependencies:
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
-      react:
-        specifier: '>=18'
-        version: 19.3.1
       victory-core:
         specifier: 38.0.1
         version: link:../victory-core
+    devDependencies:
+      react:
+        specifier: ^19.3.1
+        version: 19.3.1
 
   stories:
     dependencies:

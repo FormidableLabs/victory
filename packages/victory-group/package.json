@@ -37,6 +37,7 @@
     "victory-shared-events": "38.0.1"
   },
   "devDependencies": {
+    "react": "^19.3.1",
     "victory-bar": "*"
   },
   "peerDependencies": {

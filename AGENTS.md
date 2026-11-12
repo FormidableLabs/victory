@@ -73,7 +73,7 @@ These commands change as the uplift lands. Update this section in the same PR th
 
 - TypeScript, React function components for new code. Some class components remain (conversion is tracked in #2778); don't convert them in infra PRs.
 - Match the surrounding code's style, naming, and comment density.
-- React peer range: published packages declare `>=18`, and CI's `react` job tests on React 18.0.0 and 18.3 (the lockfile's 19 runs in `test`). React 18 APIs (`useId`, `useSyncExternalStore`, ...) are fine in library code; React 19-only APIs aren't.
+- React peer range: published packages declare `>=18`, and CI's `react` job tests on React 18.0.0 and 18.3 (the lockfile's 19 runs in `test`). React 18 APIs (`useId`, `useSyncExternalStore`, ...) are fine in library code; React 19-only APIs aren't. Each package with the `react` peer also lists `react` as a devDependency, at the root's range: otherwise pnpm auto-installs the peer, and a lockfile refresh (the release `version` script) can pick the website's React 18, so tests load two Reacts.
 - Types: `@types/react` 19 (the website stays on 18; its `tsconfig.json` `paths` keep one version in its program). A bare `React.ReactElement` has `unknown` props on 19; where code reads or clones an element's `props`, use `React.ReactElement<any>` at that spot rather than changing public prop types. Published declarations must type-check for consumers on `@types/react` 18 and 19.
 - Don't add `engines` fields to any `package.json`. `.nvmrc` is the one place the Node version is set.
 - Ship ESM + CJS. Don't add browser-only or Node-only code paths to library packages.
