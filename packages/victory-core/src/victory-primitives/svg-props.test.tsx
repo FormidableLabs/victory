@@ -135,4 +135,14 @@ describe("victory-primitives/svg-props", () => {
       "font-size": "12",
     });
   });
+
+  it("types only what reaches the element", () => {
+    // `getSvgProps` drops `name`, so the types leave it out too.
+    // @ts-expect-error `name` is an SVG attribute, but never written
+    expect(<Line name="x" />).toBeDefined();
+    // @ts-expect-error not an SVG attribute
+    expect(<Line notAnAttribute={1} />).toBeDefined();
+    // @ts-expect-error Victory's own type wins: `rx` is a number
+    expect(<Rect rx="2" />).toBeDefined();
+  });
 });
