@@ -1,5 +1,19 @@
 # victory-core
 
+## 38.1.0
+
+### Minor Changes
+
+- [#3166](https://github.com/FormidableLabs/victory/pull/3166) [`c47d8ca`](https://github.com/FormidableLabs/victory/commit/c47d8cae5a1c65abac058f8efa042d6ff0d6b6a5) - The primitives `Circle`, `Line`, `Path`, `Rect`, `Text` and `TSpan` accept their element's SVG attributes in TypeScript, such as `<Line x1={25} y1={270} />`, `<Path d="..." />` and `<Circle cx={1} cy={2} r={3} />` ([#3122](https://github.com/FormidableLabs/victory/issues/3122)). These worked at runtime but failed to type-check. Where a Victory prop shares a name with an SVG attribute (`origin`, `role`, `style`, `id`, `tabIndex`, `rx`, ...), Victory's type is kept; `name`, which the primitives don't write to the element, stays out. `VictoryPrimitiveShapeProps` takes an optional element type (`VictoryPrimitiveShapeProps<SVGLineElement>`). New exported types: `TSpanProps` (the props of `TSpan`) and `VictoryPrimitiveSvgProps`.
+
+### Patch Changes
+
+- [#3165](https://github.com/FormidableLabs/victory/pull/3165) [`3ba0908`](https://github.com/FormidableLabs/victory/commit/3ba0908bf8120ac4ad1724ea9633398e8907aca6) - `DataGetterPropType` (the type of `x`, `y`, `y0` and `sortKey`) accepts accessors that return a `Date`, such as `x={(d) => new Date(d.date)}`. These worked at runtime but failed to type-check (TS2769).
+
+- [#3164](https://github.com/FormidableLabs/victory/pull/3164) [`1e3997f`](https://github.com/FormidableLabs/victory/commit/1e3997f53855f2b6edc5a43b943f1cf77645e9da) - Fix type errors in published declarations under `skipLibCheck: false`. `createContainer` and `makeCreateContainerFunction` now have explicit return types (TS2344 before), with the same props as before. `ErrorBar`'s props are `ErrorBarProps` instead of `any` (`typeof ErrorBar.default`, TS2339 before). Code that passed `ErrorBar` undeclared props, or wrongly typed ones, compiled only because of this and now fails to type-check. `Axis.getTicks` returns `number[] | string[] | Date[]`: it returns `Date`s for date `tickValues`, which its inferred `number[] | string[]` left out (also `VictoryAxis`'s inferred `ticks`).
+
+- [#3160](https://github.com/FormidableLabs/victory/pull/3160) [`37c7a74`](https://github.com/FormidableLabs/victory/commit/37c7a747cf09f86176666c0399590f7effdb168d) - Build type declarations with `@types/react` 19. Refs from `useCanvasContext()` (`canvasRef`) and `useVictoryContainer()` (`localContainerRef`) are now typed `RefObject<HTMLCanvasElement | null>` and `RefObject<HTMLDivElement | null>` (no change on `@types/react` 18; correct on 19). Inferred `ReactElement` return types of some render methods now use `unknown` props instead of `any`, and class component types no longer list the legacy `refs` property. Code type-checks the same on `@types/react` 18 and 19.
+
 ## 38.0.1
 
 ### Patch Changes
