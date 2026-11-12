@@ -2,7 +2,7 @@ import React from "react";
 import {
   BarProps,
   VictoryBarAlignmentType,
-  VictoryBarCornerRadiusObject,
+  VictoryBarCornerRadiusProp,
   getBarPath,
   getBarWidth,
   getCornerRadius,
@@ -17,7 +17,7 @@ export interface CanvasBarProps extends VictoryCommonPrimitiveProps {
   barOffset?: number[];
   barRatio?: number;
   barWidth?: NumberOrCallback;
-  cornerRadius?: NumberOrCallback | VictoryBarCornerRadiusObject;
+  cornerRadius?: VictoryBarCornerRadiusProp;
   datum?: any;
   getPath?: (props: CanvasBarProps) => string;
   horizontal?: boolean;
