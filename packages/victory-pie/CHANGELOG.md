@@ -1,5 +1,11 @@
 # victory-pie
 
+## 38.1.0
+
+### Patch Changes
+
+- [#3160](https://github.com/FormidableLabs/victory/pull/3160) [`37c7a74`](https://github.com/FormidableLabs/victory/commit/37c7a747cf09f86176666c0399590f7effdb168d) - Build type declarations with `@types/react` 19. Refs from `useCanvasContext()` (`canvasRef`) and `useVictoryContainer()` (`localContainerRef`) are now typed `RefObject<HTMLCanvasElement | null>` and `RefObject<HTMLDivElement | null>` (no change on `@types/react` 18; correct on 19). Inferred `ReactElement` return types of some render methods now use `unknown` props instead of `any`, and class component types no longer list the legacy `refs` property. Code type-checks the same on `@types/react` 18 and 19.
+
 ## 38.0.1
 
 No changes in this release.

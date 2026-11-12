@@ -1,5 +1,13 @@
 # victory-axis
 
+## 38.1.0
+
+### Patch Changes
+
+- [#3164](https://github.com/FormidableLabs/victory/pull/3164) [`1e3997f`](https://github.com/FormidableLabs/victory/commit/1e3997f53855f2b6edc5a43b943f1cf77645e9da) - Fix type errors in published declarations under `skipLibCheck: false`. `createContainer` and `makeCreateContainerFunction` now have explicit return types (TS2344 before), with the same props as before. `ErrorBar`'s props are `ErrorBarProps` instead of `any` (`typeof ErrorBar.default`, TS2339 before). Code that passed `ErrorBar` undeclared props, or wrongly typed ones, compiled only because of this and now fails to type-check. `Axis.getTicks` returns `number[] | string[] | Date[]`: it returns `Date`s for date `tickValues`, which its inferred `number[] | string[]` left out (also `VictoryAxis`'s inferred `ticks`).
+
+- [#3160](https://github.com/FormidableLabs/victory/pull/3160) [`37c7a74`](https://github.com/FormidableLabs/victory/commit/37c7a747cf09f86176666c0399590f7effdb168d) - Build type declarations with `@types/react` 19. Refs from `useCanvasContext()` (`canvasRef`) and `useVictoryContainer()` (`localContainerRef`) are now typed `RefObject<HTMLCanvasElement | null>` and `RefObject<HTMLDivElement | null>` (no change on `@types/react` 18; correct on 19). Inferred `ReactElement` return types of some render methods now use `unknown` props instead of `any`, and class component types no longer list the legacy `refs` property. Code type-checks the same on `@types/react` 18 and 19.
+
 ## 38.0.1
 
 No changes in this release.

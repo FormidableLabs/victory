@@ -1,5 +1,9 @@
 # victory-group
 
+## 38.1.0
+
+No changes in this release.
+
 ## 38.0.1
 
 ### Patch Changes

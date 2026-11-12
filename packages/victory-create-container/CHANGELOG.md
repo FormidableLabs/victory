@@ -1,5 +1,11 @@
 # victory-create-container
 
+## 38.1.0
+
+### Patch Changes
+
+- [#3164](https://github.com/FormidableLabs/victory/pull/3164) [`1e3997f`](https://github.com/FormidableLabs/victory/commit/1e3997f53855f2b6edc5a43b943f1cf77645e9da) - Fix type errors in published declarations under `skipLibCheck: false`. `createContainer` and `makeCreateContainerFunction` now have explicit return types (TS2344 before), with the same props as before. `ErrorBar`'s props are `ErrorBarProps` instead of `any` (`typeof ErrorBar.default`, TS2339 before). Code that passed `ErrorBar` undeclared props, or wrongly typed ones, compiled only because of this and now fails to type-check. `Axis.getTicks` returns `number[] | string[] | Date[]`: it returns `Date`s for date `tickValues`, which its inferred `number[] | string[]` left out (also `VictoryAxis`'s inferred `ticks`).
+
 ## 38.0.1
 
 No changes in this release.

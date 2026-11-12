@@ -256,85 +256,85 @@ importers:
   packages/victory:
     dependencies:
       victory-area:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-area
       victory-axis:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-axis
       victory-bar:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-bar
       victory-box-plot:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-box-plot
       victory-brush-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-brush-container
       victory-brush-line:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-brush-line
       victory-candlestick:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-candlestick
       victory-canvas:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-canvas
       victory-chart:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-chart
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-create-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-create-container
       victory-cursor-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-cursor-container
       victory-errorbar:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-errorbar
       victory-group:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-group
       victory-histogram:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-histogram
       victory-legend:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-legend
       victory-line:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-line
       victory-pie:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-pie
       victory-polar-axis:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-polar-axis
       victory-scatter:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-scatter
       victory-selection-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-selection-container
       victory-shared-events:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-shared-events
       victory-stack:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-stack
       victory-tooltip:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-tooltip
       victory-voronoi:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-voronoi
       victory-voronoi-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-voronoi-container
       victory-zoom-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-zoom-container
     devDependencies:
       react:
@@ -347,10 +347,10 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-vendor
     devDependencies:
       react:
@@ -366,7 +366,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -379,10 +379,10 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-vendor
     devDependencies:
       react:
@@ -398,10 +398,10 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-vendor
     devDependencies:
       react:
@@ -420,7 +420,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -436,7 +436,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -449,7 +449,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -465,10 +465,10 @@ importers:
   packages/victory-canvas:
     dependencies:
       victory-bar:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-bar
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -484,16 +484,16 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-axis:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-axis
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-polar-axis:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-polar-axis
       victory-shared-events:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-shared-events
     devDependencies:
       react:
@@ -509,7 +509,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-vendor:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-vendor
     devDependencies:
       react:
@@ -522,22 +522,22 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-brush-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-brush-container
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-cursor-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-cursor-container
       victory-selection-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-selection-container
       victory-voronoi-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-voronoi-container
       victory-zoom-container:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-zoom-container
     devDependencies:
       react:
@@ -550,7 +550,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -563,7 +563,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -582,10 +582,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-shared-events:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-shared-events
     devDependencies:
       react:
@@ -601,13 +601,13 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-bar:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-bar
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-vendor
     devDependencies:
       react:
@@ -620,7 +620,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -633,10 +633,10 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-vendor
     devDependencies:
       react:
@@ -652,10 +652,10 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-vendor:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-vendor
     devDependencies:
       react:
@@ -668,7 +668,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -678,7 +678,7 @@ importers:
   packages/victory-scatter:
     dependencies:
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -691,7 +691,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -716,7 +716,7 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -732,10 +732,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-shared-events:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-shared-events
     devDependencies:
       react:
@@ -757,7 +757,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -849,7 +849,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:
@@ -868,10 +868,10 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
       victory-tooltip:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-tooltip
     devDependencies:
       react:
@@ -884,7 +884,7 @@ importers:
         specifier: ^4.17.19
         version: 4.17.21
       victory-core:
-        specifier: 38.0.1
+        specifier: 38.1.0
         version: link:../victory-core
     devDependencies:
       react:

@@ -1,6 +1,6 @@
 {
   "name": "victory-scatter",
-  "version": "38.0.1",
+  "version": "38.1.0",
   "description": "Scatter Component for Victory",
   "keywords": [
     "data visualization",
@@ -31,7 +31,7 @@
   "author": "Formidable",
   "license": "MIT",
   "dependencies": {
-    "victory-core": "38.0.1"
+    "victory-core": "38.1.0"
   },
   "peerDependencies": {
     "react": ">=18"

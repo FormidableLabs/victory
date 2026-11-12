@@ -1,5 +1,11 @@
 # victory-selection-container
 
+## 38.1.0
+
+### Patch Changes
+
+- [#3163](https://github.com/FormidableLabs/victory/pull/3163) [`e1909f7`](https://github.com/FormidableLabs/victory/commit/e1909f703d4753b57a6d291e2b61a387b968658a) - Type declarations no longer reference lodash's types, which consumers don't have (`@types/lodash` isn't a dependency): they resolved to `any`, or failed with TS7016 under `skipLibCheck: false`. The throttled helper handlers (`BrushHelpers.onGlobalMouseMove`, `onMouseMove`, `ZoomHelpers.onWheel`, ...) are now typed with their call signature, `cancel()` and `flush()`, and `VictorySharedEvents`'s `getBaseProps`/`getBasePropsFromChildren` return `Record<string, any>`.
+
 ## 38.0.1
 
 No changes in this release.
