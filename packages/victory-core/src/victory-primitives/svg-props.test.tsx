@@ -79,4 +79,60 @@ describe("victory-primitives/svg-props", () => {
       error.mockRestore();
     },
   );
+
+  // Also a type test: the primitives accept their element's SVG attributes
+  // (#3122).
+  it("passes SVG attributes through to the element", () => {
+    const { container } = render(
+      <svg>
+        <Circle cx={1} cy={2} r={3} />
+        <Line x1={1} x2={2} y1={3} y2={4} strokeDasharray="4,2" />
+        <Path d="M0,0L1,1" fillOpacity={0.5} />
+        <Rect x={1} y={2} width={3} height={4} rx={1} />
+        <Text x={1} y={2} dy="0.5em" textAnchor="middle">
+          <TSpan x={1} dx={2} fontSize={12}>
+            label
+          </TSpan>
+        </Text>
+      </svg>,
+    );
+    const attributes = (tag: string) =>
+      Object.fromEntries(
+        [...container.querySelector(tag)!.attributes].map((a) => [
+          a.name,
+          a.value,
+        ]),
+      );
+
+    expect(attributes("circle")).toMatchObject({ cx: "1", cy: "2", r: "3" });
+    expect(attributes("line")).toMatchObject({
+      x1: "1",
+      x2: "2",
+      y1: "3",
+      y2: "4",
+      "stroke-dasharray": "4,2",
+    });
+    expect(attributes("path")).toMatchObject({
+      d: "M0,0L1,1",
+      "fill-opacity": "0.5",
+    });
+    expect(attributes("rect")).toMatchObject({
+      x: "1",
+      y: "2",
+      width: "3",
+      height: "4",
+      rx: "1",
+    });
+    expect(attributes("text")).toMatchObject({
+      x: "1",
+      y: "2",
+      dy: "0.5em",
+      "text-anchor": "middle",
+    });
+    expect(attributes("tspan")).toMatchObject({
+      x: "1",
+      dx: "2",
+      "font-size": "12",
+    });
+  });
 });

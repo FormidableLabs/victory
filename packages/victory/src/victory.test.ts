@@ -60,6 +60,7 @@ import {
   SliceProps,
   Style,
   TSpan,
+  TSpanProps,
   Text,
   TextProps,
   TextSize,
