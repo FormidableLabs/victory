@@ -137,10 +137,15 @@ export type CategoryPropType =
       y: string[];
     };
 
-export type DataGetterPropType = ValueOrAccessor<
-  string | string[] | number | number[],
-  any // The arg will be the `datum`, which can have any type
->;
+// A value is a property key, path, or array index into each datum; an
+// accessor can also return a `Date` (for time scales).
+export type DataGetterPropType =
+  | string
+  | string[]
+  | number
+  | number[]
+  // The arg will be the `datum`, which can have any type
+  | ((datum: any) => string | string[] | number | number[] | Date);
 
 export type InterpolationPropType =
   | "basis"

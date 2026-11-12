@@ -107,10 +107,6 @@ const VoronoiLabel = (props) => {
   );
 };
 
-// Victory accepts Date accessors at runtime, but its accessor type
-// (DataGetterPropType) leaves out Date. Drop this once #3125 is fixed.
-const dateX = (date: string) => new Date(date) as unknown as number;
-
 const lastDate = last(downloads.data)!.day;
 const recentDate = format(subDays(new Date(), 2), "yyyy-MM-dd");
 const oldDownloads = groupDownloadsByWeek(downloads.data);
@@ -198,7 +194,7 @@ export const LandingDemo = () => {
           <VictoryLine
             name={`ignore-${v.version}`}
             key={v.version}
-            x={() => dateX(v.date)}
+            x={() => new Date(v.date)}
             style={{
               data: {
                 stroke: theme.color.red,
@@ -215,7 +211,7 @@ export const LandingDemo = () => {
           data={downloadsPerWeek}
           groupComponent={<g />}
           y="downloads"
-          x={(d) => dateX(d.date)}
+          x={(d) => new Date(d.date)}
           style={{
             data: { stroke: theme.color.white, strokeWidth: 4 },
           }}
@@ -224,7 +220,7 @@ export const LandingDemo = () => {
           name="ignore-scatter"
           data={[last(downloadsPerWeek)]}
           y="downloads"
-          x={(d) => dateX(d.date)}
+          x={(d) => new Date(d.date)}
           size={6}
           style={{
             data: { fill: theme.color.white },
