@@ -26,6 +26,7 @@ describe("victory-shared-events", () => {
       </svg>,
     );
     const group = container.querySelector("[data-testid='group']");
+    expect(group).not.toBeNull();
     expect(group?.querySelector("[data-testid='child']")).not.toBeNull();
   });
 
@@ -38,6 +39,7 @@ describe("victory-shared-events", () => {
       </svg>,
     );
     const group = container.querySelector("[data-testid='container']");
+    expect(group).not.toBeNull();
     expect(group?.querySelector("[data-testid='child']")).not.toBeNull();
   });
 });
