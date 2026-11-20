@@ -1,5 +1,11 @@
 # victory-shared-events
 
+## 38.1.1
+
+### Patch Changes
+
+- [#3168](https://github.com/FormidableLabs/victory/pull/3168) [`8d0a80f`](https://github.com/FormidableLabs/victory/commit/8d0a80f962e02177c54400aee3994ff65da596d8) - Fix `VictorySharedEvents` crashing when rendered with neither `events` nor `container`: it now falls back to `groupComponent`, as it already did with events
+
 ## 38.1.0
 
 ### Patch Changes
