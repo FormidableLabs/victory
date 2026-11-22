@@ -8,6 +8,7 @@ import {
   VictoryCommonPrimitiveProps,
   LineHelpers,
   VictoryCommonThemeProps,
+  roundPathString,
 } from "victory-core";
 
 const defined = (d) => {
@@ -146,7 +147,7 @@ export const Area: React.FC<AreaProps> = (initialProps) => {
       {
         key: `${id}-area`,
         style: Object.assign({}, style, { stroke: areaStroke }),
-        d: areaFunction(data),
+        d: roundPathString(areaFunction(data)),
         desc,
         tabIndex,
       },
@@ -162,7 +163,7 @@ export const Area: React.FC<AreaProps> = (initialProps) => {
           {
             key: `${id}-area-stroke`,
             style: Object.assign({}, style, { fill: "none" }),
-            d: lineFunction(data),
+            d: roundPathString(lineFunction(data)),
           },
           sharedProps,
         ),
