@@ -10,7 +10,7 @@ import { getStyle, getBarWidth, getCornerRadius } from "./bar-helper-methods";
 import { getPolarBarPath, getBarPath } from "./path-helper-methods";
 import {
   VictoryBarAlignmentType,
-  VictoryBarCornerRadiusObject,
+  VictoryBarCornerRadiusProp,
 } from "./victory-bar";
 
 export interface BarProps extends VictoryCommonPrimitiveProps {
@@ -18,7 +18,7 @@ export interface BarProps extends VictoryCommonPrimitiveProps {
   barOffset?: number[];
   barRatio?: number;
   barWidth?: NumberOrCallback;
-  cornerRadius?: NumberOrCallback | VictoryBarCornerRadiusObject;
+  cornerRadius?: VictoryBarCornerRadiusProp;
   datum?: any;
   getPath?: (props: BarProps) => string;
   horizontal?: boolean;
