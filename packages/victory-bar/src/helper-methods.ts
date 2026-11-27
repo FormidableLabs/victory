@@ -28,8 +28,8 @@ export const getBarPosition = (props, datum) => {
       ? new Date(defaultMin)
       : defaultMin;
   };
-  const _y0 = datum._y0 !== undefined ? datum._y0 : getDefaultMin("y");
-  const _x0 = datum._x0 !== undefined ? datum._x0 : getDefaultMin("x");
+  const _y0 = datum._y0 ?? getDefaultMin("y");
+  const _x0 = datum._x0 ?? getDefaultMin("x");
   return Helpers.scalePoint(props, Object.assign({}, datum, { _y0, _x0 }));
 };
 
