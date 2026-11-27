@@ -9,6 +9,18 @@ import { VictoryBar } from "./victory-bar";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
+    it("uses the default baseline for a null range endpoint", () => {
+      const bar = (y0: number | null) =>
+        VictoryBar.getBaseProps({
+          data: [{ x: 1, y: 4, y0 }],
+          domain: { x: [0, 2], y: [0, 10] },
+        })[0].data;
+      const actual = bar(null);
+      const expected = bar(0);
+      expect(actual.y).toBe(expected.y);
+      expect(actual.y0).toBe(expected.y0);
+    });
+
     it("attaches safe user props to the container component", () => {
       render(
         <VictoryBar
